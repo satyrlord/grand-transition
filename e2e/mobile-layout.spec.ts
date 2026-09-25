@@ -1,8 +1,8 @@
-import { lockInSetup } from './helpers/setup';
+import { lockInSetup } from './helpers/setup.ts';
 import { expect, test, type Page } from '@playwright/test';
-import { useFixedBrowserMatchSeed } from './helpers/match-flow';
-import { finishPresentation, reachDeliveryTotal } from './helpers/presentation';
-import type { RoundPresentationFrame } from '../src/app/round-presentation';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
+import { finishPresentation, reachDeliveryTotal } from './helpers/presentation.ts';
+import type { RoundPresentationFrame } from '../src/app/round-presentation.ts';
 
 const portraitViewports = [
   { width: 384, height: 832 },
@@ -28,7 +28,9 @@ test.beforeEach(async ({ page }) => {
 
 for (const viewport of [...portraitViewports, ...landscapeViewports]) {
   const portrait = viewport.height > viewport.width;
-  test(`mobile ${viewport.width} by ${viewport.height} supports touch setup and drafting`, async ({ page }, testInfo) => {
+  test(`mobile ${viewport.width} by ${viewport.height} supports touch setup and drafting`, async ({
+    page,
+  }, testInfo) => {
     await page.setViewportSize(viewport);
     await page.goto('');
     if (portrait) await continueInPortrait(page);
@@ -58,8 +60,9 @@ for (const viewport of [...portraitViewports, ...landscapeViewports]) {
         const pool = document.querySelector('.common-phrases')!.getBoundingClientRect();
         const scene = document.querySelector('.match-stage')!.getBoundingClientRect();
         const sentence = document.querySelector('.sentence-ledger')!.getBoundingClientRect();
-        const rows = [...document.querySelectorAll('.shared-board > li')]
-          .map((row) => row.getBoundingClientRect());
+        const rows = [...document.querySelectorAll('.shared-board > li')].map((row) =>
+          row.getBoundingClientRect(),
+        );
         return {
           left: pool.left,
           right: pool.right,
@@ -67,7 +70,9 @@ for (const viewport of [...portraitViewports, ...landscapeViewports]) {
           belowScene: pool.top >= scene.bottom - 1,
           belowSentence: pool.top >= sentence.bottom - 1,
           oneColumn: rows.every((row) => Math.abs(row.left - rows[0]!.left) <= 1),
-          separateRows: rows.every((row, index) => index === 0 || row.top >= rows[index - 1]!.bottom - 1),
+          separateRows: rows.every(
+            (row, index) => index === 0 || row.top >= rows[index - 1]!.bottom - 1,
+          ),
         };
       });
       expect(Math.abs(geometry.left)).toBeLessThanOrEqual(2);
@@ -84,9 +89,16 @@ for (const viewport of [...portraitViewports, ...landscapeViewports]) {
     await expect(page.getByRole('button', { name: 'Reshuffle used', exact: true })).toBeDisabled();
     const cardId = await page.locator('grand-transition-match').evaluate((element) => {
       const match = element as HTMLElement & {
-        snapshot: { sharedCards: Array<{ grammarAccepted: boolean; reference: { cardId: string } | null; action: unknown }> };
+        snapshot: {
+          sharedCards: Array<{
+            grammarAccepted: boolean;
+            reference: { cardId: string } | null;
+            action: unknown;
+          }>;
+        };
       };
-      return match.snapshot.sharedCards.find((card) => card.grammarAccepted && card.action !== null)?.reference?.cardId;
+      return match.snapshot.sharedCards.find((card) => card.grammarAccepted && card.action !== null)
+        ?.reference?.cardId;
     });
     expect(cardId).toBeTruthy();
     const sentenceBefore = await page.locator('.sentence-preview').textContent();
@@ -120,7 +132,9 @@ test('portrait recommendation is modal and appears once per page instance', asyn
   await expect(page.getByRole('alertdialog')).toHaveCount(0);
 });
 
-test('portrait AI pause and rotation preserve the match and remaining turn time', async ({ page }) => {
+test('portrait AI pause and rotation preserve the match and remaining turn time', async ({
+  page,
+}) => {
   await page.setViewportSize(portraitViewports[0]);
   await page.goto('');
   await continueInPortrait(page);
@@ -143,7 +157,9 @@ test('portrait AI pause and rotation preserve the match and remaining turn time'
   await expect(page.locator('.timer-fact')).toHaveAttribute('data-timer', '24');
 });
 
-test('rotating hotseat conceals the match and preserves timer and manual pause', async ({ page }) => {
+test('rotating hotseat conceals the match and preserves timer and manual pause', async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 832, height: 384 });
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).tap();
@@ -167,7 +183,9 @@ test('rotating hotseat conceals the match and preserves timer and manual pause',
   expect(await matchFacts(page)).toEqual(before);
 });
 
-test('first portrait rotation pauses an active AI match until the recommendation is dismissed', async ({ page }) => {
+test('first portrait rotation pauses an active AI match until the recommendation is dismissed', async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 832, height: 384 });
   await page.goto('');
   await page.getByRole('button', { name: 'Single Player', exact: true }).tap();
@@ -182,7 +200,9 @@ test('first portrait rotation pauses an active AI match until the recommendation
   expect(await matchFacts(page)).toEqual(before);
 });
 
-test('mobile AI delivery, victory and saved history remain readable and reachable', async ({ page }, testInfo) => {
+test('mobile AI delivery, victory and saved history remain readable and reachable', async ({
+  page,
+}, testInfo) => {
   test.setTimeout(120_000);
   await page.setViewportSize({ width: 832, height: 384 });
   await page.goto('');
@@ -217,47 +237,85 @@ test('mobile AI delivery, victory and saved history remain readable and reachabl
       await page.waitForTimeout(20);
       continue;
     }
-    const complete = await page.locator('grand-transition-match').evaluate((element) =>
-      (element as HTMLElement & { snapshot: { sentenceComplete: boolean } }).snapshot.sentenceComplete,
-    );
+    const complete = await page
+      .locator('grand-transition-match')
+      .evaluate(
+        (element) =>
+          (element as HTMLElement & { snapshot: { sentenceComplete: boolean } }).snapshot
+            .sentenceComplete,
+      );
     // After the first delivery, deliberate grammar mistakes reach a real saved
     // result quickly through the same touch controls as ordinary play.
-    const invalidCard = checkedPresentation ? await page.locator('grand-transition-match').evaluate((element) => {
-      type Card = { grammarAccepted: boolean; action: unknown; reference: { cardId: string; source: string } | null };
-      const { sharedCards, privateCards } = (element as HTMLElement & { snapshot: { sharedCards: Card[]; privateCards: Card[] } }).snapshot;
-      return [...sharedCards, ...privateCards].find((card) => !card.grammarAccepted && card.action !== null)?.reference;
-    }) : null;
+    const invalidCard = checkedPresentation
+      ? await page.locator('grand-transition-match').evaluate((element) => {
+          type Card = {
+            grammarAccepted: boolean;
+            action: unknown;
+            reference: { cardId: string; source: string } | null;
+          };
+          const { sharedCards, privateCards } = (
+            element as HTMLElement & { snapshot: { sharedCards: Card[]; privateCards: Card[] } }
+          ).snapshot;
+          return [...sharedCards, ...privateCards].find(
+            (card) => !card.grammarAccepted && card.action !== null,
+          )?.reference;
+        })
+      : null;
     const phrase = invalidCard
-      ? page.locator(`button[data-card-source="${invalidCard.source}"][data-card-id="${invalidCard.cardId}"]`)
-      : page.locator('.private-hand button.phrase-card:not(:disabled), .shared-board button.phrase-card:not(:disabled)').first();
+      ? page.locator(
+          `button[data-card-source="${invalidCard.source}"][data-card-id="${invalidCard.cardId}"]`,
+        )
+      : page
+          .locator(
+            '.private-hand button.phrase-card:not(:disabled), .shared-board button.phrase-card:not(:disabled)',
+          )
+          .first();
     await expectPhraseCardsInsideRows(page);
-    if ((invalidCard || !complete) && await phrase.count()) await phrase.tap({ timeout: 5_000 });
+    if ((invalidCard || !complete) && (await phrase.count())) await phrase.tap({ timeout: 5_000 });
     else await page.getByRole('button', { name: 'End', exact: true }).tap();
     await page.clock.runFor(500);
   }
   expect(checkedPresentation).toBe(true);
   await expect(page.getByRole('dialog', { name: 'Victory' })).toBeVisible();
-  for (const viewport of [portraitViewports[0], portraitViewports[2], { width: 832, height: 384 }, { width: 640, height: 320 }]) {
+  for (const viewport of [
+    portraitViewports[0],
+    portraitViewports[2],
+    { width: 832, height: 384 },
+    { width: 640, height: 320 },
+  ]) {
     await page.setViewportSize(viewport);
     await expectNoHorizontalOverflow(page);
     await expectHorizontallyContained(page, '.round-review-dialog');
     await page.getByRole('button', { name: 'Return to main menu' }).tap({ trial: true });
-    await page.screenshot({ path: testInfo.outputPath(`mobile-victory-${viewport.width}x${viewport.height}.png`), fullPage: true });
+    await page.screenshot({
+      path: testInfo.outputPath(`mobile-victory-${viewport.width}x${viewport.height}.png`),
+      fullPage: true,
+    });
   }
   await page.getByRole('button', { name: 'Return to main menu' }).tap();
   await page.getByRole('button', { name: /Match history/u }).tap();
   await expect(page.locator('.match-history-entry')).toHaveCount(1);
-  for (const viewport of [portraitViewports[0], portraitViewports[2], { width: 832, height: 384 }, { width: 640, height: 320 }]) {
+  for (const viewport of [
+    portraitViewports[0],
+    portraitViewports[2],
+    { width: 832, height: 384 },
+    { width: 640, height: 320 },
+  ]) {
     await page.setViewportSize(viewport);
     await expectNoHorizontalOverflow(page);
     await expectHorizontallyContained(page, '.match-history-dialog, .match-history-entry');
     await page.getByRole('button', { name: 'Close', exact: true }).tap({ trial: true });
-    await page.screenshot({ path: testInfo.outputPath(`mobile-history-${viewport.width}x${viewport.height}.png`), fullPage: true });
+    await page.screenshot({
+      path: testInfo.outputPath(`mobile-history-${viewport.width}x${viewport.height}.png`),
+      fullPage: true,
+    });
   }
   await page.getByRole('button', { name: 'Close', exact: true }).tap();
 });
 
-test('portrait recommendation suspends pending AI work and resumes it after dismissal', async ({ page }) => {
+test('portrait recommendation suspends pending AI work and resumes it after dismissal', async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 832, height: 384 });
   await page.goto('');
   await page.getByRole('button', { name: 'Single Player', exact: true }).tap();
@@ -265,9 +323,16 @@ test('portrait recommendation suspends pending AI work and resumes it after dism
   await page.getByRole('button', { name: 'Start match' }).tap();
   const cardId = await page.locator('grand-transition-match').evaluate((element) => {
     const match = element as HTMLElement & {
-      snapshot: { sharedCards: Array<{ grammarAccepted: boolean; reference: { cardId: string } | null; action: unknown }> };
+      snapshot: {
+        sharedCards: Array<{
+          grammarAccepted: boolean;
+          reference: { cardId: string } | null;
+          action: unknown;
+        }>;
+      };
     };
-    return match.snapshot.sharedCards.find((card) => card.grammarAccepted && card.action !== null)?.reference?.cardId;
+    return match.snapshot.sharedCards.find((card) => card.grammarAccepted && card.action !== null)
+      ?.reference?.cardId;
   });
   expect(cardId).toBeTruthy();
   await page.locator(`.shared-board button[data-card-id="${cardId}"]`).tap();
@@ -278,7 +343,11 @@ test('portrait recommendation suspends pending AI work and resumes it after dism
   await page.clock.runFor(45_000);
   expect(await matchRevision(page)).toBe(before);
   await continueInPortrait(page);
-  for (let elapsed = 0; elapsed < 10_000 && await matchRevision(page) === before; elapsed += 500) {
+  for (
+    let elapsed = 0;
+    elapsed < 10_000 && (await matchRevision(page)) === before;
+    elapsed += 500
+  ) {
     await page.clock.runFor(500);
     await page.waitForTimeout(20);
   }
@@ -286,9 +355,11 @@ test('portrait recommendation suspends pending AI work and resumes it after dism
 });
 
 async function matchRevision(page: Page): Promise<number> {
-  return page.locator('grand-transition-match').evaluate((element) =>
-    (element as HTMLElement & { snapshot: { revision: number } }).snapshot.revision,
-  );
+  return page
+    .locator('grand-transition-match')
+    .evaluate(
+      (element) => (element as HTMLElement & { snapshot: { revision: number } }).snapshot.revision,
+    );
 }
 
 async function expectPhraseCardsInsideRows(page: Page): Promise<void> {
@@ -298,23 +369,42 @@ async function expectPhraseCardsInsideRows(page: Page): Promise<void> {
       const element = slot.querySelector('.phrase-card')!;
       const card = element.getBoundingClientRect();
       const style = getComputedStyle(element);
-      return card.top < row.top - 1 || card.bottom > row.bottom + 1 ? [{
-        slot: slot.getAttribute('data-slot'), state: slot.getAttribute('data-card-state'),
-        rowTop: row.top, rowBottom: row.bottom, cardTop: card.top, cardBottom: card.bottom,
-        height: style.height, minHeight: style.minHeight, boxSizing: style.boxSizing,
-        gridRows: getComputedStyle(slot.parentElement!).gridTemplateRows,
-      }] : [];
+      return card.top < row.top - 1 || card.bottom > row.bottom + 1
+        ? [
+            {
+              slot: slot.getAttribute('data-slot'),
+              state: slot.getAttribute('data-card-state'),
+              rowTop: row.top,
+              rowBottom: row.bottom,
+              cardTop: card.top,
+              cardBottom: card.bottom,
+              height: style.height,
+              minHeight: style.minHeight,
+              boxSizing: style.boxSizing,
+              gridRows: getComputedStyle(slot.parentElement!).gridTemplateRows,
+            },
+          ]
+        : [];
     }),
   );
-  expect(overflowingSlots, 'Every selected and available card must remain inside its row').toEqual([]);
+  expect(overflowingSlots, 'Every selected and available card must remain inside its row').toEqual(
+    [],
+  );
 }
 
 async function expectHorizontallyContained(page: Page, selector: string): Promise<void> {
-  const boxes = await page.locator(selector).evaluateAll((elements) => elements.map((element) => {
-    const box = element.getBoundingClientRect();
-    return { left: box.left, right: box.right, width: box.width, viewport: document.documentElement.clientWidth,
-      textFits: element.scrollWidth <= element.clientWidth + 1 };
-  }));
+  const boxes = await page.locator(selector).evaluateAll((elements) =>
+    elements.map((element) => {
+      const box = element.getBoundingClientRect();
+      return {
+        left: box.left,
+        right: box.right,
+        width: box.width,
+        viewport: document.documentElement.clientWidth,
+        textFits: element.scrollWidth <= element.clientWidth + 1,
+      };
+    }),
+  );
   expect(boxes.length).toBeGreaterThan(0);
   for (const box of boxes) {
     expect(box.width).toBeGreaterThan(0);
@@ -325,9 +415,12 @@ async function expectHorizontallyContained(page: Page, selector: string): Promis
 }
 
 async function presentationFrame(page: Page) {
-  return page.locator('grand-transition-match').evaluate((element) =>
-    (element as HTMLElement & { presentation: RoundPresentationFrame | null }).presentation,
-  );
+  return page
+    .locator('grand-transition-match')
+    .evaluate(
+      (element) =>
+        (element as HTMLElement & { presentation: RoundPresentationFrame | null }).presentation,
+    );
 }
 
 async function continueInPortrait(page: Page): Promise<void> {
@@ -337,7 +430,11 @@ async function continueInPortrait(page: Page): Promise<void> {
 }
 
 async function expectNoHorizontalOverflow(page: Page): Promise<void> {
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1)).toBe(true);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1,
+    ),
+  ).toBe(true);
 }
 
 async function expectConcealed(page: Page, kind: string): Promise<void> {

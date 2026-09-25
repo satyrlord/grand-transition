@@ -1,11 +1,8 @@
-import { interfaceLocale } from './interface-localization';
+import { interfaceLocale } from './interface-localization.ts';
 
 // Interface numbers are rendered with the active interface locale. Numbers
 // inside game prose and stored numbers stay locale-neutral.
-export function formatInterfaceNumber(
-  value: number,
-  options?: Intl.NumberFormatOptions,
-): string {
+export function formatInterfaceNumber(value: number, options?: Intl.NumberFormatOptions): string {
   return formatter(options).format(value);
 }
 

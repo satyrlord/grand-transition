@@ -82,7 +82,7 @@ Character masters use transparent output of 2048 by 2048 pixels.
 
 The scene masters at this time use output of 3840 by 2160 pixels.
 The name of this size is 4K.
-For the master dimensions at this time, read `tools/scene-resolution.mjs`.
+For the master dimensions at this time, read `tools/scene-resolution.ts`.
 If an approved contract gives a smaller master, use the scene preparation procedure after generation.
 
 Do not request native API output of 1920 by 1080 pixels, because 1080 is not a multiple of 16.

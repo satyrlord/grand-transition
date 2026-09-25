@@ -6,11 +6,12 @@ export const SCENE_VARIANT_SIZES = Object.freeze([
   Object.freeze({ width: 3840, height: 2160 }),
 ]);
 
-export function sceneMasterSize() {
+// Every scene uses the same master size, so the scene ID does not change it.
+export function sceneMasterSize(_id?: string) {
   return SCENE_VARIANT_SIZES[4];
 }
 
-export function sceneVariantSizes(id) {
+export function sceneVariantSizes(id: string) {
   return SCENE_VARIANT_SIZES.filter(({ width }) => width <= sceneMasterSize(id).width);
 }
 

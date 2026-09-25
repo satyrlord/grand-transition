@@ -1,10 +1,12 @@
-import type { GameLocaleBundle } from './game-locale-schema';
+import type { GameLocaleBundle } from './game-locale-schema.ts';
 
 export function mergeRomanianMessageFiles(
   sources: Readonly<Record<string, Readonly<Record<string, string>>>>,
 ): Record<string, string> {
   const messages: Record<string, string> = {};
-  for (const [file, entries] of Object.entries(sources).toSorted(([left], [right]) => left.localeCompare(right))) {
+  for (const [file, entries] of Object.entries(sources).toSorted(([left], [right]) =>
+    left.localeCompare(right),
+  )) {
     for (const [key, text] of Object.entries(entries)) {
       if (Object.hasOwn(messages, key)) {
         throw new Error(`Duplicate Romanian game message "${key}" in "${file}".`);
@@ -23,8 +25,7 @@ export function createRomanianGameLocale(
 ): GameLocaleBundle {
   const {
     'title.name': name,
-    'title.fictionalCompositeSatireDisclaimer':
-      fictionalCompositeSatireDisclaimer,
+    'title.fictionalCompositeSatireDisclaimer': fictionalCompositeSatireDisclaimer,
     ...messages
   } = authoredMessages;
 

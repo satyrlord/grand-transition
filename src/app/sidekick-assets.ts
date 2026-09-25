@@ -16,15 +16,15 @@ const sidekickByCharacterId = new Map(
   }),
 );
 
-export const comebackSidekickIds = Object.freeze(
-  [...sidekickByCharacterId.keys()].toSorted(),
-);
+export const comebackSidekickIds = Object.freeze([...sidekickByCharacterId.keys()].toSorted());
 
 export function resolveComebackSidekick(characterId: string): string | null {
   return sidekickByCharacterId.get(characterId) ?? null;
 }
 
 export function comebackSidekickBottomInset(characterId: string): number {
-  const layout = (sidekickLayout as Record<string, { height: number; bottom: number }>)[`${characterId}.png`];
+  const layout = (sidekickLayout as Record<string, { height: number; bottom: number }>)[
+    `${characterId}.png`
+  ];
   return layout ? (layout.height - layout.bottom) / layout.height : 0;
 }

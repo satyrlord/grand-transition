@@ -1,4 +1,4 @@
-import { lockInSetup } from './helpers/setup';
+import { lockInSetup } from './helpers/setup.ts';
 import { expect, test } from '@playwright/test';
 
 test('the draft shows one unambiguous continuation cue', async ({ page }) => {

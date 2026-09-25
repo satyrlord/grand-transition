@@ -1,10 +1,7 @@
-import { lockInSetup } from './helpers/setup';
-import {
-  pauseMockedClock,
-  reachDeliveryTotal,
-} from './helpers/presentation';
+import { lockInSetup } from './helpers/setup.ts';
+import { pauseMockedClock, reachDeliveryTotal } from './helpers/presentation.ts';
 import { expect, test, type Page } from '@playwright/test';
-import { useFixedBrowserMatchSeed } from './helpers/match-flow';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 
 const targetCards = [
   { phraseId: 'common-noun-036', role: 'noun' },
@@ -45,9 +42,7 @@ for (const scenario of [
     total: 22,
   },
 ]) {
-  test('the production game scores ' + scenario.name, async ({
-    page,
-  }) => {
+  test('the production game scores ' + scenario.name, async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await useFixedBrowserMatchSeed(page, 20_260_901);
     await page.clock.install();
@@ -59,15 +54,11 @@ for (const scenario of [
     const fixture = await installTargetCards(page, scenario.cards);
     for (const cardId of fixture.cardIds) {
       await forceActivePlayer(page, fixture.playerId);
-      await page
-        .locator(`[data-card-source="shared"][data-card-id="${cardId}"]`)
-        .click();
+      await page.locator(`[data-card-source="shared"][data-card-id="${cardId}"]`).click();
     }
     await forceActivePlayer(page, fixture.playerId);
 
-    await expect(page.locator('.sentence-preview')).toHaveText(
-      scenario.sentence,
-    );
+    await expect(page.locator('.sentence-preview')).toHaveText(scenario.sentence);
     await expect(page.locator('.sentence-state')).toContainText('Sentence ready');
     await page.getByRole('button', { name: 'End', exact: true }).click();
     await page.getByRole('button', { name: 'End', exact: true }).click();
@@ -75,23 +66,25 @@ for (const scenario of [
     await pauseMockedClock(page);
     await reachDeliveryTotal(page, fixture.playerId);
     await expect(page.locator('.round-review-dialog')).toHaveCount(0);
-    await expect(page.locator('.sentence-preview')).toHaveText(
-      scenario.sentence + '.',
-    );
+    await expect(page.locator('.sentence-preview')).toHaveText(scenario.sentence + '.');
     const score = page.locator(
       `.delivery-receipt[data-speaker="${fixture.playerId}"] .delivery-total`,
     );
     await expect(score).toContainText(/Total\s*[1-9][0-9]*/u);
     if (scenario.total !== undefined) {
       await expect(score).toHaveText(new RegExp('^Total\\s*' + scenario.total + '$', 'u'));
-      await expect(page.locator(
-        '.delivery-receipt[data-speaker="' + fixture.playerId + '"] [data-score-kind="clause"]',
-      )).toContainText('11');
+      await expect(
+        page.locator(
+          '.delivery-receipt[data-speaker="' + fixture.playerId + '"] [data-score-kind="clause"]',
+        ),
+      ).toContainText('11');
     }
     if (scenario.name === 'three stacked modifiers') {
-      await expect(page.locator(
-        `.delivery-receipt[data-speaker="${fixture.playerId}"] .score-factor--weakness`,
-      )).toHaveText('×2');
+      await expect(
+        page.locator(
+          `.delivery-receipt[data-speaker="${fixture.playerId}"] .score-factor--weakness`,
+        ),
+      ).toHaveText('×2');
     }
     await expect(
       page.locator(

@@ -1,10 +1,10 @@
 import { describe, expect, test } from 'vitest';
-import { englishGameLocale, gameCatalog } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
   type GrammarStep,
-} from '../../src/engine/grammar/english-grammar-adapter';
+} from '../../src/engine/grammar/english-grammar-adapter.ts';
 
 const add = (id: string): GrammarStep => ({
   kind: 'phrase',
@@ -22,9 +22,7 @@ const analyze = (steps: readonly GrammarStep[]) =>
 
 describe('Hollywood Roast extended grammar', () => {
   test('and is legal immediately after the opening noun', () => {
-    expect(
-      analyze([add('common-noun-002'), add('common-conjunction-001')]),
-    ).toMatchObject({
+    expect(analyze([add('common-noun-002'), add('common-conjunction-001')])).toMatchObject({
       accepted: true,
       analysis: {
         complete: false,
@@ -73,9 +71,7 @@ describe('Hollywood Roast extended grammar', () => {
       accepted: true,
       analysis: { state: 'EXPECT_SUBJECT', nextRoles: ['noun'] },
     });
-    expect(
-      analyze([add('common-conjunction-003'), add('common-conjunction-003')]),
-    ).toMatchObject({
+    expect(analyze([add('common-conjunction-003'), add('common-conjunction-003')])).toMatchObject({
       accepted: false,
       faults: [{ state: 'EXPECT_SUBJECT', expectedRoles: ['noun'] }],
     });
@@ -247,7 +243,8 @@ describe('Hollywood Roast extended grammar', () => {
       analysis: {
         complete: true,
         state: 'ENDED',
-        publicText: 'Your brother denounced your partner with a reserved public office to the former secret police.',
+        publicText:
+          'Your brother denounced your partner with a reserved public office to the former secret police.',
       },
     });
   });
@@ -307,8 +304,7 @@ describe('Hollywood Roast extended grammar', () => {
       accepted: true,
       analysis: {
         complete: true,
-        publicText:
-          'Your brother is a snitch and a pig belongs in a history museum',
+        publicText: 'Your brother is a snitch and a pig belongs in a history museum',
       },
     });
     expect(
@@ -357,9 +353,10 @@ describe('Hollywood Roast extended grammar', () => {
     ['common-verb-027-future', 'a state secretary'],
   ] as const)('accepts the requested verb card %s with %s', (verb, object) => {
     const objectId = object === 'EU funds' ? 'common-noun-050' : 'common-noun-051';
-    expect(
-      analyze([add('common-noun-053'), add(verb), add(objectId)]),
-    ).toMatchObject({ accepted: true, analysis: { complete: true } });
+    expect(analyze([add('common-noun-053'), add(verb), add(objectId)])).toMatchObject({
+      accepted: true,
+      analysis: { complete: true },
+    });
   });
 
   test('so joins complete clauses and requires a new noun subject', () => {

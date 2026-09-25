@@ -13,7 +13,11 @@ export default defineConfig({
   reporter: 'line',
   projects: [
     { name: 'chromium', use: { browserName: 'chromium' } },
-    { name: 'firefox-audio', testMatch: '**/audio-speech.spec.ts', use: { browserName: 'firefox' } },
+    {
+      name: 'firefox-audio',
+      testMatch: '**/audio-speech.spec.ts',
+      use: { browserName: 'firefox' },
+    },
     { name: 'webkit-audio', testMatch: '**/audio-speech.spec.ts', use: { browserName: 'webkit' } },
   ],
   use: {
@@ -23,8 +27,7 @@ export default defineConfig({
   },
   webServer: [
     {
-      command:
-        'npm run build && npm run preview -- --host 127.0.0.1 --strictPort',
+      command: 'npm run build && npm run preview -- --host 127.0.0.1 --strictPort',
       url: 'http://127.0.0.1:4173/grand-transition/',
       reuseExistingServer: !process.env.CI,
       timeout: 300_000,

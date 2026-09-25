@@ -1,6 +1,6 @@
-import type { Phrase } from '../../content/schemas';
-import type { GameLocaleBundle } from '../../localization/game-locale-schema';
-import type { GrammarAdapter } from './grammar-adapter';
+import type { Phrase } from '../../content/schemas.ts';
+import type { GameLocaleBundle } from '../../localization/game-locale-schema.ts';
+import type { GrammarAdapter } from './grammar-adapter.ts';
 import {
   englishGrammarAdapter,
   englishRenderedForms,
@@ -9,12 +9,12 @@ import {
   type GrammarFault,
   type GrammarInput,
   type GrammarPhrase,
-} from './english-grammar-adapter';
+} from './english-grammar-adapter.ts';
 import {
   prepareRomanianGrammarPhrase,
   romanianGrammarAdapter,
   romanianRenderedForms,
-} from './romanian-grammar-adapter';
+} from './romanian-grammar-adapter.ts';
 
 // One grammar binding per shipped game locale: how that locale prepares its
 // phrase text and which analyzer plays it. The analyzer is the same shared
@@ -22,15 +22,8 @@ import {
 // prepare function still rejects a bundle from the other locale.
 export type GrammarLocaleBinding = Readonly<{
   prepare: (phrase: Phrase, locale: GameLocaleBundle) => GrammarPhrase;
-  renderedForms: (
-    phrase: Phrase,
-    locale: GameLocaleBundle,
-  ) => ReadonlySet<string>;
-  adapter: GrammarAdapter<
-    GrammarInput,
-    GrammarAnalysis,
-    GrammarFault
-  >;
+  renderedForms: (phrase: Phrase, locale: GameLocaleBundle) => ReadonlySet<string>;
+  adapter: GrammarAdapter<GrammarInput, GrammarAnalysis, GrammarFault>;
 }>;
 
 const grammarBindings = new Map<string, GrammarLocaleBinding>([

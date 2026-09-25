@@ -7,7 +7,7 @@ import { chromium, type Browser } from '@playwright/test';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 
 const execFileAsync = promisify(execFile);
-const validatorPath = path.resolve('tools', 'validate-asset-color.mjs');
+const validatorPath = path.resolve('tools', 'validate-asset-color.ts');
 const rasterStylePaths = [
   path.resolve('src', 'styles', 'match-screen.css'),
   path.resolve('src', 'styles', 'screen-shell.css'),
@@ -100,9 +100,7 @@ describe('asset color guard', () => {
   });
 
   test('accepts local warm accents when neutral and cool anchors remain', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-color-pass-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-color-pass-'));
     try {
       const pixels = rgbaCanvas(64, 64, [118, 120, 122, 255]);
       fillRect(pixels, 64, 0, 0, 16, 64, [190, 85, 30, 255]);
@@ -119,9 +117,7 @@ describe('asset color guard', () => {
   }, 30_000);
 
   test('rejects a broad yellow cast over neutral colors', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-color-yellow-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-color-yellow-'));
     try {
       const pixels = rgbaCanvas(64, 64, [125, 114, 105, 255]);
       fillRect(pixels, 64, 0, 0, 32, 32, [155, 143, 132, 255]);
@@ -142,12 +138,7 @@ describe('asset color guard', () => {
     try {
       const pixels = rgbaCanvas(64, 64, [135, 115, 95, 255]);
       fillRect(pixels, 64, 0, 0, 8, 8, [20, 48, 85, 255]);
-      await writePng(
-        path.join(fixtureRoot, 'near-neutral-yellow-wash.png'),
-        64,
-        64,
-        pixels,
-      );
+      await writePng(path.join(fixtureRoot, 'near-neutral-yellow-wash.png'), 64, 64, pixels);
 
       await expect(runValidator(fixtureRoot)).rejects.toMatchObject({
         stderr: expect.stringContaining('rejected global yellow color cast'),
@@ -158,9 +149,7 @@ describe('asset color guard', () => {
   }, 30_000);
 
   test('rejects an image that has no neutral or cool reference area', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-color-review-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-color-review-'));
     try {
       await writePng(
         path.join(fixtureRoot, 'warm-only.png'),
@@ -178,9 +167,7 @@ describe('asset color guard', () => {
   }, 30_000);
 
   test('ignores transparent pixels and the temporary green matte', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-color-matte-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-color-matte-'));
     try {
       const pixels = rgbaCanvas(64, 64, [0, 255, 0, 255]);
       fillRect(pixels, 64, 8, 8, 48, 48, [118, 120, 122, 255]);

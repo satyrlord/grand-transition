@@ -1,1 +1,1 @@
-import '../unit/skin-speech.test';
+import '../unit/skin-speech.test.ts';

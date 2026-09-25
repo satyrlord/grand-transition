@@ -1,8 +1,9 @@
 // Romanian object government is authored per semantic tense family. Every
 // verb family and every personal noun in the shipped catalog has an entry.
 // The grammar tests check exhaustive coverage when the catalog changes.
-export const romanianObjectGovernmentByFamily: Readonly<Record<string,
-  'direct' | 'nested-direct' | 'preposition' | 'copular'>> = {
+export const romanianObjectGovernmentByFamily: Readonly<
+  Record<string, 'direct' | 'nested-direct' | 'preposition' | 'copular'>
+> = {
   'common-verb-061': 'preposition',
   'common-verb-062': 'preposition',
   'common-verb-063': 'preposition',
@@ -134,8 +135,9 @@ export const romanianObjectGovernmentByFamily: Readonly<Record<string,
 };
 
 // A nested direct object follows the final verb after this clause anchor.
-export const romanianNestedObjectAnchorByFamily: Readonly<Record<string,
-  'să ' | 'de a ' | 'care ' | 'și '>> = {
+export const romanianNestedObjectAnchorByFamily: Readonly<
+  Record<string, 'să ' | 'de a ' | 'care ' | 'și '>
+> = {
   'common-verb-028': 'să ',
   'thunder-tribune-verb-001': 'și ',
   'thunder-tribune-verb-002': 'să ',
@@ -148,47 +150,81 @@ export const romanianNestedObjectAnchorByFamily: Readonly<Record<string,
   'marble-diplomat-verb-002': 'să ',
 };
 
-export const romanianPersonalObjectByNounId: Readonly<Record<string, Readonly<{
-  directText: string;
-  clitic: 'polite-second' | 'masculine-singular' | 'masculine-plural' | 'feminine-singular' | null;
-}>>> = {
-  'common-noun-028': { directText: "pe dumneavoastră", clitic: 'polite-second' },
-  'common-noun-031': { directText: "pe votanții voștri", clitic: 'masculine-plural' },
-  'common-noun-032': { directText: "o scroafă", clitic: null },
-  'common-noun-033': { directText: "un hoț", clitic: null },
-  'common-noun-036': { directText: "pe fratele vostru", clitic: 'masculine-singular' },
-  'common-noun-037': { directText: "pe tatăl vostru", clitic: 'masculine-singular' },
-  'common-noun-038': { directText: "pe vărul vostru", clitic: 'masculine-singular' },
-  'common-noun-039': { directText: "pe ginerele vostru", clitic: 'masculine-singular' },
-  'common-noun-040': { directText: "pe partenerul vostru cu post public rezervat", clitic: 'masculine-singular' },
-  'common-noun-042': { directText: "un nomenclaturist de cartier", clitic: null },
-  'common-noun-043': { directText: "un comunist", clitic: null },
-  'common-noun-044': { directText: "un străin", clitic: null },
-  'common-noun-045': { directText: "un globalist", clitic: null },
-  'common-noun-046': { directText: "un suveranist", clitic: null },
-  'common-noun-047': { directText: "un fascist", clitic: null },
-  'common-noun-048': { directText: "un porc", clitic: null },
-  'common-noun-049': { directText: "un nazist", clitic: null },
-  'common-noun-051': { directText: "un secretar de stat", clitic: null },
-  'common-noun-052': { directText: "o vrăjitoare", clitic: null },
-  'red-folded-chairman-noun-002': { directText: "o fosilă din sala de comisii, nu din popor", clitic: null },
-  'red-folded-chairman-noun-005': { directText: "un gânditor liber pe statul de plată al poporului", clitic: null },
-  'red-folded-chairman-noun-007': { directText: "pe oamenii muncii", clitic: 'masculine-plural' },
-  'thunder-tribune-noun-001': { directText: "pe acea sperietoare de la ora de maximă audiență", clitic: 'feminine-singular' },
-  'thunder-tribune-noun-002': { directText: "pe acea sperietoare pudrată din balconul oficial", clitic: 'feminine-singular' },
-  'thunder-tribune-noun-004': { directText: "o trâmbiță de partid care chițăie", clitic: null },
-  'thunder-tribune-noun-005': { directText: "un funcționar de comisie posedat de un difuzor", clitic: null },
-  'thunder-tribune-noun-006': { directText: "o șomâldoacă", clitic: null },
-  'black-sea-captain-noun-003': { directText: "un păun de port cu privilegii de amiral, mereu voios", clitic: null },
-  'black-sea-captain-noun-005': { directText: "un căpitan fără busolă, dar cu soare în suflet", clitic: null },
-  'spreadsheet-technocrat-noun-003': { directText: "un cetățean mediu trecut la rubrica altele", clitic: null },
-  'football-tycoon-noun-006': { directText: "o coloană a vinovăției fără patron", clitic: null },
+export const romanianPersonalObjectByNounId: Readonly<
+  Record<
+    string,
+    Readonly<{
+      directText: string;
+      clitic:
+        'polite-second' | 'masculine-singular' | 'masculine-plural' | 'feminine-singular' | null;
+    }>
+  >
+> = {
+  'common-noun-028': { directText: 'pe dumneavoastră', clitic: 'polite-second' },
+  'common-noun-031': { directText: 'pe votanții voștri', clitic: 'masculine-plural' },
+  'common-noun-032': { directText: 'o scroafă', clitic: null },
+  'common-noun-033': { directText: 'un hoț', clitic: null },
+  'common-noun-036': { directText: 'pe fratele vostru', clitic: 'masculine-singular' },
+  'common-noun-037': { directText: 'pe tatăl vostru', clitic: 'masculine-singular' },
+  'common-noun-038': { directText: 'pe vărul vostru', clitic: 'masculine-singular' },
+  'common-noun-039': { directText: 'pe ginerele vostru', clitic: 'masculine-singular' },
+  'common-noun-040': {
+    directText: 'pe partenerul vostru cu post public rezervat',
+    clitic: 'masculine-singular',
+  },
+  'common-noun-042': { directText: 'un nomenclaturist de cartier', clitic: null },
+  'common-noun-043': { directText: 'un comunist', clitic: null },
+  'common-noun-044': { directText: 'un străin', clitic: null },
+  'common-noun-045': { directText: 'un globalist', clitic: null },
+  'common-noun-046': { directText: 'un suveranist', clitic: null },
+  'common-noun-047': { directText: 'un fascist', clitic: null },
+  'common-noun-048': { directText: 'un porc', clitic: null },
+  'common-noun-049': { directText: 'un nazist', clitic: null },
+  'common-noun-051': { directText: 'un secretar de stat', clitic: null },
+  'common-noun-052': { directText: 'o vrăjitoare', clitic: null },
+  'red-folded-chairman-noun-002': {
+    directText: 'o fosilă din sala de comisii, nu din popor',
+    clitic: null,
+  },
+  'red-folded-chairman-noun-005': {
+    directText: 'un gânditor liber pe statul de plată al poporului',
+    clitic: null,
+  },
+  'red-folded-chairman-noun-007': { directText: 'pe oamenii muncii', clitic: 'masculine-plural' },
+  'thunder-tribune-noun-001': {
+    directText: 'pe acea sperietoare de la ora de maximă audiență',
+    clitic: 'feminine-singular',
+  },
+  'thunder-tribune-noun-002': {
+    directText: 'pe acea sperietoare pudrată din balconul oficial',
+    clitic: 'feminine-singular',
+  },
+  'thunder-tribune-noun-004': { directText: 'o trâmbiță de partid care chițăie', clitic: null },
+  'thunder-tribune-noun-005': {
+    directText: 'un funcționar de comisie posedat de un difuzor',
+    clitic: null,
+  },
+  'thunder-tribune-noun-006': { directText: 'o șomâldoacă', clitic: null },
+  'black-sea-captain-noun-003': {
+    directText: 'un păun de port cu privilegii de amiral, mereu voios',
+    clitic: null,
+  },
+  'black-sea-captain-noun-005': {
+    directText: 'un căpitan fără busolă, dar cu soare în suflet',
+    clitic: null,
+  },
+  'spreadsheet-technocrat-noun-003': {
+    directText: 'un cetățean mediu trecut la rubrica altele',
+    clitic: null,
+  },
+  'football-tycoon-noun-006': { directText: 'o coloană a vinovăției fără patron', clitic: null },
 };
 
 // A preposition may govern a case other than the unmarked noun form. These
 // families need an authored object construction before arbitrary noun pairing.
-export const romanianSpecialObjectCaseByFamily: Readonly<Record<string,
-  'genitive' | 'contract-indefinite' | 'predicate-complement'>> = {
+export const romanianSpecialObjectCaseByFamily: Readonly<
+  Record<string, 'genitive' | 'contract-indefinite' | 'predicate-complement'>
+> = {
   'red-folded-chairman-verb-003': 'contract-indefinite',
   'velvet-mogul-verb-002': 'contract-indefinite',
   'common-verb-053': 'contract-indefinite',

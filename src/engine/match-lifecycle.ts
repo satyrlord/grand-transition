@@ -1,14 +1,14 @@
-import type { BasePointsMultiplier, BasicScoringBalance } from '../content/basic-scoring-balance';
-import type { Phrase } from '../content/schemas';
 import type {
-  ComboChainState,
-  ComboFinisherScore,
-} from './combo-finisher-scoring';
+  BasePointsMultiplier,
+  BasicScoringBalance,
+} from '../content/basic-scoring-balance.ts';
+import type { Phrase } from '../content/schemas.ts';
+import type { ComboChainState, ComboFinisherScore } from './combo-finisher-scoring.ts';
 import {
   resolveContinuationComebackRound,
   type ComebackTier,
   type ContinuationCarry,
-} from './continuation-comeback-resolution';
+} from './continuation-comeback-resolution.ts';
 import {
   createDraftReducer,
   grammarMistakeSelfDamage,
@@ -20,32 +20,24 @@ import {
   type DraftPlayerSetup,
   type DraftRuleError,
   type DraftState,
-} from './draft-actions';
+} from './draft-actions.ts';
 import type {
   GameCommand,
   GameReducer,
   GameState,
   ReducerResult,
   RuleError,
-} from './game-contracts';
-import { seededRandomSource, type RandomSource } from './random-source';
+} from './game-contracts.ts';
+import { seededRandomSource, type RandomSource } from './random-source.ts';
 
 export const initialPride = 100;
 
 export type MatchMode = 'ai' | 'hotseat';
 export type MatchTimerSeconds = 30;
 export type MatchPhase =
-  | 'setup'
-  | 'round-preparation'
-  | 'drafting'
-  | 'resolution'
-  | 'sudden-death'
-  | 'results';
+  'setup' | 'round-preparation' | 'drafting' | 'resolution' | 'sudden-death' | 'results';
 
-export type MatchConfiguredPlayer = Omit<
-  DraftPlayerSetup,
-  'comebackCharge' | 'restoredCarry'
->;
+export type MatchConfiguredPlayer = Omit<DraftPlayerSetup, 'comebackCharge' | 'restoredCarry'>;
 
 export type MatchSetup = Readonly<{
   mode: MatchMode;
@@ -208,10 +200,7 @@ export type MatchSetupRequest = Readonly<{
 }>;
 
 export function createMatchSetupState(request: MatchSetupRequest): MatchState {
-  const playerOrder = request.players.map((player) => player.playerId) as [
-    string,
-    string,
-  ];
+  const playerOrder = request.players.map((player) => player.playerId) as [string, string];
   if (playerOrder[0] === playerOrder[1]) {
     throw new Error('Match player IDs must be different.');
   }
@@ -226,7 +215,8 @@ export function createMatchSetupState(request: MatchSetupRequest): MatchState {
     speechEnabled: request.speechEnabled ?? false,
     privacyEnabled: request.privacyEnabled ?? true,
     ...(request.basePointsMultiplier !== undefined
-      ? { basePointsMultiplier: request.basePointsMultiplier } : {}),
+      ? { basePointsMultiplier: request.basePointsMultiplier }
+      : {}),
   };
   const playerStates = Object.fromEntries(
     request.players.map((player) => [player.playerId, resetPlayer(player)]),
@@ -290,10 +280,7 @@ export function createMatchReducer(
   };
 }
 
-const phrasesWithoutContinuations = new WeakMap<
-  readonly Phrase[],
-  readonly Phrase[]
->();
+const phrasesWithoutContinuations = new WeakMap<readonly Phrase[], readonly Phrase[]>();
 
 // AI search builds many reducers over one catalog, so the filtered list keeps
 // one identity per catalog and its phrase index is built once.
@@ -311,10 +298,9 @@ export function reconstructMatchStatistics(
   commandHistory: readonly GameCommand[],
   resolutionHistory: readonly MatchResolution[],
 ): MatchStatistics {
-  const playerStatistics: Record<string, MatchPlayerStatistics> =
-    Object.fromEntries(
-      playerOrder.map((playerId) => [playerId, emptyPlayerStatistics()]),
-    );
+  const playerStatistics: Record<string, MatchPlayerStatistics> = Object.fromEntries(
+    playerOrder.map((playerId) => [playerId, emptyPlayerStatistics()]),
+  );
   let bestInsult: BestInsult | null = null;
 
   for (const resolution of resolutionHistory) {
@@ -334,10 +320,7 @@ export function reconstructMatchStatistics(
         ...current,
         score: current.score + result.outgoingDamage,
         bestInsult: chooseBestInsult(current.bestInsult, candidateBest),
-        highestRoundDamage: Math.max(
-          current.highestRoundDamage,
-          result.outgoingDamage,
-        ),
+        highestRoundDamage: Math.max(current.highestRoundDamage, result.outgoingDamage),
         longestValidSentence: Math.max(
           current.longestValidSentence,
           result.completeValidInsult ? result.phraseCount : 0,
@@ -363,20 +346,14 @@ export function reconstructMatchStatistics(
     players: playerStatistics,
     bestInsult,
     highestRoundDamage: Math.max(
-      ...Object.values(playerStatistics).map(
-        (statistics) => statistics.highestRoundDamage,
-      ),
+      ...Object.values(playerStatistics).map((statistics) => statistics.highestRoundDamage),
     ),
     longestValidSentence: Math.max(
-      ...Object.values(playerStatistics).map(
-        (statistics) => statistics.longestValidSentence,
-      ),
+      ...Object.values(playerStatistics).map((statistics) => statistics.longestValidSentence),
     ),
     weaknesses: sumStatistic(playerStatistics, 'weaknesses'),
     highestCombo: Math.max(
-      ...Object.values(playerStatistics).map(
-        (statistics) => statistics.highestCombo,
-      ),
+      ...Object.values(playerStatistics).map((statistics) => statistics.highestCombo),
     ),
     grammarMistakes: sumStatistic(playerStatistics, 'grammarMistakes'),
     comebacks: sumStatistic(playerStatistics, 'comebacks'),
@@ -444,12 +421,7 @@ function prepareRound(
     randomSource,
   );
   if (!prepared.ok) {
-    return reject(
-      state,
-      command,
-      'round-preparation-failed',
-      prepared.error.code,
-    );
+    return reject(state, command, 'round-preparation-failed', prepared.error.code);
   }
   const commandHistory = [...state.commandHistory, command];
   const draft = { ...prepared.state, commandHistory };
@@ -475,10 +447,7 @@ function reduceDraft(
   draftReducer: GameReducer<DraftState, DraftCommand, DraftRuleError>,
   randomSource: RandomSource,
 ): ReducerResult<MatchState, MatchLifecycleError> {
-  if (
-    (state.phase !== 'drafting' && state.phase !== 'sudden-death') ||
-    !state.draft
-  ) {
+  if ((state.phase !== 'drafting' && state.phase !== 'sudden-death') || !state.draft) {
     return reject(state, command, 'wrong-phase');
   }
   const reduced = draftReducer(state.draft, command, randomSource);
@@ -486,15 +455,13 @@ function reduceDraft(
   const draft = reduced.state;
   const mistakeActorId = command.actorId;
   const mistakeCountBefore = mistakeActorId
-    ? (state.draft.playerStates[mistakeActorId]?.construction.grammarMistakes ??
-      0)
+    ? (state.draft.playerStates[mistakeActorId]?.construction.grammarMistakes ?? 0)
     : 0;
   const mistakeCountAfter = mistakeActorId
     ? (draft.playerStates[mistakeActorId]?.construction.grammarMistakes ?? 0)
     : 0;
   const grammarMistakeDamage =
-    Math.max(0, mistakeCountAfter - mistakeCountBefore) *
-    grammarMistakeSelfDamage;
+    Math.max(0, mistakeCountAfter - mistakeCountBefore) * grammarMistakeSelfDamage;
   const timeoutDamageBefore = mistakeActorId
     ? (state.draft.playerStates[mistakeActorId]?.timeoutDamage ?? 0)
     : 0;
@@ -502,8 +469,7 @@ function reduceDraft(
     ? (draft.playerStates[mistakeActorId]?.timeoutDamage ?? 0)
     : 0;
   const immediateSelfDamage =
-    grammarMistakeDamage +
-    Math.max(0, timeoutDamageAfter - timeoutDamageBefore);
+    grammarMistakeDamage + Math.max(0, timeoutDamageAfter - timeoutDamageBefore);
   const playerStates = Object.fromEntries(
     state.playerOrder.map((playerId) => [
       playerId,
@@ -511,23 +477,14 @@ function reduceDraft(
         ...state.playerStates[playerId]!,
         pride:
           playerId === mistakeActorId
-            ? Math.max(
-                0,
-                state.playerStates[playerId]!.pride - immediateSelfDamage,
-              )
+            ? Math.max(0, state.playerStates[playerId]!.pride - immediateSelfDamage)
             : state.playerStates[playerId]!.pride,
         comebackCharge: draft.playerStates[playerId]!.comebackCharge,
       },
     ]),
   );
-  if (
-    mistakeActorId &&
-    immediateSelfDamage > 0 &&
-    playerStates[mistakeActorId]!.pride === 0
-  ) {
-    const winner = state.playerOrder.find(
-      (playerId) => playerId !== mistakeActorId,
-    )!;
+  if (mistakeActorId && immediateSelfDamage > 0 && playerStates[mistakeActorId]!.pride === 0) {
+    const winner = state.playerOrder.find((playerId) => playerId !== mistakeActorId)!;
     const resolution = immediateSelfKnockoutResolution(
       state,
       draft,
@@ -672,10 +629,7 @@ function resolveRound(
     const opponentAttack = roundResolution.players[opponentId]!;
     // Grammar-mistake and timeout self-damage already applied when they
     // happened, so the exchange applies only the opponent's damage.
-    const prideAfter = Math.max(
-      0,
-      player.pride - opponentAttack.outgoingDamage,
-    );
+    const prideAfter = Math.max(0, player.pride - opponentAttack.outgoingDamage);
     const construction = draft.playerStates[playerId]!.construction;
     const completeValidInsult =
       !construction.carryIntent &&
@@ -697,9 +651,7 @@ function resolveRound(
       comebackBonus: attack.comebackBonus,
       outgoingDamage: attack.outgoingDamage,
       sentenceSubtotal: sentenceSubtotal(attack.score),
-      phraseCount: completeValidInsult
-        ? construction.analysis.renderedPhrases.length
-        : 0,
+      phraseCount: completeValidInsult ? construction.analysis.renderedPhrases.length : 0,
       completeValidInsult,
       insultText: completeValidInsult ? construction.analysis.publicText : null,
       weaknessActivated:
@@ -770,9 +722,7 @@ function resolveRound(
     order: matchResolutionOrder,
     players,
   };
-  const knockedOut = before.playerOrder.filter(
-    (playerId) => players[playerId]!.prideAfter === 0,
-  );
+  const knockedOut = before.playerOrder.filter((playerId) => players[playerId]!.prideAfter === 0);
   let winner: string | undefined;
   let phase: MatchPhase;
   let round = before.round;
@@ -847,9 +797,7 @@ function publicConstructionPhrases(
   return construction.analysis.renderedPhrases
     .filter((phrase) => phrase.role !== 'continuation')
     .map((phrase) => {
-      const selected = construction.selectedCards.find(
-        (card) => card.phraseId === phrase.phraseId,
-      );
+      const selected = construction.selectedCards.find((card) => card.phraseId === phrase.phraseId);
       return {
         phraseId: phrase.phraseId,
         text: phrase.text,
@@ -895,9 +843,7 @@ function resetPlayer(player: MatchConfiguredPlayer): MatchPlayerState {
   };
 }
 
-function emptyStatistics(
-  playerOrder: readonly [string, string],
-): MatchStatistics {
+function emptyStatistics(playerOrder: readonly [string, string]): MatchStatistics {
   const players = Object.fromEntries(
     playerOrder.map((playerId) => [playerId, emptyPlayerStatistics()]),
   );
@@ -930,16 +876,10 @@ function sumStatistic(
   statistics: Readonly<Record<string, MatchPlayerStatistics>>,
   key: 'comebacks' | 'grammarMistakes' | 'weaknesses',
 ): number {
-  return Object.values(statistics).reduce(
-    (total, player) => total + player[key],
-    0,
-  );
+  return Object.values(statistics).reduce((total, player) => total + player[key], 0);
 }
 
-function otherPlayerId(
-  playerOrder: readonly [string, string],
-  playerId: string,
-): string {
+function otherPlayerId(playerOrder: readonly [string, string], playerId: string): string {
   return playerOrder.find((candidate) => candidate !== playerId)!;
 }
 

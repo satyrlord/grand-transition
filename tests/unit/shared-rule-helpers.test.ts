@@ -1,22 +1,18 @@
 import { describe, expect, test } from 'vitest';
-import type { Phrase } from '../../src/content/schemas';
-import { handCardSlotIndex } from '../../src/engine/draft-actions';
-import { grammarFor } from '../../src/engine/grammar/grammar-locale';
-import { phraseIndex } from '../../src/engine/phrase-index';
-import { deepFreeze, isRecord } from '../../src/engine/plain-values';
-import { stableHash } from '../../src/engine/stable-hash';
+import type { Phrase } from '../../src/content/schemas.ts';
+import { handCardSlotIndex } from '../../src/engine/draft-actions.ts';
+import { grammarFor } from '../../src/engine/grammar/grammar-locale.ts';
+import { phraseIndex } from '../../src/engine/phrase-index.ts';
+import { deepFreeze, isRecord } from '../../src/engine/plain-values.ts';
+import { stableHash } from '../../src/engine/stable-hash.ts';
 import {
   isClauseConnector,
   pickWeighted,
   preferredConnectors,
   rarityWeight,
   type WeightedPhrase,
-} from '../../src/engine/weighted-selection';
-import {
-  englishGameLocale,
-  gameCatalog,
-  romanianGameLocale,
-} from '../../src/game-content';
+} from '../../src/engine/weighted-selection.ts';
+import { englishGameLocale, gameCatalog, romanianGameLocale } from '../../src/game-content.ts';
 
 // The hash that the AI decision seeds and comeback lines used before the
 // shared helper. The helper must keep every existing seed unchanged.

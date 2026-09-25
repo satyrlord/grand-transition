@@ -11,7 +11,7 @@ export function lockControl(page: Page, side: 'one' | 'two'): Locator {
 export async function lockInSetup(page: Page): Promise<void> {
   for (const side of ['one', 'two'] as const) {
     const lock = lockControl(page, side);
-    if (await lock.getAttribute('aria-pressed') !== 'true') {
+    if ((await lock.getAttribute('aria-pressed')) !== 'true') {
       await lock.click();
     }
     await expect(lock).toHaveAttribute('aria-pressed', 'true');

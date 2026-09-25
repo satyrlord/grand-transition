@@ -1,23 +1,19 @@
 import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
-import { formatInterfaceNumber } from '../interface-format';
+import { formatInterfaceNumber } from '../interface-format.ts';
 import {
   interfaceLocaleAutonyms,
   interfaceLocales,
   isInterfaceLocale,
-} from '../../localization/interface-locale';
-import {
-  gameLocaleAutonyms,
-  gameLocales,
-  isGameLocale,
-} from '../../localization/game-locale';
+} from '../../localization/interface-locale.ts';
+import { gameLocaleAutonyms, gameLocales, isGameLocale } from '../../localization/game-locale.ts';
 import { LitElement, html, nothing } from 'lit';
 import {
   defaultSettings,
   type SettingsDocument,
   type TurnTimerSeconds,
-} from '../../persistence/codecs/settings-codec';
-import type { AudioStatus } from '../../audio/audio-port';
-import type { NeuralSpeechStatus } from '../../audio/neural-speech';
+} from '../../persistence/codecs/settings-codec.ts';
+import type { AudioStatus } from '../../audio/audio-port.ts';
+import type { NeuralSpeechStatus } from '../../audio/neural-speech.ts';
 
 const elementName = 'grand-transition-settings';
 export const closeSettingsEventName = 'close-settings';
@@ -26,16 +22,10 @@ export const dismissSettingsNoticeEventName = 'dismiss-settings-notice';
 
 export type CloseSettingsEvent = CustomEvent<Readonly<{ type: 'close-settings' }>>;
 export type SettingsChangeEvent = CustomEvent<SettingsDocument>;
-export type DismissSettingsNoticeEvent = CustomEvent<
-  Readonly<{ type: 'dismiss-settings-notice' }>
->;
+export type DismissSettingsNoticeEvent = CustomEvent<Readonly<{ type: 'dismiss-settings-notice' }>>;
 
 type NumericSetting =
-  | 'masterVolume'
-  | 'musicVolume'
-  | 'effectsVolume'
-  | 'speechVolume'
-  | 'speechRate';
+  'masterVolume' | 'musicVolume' | 'effectsVolume' | 'speechVolume' | 'speechRate';
 
 export class GrandTransitionSettings extends LitElement {
   static properties = {
@@ -137,8 +127,9 @@ export class GrandTransitionSettings extends LitElement {
               </select>
             </label>
           </div>
-          ${this.showPersistenceNotice
-            ? html`<div class="settings-persistence-notice" role="status">
+          ${
+            this.showPersistenceNotice
+              ? html`<div class="settings-persistence-notice" role="status">
                 <p>
                   ${msg(
                     'Settings storage is unavailable. Changes will not persist after this page closes.',
@@ -148,7 +139,8 @@ export class GrandTransitionSettings extends LitElement {
                   ${msg('Dismiss')}
                 </button>
               </div>`
-            : nothing}
+              : nothing
+          }
           <div class="settings-groups">
             <fieldset class="settings-group">
               <legend>${msg('Play')}</legend>
@@ -157,11 +149,13 @@ export class GrandTransitionSettings extends LitElement {
                 <div class="settings-options settings-options--multiplier"
                   role="group" aria-labelledby="settings-multiplier-label"
                   aria-describedby="settings-multiplier-note">
-                  ${([1, 2, 3, 4, 5] as const).map((value) => html`<button
+                  ${([1, 2, 3, 4, 5] as const).map(
+                    (value) => html`<button
                     type="button"
                     aria-pressed=${this.settings.basePointsMultiplier === value}
                     @click=${() => this.changeSetting('basePointsMultiplier', value)}
-                  >×${value}</button>`)}
+                  >×${value}</button>`,
+                  )}
                 </div>
                 <p id="settings-multiplier-note" class="settings-note">
                   ${msg('Scales compatibility points for both players. Default: ×3. Weakness and combos apply separately.')}
@@ -198,14 +192,25 @@ export class GrandTransitionSettings extends LitElement {
               ${this.renderVolume('masterVolume', msg('Master volume'))}
               ${this.renderVolume('musicVolume', msg('Music volume'))}
               ${this.renderVolume('effectsVolume', msg('Effects volume'))}
-              ${this.audioStatus === 'ready' ? nothing : html`
-                <p class="settings-note" role="status">${this.audioStatus === 'loading'
-                  ? msg('Loading sound…') : this.audioStatus === 'unavailable'
-                    ? msg('Sound is unavailable. You can continue without sound.')
-                    : msg('Sound starts after your first interaction.')}</p>
-                ${this.audioStatus === 'unavailable' ? html`<button type="button"
-                  class="settings-close" @click=${this.retryAudio}>${msg('Retry sound')}</button>` : nothing}
-              `}
+              ${
+                this.audioStatus === 'ready'
+                  ? nothing
+                  : html`
+                <p class="settings-note" role="status">${
+                  this.audioStatus === 'loading'
+                    ? msg('Loading sound…')
+                    : this.audioStatus === 'unavailable'
+                      ? msg('Sound is unavailable. You can continue without sound.')
+                      : msg('Sound starts after your first interaction.')
+                }</p>
+                ${
+                  this.audioStatus === 'unavailable'
+                    ? html`<button type="button"
+                  class="settings-close" @click=${this.retryAudio}>${msg('Retry sound')}</button>`
+                    : nothing
+                }
+              `
+              }
             </fieldset>
 
             <fieldset class="settings-group">
@@ -233,12 +238,18 @@ export class GrandTransitionSettings extends LitElement {
                 ${msg('Alternative local human voices. Requires a supported GPU and an extra model download of about 353 MB. Enable speech to use them.')}
                 <a href=${`${import.meta.env.BASE_URL}tts/kokoro-gpu/NOTICE.txt`} target="_blank" rel="noopener">${msg('GPU voice credits')}</a>
               </p>
-              ${this.speechStatus === 'loading' ? html`<p class="settings-note" role="status">
+              ${
+                this.speechStatus === 'loading'
+                  ? html`<p class="settings-note" role="status">
                 ${msg('Loading local voice model…')}
                 ${this.speechProgress === null ? nothing : `${Math.round(this.speechProgress * 100)}%`}
-              </p>` : !this.speechAvailable || this.speechStatus === 'unavailable' ? html`<p class="settings-note" role="status">
+              </p>`
+                  : !this.speechAvailable || this.speechStatus === 'unavailable'
+                    ? html`<p class="settings-note" role="status">
                 ${msg('Local neural speech is unavailable. You can continue without narration.')}
-              </p>` : nothing}
+              </p>`
+                    : nothing
+              }
             </fieldset>
 
             <p id="speech-service-note" class="settings-note settings-footer">
@@ -383,9 +394,11 @@ export class GrandTransitionSettings extends LitElement {
       return;
     }
     if (event.key !== 'Tab') return;
-    const controls = [...this.querySelectorAll<HTMLElement>(
-      'button:not([disabled]), input:not([disabled]), select:not([disabled]), a[href]',
-    )];
+    const controls = [
+      ...this.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), input:not([disabled]), select:not([disabled]), a[href]',
+      ),
+    ];
     if (controls.length === 0) return;
     const first = controls[0]!;
     const last = controls.at(-1)!;

@@ -1,5 +1,5 @@
-import { interfaceLocale } from './interface-localization';
-import { defaultGameLocale, type GameLocale } from '../localization/game-locale';
+import { interfaceLocale } from './interface-localization.ts';
+import { defaultGameLocale, type GameLocale } from '../localization/game-locale.ts';
 
 // The game locale that owns the game text currently on screen. The shell keeps
 // it in step: the title and setup screens use the selected game language, and a

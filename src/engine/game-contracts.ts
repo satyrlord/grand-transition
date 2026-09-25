@@ -1,9 +1,8 @@
-import type { RandomSource } from './random-source';
+import type { RandomSource } from './random-source.ts';
 
 export type ImmutableScalar = boolean | number | string | null;
 
-export type ImmutableValue =
-  ImmutableScalar | readonly ImmutableValue[] | ImmutableObject;
+export type ImmutableValue = ImmutableScalar | readonly ImmutableValue[] | ImmutableObject;
 
 export interface ImmutableObject {
   readonly [key: string]: ImmutableValue;
@@ -82,8 +81,4 @@ export type GameReducer<
   State extends AnyGameState = GameState,
   Command extends GameCommand = GameCommand,
   Error extends RuleError = RuleError,
-> = (
-  state: State,
-  command: Command,
-  randomSource: RandomSource,
-) => ReducerResult<State, Error>;
+> = (state: State, command: Command, randomSource: RandomSource) => ReducerResult<State, Error>;

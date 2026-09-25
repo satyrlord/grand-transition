@@ -20,11 +20,10 @@ export const defaultGameLocale: GameLocale = 'ro-RO';
 export const referenceGameLocale: GameLocale = 'en';
 
 // Autonyms name each language in that language and are never translated.
-export const gameLocaleAutonyms: Readonly<Record<GameLocale, string>> =
-  Object.freeze({
-    en: 'English',
-    'ro-RO': 'Română',
-  });
+export const gameLocaleAutonyms: Readonly<Record<GameLocale, string>> = Object.freeze({
+  en: 'English',
+  'ro-RO': 'Română',
+});
 
 export function isGameLocale(value: unknown): value is GameLocale {
   return value === 'en' || value === 'ro-RO';
@@ -35,9 +34,7 @@ export function isGameLocale(value: unknown): value is GameLocale {
 // application can render.
 export function shippedGameLocale(locale: { readonly locale: string }): GameLocale {
   if (!isGameLocale(locale.locale)) {
-    throw new Error(
-      `Game-locale bundle "${locale.locale}" is not a shipped game locale.`,
-    );
+    throw new Error(`Game-locale bundle "${locale.locale}" is not a shipped game locale.`);
   }
   return locale.locale;
 }

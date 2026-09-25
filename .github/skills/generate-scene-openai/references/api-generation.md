@@ -36,7 +36,7 @@ The total pixel count must be between 655,360 and 8,294,400, with the two limits
 These limits apply to generation sources.
 They do not apply to the shipping dimensions that the asset pipeline gives.
 The scene masters at this time use 3840 by 2160 pixels.
-Read `tools/scene-resolution.mjs` before you select source dimensions.
+Read `tools/scene-resolution.ts` before you select source dimensions.
 If an approved contract gives a smaller master, use the reviewed scene preparation procedure.
 
 Do not request native output of 1920 by 1080 pixels, because 1080 is not a multiple of 16.

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { initialPride, type MatchState } from '../engine/match-lifecycle';
+import { initialPride, type MatchState } from '../engine/match-lifecycle.ts';
 import {
   createMatchLog,
   decodeMatchLog,
@@ -12,11 +12,14 @@ import {
   replaySchemaVersion,
   type MatchLogDocument,
   type ReplayDocument,
-} from './codecs/replay-codec';
-import type { StoragePort } from './storage-port';
-import { speechDiagnosticsSchema, type SpeechDiagnosticsDocument } from '../audio/speech-diagnostics';
-import type { GameLocale } from '../localization/game-locale';
-import { deepFreeze, isRecord } from '../engine/plain-values';
+} from './codecs/replay-codec.ts';
+import type { RecordStoragePort, StoragePort, StorageResult } from './storage-port.ts';
+import {
+  speechDiagnosticsSchema,
+  type SpeechDiagnosticsDocument,
+} from '../audio/speech-diagnostics.ts';
+import type { GameLocale } from '../localization/game-locale.ts';
+import { deepFreeze, isRecord } from '../engine/plain-values.ts';
 
 export const matchHistoryStorageKey = 'grand-transition.match-history.v1';
 export const matchHistoryKind = 'grand-transition-match-history' as const;
@@ -68,11 +71,7 @@ const storedEntrySchema = z
     completedAt: z.string().min(1),
     settings: z
       .object({
-        turnTimerSeconds: z.union([
-          z.literal(15),
-          z.literal(30),
-          z.null(),
-        ]),
+        turnTimerSeconds: z.union([z.literal(15), z.literal(30), z.null()]),
         autoComplete: z.boolean(),
         phraseColorCoding: z.boolean(),
       })
@@ -91,23 +90,67 @@ const storedDocumentSchema = z
   })
   .strict();
 
+type EntryResult =
+  | Readonly<{ ok: true; value: MatchHistoryEntry | null }>
+  | Readonly<{ ok: false; code: MatchHistoryFailureCode }>;
+
+/**
+ * Keeps one stored record for each entry, so an append writes only that entry.
+ * A whole history document in the earlier single-key format moves into
+ * records the first time that it loads.
+ */
 export class MatchHistoryRepository {
   private entries: readonly MatchHistoryEntry[] = [];
   private persistenceFailure: MatchHistoryFailureCode | null = null;
 
-  constructor(private readonly storage: StoragePort) {
-    const stored = storage.read(matchHistoryStorageKey);
+  private readonly records: RecordStoragePort;
+
+  constructor(records: RecordStoragePort, documents: StoragePort) {
+    this.records = records;
+    const stored = records.readAll();
     if (!stored.ok) {
       this.persistenceFailure = storageFailure(stored.code);
       return;
     }
-    if (stored.value === null) return;
-    const decoded = decodeMatchHistory(stored.value);
-    if (!decoded.ok) {
-      this.persistenceFailure = decoded.code;
+    const legacy = documents.read(matchHistoryStorageKey);
+    if (!legacy.ok) {
+      this.persistenceFailure = storageFailure(legacy.code);
       return;
     }
-    this.entries = decoded.value.entries;
+
+    const entries: MatchHistoryEntry[] = [];
+    const foreignIds: string[] = [];
+    for (const serialized of stored.value) {
+      const decoded = decodeMatchHistoryEntry(serialized);
+      if (!decoded.ok) {
+        this.persistenceFailure = decoded.code;
+        return;
+      }
+      if (decoded.value === null) foreignIds.push(recordId(serialized));
+      else entries.push(decoded.value);
+    }
+
+    let legacyEntries: readonly MatchHistoryEntry[] = [];
+    if (legacy.value !== null) {
+      const decoded = decodeMatchHistory(legacy.value);
+      if (!decoded.ok) {
+        this.persistenceFailure = decoded.code;
+        return;
+      }
+      const storedIds = new Set(entries.map(({ id }) => id));
+      legacyEntries = decoded.value.entries.filter(({ id }) => !storedIds.has(id));
+    }
+    this.entries = deepFreeze([...entries, ...legacyEntries]);
+
+    // A pair from another replay document version can no longer be
+    // reproduced. The repository ignores it and removes its record.
+    for (const id of foreignIds) {
+      if (!this.write(records.remove(id))) return;
+    }
+    for (const entry of legacyEntries) {
+      if (!this.write(records.put(entry.id, encodeMatchHistoryEntry(entry)))) return;
+    }
+    if (legacy.value !== null) this.write(documents.remove(matchHistoryStorageKey));
   }
 
   snapshot(): MatchHistorySnapshot {
@@ -122,36 +165,47 @@ export class MatchHistoryRepository {
       return this.snapshot();
     }
     this.entries = deepFreeze([...this.entries, entry]);
-    return this.persist();
+    return this.persist(entry);
   }
 
-  updateSpeechDiagnostics(id: string, diagnostics: SpeechDiagnosticsDocument): MatchHistorySnapshot {
+  updateSpeechDiagnostics(
+    id: string,
+    diagnostics: SpeechDiagnosticsDocument,
+  ): MatchHistorySnapshot {
     if (!this.entries.some((entry) => entry.id === id)) return this.snapshot();
     const parsed = speechDiagnosticsSchema.safeParse(diagnostics);
     if (!parsed.success) return this.snapshot();
-    this.entries = deepFreeze(this.entries.map((entry) => entry.id === id ? { ...entry, speechDiagnostics: parsed.data } : entry));
-    return this.persist();
+    this.entries = deepFreeze(
+      this.entries.map((entry) =>
+        entry.id === id ? { ...entry, speechDiagnostics: parsed.data } : entry,
+      ),
+    );
+    return this.persist(this.entries.find((entry) => entry.id === id)!);
   }
 
-  private persist(): MatchHistorySnapshot {
+  /** Records a background storage failure that the port reported later. */
+  storageFailed(code: string): MatchHistorySnapshot {
+    this.persistenceFailure ??= storageFailure(code);
+    return this.snapshot();
+  }
+
+  private persist(entry: MatchHistoryEntry): MatchHistorySnapshot {
     if (this.persistenceFailure !== null) return this.snapshot();
 
     let serialized: string;
     try {
-      serialized = encodeMatchHistory({
-        schemaVersion: matchHistorySchemaVersion,
-        kind: matchHistoryKind,
-        entries: this.entries,
-      });
+      serialized = encodeMatchHistoryEntry(entry);
     } catch {
       this.persistenceFailure = 'invalid-data';
       return this.snapshot();
     }
-    const stored = this.storage.write(matchHistoryStorageKey, serialized);
-    if (!stored.ok) {
-      this.persistenceFailure = storageFailure(stored.code);
-    }
+    this.write(this.records.put(entry.id, serialized));
     return this.snapshot();
+  }
+
+  private write(stored: StorageResult<undefined>): boolean {
+    if (!stored.ok) this.persistenceFailure = storageFailure(stored.code);
+    return stored.ok;
   }
 }
 
@@ -171,11 +225,7 @@ export function createMatchHistoryEntry(
   if (!validIsoTime(input.completedAt)) {
     throw new Error('Match history requires a valid ISO completion time.');
   }
-  const replay = createCompletedReplay(
-    state,
-    input.initialSeed,
-    input.gameLocale,
-  );
+  const replay = createCompletedReplay(state, input.initialSeed, input.gameLocale);
   const matchLog = createMatchLog(replay, state);
   return deepFreeze({
     id: input.id,
@@ -189,11 +239,7 @@ export function createMatchHistoryEntry(
 export function encodeMatchHistory(document: MatchHistoryDocument): string {
   const ids = new Set<string>();
   for (const entry of document.entries) {
-    if (
-      ids.has(entry.id) ||
-      !validIsoTime(entry.completedAt) ||
-      !validHistoryPair(entry.replay, entry.matchLog)
-    ) {
+    if (ids.has(entry.id)) {
       throw new Error('Match history contains invalid entry data.');
     }
     ids.add(entry.id);
@@ -201,19 +247,75 @@ export function encodeMatchHistory(document: MatchHistoryDocument): string {
   const stored = storedDocumentSchema.parse({
     schemaVersion: document.schemaVersion,
     kind: document.kind,
-    entries: document.entries.map((entry) => ({
-      id: entry.id,
-      completedAt: entry.completedAt,
-      settings: entry.settings,
-      replay: JSON.parse(encodeReplay(entry.replay)),
-      matchLog: JSON.parse(encodeMatchLog(entry.matchLog)),
-      ...(entry.speechDiagnostics ? { speechDiagnostics: entry.speechDiagnostics } : {}),
-    })),
+    entries: document.entries.map(storedEntry),
   });
-  // Browser storage holds about five million characters per site and entries
-  // are never removed, so the stored document has no indentation. Exported
-  // replay and match-log documents keep their normalized two-space form.
+  // Entries are never removed, so the stored form has no indentation.
+  // Exported replay and match-log documents keep their normalized two-space form.
   return `${JSON.stringify(stored)}\n`;
+}
+
+/** Encodes the stored record of one entry. */
+export function encodeMatchHistoryEntry(entry: MatchHistoryEntry): string {
+  return JSON.stringify(storedEntrySchema.parse(storedEntry(entry)));
+}
+
+/**
+ * Decodes the stored record of one entry. A pair from another replay document
+ * version gives `null`, because the entry can no longer be reproduced.
+ */
+export function decodeMatchHistoryEntry(serialized: string): EntryResult {
+  let value: unknown;
+  try {
+    value = JSON.parse(serialized);
+  } catch {
+    return { ok: false, code: 'invalid-json' };
+  }
+  const parsed = storedEntrySchema.safeParse(value);
+  if (!parsed.success) return { ok: false, code: 'invalid-data' };
+  const entry = decodeStoredEntry(parsed.data);
+  if (entry === 'foreign-version') return { ok: true, value: null };
+  return entry === null
+    ? { ok: false, code: 'invalid-data' }
+    : { ok: true, value: deepFreeze(entry) };
+}
+
+function storedEntry(entry: MatchHistoryEntry): unknown {
+  if (!validIsoTime(entry.completedAt) || !validHistoryPair(entry.replay, entry.matchLog)) {
+    throw new Error('Match history contains invalid entry data.');
+  }
+  return {
+    id: entry.id,
+    completedAt: entry.completedAt,
+    settings: entry.settings,
+    replay: JSON.parse(encodeReplay(entry.replay)),
+    matchLog: JSON.parse(encodeMatchLog(entry.matchLog)),
+    ...(entry.speechDiagnostics ? { speechDiagnostics: entry.speechDiagnostics } : {}),
+  };
+}
+
+function decodeStoredEntry(
+  stored: z.infer<typeof storedEntrySchema>,
+): MatchHistoryEntry | 'foreign-version' | null {
+  if (isForeignVersionPair(stored.replay, stored.matchLog)) return 'foreign-version';
+  if (!validIsoTime(stored.completedAt)) return null;
+  const replay = decodeReplay(JSON.stringify(stored.replay));
+  const matchLog = decodeMatchLog(JSON.stringify(stored.matchLog));
+  if (!replay.ok || !matchLog.ok || !validHistoryPair(replay.value, matchLog.value)) {
+    return null;
+  }
+  return {
+    id: stored.id,
+    completedAt: stored.completedAt,
+    settings: stored.settings,
+    replay: replay.value,
+    matchLog: matchLog.value,
+    ...(stored.speechDiagnostics ? { speechDiagnostics: stored.speechDiagnostics } : {}),
+  };
+}
+
+function recordId(serialized: string): string {
+  const value: unknown = JSON.parse(serialized);
+  return isRecord(value) && typeof value.id === 'string' ? value.id : '';
 }
 
 export function decodeMatchHistory(serialized: string): MatchHistoryResult {
@@ -237,33 +339,15 @@ export function decodeMatchHistory(serialized: string): MatchHistoryResult {
   const ids = new Set<string>();
   const entries: MatchHistoryEntry[] = [];
   for (const stored of parsed.data.entries) {
-    if (isForeignVersionPair(stored.replay, stored.matchLog)) {
-      // The pair was recorded under another replay document version, so it can
-      // no longer be reproduced. Keep the entries that still load and ignore
-      // this one; the next stored update writes only the retained entries.
-      continue;
-    }
-    if (ids.has(stored.id) || !validIsoTime(stored.completedAt)) {
+    // A pair from another replay document version can no longer be
+    // reproduced. Keep the entries that still load and ignore this one.
+    const entry = decodeStoredEntry(stored);
+    if (entry === 'foreign-version') continue;
+    if (entry === null || ids.has(entry.id)) {
       return { ok: false, code: 'invalid-data' };
     }
-    const replay = decodeReplay(JSON.stringify(stored.replay));
-    const matchLog = decodeMatchLog(JSON.stringify(stored.matchLog));
-    if (
-      !replay.ok ||
-      !matchLog.ok ||
-      !validHistoryPair(replay.value, matchLog.value)
-    ) {
-      return { ok: false, code: 'invalid-data' };
-    }
-    ids.add(stored.id);
-    entries.push({
-      id: stored.id,
-      completedAt: stored.completedAt,
-      settings: stored.settings,
-      replay: replay.value,
-      matchLog: matchLog.value,
-      ...(stored.speechDiagnostics ? { speechDiagnostics: stored.speechDiagnostics } : {}),
-    });
+    ids.add(entry.id);
+    entries.push(entry);
   }
   return {
     ok: true,
@@ -275,10 +359,7 @@ export function decodeMatchHistory(serialized: string): MatchHistoryResult {
   };
 }
 
-function validHistoryPair(
-  replay: ReplayDocument,
-  matchLog: MatchLogDocument,
-): boolean {
+function validHistoryPair(replay: ReplayDocument, matchLog: MatchLogDocument): boolean {
   if (
     replay.schemaVersion !== matchLog.schemaVersion ||
     replay.seed !== matchLog.seed ||
@@ -295,9 +376,7 @@ function validHistoryPair(
       actorId: command.actorId,
       payload: command.payload,
     }));
-  if (
-    normalizedJson(replaySelections) !== normalizedJson(matchLog.selections)
-  ) {
+  if (normalizedJson(replaySelections) !== normalizedJson(matchLog.selections)) {
     return false;
   }
 
@@ -308,8 +387,7 @@ function validHistoryPair(
   for (const round of matchLog.rounds) {
     for (const playerId of playerIds) {
       const breakdown = matchLog.breakdowns.find(
-        (candidate) =>
-          candidate.round === round.round && candidate.playerId === playerId,
+        (candidate) => candidate.round === round.round && candidate.playerId === playerId,
       );
       if (!breakdown || breakdown.prideAfter !== round.prideAfter[playerId]) {
         return false;
@@ -368,9 +446,7 @@ function validIsoTime(value: string): boolean {
 }
 
 function storageFailure(code: string): MatchHistoryFailureCode {
-  return code === 'storage-quota' ||
-    code === 'storage-security' ||
-    code === 'storage-unavailable'
+  return code === 'storage-quota' || code === 'storage-security' || code === 'storage-unavailable'
     ? code
     : 'storage-unavailable';
 }

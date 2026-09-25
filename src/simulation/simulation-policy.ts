@@ -1,24 +1,12 @@
-import {
-  listLocalRadioCallerSimulationOptions,
-  type SimulationOption,
-} from './simulation';
-import type {
-  MatchEngineContext,
-  MatchState,
-} from '../engine/match-lifecycle';
-import {
-  decidePalaceOperator,
-  decidePartyStrategist,
-} from '../ai/advanced-ai';
+import { listLocalRadioCallerSimulationOptions, type SimulationOption } from './simulation.ts';
+import type { MatchEngineContext, MatchState } from '../engine/match-lifecycle.ts';
+import { decidePalaceOperator, decidePartyStrategist } from '../ai/advanced-ai.ts';
 
 export function listConfiguredAiSimulationOptions(
   state: MatchState,
   context: MatchEngineContext,
 ): readonly SimulationOption[] {
-  if (
-    !state.draft ||
-    (state.phase !== 'drafting' && state.phase !== 'sudden-death')
-  ) {
+  if (!state.draft || (state.phase !== 'drafting' && state.phase !== 'sudden-death')) {
     return listLocalRadioCallerSimulationOptions(state, context);
   }
   if (state.setup.aiDifficulty === 'party-strategist') {
@@ -35,12 +23,8 @@ function advancedSimulationOption(
   context: MatchEngineContext,
   difficulty: 'palace-operator' | 'party-strategist',
 ): readonly SimulationOption[] {
-  const decide =
-    difficulty === 'party-strategist'
-      ? decidePartyStrategist
-      : decidePalaceOperator;
-  const decision =
-    decide(state, context) ?? decide(state, context, { turnExpired: true });
+  const decide = difficulty === 'party-strategist' ? decidePartyStrategist : decidePalaceOperator;
+  const decision = decide(state, context) ?? decide(state, context, { turnExpired: true });
   if (!decision) return [];
   const candidate = decision.candidates.find(
     ({ command }) => commandKey(command) === commandKey(decision.command),

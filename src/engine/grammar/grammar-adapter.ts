@@ -1,4 +1,4 @@
-import type { ImmutableValue } from '../game-contracts';
+import type { ImmutableValue } from '../game-contracts.ts';
 
 export interface GrammarAccepted<Analysis extends ImmutableValue> {
   readonly accepted: true;
@@ -10,10 +10,8 @@ export interface GrammarRejected<Fault extends ImmutableValue> {
   readonly faults: readonly Fault[];
 }
 
-export type GrammarResult<
-  Analysis extends ImmutableValue,
-  Fault extends ImmutableValue,
-> = GrammarAccepted<Analysis> | GrammarRejected<Fault>;
+export type GrammarResult<Analysis extends ImmutableValue, Fault extends ImmutableValue> =
+  GrammarAccepted<Analysis> | GrammarRejected<Fault>;
 
 export interface GrammarAdapter<
   Input extends ImmutableValue = ImmutableValue,

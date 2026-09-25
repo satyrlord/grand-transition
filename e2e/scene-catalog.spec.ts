@@ -1,6 +1,6 @@
-import { lockInSetup } from './helpers/setup';
+import { lockInSetup } from './helpers/setup.ts';
 import { expect, test } from '@playwright/test';
-import { useFixedBrowserMatchSeed } from './helpers/match-flow';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 
 test.beforeEach(async ({ page }) => {
   await useFixedBrowserMatchSeed(page);
@@ -24,7 +24,9 @@ const viewports = [
   { width: 1920, height: 1080 },
 ];
 
-test('a sentence forty percent longer than the long-match fixture fits above the moderator', async ({ page }) => {
+test('a sentence forty percent longer than the long-match fixture fits above the moderator', async ({
+  page,
+}) => {
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await lockInSetup(page);
@@ -41,7 +43,11 @@ test('a sentence forty percent longer than the long-match fixture fits above the
       snapshot: Readonly<Record<string, unknown>> & { revision: number };
       updateComplete: Promise<boolean>;
     };
-    match.snapshot = { ...match.snapshot, revision: match.snapshot.revision + 1, sentenceText: text };
+    match.snapshot = {
+      ...match.snapshot,
+      revision: match.snapshot.revision + 1,
+      sentenceText: text,
+    };
     await match.updateComplete;
     await document.fonts.ready;
   }, sentence);
@@ -51,30 +57,49 @@ test('a sentence forty percent longer than the long-match fixture fits above the
     const preview = page.locator('.sentence-preview');
     await preview.focus();
     await preview.press('Home');
-    const endpointFits = async (last: boolean) => preview.evaluate((element, { value, last }) => {
-      const bubble = document.querySelector('.sentence-ledger')!.getBoundingClientRect();
-      const viewport = element.getBoundingClientRect();
-      const node = [...element.childNodes].find((node) => node.nodeType === Node.TEXT_NODE && node.textContent === value)!;
-      const range = document.createRange();
-      range.setStart(node, last ? value.length - 1 : 0);
-      range.setEnd(node, last ? value.length : 1);
-      const text = range.getBoundingClientRect();
-      return viewport.top >= bubble.top && viewport.bottom <= bubble.bottom &&
-        text.top >= bubble.top && text.bottom <= bubble.bottom &&
-        text.left >= bubble.left && text.right <= bubble.right &&
-        element.scrollWidth <= element.clientWidth;
-    }, { value: sentence, last });
+    const endpointFits = async (last: boolean) =>
+      preview.evaluate(
+        (element, { value, last }) => {
+          const bubble = document.querySelector('.sentence-ledger')!.getBoundingClientRect();
+          const viewport = element.getBoundingClientRect();
+          const node = [...element.childNodes].find(
+            (node) => node.nodeType === Node.TEXT_NODE && node.textContent === value,
+          )!;
+          const range = document.createRange();
+          range.setStart(node, last ? value.length - 1 : 0);
+          range.setEnd(node, last ? value.length : 1);
+          const text = range.getBoundingClientRect();
+          return (
+            viewport.top >= bubble.top &&
+            viewport.bottom <= bubble.bottom &&
+            text.top >= bubble.top &&
+            text.bottom <= bubble.bottom &&
+            text.left >= bubble.left &&
+            text.right <= bubble.right &&
+            element.scrollWidth <= element.clientWidth
+          );
+        },
+        { value: sentence, last },
+      );
     expect(await endpointFits(false), `${viewport.width}x${viewport.height} start`).toBe(true);
     await preview.hover();
     await page.mouse.wheel(0, 2_000);
-    await expect.poll(() => preview.evaluate((element) => element.scrollTop + element.clientHeight >= element.scrollHeight - 1)).toBe(true);
+    await expect
+      .poll(() =>
+        preview.evaluate(
+          (element) => element.scrollTop + element.clientHeight >= element.scrollHeight - 1,
+        ),
+      )
+      .toBe(true);
     expect(await endpointFits(true), `${viewport.width}x${viewport.height} end`).toBe(true);
     await expect(page.locator('.sentence-preview')).toHaveText(sentence);
   }
 });
 
 for (const scene of scenes) {
-  test(`${scene} keeps its artwork, players, and moderator clear at every supported viewport`, async ({ page }, testInfo) => {
+  test(`${scene} keeps its artwork, players, and moderator clear at every supported viewport`, async ({
+    page,
+  }, testInfo) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('');
     await page.getByRole('button', { name: 'Multiplayer' }).click();
@@ -88,55 +113,76 @@ for (const scene of scenes) {
       await expect(foreground).toHaveCount(0);
     } else {
       await expect(foreground).toHaveCount(1);
-      expect(await foreground.evaluate((image) => ({
-        clipPath: getComputedStyle(image).clipPath,
-        abovePortraits: Number(getComputedStyle(image).zIndex) > Number(getComputedStyle(
-          document.querySelector('.character-frame')!,
-        ).zIndex),
-        pointerInert: getComputedStyle(image).pointerEvents === 'none',
-      }))).toEqual({ clipPath: 'none', abovePortraits: true, pointerInert: true });
+      expect(
+        await foreground.evaluate((image) => ({
+          clipPath: getComputedStyle(image).clipPath,
+          abovePortraits:
+            Number(getComputedStyle(image).zIndex) >
+            Number(getComputedStyle(document.querySelector('.character-frame')!).zIndex),
+          pointerInert: getComputedStyle(image).pointerEvents === 'none',
+        })),
+      ).toEqual({ clipPath: 'none', abovePortraits: true, pointerInert: true });
     }
 
     for (const viewport of viewports) {
       await page.setViewportSize(viewport);
       await page.evaluate(async () => {
         await document.fonts.ready;
-        await Promise.all([...document.images].map(image => image.decode()));
+        await Promise.all([...document.images].map((image) => image.decode()));
       });
-      await expect.poll(() => page.locator('.broadcast-stage-art').evaluate(
-        (image: HTMLImageElement) => image.complete && image.currentSrc.length > 0 && image.naturalWidth > 0,
-      )).toBe(true);
+      await expect
+        .poll(() =>
+          page
+            .locator('.broadcast-stage-art')
+            .evaluate(
+              (image: HTMLImageElement) =>
+                image.complete && image.currentSrc.length > 0 && image.naturalWidth > 0,
+            ),
+        )
+        .toBe(true);
       const geometry = await page.evaluate(() => {
         const background = document.querySelector<HTMLImageElement>('.broadcast-stage-art')!;
         const back = background.getBoundingClientRect();
         const speech = document.querySelector('.sentence-ledger')!.getBoundingClientRect();
         const pool = document.querySelector('.common-phrases')!;
         const poolBox = pool.getBoundingClientRect();
-        const focal = JSON.parse(background.closest('picture')!.getAttribute('data-scene-focal-rectangles')!) as {
+        const focal = JSON.parse(
+          background.closest('picture')!.getAttribute('data-scene-focal-rectangles')!,
+        ) as {
           moderatorFace: { x: number; y: number; width: number; height: number } | null;
         };
         const face = focal.moderatorFace;
-        const moderator = face ? {
-          left: back.left + back.width * face.x,
-          right: back.left + back.width * (face.x + face.width),
-          top: back.top + back.height * face.y,
-          bottom: back.top + back.height * (face.y + face.height),
-        } : null;
-        const frames = [...document.querySelectorAll('.character-frame')].map(frame => frame.getBoundingClientRect());
+        const moderator = face
+          ? {
+              left: back.left + back.width * face.x,
+              right: back.left + back.width * (face.x + face.width),
+              top: back.top + back.height * face.y,
+              bottom: back.top + back.height * (face.y + face.height),
+            }
+          : null;
+        const frames = [...document.querySelectorAll('.character-frame')].map((frame) =>
+          frame.getBoundingClientRect(),
+        );
         return {
           source: background.currentSrc,
           loaded: background.complete && background.naturalWidth > 0,
-          allManifest: [...document.querySelectorAll('.broadcast-scene-picture')].every(picture => picture.getAttribute('data-scene-kind') === 'manifest'),
+          allManifest: [...document.querySelectorAll('.broadcast-scene-picture')].every(
+            (picture) => picture.getAttribute('data-scene-kind') === 'manifest',
+          ),
           pointerInert: getComputedStyle(background).pointerEvents === 'none',
-          noScroll: document.documentElement.scrollWidth === innerWidth && document.documentElement.scrollHeight === innerHeight,
+          noScroll:
+            document.documentElement.scrollWidth === innerWidth &&
+            document.documentElement.scrollHeight === innerHeight,
           poolFits: poolBox.bottom <= innerHeight && poolBox.top >= 0,
           poolBackground: getComputedStyle(pool).backgroundColor,
           centered: Math.abs((poolBox.left + poolBox.right) / 2 - innerWidth / 2) < 1,
-          moderatorClear: !moderator || (speech.bottom < moderator.top && poolBox.top > moderator.bottom),
-          moderatorCentered: !moderator || Math.abs((moderator.left + moderator.right) / 2 - innerWidth / 2) < 1,
-          frameScale: frames.map(frame => frame.height / back.height),
-          frameTop: frames.map(frame => (frame.top - back.top) / back.height),
-          squarePortraits: [...document.querySelectorAll('.character-portrait')].every(image => {
+          moderatorClear:
+            !moderator || (speech.bottom < moderator.top && poolBox.top > moderator.bottom),
+          moderatorCentered:
+            !moderator || Math.abs((moderator.left + moderator.right) / 2 - innerWidth / 2) < 1,
+          frameScale: frames.map((frame) => frame.height / back.height),
+          frameTop: frames.map((frame) => (frame.top - back.top) / back.height),
+          squarePortraits: [...document.querySelectorAll('.character-portrait')].every((image) => {
             const rect = image.getBoundingClientRect();
             return Math.abs(rect.width - rect.height) < 1;
           }),
@@ -157,7 +203,9 @@ for (const scene of scenes) {
       for (const scale of geometry.frameScale) expect(scale).toBeCloseTo(0.8, 3);
       for (const top of geometry.frameTop) expect(top).toBeCloseTo(0.24, 3);
       await expect(page.locator('.shared-board > li')).toHaveCount(9);
-      await page.screenshot({ path: testInfo.outputPath(`${scene}-${viewport.width}x${viewport.height}.png`) });
+      await page.screenshot({
+        path: testInfo.outputPath(`${scene}-${viewport.width}x${viewport.height}.png`),
+      });
     }
   });
 }

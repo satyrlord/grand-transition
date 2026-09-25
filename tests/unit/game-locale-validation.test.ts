@@ -1,19 +1,18 @@
 import { describe, expect, test } from 'vitest';
 import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { mergeRomanianMessageFiles } from '../../src/localization/ro-game-locale';
-import type { GameLocaleBundle } from '../../src/localization/game-locale-schema';
+import { mergeRomanianMessageFiles } from '../../src/localization/ro-game-locale.ts';
+import type { GameLocaleBundle } from '../../src/localization/game-locale-schema.ts';
 import {
   validateGameLocaleBundleText,
   validateGameLocaleBundles,
   validateLocaleNameParity,
   validateSentenceTails,
   type GameLocaleFailure,
-} from '../../src/localization/game-locale-validation';
-import { validateGameLocales } from '../../tools/validate-game-locales';
+} from '../../src/localization/game-locale-validation.ts';
+import { validateGameLocales } from '../../tools/validate-game-locales.ts';
 
-const englishDisclaimer =
-  'All characters and events are fictional composites created for satire.';
+const englishDisclaimer = 'All characters and events are fictional composites created for satire.';
 const romanianDisclaimer =
   'Toate personajele și evenimentele sunt compoziții fictive create pentru satiră.';
 
@@ -49,8 +48,9 @@ describe('game-locale bundle validation', () => {
       'phrase.b': 'a televised revolution',
     });
     const romanian = bundle('ro-RO', { 'phrase.a': 'dezacordul vostru' });
-    expect(pathsAndCodes(validateGameLocaleBundles([english, romanian], 'en')))
-      .toEqual([{ path: 'messages.phrase.b', code: 'missing-translation' }]);
+    expect(pathsAndCodes(validateGameLocaleBundles([english, romanian], 'en'))).toEqual([
+      { path: 'messages.phrase.b', code: 'missing-translation' },
+    ]);
   });
 
   test('fails at the field path of an unexpected extra translation', () => {
@@ -59,8 +59,9 @@ describe('game-locale bundle validation', () => {
       'phrase.a': 'dezacordul vostru',
       'phrase.extra': 'o expresie în plus',
     });
-    expect(pathsAndCodes(validateGameLocaleBundles([english, romanian], 'en')))
-      .toEqual([{ path: 'messages.phrase.extra', code: 'unexpected-message' }]);
+    expect(pathsAndCodes(validateGameLocaleBundles([english, romanian], 'en'))).toEqual([
+      { path: 'messages.phrase.extra', code: 'unexpected-message' },
+    ]);
   });
 
   test('refuses a catalog without its reference locale', () => {
@@ -81,18 +82,13 @@ describe('game-locale bundle validation', () => {
       ['javascript:alert(1)', 'unsafe-text'],
     ];
     for (const [text, code] of cases) {
-      const failures = validateGameLocaleBundleText(
-        bundle('ro-RO', { 'phrase.a': text }),
-        'ro-RO',
-      );
+      const failures = validateGameLocaleBundleText(bundle('ro-RO', { 'phrase.a': text }), 'ro-RO');
       if (code === null) {
         expect(failures).toEqual([]);
         continue;
       }
       expect(failures).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({ path: 'messages.phrase.a', code }),
-        ]),
+        expect.arrayContaining([expect.objectContaining({ path: 'messages.phrase.a', code })]),
       );
     }
   });
@@ -101,10 +97,9 @@ describe('game-locale bundle validation', () => {
     const english = bundle('en', { 'phrase.a': 'a résumé for the summit' });
     expect(validateGameLocaleBundleText(english, 'en')).toEqual([]);
     const romanian = bundle('ro-RO', { 'phrase.a': 'un café' });
-    expect(pathsAndCodes(validateGameLocaleBundleText(romanian, 'ro-RO')))
-      .toEqual([
-        { path: 'messages.phrase.a', code: 'non-standard-letter' },
-      ]);
+    expect(pathsAndCodes(validateGameLocaleBundleText(romanian, 'ro-RO'))).toEqual([
+      { path: 'messages.phrase.a', code: 'non-standard-letter' },
+    ]);
   });
 
   test('fails duplicate visible text inside a group but allows agreement forms', () => {
@@ -153,10 +148,7 @@ describe('game-locale bundle validation', () => {
   test('reports a missing or unsafe disclaimer at its own field path', () => {
     expect(
       pathsAndCodes(
-        validateGameLocaleBundleText(
-          bundle('ro-RO', { 'phrase.a': 'ceva' }, '   '),
-          'ro-RO',
-        ),
+        validateGameLocaleBundleText(bundle('ro-RO', { 'phrase.a': 'ceva' }, '   '), 'ro-RO'),
       ),
     ).toEqual([
       {
@@ -177,9 +169,7 @@ describe('game-locale bundle validation', () => {
       { path: 'messages.phrase.b', code: 'case-governing-tail' },
     ]);
     // A key outside the verb and predicate roles is never inspected.
-    expect(
-      validateSentenceTails(messages, new Set(['phrase.a', 'phrase.c'])),
-    ).toEqual([]);
+    expect(validateSentenceTails(messages, new Set(['phrase.a', 'phrase.c']))).toEqual([]);
   });
 
   test('fails a name that diverges from the displayed-name table', () => {
@@ -198,10 +188,12 @@ describe('game-locale bundle validation', () => {
   });
 
   test('rejects duplicate Romanian keys across authored files', () => {
-    expect(() => mergeRomanianMessageFiles({
-      'first.json': { 'phrase.a': 'prima variantă' },
-      'second.json': { 'phrase.a': 'a doua variantă' },
-    })).toThrow(/Duplicate Romanian game message "phrase.a" in "second.json"/u);
+    expect(() =>
+      mergeRomanianMessageFiles({
+        'first.json': { 'phrase.a': 'prima variantă' },
+        'second.json': { 'phrase.a': 'a doua variantă' },
+      }),
+    ).toThrow(/Duplicate Romanian game message "phrase.a" in "second.json"/u);
   });
 
   test('the shipped-locale gate reports name mismatch and relation tails', () => {
@@ -209,25 +201,34 @@ describe('game-locale bundle validation', () => {
     const fixtureRoot = mkdtempSync(path.join(tmpRoot, 'locale-gate-'));
     expect(fixtureRoot.startsWith(`${tmpRoot}${path.sep}`)).toBe(true);
     try {
-      cpSync(
-        path.join(process.cwd(), 'src', 'content'),
-        path.join(fixtureRoot, 'src', 'content'),
-        { recursive: true },
-      );
+      cpSync(path.join(process.cwd(), 'src', 'content'), path.join(fixtureRoot, 'src', 'content'), {
+        recursive: true,
+      });
       const change = (relativeFile: string, key: string, value: string) => {
         const file = path.join(fixtureRoot, 'src', 'content', 'ro', relativeFile);
         const json = JSON.parse(readFileSync(file, 'utf8')) as Record<string, string>;
         json[key] = value;
         writeFileSync(file, `${JSON.stringify(json, null, 2)}\n`);
       };
-      change('characters/algorithmic-prophet.json', 'character.algorithmic-prophet.name', 'Alt profet');
+      change(
+        'characters/algorithmic-prophet.json',
+        'character.algorithmic-prophet.name',
+        'Alt profet',
+      );
       change('common-verb.json', 'phrase.common-verb-001-past', 'o dovadă a');
-      change('relation-inflections.json', 'phrase.common-verb-001-past.second-person', 'o dovadă a');
+      change(
+        'relation-inflections.json',
+        'phrase.common-verb-001-past.second-person',
+        'o dovadă a',
+      );
       expect(pathsAndCodes(validateGameLocales(fixtureRoot))).toEqual(
         expect.arrayContaining([
           { path: 'messages.character.algorithmic-prophet.name', code: 'name-mismatch' },
           { path: 'messages.phrase.common-verb-001-past', code: 'case-governing-tail' },
-          { path: 'messages.phrase.common-verb-001-past.second-person', code: 'case-governing-tail' },
+          {
+            path: 'messages.phrase.common-verb-001-past.second-person',
+            code: 'case-governing-tail',
+          },
         ]),
       );
     } finally {

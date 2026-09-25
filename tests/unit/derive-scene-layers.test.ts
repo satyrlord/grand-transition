@@ -3,8 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
 import { afterEach, describe, expect, test } from 'vitest';
-// @ts-expect-error The production image tool is a native ECMAScript module.
-import { deriveSceneLayers } from '../../tools/derive-scene-layers.mjs';
+import { deriveSceneLayers } from '../../tools/derive-scene-layers.ts';
 
 const roots: string[] = [];
 
@@ -33,7 +32,9 @@ function fillRect(
 }
 
 async function writeRgb(filePath: string, width: number, height: number, pixels: Buffer) {
-  await sharp(pixels, { raw: { width, height, channels: 3 } }).png().toFile(filePath);
+  await sharp(pixels, { raw: { width, height, channels: 3 } })
+    .png()
+    .toFile(filePath);
 }
 
 async function makePair(
@@ -71,7 +72,10 @@ function outputs(root: string, suffix = '') {
 }
 
 async function rgbAt(filePath: string, x: number, y: number): Promise<number[]> {
-  const { data, info } = await sharp(filePath).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { data, info } = await sharp(filePath)
+    .removeAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
   const offset = (y * info.width + x) * info.channels;
   return [...data.subarray(offset, offset + 3)];
 }

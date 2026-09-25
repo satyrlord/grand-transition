@@ -1,4 +1,4 @@
-import type { ImmutableObject } from '../engine/game-contracts';
+import type { ImmutableObject } from '../engine/game-contracts.ts';
 
 export interface VersionedDocument extends ImmutableObject {
   readonly schemaVersion: number;
@@ -14,8 +14,7 @@ export interface CodecSuccess<Value extends VersionedDocument> {
   readonly value: Value;
 }
 
-export type CodecResult<Value extends VersionedDocument> =
-  CodecSuccess<Value> | CodecFailure;
+export type CodecResult<Value extends VersionedDocument> = CodecSuccess<Value> | CodecFailure;
 
 export interface VersionedCodec<Value extends VersionedDocument> {
   readonly schemaVersion: number;
@@ -39,6 +38,33 @@ export interface StoragePort {
   read(key: string): StorageResult<string | null>;
   write(key: string, value: string): StorageResult<undefined>;
   remove(key: string): StorageResult<undefined>;
+}
+
+/** Stores one value for each record ID and keeps the first-write order. */
+export interface RecordStoragePort {
+  readAll(): StorageResult<readonly string[]>;
+  /** Adds a record, or replaces the value of an existing record in its place. */
+  put(id: string, value: string): StorageResult<undefined>;
+  remove(id: string): StorageResult<undefined>;
+}
+
+export function createMemoryRecordStorage(
+  initialValues: Readonly<Record<string, string>> = {},
+): RecordStoragePort {
+  const values = new Map(Object.entries(initialValues));
+  return {
+    readAll() {
+      return { ok: true, value: [...values.values()] };
+    },
+    put(id, value) {
+      values.set(id, value);
+      return { ok: true, value: undefined };
+    },
+    remove(id) {
+      values.delete(id);
+      return { ok: true, value: undefined };
+    },
+  };
 }
 
 export function createMemoryStorage(

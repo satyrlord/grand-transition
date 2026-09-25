@@ -1,4 +1,4 @@
-import type { GameLocaleBundle } from './game-locale-schema';
+import type { GameLocaleBundle } from './game-locale-schema.ts';
 
 export function createEnglishGameLocale(
   authoredMessages: Readonly<Record<string, string>>,
@@ -12,8 +12,7 @@ export function createEnglishGameLocale(
     },
     messages: {
       ...authoredMessages,
-      'scene.transition-era-television-studio.name':
-        'Transition-Era Television Studio',
+      'scene.transition-era-television-studio.name': 'Transition-Era Television Studio',
       'scene.transition-era-television-studio.description':
         'A late-2000s municipal television forum with tall debate desks, heavy curtains, faux marble, and a severe fictional moderator.',
       'scene.modern-debate-studio.name': 'Modern Debate Studio',
@@ -28,8 +27,7 @@ export function createEnglishGameLocale(
       'scene.palace-press-hall.name': 'Palace Press Hall',
       'scene.palace-press-hall.description':
         'A vast official press hall built for protocol, sparse statements, and long institutional silences.',
-      'scene.influencer-campaign-livestream.name':
-        'Influencer Campaign Livestream',
+      'scene.influencer-campaign-livestream.name': 'Influencer Campaign Livestream',
       'scene.influencer-campaign-livestream.description':
         'A campaign livestream set with ring lights, vertical screens, donation alerts, and wellness props.',
       'scene.civic-cypher-boxing-ring.name': 'Civic Cypher Boxing Ring',

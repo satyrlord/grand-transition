@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { localeKeySchema } from '../content/schemas';
+import { localeKeySchema } from '../content/schemas.ts';
 
 const unsafeHtmlPattern = /<!--|<\/?[a-z][^>]*>|javascript:|on[a-z]+\s*=/iu;
 
@@ -8,8 +8,7 @@ export const gameTextSchema = z
   .trim()
   .min(1, 'Add visible game text.')
   .refine((text) => !unsafeHtmlPattern.test(text), {
-    message:
-      'Remove HTML, script URLs, and inline event handlers. Use plain text.',
+    message: 'Remove HTML, script URLs, and inline event handlers. Use plain text.',
   });
 
 export const bcp47LocaleSchema = z
@@ -37,18 +36,13 @@ export const gameLocaleBundleSchema = z
     // content and focused assertions instead of by English keywords.
     if (!/^en(?:-|$)/u.test(bundle.locale)) return;
     const text = bundle.title.fictionalCompositeSatireDisclaimer;
-    if (
-      /fictional/iu.test(text) &&
-      /composite/iu.test(text) &&
-      /satir/iu.test(text)
-    ) {
+    if (/fictional/iu.test(text) && /composite/iu.test(text) && /satir/iu.test(text)) {
       return;
     }
     context.addIssue({
       code: 'custom',
       path: ['title', 'fictionalCompositeSatireDisclaimer'],
-      message:
-        'State that the title uses fictional composites created for satire.',
+      message: 'State that the title uses fictional composites created for satire.',
     });
   });
 

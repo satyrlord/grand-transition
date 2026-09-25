@@ -10,7 +10,9 @@ describe('presentation boundaries', () => {
       readFile(path.join(appRoot, 'app-shell.ts'), 'utf8'),
       readFile(path.join(appRoot, 'match-coordinator.ts'), 'utf8'),
     ]);
-    expect(shell).not.toMatch(/createMatchReducer|decideLocalRadioCaller|decidePartyStrategist|decidePalaceOperator|createMatchHistoryEntry|recordLadderResult/u);
+    expect(shell).not.toMatch(
+      /createMatchReducer|decideLocalRadioCaller|decidePartyStrategist|decidePalaceOperator|createMatchHistoryEntry|recordLadderResult/u,
+    );
     expect(coordinator).not.toMatch(/from ['"](?:lit|@lit|.*screens\/|.*match-screen-snapshot)/u);
     expect(coordinator).not.toMatch(/\b(?:window|document|HTMLElement|customElements)\b/u);
   });
@@ -21,11 +23,9 @@ describe('presentation boundaries', () => {
       readFile(path.join(appRoot, 'match-screen-snapshot.ts'), 'utf8'),
     ]);
 
-    expect(appShell).toContain("from './match-screen-snapshot'");
+    expect(appShell).toContain("from './match-screen-snapshot.ts'");
     expect(matchScreen).not.toContain('createMatchScreenSnapshot');
-    expect(snapshotOwner).toContain(
-      'export function createMatchScreenSnapshot',
-    );
+    expect(snapshotOwner).toContain('export function createMatchScreenSnapshot');
     expect(snapshotOwner).not.toMatch(/from ['"]lit(?:\/[^'"]*)?['"]/u);
     expect(snapshotOwner).not.toContain("from './screens/");
   });

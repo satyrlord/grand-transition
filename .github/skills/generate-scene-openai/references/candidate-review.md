@@ -14,7 +14,7 @@ To examine an image on the disk without generation, use its necessary target dim
 
 ```text
 node .github/skills/generate-scene-openai/scripts/scene-image.mjs inspect --input tmp/scene-generation/run/candidate.png --size 3840x2160
-node tools/validate-asset-color.mjs validate tmp/scene-generation/run
+node tools/validate-asset-color.ts validate tmp/scene-generation/run
 ```
 
 For transparent output, add `--background transparent`, and read [native alpha preparation](native-alpha.md).

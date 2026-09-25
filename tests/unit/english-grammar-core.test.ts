@@ -1,10 +1,10 @@
 import { describe, expect, test } from 'vitest';
-import { englishGameLocale, gameCatalog } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
   type GrammarStep,
-} from '../../src/engine/grammar/english-grammar-adapter';
+} from '../../src/engine/grammar/english-grammar-adapter.ts';
 
 const phrase = (id: string) =>
   prepareEnglishGrammarPhrase(
@@ -24,10 +24,7 @@ const analyze = (steps: readonly GrammarStep[]) =>
 
 describe('Hollywood Roast English grammar', () => {
   test('accepts the two minimum sentence forms', () => {
-    const predicate = analyze([
-      add('common-noun-001'),
-      add('common-predicate-010-present'),
-    ]);
+    const predicate = analyze([add('common-noun-001'), add('common-predicate-010-present')]);
     const object = analyze([
       add('common-noun-001'),
       add('common-verb-010-present'),
@@ -120,18 +117,12 @@ describe('Hollywood Roast English grammar', () => {
     for (const [predicateId, expected] of [
       ['common-predicate-005-past', 'You were a Communist Party member'],
       ['common-predicate-005-present', 'You are a Communist Party member'],
-      [
-        'common-predicate-005-future',
-        'You will be a Communist Party member',
-      ],
+      ['common-predicate-005-future', 'You will be a Communist Party member'],
       ['common-predicate-015-past', 'You were a snitch'],
       ['common-predicate-015-present', 'You are a snitch'],
       ['common-predicate-015-future', 'You will be a snitch'],
     ] as const) {
-      expect(
-        analyze([add('common-noun-028'), add(predicateId)]),
-        predicateId,
-      ).toMatchObject({
+      expect(analyze([add('common-noun-028'), add(predicateId)]), predicateId).toMatchObject({
         accepted: true,
         analysis: { complete: true, publicText: expected },
       });
@@ -140,27 +131,12 @@ describe('Hollywood Roast English grammar', () => {
 
   test('renders the requested social-media families and ending', () => {
     for (const [predicateId, expected] of [
-      [
-        'common-predicate-003-past',
-        'A foreigner cheered for a Russian attack',
-      ],
+      ['common-predicate-003-past', 'A foreigner cheered for a Russian attack'],
       ['common-predicate-003-present', 'A foreigner cheers for a Russian attack'],
-      [
-        'common-predicate-003-future',
-        'A foreigner will cheer for a Russian attack',
-      ],
-      [
-        'common-predicate-004-past',
-        'A foreigner harassed innocent people on social media',
-      ],
-      [
-        'common-predicate-004-present',
-        'A foreigner harasses innocent people on social media',
-      ],
-      [
-        'common-predicate-004-future',
-        'A foreigner will harass innocent people on social media',
-      ],
+      ['common-predicate-003-future', 'A foreigner will cheer for a Russian attack'],
+      ['common-predicate-004-past', 'A foreigner harassed innocent people on social media'],
+      ['common-predicate-004-present', 'A foreigner harasses innocent people on social media'],
+      ['common-predicate-004-future', 'A foreigner will harass innocent people on social media'],
     ] as const) {
       expect(analyze([add('common-noun-044'), add(predicateId)])).toMatchObject({
         accepted: true,
@@ -168,18 +144,11 @@ describe('Hollywood Roast English grammar', () => {
       });
     }
 
-    expect(
-      analyze([add('common-noun-028'), add('common-predicate-003-present')]),
-    ).toMatchObject({
+    expect(analyze([add('common-noun-028'), add('common-predicate-003-present')])).toMatchObject({
       accepted: true,
       analysis: { publicText: 'You cheer for a Russian attack' },
     });
-    expect(
-      analyze([
-        add('common-noun-028'),
-        add('common-predicate-004-present'),
-      ]),
-    ).toMatchObject({
+    expect(analyze([add('common-noun-028'), add('common-predicate-004-present')])).toMatchObject({
       accepted: true,
       analysis: { publicText: 'You harass innocent people on social media' },
     });
@@ -193,8 +162,7 @@ describe('Hollywood Roast English grammar', () => {
       accepted: true,
       analysis: {
         state: 'ENDED',
-        publicText:
-          'A foreigner cheers for a Russian attack and most of your followers are bots.',
+        publicText: 'A foreigner cheers for a Russian attack and most of your followers are bots.',
       },
     });
   });
@@ -214,16 +182,13 @@ describe('Hollywood Roast English grammar', () => {
       'black-sea-captain-predicate-002-past',
       'black-sea-captain-predicate-002-future',
     ] as const;
-    const nouns = gameCatalog.phrases.filter(
-      (candidate) => candidate.role === 'noun',
-    );
+    const nouns = gameCatalog.phrases.filter((candidate) => candidate.role === 'noun');
 
     for (const noun of nouns) {
       const expectedPossessive =
         noun.grammaticalPerson === 'second'
           ? 'your'
-          : noun.grammaticalNumber === 'plural' ||
-              noun.referentKind === 'personal'
+          : noun.grammaticalNumber === 'plural' || noun.referentKind === 'personal'
             ? 'their'
             : 'its';
       for (const relationId of relationIds) {
@@ -233,10 +198,9 @@ describe('Hollywood Roast English grammar', () => {
           analysis: { complete: true },
         });
         if (result.accepted) {
-          expect(
-            result.analysis.renderedPhrases[1]?.text,
-            `${noun.id} + ${relationId}`,
-          ).toContain(`${expectedPossessive} own`);
+          expect(result.analysis.renderedPhrases[1]?.text, `${noun.id} + ${relationId}`).toContain(
+            `${expectedPossessive} own`,
+          );
         }
       }
     }
@@ -270,8 +234,7 @@ describe('Hollywood Roast English grammar', () => {
       analysis: {
         complete: true,
         agreement: { subject: 'plural' },
-        publicText:
-          'Holy Water from the Danube and you made your own voters change the channel',
+        publicText: 'Holy Water from the Danube and you made your own voters change the channel',
       },
     });
   });
@@ -410,9 +373,7 @@ describe('Hollywood Roast English grammar', () => {
           'Your unanimous disagreement reinvents a televised revolution before the promises lose their warranty behind doors transparent only in the brochure',
       },
     });
-    expect(
-      analyze([add('common-noun-001'), add('common-modifier-001')]),
-    ).toMatchObject({
+    expect(analyze([add('common-noun-001'), add('common-modifier-001')])).toMatchObject({
       accepted: false,
       faults: [
         {
@@ -460,7 +421,6 @@ describe('Hollywood Roast English grammar', () => {
   });
 });
 
-
 test('with requires its noun before another connector can start a clause', () => {
   const prefix = ['common-noun-053', 'common-predicate-001-present', 'common-conjunction-005'];
   expect(analyze(prefix.map(add))).toMatchObject({ accepted: true, analysis: { complete: false } });
@@ -470,18 +430,26 @@ test('with requires its noun before another connector can start a clause', () =>
   ]) {
     expect(analyze(ids.map(add))).toMatchObject({ accepted: false });
   }
-  expect(analyze([...prefix, 'common-noun-001'].map(add))).toMatchObject({ accepted: true, analysis: { complete: true } });
+  expect(analyze([...prefix, 'common-noun-001'].map(add))).toMatchObject({
+    accepted: true,
+    analysis: { complete: true },
+  });
 });
-
 
 test('completes the approved cemetery-turnout sentence as a modifier', () => {
   const result = analyze([
-    add('common-noun-053'), add('thunder-tribune-predicate-001-present'), add('thunder-tribune-modifier-001'),
+    add('common-noun-053'),
+    add('thunder-tribune-predicate-001-present'),
+    add('thunder-tribune-modifier-001'),
   ]);
-  expect(result).toMatchObject({ accepted: true, analysis: {
-    complete: true,
-    publicText: 'Holy Water from the Danube can lose an election to an empty ballot with 110% turnout at the cemetery',
-  } });
+  expect(result).toMatchObject({
+    accepted: true,
+    analysis: {
+      complete: true,
+      publicText:
+        'Holy Water from the Danube can lose an election to an empty ballot with 110% turnout at the cemetery',
+    },
+  });
 });
 
 // Catalog-wide guarantees. These read whatever the shipped catalog contains, so
@@ -495,17 +463,22 @@ describe('catalog-wide clause coverage', () => {
     ['football-tycoon-predicate-002', 'was', 'were'],
     ['football-tycoon-predicate-003', 'was', 'were'],
     ['football-tycoon-predicate-004', 'was', 'were'],
-  ])('agrees with singular, plural, and second-person subjects in %s', (family, singular, plural) => {
-    for (const [subject, copula] of [
-      ['common-noun-001', singular], ['common-noun-031', plural], ['common-noun-028', plural],
-    ]) {
-      const result = analyze([add(subject!), add(`${family}-past`), { kind: 'end' }]);
-      expect(result).toMatchObject({ accepted: true, analysis: { complete: true } });
-      if (result.accepted) {
-        expect(result.analysis.renderedPhrases[1]?.text).toMatch(new RegExp(`^${copula} `, 'u'));
+  ])(
+    'agrees with singular, plural, and second-person subjects in %s',
+    (family, singular, plural) => {
+      for (const [subject, copula] of [
+        ['common-noun-001', singular],
+        ['common-noun-031', plural],
+        ['common-noun-028', plural],
+      ]) {
+        const result = analyze([add(subject!), add(`${family}-past`), { kind: 'end' }]);
+        expect(result).toMatchObject({ accepted: true, analysis: { complete: true } });
+        if (result.accepted) {
+          expect(result.analysis.renderedPhrases[1]?.text).toMatch(new RegExp(`^${copula} `, 'u'));
+        }
       }
-    }
-  });
+    },
+  );
 
   test.each([
     'red-folded-chairman-predicate-004-present',
@@ -521,28 +494,26 @@ describe('catalog-wide clause coverage', () => {
   test('every shipped ending completes personal, nonpersonal, and plural clauses', () => {
     for (const ending of gameCatalog.phrases.filter(({ role }) => role === 'ending')) {
       for (const subject of ['common-noun-028', 'common-noun-019', 'common-noun-031']) {
-        const result = analyze([
-          add(subject), add('common-predicate-010-present'), add(ending.id),
-        ]);
+        const result = analyze([add(subject), add('common-predicate-010-present'), add(ending.id)]);
         expect(result, `${subject} + ${ending.id}`).toMatchObject({
           accepted: true,
           analysis: { complete: true, state: 'ENDED' },
         });
         if (!result.accepted) continue;
         expect(result.analysis.publicText, ending.id).toMatch(/\.$/u);
-        expect(result.analysis.publicText, ending.id)
-          .not.toMatch(/\.\.|undefined|\s{2}/u);
+        expect(result.analysis.publicText, ending.id).not.toMatch(/\.\.|undefined|\s{2}/u);
       }
     }
   });
 
   test('every shipped noun and modifier stays reachable in a complete clause', () => {
     for (const entry of gameCatalog.phrases) {
-      const ids = entry.role === 'noun'
-        ? [entry.id, 'common-predicate-010-present', 'common-ending-008']
-        : entry.role === 'modifier'
-          ? ['common-noun-028', 'common-predicate-010-present', entry.id, 'common-ending-008']
-          : null;
+      const ids =
+        entry.role === 'noun'
+          ? [entry.id, 'common-predicate-010-present', 'common-ending-008']
+          : entry.role === 'modifier'
+            ? ['common-noun-028', 'common-predicate-010-present', entry.id, 'common-ending-008']
+            : null;
       if (!ids) continue;
       expect(analyze(ids.map(add)), entry.id).toMatchObject({
         accepted: true,

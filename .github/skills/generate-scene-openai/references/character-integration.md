@@ -9,14 +9,14 @@ This module uses these abbreviations:
 
 ## Prepare the reviewed master
 
-Read the contract of the selected character, `tools/build-character-assets.mjs`, and `tools/validate-character-assets.mjs`.
+Read the contract of the selected character, `tools/build-character-assets.ts`, and `tools/validate-character-assets.ts`.
 Read its entry in `src/assets/characters/portrait-layout.json` and the manifest.
 The commands in this module apply to selection portraits and the skins that come from them.
 
 For a five-pose work unit, use [pose generation](../../generate-character-openai/references/pose-generation.md).
 That procedure uses the targeted package builder.
 Use the full-tree commands in this module only when the approved task includes the full selection inventory.
-For other state drawings, use the state inventory and the `tools/build-character-states.mjs` contract.
+For other state drawings, use the state inventory and the `tools/build-character-states.ts` contract.
 
 For a new identity or a new state, add the code for its approved inventory contract before you import artwork.
 The selection-portrait builder accepts only transparent PNG masters of 2048 by 2048 pixels.
@@ -49,10 +49,10 @@ Keep the previous shipping assets until all the staged checks pass.
 Run these commands in this sequence:
 
 ```text
-node tools/build-character-assets.mjs tmp/character-generation/run/characters
-node tools/validate-character-assets.mjs tmp/character-generation/run/characters
+node tools/build-character-assets.ts tmp/character-generation/run/characters
+node tools/validate-character-assets.ts tmp/character-generation/run/characters
 node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate tmp/character-generation/run/characters
-node tools/validate-asset-color.mjs validate tmp/character-generation/run/characters
+node tools/validate-asset-color.ts validate tmp/character-generation/run/characters
 ```
 
 Do not validate while the builder writes variants.

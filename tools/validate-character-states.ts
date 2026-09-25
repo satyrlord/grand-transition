@@ -3,37 +3,48 @@ import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import contract from '../src/assets/characters/state-contract.json' with { type: 'json' };
-import { CHARACTER_BYTE_BUDGETS } from './build-character-assets.mjs';
-import { stateFormats, statePackages, stateWidths } from './build-character-states.mjs';
-import { inspectAlpha, inspectRaster } from './validate-character-assets.mjs';
-import { hasNativeAlphaProvenance } from './asset-pixels.mjs';
+import { CHARACTER_BYTE_BUDGETS, type CharacterAsset, type CharacterManifest } from './build-character-assets.ts';
+import { stateFormats, statePackages, stateWidths, type StateManifest } from './build-character-states.ts';
+import { inspectAlpha, inspectRaster } from './validate-character-assets.ts';
+import { hasNativeAlphaProvenance } from './asset-pixels.ts';
 
-const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const isRecord = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
-const identifier = (value) => typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(value);
-const hash = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value);
-const requireFact = (condition, message) => { if (!condition) throw new Error(message); };
+const sha256 = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  value !== null && typeof value === 'object' && !Array.isArray(value);
+const identifier = (value: unknown) => typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(value);
+const hash = (value: unknown) => typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value);
+function requireFact(condition: unknown, message: string): asserts condition {
+  if (!condition) throw new Error(message);
+}
 const crop = { x: 0, y: 0, width: 1, height: 1, strategy: 'full-body-safe-margin-v1' };
-const sameFields = (actual, expected) => isRecord(actual) &&
+const stateAssetReuse: Readonly<Record<string, string | undefined>> = contract.stateAssetReuse;
+type SizedAsset = {
+  id: string; ownerId: string; skinId?: string;
+  variants: readonly { format: string; width: number; bytes: number }[];
+};
+type RasterRecord = { path: string; format: string; width: number; height: number; bytes: number; sha256: string };
+const sameFields = (actual: unknown, expected: Record<string, unknown>) => isRecord(actual) &&
   Object.keys(actual).length === Object.keys(expected).length &&
   Object.entries(expected).every(([key, value]) => actual[key] === value);
 
 /** Structural checks run before image decoding, including every required mapping. */
-export function validateStateManifest(manifest, selectionManifest) {
-  requireFact(isRecord(manifest) && manifest.schemaVersion === 1 && Array.isArray(manifest.packages) && Array.isArray(manifest.assets),
+export function validateStateManifest(input: unknown, selectionManifest: { assets?: unknown }): StateManifest {
+  requireFact(isRecord(input) && input.schemaVersion === 1 && Array.isArray(input.packages) && Array.isArray(input.assets),
     'Character state manifest must declare schemaVersion 1, packages, and assets.');
+  // The checks below prove each field that the typed manifest declares.
+  const manifest = input as StateManifest;
   const skins = statePackages(selectionManifest);
   requireFact(manifest.packages.length === contract.expectedPackageCount,
     `Character state package inventory must contain exactly ${contract.expectedPackageCount} packages.`);
-  const assets = new Map();
+  const assets = new Map<string, CharacterAsset>();
   for (const asset of manifest.assets) {
     requireFact(isRecord(asset) && typeof asset.id === 'string' && !assets.has(asset.id), 'Character state asset IDs must be present and unique.');
     assets.set(asset.id, asset);
   }
   requireFact(manifest.assets.length === contract.expectedStateMasterCount,
     `Character state manifest must contain exactly ${contract.expectedStateMasterCount} state masters.`);
-  const seenPackages = new Set();
-  const usedAssets = new Set();
+  const seenPackages = new Set<string>();
+  const usedAssets = new Set<string>();
   for (const group of manifest.packages) {
     requireFact(isRecord(group), 'Character state package must be an object.');
     const skin = skins.find((item) => item.ownerId === group.ownerId && item.skinId === group.skinId);
@@ -45,9 +56,9 @@ export function validateStateManifest(manifest, selectionManifest) {
     for (const state of contract.states) {
       const records = group.states.filter((item) => isRecord(item) && item.stateId === state.id);
       requireFact(records.length === 1, `${skin.id}: missing or duplicate ${state.id} mapping.`);
-      const record = records[0];
+      const record = records[0]!;
       requireFact(record.durationMs === state.durationMs && record.loop === state.loop, `${skin.id}/${state.id}: incorrect motion timing or loop mode.`);
-      const reusedStateId = contract.stateAssetReuse[state.id];
+      const reusedStateId = stateAssetReuse[state.id];
       const expectedAssetId = state.id === 'selection' || reusedStateId === 'selection'
         ? skin.id
         : reusedStateId ? `${skin.id}--${reusedStateId}` : `${skin.id}--${state.id}`;
@@ -75,7 +86,7 @@ export function validateStateManifest(manifest, selectionManifest) {
         for (const format of stateFormats) {
           const variants = asset.variants.filter((variant) => isRecord(variant) && variant.width === width && variant.format === format);
           requireFact(variants.length === 1, `${assetId}: missing or duplicate ${width}px ${format}.`);
-          const variant = variants[0];
+          const variant = variants[0]!;
           requireFact(variant.path === `states/variants/${assetId}-${width}x${width}.${format}` && variant.height === width && hash(variant.sha256) &&
             Number.isInteger(variant.bytes) && variant.bytes > 0 && variant.bytes <= CHARACTER_BYTE_BUDGETS[format], `${assetId}: invalid variant path, dimensions, hash, or byte budget.`);
         }
@@ -87,16 +98,20 @@ export function validateStateManifest(manifest, selectionManifest) {
   return manifest;
 }
 
-export function measurePackageBytes(manifest, selection, sceneManifest) {
-  const variantBytes = (asset, format) => {
+export function measurePackageBytes(
+  manifest: { assets: readonly SizedAsset[] },
+  selection: { assets: readonly SizedAsset[] },
+  sceneManifest: { assets: readonly SizedAsset[] },
+): number {
+  const variantBytes = (asset: SizedAsset, format: string): number => {
     const variant = asset.variants.filter((item) => item.format === format)
-      .reduce((largest, item) => !largest || item.width > largest.width ? item : largest, undefined);
+      .reduce<SizedAsset['variants'][number] | undefined>((largest, item) => !largest || item.width > largest.width ? item : largest, undefined);
     requireFact(variant && Number.isInteger(variant.bytes) && variant.bytes > 0,
       asset.id + ': missing largest ' + format + ' variant byte size.');
     return variant.bytes;
   };
   return Math.max(...stateFormats.map((format) => {
-    const scenes = new Map();
+    const scenes = new Map<string, number>();
     for (const asset of sceneManifest.assets) {
       scenes.set(asset.ownerId, (scenes.get(asset.ownerId) ?? 0) + variantBytes(asset, format));
     }
@@ -108,8 +123,11 @@ export function measurePackageBytes(manifest, selection, sceneManifest) {
   }));
 }
 
-export async function validateStateAsset(root, asset) {
-  const variantFiles = [];
+export async function validateStateAsset(
+  root: string,
+  asset: { id: string; source: RasterRecord; variants: readonly RasterRecord[] },
+): Promise<string[]> {
+  const variantFiles: string[] = [];
   let nativeAlpha = false;
   for (const raster of [asset.source, ...asset.variants]) {
     const context = `${asset.id}: ${raster.path}`;
@@ -122,18 +140,21 @@ export async function validateStateAsset(root, asset) {
   return variantFiles;
 }
 
-export async function validateCharacterStates({ characterRoot = path.resolve('src/assets/characters'), sceneRoot = path.resolve('src/assets/scenes') } = {}) {
+export async function validateCharacterStates({
+  characterRoot = path.resolve('src/assets/characters'),
+  sceneRoot = path.resolve('src/assets/scenes'),
+}: { characterRoot?: string; sceneRoot?: string } = {}) {
   const root = path.resolve(characterRoot);
-  const selection = JSON.parse(await readFile(path.join(root, 'character-manifest.json'), 'utf8'));
+  const selection = JSON.parse(await readFile(path.join(root, 'character-manifest.json'), 'utf8')) as CharacterManifest;
   const manifest = validateStateManifest(JSON.parse(await readFile(path.join(root, 'states/state-manifest.json'), 'utf8')), selection);
-  const expectedFiles = new Set();
+  const expectedFiles = new Set<string>();
   for (const asset of manifest.assets) {
     for (const file of await validateStateAsset(root, asset)) expectedFiles.add(file);
   }
   const actualFiles = await readdir(path.join(root, 'states/variants'));
   requireFact(actualFiles.length === expectedFiles.size && actualFiles.every((file) => expectedFiles.has(file)), 'State runtime directory contains missing or extra files.');
   const expectedMasters = new Set(manifest.assets.map(({ source }) => source.path));
-  const actualMasters = new Set();
+  const actualMasters = new Set<string>();
   for (const skin of statePackages(selection)) {
     const stateRoot = path.join(root, 'states', skin.id);
     for (const entry of await readdir(stateRoot, { withFileTypes: true })) {

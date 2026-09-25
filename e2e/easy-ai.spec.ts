@@ -1,13 +1,7 @@
-import { lockInSetup } from './helpers/setup';
-import { finishPresentation } from './helpers/presentation';
-import {
-  expect,
-  test,
-  type Locator,
-  type Page,
-  type TestInfo,
-} from '@playwright/test';
-import { useFixedBrowserMatchSeed } from './helpers/match-flow';
+import { lockInSetup } from './helpers/setup.ts';
+import { finishPresentation } from './helpers/presentation.ts';
+import { expect, test, type Locator, type Page, type TestInfo } from '@playwright/test';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 
 test.setTimeout(90_000);
 
@@ -20,56 +14,50 @@ test('a custom Local Radio Caller match reaches victory without private-hand exp
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Single Player' }).click();
 
-  await expect(page.getByLabel('Difficulty', { exact: true })).toHaveValue(
-    'local-radio-caller',
-  );
+  await expect(page.getByLabel('Difficulty', { exact: true })).toHaveValue('local-radio-caller');
   await installAiThinkingProbe(page);
   await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
 
   let sawThinking = false;
   for (let step = 0; step < 800; step += 1) {
-    if (await page.getByRole('heading', { name: 'Victory' }).isVisible().catch(() => false)) {
+    if (
+      await page
+        .getByRole('heading', { name: 'Victory' })
+        .isVisible()
+        .catch(() => false)
+    ) {
       break;
     }
     if (await finishPresentation(page)) continue;
     const thinking = page.locator('.ai-thinking-record');
     if (await thinking.isVisible().catch(() => false)) {
       sawThinking = true;
-      const projection = await page.locator('grand-transition-match').evaluate(
-        (element) =>
-          {
-            const match = element as HTMLElement & {
-              thinking: boolean;
-              snapshot?: {
-                activePlayerId: string;
-                privateCards: Array<{
-                  reference: unknown;
-                  phraseId: string | null;
-                  text: string;
-                }>;
-              };
-            };
-            return {
-              thinking: match.thinking,
-              snapshot: match.snapshot,
-              privateHandCount: match.querySelectorAll('.private-hand').length,
-              actionCount: match.querySelectorAll('.match-actions').length,
-            };
-          },
-      );
-      if (
-        projection.thinking &&
-        projection.snapshot?.activePlayerId === 'player-two'
-      ) {
+      const projection = await page.locator('grand-transition-match').evaluate((element) => {
+        const match = element as HTMLElement & {
+          thinking: boolean;
+          snapshot?: {
+            activePlayerId: string;
+            privateCards: Array<{
+              reference: unknown;
+              phraseId: string | null;
+              text: string;
+            }>;
+          };
+        };
+        return {
+          thinking: match.thinking,
+          snapshot: match.snapshot,
+          privateHandCount: match.querySelectorAll('.private-hand').length,
+          actionCount: match.querySelectorAll('.match-actions').length,
+        };
+      });
+      if (projection.thinking && projection.snapshot?.activePlayerId === 'player-two') {
         expect(projection.privateHandCount).toBe(0);
         expect(projection.actionCount).toBe(0);
         expect(
           projection.snapshot.privateCards.every(
-            (card) =>
-              card.reference === null &&
-              card.phraseId === null &&
-              card.text === '',
+            (card) => card.reference === null && card.phraseId === null && card.text === '',
           ),
         ).toBe(true);
       }
@@ -103,9 +91,11 @@ test('a custom Local Radio Caller match reaches victory without private-hand exp
       await page.getByRole('button', { name: 'End', exact: true }).click();
       continue;
     }
-    const phrase = page.locator(
-      '.private-hand button.phrase-card:not(:disabled), .shared-board button.phrase-card:not(:disabled)',
-    ).first();
+    const phrase = page
+      .locator(
+        '.private-hand button.phrase-card:not(:disabled), .shared-board button.phrase-card:not(:disabled)',
+      )
+      .first();
     if (await phrase.isVisible().catch(() => false)) {
       await phrase.click();
       continue;
@@ -134,9 +124,7 @@ test('a custom Local Radio Caller match reaches victory without private-hand exp
   });
 });
 
-test('the AI speech bubble stays open automatically for the human reader', async ({
-  page,
-}) => {
+test('the AI speech bubble stays open automatically for the human reader', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await useFixedBrowserMatchSeed(page, 21);
   await page.clock.install();
@@ -145,39 +133,33 @@ test('the AI speech bubble stays open automatically for the human reader', async
 
   await lockInSetup(page);
 
-
   await page.getByRole('button', { name: 'Start match' }).click();
 
-  const validCard = await page.locator('grand-transition-match').evaluate(
-    (element) => {
-      const snapshot = (
-        element as HTMLElement & {
-          snapshot?: {
-            sentenceText: string;
-            privateCards: Array<{
-              previewText: string;
-              reference: { source: string; cardId: string } | null;
-            }>;
-            sharedCards: Array<{
-              previewText: string;
-              reference: { source: string; cardId: string } | null;
-            }>;
-          };
-        }
-      ).snapshot;
-      return [...(snapshot?.privateCards ?? []), ...(snapshot?.sharedCards ?? [])]
-        .find(
-          (card) =>
-            card.reference &&
-            card.previewText.trim() !== '' &&
-            card.previewText !== snapshot?.sentenceText,
-        )?.reference;
-    },
-  );
+  const validCard = await page.locator('grand-transition-match').evaluate((element) => {
+    const snapshot = (
+      element as HTMLElement & {
+        snapshot?: {
+          sentenceText: string;
+          privateCards: Array<{
+            previewText: string;
+            reference: { source: string; cardId: string } | null;
+          }>;
+          sharedCards: Array<{
+            previewText: string;
+            reference: { source: string; cardId: string } | null;
+          }>;
+        };
+      }
+    ).snapshot;
+    return [...(snapshot?.privateCards ?? []), ...(snapshot?.sharedCards ?? [])].find(
+      (card) =>
+        card.reference &&
+        card.previewText.trim() !== '' &&
+        card.previewText !== snapshot?.sentenceText,
+    )?.reference;
+  });
   await page
-    .locator(
-      `[data-card-source="${validCard!.source}"][data-card-id="${validCard!.cardId}"]`,
-    )
+    .locator(`[data-card-source="${validCard!.source}"][data-card-id="${validCard!.cardId}"]`)
     .click();
   await expect
     .poll(() =>
@@ -214,70 +196,64 @@ test('browser Back cancels a pending AI presentation without a hidden command', 
 
   await lockInSetup(page);
 
-
   await page.getByRole('button', { name: 'Start match' }).click();
-  const pending = await page.locator('grand-transition-app').evaluate(
-    async (element) => {
-      const app = element as HTMLElement & {
-        aiThinking: boolean;
-        matchState?: { commandHistory: unknown[] };
-      };
-      const match = element.querySelector('grand-transition-match') as
-        | (HTMLElement & {
-            thinking: boolean;
-            snapshot?: {
-              sentenceText: string;
-              activePlayerId: string;
-              privateCards: Array<{
-                previewText: string;
-                reference: { source: string; cardId: string } | null;
-                phraseId: string | null;
-                text: string;
-              }>;
-              sharedCards: Array<{
-                previewText: string;
-                reference: { source: string; cardId: string } | null;
-              }>;
-            };
-          })
-        | null;
-      const snapshot = match?.snapshot;
-      const reference = [
-        ...(snapshot?.privateCards ?? []),
-        ...(snapshot?.sharedCards ?? []),
-      ].find(
-        (card) =>
-          card.reference &&
-          card.previewText.trim() !== '' &&
-          card.previewText !== snapshot?.sentenceText,
-      )?.reference;
-      if (!match || !reference) {
-        throw new Error('The AI match did not expose a playable card.');
-      }
-      const cardButton = match.querySelector<HTMLButtonElement>(
-        `[data-card-source="${reference.source}"][data-card-id="${reference.cardId}"]`,
-      );
-      if (!cardButton) {
-        throw new Error('The playable AI card button was not found.');
-      }
-      cardButton.click();
-      for (let attempt = 0; attempt < 200; attempt += 1) {
-        if (app.aiThinking && match.thinking) break;
-        await new Promise((resolve) => setTimeout(resolve, 5));
-      }
-      const pendingSnapshot = match.snapshot;
-      const before = app.matchState?.commandHistory.length;
-      const observed = {
-        activePlayerId: pendingSnapshot?.activePlayerId,
-        thinking: match.thinking,
-        privateCards: pendingSnapshot?.privateCards,
-        privateHandCount: match.querySelectorAll('.private-hand').length,
-        actionCount: match.querySelectorAll('.match-actions').length,
-      };
-      window.history.back();
-      return { ...observed, before };
-    },
-  );
+  const pending = await page.locator('grand-transition-app').evaluate(async (element) => {
+    const app = element as HTMLElement & {
+      aiThinking: boolean;
+      matchState?: { commandHistory: unknown[] };
+    };
+    const match = element.querySelector('grand-transition-match') as
+      | (HTMLElement & {
+          thinking: boolean;
+          snapshot?: {
+            sentenceText: string;
+            activePlayerId: string;
+            privateCards: Array<{
+              previewText: string;
+              reference: { source: string; cardId: string } | null;
+              phraseId: string | null;
+              text: string;
+            }>;
+            sharedCards: Array<{
+              previewText: string;
+              reference: { source: string; cardId: string } | null;
+            }>;
+          };
+        })
+      | null;
+    const snapshot = match?.snapshot;
+    const reference = [...(snapshot?.privateCards ?? []), ...(snapshot?.sharedCards ?? [])].find(
+      (card) =>
+        card.reference &&
+        card.previewText.trim() !== '' &&
+        card.previewText !== snapshot?.sentenceText,
+    )?.reference;
+    if (!match || !reference) {
+      throw new Error('The AI match did not expose a playable card.');
+    }
+    const cardButton = match.querySelector<HTMLButtonElement>(
+      `[data-card-source="${reference.source}"][data-card-id="${reference.cardId}"]`,
+    );
+    if (!cardButton) {
+      throw new Error('The playable AI card button was not found.');
+    }
+    cardButton.click();
+    for (let attempt = 0; attempt < 200; attempt += 1) {
+      if (app.aiThinking && match.thinking) break;
+      await new Promise((resolve) => setTimeout(resolve, 5));
+    }
+    const pendingSnapshot = match.snapshot;
+    const before = app.matchState?.commandHistory.length;
+    const observed = {
+      activePlayerId: pendingSnapshot?.activePlayerId,
+      thinking: match.thinking,
+      privateCards: pendingSnapshot?.privateCards,
+      privateHandCount: match.querySelectorAll('.private-hand').length,
+      actionCount: match.querySelectorAll('.match-actions').length,
+    };
+    window.history.back();
+    return { ...observed, before };
+  });
   expect(pending).toMatchObject({
     activePlayerId: 'player-two',
     thinking: true,
@@ -286,24 +262,21 @@ test('browser Back cancels a pending AI presentation without a hidden command', 
   });
   expect(
     pending.privateCards?.every(
-      (card) =>
-        card.reference === null && card.phraseId === null && card.text === '',
+      (card) => card.reference === null && card.phraseId === null && card.text === '',
     ),
   ).toBe(true);
   await expect(page.locator('.setup-screen')).toBeVisible();
   await page.waitForTimeout(1_200);
-  const after = await page.locator('grand-transition-app').evaluate(
-    (element) => {
-      const app = element as HTMLElement & {
-        aiThinking?: boolean;
-        matchState?: { commandHistory: unknown[] };
-      };
-      return {
-        aiThinking: app.aiThinking,
-        commands: app.matchState?.commandHistory.length,
-      };
-    },
-  );
+  const after = await page.locator('grand-transition-app').evaluate((element) => {
+    const app = element as HTMLElement & {
+      aiThinking?: boolean;
+      matchState?: { commandHistory: unknown[] };
+    };
+    return {
+      aiThinking: app.aiThinking,
+      commands: app.matchState?.commandHistory.length,
+    };
+  });
   expect(after).toEqual({ aiThinking: false, commands: pending.before });
 });
 
@@ -322,9 +295,7 @@ for (const viewport of [
     await page.clock.install();
     await page.goto('/grand-transition/');
     await page.getByRole('button', { name: 'Multiplayer' }).click();
-    await expect(
-      page.getByRole('group', { name: 'Match settings' }),
-    ).toBeVisible();
+    await expect(page.getByRole('group', { name: 'Match settings' })).toBeVisible();
     await waitForLocalImages(page.locator('.setup-screen'));
     await page.evaluate(() => document.fonts.ready);
     await expectNoViewportOverflow(page.locator('.setup-screen'));
@@ -336,17 +307,13 @@ for (const viewport of [
     await page.getByRole('button', { name: 'Back', exact: true }).click();
     await page.getByRole('button', { name: 'Single Player', exact: true }).click();
 
-    await expect(page.getByLabel('Difficulty', { exact: true })).toHaveValue(
-      'local-radio-caller',
-    );
+    await expect(page.getByLabel('Difficulty', { exact: true })).toHaveValue('local-radio-caller');
     await expect(page.locator('.setup-screen')).toBeVisible();
     await waitForLocalImages(page.locator('.setup-screen'));
     await page.evaluate(() => document.fonts.ready);
     await expectNoViewportOverflow(page.locator('.setup-screen'));
     const aiGeometry = await readSetupFooterGeometry(page);
-    expect(aiGeometry.layout.fieldset).toEqual(
-      hotseatGeometry.layout.fieldset,
-    );
+    expect(aiGeometry.layout.fieldset).toEqual(hotseatGeometry.layout.fieldset);
     expect(aiGeometry.layout.actions).toEqual(hotseatGeometry.layout.actions);
     expect(aiGeometry.difficultyValue).toBe('local-radio-caller');
     expect(aiGeometry.controlsAligned).toBe(true);
@@ -368,45 +335,38 @@ for (const viewport of [
         ).snapshot?.activePlayerId,
     );
     if (activePlayerId === 'player-one') {
-      const validCard = await page.locator('grand-transition-match').evaluate(
-        (element) => {
-          const snapshot = (
-            element as HTMLElement & {
-              snapshot?: {
-                sentenceText: string;
-                privateCards: Array<{
-                  previewText: string;
-                  reference: { source: string; cardId: string } | null;
-                }>;
-                sharedCards: Array<{
-                  previewText: string;
-                  reference: { source: string; cardId: string } | null;
-                }>;
-              };
-            }
-          ).snapshot;
-          return [...(snapshot?.privateCards ?? []), ...(snapshot?.sharedCards ?? [])]
-            .find(
-              (card) =>
-                card.reference &&
-                card.previewText.trim() !== '' &&
-                card.previewText !== snapshot?.sentenceText,
-            )?.reference;
-        },
-      );
+      const validCard = await page.locator('grand-transition-match').evaluate((element) => {
+        const snapshot = (
+          element as HTMLElement & {
+            snapshot?: {
+              sentenceText: string;
+              privateCards: Array<{
+                previewText: string;
+                reference: { source: string; cardId: string } | null;
+              }>;
+              sharedCards: Array<{
+                previewText: string;
+                reference: { source: string; cardId: string } | null;
+              }>;
+            };
+          }
+        ).snapshot;
+        return [...(snapshot?.privateCards ?? []), ...(snapshot?.sharedCards ?? [])].find(
+          (card) =>
+            card.reference &&
+            card.previewText.trim() !== '' &&
+            card.previewText !== snapshot?.sentenceText,
+        )?.reference;
+      });
       expect(validCard).toBeTruthy();
       await page
-        .locator(
-          `[data-card-source="${validCard!.source}"][data-card-id="${validCard!.cardId}"]`,
-        )
+        .locator(`[data-card-source="${validCard!.source}"][data-card-id="${validCard!.cardId}"]`)
         .click();
     }
     await expect
       .poll(
         async () =>
-          (await readAiThinkingEvidence(page)).filter(
-            (evidence) => evidence.visible,
-          ).length,
+          (await readAiThinkingEvidence(page)).filter((evidence) => evidence.visible).length,
       )
       .toBeGreaterThan(0);
     const thinkingBox = (await readAiThinkingEvidence(page)).find(
@@ -416,17 +376,16 @@ for (const viewport of [
     expect(thinkingBox.height).toBeGreaterThan(0);
     expect(thinkingBox.x).toBeGreaterThanOrEqual(0);
     expect(thinkingBox.y).toBeGreaterThanOrEqual(0);
-    expect(thinkingBox.x + thinkingBox.width).toBeLessThanOrEqual(
-      viewport.width,
-    );
-    expect(thinkingBox.y + thinkingBox.height).toBeLessThanOrEqual(
-      viewport.height,
-    );
-    if (await page.locator('.ai-thinking-record').isVisible().catch(() => false)) {
+    expect(thinkingBox.x + thinkingBox.width).toBeLessThanOrEqual(viewport.width);
+    expect(thinkingBox.y + thinkingBox.height).toBeLessThanOrEqual(viewport.height);
+    if (
+      await page
+        .locator('.ai-thinking-record')
+        .isVisible()
+        .catch(() => false)
+    ) {
       await page.screenshot({
-        path: testInfo.outputPath(
-          `ai-thinking-${viewport.width}x${viewport.height}.png`,
-        ),
+        path: testInfo.outputPath(`ai-thinking-${viewport.width}x${viewport.height}.png`),
         fullPage: true,
       });
     }
@@ -489,10 +448,7 @@ async function installAiThinkingProbe(page: Page): Promise<void> {
         activePlayerId: match?.snapshot?.activePlayerId,
         privateCardsRedacted:
           match?.snapshot?.privateCards.every(
-            (card) =>
-              card.reference === null &&
-              card.phraseId === null &&
-              card.text === '',
+            (card) => card.reference === null && card.phraseId === null && card.text === '',
           ) ?? false,
         privateHandCount: match?.querySelectorAll('.private-hand').length ?? -1,
         actionCount: match?.querySelectorAll('.match-actions').length ?? -1,
@@ -523,9 +479,7 @@ async function readAiThinkingEvidence(page: Page): Promise<AiThinkingEvidence[]>
   );
 }
 
-async function expectNoViewportOverflow(
-  locator: Locator,
-): Promise<void> {
+async function expectNoViewportOverflow(locator: Locator): Promise<void> {
   const geometry = await locator.evaluate((element) => ({
     clientWidth: element.clientWidth,
     clientHeight: element.clientHeight,
@@ -538,8 +492,7 @@ async function expectNoViewportOverflow(
 
 async function readSetupFooterGeometry(page: Page) {
   return page.locator('.match-settings').evaluate((fieldset) => {
-    const difficulty =
-      fieldset.querySelector<HTMLSelectElement>('#aiDifficulty');
+    const difficulty = fieldset.querySelector<HTMLSelectElement>('#aiDifficulty');
     const scene = fieldset.querySelector<HTMLSelectElement>('#sceneId')!;
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d')!;
@@ -551,10 +504,7 @@ async function readSetupFooterGeometry(page: Page) {
         Number.parseFloat(style.paddingLeft) -
         Number.parseFloat(style.paddingRight) -
         12;
-      return (
-        context.measureText(select.selectedOptions[0]?.text ?? '').width <=
-        availableWidth
-      );
+      return context.measureText(select.selectedOptions[0]?.text ?? '').width <= availableWidth;
     };
     const box = (element: Element) => {
       const bounds = element.getBoundingClientRect();
@@ -568,20 +518,15 @@ async function readSetupFooterGeometry(page: Page) {
     const controls = [difficulty, scene].filter(
       (control): control is HTMLSelectElement => control !== null,
     );
-    const controlTops = controls.map(
-      (control) => control.getBoundingClientRect().top,
-    );
+    const controlTops = controls.map((control) => control.getBoundingClientRect().top);
 
     return {
       layout: {
         fieldset: box(fieldset),
-        actions: [...document.querySelectorAll('.setup-actions button')].map(
-          box,
-        ),
+        actions: [...document.querySelectorAll('.setup-actions button')].map(box),
       },
       difficultyValue: difficulty?.value ?? null,
-      controlsAligned:
-        Math.max(...controlTops) - Math.min(...controlTops) <= 1,
+      controlsAligned: Math.max(...controlTops) - Math.min(...controlTops) <= 1,
       difficultyLabelFits: difficulty ? labelFits(difficulty) : true,
       sceneLabelFits: labelFits(scene),
     };
@@ -592,13 +537,15 @@ async function waitForLocalImages(locator: Locator): Promise<void> {
   await expect
     .poll(
       () =>
-        locator.locator('img').evaluateAll((images) =>
-          images.every(
-            (image) =>
-              (image as HTMLImageElement).complete &&
-              (image as HTMLImageElement).naturalWidth > 0,
+        locator
+          .locator('img')
+          .evaluateAll((images) =>
+            images.every(
+              (image) =>
+                (image as HTMLImageElement).complete &&
+                (image as HTMLImageElement).naturalWidth > 0,
+            ),
           ),
-        ),
       { timeout: 15_000 },
     )
     .toBe(true);

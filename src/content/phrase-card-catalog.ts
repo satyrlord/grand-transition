@@ -8,7 +8,7 @@ import {
   validateCharacterSkinVoices,
   type Character,
   type Phrase,
-} from './schemas';
+} from './schemas.ts';
 
 const maximumPhraseWordCount = 11;
 // A comeback line is delivered alone, with no card placed after it, so its
@@ -94,8 +94,7 @@ const manualPhraseCardSchema = phraseDefinitionSchema
     if (Boolean(card.personalSingularText) !== Boolean(card.secondPersonText)) {
       context.addIssue({
         code: 'custom',
-        message:
-          'Add both personalSingularText and secondPersonText, or omit both.',
+        message: 'Add both personalSingularText and secondPersonText, or omit both.',
       });
     }
     if (
@@ -104,8 +103,7 @@ const manualPhraseCardSchema = phraseDefinitionSchema
     ) {
       context.addIssue({
         code: 'custom',
-        message:
-          'Add singularText and pluralText before person-specific agreement forms.',
+        message: 'Add singularText and pluralText before person-specific agreement forms.',
       });
     }
     if (card.role === 'ending' && !card.text.endsWith('.')) {
@@ -230,26 +228,26 @@ export function parsePhraseCardCorpus(
     const personalSingularKey = `${textKey}.personal-singular`;
     const secondPersonKey = `${textKey}.second-person`;
     phrases.push(
-      parsed(phraseSchema, {
-        ...definition,
-        characterIds: owner ? [owner] : undefined,
-        textKey,
-        numberForms:
-          singularText && pluralText
-            ? {
-                singularKey,
-                pluralKey,
-                personalSingularKey:
-                  personalSingularText && secondPersonText
-                    ? personalSingularKey
-                    : undefined,
-                secondPersonKey:
-                  personalSingularText && secondPersonText
-                    ? secondPersonKey
-                    : undefined,
-              }
-            : undefined,
-      }, options),
+      parsed(
+        phraseSchema,
+        {
+          ...definition,
+          characterIds: owner ? [owner] : undefined,
+          textKey,
+          numberForms:
+            singularText && pluralText
+              ? {
+                  singularKey,
+                  pluralKey,
+                  personalSingularKey:
+                    personalSingularText && secondPersonText ? personalSingularKey : undefined,
+                  secondPersonKey:
+                    personalSingularText && secondPersonText ? secondPersonKey : undefined,
+                }
+              : undefined,
+        },
+        options,
+      ),
     );
     englishMessages[textKey] = text;
     if (singularText && pluralText) {
@@ -273,9 +271,7 @@ export function parseCharacterCardFile(
   const source = parsed(manualCharacterFileSchema, input, options);
   const expectedFileName = `${source.id}-phrase-cards.json`;
   if (sourceName && fileName(sourceName) !== expectedFileName) {
-    throw new Error(
-      `Character file "${sourceName}" must be named "${expectedFileName}".`,
-    );
+    throw new Error(`Character file "${sourceName}" must be named "${expectedFileName}".`);
   }
   const corpus = parsePhraseCardCorpus(source.phrases, source.id, options);
   const nameKey = `character.${source.id}.name`;
@@ -285,21 +281,18 @@ export function parseCharacterCardFile(
     medium: [`comeback.${source.id}.medium`],
     strong: [`comeback.${source.id}.strong`],
   } as const;
-  const {
-    rosterOrder,
-    name,
-    description,
-    comebacks,
-    phrases: _phrases,
-    ...definition
-  } = source;
-  const character = parsed(characterSchema, {
-    ...definition,
-    nameKey,
-    descriptionKey,
-    characterPhraseIds: corpus.phrases.map((phrase) => phrase.id),
-    comebackLinesByTier,
-  }, options);
+  const { rosterOrder, name, description, comebacks, phrases: _phrases, ...definition } = source;
+  const character = parsed(
+    characterSchema,
+    {
+      ...definition,
+      nameKey,
+      descriptionKey,
+      characterPhraseIds: corpus.phrases.map((phrase) => phrase.id),
+      comebackLinesByTier,
+    },
+    options,
+  );
   const englishMessages = {
     ...corpus.englishMessages,
     [nameKey]: name,
@@ -318,12 +311,10 @@ export function buildPhraseCardCatalog(
 ): PhraseCardCatalog {
   const common = parsePhraseCardCorpus(commonSource, undefined, options);
   const characterFiles = Object.entries(characterSources)
-    .map(([sourceName, source]) =>
-      parseCharacterCardFile(source, sourceName, options))
+    .map(([sourceName, source]) => parseCharacterCardFile(source, sourceName, options))
     .toSorted(
       (left, right) =>
-        left.rosterOrder - right.rosterOrder ||
-        left.character.id.localeCompare(right.character.id),
+        left.rosterOrder - right.rosterOrder || left.character.id.localeCompare(right.character.id),
     );
   validateNeutralPhraseIdentifiers(common, 'common');
   for (const file of characterFiles) {
@@ -332,9 +323,7 @@ export function buildPhraseCardCatalog(
   const seenOrders = new Set<number>();
   for (const file of characterFiles) {
     if (seenOrders.has(file.rosterOrder)) {
-      throw new Error(
-        `Character roster order ${file.rosterOrder} occurs more than once.`,
-      );
+      throw new Error(`Character roster order ${file.rosterOrder} occurs more than once.`);
     }
     seenOrders.add(file.rosterOrder);
   }
@@ -353,16 +342,10 @@ export function buildPhraseCardCatalog(
   };
 }
 
-function validateNeutralPhraseIdentifiers(
-  corpus: PhraseCardCorpus,
-  owner: string,
-): void {
+function validateNeutralPhraseIdentifiers(corpus: PhraseCardCorpus, owner: string): void {
   const escapedOwner = owner.replaceAll(/[.*+?^${}()|[\]\\]/gu, '\\$&');
   for (const phrase of corpus.phrases) {
-    const familyPattern = new RegExp(
-      `^${escapedOwner}-${phrase.role}-[0-9]{3,}$`,
-      'u',
-    );
+    const familyPattern = new RegExp(`^${escapedOwner}-${phrase.role}-[0-9]{3,}$`, 'u');
     if (phrase.role === 'verb' || phrase.role === 'predicate') {
       if (!phrase.tenseFamily || !familyPattern.test(phrase.tenseFamily)) {
         throw new Error(
@@ -403,9 +386,7 @@ export function combinePhraseCardCorpora(input: {
   const visibleTextOwner = new Map<string, string>();
   for (const phrase of phrases) {
     if (seen.has(phrase.id)) {
-      throw new Error(
-        `Phrase card "${phrase.id}" occurs in more than one corpus.`,
-      );
+      throw new Error(`Phrase card "${phrase.id}" occurs in more than one corpus.`);
     }
     seen.add(phrase.id);
 

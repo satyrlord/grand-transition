@@ -17,9 +17,15 @@ Add the sound, music, speech, and timer settings.
 Add the initial versioned codec, browser storage, and recovery from corrupt data.
 Also add a fallback in memory and a failure notice that does not block.
 
-Use `localStorage` for settings.
-IndexedDB must have a subsequent approved volume requirement.
-Only the browser adapter calls storage.
+Keep settings and ladder progress in the `documents` object store of the `grand-transition` IndexedDB database.
+Milestone 019 keeps the match history in the `match-history` object store of the same database.
+The entry point opens the database and loads each stored value before the application shell starts.
+Thus each repository reads its value synchronously.
+A write changes the loaded value immediately, and it commits in the background.
+When a background write fails, the repository that owns the value starts its fallback.
+When the database has no value for a key, the adapter moves the `localStorage` value of an earlier release with that key into the database.
+It then removes each `localStorage` copy of the keys that it moves.
+Only the browser adapters call storage.
 When storage is blocked, full, corrupt, or not available, continue through an adapter in memory.
 Show a notice that does not block.
 The notice tells the user that the changes will not stay after the page closes.
@@ -137,7 +143,7 @@ The repository does not write again, repair, or apply a part of a rejected docum
 It keeps the document bytes, and it uses the defaults in memory.
 
 It replaces the document only when the user changes a setting the next time.
-Keep the `grand-transition.settings.v1` storage key.
+Keep the `grand-transition.settings.v1` document key.
 The storage failures are `storage-unavailable`, `storage-quota`, or `storage-security`.
 
 The fallback notice is `Settings storage is unavailable. Changes will not
@@ -172,7 +178,7 @@ The adapter in memory stays active for the browser session.
   They let the user do the setup and play a full match.
 - **AC-020-04:** When the user closes the notice, it stays hidden for the session.
   The game does not say that the persistence operates again.
-- **AC-020-05:** Only the storage adapter imports `localStorage`.
+- **AC-020-05:** Only the storage adapters use IndexedDB and `localStorage`.
   Codecs are deterministic pure modules, and they log no stored value.
 - **AC-020-06:** The selected Turn timer option stays visually different in forced-colors mode, and it does not hide its `aria-pressed` state.
 

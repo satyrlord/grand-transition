@@ -1,7 +1,5 @@
-import sceneManifest from '../assets/scenes/scene-manifest.json' with {
-  type: 'json',
-};
-import { isRecord } from '../engine/plain-values';
+import sceneManifest from '../assets/scenes/scene-manifest.json' with { type: 'json' };
+import { isRecord } from '../engine/plain-values.ts';
 
 const sceneVariantUrls = {
   ...import.meta.glob('../assets/scenes/variants/*.avif', {
@@ -62,20 +60,21 @@ type SceneAssetBase = Readonly<{
   webp: SceneAssetSource;
 }>;
 
-export type SceneManifestAsset = SceneAssetBase & Readonly<{
-  kind: 'manifest';
-  width: 3840;
-  height: 2160;
-  avif: SceneAssetSource;
-  sizes: typeof sceneImageSizes;
-  focalPoint: ScenePoint;
-  focalRectangles: Readonly<Record<string, SceneRectangle | null>>;
-  sharedSafeRectangles: Readonly<Record<string, SceneRectangle>>;
-  crop: Readonly<{
-    core: SceneRectangle;
-    strategy: string;
+export type SceneManifestAsset = SceneAssetBase &
+  Readonly<{
+    kind: 'manifest';
+    width: 3840;
+    height: 2160;
+    avif: SceneAssetSource;
+    sizes: typeof sceneImageSizes;
+    focalPoint: ScenePoint;
+    focalRectangles: Readonly<Record<string, SceneRectangle | null>>;
+    sharedSafeRectangles: Readonly<Record<string, SceneRectangle>>;
+    crop: Readonly<{
+      core: SceneRectangle;
+      strategy: string;
+    }>;
   }>;
-}>;
 
 export type SceneAsset = SceneManifestAsset;
 
@@ -91,12 +90,7 @@ export const sceneAssetManifest: readonly SceneManifestAsset[] = Object.freeze(
   manifestAssets.map(createSceneAsset),
 );
 
-const sceneAssetById = new Map(
-  sceneAssetManifest.map((asset) => [
-    asset.id,
-    asset,
-  ] as const),
-);
+const sceneAssetById = new Map(sceneAssetManifest.map((asset) => [asset.id, asset] as const));
 
 export function resolveSceneAsset(assetId: string): SceneAsset {
   const asset = sceneAssetById.get(assetId);
@@ -151,10 +145,7 @@ function readManifestAssets(value: unknown): readonly ManifestAsset[] {
       if (asset.ownerType !== 'scene') {
         throw new Error(`Scene asset "${id}" must have ownerType scene.`);
       }
-      const ownerId = requireString(
-        asset.ownerId,
-        `Scene asset "${id}" is missing an owner ID.`,
-      );
+      const ownerId = requireString(asset.ownerId, `Scene asset "${id}" is missing an owner ID.`);
       const layerRole = asset.layerRole;
       if (layerRole !== 'back' && layerRole !== 'foreground') {
         throw new Error(`Scene asset "${id}" has an invalid layer role.`);
@@ -178,10 +169,7 @@ function readManifestAssets(value: unknown): readonly ManifestAsset[] {
         ownerId,
         layerRole,
         source: {
-          path: requireString(
-            asset.source.path,
-            `Scene asset "${id}" is missing its source path.`,
-          ),
+          path: requireString(asset.source.path, `Scene asset "${id}" is missing its source path.`),
           width,
           height,
           format: 'png',
@@ -207,9 +195,9 @@ function readVariants(id: string, value: unknown, masterWidth: number): Manifest
     throw new Error(`Scene asset "${id}" is missing its variants.`);
   }
   const expected = new Set(
-    supportedVariantWidths.filter((width) => width <= masterWidth).flatMap((width) =>
-      supportedVariantFormats.map((format) => `${width}:${format}`),
-    ),
+    supportedVariantWidths
+      .filter((width) => width <= masterWidth)
+      .flatMap((width) => supportedVariantFormats.map((format) => `${width}:${format}`)),
   );
   const seen = new Set<string>();
   const variants = value.map((variant, index) => {
@@ -236,7 +224,9 @@ function readVariants(id: string, value: unknown, masterWidth: number): Manifest
       width > masterWidth ||
       height !== width * (9 / 16)
     ) {
-      throw new Error(`Scene asset "${id}" variant "${path}" has unsupported dimensions or format.`);
+      throw new Error(
+        `Scene asset "${id}" variant "${path}" has unsupported dimensions or format.`,
+      );
     }
     const key = `${width}:${formatName}`;
     if (seen.has(key)) throw new Error(`Duplicate scene variant "${path}".`);
@@ -250,9 +240,7 @@ function readVariants(id: string, value: unknown, masterWidth: number): Manifest
     };
   });
   if (expected.size > 0) {
-    throw new Error(
-      `Scene asset "${id}" is missing variants: ${[...expected].join(', ')}.`,
-    );
+    throw new Error(`Scene asset "${id}" is missing variants: ${[...expected].join(', ')}.`);
   }
   return variants;
 }
@@ -299,9 +287,7 @@ function createSource(
   if (selected.length !== supportedVariantWidths.filter((width) => width <= masterWidth).length) {
     throw new Error(`Scene asset is missing its ${format.toUpperCase()} variants.`);
   }
-  const srcSet = selected
-    .map((variant) => `${variant.url} ${variant.width}w`)
-    .join(', ');
+  const srcSet = selected.map((variant) => `${variant.url} ${variant.width}w`).join(', ');
   return Object.freeze({
     format,
     mimeType: `image/${format}` as `image/${SceneVariantFormat}`,
@@ -332,10 +318,7 @@ function readPoint(value: unknown, context: string): ScenePoint {
   });
 }
 
-function readRectangles(
-  value: unknown,
-  context: string,
-): Record<string, SceneRectangle> {
+function readRectangles(value: unknown, context: string): Record<string, SceneRectangle> {
   if (!isRecord(value)) throw new Error(`${context} must be an object.`);
   return Object.fromEntries(
     Object.entries(value).map(([name, rectangle]) => [
@@ -358,10 +341,7 @@ function readNullableRectangles(
   );
 }
 
-function readCrop(
-  value: unknown,
-  context: string,
-): ManifestAsset['crop'] {
+function readCrop(value: unknown, context: string): ManifestAsset['crop'] {
   if (!isRecord(value)) throw new Error(`${context} must be an object.`);
   return {
     core: readRectangle(value.core, `${context}.core`),
@@ -402,7 +382,9 @@ function requireNumber(value: unknown, message: string): number {
   return value;
 }
 
-function freezeRecord<Value>(record: Readonly<Record<string, Value>>): Readonly<Record<string, Value>> {
+function freezeRecord<Value>(
+  record: Readonly<Record<string, Value>>,
+): Readonly<Record<string, Value>> {
   return Object.freeze(
     Object.fromEntries(
       Object.entries(record).map(([key, value]) => [

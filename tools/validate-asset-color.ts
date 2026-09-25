@@ -1,7 +1,7 @@
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { chromium } from '@playwright/test';
+import { chromium, type Page } from '@playwright/test';
 
 const supportedRasterExtensions = new Set([
   '.avif',
@@ -10,20 +10,38 @@ const supportedRasterExtensions = new Set([
   '.png',
   '.webp',
 ]);
-const mimeTypes = {
+const mimeTypes: Readonly<Record<string, string>> = {
   '.avif': 'image/avif',
   '.jpeg': 'image/jpeg',
   '.jpg': 'image/jpeg',
   '.png': 'image/png',
   '.webp': 'image/webp',
 };
+type ColorPolicy = Readonly<{
+  sampleLimit: number;
+  minimumOpaqueSamples: number;
+  minimumNeutralSamples: number;
+  minimumCoolSamples: number;
+  neutralMaxChannelSpread: number;
+  neutralMaxRedGreenSpread: number;
+  neutralMinimumChannel: number;
+  coolMinimumChannel: number;
+  coolBlueDominance: number;
+  nearNeutralMaxChannelSpread: number;
+  nearNeutralMaxRedGreenSpread: number;
+  yellowBiasThreshold: number;
+  maximumMedianYellowBias: number;
+  maximumNeutralYellowFraction: number;
+}>;
+type ColorMetrics = Awaited<ReturnType<typeof inspectImage>>;
+
 const policyPath = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   'asset-color-policy.json',
 );
 
-async function listRasterFiles(rootPath) {
-  const files = [];
+async function listRasterFiles(rootPath: string): Promise<string[]> {
+  const files: string[] = [];
   for (const entry of await readdir(rootPath, { withFileTypes: true })) {
     const entryPath = path.join(rootPath, entry.name);
     if (entry.isDirectory()) {
@@ -40,11 +58,11 @@ async function listRasterFiles(rootPath) {
   return files.sort((left, right) => left.localeCompare(right, 'en'));
 }
 
-function formatMetric(value) {
+function formatMetric(value: number | null): string {
   return value === null ? 'n/a' : value.toFixed(2);
 }
 
-async function inspectImage(page, filePath, policy) {
+async function inspectImage(page: Page, filePath: string, policy: ColorPolicy) {
   const extension = path.extname(filePath).toLowerCase();
   const input = await readFile(filePath);
   const source = `data:${mimeTypes[extension]};base64,${input.toString('base64')}`;
@@ -72,12 +90,12 @@ async function inspectImage(page, filePath, policy) {
         1,
         Math.ceil(Math.sqrt(pixelCount / imagePolicy.sampleLimit)),
       );
-      const neutralBiases = [];
-      const nearNeutralBiases = [];
-      const coolDominances = [];
+      const neutralBiases: number[] = [];
+      const nearNeutralBiases: number[] = [];
+      const coolDominances: number[] = [];
       let sampledPixels = 0;
       let opaqueSamples = 0;
-      const medianInPage = (values) => {
+      const medianInPage = (values: readonly number[]) => {
         if (values.length === 0) return null;
         const sorted = [...values].sort((left, right) => left - right);
         const middle = Math.floor(sorted.length / 2);
@@ -85,13 +103,13 @@ async function inspectImage(page, filePath, policy) {
           ? (sorted[middle - 1] + sorted[middle]) / 2
           : sorted[middle];
       };
-      const srgbToLinear = (channel) => {
+      const srgbToLinear = (channel: number) => {
         const normalized = channel / 255;
         return normalized <= 0.04045
           ? normalized / 12.92
           : ((normalized + 0.055) / 1.055) ** 2.4;
       };
-      const labB = (red, green, blue) => {
+      const labB = (red: number, green: number, blue: number) => {
         const linearRed = srgbToLinear(red);
         const linearGreen = srgbToLinear(green);
         const linearBlue = srgbToLinear(blue);
@@ -104,7 +122,7 @@ async function inspectImage(page, filePath, policy) {
             linearGreen * 0.119192 +
             linearBlue * 0.9503041) /
           1.08883;
-        const labPivot = (value) =>
+        const labPivot = (value: number) =>
           value > 0.008856
             ? Math.cbrt(value)
             : 7.787037 * value + 16 / 116;
@@ -185,7 +203,7 @@ async function inspectImage(page, filePath, policy) {
   );
 }
 
-function validateMetrics(filePath, metrics, policy) {
+function validateMetrics(filePath: string, metrics: ColorMetrics, policy: ColorPolicy): void {
   if (metrics.opaqueSamples < policy.minimumOpaqueSamples) {
     throw new Error(
       `${filePath}: color validation found only ${metrics.opaqueSamples} ` +
@@ -238,8 +256,8 @@ function validateMetrics(filePath, metrics, policy) {
   }
 }
 
-async function validate(rootPath) {
-  const policy = JSON.parse(await readFile(policyPath, 'utf8'));
+async function validate(rootPath: string): Promise<void> {
+  const policy = JSON.parse(await readFile(policyPath, 'utf8')) as ColorPolicy;
   const files = await listRasterFiles(rootPath);
   if (files.length === 0) {
     process.stdout.write(`Asset color validation passed: ${rootPath} is empty.\n`);
@@ -286,7 +304,7 @@ if (command === 'validate' && (!rootArgument || process.argv.length === 4)) {
   });
 } else {
   process.stderr.write(
-    'Usage: validate-asset-color.mjs validate [asset-root]\n',
+    'Usage: validate-asset-color.ts validate [asset-root]\n',
   );
   process.exitCode = 2;
 }

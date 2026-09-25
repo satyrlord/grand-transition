@@ -5,15 +5,16 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import baseline from './character-replacement-baseline.json' with { type: 'json' };
 import portraitLayout from '../src/assets/characters/portrait-layout.json' with { type: 'json' };
-import { hasNativeAlphaProvenance } from './asset-pixels.mjs';
+import { hasNativeAlphaProvenance } from './asset-pixels.ts';
 
 export const CHARACTER_MASTER_NAMES = Object.freeze(
   [...new Set([...baseline.assets.map(({ file }) => file),
     ...Object.keys(portraitLayout.portraits).map((id) => `${id}.png`),
   ])].toSorted((left, right) => left.localeCompare(right, 'en')),
 );
-export const CHARACTER_VARIANT_SIZES = Object.freeze([128, 256, 320, 640, 960]);
-export const CHARACTER_VARIANT_FORMATS = Object.freeze(['avif', 'webp']);
+export type CharacterVariantFormat = 'avif' | 'webp';
+export const CHARACTER_VARIANT_SIZES: readonly number[] = Object.freeze([128, 256, 320, 640, 960]);
+export const CHARACTER_VARIANT_FORMATS: readonly CharacterVariantFormat[] = Object.freeze(['avif', 'webp']);
 export const CHARACTER_BYTE_BUDGETS = Object.freeze({ avif: 250 * 1024, webp: 350 * 1024 });
 
 const SOURCE_DESCRIPTION =
@@ -21,12 +22,33 @@ const SOURCE_DESCRIPTION =
 const LICENSE_IDENTIFIER = 'LicenseRef-Grand-Transition-Original';
 const QUALITY = Object.freeze({ avif: 70, webp: 78 });
 
-const sha256 = (input) => createHash('sha256').update(input).digest('hex');
-const assetId = (fileName) => path.parse(fileName).name;
-const ownerId = (id) => id.split('--', 1)[0];
-const skinId = (id) => id.includes('--') ? id.slice(id.indexOf('--') + 2) : 'default';
+export type CharacterLayout = Record<string, { facing: 'left' | 'right'; sourceSha256: string }>;
+export type CharacterVariant = {
+  path: string; width: number; height: number; format: CharacterVariantFormat;
+  quality?: number; lossless?: boolean; bytes: number; sha256: string;
+};
+export type CharacterSource = { path: string; width: number; height: number; format: string; bytes: number; sha256: string };
+export type CharacterAsset = {
+  id: string; ownerType: string; ownerId: string; skinId: string; facing?: string;
+  stateId: string; poseId: string; expressionId: string;
+  sourceDescription: string; licenseIdentifier: string;
+  source: CharacterSource;
+  focalPoint: { x: number; y: number };
+  crop: { x: number; y: number; width: number; height: number; strategy: string };
+  variants: CharacterVariant[];
+};
+export type CharacterManifest = { schemaVersion: number; assets: CharacterAsset[] };
+type CharacterMaster = { fileName: string; id: string; input: Buffer };
 
-export async function readCharacterLayout(characterRoot, masterNames = CHARACTER_MASTER_NAMES) {
+const sha256 = (input: Uint8Array) => createHash('sha256').update(input).digest('hex');
+const assetId = (fileName: string) => path.parse(fileName).name;
+const ownerId = (id: string) => id.split('--', 1)[0]!;
+const skinId = (id: string) => id.includes('--') ? id.slice(id.indexOf('--') + 2) : 'default';
+
+export async function readCharacterLayout(
+  characterRoot: string,
+  masterNames: readonly string[] = CHARACTER_MASTER_NAMES,
+): Promise<CharacterLayout> {
   const layout = JSON.parse(await readFile(path.join(characterRoot, 'portrait-layout.json'), 'utf8'));
   const ids = masterNames.map(assetId);
   if (layout.schemaVersion !== 1 || !layout.portraits || Array.isArray(layout.portraits) ||
@@ -42,11 +64,11 @@ export async function readCharacterLayout(characterRoot, masterNames = CHARACTER
   return layout.portraits;
 }
 
-export async function encodeVariant(input, width, format) {
+export async function encodeVariant(input: Buffer, width: number, format: CharacterVariantFormat): Promise<Buffer> {
   return (await encodeVariantWithMetadata(input, width, format)).output;
 }
 
-export async function encodeVariantWithMetadata(input, width, format) {
+export async function encodeVariantWithMetadata(input: Buffer, width: number, format: CharacterVariantFormat) {
   let pipeline = sharp(input).resize(width, width, { fit: 'contain', kernel: sharp.kernel.lanczos3 });
   const nativeAlpha = hasNativeAlphaProvenance(input);
   if (nativeAlpha) {
@@ -82,7 +104,7 @@ export async function encodeVariantWithMetadata(input, width, format) {
   return { output, quality: lossless ? 100 : QUALITY[format], ...(lossless ? { lossless: true } : {}) };
 }
 
-async function readMaster(characterRoot, fileName) {
+async function readMaster(characterRoot: string, fileName: string) {
   const filePath = path.join(characterRoot, fileName);
   const input = await readFile(filePath);
   const metadata = await sharp(input).metadata();
@@ -92,7 +114,7 @@ async function readMaster(characterRoot, fileName) {
   return { input, filePath };
 }
 
-async function assertMasterSet(characterRoot, masterNames) {
+async function assertMasterSet(characterRoot: string, masterNames: readonly string[]): Promise<void> {
   const actual = (await readdir(characterRoot, { withFileTypes: true }))
     .filter((entry) => entry.isFile() && path.extname(entry.name).toLowerCase() === '.png')
     .map((entry) => entry.name)
@@ -103,18 +125,26 @@ async function assertMasterSet(characterRoot, masterNames) {
   }
 }
 
-export function selectedCharacterAssetIds(only, masterNames = CHARACTER_MASTER_NAMES) {
+export function selectedCharacterAssetIds(
+  only: unknown,
+  masterNames: readonly string[] = CHARACTER_MASTER_NAMES,
+): Set<string> | null {
   if (only === undefined) return null;
   const ids = new Set(masterNames.map(assetId));
   if (!Array.isArray(only) || only.length === 0 || only.some((id) => !ids.has(id)) ||
     new Set(only).size !== only.length) {
     throw new Error('Selected character IDs must be a non-empty list of distinct known asset IDs.');
   }
-  return new Set(only);
+  return new Set(only as string[]);
 }
 
-async function verifiedCachedAssets(characterRoot, masters, selected, layout) {
-  const manifest = JSON.parse(await readFile(path.join(characterRoot, 'character-manifest.json'), 'utf8'));
+async function verifiedCachedAssets(
+  characterRoot: string,
+  masters: readonly CharacterMaster[],
+  selected: ReadonlySet<string>,
+  layout: CharacterLayout,
+): Promise<Map<string, CharacterAsset>> {
+  const manifest = JSON.parse(await readFile(path.join(characterRoot, 'character-manifest.json'), 'utf8')) as CharacterManifest;
   const expectedIds = masters.map(({ id }) => id);
   if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.assets) ||
     manifest.assets.length !== expectedIds.length ||
@@ -122,10 +152,10 @@ async function verifiedCachedAssets(characterRoot, masters, selected, layout) {
     manifest.assets.some((asset) => !expectedIds.includes(asset?.id))) {
     throw new Error('Selective character builds require a complete existing character manifest.');
   }
-  const cache = new Map();
+  const cache = new Map<string, CharacterAsset>();
   for (const master of masters) {
     if (selected.has(master.id)) continue;
-    const asset = manifest.assets.find((entry) => entry.id === master.id);
+    const asset = manifest.assets.find((entry) => entry.id === master.id)!;
     if (asset.ownerType !== 'character' || asset.ownerId !== ownerId(master.id) ||
       asset.skinId !== skinId(master.id) || asset.facing !== layout[master.id].facing ||
       asset.stateId !== 'selection' || asset.poseId !== 'selection' || asset.expressionId !== 'selection' ||
@@ -172,15 +202,19 @@ async function verifiedCachedAssets(characterRoot, masters, selected, layout) {
   return cache;
 }
 
-export async function mapWithConcurrency(values, concurrency, work) {
-  const results = Array.from({ length: values.length });
+export async function mapWithConcurrency<Value, Result>(
+  values: readonly Value[],
+  concurrency: number,
+  work: (value: Value) => Promise<Result>,
+): Promise<Result[]> {
+  const results = Array.from<Result>({ length: values.length });
   let nextIndex = 0;
-  const failures = [];
+  const failures: unknown[] = [];
   async function worker() {
     while (nextIndex < values.length && failures.length === 0) {
       const index = nextIndex;
       nextIndex += 1;
-      try { results[index] = await work(values[index]); }
+      try { results[index] = await work(values[index]!); }
       catch (error) { failures.push(error); }
     }
   }
@@ -195,7 +229,7 @@ export async function buildCharacterAssets({
   characterRoot = path.resolve('src', 'assets', 'characters'),
   masterNames = CHARACTER_MASTER_NAMES,
   only,
-} = {}) {
+}: { characterRoot?: string; masterNames?: readonly string[]; only?: readonly string[] } = {}): Promise<CharacterManifest> {
   const selected = selectedCharacterAssetIds(only, masterNames);
   const resolvedRoot = path.resolve(characterRoot);
   await assertMasterSet(resolvedRoot, masterNames);
@@ -203,10 +237,10 @@ export async function buildCharacterAssets({
   const masters = await Promise.all(masterNames.map(async (fileName) => {
     const id = assetId(fileName);
     const { input } = await readMaster(resolvedRoot, fileName);
-    if (layout[id].sourceSha256 !== sha256(input)) throw new Error(`${id}: source changed after the facing review.`);
+    if (layout[id]!.sourceSha256 !== sha256(input)) throw new Error(`${id}: source changed after the facing review.`);
     return { fileName, id, input };
   }));
-  const cached = selected ? await verifiedCachedAssets(resolvedRoot, masters, selected, layout) : new Map();
+  const cached = selected ? await verifiedCachedAssets(resolvedRoot, masters, selected, layout) : new Map<string, CharacterAsset>();
   const temporaryRoot = await mkdtemp(
     path.join(resolvedRoot, '.character-assets-build-'),
   );
@@ -216,7 +250,7 @@ export async function buildCharacterAssets({
     const assets = await mapWithConcurrency(
       masters,
       3,
-      async ({ fileName, id, input }) => {
+      async ({ fileName, id, input }): Promise<CharacterAsset> => {
       const cachedAsset = cached.get(id);
       if (cachedAsset) {
         await Promise.all(cachedAsset.variants.map((variant) =>
@@ -250,7 +284,7 @@ export async function buildCharacterAssets({
         ownerType: 'character',
         ownerId: ownerId(id),
         skinId: skinId(id),
-        facing: layout[id].facing,
+        facing: layout[id]!.facing,
         stateId: 'selection',
         poseId: 'selection',
         expressionId: 'selection',
@@ -284,11 +318,11 @@ export async function buildCharacterAssets({
 const invokedScript = process.argv[1] ? path.resolve(process.argv[1]) : undefined;
 if (invokedScript === path.resolve(fileURLToPath(import.meta.url))) {
   const args = process.argv.slice(2);
-  const characterRoot = args[0] && !args[0].startsWith('--') ? path.resolve(args.shift()) : undefined;
+  const characterRoot = args[0] && !args[0].startsWith('--') ? path.resolve(args.shift()!) : undefined;
   const validOptions = args.length === 0 || (args.length === 2 && args[0] === '--only');
   const only = args.length === 0 ? undefined : args[1]?.split(',');
   Promise.resolve().then(() => {
-    if (!validOptions) throw new Error('Use build-character-assets.mjs [character-root] [--only id1,id2].');
+    if (!validOptions) throw new Error('Use build-character-assets.ts [character-root] [--only id1,id2].');
     return buildCharacterAssets({ characterRoot, only });
   })
     .then((manifest) => process.stdout.write(`Built ${manifest.assets.length} character masters and ${manifest.assets.length * CHARACTER_VARIANT_SIZES.length * CHARACTER_VARIANT_FORMATS.length} variants.\n`))

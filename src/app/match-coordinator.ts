@@ -1,6 +1,4 @@
-import { scoringBalanceForMultiplier } from '../content/basic-scoring-balance';
-import { decideLocalRadioCaller } from '../ai/easy-ai';
-import { decidePalaceOperator, decidePartyStrategist } from '../ai/advanced-ai';
+import { scoringBalanceForMultiplier } from '../content/basic-scoring-balance.ts';
 import {
   createMatchReducer,
   defaultMatchRandomSource,
@@ -9,12 +7,17 @@ import {
   type MatchLifecycleCommand,
   type MatchResolution,
   type MatchState,
-} from '../engine/match-lifecycle';
-import { recordLadderResult } from '../engine/ladder';
-import { shippedGameLocale } from '../localization/game-locale';
-import type { GameLocaleBundle } from '../localization/game-locale-schema';
-import { createMatchHistoryEntry, type MatchHistoryRepository, type MatchHistorySettings } from '../persistence/match-history';
-import type { LadderProgressRepository } from '../persistence/ladder-progress';
+} from '../engine/match-lifecycle.ts';
+import { recordLadderResult } from '../engine/ladder.ts';
+import { shippedGameLocale } from '../localization/game-locale.ts';
+import type { GameLocaleBundle } from '../localization/game-locale-schema.ts';
+import {
+  createMatchHistoryEntry,
+  type MatchHistoryRepository,
+  type MatchHistorySettings,
+} from '../persistence/match-history.ts';
+import type { LadderProgressRepository } from '../persistence/ladder-progress.ts';
+import { inThreadAiDecider, type AiDecider } from './ai-decider.ts';
 
 export type MatchArenaReaction =
   | Readonly<{
@@ -66,6 +69,8 @@ type CoordinatorDependencies = Readonly<{
   clearTimeout: (id: number) => void;
   /** Monotonic milliseconds for AI decision time. */
   elapsedNow?: () => number;
+  /** Runs the AI search. The default runs it on the calling thread. */
+  aiDecider?: AiDecider;
 }>;
 
 type AiTurnRequest = Readonly<{
@@ -80,9 +85,13 @@ export class MatchCoordinator {
   private reducer: ReturnType<typeof createMatchReducer>;
   private context: MatchEngineContext;
   private aiTimerId: number | undefined;
+  private cancelAiDecision: (() => void) | undefined;
   private aiRequest: AiTurnRequest | undefined;
 
-  constructor(private readonly dependencies: CoordinatorDependencies) {
+  private readonly dependencies: CoordinatorDependencies;
+
+  constructor(dependencies: CoordinatorDependencies) {
+    this.dependencies = dependencies;
     this.context = dependencies.context;
     this.reducer = createMatchReducer(this.context);
   }
@@ -113,28 +122,48 @@ export class MatchCoordinator {
   }
 
   /** Applies one command. A rejected command is logged and returns null. */
-  apply(before: MatchState, command: MatchCommand, identity: MatchIdentity): MatchTransition | null {
+  apply(
+    before: MatchState,
+    command: MatchCommand,
+    identity: MatchIdentity,
+  ): MatchTransition | null {
     const result = this.reducer(before, command, defaultMatchRandomSource);
     if (!result.ok) {
       this.dependencies.log({
-        initialSeed: identity.initialSeed, action: command.type,
-        actorId: command.actorId ?? null, outcome: 'rejected',
-        errorCode: result.error.code, command, before, after: before,
+        initialSeed: identity.initialSeed,
+        action: command.type,
+        actorId: command.actorId ?? null,
+        outcome: 'rejected',
+        errorCode: result.error.code,
+        command,
+        before,
+        after: before,
       });
       return null;
     }
     const reduced = result.state;
     this.logAccepted(identity.initialSeed, command, before, reduced);
-    const state = reduced.phase === 'resolution'
-      ? this.lifecycle(reduced, 'resolve-round', identity.initialSeed)
-      : reduced;
+    const state =
+      reduced.phase === 'resolution'
+        ? this.lifecycle(reduced, 'resolve-round', identity.initialSeed)
+        : reduced;
     const resolution = state.resolutionHistory.at(-1) ?? null;
-    const victory = state.phase === 'results' && state.winner
-      ? { winnerId: state.winner, completedRounds: state.resolutionHistory.length, ladder: identity.ladder }
-      : null;
-    const reviewState = reduced.phase === 'resolution' && reduced.draft
-      ? reduced
-      : victory && reduced.draft ? reduced : victory && before.draft ? before : null;
+    const victory =
+      state.phase === 'results' && state.winner
+        ? {
+            winnerId: state.winner,
+            completedRounds: state.resolutionHistory.length,
+            ladder: identity.ladder,
+          }
+        : null;
+    const reviewState =
+      reduced.phase === 'resolution' && reduced.draft
+        ? reduced
+        : victory && reduced.draft
+          ? reduced
+          : victory && before.draft
+            ? before
+            : null;
     if (victory) this.complete(state, identity);
     return {
       state,
@@ -147,9 +176,7 @@ export class MatchCoordinator {
     this.cancelAiTurn();
     const state = request.currentState();
     if (!isAiTurn(state)) return;
-    const decide = state.setup.aiDifficulty === 'party-strategist'
-      ? decidePartyStrategist
-      : state.setup.aiDifficulty === 'palace-operator' ? decidePalaceOperator : decideLocalRadioCaller;
+    const decider = this.dependencies.aiDecider ?? inThreadAiDecider;
     const context = this.context;
     const elapsedNow = this.dependencies.elapsedNow ?? (() => performance.now());
     this.aiRequest = request;
@@ -168,29 +195,39 @@ export class MatchCoordinator {
       if (!stillPending()) return;
       this.aiTimerId = undefined;
       const started = elapsedNow();
-      const decision = decide(state, context, { reducedDelay: request.reducedDelay });
-      if (!decision) {
-        this.cancelAiTurn();
-        return;
-      }
-      const remainingDelay = Math.max(0, decision.delayMs - (elapsedNow() - started));
-      this.aiTimerId = this.dependencies.setTimeout(() => {
-        if (!stillPending()) return;
-        this.aiTimerId = undefined;
-        // Keep one task between presentation and command application so that
-        // an in-flight browser Back traversal can cancel the turn.
-        this.aiTimerId = this.dependencies.setTimeout(() => {
+      this.cancelAiDecision = decider.decide(
+        state,
+        context,
+        { reducedDelay: request.reducedDelay },
+        (decision) => {
+          this.cancelAiDecision = undefined;
           if (!stillPending()) return;
-          this.aiTimerId = undefined;
-          this.aiRequest = undefined;
-          request.thinking(false);
-          request.apply(decision.command);
-        }, 0);
-      }, remainingDelay);
+          if (!decision) {
+            this.cancelAiTurn();
+            return;
+          }
+          const remainingDelay = Math.max(0, decision.delayMs - (elapsedNow() - started));
+          this.aiTimerId = this.dependencies.setTimeout(() => {
+            if (!stillPending()) return;
+            this.aiTimerId = undefined;
+            // Keep one task between presentation and command application so that
+            // an in-flight browser Back traversal can cancel the turn.
+            this.aiTimerId = this.dependencies.setTimeout(() => {
+              if (!stillPending()) return;
+              this.aiTimerId = undefined;
+              this.aiRequest = undefined;
+              request.thinking(false);
+              request.apply(decision.command);
+            }, 0);
+          }, remainingDelay);
+        },
+      );
     }, 0);
   }
 
   cancelAiTurn(): void {
+    this.cancelAiDecision?.();
+    this.cancelAiDecision = undefined;
     if (this.aiTimerId !== undefined) {
       this.dependencies.clearTimeout(this.aiTimerId);
       this.aiTimerId = undefined;
@@ -199,7 +236,11 @@ export class MatchCoordinator {
     this.aiRequest = undefined;
   }
 
-  private lifecycle(state: MatchState, type: MatchLifecycleCommand['type'], initialSeed: number): MatchState {
+  private lifecycle(
+    state: MatchState,
+    type: MatchLifecycleCommand['type'],
+    initialSeed: number,
+  ): MatchState {
     const command = { type, source: 'user', payload: {} } as MatchCommand;
     const result = this.reducer(state, command, defaultMatchRandomSource);
     if (!result.ok) throw new Error(`Match lifecycle ${type} failed: ${result.error.code}.`);
@@ -207,21 +248,39 @@ export class MatchCoordinator {
     return result.state;
   }
 
-  private logAccepted(initialSeed: number, command: MatchCommand, before: MatchState, after: MatchState): void {
-    this.dependencies.log({ initialSeed, action: command.type, actorId: command.actorId ?? null,
-      outcome: 'accepted', command, before, after });
+  private logAccepted(
+    initialSeed: number,
+    command: MatchCommand,
+    before: MatchState,
+    after: MatchState,
+  ): void {
+    this.dependencies.log({
+      initialSeed,
+      action: command.type,
+      actorId: command.actorId ?? null,
+      outcome: 'accepted',
+      command,
+      before,
+      after,
+    });
   }
 
   private complete(state: MatchState, identity: MatchIdentity): void {
     const progress = this.dependencies.ladder.snapshot().progress;
     if (identity.ladder && progress) {
-      this.dependencies.ladder.replace(recordLadderResult(progress, state.winner === 'player-one' ? 'win' : 'loss'));
+      this.dependencies.ladder.replace(
+        recordLadderResult(progress, state.winner === 'player-one' ? 'win' : 'loss'),
+      );
     }
-    this.dependencies.history.append(createMatchHistoryEntry(state, {
-      id: identity.id, initialSeed: identity.initialSeed,
-      completedAt: this.dependencies.now(), settings: identity.settings,
-      gameLocale: shippedGameLocale(this.locale),
-    }));
+    this.dependencies.history.append(
+      createMatchHistoryEntry(state, {
+        id: identity.id,
+        initialSeed: identity.initialSeed,
+        completedAt: this.dependencies.now(),
+        settings: identity.settings,
+        gameLocale: shippedGameLocale(this.locale),
+      }),
+    );
   }
 }
 
@@ -234,9 +293,12 @@ export function cliffhangerReaction(state: MatchState): MatchArenaReaction | nul
 }
 
 function isAiTurn(state: MatchState | null): state is MatchState {
-  return Boolean(state?.draft && state.setup.mode === 'ai' &&
+  return Boolean(
+    state?.draft &&
+    state.setup.mode === 'ai' &&
     state.activePlayerId === 'player-two' &&
-    (state.phase === 'drafting' || state.phase === 'sudden-death'));
+    (state.phase === 'drafting' || state.phase === 'sudden-death'),
+  );
 }
 
 function grammarMistakeReaction(
@@ -247,13 +309,13 @@ function grammarMistakeReaction(
   if (command.type !== 'select-phrase' || !command.actorId) return null;
   const beforePlayer = before.draft?.playerStates[command.actorId];
   const afterPlayer = after.draft?.playerStates[command.actorId];
-  const mistakes = afterPlayer?.construction.grammarMistakes ??
-    (after.phase === 'results' ? after.resolutionHistory.at(-1)?.players[command.actorId]?.grammarMistakes : undefined);
+  const mistakes =
+    afterPlayer?.construction.grammarMistakes ??
+    (after.phase === 'results'
+      ? after.resolutionHistory.at(-1)?.players[command.actorId]?.grammarMistakes
+      : undefined);
   if (!beforePlayer || mistakes === undefined) return null;
-  if (
-    mistakes <=
-    beforePlayer.construction.grammarMistakes
-  ) {
+  if (mistakes <= beforePlayer.construction.grammarMistakes) {
     return null;
   }
   return Object.freeze({
@@ -261,10 +323,8 @@ function grammarMistakeReaction(
     playerId: command.actorId,
     damage: Math.max(
       0,
-      before.playerStates[command.actorId]!.pride -
-        after.playerStates[command.actorId]!.pride,
+      before.playerStates[command.actorId]!.pride - after.playerStates[command.actorId]!.pride,
     ),
     sequence: after.commandHistory.length,
   });
 }
-

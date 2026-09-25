@@ -6,16 +6,22 @@ import {
   resolveSceneAsset,
   sceneAssetManifest,
   sceneImageSizes,
-} from '../../src/app/scene-assets';
-import { gameCatalog } from '../../src/game-content';
+} from '../../src/app/scene-assets.ts';
+import { gameCatalog } from '../../src/game-content.ts';
 
 describe('scene asset resolver', () => {
   test('ships regenerated studio layers from native 4K Flare sources without upscaling', async () => {
     const root = path.resolve('src/assets/scenes');
     const expected = [
       ['modern-debate-studio', '6ec7559a6d9be4418666ed4e7367f4f3d7206af4ceb89f709834d9822c830c20'],
-      ['modern-debate-studio-desks', 'bc6e11b259d99fe763e362c1c956fc3cb79fe5a6583a68892155822e7d599901'],
-      ['transition-era-television-studio-desks', '687e4920f87819df31e2203ee1f14afef27ddb8849dd34187364fffeff9f081a'],
+      [
+        'modern-debate-studio-desks',
+        'bc6e11b259d99fe763e362c1c956fc3cb79fe5a6583a68892155822e7d599901',
+      ],
+      [
+        'transition-era-television-studio-desks',
+        '687e4920f87819df31e2203ee1f14afef27ddb8849dd34187364fffeff9f081a',
+      ],
     ] as const;
     const manifest = JSON.parse(await readFile(path.join(root, 'scene-manifest.json'), 'utf8'));
 
@@ -38,7 +44,9 @@ describe('scene asset resolver', () => {
     const hash = createHash('sha256').update(bytes).digest('hex');
     expect(hash).toBe('76368f93b5a8391c2ad3614ba4b87804b4bb95a0ebfd5e7a177601c644f62442');
     const manifest = JSON.parse(await readFile(path.join(root, 'scene-manifest.json'), 'utf8'));
-    const scene = manifest.assets.find((asset: { id: string }) => asset.id === 'transition-era-television-studio');
+    const scene = manifest.assets.find(
+      (asset: { id: string }) => asset.id === 'transition-era-television-studio',
+    );
     expect(scene.source).toMatchObject({ sha256: hash, width: 3840, height: 2160 });
     expect(scene.sourceDescription).toContain('OpenAI API, gpt-image-2.5-sunburst');
     expect(scene.sourceDescription).toContain('native 3840x2160');
@@ -65,8 +73,9 @@ describe('scene asset resolver', () => {
     const hash = createHash('sha256').update(bytes).digest('hex');
     expect(hash).toBe('1b377bdfc260c715909486744e6b5acdd71b755b288bd2d3f83e017c557f5db1');
     const manifest = JSON.parse(await readFile(path.join(root, 'scene-manifest.json'), 'utf8'));
-    const scene = manifest.assets.find((asset: { id: string }) =>
-      asset.id === 'civic-cypher-boxing-ring');
+    const scene = manifest.assets.find(
+      (asset: { id: string }) => asset.id === 'civic-cypher-boxing-ring',
+    );
     expect(scene).toMatchObject({
       ownerId: 'civic-cypher-boxing-ring',
       layerRole: 'back',
@@ -77,8 +86,11 @@ describe('scene asset resolver', () => {
     expect(scene.sourceDescription).toContain('reference-edited');
     expect(scene.sourceDescription).toContain('composited at fixed clear positions');
     expect(scene.sourceDescription).toContain('No upscaling');
-    expect(manifest.assets.some((asset: { id: string }) =>
-      asset.id.startsWith('civic-cypher-boxing-ring-'))).toBe(false);
+    expect(
+      manifest.assets.some((asset: { id: string }) =>
+        asset.id.startsWith('civic-cypher-boxing-ring-'),
+      ),
+    ).toBe(false);
   });
 
   test('maps every manifest layer to AVIF-first and WebP fallback srcsets', () => {
@@ -91,7 +103,7 @@ describe('scene asset resolver', () => {
 
     for (const asset of sceneAssetManifest) {
       expect(asset.width).toBe(3840);
-      expect(asset.height).toBe(asset.width * 9 / 16);
+      expect(asset.height).toBe((asset.width * 9) / 16);
       expect(asset.url).toBe(asset.webp.fallbackUrl);
       expect(asset.avif.srcSet).toMatch(/640w/u);
       expect(asset.avif.srcSet).toMatch(/1280w/u);
@@ -132,9 +144,7 @@ describe('scene asset resolver', () => {
 
   test('exposes the shared responsive image sizing contract', () => {
     expect(sceneImageSizes).toBe('(max-aspect-ratio: 4/3) 134vw, 100vw');
-    const transitionBack = resolveSceneAsset(
-      'transition-era-television-studio',
-    );
+    const transitionBack = resolveSceneAsset('transition-era-television-studio');
     expect(transitionBack.kind).toBe('manifest');
     if (transitionBack.kind === 'manifest') {
       expect(transitionBack.focalPoint).toEqual({ x: 0.5, y: 0.43 });
@@ -154,7 +164,12 @@ describe('scene asset resolver', () => {
   });
 
   test('each foundation scene resolves its own complete package without title artwork', () => {
-    for (const id of ['county-council-ballroom', 'midnight-call-in-studio', 'palace-press-hall', 'influencer-campaign-livestream']) {
+    for (const id of [
+      'county-council-ballroom',
+      'midnight-call-in-studio',
+      'palace-press-hall',
+      'influencer-campaign-livestream',
+    ]) {
       const back = resolveSceneAsset(id);
       const foreground = resolveSceneAsset(`${id}-foreground`);
       for (const asset of [back, foreground]) {

@@ -1,0 +1,18 @@
+# The formatter owns TypeScript, JavaScript, and CSS sources only.
+# JSON files include hash-pinned manifests, and Markdown follows markdownlint.
+*.json
+*.md
+*.html
+*.yml
+*.yaml
+*.xlf
+dist/
+coverage/
+node_modules/
+public/
+tmp/
+logs/
+output/
+.impeccable/
+src/localization/generated/
+tests/browser/__screenshots__/

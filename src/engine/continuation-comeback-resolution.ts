@@ -1,18 +1,15 @@
-import type { Character, Phrase } from '../content/schemas';
-import type { BasicScoringBalance } from '../content/basic-scoring-balance';
-import type { GameLocaleBundle } from '../localization/game-locale-schema';
-import type { GameCommand, RuleError } from './game-contracts';
+import type { Character, Phrase } from '../content/schemas.ts';
+import type { BasicScoringBalance } from '../content/basic-scoring-balance.ts';
+import type { GameLocaleBundle } from '../localization/game-locale-schema.ts';
+import type { GameCommand, RuleError } from './game-contracts.ts';
 import {
   scoreComboFinisherConstruction,
   type ComboChainState,
   type ComboFinisherScore,
-} from './combo-finisher-scoring';
-import type {
-  GrammarAnalysis,
-  GrammarStep,
-} from './grammar/english-grammar-adapter';
-import { seededRandomSource, type RandomSource } from './random-source';
-import { stableHash } from './stable-hash';
+} from './combo-finisher-scoring.ts';
+import type { GrammarAnalysis, GrammarStep } from './grammar/english-grammar-adapter.ts';
+import { seededRandomSource, type RandomSource } from './random-source.ts';
+import { stableHash } from './stable-hash.ts';
 
 export const comebackTiers = ['weak', 'medium', 'strong'] as const;
 export type ComebackTier = (typeof comebackTiers)[number];
@@ -37,10 +34,7 @@ export type ComebackSelection = Readonly<{
 }>;
 
 export type ComebackSelectionErrorCode =
-  | 'comeback-already-selected'
-  | 'comeback-unaffordable'
-  | 'sentence-incomplete'
-  | 'wrong-phase';
+  'comeback-already-selected' | 'comeback-unaffordable' | 'sentence-incomplete' | 'wrong-phase';
 
 export type ComebackSelectionError = RuleError<
   ComebackSelectionErrorCode,
@@ -57,19 +51,12 @@ export type ContinuationCarry = Readonly<{
   publicText: string;
 }>;
 
-export function availableComebackTiers(
-  charge: number,
-): readonly ComebackTier[] {
+export function availableComebackTiers(charge: number): readonly ComebackTier[] {
   const boundedCharge = normalizeCharge(charge);
-  return comebackTiers.filter(
-    (tier) => comebackRules[tier].cost <= boundedCharge,
-  );
+  return comebackTiers.filter((tier) => comebackRules[tier].cost <= boundedCharge);
 }
 
-export function addComebackCharge(
-  currentCharge: number,
-  receivedOpponentDamage: number,
-): number {
+export function addComebackCharge(currentCharge: number, receivedOpponentDamage: number): number {
   return Math.min(
     comebackChargeCap,
     normalizeCharge(currentCharge) + normalizeDamage(receivedOpponentDamage),
@@ -81,8 +68,7 @@ export function resolveContinuationStatus(request: {
   readonly opponentOutgoingDamage: number;
 }): 'broken' | 'none' | 'survived' {
   if (!request.carryIntent) return 'none';
-  return normalizeDamage(request.opponentOutgoingDamage) >=
-    continuationBreakDamage
+  return normalizeDamage(request.opponentOutgoingDamage) >= continuationBreakDamage
     ? 'broken'
     : 'survived';
 }
@@ -124,16 +110,10 @@ export function selectComebackTier(request: {
   }
 
   const lineKeys = request.character.comebackLinesByTier[request.tier];
-  const randomStep = (request.randomSource ?? seededRandomSource).next(
-    request.seed,
-  );
-  const historyOffset =
-    stableHash(JSON.stringify(request.commandHistory ?? [])) % lineKeys.length;
+  const randomStep = (request.randomSource ?? seededRandomSource).next(request.seed);
+  const historyOffset = stableHash(JSON.stringify(request.commandHistory ?? [])) % lineKeys.length;
   const lineIndex =
-    (Math.min(
-      lineKeys.length - 1,
-      Math.floor(randomStep.value * lineKeys.length),
-    ) +
+    (Math.min(lineKeys.length - 1, Math.floor(randomStep.value * lineKeys.length)) +
       historyOffset) %
     lineKeys.length;
   const closingLineKey = lineKeys[lineIndex]!;
@@ -193,10 +173,7 @@ export type ContinuationComebackResolution = Readonly<{
 }>;
 
 export function resolveContinuationComebackRound(request: {
-  readonly players: readonly [
-    ContinuationComebackPlayerInput,
-    ContinuationComebackPlayerInput,
-  ];
+  readonly players: readonly [ContinuationComebackPlayerInput, ContinuationComebackPlayerInput];
   readonly comboState: ComboChainState;
 }): ContinuationComebackResolution {
   let comboState = request.comboState;
@@ -221,8 +198,7 @@ export function resolveContinuationComebackRound(request: {
       balance: player.balance,
     });
     comboState = scored.comboState;
-    const comebackBonus =
-      player.construction.selectedComeback?.damageBonus ?? 0;
+    const comebackBonus = player.construction.selectedComeback?.damageBonus ?? 0;
     return {
       player,
       sentenceDamage: scored.score.finalDamage,
@@ -231,10 +207,7 @@ export function resolveContinuationComebackRound(request: {
       score: scored.score,
     };
   };
-  const attacks = [
-    scorePlayer(request.players[0]),
-    scorePlayer(request.players[1]),
-  ] as const;
+  const attacks = [scorePlayer(request.players[0]), scorePlayer(request.players[1])] as const;
 
   const results: Record<string, ContinuationComebackPlayerResult> = {};
   for (const [index, attack] of attacks.entries()) {
@@ -265,8 +238,7 @@ export function resolveContinuationComebackRound(request: {
       outgoingDamage: attack.outgoingDamage,
       comebackCharge,
       availableComebackTiers: availableComebackTiers(comebackCharge),
-      closingLine:
-        attack.player.construction.selectedComeback?.closingLine ?? null,
+      closingLine: attack.player.construction.selectedComeback?.closingLine ?? null,
       score: attack.score,
       continuation: {
         status: continuationStatus,

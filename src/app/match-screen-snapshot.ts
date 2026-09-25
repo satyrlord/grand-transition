@@ -1,46 +1,43 @@
-import type { MatchArenaReaction } from './match-coordinator';
-export type { MatchArenaReaction } from './match-coordinator';
+import type { MatchArenaReaction } from './match-coordinator.ts';
+export type { MatchArenaReaction } from './match-coordinator.ts';
 import { msg, str } from '@lit/localize';
-import type { Phrase } from '../content/schemas';
+import type { Phrase } from '../content/schemas.ts';
 import {
   handCardSlotIndex,
   snapshotDraftStateForPlayer,
   type ComebackTier,
   type DraftCardReference,
-} from '../engine/draft-actions';
-import { phraseIndex } from '../engine/phrase-index';
+} from '../engine/draft-actions.ts';
+import { phraseIndex } from '../engine/phrase-index.ts';
 import {
   comebackChargeCap,
   comebackRules,
   comebackTiers,
-} from '../engine/continuation-comeback-resolution';
-import type { ComboFinisherScore } from '../engine/combo-finisher-scoring';
-import { extractScoreClauseAnchors } from '../engine/basic-scoring';
-import type { GrammarAnalysis } from '../engine/grammar/english-grammar-adapter';
-import { grammarFor } from '../engine/grammar/grammar-locale';
+} from '../engine/continuation-comeback-resolution.ts';
+import type { ComboFinisherScore } from '../engine/combo-finisher-scoring.ts';
+import { extractScoreClauseAnchors } from '../engine/basic-scoring.ts';
+import type { GrammarAnalysis } from '../engine/grammar/english-grammar-adapter.ts';
+import { grammarFor } from '../engine/grammar/grammar-locale.ts';
 import type {
   MatchResolution,
   MatchResolutionPlayer,
   MatchState,
-} from '../engine/match-lifecycle';
-import { characterSkins, gameCatalog } from '../game-content';
-import type { GameLocaleBundle } from '../localization/game-locale-schema';
-import {
-  interfaceCharacterName,
-  interfaceSceneName,
-} from './interface-names';
-import { deepFreeze } from '../engine/plain-values';
-import { projectCharacterCue, type CharacterCue, type CharacterFrame } from './character-motion';
-import { resolveCharacterFrames } from './character-state-assets';
-import { matchCharacterImageSizes, type CharacterFacing } from './character-assets';
-import { comebackSidekickBottomInset, resolveComebackSidekick } from './sidekick-assets';
+} from '../engine/match-lifecycle.ts';
+import { characterSkins, gameCatalog } from '../game-content.ts';
+import type { GameLocaleBundle } from '../localization/game-locale-schema.ts';
+import { interfaceCharacterName, interfaceSceneName } from './interface-names.ts';
+import { deepFreeze } from '../engine/plain-values.ts';
+import { projectCharacterCue, type CharacterCue, type CharacterFrame } from './character-motion.ts';
+import { resolveCharacterFrames } from './character-state-assets.ts';
+import { matchCharacterImageSizes, type CharacterFacing } from './character-assets.ts';
+import { comebackSidekickBottomInset, resolveComebackSidekick } from './sidekick-assets.ts';
 import {
   resolveSceneAsset,
   sceneImageSizes,
   type SceneAssetSource,
   type ScenePoint,
   type SceneRectangle,
-} from './scene-assets';
+} from './scene-assets.ts';
 
 type MatchCardState = 'disabled' | 'empty' | 'legal' | 'selected';
 type MatchCardAction = 'select' | null;
@@ -112,24 +109,25 @@ type MatchSceneLayerBase = Readonly<{
   webp: SceneAssetSource;
 }>;
 
-export type MatchManifestSceneLayerView = MatchSceneLayerBase & Readonly<{
-  kind: 'manifest';
-  width: 1920 | 3840;
-  height: 1080 | 2160;
-  sizes: typeof sceneImageSizes;
-  avif: SceneAssetSource;
-  sources: Readonly<{
+export type MatchManifestSceneLayerView = MatchSceneLayerBase &
+  Readonly<{
+    kind: 'manifest';
+    width: 1920 | 3840;
+    height: 1080 | 2160;
+    sizes: typeof sceneImageSizes;
     avif: SceneAssetSource;
-    webp: SceneAssetSource;
+    sources: Readonly<{
+      avif: SceneAssetSource;
+      webp: SceneAssetSource;
+    }>;
+    focalPoint: ScenePoint;
+    focalRectangles: Readonly<Record<string, SceneRectangle | null>>;
+    sharedSafeRectangles: Readonly<Record<string, SceneRectangle>>;
+    crop: Readonly<{
+      core: SceneRectangle;
+      strategy: string;
+    }>;
   }>;
-  focalPoint: ScenePoint;
-  focalRectangles: Readonly<Record<string, SceneRectangle | null>>;
-  sharedSafeRectangles: Readonly<Record<string, SceneRectangle>>;
-  crop: Readonly<{
-    core: SceneRectangle;
-    strategy: string;
-  }>;
-}>;
 
 export type MatchSceneLayerView = MatchManifestSceneLayerView;
 
@@ -227,21 +225,15 @@ export function createMatchScreenSnapshot(
           ),
           state.activePlayerId,
           ...state.playerOrder,
-        ].find(
-          (playerId) => reviewResolution.players[playerId]?.completeValidInsult,
-        ) ?? state.activePlayerId);
+        ].find((playerId) => reviewResolution.players[playerId]?.completeValidInsult) ??
+        state.activePlayerId);
   const activePlayer = state.draft.playerStates[activePlayerId];
   if (!activePlayer) {
     throw new Error(`The active player "${activePlayerId}" is missing.`);
   }
-  const opponentId = state.playerOrder.find(
-    (playerId) => playerId !== activePlayerId,
-  )!;
+  const opponentId = state.playerOrder.find((playerId) => playerId !== activePlayerId)!;
   const opponent = state.draft.playerStates[opponentId]!;
-  const viewerSnapshot = snapshotDraftStateForPlayer(
-    state.draft,
-    viewerId,
-  );
+  const viewerSnapshot = snapshotDraftStateForPlayer(state.draft, viewerId);
   const phraseById = phraseIndex(gameCatalog.phrases);
   const selectedPhraseIds = new Set(
     Object.values(state.draft.playerStates).flatMap((player) =>
@@ -302,8 +294,7 @@ export function createMatchScreenSnapshot(
     const player = state.playerStates[playerId]!;
     const draftPlayer = viewerSnapshot.players[playerId]!;
     const skin = characterSkin(player.characterId, skinIdsByPlayer[playerId]);
-    const currentPublicSentence =
-      draftPlayer.construction.previewText?.trim() ?? '';
+    const currentPublicSentence = draftPlayer.construction.previewText?.trim() ?? '';
     return {
       playerId,
       characterId: player.characterId,
@@ -363,9 +354,10 @@ export function createMatchScreenSnapshot(
     }),
   );
   const activeName = characterName(activePlayer.characterId);
-  const arenaReactionPlayer = arenaReaction?.kind === 'grammar-mistake'
-    ? state.playerStates[arenaReaction.playerId]
-    : undefined;
+  const arenaReactionPlayer =
+    arenaReaction?.kind === 'grammar-mistake'
+      ? state.playerStates[arenaReaction.playerId]
+      : undefined;
   const reviewSentence = reviewResolution
     ? reviewResolution.players[activePlayerId]?.constructionText?.trim() ||
       latestPublicSentence(state, activePlayerId)
@@ -385,9 +377,7 @@ export function createMatchScreenSnapshot(
     victory: victory
       ? {
           winnerId: victory.winnerId,
-          winnerName: characterName(
-            state.playerStates[victory.winnerId]!.characterId,
-          ),
+          winnerName: characterName(state.playerStates[victory.winnerId]!.characterId),
           completedRounds: victory.completedRounds,
           ladder: victory.ladder ?? false,
         }
@@ -422,20 +412,19 @@ export function createMatchScreenSnapshot(
       comebackTiers: actionComebackTiers,
       comebackTier: actionComebackTier,
       comebackDamageBonus:
-        actionComebackTier === null
-          ? null
-          : comebackRules[actionComebackTier].damageBonus,
+        actionComebackTier === null ? null : comebackRules[actionComebackTier].damageBonus,
     },
-    arenaReaction: reviewResolution !== null || !arenaReaction
-      ? null
-      : arenaReaction.kind === 'grammar-mistake' && arenaReactionPlayer
-        ? {
-            ...arenaReaction,
-            playerName: characterName(arenaReactionPlayer.characterId),
-          }
-        : arenaReaction.kind === 'cliffhanger'
-          ? arenaReaction
-          : null,
+    arenaReaction:
+      reviewResolution !== null || !arenaReaction
+        ? null
+        : arenaReaction.kind === 'grammar-mistake' && arenaReactionPlayer
+          ? {
+              ...arenaReaction,
+              playerName: characterName(arenaReactionPlayer.characterId),
+            }
+          : arenaReaction.kind === 'cliffhanger'
+            ? arenaReaction
+            : null,
     reaction: {
       round: reviewResolution?.round ?? null,
       outcomeLabel: reviewResolution
@@ -519,7 +508,9 @@ function scoreComponentViews(
         const phrase = phraseById.get(item.phraseId);
         components.push({
           kind: 'finisher',
-          narrationIndex: result.constructionPhrases.findIndex(({ phraseId }) => phraseId === item.phraseId),
+          narrationIndex: result.constructionPhrases.findIndex(
+            ({ phraseId }) => phraseId === item.phraseId,
+          ),
           phraseText:
             phraseTextById.get(item.phraseId) ??
             (phrase ? gameMessage(locale, phrase.textKey) : msg('Finisher')),
@@ -560,9 +551,7 @@ function scorePhraseText(
   phraseIds: readonly string[],
   phraseTextById: ReadonlyMap<string, string>,
 ): string {
-  return phraseIds
-    .map((phraseId) => phraseTextById.get(phraseId) ?? phraseId)
-    .join(' ');
+  return phraseIds.map((phraseId) => phraseTextById.get(phraseId) ?? phraseId).join(' ');
 }
 
 function comboDamageDetails(
@@ -593,9 +582,7 @@ function weaknessDamageDetails(
   return {
     factor: score.breakdown.reduce(
       (factor, item) =>
-        item.kind === 'weakness-multiplier'
-          ? Math.max(factor, item.factor)
-          : factor,
+        item.kind === 'weakness-multiplier' ? Math.max(factor, item.factor) : factor,
       1,
     ),
     tags: [
@@ -608,15 +595,11 @@ function weaknessDamageDetails(
   };
 }
 
-function roundOutcomeLabel(
-  state: MatchState,
-  resolution: MatchResolution,
-): string {
+function roundOutcomeLabel(state: MatchState, resolution: MatchResolution): string {
   const [firstId, secondId] = state.playerOrder;
   const firstDamage = resolution.players[firstId]!.outgoingDamage;
   const secondDamage = resolution.players[secondId]!.outgoingDamage;
-  if (firstDamage === secondDamage)
-    return msg(str`Round ${resolution.round} result: tie`);
+  if (firstDamage === secondDamage) return msg(str`Round ${resolution.round} result: tie`);
   const winnerId = firstDamage > secondDamage ? firstId : secondId;
   return msg(
     str`Round ${resolution.round} winner: ${characterName(state.playerStates[winnerId]!.characterId)}`,
@@ -753,25 +736,16 @@ function legalPreview(
   };
 }
 
-function latestPublicSentence(
-  state: MatchState,
-  playerId: string,
-): string | null {
+function latestPublicSentence(state: MatchState, playerId: string): string | null {
   for (let index = state.resolutionHistory.length - 1; index >= 0; index -= 1) {
     const player = state.resolutionHistory[index]?.players[playerId];
-    const sentence =
-      player?.constructionStatus === 'valid'
-        ? player.constructionText.trim()
-        : '';
+    const sentence = player?.constructionStatus === 'valid' ? player.constructionText.trim() : '';
     if (sentence) return sentence;
   }
   return null;
 }
 
-function weaknessMatches(
-  phrase: Phrase,
-  weaknessTags: readonly string[],
-): readonly string[] {
+function weaknessMatches(phrase: Phrase, weaknessTags: readonly string[]): readonly string[] {
   return weaknessTags.filter((tag) => phrase.tags.includes(tag));
 }
 
@@ -800,9 +774,7 @@ function characterSkin(characterId: string, skinId?: string) {
 }
 
 function sceneLayerViews(sceneId: string): readonly MatchSceneLayerView[] {
-  const scene = gameCatalog.scenes.find(
-    (candidate) => candidate.id === sceneId,
-  );
+  const scene = gameCatalog.scenes.find((candidate) => candidate.id === sceneId);
   if (!scene) throw new Error(`Unknown match scene "${sceneId}".`);
 
   return scene.backgroundLayers.map(({ depth, media }) => {

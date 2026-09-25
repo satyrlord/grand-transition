@@ -1,6 +1,6 @@
 // Romanian neural speech assets for spec-029 phase 2.
 //
-// Mirrors tools/neural-speech-assets.mjs: pin the upstream revisions, verify
+// Mirrors tools/neural-speech-assets.ts: pin the upstream revisions, verify
 // every downloaded byte, patch the exported ONNX graphs so they also return
 // phoneme durations, vendor the Romanian pronunciation runtime, and write a
 // manifest that validateRomanianSpeechAssets() re-checks independently.
@@ -34,26 +34,62 @@ const lianaSource = 'https://huggingface.co/eduardem/piper-liana-romanian';
 const lianaBase = `${lianaSource}/resolve/${lianaRevision}/`;
 const espeakRevision = '4870adfa25b1a32b4361592f1be8a40337c58d6c';
 
-const sources = [
+type PinnedSource = { name: string; url: string; bytes?: number; sha256?: string };
+const sources: PinnedSource[] = [
   {
     name: 'mihai/ro_RO-mihai-medium.onnx',
     url: `${piperBase}ro_RO-mihai-medium.onnx`,
     bytes: 63201294,
     sha256: 'e0608bbbd53c80267c09ece681b09f5199f54e792356684c8073738e5f15d29f',
   },
-  { name: 'mihai/ro_RO-mihai-medium.onnx.json', url: `${piperBase}ro_RO-mihai-medium.onnx.json`, bytes: 4877, sha256: '8cc0c9f077dc0cec3c25a6a055ec8046db8e40a2510591582f2c9c869f4bc47e' },
-  { name: 'mihai/MODEL_CARD', url: `${piperBase}MODEL_CARD`, bytes: 278, sha256: 'e06fb69411b3614636fdec4af646ac74548c6c323a8ac4030e34cb54e99016a1' },
+  {
+    name: 'mihai/ro_RO-mihai-medium.onnx.json',
+    url: `${piperBase}ro_RO-mihai-medium.onnx.json`,
+    bytes: 4877,
+    sha256: '8cc0c9f077dc0cec3c25a6a055ec8046db8e40a2510591582f2c9c869f4bc47e',
+  },
+  {
+    name: 'mihai/MODEL_CARD',
+    url: `${piperBase}MODEL_CARD`,
+    bytes: 278,
+    sha256: 'e06fb69411b3614636fdec4af646ac74548c6c323a8ac4030e34cb54e99016a1',
+  },
   {
     name: 'liana/ro_RO-liana-medium.onnx',
     url: `${lianaBase}voices/liana-medium/ro_RO-liana-medium.onnx`,
     bytes: 63516050,
     sha256: '40c6cbe08905ba702f4df5966a3a8de2bcc232db8ad3784db74bbd948d9953d3',
   },
-  { name: 'liana/ro_RO-liana-medium.onnx.json', url: `${lianaBase}voices/liana-medium/ro_RO-liana-medium.onnx.json`, bytes: 4855, sha256: 'bb70ba2e0181a3d98050020ea3531a279f96afd72cc86d571cf5de0920383f46' },
-  { name: 'liana/README.md', url: `${lianaBase}README.md`, bytes: 17843, sha256: '24b4471be0f635555d64e74d6aab78ff62fc0d04eea6d6e076996bb5d0b3ae01' },
-  { name: 'pronounce/ro_dict', url: `${lianaBase}espeak/ro_dict`, bytes: 72506, sha256: '6cd3b221a33308d802b6c4d7bf1e618db4fb1caa92ef165a327fc775ee82e5ca' },
-  { name: 'pronounce/ro_extra', url: `${lianaBase}espeak/ro_extra`, bytes: 13456, sha256: 'bef32cd1d8cc9ca5cba64416845c13782ae82b154ce009dd222495ebbd6089d7' },
-  { name: 'pronounce/espeak-ng.pin', url: `${lianaBase}espeak/espeak-ng.pin`, bytes: 174, sha256: '2a81547ac0679e8156551a7d40980985b3cb01a1ca9b9c5c1cfe9090a20f3788' },
+  {
+    name: 'liana/ro_RO-liana-medium.onnx.json',
+    url: `${lianaBase}voices/liana-medium/ro_RO-liana-medium.onnx.json`,
+    bytes: 4855,
+    sha256: 'bb70ba2e0181a3d98050020ea3531a279f96afd72cc86d571cf5de0920383f46',
+  },
+  {
+    name: 'liana/README.md',
+    url: `${lianaBase}README.md`,
+    bytes: 17843,
+    sha256: '24b4471be0f635555d64e74d6aab78ff62fc0d04eea6d6e076996bb5d0b3ae01',
+  },
+  {
+    name: 'pronounce/ro_dict',
+    url: `${lianaBase}espeak/ro_dict`,
+    bytes: 72506,
+    sha256: '6cd3b221a33308d802b6c4d7bf1e618db4fb1caa92ef165a327fc775ee82e5ca',
+  },
+  {
+    name: 'pronounce/ro_extra',
+    url: `${lianaBase}espeak/ro_extra`,
+    bytes: 13456,
+    sha256: 'bef32cd1d8cc9ca5cba64416845c13782ae82b154ce009dd222495ebbd6089d7',
+  },
+  {
+    name: 'pronounce/espeak-ng.pin',
+    url: `${lianaBase}espeak/espeak-ng.pin`,
+    bytes: 174,
+    sha256: '2a81547ac0679e8156551a7d40980985b3cb01a1ca9b9c5c1cfe9090a20f3788',
+  },
 ];
 
 // The pinned ONNX schema used to append the duration output, matching the
@@ -105,36 +141,88 @@ const identity = {
   ],
 };
 
-const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 
 // Output inventory pinned by the first build. validate() refuses any drift from
 // it, including a changed file size, a changed digest, or an extra file.
 const expectedFiles = [
-  { path: 'NOTICE.txt', bytes: 1591, sha256: 'b7a1e09c92b1b444e112c09e1a378132a5702efcd996becd9e6e43720cfd446b' },
-  { path: 'liana/MODEL_CARD', bytes: 17843, sha256: '24b4471be0f635555d64e74d6aab78ff62fc0d04eea6d6e076996bb5d0b3ae01' },
-  { path: 'liana/config.json', bytes: 4855, sha256: 'bb70ba2e0181a3d98050020ea3531a279f96afd72cc86d571cf5de0920383f46' },
-  { path: 'liana/model.onnx', bytes: 63516164, sha256: '6de939f34a464434c982f726a55d9bff06b39ee35fc3d4e87bcda3f88a135a14' },
-  { path: 'mihai/MODEL_CARD', bytes: 278, sha256: 'e06fb69411b3614636fdec4af646ac74548c6c323a8ac4030e34cb54e99016a1' },
-  { path: 'mihai/config.json', bytes: 4877, sha256: '8cc0c9f077dc0cec3c25a6a055ec8046db8e40a2510591582f2c9c869f4bc47e' },
-  { path: 'mihai/model.onnx', bytes: 63201408, sha256: '240154e6744cb496897bbb4242121dc1709d3279f25e4f1ba5de61b341c9da38' },
-  { path: 'pronounce/data/bundle-1.data', bytes: 2071717, sha256: '9fddb3e23492d0e4290cd601cb397c7532e196c3b3e9aa5ac40ff323b9be3495' },
-  { path: 'pronounce/data/core.data', bytes: 713784, sha256: '2e0c2a24a667c3a0dc01885fec01f010062f74c0dfb35e8684ba95e95a1c8673' },
-  { path: 'pronounce/data/manifest.json', bytes: 6649, sha256: 'e5df411f6d5c8a439c93bc708b3cf5f089a466c1334c474bf9e893d63dbfe30c' },
-  { path: 'pronounce/espeak-phonemizer-LICENSE', bytes: 35147, sha256: '8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903' },
-  { path: 'pronounce/espeak-phonemizer-NOTICES', bytes: 1267, sha256: 'd1f35cb1143a05a3dc67acc6707755ebd2ac71a9b9bd1093cb4a4d27b824327f' },
-  { path: 'pronounce/wasm/espeak-ng.wasm', bytes: 306459, sha256: '8b087d038ee043a355b0bf6c0737328becab128e563e7181a663defb1408e587' },
+  {
+    path: 'NOTICE.txt',
+    bytes: 1591,
+    sha256: 'b7a1e09c92b1b444e112c09e1a378132a5702efcd996becd9e6e43720cfd446b',
+  },
+  {
+    path: 'liana/MODEL_CARD',
+    bytes: 17843,
+    sha256: '24b4471be0f635555d64e74d6aab78ff62fc0d04eea6d6e076996bb5d0b3ae01',
+  },
+  {
+    path: 'liana/config.json',
+    bytes: 4855,
+    sha256: 'bb70ba2e0181a3d98050020ea3531a279f96afd72cc86d571cf5de0920383f46',
+  },
+  {
+    path: 'liana/model.onnx',
+    bytes: 63516164,
+    sha256: '6de939f34a464434c982f726a55d9bff06b39ee35fc3d4e87bcda3f88a135a14',
+  },
+  {
+    path: 'mihai/MODEL_CARD',
+    bytes: 278,
+    sha256: 'e06fb69411b3614636fdec4af646ac74548c6c323a8ac4030e34cb54e99016a1',
+  },
+  {
+    path: 'mihai/config.json',
+    bytes: 4877,
+    sha256: '8cc0c9f077dc0cec3c25a6a055ec8046db8e40a2510591582f2c9c869f4bc47e',
+  },
+  {
+    path: 'mihai/model.onnx',
+    bytes: 63201408,
+    sha256: '240154e6744cb496897bbb4242121dc1709d3279f25e4f1ba5de61b341c9da38',
+  },
+  {
+    path: 'pronounce/data/bundle-1.data',
+    bytes: 2071717,
+    sha256: '9fddb3e23492d0e4290cd601cb397c7532e196c3b3e9aa5ac40ff323b9be3495',
+  },
+  {
+    path: 'pronounce/data/core.data',
+    bytes: 713784,
+    sha256: '2e0c2a24a667c3a0dc01885fec01f010062f74c0dfb35e8684ba95e95a1c8673',
+  },
+  {
+    path: 'pronounce/data/manifest.json',
+    bytes: 6649,
+    sha256: 'e5df411f6d5c8a439c93bc708b3cf5f089a466c1334c474bf9e893d63dbfe30c',
+  },
+  {
+    path: 'pronounce/espeak-phonemizer-LICENSE',
+    bytes: 35147,
+    sha256: '8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903',
+  },
+  {
+    path: 'pronounce/espeak-phonemizer-NOTICES',
+    bytes: 1267,
+    sha256: 'd1f35cb1143a05a3dc67acc6707755ebd2ac71a9b9bd1093cb4a4d27b824327f',
+  },
+  {
+    path: 'pronounce/wasm/espeak-ng.wasm',
+    bytes: 306459,
+    sha256: '8b087d038ee043a355b0bf6c0737328becab128e563e7181a663defb1408e587',
+  },
 ];
 
-async function download(url) {
+async function download(url: string): Promise<Buffer> {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`The pinned speech source is unavailable: ${url}`);
   return Buffer.from(await response.arrayBuffer());
 }
 
 // Cache pinned sources for repeated builds.
-async function fetchPinned({ name, url, bytes, sha256 }) {
+async function fetchPinned({ name, url, bytes, sha256 }: PinnedSource): Promise<Buffer> {
   const file = path.join(cache, name);
-  let content;
+  let content: Buffer;
   try {
     content = await readFile(file);
   } catch {
@@ -151,8 +239,14 @@ async function fetchPinned({ name, url, bytes, sha256 }) {
   return content;
 }
 
-function patchModel(bytes, Model, label) {
-  const model = Model.decode(bytes);
+function patchModel(bytes: Buffer, Model: protobuf.Type, label: string): Buffer {
+  // Only the graph fields that the duration output changes are typed here.
+  const model = Model.decode(bytes) as unknown as {
+    graph: {
+      node: { name?: string; opType: string; input?: string[]; output: string[] }[];
+      output: unknown[];
+    };
+  };
   const hasDurationTensor = model.graph.node.some(
     (node) => node.opType === 'Ceil' && node.output.includes('/Ceil_output_0'),
   );
@@ -180,24 +274,30 @@ function patchModel(bytes, Model, label) {
 // Trim the 113-language eSpeak data to what Romanian needs: the shared core plus
 // one bucket, with Liana's patched dictionary replacing the stock ro_dict. The
 // packed format is plain concatenation, so offsets are recomputed here.
-async function buildPronunciation(patchedDictionary) {
-  const manifest = JSON.parse(
-    await readFile(`${phonemizerDist}/data/manifest.json`, 'utf8'),
-  );
+type PackedFile = { offset: number; length: number };
+
+async function buildPronunciation(patchedDictionary: Buffer) {
+  const manifest = JSON.parse(await readFile(`${phonemizerDist}/data/manifest.json`, 'utf8')) as {
+    generatedAt: unknown;
+    core: unknown;
+    voiceToBucket: Record<string, string | undefined>;
+    buckets: Record<string, { files: Record<string, PackedFile> }>;
+  };
   const bucketName = manifest.voiceToBucket.ro;
   if (!bucketName) throw new Error('The pinned phonemizer data has no Romanian voice.');
-  const bucket = manifest.buckets[bucketName];
+  const bucket = manifest.buckets[bucketName]!;
   const packed = await readFile(`${phonemizerDist}/data/${bucketName}.data`);
   const entries = Object.entries(bucket.files).sort(
     ([, left], [, right]) => left.offset - right.offset,
   );
-  const parts = [];
-  const files = {};
+  const parts: Buffer[] = [];
+  const files: Record<string, PackedFile> = {};
   let offset = 0;
   for (const [name, entry] of entries) {
-    const content = name === 'ro_dict'
-      ? patchedDictionary
-      : packed.subarray(entry.offset, entry.offset + entry.length);
+    const content =
+      name === 'ro_dict'
+        ? patchedDictionary
+        : packed.subarray(entry.offset, entry.offset + entry.length);
     files[name] = { offset, length: content.length };
     parts.push(content);
     offset += content.length;
@@ -205,10 +305,22 @@ async function buildPronunciation(patchedDictionary) {
   await mkdir(`${root}/pronounce/data`, { recursive: true });
   await mkdir(`${root}/pronounce/wasm`, { recursive: true });
   await writeFile(`${root}/pronounce/data/${bucketName}.data`, Buffer.concat(parts));
-  await writeFile(`${root}/pronounce/data/core.data`, await readFile(`${phonemizerDist}/data/core.data`));
-  await writeFile(`${root}/pronounce/wasm/espeak-ng.wasm`, await readFile(`${phonemizerDist}/wasm/espeak-ng.wasm`));
-  await writeFile(`${root}/pronounce/espeak-phonemizer-LICENSE`, await readFile('node_modules/espeak-phonemizer/LICENSE'));
-  await writeFile(`${root}/pronounce/espeak-phonemizer-NOTICES`, await readFile('node_modules/espeak-phonemizer/THIRD_PARTY_NOTICES.md'));
+  await writeFile(
+    `${root}/pronounce/data/core.data`,
+    await readFile(`${phonemizerDist}/data/core.data`),
+  );
+  await writeFile(
+    `${root}/pronounce/wasm/espeak-ng.wasm`,
+    await readFile(`${phonemizerDist}/wasm/espeak-ng.wasm`),
+  );
+  await writeFile(
+    `${root}/pronounce/espeak-phonemizer-LICENSE`,
+    await readFile('node_modules/espeak-phonemizer/LICENSE'),
+  );
+  await writeFile(
+    `${root}/pronounce/espeak-phonemizer-NOTICES`,
+    await readFile('node_modules/espeak-phonemizer/THIRD_PARTY_NOTICES.md'),
+  );
   await writeFile(
     `${root}/pronounce/data/manifest.json`,
     `${JSON.stringify(
@@ -230,9 +342,15 @@ async function buildPronunciation(patchedDictionary) {
 // so there is one source of truth for the runtime identity.
 async function sharedRuntime() {
   const manifest = JSON.parse(await readFile('public/tts/piper/manifest.json', 'utf8'));
-  const record = manifest.files?.find(({ path: name }) => name === 'ort-wasm-simd-threaded.wasm');
+  const record = (
+    manifest.files as { path: string; bytes: number; sha256: string }[] | undefined
+  )?.find(({ path: name }) => name === 'ort-wasm-simd-threaded.wasm');
   if (!record) throw new Error('The English speech package does not pin the ONNX runtime.');
-  return { path: '../piper/ort-wasm-simd-threaded.wasm', bytes: record.bytes, sha256: record.sha256 };
+  return {
+    path: '../piper/ort-wasm-simd-threaded.wasm',
+    bytes: record.bytes,
+    sha256: record.sha256,
+  };
 }
 
 async function build() {
@@ -241,7 +359,7 @@ async function build() {
   // into a package the pinned inventory does not describe. That includes the
   // retired Liana high weights, now replaced by the medium tier.
   await rm(root, { recursive: true, force: true });
-  const loaded = new Map();
+  const loaded = new Map<string, Buffer>();
   for (const source of sources) {
     const content = await fetchPinned(source);
     loaded.set(source.name, content);
@@ -256,26 +374,30 @@ async function build() {
     schema = await download(schemaSource.url);
     await writeFile(path.join(cache, schemaSource.name), schema);
   }
-  if (hash(schema) !== schemaSource.sha256) throw new Error('The pinned ONNX schema hash does not match.');
+  if (hash(schema) !== schemaSource.sha256)
+    throw new Error('The pinned ONNX schema hash does not match.');
   const Model = protobuf.parse(schema.toString('utf8')).root.lookupType('onnx.ModelProto');
   const voiceStems = { mihai: 'ro_RO-mihai-medium', liana: 'ro_RO-liana-medium' };
   for (const [voice, stem] of Object.entries(voiceStems)) {
-    const patched = patchModel(loaded.get(`${voice}/${stem}.onnx`), Model, voice);
-    const model = identity.voices.find(({ id }) => id === stem).model;
+    const patched = patchModel(loaded.get(`${voice}/${stem}.onnx`)!, Model, voice);
+    const model = identity.voices.find(({ id }) => id === stem)!.model;
     if (patched.length !== model.bytes || hash(patched) !== model.sha256) {
       throw new Error(`The derived Romanian model hash does not match: ${voice}`);
     }
     await mkdir(`${root}/${voice}`, { recursive: true });
     for (const [index, file] of model.files.entries()) {
-      await writeFile(path.join(root, file), patched.subarray(index * modelPartBytes, (index + 1) * modelPartBytes));
+      await writeFile(
+        path.join(root, file),
+        patched.subarray(index * modelPartBytes, (index + 1) * modelPartBytes),
+      );
     }
-    await writeFile(`${root}/${voice}/config.json`, loaded.get(`${voice}/${stem}.onnx.json`));
+    await writeFile(`${root}/${voice}/config.json`, loaded.get(`${voice}/${stem}.onnx.json`)!);
   }
-  await writeFile(`${root}/mihai/MODEL_CARD`, loaded.get('mihai/MODEL_CARD'));
-  await writeFile(`${root}/liana/MODEL_CARD`, loaded.get('liana/README.md'));
-  const pronunciation = await buildPronunciation(loaded.get('pronounce/ro_dict'));
+  await writeFile(`${root}/mihai/MODEL_CARD`, loaded.get('mihai/MODEL_CARD')!);
+  await writeFile(`${root}/liana/MODEL_CARD`, loaded.get('liana/README.md')!);
+  const pronunciation = await buildPronunciation(loaded.get('pronounce/ro_dict')!);
   await writeFile(path.join(root, 'NOTICE.txt'), notice(pronunciation.bucketName));
-  const files = [];
+  const files: { path: string; bytes: number; sha256: string }[] = [];
   for (const name of await inventory(root)) {
     const content = await readFile(path.join(root, name));
     files.push({ path: name, bytes: content.length, sha256: hash(content) });
@@ -299,7 +421,7 @@ async function build() {
   console.log('Prepared local Romanian speech assets.');
 }
 
-function notice(bucketName) {
+function notice(bucketName: string): string {
   return [
     'Romanian neural speech assets. Local inference only; no phrase leaves the device.',
     '',
@@ -324,18 +446,19 @@ function notice(bucketName) {
   ].join('\n');
 }
 
-async function inventory(directory, prefix = '') {
+async function inventory(directory: string, prefix = ''): Promise<string[]> {
   const entries = await readdir(directory, { withFileTypes: true });
-  const names = [];
+  const names: string[] = [];
   for (const entry of entries) {
     const relative = prefix ? `${prefix}/${entry.name}` : entry.name;
-    if (entry.isDirectory()) names.push(...(await inventory(path.join(directory, entry.name), relative)));
+    if (entry.isDirectory())
+      names.push(...(await inventory(path.join(directory, entry.name), relative)));
     else names.push(relative);
   }
   return names.sort(comparePaths);
 }
 
-function comparePaths(left, right) {
+function comparePaths(left: string, right: string): number {
   return left < right ? -1 : left > right ? 1 : 0;
 }
 
@@ -351,7 +474,9 @@ export async function validateRomanianSpeechAssets(assetRoot = root) {
   if (!isDeepStrictEqual(manifest, expectedManifest)) {
     throw new Error('The Romanian speech asset manifest is invalid.');
   }
-  const expectedInventory = [...expectedFiles.map(({ path: name }) => name), 'manifest.json'].sort(comparePaths);
+  const expectedInventory = [...expectedFiles.map(({ path: name }) => name), 'manifest.json'].sort(
+    comparePaths,
+  );
   if (!isDeepStrictEqual(await inventory(assetRoot), expectedInventory)) {
     throw new Error('The Romanian speech asset directory has an invalid inventory.');
   }
@@ -381,7 +506,10 @@ export async function validateRomanianSpeechAssets(assetRoot = root) {
       throw new Error(`The reassembled Romanian model hash does not match: ${id}`);
     }
   }
-  for (const [voice, speakerCount] of [['mihai', 1], ['liana', 1]]) {
+  for (const [voice, speakerCount] of [
+    ['mihai', 1],
+    ['liana', 1],
+  ]) {
     const config = JSON.parse(await readFile(`${assetRoot}/${voice}/config.json`, 'utf8'));
     const speakerIdMap = Object.keys(config.speaker_id_map ?? {});
     if (
@@ -394,7 +522,9 @@ export async function validateRomanianSpeechAssets(assetRoot = root) {
       throw new Error(`The ${voice} Romanian voice configuration is invalid.`);
     }
   }
-  const pronunciation = JSON.parse(await readFile(`${assetRoot}/pronounce/data/manifest.json`, 'utf8'));
+  const pronunciation = JSON.parse(
+    await readFile(`${assetRoot}/pronounce/data/manifest.json`, 'utf8'),
+  );
   if (!isDeepStrictEqual(Object.keys(pronunciation.voiceToBucket), ['ro'])) {
     throw new Error('The shipped pronunciation data must carry Romanian only.');
   }
@@ -405,7 +535,7 @@ export async function validateRomanianSpeechAssets(assetRoot = root) {
   if (!dictionary) throw new Error('The shipped pronunciation data has no Romanian dictionary.');
   const bundle = await readFile(`${assetRoot}/pronounce/data/${bucket.path}`);
   const shipped = bundle.subarray(dictionary.offset, dictionary.offset + dictionary.length);
-  const pinned = sources.find(({ name }) => name === 'pronounce/ro_dict');
+  const pinned = sources.find(({ name }) => name === 'pronounce/ro_dict')!;
   if (shipped.length !== pinned.bytes || hash(shipped) !== pinned.sha256) {
     throw new Error('The shipped Romanian dictionary is not the pinned patched dictionary.');
   }
@@ -415,5 +545,5 @@ export async function validateRomanianSpeechAssets(assetRoot = root) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   if (process.argv[2] === 'build') await build();
   else if (process.argv[2] === 'validate') await validateRomanianSpeechAssets();
-  else throw new Error('Use romanian-speech-assets.mjs build or validate.');
+  else throw new Error('Use romanian-speech-assets.ts build or validate.');
 }

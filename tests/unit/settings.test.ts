@@ -6,34 +6,41 @@ import {
   SettingsValidationError,
   settingsSchemaVersion,
   type SettingsDocument,
-} from '../../src/persistence/codecs/settings-codec';
-import {
-  SettingsRepository,
-  settingsStorageKey,
-} from '../../src/persistence/settings';
+} from '../../src/persistence/codecs/settings-codec.ts';
+import { SettingsRepository, settingsStorageKey } from '../../src/persistence/settings.ts';
 import {
   createMemoryStorage,
   type StoragePort,
   type StorageResult,
-} from '../../src/persistence/storage-port';
+} from '../../src/persistence/storage-port.ts';
 
 describe('settings codec', () => {
   test('loads the current settings document and keeps every stored preference', () => {
     const stored = settings({
-      masterVolume: 0.55, musicVolume: 0.45, autoComplete: false,
-      speechEnabled: false, gpuVoices: false, speechVoiceUri: 'retired:voice', speechRate: 1.2,
-      turnTimerSeconds: null, basePointsMultiplier: 5, tutorialMode: true,
+      masterVolume: 0.55,
+      musicVolume: 0.45,
+      autoComplete: false,
+      speechEnabled: false,
+      gpuVoices: false,
+      speechVoiceUri: 'retired:voice',
+      speechRate: 1.2,
+      turnTimerSeconds: null,
+      basePointsMultiplier: 5,
+      tutorialMode: true,
     });
     const serialized = JSON.stringify(stored);
     const storage = createMemoryStorage({ [settingsStorageKey]: serialized });
     const repository = new SettingsRepository(storage);
     expect(repository.snapshot()).toEqual({
-      settings: stored, persistenceFailure: null, usingMemoryFallback: false,
+      settings: stored,
+      persistenceFailure: null,
+      usingMemoryFallback: false,
     });
     expect(storage.read(settingsStorageKey)).toEqual({ ok: true, value: serialized });
     repository.replace({ ...stored, basePointsMultiplier: 3 });
     expect(new SettingsRepository(storage).snapshot().settings).toEqual({
-      ...stored, basePointsMultiplier: 3,
+      ...stored,
+      basePointsMultiplier: 3,
     });
   });
 
@@ -41,7 +48,9 @@ describe('settings codec', () => {
     expect(settingsSchemaVersion).toBe(3);
     for (const schemaVersion of [1, 2, 4, 5, 6]) {
       expect(decodeSettings(JSON.stringify({ ...defaultSettings, schemaVersion }))).toEqual({
-        ok: false, code: 'unsupported-version', path: 'schemaVersion',
+        ok: false,
+        code: 'unsupported-version',
+        path: 'schemaVersion',
       });
     }
   });
@@ -73,9 +82,7 @@ describe('settings codec', () => {
 
   test('rejects an unknown game locale at its field path', () => {
     for (const gameLocale of ['ro', 'en-US', 'ro-RO ', '', 1, null]) {
-      expect(
-        decodeSettings(JSON.stringify({ ...defaultSettings, gameLocale })),
-      ).toEqual({
+      expect(decodeSettings(JSON.stringify({ ...defaultSettings, gameLocale }))).toEqual({
         ok: false,
         code: 'invalid-data',
         path: 'gameLocale',
@@ -85,9 +92,7 @@ describe('settings codec', () => {
 
   test('rejects a document stored before the game locale existed and preserves the interface locale', () => {
     const { gameLocale: _, ...previousShape } = defaultSettings;
-    expect(
-      decodeSettings(JSON.stringify({ ...previousShape, schemaVersion: 2 })),
-    ).toEqual({
+    expect(decodeSettings(JSON.stringify({ ...previousShape, schemaVersion: 2 }))).toEqual({
       ok: false,
       code: 'unsupported-version',
       path: 'schemaVersion',
@@ -102,9 +107,7 @@ describe('settings codec', () => {
 
   test('rejects an unknown interface locale at its field path', () => {
     for (const interfaceLocale of ['ro', 'en-US', 'ro-RO ', '', 1, null]) {
-      expect(
-        decodeSettings(JSON.stringify({ ...defaultSettings, interfaceLocale })),
-      ).toEqual({
+      expect(decodeSettings(JSON.stringify({ ...defaultSettings, interfaceLocale }))).toEqual({
         ok: false,
         code: 'invalid-data',
         path: 'interfaceLocale',
@@ -114,9 +117,7 @@ describe('settings codec', () => {
 
   test('rejects a document stored before the interface locale existed and preserves every other value', () => {
     const { interfaceLocale: _, ...previousShape } = defaultSettings;
-    expect(
-      decodeSettings(JSON.stringify({ ...previousShape, schemaVersion: 1 })),
-    ).toEqual({
+    expect(decodeSettings(JSON.stringify({ ...previousShape, schemaVersion: 1 }))).toEqual({
       ok: false,
       code: 'unsupported-version',
       path: 'schemaVersion',
@@ -137,9 +138,7 @@ describe('settings codec', () => {
     expect(repository.snapshot().settings.basePointsMultiplier).toBe(5);
     expect(repository.snapshot().settings.tutorialMode).toBe(true);
     expect(repository.snapshot().settings.gpuVoices).toBe(false);
-    expect(repository.snapshot().settings.speechVoiceUri).toBe(
-      'urn:grand-transition:saved-voice',
-    );
+    expect(repository.snapshot().settings.speechVoiceUri).toBe('urn:grand-transition:saved-voice');
     repository.replace({ ...stored, interfaceLocale: 'en' });
     expect(new SettingsRepository(storage).snapshot().settings).toEqual({
       ...stored,
@@ -156,7 +155,9 @@ describe('settings codec', () => {
     expect(defaultSettings.tutorialMode).toBe(false);
     const { tutorialMode: _, ...source } = defaultSettings;
     expect(decodeSettings(JSON.stringify(source))).toEqual({
-      ok: false, code: 'invalid-data', path: 'tutorialMode',
+      ok: false,
+      code: 'invalid-data',
+      path: 'tutorialMode',
     });
   });
 
@@ -168,7 +169,9 @@ describe('settings codec', () => {
   test('requires the multiplier', () => {
     const { basePointsMultiplier: _, ...source } = defaultSettings;
     expect(decodeSettings(JSON.stringify(source))).toEqual({
-      ok: false, code: 'invalid-data', path: 'basePointsMultiplier',
+      ok: false,
+      code: 'invalid-data',
+      path: 'basePointsMultiplier',
     });
   });
 
@@ -184,15 +187,19 @@ describe('settings codec', () => {
 
   test('keeps an explicitly saved speech rate across a reload', () => {
     const stored = settings({
-      speechRate: 1.2, speechEnabled: true, speechVoiceUri: 'retired:voice',
+      speechRate: 1.2,
+      speechEnabled: true,
+      speechVoiceUri: 'retired:voice',
     });
     const storage = createMemoryStorage({ [settingsStorageKey]: JSON.stringify(stored) });
     const repository = new SettingsRepository(storage);
     expect(repository.snapshot().settings.speechRate).toBe(1.2);
     repository.replace({ ...repository.snapshot().settings, speechRate: 1.4 });
     expect(new SettingsRepository(storage).snapshot().settings.speechRate).toBe(1.4);
-    expect(decodeSettings(JSON.stringify({ ...stored, speechRate: 1.15 })))
-      .toMatchObject({ ok: false, code: 'invalid-data' });
+    expect(decodeSettings(JSON.stringify({ ...stored, speechRate: 1.15 }))).toMatchObject({
+      ok: false,
+      code: 'invalid-data',
+    });
   });
   test('new settings use 10 percent music and 1.00 speech defaults while existing saved rates remain intact', () => {
     expect(defaultSettings.musicVolume).toBe(0.1);
@@ -209,15 +216,21 @@ describe('settings codec', () => {
     expect(defaultSettings.schemaVersion).toBe(settingsSchemaVersion);
     const { gpuVoices: _, ...withoutGpuVoices } = defaultSettings;
     expect(decodeSettings(JSON.stringify(withoutGpuVoices))).toEqual({
-      ok: false, code: 'invalid-data', path: 'gpuVoices',
+      ok: false,
+      code: 'invalid-data',
+      path: 'gpuVoices',
     });
     const { interfaceLocale: __, ...withoutInterfaceLocale } = defaultSettings;
     expect(decodeSettings(JSON.stringify(withoutInterfaceLocale))).toEqual({
-      ok: false, code: 'invalid-data', path: 'interfaceLocale',
+      ok: false,
+      code: 'invalid-data',
+      path: 'interfaceLocale',
     });
     const { gameLocale: ___, ...withoutGameLocale } = defaultSettings;
     expect(decodeSettings(JSON.stringify(withoutGameLocale))).toEqual({
-      ok: false, code: 'invalid-data', path: 'gameLocale',
+      ok: false,
+      code: 'invalid-data',
+      path: 'gameLocale',
     });
   });
 
@@ -305,7 +318,9 @@ describe('settings codec', () => {
       path: '$',
     });
     expect(
-      decodeSettings(JSON.stringify({ ...defaultSettings, schemaVersion: settingsSchemaVersion + 1 })),
+      decodeSettings(
+        JSON.stringify({ ...defaultSettings, schemaVersion: settingsSchemaVersion + 1 }),
+      ),
     ).toEqual({
       ok: false,
       code: 'unsupported-version',
@@ -320,9 +335,9 @@ describe('settings codec', () => {
       vi.spyOn(console, 'error'),
     ];
 
-    expect(() =>
-      encodeSettings(settings({ masterVolume: 0.12 })),
-    ).toThrowError(SettingsValidationError);
+    expect(() => encodeSettings(settings({ masterVolume: 0.12 }))).toThrowError(
+      SettingsValidationError,
+    );
     expect(consoleSpies.every((spy) => spy.mock.calls.length === 0)).toBe(true);
   });
 });
@@ -366,46 +381,37 @@ describe('settings repository', () => {
       'unsupported-version',
       JSON.stringify({ ...defaultSettings, schemaVersion: settingsSchemaVersion + 1 }),
     ],
-  ] as const)(
-    'keeps %s bytes until the user changes a setting',
-    (failure, badBytes) => {
-      const storage = createMemoryStorage({ [settingsStorageKey]: badBytes });
-      const repository = new SettingsRepository(storage);
+  ] as const)('keeps %s bytes until the user changes a setting', (failure, badBytes) => {
+    const storage = createMemoryStorage({ [settingsStorageKey]: badBytes });
+    const repository = new SettingsRepository(storage);
 
-      expect(repository.snapshot()).toEqual({
-        settings: defaultSettings,
-        persistenceFailure: failure,
-        usingMemoryFallback: true,
-      });
-      expect(storage.read(settingsStorageKey)).toEqual({
-        ok: true,
-        value: badBytes,
-      });
+    expect(repository.snapshot()).toEqual({
+      settings: defaultSettings,
+      persistenceFailure: failure,
+      usingMemoryFallback: true,
+    });
+    expect(storage.read(settingsStorageKey)).toEqual({
+      ok: true,
+      value: badBytes,
+    });
 
-      repository.replace(settings({ masterVolume: 0.5 }));
-      expect(storage.read(settingsStorageKey)).toEqual({
-        ok: true,
-        value: encodeSettings(settings({ masterVolume: 0.5 })),
-      });
-      expect(repository.snapshot().persistenceFailure).toBeNull();
-      expect(repository.snapshot().usingMemoryFallback).toBe(false);
+    repository.replace(settings({ masterVolume: 0.5 }));
+    expect(storage.read(settingsStorageKey)).toEqual({
+      ok: true,
+      value: encodeSettings(settings({ masterVolume: 0.5 })),
+    });
+    expect(repository.snapshot().persistenceFailure).toBeNull();
+    expect(repository.snapshot().usingMemoryFallback).toBe(false);
 
-      repository.replace(
-        settings({ masterVolume: 0.5, autoComplete: false }),
-      );
-      expect(new SettingsRepository(storage).snapshot()).toEqual({
-        settings: settings({ masterVolume: 0.5, autoComplete: false }),
-        persistenceFailure: null,
-        usingMemoryFallback: false,
-      });
-    },
-  );
+    repository.replace(settings({ masterVolume: 0.5, autoComplete: false }));
+    expect(new SettingsRepository(storage).snapshot()).toEqual({
+      settings: settings({ masterVolume: 0.5, autoComplete: false }),
+      persistenceFailure: null,
+      usingMemoryFallback: false,
+    });
+  });
 
-  test.each([
-    'storage-quota',
-    'storage-security',
-    'storage-unavailable',
-  ] as const)(
+  test.each(['storage-quota', 'storage-security', 'storage-unavailable'] as const)(
     'activates memory fallback for a %s read failure',
     (failureCode) => {
       const browser = failingStorage(failureCode, 'read');
@@ -426,11 +432,7 @@ describe('settings repository', () => {
     },
   );
 
-  test.each([
-    'storage-quota',
-    'storage-security',
-    'storage-unavailable',
-  ] as const)(
+  test.each(['storage-quota', 'storage-security', 'storage-unavailable'] as const)(
     'activates memory fallback for a %s write failure and stays there',
     (failureCode) => {
       const browser = failingStorage(failureCode, 'write');
@@ -482,9 +484,7 @@ test('the memory adapter has the complete storage contract', () => {
   expect(storage.read('new')).toEqual({ ok: true, value: null });
 });
 
-function settings(
-  changes: Partial<SettingsDocument> = {},
-): SettingsDocument {
+function settings(changes: Partial<SettingsDocument> = {}): SettingsDocument {
   return Object.freeze({ ...defaultSettings, ...changes });
 }
 
@@ -497,16 +497,11 @@ function failingStorage(
 }> {
   const failure = <Value>(): StorageResult<Value> => ({ ok: false, code });
   const write = vi.fn<StoragePort['write']>((_key, _value) =>
-    operation === 'write'
-      ? failure<undefined>()
-      : { ok: true, value: undefined },
+    operation === 'write' ? failure<undefined>() : { ok: true, value: undefined },
   );
   return {
     port: {
-      read: () =>
-        operation === 'read'
-          ? failure<string | null>()
-          : { ok: true, value: null },
+      read: () => (operation === 'read' ? failure<string | null>() : { ok: true, value: null }),
       write,
       remove: () => ({ ok: true, value: undefined }),
     },

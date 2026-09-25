@@ -1,19 +1,16 @@
 import { expect, test, vi } from 'vitest';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import {
-  romanianGameLocale,
-  gameCatalog,
-} from '../../src/game-content';
-import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation';
-import type { ReplayContext } from '../../src/persistence/codecs/replay-codec';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
+import { romanianGameLocale, gameCatalog } from '../../src/game-content.ts';
+import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation.ts';
+import type { ReplayContext } from '../../src/persistence/codecs/replay-codec.ts';
 import {
   createMatchHistoryEntry,
   type MatchHistoryEntry,
-} from '../../src/persistence/match-history';
-import { GrandTransitionMatchHistory } from '../../src/app/screens/match-history-modal';
-import { setInterfaceLocale } from '../../src/app/interface-localization';
-import { setGameTextLocale } from '../../src/app/game-text-language';
-import { interfaceCharacterName } from '../../src/app/interface-names';
+} from '../../src/persistence/match-history.ts';
+import { GrandTransitionMatchHistory } from '../../src/app/screens/match-history-modal.ts';
+import { setInterfaceLocale } from '../../src/app/interface-localization.ts';
+import { setGameTextLocale } from '../../src/app/game-text-language.ts';
+import { interfaceCharacterName } from '../../src/app/interface-names.ts';
 
 const seed = 20_260_917;
 
@@ -27,8 +24,7 @@ const recordedSentence = (): HTMLElement | null =>
   document.querySelector('.match-history-sentence');
 
 async function mountHistory(entries: readonly MatchHistoryEntry[]): Promise<void> {
-  document.body.innerHTML =
-    '<grand-transition-match-history></grand-transition-match-history>';
+  document.body.innerHTML = '<grand-transition-match-history></grand-transition-match-history>';
   const modal = document.querySelector(
     'grand-transition-match-history',
   ) as GrandTransitionMatchHistory;

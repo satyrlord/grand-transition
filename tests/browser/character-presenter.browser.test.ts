@@ -1,8 +1,12 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import { commands, page } from 'vitest/browser';
-import { GrandTransitionCharacter } from '../../src/components/character-presenter';
-import { resolveCharacterAsset } from '../../src/app/character-assets';
-import { characterMotion, type CharacterFrame, type CharacterStateId } from '../../src/app/character-motion';
+import { GrandTransitionCharacter } from '../../src/components/character-presenter.ts';
+import { resolveCharacterAsset } from '../../src/app/character-assets.ts';
+import {
+  characterMotion,
+  type CharacterFrame,
+  type CharacterStateId,
+} from '../../src/app/character-motion.ts';
 import styles from '../../src/styles/match-screen.css?raw';
 
 const styleElements: HTMLStyleElement[] = [];
@@ -28,14 +32,21 @@ function mount(initialState: 'idle' | 'selection' = 'idle', failDeliveryAvif = f
   container.style.cssText = 'position:relative;inset:auto;width:320px;height:320px;';
   const presenter = new GrandTransitionCharacter();
   const asset = resolveCharacterAsset('red-folded-chairman');
-  presenter.frames = Object.freeze(Object.keys(characterMotion).map((id) => Object.freeze({
-    id: 'fixture-' + id, stateId: id as CharacterStateId,
-    url: asset.url, sizes: '320px',
-    avif: failDeliveryAvif && id === 'delivery'
-      ? { ...asset.avif, srcSet: 'data:image/avif;base64,AAAA 320w' }
-      : asset.avif,
-    webp: asset.webp,
-  } satisfies CharacterFrame)));
+  presenter.frames = Object.freeze(
+    Object.keys(characterMotion).map((id) =>
+      Object.freeze({
+        id: 'fixture-' + id,
+        stateId: id as CharacterStateId,
+        url: asset.url,
+        sizes: '320px',
+        avif:
+          failDeliveryAvif && id === 'delivery'
+            ? { ...asset.avif, srcSet: 'data:image/avif;base64,AAAA 320w' }
+            : asset.avif,
+        webp: asset.webp,
+      } satisfies CharacterFrame),
+    ),
+  );
   presenter.cue = { stateId: initialState, sequence: 1 };
   container.append(presenter);
   document.body.append(container);
@@ -46,29 +57,40 @@ const visibleState = (element: GrandTransitionCharacter) =>
   element.querySelector<HTMLElement>('[data-state-visible="true"]')?.dataset.stateId;
 
 test.each([
-  ['red', false], ['red', true], ['blue', false], ['blue', true],
-] as const)('keeps recoil away from the opponent for %s with mirrored=%s', async (side, mirrored) => {
-  const presenter = mount();
-  const frame = presenter.parentElement!;
-  const player = document.createElement('div');
-  player.className = 'match-player';
-  player.dataset.side = side;
-  player.style.cssText = 'position:relative;inset:0;width:320px;height:320px;';
-  frame.replaceWith(player);
-  player.append(frame);
-  frame.dataset.mirrored = String(mirrored);
-  await ready(presenter);
-  presenter.cue = { stateId: 'heavy-hit', sequence: 2 };
-  await presenter.updateComplete;
-  const reaction = presenter.querySelector<HTMLElement>('[data-state-visible="true"]')!;
-  const animation = reaction.getAnimations()[0]!;
-  animation.pause();
-  animation.currentTime = 130;
-  const drawing = reaction.querySelector('.character-state-drawing')!;
-  expect(new DOMMatrix(getComputedStyle(drawing).transform).a).toBe(mirrored ? -1 : 1);
-  expect(getComputedStyle(presenter.querySelector('.character-state-layer')!).transform).toBe('none');
-  expect(new DOMMatrix(getComputedStyle(reaction).transform).m41).toBeCloseTo(side === 'red' ? -2.24 : 2.24, 2);
-});
+  ['red', false],
+  ['red', true],
+  ['blue', false],
+  ['blue', true],
+] as const)(
+  'keeps recoil away from the opponent for %s with mirrored=%s',
+  async (side, mirrored) => {
+    const presenter = mount();
+    const frame = presenter.parentElement!;
+    const player = document.createElement('div');
+    player.className = 'match-player';
+    player.dataset.side = side;
+    player.style.cssText = 'position:relative;inset:0;width:320px;height:320px;';
+    frame.replaceWith(player);
+    player.append(frame);
+    frame.dataset.mirrored = String(mirrored);
+    await ready(presenter);
+    presenter.cue = { stateId: 'heavy-hit', sequence: 2 };
+    await presenter.updateComplete;
+    const reaction = presenter.querySelector<HTMLElement>('[data-state-visible="true"]')!;
+    const animation = reaction.getAnimations()[0]!;
+    animation.pause();
+    animation.currentTime = 130;
+    const drawing = reaction.querySelector('.character-state-drawing')!;
+    expect(new DOMMatrix(getComputedStyle(drawing).transform).a).toBe(mirrored ? -1 : 1);
+    expect(getComputedStyle(presenter.querySelector('.character-state-layer')!).transform).toBe(
+      'none',
+    );
+    expect(new DOMMatrix(getComputedStyle(reaction).transform).m41).toBeCloseTo(
+      side === 'red' ? -2.24 : 2.24,
+      2,
+    );
+  },
+);
 async function ready(element: GrandTransitionCharacter) {
   await decodedFrames(element);
   expect(visibleState(element)).toBe('idle');
@@ -76,14 +98,20 @@ async function ready(element: GrandTransitionCharacter) {
 
 async function decodedFrames(element: GrandTransitionCharacter) {
   await element.updateComplete;
-  await Promise.all([...element.querySelectorAll<HTMLImageElement>('img')].map(async (image) => {
-    if (!image.complete || image.naturalWidth === 0) {
-      await new Promise<void>((resolve) => image.addEventListener('load', () => resolve(), { once: true }));
-    }
-    await image.decode();
-  }));
+  await Promise.all(
+    [...element.querySelectorAll<HTMLImageElement>('img')].map(async (image) => {
+      if (!image.complete || image.naturalWidth === 0) {
+        await new Promise<void>((resolve) =>
+          image.addEventListener('load', () => resolve(), { once: true }),
+        );
+      }
+      await image.decode();
+    }),
+  );
   await element.updateComplete;
-  await vi.waitFor(() => expect(element.querySelectorAll('.character-state-upper')).toHaveLength(9));
+  await vi.waitFor(() =>
+    expect(element.querySelectorAll('.character-state-upper')).toHaveLength(9),
+  );
 }
 
 test('reserves one image plane, preloads only its supplied package, and splits decoded body parts', async () => {
@@ -160,13 +188,20 @@ test('a newer public cue replaces a reaction without waiting for it', async () =
 
 test('late decode cannot resurrect a superseded state', async () => {
   let release!: () => void;
-  const gate = new Promise<void>((resolve) => { release = resolve; });
-  vi.spyOn(HTMLImageElement.prototype, 'decode').mockImplementation(function(this: HTMLImageElement) {
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  vi.spyOn(HTMLImageElement.prototype, 'decode').mockImplementation(function (
+    this: HTMLImageElement,
+  ) {
     return this.closest<HTMLElement>('[data-state-id]')?.dataset.stateId === 'delivery'
-      ? gate : Promise.resolve();
+      ? gate
+      : Promise.resolve();
   });
   const presenter = mount();
-  await vi.waitFor(() => expect(presenter.querySelectorAll('.character-state-upper')).toHaveLength(8));
+  await vi.waitFor(() =>
+    expect(presenter.querySelectorAll('.character-state-upper')).toHaveLength(8),
+  );
   presenter.cue = { stateId: 'delivery', sequence: 2 };
   await presenter.updateComplete;
   expect(visibleState(presenter)).toBe('idle');
@@ -174,7 +209,9 @@ test('late decode cannot resurrect a superseded state', async () => {
   await presenter.updateComplete;
   expect(visibleState(presenter)).toBe('grammar-mistake');
   release();
-  await vi.waitFor(() => expect(presenter.querySelectorAll('.character-state-upper')).toHaveLength(9));
+  await vi.waitFor(() =>
+    expect(presenter.querySelectorAll('.character-state-upper')).toHaveLength(9),
+  );
   expect(visibleState(presenter)).not.toBe('delivery');
 });
 
@@ -187,8 +224,13 @@ test('pause discards a transient and resume does not replay it', async () => {
   presenter.paused = true;
   await presenter.updateComplete;
   expect(visibleState(presenter)).toBe('idle');
-  expect(presenter.querySelector('.character-state-layer')?.getAttribute('data-motion-suspended')).toBe('true');
-  expect(getComputedStyle(presenter.querySelector('[data-state-visible="true"] .character-state-upper')!).animationPlayState).toBe('paused');
+  expect(
+    presenter.querySelector('.character-state-layer')?.getAttribute('data-motion-suspended'),
+  ).toBe('true');
+  expect(
+    getComputedStyle(presenter.querySelector('[data-state-visible="true"] .character-state-upper')!)
+      .animationPlayState,
+  ).toBe('paused');
   presenter.paused = false;
   await presenter.updateComplete;
   expect(visibleState(presenter)).toBe('idle');
@@ -223,7 +265,9 @@ test('reduced motion suppresses loops and reactions while keeping the requested 
     presenter.cue = { stateId: 'heavy-hit', sequence: 2 };
     await presenter.updateComplete;
     expect(visibleState(presenter)).toBe('heavy-hit');
-    expect(getComputedStyle(presenter.querySelector('[data-state-visible="true"]')!).animationName).toBe('none');
+    expect(
+      getComputedStyle(presenter.querySelector('[data-state-visible="true"]')!).animationName,
+    ).toBe('none');
   } finally {
     await commands.setReducedMotion(false);
   }
@@ -234,9 +278,12 @@ test('a reaction does not intercept a pointer action or change the reserved fram
   await ready(presenter);
   const button = document.createElement('button');
   button.textContent = 'Action behind art';
-  button.style.cssText = 'position:absolute;left:120px;top:130px;width:100px;height:44px;pointer-events:auto;';
+  button.style.cssText =
+    'position:absolute;left:120px;top:130px;width:100px;height:44px;pointer-events:auto;';
   let clicks = 0;
-  button.addEventListener('click', () => { clicks += 1; });
+  button.addEventListener('click', () => {
+    clicks += 1;
+  });
   presenter.parentElement!.prepend(button);
   const before = presenter.getBoundingClientRect().toJSON();
   presenter.cue = { stateId: 'heavy-hit', sequence: 2 };

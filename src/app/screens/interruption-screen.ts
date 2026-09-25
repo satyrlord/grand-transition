@@ -11,7 +11,8 @@ export const phraseColorCodingChangeEventName = 'phrase-color-coding-change';
 export const musicEnabledChangeEventName = 'music-enabled-change';
 export const voicesEnabledChangeEventName = 'voices-enabled-change';
 
-export type InterruptionKind = 'paused' | 'unsupported-viewport' | 'landscape-recommended' | 'hotseat-portrait';
+export type InterruptionKind =
+  'paused' | 'unsupported-viewport' | 'landscape-recommended' | 'hotseat-portrait';
 export type TurnTimerSeconds = 15 | 30 | null;
 export type TurnTimerChangeEvent = CustomEvent<TurnTimerSeconds>;
 export type AutoCompleteChangeEvent = CustomEvent<boolean>;
@@ -82,7 +83,10 @@ export class GrandTransitionInterruption extends LitElement {
           aria-labelledby="interruption-title"
           aria-describedby=${confirmingExit ? 'exit-confirmation-copy' : recommendation ? 'orientation-copy' : nothing}
         >
-          ${recommendation ? nothing : html`<p class="interruption-status">
+          ${
+            recommendation
+              ? nothing
+              : html`<p class="interruption-status">
             ${
               confirmingExit
                 ? msg('Match interruption')
@@ -90,16 +94,19 @@ export class GrandTransitionInterruption extends LitElement {
                   ? msg('Transmission held')
                   : msg('Transmission unavailable')
             }
-          </p>`}
+          </p>`
+          }
           <h1 id="interruption-title">
             ${
               confirmingExit
                 ? msg('End this match?')
                 : paused
                   ? msg('Paused')
-                  : recommendation ? msg('Landscape recommended')
-                  : hotseatPortrait ? msg('Multiplayer requires landscape')
-                  : msg('Larger viewport required')
+                  : recommendation
+                    ? msg('Landscape recommended')
+                    : hotseatPortrait
+                      ? msg('Multiplayer requires landscape')
+                      : msg('Larger viewport required')
             }
           </h1>
           ${
@@ -133,10 +140,10 @@ export class GrandTransitionInterruption extends LitElement {
                   </p>
                   <button type="button" class="interruption-primary"
                     @click=${this.continuePortrait}>${msg('Continue in portrait')}</button>`
-              : hotseatPortrait
-                ? html`<p>${msg('The match is concealed and the turn timer is stopped. Rotate to landscape to continue. Your match is preserved.')}</p>`
-              : paused
-                ? html`
+                : hotseatPortrait
+                  ? html`<p>${msg('The match is concealed and the turn timer is stopped. Rotate to landscape to continue. Your match is preserved.')}</p>`
+                  : paused
+                    ? html`
                     <p>
                       ${msg('The match is concealed and the turn timer is stopped.')}
                     </p>
@@ -216,7 +223,7 @@ export class GrandTransitionInterruption extends LitElement {
                       </button>
                     </div>
                   `
-                : html`
+                    : html`
                     <p>
                       ${msg('Use a browser viewport of at least 640 by 320 CSS pixels in landscape, or 360 by 640 in portrait. Square viewports are not supported.')}
                     </p>
@@ -254,10 +261,7 @@ export class GrandTransitionInterruption extends LitElement {
     this.dispatchEvent(new CustomEvent('continue-portrait', { bubbles: true, composed: true }));
   };
 
-  private renderTimerOption(
-    value: TurnTimerSeconds,
-    label: string,
-  ): ReturnType<typeof html> {
+  private renderTimerOption(value: TurnTimerSeconds, label: string): ReturnType<typeof html> {
     const selected = this.turnTimerSeconds === value;
     return html`
       <button
@@ -273,10 +277,7 @@ export class GrandTransitionInterruption extends LitElement {
     `;
   }
 
-  private renderAutoCompleteOption(
-    value: boolean,
-    label: string,
-  ): ReturnType<typeof html> {
+  private renderAutoCompleteOption(value: boolean, label: string): ReturnType<typeof html> {
     const selected = this.autoComplete === value;
     return html`
       <button
@@ -372,10 +373,7 @@ export class GrandTransitionInterruption extends LitElement {
     );
   }
 
-  private renderPhraseColorCodingOption(
-    value: boolean,
-    label: string,
-  ): ReturnType<typeof html> {
+  private renderPhraseColorCodingOption(value: boolean, label: string): ReturnType<typeof html> {
     const selected = this.phraseColorCoding === value;
     return html`
       <button

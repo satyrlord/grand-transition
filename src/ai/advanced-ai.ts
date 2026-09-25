@@ -1,17 +1,14 @@
-import { continuationBreakDamage } from '../engine/continuation-comeback-resolution';
-import type { Character } from '../content/schemas';
-import type { DraftCommand } from '../engine/draft-actions';
+import { continuationBreakDamage } from '../engine/continuation-comeback-resolution.ts';
+import type { Character } from '../content/schemas.ts';
+import type { DraftCommand } from '../engine/draft-actions.ts';
 import {
   createMatchReducer,
   type MatchEngineContext,
   type MatchState,
-} from '../engine/match-lifecycle';
-import { seededRandomSource, type RandomSource } from '../engine/random-source';
-import { stableHash } from '../engine/stable-hash';
-import {
-  evaluateLocalRadioCallerCandidates,
-  type EasyAiCandidate,
-} from './easy-ai';
+} from '../engine/match-lifecycle.ts';
+import { seededRandomSource, type RandomSource } from '../engine/random-source.ts';
+import { stableHash } from '../engine/stable-hash.ts';
+import { evaluateLocalRadioCallerCandidates, type EasyAiCandidate } from './easy-ai.ts';
 
 export type AdvancedAiDifficulty = 'palace-operator' | 'party-strategist';
 
@@ -45,9 +42,7 @@ export const palaceReplyDiscount = 0.85;
 type PartyFeatureName = keyof typeof partyStrategistWeights;
 type PalaceFeatureName = keyof typeof palaceOperatorWeights;
 
-export type AdvancedAiFeatures = Readonly<
-  Record<PartyFeatureName | PalaceFeatureName, number>
->;
+export type AdvancedAiFeatures = Readonly<Record<PartyFeatureName | PalaceFeatureName, number>>;
 
 export type PartyStrategistCandidate = Readonly<{
   command: DraftCommand;
@@ -99,25 +94,15 @@ const binaryFeatures = new Set<keyof AdvancedAiFeatures>([
   'continuationBreak',
 ]);
 
-const partyFeatureNames = Object.keys(
-  partyStrategistWeights,
-) as PartyFeatureName[];
-const palaceFeatureNames = Object.keys(
-  palaceOperatorWeights,
-) as PalaceFeatureName[];
-const advancedFeatureNames = [
-  ...partyFeatureNames,
-  ...palaceFeatureNames,
-] as const;
+const partyFeatureNames = Object.keys(partyStrategistWeights) as PartyFeatureName[];
+const palaceFeatureNames = Object.keys(palaceOperatorWeights) as PalaceFeatureName[];
+const advancedFeatureNames = [...partyFeatureNames, ...palaceFeatureNames] as const;
 
 export function personalityMultiplier(trait: number): number {
   return 1 + (trait - 0.5) * 0.4;
 }
 
-export function wrongSelectionUtility(
-  removedPhraseValue: number,
-  exactSelfDamage: number,
-): number {
+export function wrongSelectionUtility(removedPhraseValue: number, exactSelfDamage: number): number {
   return removedPhraseValue - exactSelfDamage;
 }
 
@@ -201,8 +186,7 @@ export function evaluatePalaceOperatorCandidates(
     }))
     .toSorted(
       (left, right) =>
-        right.utility - left.utility ||
-        compareCommands(left.candidate, right.candidate),
+        right.utility - left.utility || compareCommands(left.candidate, right.candidate),
     )
     .slice(0, palaceBeamWidth);
   const actorId = state.activePlayerId;
@@ -210,12 +194,7 @@ export function evaluatePalaceOperatorCandidates(
   const searched: PalaceOperatorCandidate[] = [];
 
   for (const first of firstPly) {
-    const nextState = reduceAccepted(
-      state,
-      context,
-      first.candidate.command,
-      randomSource,
-    );
+    const nextState = reduceAccepted(state, context, first.candidate.command, randomSource);
     let principalReply: DraftCommand | null = null;
     let principalReplyUtility = 0;
     let evaluatedReplies = 0;
@@ -229,19 +208,10 @@ export function evaluatePalaceOperatorCandidates(
         randomSource,
       })
         .toSorted(
-          (left, right) =>
-            right.utility - left.utility || compareEasyCandidates(left, right),
+          (left, right) => right.utility - left.utility || compareEasyCandidates(left, right),
         )
-        .slice(
-          0,
-          Math.min(palaceReplyWidth, palaceNodeLimit - evaluatedNodes),
-        );
-      const replies = scoreAdvancedCandidates(
-        nextState,
-        context,
-        replyEasy,
-        randomSource,
-      ).toSorted(
+        .slice(0, Math.min(palaceReplyWidth, palaceNodeLimit - evaluatedNodes));
+      const replies = scoreAdvancedCandidates(nextState, context, replyEasy, randomSource).toSorted(
         (left, right) => right.utility - left.utility || compareCommands(left, right),
       );
       evaluatedReplies = replies.length;
@@ -332,13 +302,14 @@ function scoreAdvancedCandidates(
     randomSource,
   );
   const construction = state.draft!.playerStates[actorId]!.construction;
-  const canKeepDrafting = easyCandidates.some(({ command, rawFeatures }) =>
-    rawFeatures.grammarRisk === 0 &&
-    rawFeatures.deadEnd === 0 &&
-    rawFeatures.continuation === 0 &&
-    (command.type === 'select-phrase' ||
-      (construction.analysis.complete &&
-        (command.type === 'commit-sentence' || command.type === 'select-comeback'))),
+  const canKeepDrafting = easyCandidates.some(
+    ({ command, rawFeatures }) =>
+      rawFeatures.grammarRisk === 0 &&
+      rawFeatures.deadEnd === 0 &&
+      rawFeatures.continuation === 0 &&
+      (command.type === 'select-phrase' ||
+        (construction.analysis.complete &&
+          (command.type === 'commit-sentence' || command.type === 'select-comeback'))),
   );
   const raw = easyCandidates.map((candidate) => {
     const nextState = reduceAccepted(state, context, candidate.command, randomSource);
@@ -346,9 +317,12 @@ function scoreAdvancedCandidates(
     const actorPrideAfter = nextState?.playerStates[actorId]?.pride ?? actorPrideBefore;
     const exactSelfDamage = Math.max(0, actorPrideBefore - actorPrideAfter);
     const wrong = candidate.rawFeatures.grammarRisk > 0;
-    const prematureContinuation = candidate.rawFeatures.continuation > 0 &&
+    const prematureContinuation =
+      candidate.rawFeatures.continuation > 0 &&
       (construction.steps.length === 0 || canKeepDrafting);
-    const prematureCommit = canKeepDrafting && !construction.analysis.complete &&
+    const prematureCommit =
+      canKeepDrafting &&
+      !construction.analysis.complete &&
       (candidate.command.type === 'commit-sentence' || candidate.command.type === 'expire-turn');
     const rawFeatures: AdvancedAiFeatures = Object.freeze({
       immediateDamage: finite(candidate.rawFeatures.immediateDamage),
@@ -379,17 +353,13 @@ function scoreAdvancedCandidates(
           state.playerStates[actorId]?.comebackCharge ??
           0) / 60,
       wrongSelectionUtility: wrong
-        ? wrongSelectionUtility(
-            opponentValues.get(candidate.targetId) ?? 0,
-            exactSelfDamage,
-          )
+        ? wrongSelectionUtility(opponentValues.get(candidate.targetId) ?? 0, exactSelfDamage)
         : 0,
     });
     return {
       candidate,
       rawFeatures,
-      selfKnockout:
-        actorPrideBefore > 0 && actorPrideAfter === 0 && nextState?.phase === 'results',
+      selfKnockout: actorPrideBefore > 0 && actorPrideAfter === 0 && nextState?.phase === 'results',
     };
   });
   const maxima = Object.fromEntries(
@@ -410,15 +380,13 @@ function scoreAdvancedCandidates(
       );
       // A refresh has no draft features of its own. Its value is the expected
       // utility of the replacement hand that the Local Radio evaluation found.
-      const redrawValue =
-        candidate.command.type === 'redraw-hand' ? candidate.utility : 0;
+      const redrawValue = candidate.command.type === 'redraw-hand' ? candidate.utility : 0;
       return Object.freeze({
         command: candidate.command,
         targetId: candidate.targetId,
         rawFeatures,
         normalizedFeatures,
-        utility:
-          partyUtility(normalizedFeatures, actor.aiPersonality) + redrawValue,
+        utility: partyUtility(normalizedFeatures, actor.aiPersonality) + redrawValue,
         selfKnockout,
       });
     })
@@ -441,10 +409,7 @@ function palaceFirstPlyUtility(
 ): number {
   return palaceFeatureNames.reduce((total, name) => {
     const weight = palaceOperatorWeights[name];
-    return (
-      total +
-      candidate.normalizedFeatures[name] * weight * traitWeight(name, personality)
-    );
+    return total + candidate.normalizedFeatures[name] * weight * traitWeight(name, personality);
   }, candidate.utility);
 }
 
@@ -460,11 +425,7 @@ function traitWeight(
   ) {
     return 1;
   }
-  if (
-    name === 'immediateDamage' ||
-    name === 'weaknessOpportunity' ||
-    name === 'comboOpportunity'
-  ) {
+  if (name === 'immediateDamage' || name === 'weaknessOpportunity' || name === 'comboOpportunity') {
     return personalityMultiplier(personality.aggression);
   }
   if (name === 'denial' || name === 'continuationBreak') {
@@ -486,11 +447,7 @@ function keepNonKnockoutWrongSelections(
   candidates: readonly PartyStrategistCandidate[],
 ): readonly PartyStrategistCandidate[] {
   const hasSafe = candidates.some(({ selfKnockout }) => !selfKnockout);
-  return hasSafe
-    ? candidates.filter(
-        ({ selfKnockout }) => !selfKnockout,
-      )
-    : candidates;
+  return hasSafe ? candidates.filter(({ selfKnockout }) => !selfKnockout) : candidates;
 }
 
 /** Shared-card lethal threats and values for the opponent, from one evaluation. */
@@ -507,9 +464,7 @@ function opponentSharedCardFacts(
   const shared = evaluateLocalRadioCallerCandidates(opponentState, context, {
     randomSource,
   }).filter(
-    ({ command }) =>
-      command.type === 'select-phrase' &&
-      command.payload.card.source === 'shared',
+    ({ command }) => command.type === 'select-phrase' && command.payload.card.source === 'shared',
   );
   return {
     lethalThreatIds: new Set(
@@ -517,21 +472,14 @@ function opponentSharedCardFacts(
         .filter(({ rawFeatures }) => rawFeatures.immediateLethal > 0)
         .map(({ targetId }) => targetId),
     ),
-    values: new Map(
-      shared.map(({ targetId, utility }) => [targetId, Math.max(0, utility)]),
-    ),
+    values: new Map(shared.map(({ targetId, utility }) => [targetId, Math.max(0, utility)])),
   };
 }
 
 function forceOpponentTurn(state: MatchState): MatchState | null {
   if (!state.draft) return null;
-  const opponentId = state.playerOrder.find(
-    (playerId) => playerId !== state.activePlayerId,
-  );
-  if (
-    !opponentId ||
-    state.draft.playerStates[opponentId]?.construction.status !== 'building'
-  ) {
+  const opponentId = state.playerOrder.find((playerId) => playerId !== state.activePlayerId);
+  if (!opponentId || state.draft.playerStates[opponentId]?.construction.status !== 'building') {
     return null;
   }
   return {
@@ -588,11 +536,7 @@ function selectBestCandidate<
   return Object.freeze({ candidate: tied[index]!, nextSeed: step.nextSeed });
 }
 
-function normalize(
-  name: keyof AdvancedAiFeatures,
-  value: number,
-  maximum: number,
-): number {
+function normalize(name: keyof AdvancedAiFeatures, value: number, maximum: number): number {
   if (binaryFeatures.has(name)) return value === 0 ? 0 : 1;
   return maximum === 0 ? 0 : value / maximum;
 }
@@ -622,12 +566,6 @@ function compareCommands(
   );
 }
 
-function decisionSeed(
-  state: MatchState,
-  difficulty: AdvancedAiDifficulty,
-): number {
-  return stableHash(
-    `${difficulty}:${JSON.stringify(state.commandHistory)}`,
-    state.seed,
-  );
+function decisionSeed(state: MatchState, difficulty: AdvancedAiDifficulty): number {
+  return stableHash(`${difficulty}:${JSON.stringify(state.commandHistory)}`, state.seed);
 }

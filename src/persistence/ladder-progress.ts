@@ -1,9 +1,6 @@
-import type { LadderProgress } from '../engine/ladder';
-import {
-  decodeLadderProgress,
-  encodeLadderProgress,
-} from './codecs/ladder-progress-codec';
-import { createMemoryStorage, type StoragePort } from './storage-port';
+import type { LadderProgress } from '../engine/ladder.ts';
+import { decodeLadderProgress, encodeLadderProgress } from './codecs/ladder-progress-codec.ts';
+import { createMemoryStorage, type StoragePort } from './storage-port.ts';
 
 export const ladderProgressStorageKey = 'grand-transition.ladder-progress.v1';
 export const ladderProgressPersistenceNotice =
@@ -29,10 +26,12 @@ export class LadderProgressRepository {
   private canReplaceInvalidStoredValue = false;
   private legacyStoredValue = false;
 
-  constructor(
-    private readonly browserStorage: StoragePort,
-    private readonly memoryStorage: StoragePort = createMemoryStorage(),
-  ) {
+  private readonly browserStorage: StoragePort;
+  private readonly memoryStorage: StoragePort;
+
+  constructor(browserStorage: StoragePort, memoryStorage: StoragePort = createMemoryStorage()) {
+    this.browserStorage = browserStorage;
+    this.memoryStorage = memoryStorage;
     const stored = browserStorage.read(ladderProgressStorageKey);
     if (!stored.ok) {
       this.activateStorageFallback(stored.code);
@@ -66,9 +65,7 @@ export class LadderProgressRepository {
     });
   }
 
-  validateCatalog(
-    isValid: (progress: LadderProgress) => boolean,
-  ): LadderProgressSnapshot {
+  validateCatalog(isValid: (progress: LadderProgress) => boolean): LadderProgressSnapshot {
     if (this.progress && !isValid(this.progress)) {
       this.progress = null;
       this.persistenceFailure = 'invalid-data';
@@ -90,10 +87,7 @@ export class LadderProgressRepository {
       this.memoryStorage.write(ladderProgressStorageKey, serialized);
       if (this.canReplaceInvalidStoredValue) {
         this.canReplaceInvalidStoredValue = false;
-        const replaced = this.browserStorage.write(
-          ladderProgressStorageKey,
-          serialized,
-        );
+        const replaced = this.browserStorage.write(ladderProgressStorageKey, serialized);
         if (replaced.ok) {
           this.persistenceFailure = null;
           this.usingMemoryFallback = false;
@@ -126,6 +120,17 @@ export class LadderProgressRepository {
     return this.snapshot();
   }
 
+  /** Records a background storage failure that the port reported later. */
+  storageFailed(code: string): LadderProgressSnapshot {
+    if (!this.usingMemoryFallback) {
+      this.activateStorageFallback(code);
+      if (this.progress) {
+        this.memoryStorage.write(ladderProgressStorageKey, encodeLadderProgress(this.progress));
+      }
+    }
+    return this.snapshot();
+  }
+
   private activateStorageFallback(code: string): void {
     this.persistenceFailure = storageFailure(code);
     this.usingMemoryFallback = true;
@@ -134,9 +139,7 @@ export class LadderProgressRepository {
 }
 
 function storageFailure(code: string): LadderProgressFailureCode {
-  return code === 'storage-quota' ||
-    code === 'storage-security' ||
-    code === 'storage-unavailable'
+  return code === 'storage-quota' || code === 'storage-security' || code === 'storage-unavailable'
     ? code
     : 'storage-unavailable';
 }

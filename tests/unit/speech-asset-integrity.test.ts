@@ -1,14 +1,9 @@
 import { describe, expect, test, vi } from 'vitest';
-import {
-  assertIntegrity,
-  readExactBody,
-  sha256Hex,
-} from '../../src/audio/asset-integrity';
+import { assertIntegrity, readExactBody, sha256Hex } from '../../src/audio/asset-integrity.ts';
 
 const bytes = new TextEncoder().encode('abc');
 // SHA-256("abc") from FIPS 180-2.
-const abcDigest =
-  'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad';
+const abcDigest = 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad';
 
 function stream(...chunks: string[]): ReadableStream<Uint8Array> {
   return new ReadableStream({
@@ -25,11 +20,15 @@ describe('speech asset integrity', () => {
   });
 
   test('accepts only the recorded size and digest', async () => {
-    await expect(assertIntegrity(bytes, { bytes: 3, sha256: abcDigest }, 'Asset')).resolves.toBeUndefined();
-    await expect(assertIntegrity(bytes, { bytes: 4, sha256: abcDigest }, 'Asset'))
-      .rejects.toThrow('Asset integrity failed.');
-    await expect(assertIntegrity(bytes, { bytes: 3, sha256: '0'.repeat(64) }, 'Asset'))
-      .rejects.toThrow('Asset integrity failed.');
+    await expect(
+      assertIntegrity(bytes, { bytes: 3, sha256: abcDigest }, 'Asset'),
+    ).resolves.toBeUndefined();
+    await expect(assertIntegrity(bytes, { bytes: 4, sha256: abcDigest }, 'Asset')).rejects.toThrow(
+      'Asset integrity failed.',
+    );
+    await expect(
+      assertIntegrity(bytes, { bytes: 3, sha256: '0'.repeat(64) }, 'Asset'),
+    ).rejects.toThrow('Asset integrity failed.');
   });
 
   test('reads an exact body and reports cumulative progress', async () => {
@@ -40,9 +39,11 @@ describe('speech asset integrity', () => {
   });
 
   test('rejects a body that is longer or shorter than its record', async () => {
-    await expect(readExactBody(stream('abcd'), 3, 'Asset', () => {}))
-      .rejects.toThrow('Asset size mismatch.');
-    await expect(readExactBody(stream('ab'), 3, 'Asset', () => {}))
-      .rejects.toThrow('Asset is incomplete.');
+    await expect(readExactBody(stream('abcd'), 3, 'Asset', () => {})).rejects.toThrow(
+      'Asset size mismatch.',
+    );
+    await expect(readExactBody(stream('ab'), 3, 'Asset', () => {})).rejects.toThrow(
+      'Asset is incomplete.',
+    );
   });
 });

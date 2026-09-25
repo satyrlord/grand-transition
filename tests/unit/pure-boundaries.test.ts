@@ -6,11 +6,7 @@ import { promisify } from 'node:util';
 import { describe, expect, test } from 'vitest';
 
 const execFileAsync = promisify(execFile);
-const checkerPath = path.resolve(
-  process.cwd(),
-  'tools',
-  'check-pure-boundaries.mjs',
-);
+const checkerPath = path.resolve(process.cwd(), 'tools', 'check-pure-boundaries.ts');
 const packagePath = path.resolve(process.cwd(), 'package.json');
 
 type CommandError = Error & { stderr?: string; stdout?: string };
@@ -19,6 +15,7 @@ const ownedBrowserApiNames = [
   'window',
   'document',
   'customElements',
+  'indexedDB',
   'localStorage',
   'sessionStorage',
   'speechSynthesis',
@@ -40,10 +37,14 @@ describe('pure-module boundaries', () => {
       const localeRoot = path.join(fixtureRoot, 'src', 'localization');
       await mkdir(engineRoot, { recursive: true });
       await mkdir(localeRoot, { recursive: true });
-      await writeFile(path.join(engineRoot, 'valid.ts'), "export { value } from '../localization/value';");
+      await writeFile(
+        path.join(engineRoot, 'valid.ts'),
+        "export { value } from '../localization/value';",
+      );
       await writeFile(path.join(localeRoot, 'value.ts'), source);
-      await expect(execFileAsync(process.execPath, [checkerPath, '--root', fixtureRoot]))
-        .rejects.toThrow(/localization[\\/]value.ts/u);
+      await expect(
+        execFileAsync(process.execPath, [checkerPath, '--root', fixtureRoot]),
+      ).rejects.toThrow(/localization[\\/]value.ts/u);
     } finally {
       await rm(fixtureRoot, { force: true, recursive: true });
     }
@@ -73,9 +74,7 @@ describe('pure-module boundaries', () => {
   ])(
     'rejects a pure dependency on generated interface localization: %s',
     async (relativePath, source) => {
-      const fixtureRoot = await mkdtemp(
-        path.join(os.tmpdir(), 'grand-transition-boundaries-'),
-      );
+      const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-boundaries-'));
       try {
         const sourcePath = path.join(fixtureRoot, relativePath);
         const generatedPath = path.join(
@@ -92,11 +91,7 @@ describe('pure-module boundaries', () => {
 
         let failure: CommandError | undefined;
         try {
-          await execFileAsync(process.execPath, [
-            checkerPath,
-            '--root',
-            fixtureRoot,
-          ]);
+          await execFileAsync(process.execPath, [checkerPath, '--root', fixtureRoot]);
         } catch (error) {
           failure = error as CommandError;
         }
@@ -112,9 +107,7 @@ describe('pure-module boundaries', () => {
   );
 
   test('allows application code to import generated interface localization', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-boundaries-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-boundaries-'));
     try {
       const files = new Map([
         [
@@ -133,15 +126,9 @@ describe('pure-module boundaries', () => {
         await writeFile(filePath, source, 'utf8');
       }
 
-      const result = await execFileAsync(process.execPath, [
-        checkerPath,
-        '--root',
-        fixtureRoot,
-      ]);
+      const result = await execFileAsync(process.execPath, [checkerPath, '--root', fixtureRoot]);
 
-      expect(result.stdout).toContain(
-        'Pure-module boundary check passed: checked 1 file(s).',
-      );
+      expect(result.stdout).toContain('Pure-module boundary check passed: checked 1 file(s).');
     } finally {
       await rm(fixtureRoot, { force: true, recursive: true });
     }
@@ -152,9 +139,7 @@ describe('pure-module boundaries', () => {
       scripts: Record<string, string>;
     };
 
-    expect(packageJson.scripts['boundaries:check']).toBe(
-      'node tools/check-pure-boundaries.mjs',
-    );
+    expect(packageJson.scripts['boundaries:check']).toBe('node tools/check-pure-boundaries.ts');
     expect(packageJson.scripts.validate).toContain('npm run boundaries:check');
   });
 
@@ -165,9 +150,7 @@ describe('pure-module boundaries', () => {
   });
 
   test('rejects Lit and every owned browser API class in a pure module', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-boundaries-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-boundaries-'));
     try {
       const engineRoot = path.join(fixtureRoot, 'src', 'engine');
       await mkdir(engineRoot, { recursive: true });
@@ -182,11 +165,7 @@ describe('pure-module boundaries', () => {
 
       let failure: CommandError | undefined;
       try {
-        await execFileAsync(process.execPath, [
-          checkerPath,
-          '--root',
-          fixtureRoot,
-        ]);
+        await execFileAsync(process.execPath, [checkerPath, '--root', fixtureRoot]);
       } catch (error) {
         failure = error as CommandError;
       }
@@ -205,9 +184,7 @@ describe('pure-module boundaries', () => {
   });
 
   test('accepts DOM words inside strings and comments', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-boundaries-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-boundaries-'));
     try {
       const engineRoot = path.join(fixtureRoot, 'src', 'engine');
       await mkdir(engineRoot, { recursive: true });
@@ -224,11 +201,7 @@ describe('pure-module boundaries', () => {
 
       let failure: CommandError | undefined;
       try {
-        await execFileAsync(process.execPath, [
-          checkerPath,
-          '--root',
-          fixtureRoot,
-        ]);
+        await execFileAsync(process.execPath, [checkerPath, '--root', fixtureRoot]);
       } catch (error) {
         failure = error as CommandError;
       }
@@ -240,9 +213,7 @@ describe('pure-module boundaries', () => {
   });
 
   test('rejects dependencies from pure modules into application code', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-boundaries-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-boundaries-'));
     try {
       const engineRoot = path.join(fixtureRoot, 'src', 'engine');
       await mkdir(engineRoot, { recursive: true });
@@ -254,11 +225,7 @@ describe('pure-module boundaries', () => {
 
       let failure: CommandError | undefined;
       try {
-        await execFileAsync(process.execPath, [
-          checkerPath,
-          '--root',
-          fixtureRoot,
-        ]);
+        await execFileAsync(process.execPath, [checkerPath, '--root', fixtureRoot]);
       } catch (error) {
         failure = error as CommandError;
       }
@@ -273,9 +240,7 @@ describe('pure-module boundaries', () => {
   });
 
   test('rejects a template-literal dependency into application code', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-boundaries-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-boundaries-'));
     try {
       const engineRoot = path.join(fixtureRoot, 'src', 'engine');
       await mkdir(engineRoot, { recursive: true });
@@ -287,11 +252,7 @@ describe('pure-module boundaries', () => {
 
       let failure: CommandError | undefined;
       try {
-        await execFileAsync(process.execPath, [
-          checkerPath,
-          '--root',
-          fixtureRoot,
-        ]);
+        await execFileAsync(process.execPath, [checkerPath, '--root', fixtureRoot]);
       } catch (error) {
         failure = error as CommandError;
       }
@@ -306,9 +267,7 @@ describe('pure-module boundaries', () => {
   });
 
   test('accepts the approved pure dependency directions', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-boundaries-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-boundaries-'));
     try {
       const files = new Map([
         [
@@ -328,10 +287,7 @@ describe('pure-module boundaries', () => {
           "import { value } from '../content/value';\nexport type LocaleValue = typeof value;\n",
         ],
         [path.join('src', 'content', 'value.ts'), 'export const value = 1;\n'],
-        [
-          path.join('src', 'persistence', 'storage-port.ts'),
-          'export interface StoragePort {}\n',
-        ],
+        [path.join('src', 'persistence', 'storage-port.ts'), 'export interface StoragePort {}\n'],
         [
           path.join('src', 'persistence', 'codecs', 'valid.ts'),
           "import type { StoragePort } from '../storage-port';\nexport type CodecPort = StoragePort;\n",
@@ -343,21 +299,14 @@ describe('pure-module boundaries', () => {
         await writeFile(filePath, source, 'utf8');
       }
 
-      const result = await execFileAsync(process.execPath, [
-        checkerPath,
-        '--root',
-        fixtureRoot,
-      ]);
+      const result = await execFileAsync(process.execPath, [checkerPath, '--root', fixtureRoot]);
 
-      expect(result.stdout).toContain(
-        'Pure-module boundary check passed: checked 6 file(s).',
-      );
+      expect(result.stdout).toContain('Pure-module boundary check passed: checked 6 file(s).');
     } finally {
       await rm(fixtureRoot, { force: true, recursive: true });
     }
   });
 });
-
 
 test.each([
   'export const run = () => globalThis["fetch"]("https://invalid.example");',
@@ -390,14 +339,8 @@ test('permits member access through a property named globalThis', async () => {
       path.join(root, 'src', 'engine', 'sample.ts'),
       "export const run = (target: { globalThis?: Record<string, unknown> }) => target.globalThis?.['fetch'];\n",
     );
-    const result = await execFileAsync(process.execPath, [
-      checkerPath,
-      '--root',
-      root,
-    ]);
-    expect(result.stdout).toContain(
-      'Pure-module boundary check passed: checked 1 file(s).',
-    );
+    const result = await execFileAsync(process.execPath, [checkerPath, '--root', root]);
+    expect(result.stdout).toContain('Pure-module boundary check passed: checked 1 file(s).');
   } finally {
     await rm(root, { recursive: true, force: true });
   }
@@ -407,13 +350,17 @@ test('permits template text, nested expressions, regular expressions, and divisi
   const root = await mkdtemp(path.join(os.tmpdir(), 'gt-template-boundary-'));
   try {
     await mkdir(path.join(root, 'src', 'engine'), { recursive: true });
-    await writeFile(path.join(root, 'src', 'engine', 'sample.ts'), [
-      'export const label = `fetch ${`nested ${({ value: 2 }).value}`} document ${1}`;',
-      'export const pattern = /^#[0-9a-f]{6}$/u;',
-      'export const ratio = (6 + 2) / 4;',
-    ].join('\n'));
-    await expect(execFileAsync(process.execPath, [checkerPath, '--root', root]))
-      .resolves.toHaveProperty('stdout', expect.stringContaining('checked 1 file(s)'));
+    await writeFile(
+      path.join(root, 'src', 'engine', 'sample.ts'),
+      [
+        'export const label = `fetch ${`nested ${({ value: 2 }).value}`} document ${1}`;',
+        'export const pattern = /^#[0-9a-f]{6}$/u;',
+        'export const ratio = (6 + 2) / 4;',
+      ].join('\n'),
+    );
+    await expect(
+      execFileAsync(process.execPath, [checkerPath, '--root', root]),
+    ).resolves.toHaveProperty('stdout', expect.stringContaining('checked 1 file(s)'));
   } finally {
     await rm(root, { recursive: true, force: true });
   }

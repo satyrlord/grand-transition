@@ -1,8 +1,8 @@
 import { expect, type Page } from '@playwright/test';
 
 const deliveryPhase = (page: Page): Promise<string | null> =>
-  page.evaluate(() =>
-    document.querySelector('.match-screen')?.getAttribute('data-delivery-phase') ?? null,
+  page.evaluate(
+    () => document.querySelector('.match-screen')?.getAttribute('data-delivery-phase') ?? null,
   );
 
 /** Advance the installed browser clock while an actual presentation owns input. */
@@ -45,27 +45,34 @@ export async function pauseMockedClock(page: Page, marginMs = 50): Promise<void>
 
 export async function reachDeliveryTotal(page: Page, speakerId: string): Promise<void> {
   for (let elapsed = 0; elapsed < 60_000; elapsed += 100) {
-    if (await page.evaluate((id) => {
-      const receipt = document.querySelector('.delivery-receipt');
-      return receipt?.getAttribute('data-speaker') === id && Boolean(receipt.querySelector('.delivery-total'));
-    }, speakerId)) return;
+    if (
+      await page.evaluate((id) => {
+        const receipt = document.querySelector('.delivery-receipt');
+        return (
+          receipt?.getAttribute('data-speaker') === id &&
+          Boolean(receipt.querySelector('.delivery-total'))
+        );
+      }, speakerId)
+    )
+      return;
     await page.clock.runFor(100);
   }
   throw new Error('The expected speaker did not reach the inline total.');
 }
 
-export async function reachDeliveryHesitation(
-  page: Page,
-  speakerId: string,
-): Promise<void> {
+export async function reachDeliveryHesitation(page: Page, speakerId: string): Promise<void> {
   for (let elapsed = 0; elapsed < 60_000; elapsed += 100) {
-    if (await page.evaluate((id) => {
-      const receipt = document.querySelector('.delivery-receipt');
-      return receipt?.getAttribute('data-speaker') === id &&
-        document.querySelector('.match-screen')?.getAttribute(
-          'data-delivery-phase',
-        ) === 'hesitating';
-    }, speakerId)) return;
+    if (
+      await page.evaluate((id) => {
+        const receipt = document.querySelector('.delivery-receipt');
+        return (
+          receipt?.getAttribute('data-speaker') === id &&
+          document.querySelector('.match-screen')?.getAttribute('data-delivery-phase') ===
+            'hesitating'
+        );
+      }, speakerId)
+    )
+      return;
     await page.clock.runFor(100);
   }
   throw new Error('The expected speaker did not reach the hesitation hold.');

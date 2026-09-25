@@ -8,7 +8,7 @@ PNG: Portable Network Graphics.
 Use this procedure only after the candidate review passes.
 For transparent output, first use [native alpha preparation](native-alpha.md).
 When that step changed alpha, use the reviewed prepared-native image as the source.
-Read `tools/scene-resolution.mjs`, `tools/build-scene-assets.mjs`, and the manifest entry of the selected scene.
+Read `tools/scene-resolution.ts`, `tools/build-scene-assets.ts`, and the manifest entry of the selected scene.
 Use the helper to prepare the shipping dimensions:
 
 ```powershell
@@ -79,10 +79,10 @@ Keep the previous shipping package until the staged checks pass.
 Run the scene builder on that full staged tree:
 
 ```text
-node tools/build-scene-assets.mjs tmp/scene-generation/run/scenes
-node tools/validate-scene-assets.mjs tmp/scene-generation/run/scenes
+node tools/build-scene-assets.ts tmp/scene-generation/run/scenes
+node tools/validate-scene-assets.ts tmp/scene-generation/run/scenes
 node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate tmp/scene-generation/run/scenes
-node tools/validate-asset-color.mjs validate tmp/scene-generation/run/scenes
+node tools/validate-asset-color.ts validate tmp/scene-generation/run/scenes
 ```
 
 Run these commands in this sequence.

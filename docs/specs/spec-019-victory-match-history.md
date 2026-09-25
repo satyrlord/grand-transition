@@ -49,11 +49,16 @@ Browser Back, Escape, resize, reduced motion, and a temporary unsupported viewpo
 
 ## Persistent local match history
 
-When a player match first goes into `results`, make one versioned public history entry, and try to add it to the end of `localStorage`.
-Use the key `grand-transition.match-history.v1`.
-Only the browser storage adapter can call `localStorage`.
+When a player match first goes into `results`, make one versioned public history entry, and try to add it to the end of the stored history.
+Keep each entry as one record in the `match-history` object store of the `grand-transition` IndexedDB database.
+The key of a record is the entry identifier, and a sequence number keeps the order of addition.
+An append writes only its record, so the size of the history does not make a write slower.
+Only the browser storage adapters can call IndexedDB or `localStorage`.
 
-The version 1 document has `schemaVersion: 1`, the kind `grand-transition-match-history`, and an ordered `entries` array.
+Earlier releases kept the history as one version 1 document in `localStorage`, with the key `grand-transition.match-history.v1`.
+That document has `schemaVersion: 1`, the kind `grand-transition-match-history`, and an ordered `entries` array.
+Milestone 020 moves the document into the database.
+When the history loads, it adds each document entry that has no record to the end of the records, and then it removes the document.
 Each entry contains these items:
 
 - One stable identifier and the `completedAt` time in International Organization for Standardization (ISO) 8601 format.
@@ -88,6 +93,7 @@ When the replay document and the match-log document of an entry use the same dif
 Do not use it.
 Do this before the validation of the identity and the `completedAt` time of the kept entries.
 Keep each entry that continues to decode.
+When the history loads, remove the record of each entry that it does not use.
 Do not write the stored bytes again until the next stored update.
 
 The stored history document is compact JSON with one last newline and no indentation, because entries are never removed.
@@ -135,6 +141,8 @@ When the modal opens or closes, the browser history, the setup selection, the ac
 ## Storage and codec failures
 
 Catch quota failures, security failures, unavailable-storage failures, malformed-data failures, and unsupported-version failures.
+A write can also fail in the background after the call returns.
+Then the history goes into the same failure state.
 These failures must not block or close the victory state.
 Keep newly completed entries in memory for the page session of that time.
 Show a persistence notice that does not block on the title screen and in the history modal.

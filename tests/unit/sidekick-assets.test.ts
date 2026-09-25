@@ -6,7 +6,7 @@ import {
   comebackSidekickBottomInset,
   comebackSidekickIds,
   resolveComebackSidekick,
-} from '../../src/app/sidekick-assets';
+} from '../../src/app/sidekick-assets.ts';
 
 describe('comeback sidekick assets', () => {
   test('discovers only the nineteen manually approved assets by character ID', () => {
@@ -47,14 +47,22 @@ describe('comeback sidekick assets', () => {
       (await readdir(root)).filter((name) => name.endsWith('.png')).sort(),
     );
     for (const [filename, layout] of Object.entries(sidekickLayout)) {
-      const { data, info } = await sharp(`${root}/${filename}`).ensureAlpha().raw()
+      const { data, info } = await sharp(`${root}/${filename}`)
+        .ensureAlpha()
+        .raw()
         .toBuffer({ resolveWithObject: true });
       let bottom = info.height;
-      while (bottom > 0 && !data.subarray((bottom - 1) * info.width * 4, bottom * info.width * 4)
-        .some((value, index) => index % 4 === 3 && value > 0)) bottom -= 1;
+      while (
+        bottom > 0 &&
+        !data
+          .subarray((bottom - 1) * info.width * 4, bottom * info.width * 4)
+          .some((value, index) => index % 4 === 3 && value > 0)
+      )
+        bottom -= 1;
       expect(layout, filename).toEqual({ height: info.height, bottom });
-      expect(comebackSidekickBottomInset(filename.replace(/\.png$/u, '')))
-        .toBe((info.height - bottom) / info.height);
+      expect(comebackSidekickBottomInset(filename.replace(/\.png$/u, ''))).toBe(
+        (info.height - bottom) / info.height,
+      );
     }
   });
 });

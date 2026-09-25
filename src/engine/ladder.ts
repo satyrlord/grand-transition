@@ -1,10 +1,7 @@
-import { seededRandomSource, type RandomSource } from './random-source';
-import { deepFreeze } from './plain-values';
+import { seededRandomSource, type RandomSource } from './random-source.ts';
+import { deepFreeze } from './plain-values.ts';
 
-export type LadderDifficulty =
-  | 'local-radio-caller'
-  | 'palace-operator'
-  | 'party-strategist';
+export type LadderDifficulty = 'local-radio-caller' | 'palace-operator' | 'party-strategist';
 
 export type LadderProgress = Readonly<{
   schemaVersion: 2;
@@ -78,9 +75,7 @@ export function ladderRungCount(progress: LadderProgress): number {
   return progress.opponentIds.length;
 }
 
-export function currentLadderRung(
-  progress: LadderProgress,
-): LadderRung | null {
+export function currentLadderRung(progress: LadderProgress): LadderRung | null {
   const rungCount = ladderRungCount(progress);
   if (progress.completed || progress.rungIndex >= rungCount) return null;
   const rungIndex = progress.rungIndex;
@@ -93,10 +88,7 @@ export function currentLadderRung(
   });
 }
 
-export function recordLadderResult(
-  progress: LadderProgress,
-  result: LadderResult,
-): LadderProgress {
+export function recordLadderResult(progress: LadderProgress, result: LadderResult): LadderProgress {
   if (progress.completed || result === 'abandon') return progress;
   const { unfinishedAttempts: _resolvedAttempts, ...resolved } = progress;
   if (result === 'loss') {
@@ -167,9 +159,7 @@ export function reconcileLadderScenes(
   if (progress.sceneOrder.every((sceneId) => availableScenes.has(sceneId))) {
     return progress;
   }
-  const usedScenes = new Set(
-    progress.sceneOrder.filter((sceneId) => availableScenes.has(sceneId)),
-  );
+  const usedScenes = new Set(progress.sceneOrder.filter((sceneId) => availableScenes.has(sceneId)));
   const unusedScenes = shuffle(
     scenes.filter((sceneId) => !usedScenes.has(sceneId)),
     progress.seed,
@@ -179,9 +169,10 @@ export function reconcileLadderScenes(
   let replacements = 0;
   const sceneOrder = progress.sceneOrder.map((sceneId) => {
     if (availableScenes.has(sceneId)) return sceneId;
-    const replacement = replacements < unusedScenes.length
-      ? unusedScenes[replacements]!
-      : fallbackScenes[(replacements - unusedScenes.length) % fallbackScenes.length]!;
+    const replacement =
+      replacements < unusedScenes.length
+        ? unusedScenes[replacements]!
+        : fallbackScenes[(replacements - unusedScenes.length) % fallbackScenes.length]!;
     replacements += 1;
     return replacement;
   });
@@ -192,10 +183,7 @@ export function reconcileLadderScenes(
  * Splits the rungs into thirds in difficulty order. The extra rungs of a count
  * that three does not divide go to the harder tiers, so 7 rungs give 2, 2, 3.
  */
-export function ladderDifficulty(
-  rungIndex: number,
-  rungCount: number,
-): LadderDifficulty {
+export function ladderDifficulty(rungIndex: number, rungCount: number): LadderDifficulty {
   if (!Number.isInteger(rungIndex) || rungIndex < 0 || rungIndex >= rungCount) {
     throw new Error(`Unknown ladder rung ${rungIndex}.`);
   }

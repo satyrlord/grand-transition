@@ -1,13 +1,24 @@
 import contract from '../assets/characters/state-contract.json' with { type: 'json' };
-import type { MatchResolution, MatchState } from '../engine/match-lifecycle';
-import type { MatchArenaReaction } from './match-coordinator';
-import type { CharacterAssetSource } from './character-assets';
+import type { MatchResolution, MatchState } from '../engine/match-lifecycle.ts';
+import type { MatchArenaReaction } from './match-coordinator.ts';
+import type { CharacterAssetSource } from './character-assets.ts';
 
 export type CharacterStateId =
-  | 'idle' | 'selection' | 'thinking' | 'delivery' | 'light-hit'
-  | 'heavy-hit' | 'weakness' | 'comeback' | 'grammar-mistake';
+  | 'idle'
+  | 'selection'
+  | 'thinking'
+  | 'delivery'
+  | 'light-hit'
+  | 'heavy-hit'
+  | 'weakness'
+  | 'comeback'
+  | 'grammar-mistake';
 
-export type CharacterCue = Readonly<{ stateId: CharacterStateId; sequence: number; hold?: boolean }>;
+export type CharacterCue = Readonly<{
+  stateId: CharacterStateId;
+  sequence: number;
+  hold?: boolean;
+}>;
 
 export type CharacterFrame = Readonly<{
   id: string;
@@ -18,9 +29,14 @@ export type CharacterFrame = Readonly<{
   webp: CharacterAssetSource;
 }>;
 
-export const characterMotion = Object.freeze(Object.fromEntries(
-  contract.states.map((state) => [state.id, Object.freeze({ durationMs: state.durationMs, loop: state.loop })]),
-)) as Readonly<Record<CharacterStateId, Readonly<{ durationMs: number; loop: boolean }>>>;
+export const characterMotion = Object.freeze(
+  Object.fromEntries(
+    contract.states.map((state) => [
+      state.id,
+      Object.freeze({ durationMs: state.durationMs, loop: state.loop }),
+    ]),
+  ),
+) as Readonly<Record<CharacterStateId, Readonly<{ durationMs: number; loop: boolean }>>>;
 
 /** Project accepted public facts only. Animation never changes the reducer. */
 export function projectCharacterCue(
@@ -40,7 +56,11 @@ export function projectCharacterCue(
   }
   const command = state.commandHistory.at(-1);
   if (command?.type === 'prepare-round') {
-    return cue(state.commandHistory.filter((item) => item.type === 'prepare-round').length === 1 ? 'selection' : 'idle');
+    return cue(
+      state.commandHistory.filter((item) => item.type === 'prepare-round').length === 1
+        ? 'selection'
+        : 'idle',
+    );
   }
   if (command?.type === 'start-match' || !command) return cue('selection');
   if (command.actorId !== playerId) return cue('idle');

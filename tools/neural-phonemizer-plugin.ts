@@ -5,7 +5,8 @@ import type { Plugin } from 'vite';
 
 const prefix = 'virtual:grand-transition-phonemizer:';
 const sourceHash = '193481f474f7c1ea81df3195d18b45df8ef7254dbdccb3f193d60215c4897bec';
-let prepared: Readonly<{ hash: string; code: string; modules: ReadonlyMap<string, string> }> | undefined;
+let prepared:
+  Readonly<{ hash: string; code: string; modules: ReadonlyMap<string, string> }> | undefined;
 
 /** Split the pinned generated pronunciation engine and its data without evaluating source. */
 export function neuralPhonemizerPlugin(): Plugin {
@@ -29,14 +30,18 @@ export function neuralPhonemizerPlugin(): Plugin {
   return {
     name: 'neural-pronunciation-chunks',
     enforce: 'pre',
-    resolveId(id) { if (id.startsWith(prefix)) return '\0' + id; },
+    resolveId(id) {
+      if (id.startsWith(prefix)) return '\0' + id;
+    },
     async load(id) {
       if (id.startsWith('\0' + prefix)) return modules.get(id.slice(1));
       if (!id.replaceAll('\\', '/').endsWith('/phonemizer/dist/phonemizer.js')) return;
       const source = await readFile(id, 'utf8');
       const hash = createHash('sha256').update(source).digest('hex');
       if (hash !== sourceHash) {
-        throw new Error('Review the pronunciation engine split before changing its pinned version.');
+        throw new Error(
+          'Review the pronunciation engine split before changing its pinned version.',
+        );
       }
       // Share CPU-heavy preparation across worker builds, but validate every load.
       if (prepared?.hash === hash) {
@@ -47,8 +52,12 @@ export function neuralPhonemizerPlugin(): Plugin {
       function visit(value: unknown): void {
         if (!value || typeof value !== 'object') return;
         const node = value as Record<string, unknown>;
-        if (node.type === 'FunctionExpression' && typeof node.start === 'number' && typeof node.end === 'number' &&
-          source.slice(node.start, node.start + 33).startsWith('function(A,e){this.exports=')) {
+        if (
+          node.type === 'FunctionExpression' &&
+          typeof node.start === 'number' &&
+          typeof node.end === 'number' &&
+          source.slice(node.start, node.start + 33).startsWith('function(A,e){this.exports=')
+        ) {
           instance = { start: node.start, end: node.end };
           return;
         }
@@ -60,9 +69,15 @@ export function neuralPhonemizerPlugin(): Plugin {
       visit(parseAst(source));
       if (!instance) throw new Error('The pronunciation module has no supported engine factory.');
       const engineId = prefix + 'engine';
-      modules.set(engineId, splitData('export default ' + source.slice(instance.start, instance.end) + ';', 'engine'));
-      const entry = source.slice(0, instance.start) + '__phonemeEngine' + source.slice(instance.end);
-      const code = `const __phonemeEngine=(await import(${JSON.stringify(engineId)})).default;\n` + splitData(entry, 'entry');
+      modules.set(
+        engineId,
+        splitData('export default ' + source.slice(instance.start, instance.end) + ';', 'engine'),
+      );
+      const entry =
+        source.slice(0, instance.start) + '__phonemeEngine' + source.slice(instance.end);
+      const code =
+        `const __phonemeEngine=(await import(${JSON.stringify(engineId)})).default;\n` +
+        splitData(entry, 'entry');
       prepared = { hash, code, modules: new Map(modules) };
       return code;
     },

@@ -29,7 +29,7 @@ const domainDefinitions = {
   },
 };
 
-async function* walkFiles(directory) {
+async function* walkFiles(directory: string): AsyncGenerator<string> {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const entryPath = path.join(directory, entry.name);
     if (entry.isDirectory()) {
@@ -40,8 +40,8 @@ async function* walkFiles(directory) {
   }
 }
 
-export async function validateDomain(domain, rootDirectory = process.cwd()) {
-  const definition = domainDefinitions[domain];
+export async function validateDomain(domain: string, rootDirectory = process.cwd()) {
+  const definition = domainDefinitions[domain as keyof typeof domainDefinitions];
   if (!definition) {
     throw new Error(
       `Unknown scaffold domain "${domain}". Expected assets, content, or localization.`,
@@ -78,7 +78,7 @@ export async function validateDomain(domain, rootDirectory = process.cwd()) {
   return { directory, files };
 }
 
-function parseArguments(argumentsList) {
+function parseArguments(argumentsList: readonly string[]) {
   const domainIndex = argumentsList.indexOf('--domain');
   const modeIndex = argumentsList.indexOf('--mode');
   const rootIndex = argumentsList.indexOf('--root');
@@ -90,7 +90,7 @@ function parseArguments(argumentsList) {
 
   if (!domain || !['validate', 'build'].includes(mode) || !rootDirectory) {
     throw new Error(
-      'Usage: node tools/validate-scaffold.mjs --domain <assets|content|localization> [--mode validate|build] [--root <path>]',
+      'Usage: node tools/validate-scaffold.ts --domain <assets|content|localization> [--mode validate|build] [--root <path>]',
     );
   }
   if (mode === 'build' && domain !== 'assets') {

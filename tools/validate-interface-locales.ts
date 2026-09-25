@@ -6,18 +6,18 @@
 // every message is translated, and that Romanian text is complete, correctly
 // referenced, safe, and written with standard diacritics.
 //
-// Usage: node_modules/.bin/tsx tools/validate-interface-locales.ts
+// Usage: node tools/validate-interface-locales.ts
 
 import { mkdtemp, readFile, rmdir, unlink } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { styleText } from 'node:util';
-import { templates } from '../src/localization/generated/ro-RO';
+import { templates } from '../src/localization/generated/ro-RO.ts';
 import {
   validateLocalizedText,
   type LocalizedTextFailure,
-} from '../src/localization/localized-text-rules';
+} from '../src/localization/localized-text-rules.ts';
 import { RuntimeLitLocalizer } from '@lit/localize-tools/lib/modes/runtime.js';
 import type { Config } from '@lit/localize-tools/lib/types/config.js';
 import type { ProgramMessage } from '@lit/localize-tools/lib/messages.js';
@@ -51,30 +51,33 @@ export function parseXliff(xliffText: string): readonly InterfaceCatalogUnit[] {
 }
 
 export function placeholderIds(xml: string): readonly string[] {
-  return Object.freeze(
-    [...xml.matchAll(placeholderTag)].map((match) => match[1] as string),
-  );
+  return Object.freeze([...xml.matchAll(placeholderTag)].map((match) => match[1] as string));
 }
 
 // Message text without the XLIFF placeholder markup that carries the source
 // expression references.
 export function plainMessageText(xml: string): string {
-  return xml.replace(placeholderTag, '').replaceAll(
-    /&(#x[\da-f]+|#\d+|amp|lt|gt|quot|apos);/giu,
-    (entity, code: string) => {
+  return xml
+    .replace(placeholderTag, '')
+    .replaceAll(/&(#x[\da-f]+|#\d+|amp|lt|gt|quot|apos);/giu, (entity, code: string) => {
       const named: Record<string, string> = {
-        amp: '&', lt: '<', gt: '>', quot: '"', apos: "'",
+        amp: '&',
+        lt: '<',
+        gt: '>',
+        quot: '"',
+        apos: "'",
       };
       if (named[code]) return named[code];
       const point = code.toLowerCase().startsWith('#x')
         ? Number.parseInt(code.slice(2), 16)
         : Number.parseInt(code.slice(1), 10);
-      return Number.isInteger(point) && point >= 0 && point <= 0x10ffff &&
+      return Number.isInteger(point) &&
+        point >= 0 &&
+        point <= 0x10ffff &&
         !(point >= 0xd800 && point <= 0xdfff)
         ? String.fromCodePoint(point)
         : entity;
-    },
-  );
+    });
 }
 
 export function validateMessageText(
@@ -117,8 +120,10 @@ export function validateCatalog(
       const targetIds = placeholderIds(unit.target);
       const sourceReferences = [...unit.source.matchAll(placeholderTag)].map((match) => match[2]);
       const targetReferences = [...unit.target.matchAll(placeholderTag)].map((match) => match[2]);
-      if (sourceIds.join(',') !== targetIds.join(',') ||
-        sourceReferences.join('\0') !== targetReferences.join('\0')) {
+      if (
+        sourceIds.join(',') !== targetIds.join(',') ||
+        sourceReferences.join('\0') !== targetReferences.join('\0')
+      ) {
         failures.push({
           path: path_,
           code: 'placeholder-mismatch',
@@ -149,14 +154,22 @@ export function validateCatalog(
 }
 
 function escapeXml(value: string): string {
-  return value.replaceAll('&', '&amp;').replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll('\n', '&#10;');
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('\n', '&#10;');
 }
 
 function sourceXml(message: Pick<ProgramMessage, 'contents'>): string {
-  return message.contents.map((part) => typeof part === 'string'
-    ? escapeXml(part)
-    : `<x id="${part.index}" equiv-text="${escapeXml(part.untranslatable)}"/>`).join('');
+  return message.contents
+    .map((part) =>
+      typeof part === 'string'
+        ? escapeXml(part)
+        : `<x id="${part.index}" equiv-text="${escapeXml(part.untranslatable)}"/>`,
+    )
+    .join('');
 }
 
 export function validateSourceCatalog(
@@ -199,7 +212,9 @@ export async function validateInterfaceLocales(
   rootDirectory: string = process.cwd(),
 ): Promise<readonly InterfaceLocaleFailure[]> {
   const xliffText = await readFile(path.join(rootDirectory, xliffPath), 'utf8');
-  const configFile = JSON.parse(await readFile(path.join(rootDirectory, 'lit-localize.json'), 'utf8')) as Config;
+  const configFile = JSON.parse(
+    await readFile(path.join(rootDirectory, 'lit-localize.json'), 'utf8'),
+  ) as Config;
   const outputDirectory = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-localize-'));
   const localizer = new RuntimeLitLocalizer({
     ...configFile,
@@ -210,13 +225,16 @@ export async function validateInterfaceLocales(
   try {
     const extracted = localizer.extractSourceMessages();
     if (extracted.errors.length > 0) {
-      return Object.freeze(extracted.errors.map((error) => ({
-        path: error.file?.fileName ?? 'src/',
-        code: 'source-extraction-error',
-        message: typeof error.messageText === 'string'
-          ? error.messageText
-          : error.messageText.messageText,
-      })));
+      return Object.freeze(
+        extracted.errors.map((error) => ({
+          path: error.file?.fileName ?? 'src/',
+          code: 'source-extraction-error',
+          message:
+            typeof error.messageText === 'string'
+              ? error.messageText
+              : error.messageText.messageText,
+        })),
+      );
     }
     const units = parseXliff(xliffText);
     const failures = [
@@ -250,12 +268,7 @@ async function main(): Promise<void> {
     for (const failure of failures) {
       console.error(`${failure.path}: ${failure.code}: ${failure.message}`);
     }
-    console.error(
-      styleText(
-        'red',
-        `localization validation failed: ${failures.length} issue(s).`,
-      ),
-    );
+    console.error(styleText('red', `localization validation failed: ${failures.length} issue(s).`));
     process.exitCode = 1;
     return;
   }
@@ -264,9 +277,7 @@ async function main(): Promise<void> {
   );
 }
 
-const invokedScript = process.argv[1]
-  ? path.resolve(process.argv[1])
-  : undefined;
+const invokedScript = process.argv[1] ? path.resolve(process.argv[1]) : undefined;
 if (invokedScript === path.resolve(fileURLToPath(import.meta.url))) {
   main().catch((error) => {
     console.error(error instanceof Error ? error.message : error);

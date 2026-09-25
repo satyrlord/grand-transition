@@ -1,8 +1,8 @@
-import { lockInSetup } from './helpers/setup';
-import { finishPresentation } from './helpers/presentation';
-import type { RoundPresentationFrame } from '../src/app/round-presentation';
+import { lockInSetup } from './helpers/setup.ts';
+import { finishPresentation } from './helpers/presentation.ts';
+import type { RoundPresentationFrame } from '../src/app/round-presentation.ts';
 import { expect, test, type Locator, type Page } from '@playwright/test';
-import { useFixedBrowserMatchSeed } from './helpers/match-flow';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 
 const sceneVariantDimensions = [
   [640, 360],
@@ -22,9 +22,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
 }, testInfo) => {
   await startMatch(page);
 
-  await expect(
-    page.getByRole('heading', { name: /Round 1.*turn/u }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Round 1.*turn/u })).toBeVisible();
   await expect(page.locator('.shared-board > li')).toHaveCount(9);
   await expect(page.locator('.private-hand ol > li')).toHaveCount(2);
   await expect(page.locator('#sentence-title')).toHaveCount(1);
@@ -34,10 +32,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
   await expect(page.locator('.player-health-label').first()).toBeVisible();
   await expect(page.locator('.player-health-label').last()).toBeVisible();
   await expect(page.locator('.timer-fact dd')).toHaveText(/^\d+$/u);
-  await expect(page.locator('.timer-fact dd')).toHaveAttribute(
-    'aria-label',
-    /^\d+ seconds$/u,
-  );
+  await expect(page.locator('.timer-fact dd')).toHaveAttribute('aria-label', /^\d+ seconds$/u);
   expect(
     await page.locator('grand-transition-match').evaluate(
       (
@@ -47,24 +42,14 @@ test('the longest desktop match state fits and exposes every required fact', asy
       ) => match.snapshot?.timer.durationSeconds,
     ),
   ).toBe(30);
-  await expect(
-    page.getByRole('navigation', { name: 'Turn actions' }),
-  ).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Turn actions' })).toBeVisible();
   await expect(page.locator('[data-turn-state="active"]')).toHaveCount(1);
-  await expect(
-    page.locator('[data-turn-state="active"] .player-turn-status'),
-  ).toHaveText('Your turn');
-  await expect(page.locator('.player-turn-status:not([hidden])')).toHaveCount(
-    1,
+  await expect(page.locator('[data-turn-state="active"] .player-turn-status')).toHaveText(
+    'Your turn',
   );
-  await expect(page.locator('.private-hand')).toHaveAttribute(
-    'data-side',
-    'red',
-  );
-  await expect(page.locator('.sentence-ledger')).toHaveAttribute(
-    'data-speaker-side',
-    'red',
-  );
+  await expect(page.locator('.player-turn-status:not([hidden])')).toHaveCount(1);
+  await expect(page.locator('.private-hand')).toHaveAttribute('data-side', 'red');
+  await expect(page.locator('.sentence-ledger')).toHaveAttribute('data-speaker-side', 'red');
   await expect(page.locator('.player-sentence--waiting')).toHaveCount(1);
   await expect(page.locator('.player-sentence--waiting')).toContainText('…');
   const activePortrait = page.locator(
@@ -74,9 +59,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
   const playerSeparation = await page.evaluate(() =>
     [...document.querySelectorAll('.match-player')].map((player) => {
       const hud = player.querySelector('.player-hud')!.getBoundingClientRect();
-      const portrait = player
-        .querySelector('.character-portrait')!
-        .getBoundingClientRect();
+      const portrait = player.querySelector('.character-portrait')!.getBoundingClientRect();
       const name = player.querySelector('h2')!;
       const nameBox = name.getBoundingClientRect();
       const nameText = document.createRange();
@@ -87,11 +70,11 @@ test('the longest desktop match state fits and exposes every required fact', asy
         completeTwoLineName:
           name.scrollWidth <= name.clientWidth + 1 &&
           name.scrollHeight <= name.clientHeight + 1 &&
-          textBox.top >= nameBox.top - 1 && textBox.bottom <= nameBox.bottom + 1 &&
+          textBox.top >= nameBox.top - 1 &&
+          textBox.bottom <= nameBox.bottom + 1 &&
           textBox.height <= 2 * Number.parseFloat(getComputedStyle(name).lineHeight) + 1 &&
           getComputedStyle(name).textOverflow !== 'ellipsis',
-        filter: getComputedStyle(player.querySelector('.character-portrait')!)
-          .filter,
+        filter: getComputedStyle(player.querySelector('.character-portrait')!).filter,
         state: player.getAttribute('data-turn-state'),
       };
     }),
@@ -101,9 +84,9 @@ test('the longest desktop match state fits and exposes every required fact', asy
       Boolean(noOverlap && completeTwoLineName),
     ),
   ).toBe(true);
-  expect(
-    playerSeparation.find(({ state }) => state === 'active')?.filter,
-  ).not.toBe(playerSeparation.find(({ state }) => state === 'waiting')?.filter);
+  expect(playerSeparation.find(({ state }) => state === 'active')?.filter).not.toBe(
+    playerSeparation.find(({ state }) => state === 'waiting')?.filter,
+  );
   expect(
     await page
       .locator('[data-turn-state="waiting"] .character-portrait')
@@ -112,9 +95,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
   expect(await centeredHeaderControls(page)).toBe(true);
   expect(await topStatusRegionsDoNotOverlap(page)).toBe(true);
 
-  await expect(
-    page.getByRole('heading', { name: 'Common phrases' }),
-  ).toHaveCount(1);
+  await expect(page.getByRole('heading', { name: 'Common phrases' })).toHaveCount(1);
   await expect(page.locator('.card-role')).toHaveCount(0);
   await expect(page.locator('.card-bottomline')).toHaveCount(0);
   await expect(page.locator('.card-weakness')).toHaveCount(0);
@@ -123,24 +104,20 @@ test('the longest desktop match state fits and exposes every required fact', asy
     .evaluateAll((buttons) =>
       buttons.every(
         (button) =>
-          button.textContent?.trim() ===
-          button.querySelector('.card-phrase')?.textContent?.trim(),
+          button.textContent?.trim() === button.querySelector('.card-phrase')?.textContent?.trim(),
       ),
     );
   expect(visibleCardText).toBe(true);
-  await expect(page.locator('.shared-board button.phrase-card').first())
-    .toHaveAccessibleName(/Shared/u);
-  const commonPhraseGeometry = await page
-    .locator('.shared-board > li')
-    .evaluateAll((slots) =>
-      slots.map((slot) => {
-        const box = slot.getBoundingClientRect();
-        return { left: box.left, top: box.top, width: box.width };
-      }),
-    );
-  expect(
-    new Set(commonPhraseGeometry.map(({ left }) => Math.round(left))).size,
-  ).toBe(1);
+  await expect(page.locator('.shared-board button.phrase-card').first()).toHaveAccessibleName(
+    /Shared/u,
+  );
+  const commonPhraseGeometry = await page.locator('.shared-board > li').evaluateAll((slots) =>
+    slots.map((slot) => {
+      const box = slot.getBoundingClientRect();
+      return { left: box.left, top: box.top, width: box.width };
+    }),
+  );
+  expect(new Set(commonPhraseGeometry.map(({ left }) => Math.round(left))).size).toBe(1);
   expect(commonPhraseGeometry.map(({ top }) => top)).toEqual(
     commonPhraseGeometry.map(({ top }) => top).toSorted((a, b) => a - b),
   );
@@ -189,8 +166,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
       )
         .filter(
           (node) =>
-            node.scrollWidth > node.clientWidth + 1 ||
-            node.scrollHeight > node.clientHeight + 1,
+            node.scrollWidth > node.clientWidth + 1 || node.scrollHeight > node.clientHeight + 1,
         )
         .map((node) => {
           return {
@@ -217,10 +193,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
         const box = icon.getBoundingClientRect();
         return {
           namespace: icon.namespaceURI,
-          pathNamespaces: Array.from(
-            icon.querySelectorAll('path'),
-            (path) => path.namespaceURI,
-          ),
+          pathNamespaces: Array.from(icon.querySelectorAll('path'), (path) => path.namespaceURI),
           pathCount: icon.querySelectorAll('path').length,
           width: box.width,
           height: box.height,
@@ -234,9 +207,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
       (icon) =>
         icon.namespace === 'http://www.w3.org/2000/svg' &&
         icon.pathCount > 0 &&
-        icon.pathNamespaces.every(
-          (namespace) => namespace === 'http://www.w3.org/2000/svg',
-        ) &&
+        icon.pathNamespaces.every((namespace) => namespace === 'http://www.w3.org/2000/svg') &&
         icon.width > 0 &&
         icon.height > 0 &&
         icon.stroke !== 'none',
@@ -248,9 +219,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
       '.match-turn-heading h1, .player-health-label, .player-turn-status, .player-health strong, .sentence-preview, .card-phrase, .action-title',
     );
     return Math.min(
-      ...Array.from(text, (element) =>
-        Number.parseFloat(getComputedStyle(element).fontSize),
-      ),
+      ...Array.from(text, (element) => Number.parseFloat(getComputedStyle(element).fontSize)),
     );
   });
   expect(tacticalTextFloor).toBeGreaterThanOrEqual(11);
@@ -282,7 +251,8 @@ test('the longest desktop match state fits and exposes every required fact', asy
         return (
           heading.scrollWidth <= heading.clientWidth + 1 &&
           heading.scrollHeight <= heading.clientHeight + 1 &&
-          textBox.top >= box.top - 1 && textBox.bottom <= box.bottom + 1 &&
+          textBox.top >= box.top - 1 &&
+          textBox.bottom <= box.bottom + 1 &&
           textBox.height <= 2 * Number.parseFloat(getComputedStyle(heading).lineHeight) + 1 &&
           getComputedStyle(heading).textOverflow !== 'ellipsis'
         );
@@ -339,19 +309,12 @@ test('the longest desktop match state fits and exposes every required fact', asy
   expect(foregroundAlpha?.transparentRatio).toBeGreaterThan(0.7);
   expectDeskPlateBounds(foregroundAlpha);
   const sceneStack = await page.evaluate(() => ({
-    background: Number(
-      getComputedStyle(document.querySelector('.broadcast-stage-art')!).zIndex,
-    ),
-    portrait: Number(
-      getComputedStyle(document.querySelector('.character-portrait')!).zIndex,
-    ),
+    background: Number(getComputedStyle(document.querySelector('.broadcast-stage-art')!).zIndex),
+    portrait: Number(getComputedStyle(document.querySelector('.character-portrait')!).zIndex),
     foreground: Number(
-      getComputedStyle(document.querySelector('.broadcast-stage-foreground')!)
-        .zIndex,
+      getComputedStyle(document.querySelector('.broadcast-stage-foreground')!).zIndex,
     ),
-    playerHud: Number(
-      getComputedStyle(document.querySelector('.player-hud')!).zIndex,
-    ),
+    playerHud: Number(getComputedStyle(document.querySelector('.player-hud')!).zIndex),
   }));
   expect(sceneStack.background).toBeLessThan(sceneStack.portrait);
   expect(sceneStack.portrait).toBeLessThan(sceneStack.foreground);
@@ -367,9 +330,7 @@ test('the longest desktop match state fits and exposes every required fact', asy
   expect(completePlate).toEqual({ propsAbsent: true, desksClip: 'none', inert: true });
   expect(
     await page.evaluate(() => {
-      const background = document
-        .querySelector('.broadcast-stage-art')!
-        .getBoundingClientRect();
+      const background = document.querySelector('.broadcast-stage-art')!.getBoundingClientRect();
       const foreground = document
         .querySelector('.broadcast-stage-foreground')!
         .getBoundingClientRect();
@@ -387,39 +348,26 @@ test('the longest desktop match state fits and exposes every required fact', asy
     viewportWidth: document.documentElement.clientWidth,
     viewportHeight: document.documentElement.clientHeight,
   }));
-  expect(parityGeometry.documentWidth).toBeLessThanOrEqual(
-    parityGeometry.viewportWidth,
-  );
-  expect(parityGeometry.documentHeight).toBeLessThanOrEqual(
-    parityGeometry.viewportHeight,
-  );
+  expect(parityGeometry.documentWidth).toBeLessThanOrEqual(parityGeometry.viewportWidth);
+  expect(parityGeometry.documentHeight).toBeLessThanOrEqual(parityGeometry.viewportHeight);
   await page.screenshot({
     path: testInfo.outputPath('match-user-parity-1672x941.png'),
     fullPage: true,
   });
 });
 
-test('the match prevents accidental browser text selection', async ({
-  page,
-}) => {
+test('the match prevents accidental browser text selection', async ({ page }) => {
   await startMatch(page);
   await expect(page.locator('body')).toHaveCSS('user-select', 'none');
   await expect(page.locator('.match-screen')).toHaveCSS('user-select', 'none');
   await page.keyboard.press('Control+A');
-  expect(
-    await page.evaluate(() => window.getSelection()?.toString() ?? ''),
-  ).toBe('');
+  expect(await page.evaluate(() => window.getSelection()?.toString() ?? '')).toBe('');
 });
 
-test('the next round clears an incomplete public sentence', async ({
-  page,
-}) => {
+test('the next round clears an incomplete public sentence', async ({ page }) => {
   await pauseMatchClock(page);
   await startMatch(page);
-  await page
-    .locator('[data-role="noun"] button[data-card-state="legal"]')
-    .first()
-    .click();
+  await page.locator('[data-role="noun"] button[data-card-state="legal"]').first().click();
   const bubble = page.locator('.player-sentence--waiting');
   await bubble.hover();
   const priorPublicSentence = (
@@ -430,28 +378,20 @@ test('the next round clears an incomplete public sentence', async ({
   await page.getByRole('button', { name: 'End', exact: true }).click();
   await page.getByRole('button', { name: 'End', exact: true }).click();
   await finishPresentation(page);
-  await expect(
-    page.getByRole('heading', { name: /Round 2.*turn/u }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Round 2.*turn/u })).toBeVisible();
   await page.mouse.move(0, 0);
-  await expect(page.locator('.sentence-preview')).toHaveText(
-    'Select a noun to begin.',
-  );
+  await expect(page.locator('.sentence-preview')).toHaveText('Select a noun to begin.');
 
   const nextRoundBubble = page.locator('.player-sentence--waiting');
   await nextRoundBubble.hover();
   await expect(nextRoundBubble).toHaveAttribute('data-revealed', 'true');
-  await expect(nextRoundBubble.locator('.waiting-sentence-content')).toHaveText(
-    'No sentence yet.',
+  await expect(nextRoundBubble.locator('.waiting-sentence-content')).toHaveText('No sentence yet.');
+  await expect(nextRoundBubble.locator('.waiting-sentence-content')).not.toHaveText(
+    priorPublicSentence!,
   );
-  await expect(
-    nextRoundBubble.locator('.waiting-sentence-content'),
-  ).not.toHaveText(priorPublicSentence!);
 });
 
-test('the gray waiting bubble always reveals and fits its complete sentence', async ({
-  page,
-}) => {
+test('the gray waiting bubble always reveals and fits its complete sentence', async ({ page }) => {
   await startMatch(page);
   const sentence =
     'Your reform calendar transports voters with busses from the government podium and embarrasses this televised debate. And I have the dossiers to prove it!';
@@ -487,9 +427,7 @@ test('the gray waiting bubble always reveals and fits its complete sentence', as
     expect(expandedBox!.width).toBeGreaterThan(compactBox!.width);
     const geometry = await bubble.evaluate((element) => {
       const box = element.getBoundingClientRect();
-      const sentenceContent = element.querySelector<HTMLElement>(
-        '.waiting-sentence-content',
-      )!;
+      const sentenceContent = element.querySelector<HTMLElement>('.waiting-sentence-content')!;
       return {
         bottom: box.bottom,
         contentHeight: sentenceContent.clientHeight,
@@ -506,12 +444,8 @@ test('the gray waiting bubble always reveals and fits its complete sentence', as
     expect(geometry.top).toBeGreaterThanOrEqual(0);
     expect(geometry.right).toBeLessThanOrEqual(viewport.width);
     expect(geometry.bottom).toBeLessThanOrEqual(viewport.height);
-    expect(geometry.contentScrollWidth).toBeLessThanOrEqual(
-      geometry.contentWidth + 1,
-    );
-    expect(geometry.contentScrollHeight).toBeLessThanOrEqual(
-      geometry.contentHeight + 1,
-    );
+    expect(geometry.contentScrollWidth).toBeLessThanOrEqual(geometry.contentWidth + 1);
+    expect(geometry.contentScrollHeight).toBeLessThanOrEqual(geometry.contentHeight + 1);
     expect(geometry.clipPath).toBe('none');
 
     await page.locator('.sentence-preview').hover();
@@ -548,9 +482,7 @@ test('the reported long bubble works on both sides at the reported viewport', as
   await page.getByLabel('Scene').selectOption('modern-debate-studio');
   await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
-  await expect(
-    page.getByRole('heading', { name: /Round 1.*turn/u }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Round 1.*turn/u })).toBeVisible();
   await page.setViewportSize({ width: 2014, height: 921 });
   const sentence =
     'Your reform calendar transports voters with busses from the government podium and embarrasses this televised debate. And I have the dossiers to prove it!';
@@ -649,26 +581,18 @@ test.describe('touch waiting-bubble disclosure', () => {
   });
 });
 
-test('the selected roster characters load their local portrait assets', async ({
-  page,
-}) => {
+test('the selected roster characters load their local portrait assets', async ({ page }) => {
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await selectSetupCharacter(page, 'two', 'black-sea-captain');
   await lockInSetup(page);
 
   await page.getByRole('button', { name: 'Start match' }).click();
 
-  await expect(
-    page.getByRole('heading', { name: 'Black Sea Captain' }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Black Sea Captain' })).toBeVisible();
   const portraits = page.locator('.character-portrait');
   await expect(portraits).toHaveCount(2);
-  await expect(
-    page.locator('img.character-portrait[src*="red-folded-chairman"]'),
-  ).toBeVisible();
-  await expect(
-    page.locator('img.character-portrait[src*="black-sea-captain"]'),
-  ).toBeVisible();
+  await expect(page.locator('img.character-portrait[src*="red-folded-chairman"]')).toBeVisible();
+  await expect(page.locator('img.character-portrait[src*="black-sea-captain"]')).toBeVisible();
   await expect
     .poll(() =>
       portraits.evaluateAll((images: HTMLImageElement[]) =>
@@ -686,7 +610,8 @@ test('the selected roster characters load their local portrait assets', async ({
         return (
           heading.scrollWidth <= heading.clientWidth + 1 &&
           heading.scrollHeight <= heading.clientHeight + 1 &&
-          textBox.top >= box.top - 1 && textBox.bottom <= box.bottom + 1 &&
+          textBox.top >= box.top - 1 &&
+          textBox.bottom <= box.bottom + 1 &&
           textBox.height <= 2 * Number.parseFloat(getComputedStyle(heading).lineHeight) + 1 &&
           getComputedStyle(heading).textOverflow !== 'ellipsis'
         );
@@ -716,16 +641,16 @@ test('the selected roster characters load their local portrait assets', async ({
 });
 
 for (const viewport of [
-    { width: 1024, height: 720 },
-    { width: 1024, height: 768 },
-    { width: 1280, height: 720 },
-    { width: 1400, height: 1050 },
-    { width: 1920, height: 1080 },
-    { width: 1280, height: 1024 },
-    { width: 2560, height: 1080 },
-    { width: 3424, height: 1427 },
-    { width: 5120, height: 1440 },
-  ]) {
+  { width: 1024, height: 720 },
+  { width: 1024, height: 768 },
+  { width: 1280, height: 720 },
+  { width: 1400, height: 1050 },
+  { width: 1920, height: 1080 },
+  { width: 1280, height: 1024 },
+  { width: 2560, height: 1080 },
+  { width: 3424, height: 1427 },
+  { width: 5120, height: 1440 },
+]) {
   test(`the selected modern debate studio loads both local scene layers at ${viewport.width}x${viewport.height}`, async ({
     page,
   }, testInfo) => {
@@ -748,7 +673,11 @@ for (const viewport of [
     });
     const sceneVariantRequests: string[] = [];
     page.on('request', (request) => {
-      if (/\/assets\/(?:modern-debate|transition-era)-.*\.(?:avif|webp)(?:$|[?#])/u.test(request.url())) {
+      if (
+        /\/assets\/(?:modern-debate|transition-era)-.*\.(?:avif|webp)(?:$|[?#])/u.test(
+          request.url(),
+        )
+      ) {
         sceneVariantRequests.push(request.url());
       }
     });
@@ -758,9 +687,7 @@ for (const viewport of [
     expect(sceneVariantRequests).toEqual([]);
     await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match' }).click();
-    await expect(
-      page.getByRole('heading', { name: /Round 1.*turn/u }),
-    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Round 1.*turn/u })).toBeVisible();
 
     const background = page.locator(
       '.broadcast-stage-art[data-scene-asset="modern-debate-studio"]',
@@ -771,11 +698,9 @@ for (const viewport of [
     await expect(background).toBeVisible();
     await expect(foreground).toBeVisible();
     expect(
-      await page.locator(
-        'picture[data-scene-asset="modern-debate-studio"] source',
-      ).evaluateAll((sources) =>
-        sources.map((source) => (source as HTMLSourceElement).type),
-      ),
+      await page
+        .locator('picture[data-scene-asset="modern-debate-studio"] source')
+        .evaluateAll((sources) => sources.map((source) => (source as HTMLSourceElement).type)),
     ).toEqual(['image/avif', 'image/webp']);
     expect(await background.getAttribute('src')).toContain('.webp');
     expect(await background.getAttribute('src')).not.toContain('.png');
@@ -788,9 +713,9 @@ for (const viewport of [
       .evaluate((picture) => ({
         cropCore: picture.getAttribute('data-scene-crop-core'),
         safeRectangles: picture.getAttribute('data-scene-safe-rectangles'),
-        styleCoreWidth: getComputedStyle(
-          picture.querySelector('img')!,
-        ).getPropertyValue('--scene-crop-core-width'),
+        styleCoreWidth: getComputedStyle(picture.querySelector('img')!).getPropertyValue(
+          '--scene-crop-core-width',
+        ),
       }));
     expect(manifestGeometry.cropCore).toContain('"width":0.75');
     expect(manifestGeometry.safeRectangles).toContain('centralInteraction');
@@ -824,9 +749,7 @@ for (const viewport of [
       .poll(() => background.evaluate((image: HTMLImageElement) => image.currentSrc))
       .toMatch(/\.avif(?:$|[?#])/u);
     await expect.poll(() => sceneVariantRequests.length).toBe(2);
-    expect(
-      sceneVariantRequests.every((url) => url.includes('modern-debate-studio')),
-    ).toBe(true);
+    expect(sceneVariantRequests.every((url) => url.includes('modern-debate-studio'))).toBe(true);
     await page.waitForLoadState('networkidle');
     expect(
       await page.evaluate(
@@ -847,27 +770,25 @@ for (const viewport of [
     await expect
       .poll(
         () =>
-          page.locator('.character-portrait').evaluateAll((portraits) =>
-            portraits.every(
-              (portrait) =>
-                (portrait as HTMLImageElement).complete &&
-                (portrait as HTMLImageElement).naturalWidth > 0,
+          page
+            .locator('.character-portrait')
+            .evaluateAll((portraits) =>
+              portraits.every(
+                (portrait) =>
+                  (portrait as HTMLImageElement).complete &&
+                  (portrait as HTMLImageElement).naturalWidth > 0,
+              ),
             ),
-          ),
         { timeout: 15_000 },
       )
       .toBe(true);
 
     await page.setViewportSize(viewport);
     await decodeImages(
-      page.locator(
-        '.broadcast-stage-art, .broadcast-stage-foreground, .character-portrait',
-      ),
+      page.locator('.broadcast-stage-art, .broadcast-stage-foreground, .character-portrait'),
     );
     const geometry = await page.evaluate(() => {
-      const backgroundBox = document
-        .querySelector('.broadcast-stage-art')!
-        .getBoundingClientRect();
+      const backgroundBox = document.querySelector('.broadcast-stage-art')!.getBoundingClientRect();
       const foregroundBox = document
         .querySelector('.broadcast-stage-foreground')!
         .getBoundingClientRect();
@@ -890,8 +811,7 @@ for (const viewport of [
           (innerWidth / (backgroundBox.width * 0.75) > 0.999 &&
             innerWidth / (backgroundBox.width * 0.75) < 1.001),
         fullSceneAtSixteenByNine:
-          ratio < 16 / 9 - 0.0001 ||
-          Math.abs(backgroundBox.width - innerWidth) <= 1,
+          ratio < 16 / 9 - 0.0001 || Math.abs(backgroundBox.width - innerWidth) <= 1,
         fourByThreeCore:
           Math.abs(ratio - 4 / 3) > 0.0001 ||
           Math.abs(backgroundBox.width * 0.75 - innerWidth) <= 1,
@@ -900,9 +820,7 @@ for (const viewport of [
             ? backgroundBox.top > 0 && backgroundBox.bottom >= innerHeight
             : backgroundBox.top <= 1,
         extensionSurface: (() => {
-          const style = getComputedStyle(
-            document.querySelector('.broadcast-stage')!,
-          );
+          const style = getComputedStyle(document.querySelector('.broadcast-stage')!);
           return {
             color: style.backgroundColor,
             image: style.backgroundImage,
@@ -911,29 +829,13 @@ for (const viewport of [
         })(),
       };
     });
-    expect(geometry.documentFits, `${viewport.width}x${viewport.height}`).toBe(
-      true,
-    );
-    expect(geometry.backgroundCovers, `${viewport.width}x${viewport.height}`).toBe(
-      true,
-    );
-    expect(geometry.layersAligned, `${viewport.width}x${viewport.height}`).toBe(
-      true,
-    );
-    expect(
-      geometry.protectedCoreFitsViewport,
-      `${viewport.width}x${viewport.height}`,
-    ).toBe(true);
-    expect(
-      geometry.fullSceneAtSixteenByNine,
-      `${viewport.width}x${viewport.height}`,
-    ).toBe(true);
-    expect(geometry.fourByThreeCore, `${viewport.width}x${viewport.height}`).toBe(
-      true,
-    );
-    expect(geometry.topContinuation, `${viewport.width}x${viewport.height}`).toBe(
-      true,
-    );
+    expect(geometry.documentFits, `${viewport.width}x${viewport.height}`).toBe(true);
+    expect(geometry.backgroundCovers, `${viewport.width}x${viewport.height}`).toBe(true);
+    expect(geometry.layersAligned, `${viewport.width}x${viewport.height}`).toBe(true);
+    expect(geometry.protectedCoreFitsViewport, `${viewport.width}x${viewport.height}`).toBe(true);
+    expect(geometry.fullSceneAtSixteenByNine, `${viewport.width}x${viewport.height}`).toBe(true);
+    expect(geometry.fourByThreeCore, `${viewport.width}x${viewport.height}`).toBe(true);
+    expect(geometry.topContinuation, `${viewport.width}x${viewport.height}`).toBe(true);
     expect(
       await moderatorFaceIsClearOfPortraits(page),
       `${viewport.width}x${viewport.height}`,
@@ -945,9 +847,7 @@ for (const viewport of [
       expect(geometry.extensionSurface.image).toBe('none');
     }
     await page.screenshot({
-      path: testInfo.outputPath(
-        `modern-debate-studio-${viewport.width}x${viewport.height}.png`,
-      ),
+      path: testInfo.outputPath(`modern-debate-studio-${viewport.width}x${viewport.height}.png`),
       fullPage: true,
     });
   });
@@ -962,9 +862,7 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
       portraits.evaluateAll((images: HTMLImageElement[]) =>
         images.every(
           (image) =>
-            image.complete &&
-            image.naturalWidth === image.naturalHeight &&
-            image.naturalWidth > 0,
+            image.complete && image.naturalWidth === image.naturalHeight && image.naturalWidth > 0,
         ),
       ),
     )
@@ -988,35 +886,28 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
       // Let responsive source selection use the new viewport, then decode and
       // measure in the same browser task so another source update cannot race it.
       await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-      await Promise.all([...document.querySelectorAll<HTMLImageElement>(
-        '.broadcast-stage-art, .character-frame img',
-      )].map((image) => image.decode()));
-      const stage = document
-        .querySelector('.broadcast-stage')!
-        .getBoundingClientRect();
-      const scene = document
-        .querySelector('.broadcast-stage-art')!
-        .getBoundingClientRect();
+      await Promise.all(
+        [
+          ...document.querySelectorAll<HTMLImageElement>(
+            '.broadcast-stage-art, .character-frame img',
+          ),
+        ].map((image) => image.decode()),
+      );
+      const stage = document.querySelector('.broadcast-stage')!.getBoundingClientRect();
+      const scene = document.querySelector('.broadcast-stage-art')!.getBoundingClientRect();
       const deskTop = scene.top + scene.height * 0.62;
       return [...document.querySelectorAll('.match-player')].map((player) => {
-        const frame = player
-          .querySelector('.character-frame')!
-          .getBoundingClientRect();
-        const portraitImage = player.querySelector<HTMLImageElement>(
-          '.character-portrait',
-        )!;
+        const frame = player.querySelector('.character-frame')!.getBoundingClientRect();
+        const portraitImage = player.querySelector<HTMLImageElement>('.character-portrait')!;
         const portrait = portraitImage.getBoundingClientRect();
-        const hud = player
-          .querySelector('.player-hud')!
-          .getBoundingClientRect();
+        const hud = player.querySelector('.player-hud')!.getBoundingClientRect();
         return {
           portraitTopRatio: (portrait.top - frame.top) / frame.height,
           portraitHeightRatio: portrait.height / frame.height,
           portraitTop: portrait.top,
           portraitHeight: portrait.height,
           renderedWidthRatio:
-            (portrait.height *
-              (portraitImage.naturalWidth / portraitImage.naturalHeight)) /
+            (portrait.height * (portraitImage.naturalWidth / portraitImage.naturalHeight)) /
             frame.height,
           portraitBottomRatio: portrait.bottom / stage.height,
           naturalWidth: portraitImage.naturalWidth,
@@ -1051,8 +942,7 @@ test('keeps portraits in a stable standing-desk scale', async ({ page }) => {
           portraitBottomRatio < 1.05 &&
           naturalWidth === naturalHeight &&
           naturalWidth > 0 &&
-          portraitTop +
-            portraitHeight * (portraitPixelFacts[index]!.topOpaqueRatio + 0.22) <
+          portraitTop + portraitHeight * (portraitPixelFacts[index]!.topOpaqueRatio + 0.22) <
             deskTop &&
           clearsHud,
       ),
@@ -1065,16 +955,12 @@ test('keeps the Thunder Tribune selection tall in the final square portrait plan
   page,
 }) => {
   await startMatch(page);
-  const portrait = page.locator(
-    '[data-state-id="selection"] img[src*="thunder-tribune"]',
-  );
+  const portrait = page.locator('[data-state-id="selection"] img[src*="thunder-tribune"]');
   await expect
     .poll(() =>
       portrait.evaluate(
         (image: HTMLImageElement) =>
-          image.complete &&
-          image.naturalWidth === image.naturalHeight &&
-          image.naturalWidth > 0,
+          image.complete && image.naturalWidth === image.naturalHeight && image.naturalWidth > 0,
       ),
     )
     .toBe(true);
@@ -1126,22 +1012,14 @@ test('keeps the Thunder Tribune selection tall in the final square portrait plan
   });
   expect(silhouette.heightRatio).toBeGreaterThanOrEqual(0.93);
   expect(silhouette.heightRatio).toBeLessThanOrEqual(0.99);
-  expect(silhouette.minimumY / silhouette.canvasSize).toBeGreaterThanOrEqual(
-    0.01,
-  );
-  expect(silhouette.minimumY / silhouette.canvasSize).toBeLessThanOrEqual(
-    0.05,
-  );
-  expect(silhouette.maximumY / silhouette.canvasSize).toBeGreaterThanOrEqual(
-    0.95,
-  );
+  expect(silhouette.minimumY / silhouette.canvasSize).toBeGreaterThanOrEqual(0.01);
+  expect(silhouette.minimumY / silhouette.canvasSize).toBeLessThanOrEqual(0.05);
+  expect(silhouette.maximumY / silhouette.canvasSize).toBeGreaterThanOrEqual(0.95);
   expect(silhouette.maximumY / silhouette.canvasSize).toBeLessThan(1);
   expect(silhouette.occupiedAreaRatio).toBeGreaterThanOrEqual(0.12);
 });
 
-test('keeps the physical moderator face clear of drafting UI', async ({
-  page,
-}) => {
+test('keeps the physical moderator face clear of drafting UI', async ({ page }) => {
   test.setTimeout(60_000);
   await startMatch(page);
   const background = page.locator('.broadcast-stage-art');
@@ -1161,13 +1039,15 @@ test('keeps the physical moderator face clear of drafting UI', async ({
   await expect
     .poll(
       () =>
-        page.locator('.character-portrait').evaluateAll((portraits) =>
-          portraits.every(
-            (portrait) =>
-              (portrait as HTMLImageElement).complete &&
-              (portrait as HTMLImageElement).naturalWidth > 0,
+        page
+          .locator('.character-portrait')
+          .evaluateAll((portraits) =>
+            portraits.every(
+              (portrait) =>
+                (portrait as HTMLImageElement).complete &&
+                (portrait as HTMLImageElement).naturalWidth > 0,
+            ),
           ),
-        ),
       { timeout: 15_000 },
     )
     .toBe(true);
@@ -1181,16 +1061,12 @@ test('keeps the physical moderator face clear of drafting UI', async ({
     { width: 1280, height: 1024 },
   ]) {
     await page.setViewportSize(viewport);
-    await decodeImages(
-      page.locator('.broadcast-stage-art, .character-portrait'),
-    );
+    await decodeImages(page.locator('.broadcast-stage-art, .character-portrait'));
     await expectModeratorFaceClearance(page, `${viewport.width}x${viewport.height}`);
   }
 });
 
-test('waits for a replacement portrait before measuring moderator clearance', async ({
-  page,
-}) => {
+test('waits for a replacement portrait before measuring moderator clearance', async ({ page }) => {
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   // A declared selection-art fallback keeps the static portrait path. State-package
   // characters render through the frame presenter, whose own visible frame would
@@ -1249,16 +1125,16 @@ test('waits for a replacement portrait before measuring moderator clearance', as
 });
 
 for (const viewport of [
-    { width: 1024, height: 1023 },
-    { width: 1024, height: 720 },
-    { width: 1024, height: 768 },
-    { width: 1280, height: 720 },
-    { width: 1400, height: 1050 },
-    { width: 1920, height: 1080 },
-    { width: 2560, height: 1080 },
-    { width: 3424, height: 1427 },
-    { width: 5120, height: 1440 },
-  ]) {
+  { width: 1024, height: 1023 },
+  { width: 1024, height: 720 },
+  { width: 1024, height: 768 },
+  { width: 1280, height: 720 },
+  { width: 1400, height: 1050 },
+  { width: 1920, height: 1080 },
+  { width: 2560, height: 1080 },
+  { width: 3424, height: 1427 },
+  { width: 5120, height: 1440 },
+]) {
   test(`the match fits the supported landscape matrix at ${viewport.width}x${viewport.height}`, async ({
     page,
   }, testInfo) => {
@@ -1268,35 +1144,19 @@ for (const viewport of [
     const fontEvidence = await page.evaluate(async () => {
       await Promise.all([
         document.fonts.load('400 24px "Poiret One"', 'THUNDER'),
-        document.fonts.load(
-          '900 24px "Nunito Variable"',
-          'ȘȚĂÎÂ ÎNTR-O COALIȚIE',
-        ),
-        document.fonts.load(
-          '700 16px "Rubik Variable"',
-          'o ordonanță de urgență',
-        ),
+        document.fonts.load('900 24px "Nunito Variable"', 'ȘȚĂÎÂ ÎNTR-O COALIȚIE'),
+        document.fonts.load('700 16px "Rubik Variable"', 'o ordonanță de urgență'),
         document.fonts.load('400 24px "Share Tech Mono"', '00:30'),
       ]);
       return {
-        feature: getComputedStyle(document.querySelector('.match-player h2')!)
-          .fontFamily,
-        speech: getComputedStyle(document.querySelector('.sentence-preview')!)
-          .fontFamily,
-        phrase: getComputedStyle(document.querySelector('.card-phrase')!)
-          .fontFamily,
-        timer: getComputedStyle(document.querySelector('.timer-fact dd')!)
-          .fontFamily,
+        feature: getComputedStyle(document.querySelector('.match-player h2')!).fontFamily,
+        speech: getComputedStyle(document.querySelector('.sentence-preview')!).fontFamily,
+        phrase: getComputedStyle(document.querySelector('.card-phrase')!).fontFamily,
+        timer: getComputedStyle(document.querySelector('.timer-fact dd')!).fontFamily,
         loaded: {
           feature: document.fonts.check('400 24px "Poiret One"', 'THUNDER'),
-          speech: document.fonts.check(
-            '900 24px "Nunito Variable"',
-            'ȘȚĂÎÂ ÎNTR-O COALIȚIE',
-          ),
-          phrase: document.fonts.check(
-            '700 16px "Rubik Variable"',
-            'o ordonanță de urgență',
-          ),
+          speech: document.fonts.check('900 24px "Nunito Variable"', 'ȘȚĂÎÂ ÎNTR-O COALIȚIE'),
+          phrase: document.fonts.check('700 16px "Rubik Variable"', 'o ordonanță de urgență'),
           timer: document.fonts.check('400 24px "Share Tech Mono"', '00:30'),
         },
       };
@@ -1314,20 +1174,18 @@ for (const viewport of [
       'THROUGH ANOTHER REFORM CYCLE, PENDING FURTHER CONSULTATION',
     ].join(', ');
     await page.mouse.move(0, 0);
-    await page
-      .locator('grand-transition-match')
-      .evaluate(async (element, sentence) => {
-        const match = element as HTMLElement & {
-          snapshot: Readonly<Record<string, unknown>> & { revision: number };
-          updateComplete: Promise<boolean>;
-        };
-        match.snapshot = {
-          ...match.snapshot,
-          revision: match.snapshot.revision + 1,
-          sentenceText: sentence,
-        };
-        await match.updateComplete;
-      }, longSentence);
+    await page.locator('grand-transition-match').evaluate(async (element, sentence) => {
+      const match = element as HTMLElement & {
+        snapshot: Readonly<Record<string, unknown>> & { revision: number };
+        updateComplete: Promise<boolean>;
+      };
+      match.snapshot = {
+        ...match.snapshot,
+        revision: match.snapshot.revision + 1,
+        sentenceText: sentence,
+      };
+      await match.updateComplete;
+    }, longSentence);
 
     await page.setViewportSize(viewport);
     await page.mouse.move(0, 0);
@@ -1348,9 +1206,16 @@ for (const viewport of [
         documentHeight: document.documentElement.scrollHeight,
         ambienceAligned: (() => {
           const scene = document.querySelector('.broadcast-stage-art')!.getBoundingClientRect();
-          const ambience = document.querySelector('.broadcast-stage-ambience')!.getBoundingClientRect();
-          return ['x', 'y', 'width', 'height'].every((key) =>
-            Math.abs(scene[key as 'x' | 'y' | 'width' | 'height'] - ambience[key as 'x' | 'y' | 'width' | 'height']) < 0.5);
+          const ambience = document
+            .querySelector('.broadcast-stage-ambience')!
+            .getBoundingClientRect();
+          return ['x', 'y', 'width', 'height'].every(
+            (key) =>
+              Math.abs(
+                scene[key as 'x' | 'y' | 'width' | 'height'] -
+                  ambience[key as 'x' | 'y' | 'width' | 'height'],
+              ) < 0.5,
+          );
         })(),
         requiredInside: required.every((element) => {
           const box = element.getBoundingClientRect();
@@ -1364,8 +1229,7 @@ for (const viewport of [
         textClipping: text
           .filter(
             (node) =>
-              node.scrollWidth > node.clientWidth + 1 ||
-              node.scrollHeight > node.clientHeight + 1,
+              node.scrollWidth > node.clientWidth + 1 || node.scrollHeight > node.clientHeight + 1,
           )
           .map((node) => ({
             text: node.textContent?.trim(),
@@ -1375,8 +1239,7 @@ for (const viewport of [
             scrollHeight: node.scrollHeight,
           })),
         sentence: (() => {
-          const node =
-            document.querySelector<HTMLElement>('.sentence-preview')!;
+          const node = document.querySelector<HTMLElement>('.sentence-preview')!;
           return {
             text: node.textContent?.trim(),
             density: node.dataset.density,
@@ -1388,12 +1251,8 @@ for (const viewport of [
     expect(facts.documentWidth).toBeLessThanOrEqual(viewport.width);
     expect(facts.documentHeight).toBeLessThanOrEqual(viewport.height);
     expect(facts.ambienceAligned).toBe(true);
-    expect(facts.requiredInside, `${viewport.width}x${viewport.height}`).toBe(
-      true,
-    );
-    expect(facts.textClipping, `${viewport.width}x${viewport.height}`).toEqual(
-      [],
-    );
+    expect(facts.requiredInside, `${viewport.width}x${viewport.height}`).toBe(true);
+    expect(facts.textClipping, `${viewport.width}x${viewport.height}`).toEqual([]);
     expect(facts.sentence.text).toBe(longSentence);
     expect(facts.sentence.density).toBe('dense');
     expect(facts.sentence.textOverflow).not.toBe('ellipsis');
@@ -1405,44 +1264,56 @@ for (const viewport of [
         .evaluate((portrait) => getComputedStyle(portrait).opacity),
     ).toBe('1');
     await page.screenshot({
-      path: testInfo.outputPath(
-        `match-${viewport.width}x${viewport.height}.png`,
-      ),
+      path: testInfo.outputPath(`match-${viewport.width}x${viewport.height}.png`),
       fullPage: true,
     });
   });
 }
 
 for (const viewport of [
-    { width: 1024, height: 720 },
-    { width: 1024, height: 768 },
-    { width: 1280, height: 720 },
-    { width: 1920, height: 1080 },
-    { width: 3424, height: 1427 },
-    { width: 5120, height: 1440 },
-  ]) {
-  test(`grammar feedback stays below speech and expires without player input at ${viewport.width}x${viewport.height}`, async ({ page }, testInfo) => {
+  { width: 1024, height: 720 },
+  { width: 1024, height: 768 },
+  { width: 1280, height: 720 },
+  { width: 1920, height: 1080 },
+  { width: 3424, height: 1427 },
+  { width: 5120, height: 1440 },
+]) {
+  test(`grammar feedback stays below speech and expires without player input at ${viewport.width}x${viewport.height}`, async ({
+    page,
+  }, testInfo) => {
     await useFixedBrowserMatchSeed(page);
     await pauseMatchClock(page);
     await page.goto('');
     await page.setViewportSize(viewport);
     await startMatch(page);
-    await page.locator('.shared-board [data-role="predicate"] button[data-card-state="legal"]').first().click();
+    await page
+      .locator('.shared-board [data-role="predicate"] button[data-card-state="legal"]')
+      .first()
+      .click();
     const strike = page.locator('.grammar-strike');
     await expect(strike).toBeVisible();
     const geometry = await page.evaluate(() => {
       const speech = document.querySelector('.sentence-ledger')!.getBoundingClientRect();
       const strike = document.querySelector('.grammar-strike')!.getBoundingClientRect();
-      const tailHeight = parseFloat(getComputedStyle(document.querySelector('.sentence-ledger')!, '::after').height);
+      const tailHeight = parseFloat(
+        getComputedStyle(document.querySelector('.sentence-ledger')!, '::after').height,
+      );
       return {
         belowSpeechAndTail: strike.top >= speech.bottom + tailHeight,
-        insideViewport: strike.left >= 0 && strike.right <= innerWidth && strike.bottom <= innerHeight,
+        insideViewport:
+          strike.left >= 0 && strike.right <= innerWidth && strike.bottom <= innerHeight,
       };
     });
-    expect(geometry, JSON.stringify(viewport)).toEqual({ belowSpeechAndTail: true, insideViewport: true });
+    expect(geometry, JSON.stringify(viewport)).toEqual({
+      belowSpeechAndTail: true,
+      insideViewport: true,
+    });
     if (viewport.width === 3424) {
       await page.clock.runFor(550);
-      await page.screenshot({ path: testInfo.outputPath('grammar-toast-ultrawide.png'), animations: 'disabled' });
+      await page.screenshot({
+        path: testInfo.outputPath('grammar-toast-ultrawide.png'),
+        animations: 'disabled',
+      });
     }
     await page.clock.fastForward(3_000);
     await expect(strike).toHaveCount(0);
@@ -1460,13 +1331,11 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
     name: 'Reshuffle private phrases',
   });
   await redraw.click();
-  await expect(
-    page.getByRole('button', { name: 'Reshuffle used' }),
-  ).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Reshuffle used' })).toBeDisabled();
 
-  const wrongPredicate = page.locator(
-    '.shared-board [data-role="predicate"] button[data-card-state="legal"]',
-  ).first();
+  const wrongPredicate = page
+    .locator('.shared-board [data-role="predicate"] button[data-card-state="legal"]')
+    .first();
   await expect(wrongPredicate).toBeVisible();
   await wrongPredicate.click();
   const grammarStrike = page.locator('.grammar-strike');
@@ -1475,18 +1344,19 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   await expect(grammarStrike).toContainText('Grammar mistake');
   await expect(grammarStrike).toContainText('Red-Folded Chairman');
   await expect(grammarStrike).toContainText('−3 Pride');
-  await expect(
-    page.locator('[data-reaction-state="grammar-mistake"]'),
-  ).toHaveAttribute('data-side', 'red');
+  await expect(page.locator('[data-reaction-state="grammar-mistake"]')).toHaveAttribute(
+    'data-side',
+    'red',
+  );
   expect(
     await page
-      .locator('[data-reaction-state="grammar-mistake"] [data-state-id="grammar-mistake"][data-state-visible="true"]')
+      .locator(
+        '[data-reaction-state="grammar-mistake"] [data-state-id="grammar-mistake"][data-state-visible="true"]',
+      )
       .evaluate((portrait) => getComputedStyle(portrait).animationName),
   ).toBe('character-pause');
   expect(
-    await grammarStrike.evaluate(
-      (element) => getComputedStyle(element).animationDuration,
-    ),
+    await grammarStrike.evaluate((element) => getComputedStyle(element).animationDuration),
   ).toBe('0.52s');
   expect(
     await page
@@ -1498,25 +1368,17 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
     path: testInfo.outputPath('match-grammar-mistake.png'),
     fullPage: true,
   });
-  await expect(
-    page.getByRole('heading', { name: /Thunder Tribune's turn/u }),
-  ).toBeVisible();
-  await expect(
-    page.locator('[data-turn-state="active"] .player-turn-status'),
-  ).toHaveText('Your turn');
+  await expect(page.getByRole('heading', { name: /Thunder Tribune's turn/u })).toBeVisible();
+  await expect(page.locator('[data-turn-state="active"] .player-turn-status')).toHaveText(
+    'Your turn',
+  );
   const incomingPortrait = page.locator(
     '[data-turn-state="active"] [data-state-visible="true"] .character-state-upper',
   );
   await expect(incomingPortrait).toHaveCSS('animation-name', 'character-breath');
   await expect(incomingPortrait).toHaveCSS('animation-duration', '3s');
-  await expect(page.locator('.private-hand')).toHaveAttribute(
-    'data-side',
-    'blue',
-  );
-  await expect(page.locator('.sentence-ledger')).toHaveAttribute(
-    'data-speaker-side',
-    'blue',
-  );
+  await expect(page.locator('.private-hand')).toHaveAttribute('data-side', 'blue');
+  await expect(page.locator('.sentence-ledger')).toHaveAttribute('data-speaker-side', 'blue');
   await expect(page.locator('.player-sentence--waiting')).toHaveCount(1);
 
   for (let turn = 0; turn < 8; turn += 1) {
@@ -1526,16 +1388,43 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   await expect(page.getByRole('dialog')).toHaveCount(0);
   // A public long receipt fixture tests the same component renderer at all viewports.
   await page.locator('grand-transition-match').evaluate(async (element) => {
-    const match = element as HTMLElement & { presentation: RoundPresentationFrame; updateComplete: Promise<boolean> };
-    const base = { narrationIndex: 1, restrictionFactor: 1, weaknessFactor: 1, comboFactor: 1, weaknessTags: [] };
-    match.presentation = { ...match.presentation, phase: 'total', total: 61,
+    const match = element as HTMLElement & {
+      presentation: RoundPresentationFrame;
+      updateComplete: Promise<boolean>;
+    };
+    const base = {
+      narrationIndex: 1,
+      restrictionFactor: 1,
+      weaknessFactor: 1,
+      comboFactor: 1,
+      weaknessTags: [],
+    };
+    match.presentation = {
+      ...match.presentation,
+      phase: 'total',
+      total: 61,
       text: 'Your party belongs in a party museum, and your voters change the channel.',
       components: [
-        { ...base, kind: 'clause', phraseText: 'Your party belongs in a party museum', base: 10,
-          amount: 40, weaknessFactor: 2, comboFactor: 2, weaknessTags: ['evidence', 'credibility', 'restraint'] },
+        {
+          ...base,
+          kind: 'clause',
+          phraseText: 'Your party belongs in a party museum',
+          base: 10,
+          amount: 40,
+          weaknessFactor: 2,
+          comboFactor: 2,
+          weaknessTags: ['evidence', 'credibility', 'restraint'],
+        },
         { ...base, kind: 'finisher', phraseText: 'By emergency ordinance.', base: 3, amount: 3 },
-        { ...base, kind: 'comeback', phraseText: 'And that closes the record.', base: 18, amount: 18 },
-      ] };
+        {
+          ...base,
+          kind: 'comeback',
+          phraseText: 'And that closes the record.',
+          base: 18,
+          amount: 18,
+        },
+      ],
+    };
     await match.updateComplete;
   });
   const receipt = page.locator('.delivery-receipt');
@@ -1543,54 +1432,80 @@ test('pointer play completes redraw, an immediate grammar mistake, and the other
   await expect(receipt.locator('.score-factor--weakness')).toHaveText('×2');
   await expect(receipt.locator('.score-factor--combo')).toHaveText('×2');
   await expect(receipt.locator('[data-score-amount="40"]')).toContainText(/=\s*40/u);
-  await expect(receipt.locator('[data-score-kind="comeback"]')).toContainText(/Comeback.*And that closes the record.*\+18/su);
+  await expect(receipt.locator('[data-score-kind="comeback"]')).toContainText(
+    /Comeback.*And that closes the record.*\+18/su,
+  );
   await expect(receipt.locator('.delivery-total')).toContainText(/Total\s*61/u);
-  await expect(receipt.locator('.delivery-score-weakness')).toHaveText('Evidence · Credibility · Restraint');
-  expect(await receipt.locator('.delivery-score').first().evaluate((step) => getComputedStyle(step).animationName)).toBe('none');
-  for (const viewport of [{ width: 1280, height: 720 }, { width: 1024, height: 720 },
-    { width: 1024, height: 768 }, { width: 1920, height: 1080 }]) {
+  await expect(receipt.locator('.delivery-score-weakness')).toHaveText(
+    'Evidence · Credibility · Restraint',
+  );
+  expect(
+    await receipt
+      .locator('.delivery-score')
+      .first()
+      .evaluate((step) => getComputedStyle(step).animationName),
+  ).toBe('none');
+  for (const viewport of [
+    { width: 1280, height: 720 },
+    { width: 1024, height: 720 },
+    { width: 1024, height: 768 },
+    { width: 1920, height: 1080 },
+  ]) {
     await page.setViewportSize(viewport);
     const geometry = await receipt.evaluate((record) => {
       const box = record.getBoundingClientRect();
       const bubble = document.querySelector('.sentence-ledger')!.getBoundingClientRect();
-      return { inside: box.left >= 0 && box.top >= 0 && box.right <= innerWidth && box.bottom <= innerHeight,
+      return {
+        inside:
+          box.left >= 0 && box.top >= 0 && box.right <= innerWidth && box.bottom <= innerHeight,
         horizontalFit: record.scrollWidth <= record.clientWidth + 1,
-        bubbleClear: box.top >= bubble.bottom || box.right <= bubble.left || box.left >= bubble.right,
-        copySize: Number.parseFloat(getComputedStyle(record.querySelector('.delivery-score-text')!).fontSize) };
+        bubbleClear:
+          box.top >= bubble.bottom || box.right <= bubble.left || box.left >= bubble.right,
+        copySize: Number.parseFloat(
+          getComputedStyle(record.querySelector('.delivery-score-text')!).fontSize,
+        ),
+      };
     });
-    expect(geometry.inside).toBe(true); expect(geometry.horizontalFit).toBe(true);
-    expect(geometry.bubbleClear).toBe(true); expect(geometry.copySize).toBeGreaterThanOrEqual(11);
-    await page.screenshot({ path: testInfo.outputPath(`inline-feedback-${viewport.width}x${viewport.height}.png`) });
+    expect(geometry.inside).toBe(true);
+    expect(geometry.horizontalFit).toBe(true);
+    expect(geometry.bubbleClear).toBe(true);
+    expect(geometry.copySize).toBeGreaterThanOrEqual(11);
+    await page.screenshot({
+      path: testInfo.outputPath(`inline-feedback-${viewport.width}x${viewport.height}.png`),
+    });
   }
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  expect(await receipt.locator('.delivery-score').first().evaluate((step) => getComputedStyle(step).animationName)).toBe('none');
+  expect(
+    await receipt
+      .locator('.delivery-score')
+      .first()
+      .evaluate((step) => getComputedStyle(step).animationName),
+  ).toBe('none');
   await finishPresentation(page);
   await expect(page.getByRole('heading', { name: /Round 2.*turn/u })).toBeVisible();
 });
 
-test('the grammar strike fits the minimum landscape', async ({
-  page,
-}, testInfo) => {
+test('the grammar strike fits the minimum landscape', async ({ page }, testInfo) => {
   await pauseMatchClock(page);
   await page.setViewportSize({ width: 1024, height: 720 });
   await startMatch(page);
   await decodeImages(page.locator('.character-frame img'));
 
   await page
-    .locator(
-      '.shared-board [data-role="predicate"] button[data-card-state="legal"]',
-    )
+    .locator('.shared-board [data-role="predicate"] button[data-card-state="legal"]')
     .first()
     .click();
   const strike = page.locator('.grammar-strike');
   await expect(strike).toBeVisible();
   await expect(strike).toContainText('−3 Pride');
-  expect(
-    await strike.evaluate((element) => getComputedStyle(element).animationName),
-  ).toBe('grammar-strike-in');
+  expect(await strike.evaluate((element) => getComputedStyle(element).animationName)).toBe(
+    'grammar-strike-in',
+  );
   expect(
     await page
-      .locator('[data-reaction-state="grammar-mistake"] [data-state-id="grammar-mistake"][data-state-visible="true"]')
+      .locator(
+        '[data-reaction-state="grammar-mistake"] [data-state-id="grammar-mistake"][data-state-visible="true"]',
+      )
       .evaluate((portrait) => getComputedStyle(portrait).animationName),
   ).toBe('character-pause');
   expect(
@@ -1600,12 +1515,8 @@ test('the grammar strike fits the minimum landscape', async ({
   ).toBe('grammar-arena-flash');
   const geometry = await strike.evaluate((element) => {
     const box = element.getBoundingClientRect();
-    const sentence = document
-      .querySelector('.sentence-ledger')!
-      .getBoundingClientRect();
-    const board = document
-      .querySelector('.common-phrases')!
-      .getBoundingClientRect();
+    const sentence = document.querySelector('.sentence-ledger')!.getBoundingClientRect();
+    const board = document.querySelector('.common-phrases')!.getBoundingClientRect();
     return {
       inside:
         box.left >= 0 &&
@@ -1621,9 +1532,7 @@ test('the grammar strike fits the minimum landscape', async ({
   });
   expect(Object.values(geometry).every(Boolean)).toBe(true);
   await expect(
-    page.locator(
-      '.tutorial, .tactical-help, .card-hint, [data-tutorial], [data-guided-turn]',
-    ),
+    page.locator('.tutorial, .tactical-help, .card-hint, [data-tutorial], [data-guided-turn]'),
   ).toHaveCount(0);
   await page.clock.runFor(550);
   await page.screenshot({
@@ -1632,9 +1541,7 @@ test('the grammar strike fits the minimum landscape', async ({
   });
 });
 
-test('reduced motion keeps grammar feedback without movement or flashing', async ({
-  page,
-}) => {
+test('reduced motion keeps grammar feedback without movement or flashing', async ({ page }) => {
   await pauseMatchClock(page);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 1024, height: 720 });
@@ -1642,21 +1549,20 @@ test('reduced motion keeps grammar feedback without movement or flashing', async
   await decodeImages(page.locator('.character-frame img'));
 
   const sideControls = page.locator('.private-hand, .match-actions');
-  const readSideControlMotion = () => sideControls.evaluateAll((controls) =>
-    controls.map((control) => ({
-      side: control.getAttribute('data-side'),
-      animation: getComputedStyle(control).animationName,
-    })),
-  );
+  const readSideControlMotion = () =>
+    sideControls.evaluateAll((controls) =>
+      controls.map((control) => ({
+        side: control.getAttribute('data-side'),
+        animation: getComputedStyle(control).animationName,
+      })),
+    );
   expect(await readSideControlMotion()).toEqual([
     { side: 'red', animation: 'none' },
     { side: 'red', animation: 'none' },
   ]);
 
   await page
-    .locator(
-      '.shared-board [data-role="predicate"] button[data-card-state="legal"]',
-    )
+    .locator('.shared-board [data-role="predicate"] button[data-card-state="legal"]')
     .first()
     .click();
   const strike = page.locator('.grammar-strike');
@@ -1666,12 +1572,12 @@ test('reduced motion keeps grammar feedback without movement or flashing', async
     { side: 'blue', animation: 'none' },
     { side: 'blue', animation: 'none' },
   ]);
-  expect(
-    await strike.evaluate((element) => getComputedStyle(element).animationName),
-  ).toBe('none');
+  expect(await strike.evaluate((element) => getComputedStyle(element).animationName)).toBe('none');
   expect(
     await page
-      .locator('[data-reaction-state="grammar-mistake"] [data-state-id="grammar-mistake"][data-state-visible="true"]')
+      .locator(
+        '[data-reaction-state="grammar-mistake"] [data-state-id="grammar-mistake"][data-state-visible="true"]',
+      )
       .evaluate((portrait) => getComputedStyle(portrait).animationName),
   ).toBe('none');
   expect(
@@ -1687,9 +1593,7 @@ test('manual and viewport pauses conceal the match and preserve the timer', asyn
 }, testInfo) => {
   await startMatch(page);
   await page.waitForTimeout(1_100);
-  const timerBeforePause = Number(
-    await page.locator('.timer-fact').getAttribute('data-timer'),
-  );
+  const timerBeforePause = Number(await page.locator('.timer-fact').getAttribute('data-timer'));
 
   await page.getByRole('button', { name: 'Pause', exact: true }).click();
   await expect(page.locator('[data-interruption="paused"]')).toBeVisible();
@@ -1703,9 +1607,7 @@ test('manual and viewport pauses conceal the match and preserve the timer', asyn
 
   await page.waitForTimeout(1_100);
   await page.setViewportSize({ width: 639, height: 320 });
-  await expect(
-    page.locator('[data-interruption="unsupported-viewport"]'),
-  ).toBeVisible();
+  await expect(page.locator('[data-interruption="unsupported-viewport"]')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Resume', exact: true })).toHaveCount(0);
   await page.screenshot({
     path: testInfo.outputPath('unsupported-viewport-639x320.png'),
@@ -1724,9 +1626,7 @@ test('manual and viewport pauses conceal the match and preserve the timer', asyn
 
   const timerBeforeViewportPause = timerAfterManualPause;
   await page.setViewportSize({ width: 639, height: 320 });
-  await expect(
-    page.locator('[data-interruption="unsupported-viewport"]'),
-  ).toBeVisible();
+  await expect(page.locator('[data-interruption="unsupported-viewport"]')).toBeVisible();
   await page.waitForTimeout(1_100);
   await page.setViewportSize({ width: 1024, height: 720 });
   await expect(page.locator('.match-screen')).toBeVisible();
@@ -1734,14 +1634,10 @@ test('manual and viewport pauses conceal the match and preserve the timer', asyn
     await page.locator('.timer-fact').getAttribute('data-timer'),
   );
   expect(timerAfterViewportPause).toBeLessThanOrEqual(timerBeforeViewportPause);
-  expect(timerAfterViewportPause).toBeGreaterThanOrEqual(
-    timerBeforeViewportPause - 1,
-  );
+  expect(timerAfterViewportPause).toBeGreaterThanOrEqual(timerBeforeViewportPause - 1);
 });
 
-test('Pause settings apply to the resumed match', async ({
-  page,
-}, testInfo) => {
+test('Pause settings apply to the resumed match', async ({ page }, testInfo) => {
   await startMatch(page);
   await page.getByRole('button', { name: 'Pause', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Resume', exact: true })).toBeFocused();
@@ -1753,9 +1649,7 @@ test('Pause settings apply to the resumed match', async ({
   const phraseColorCodingSettings = page
     .locator('.interruption-setting')
     .filter({ hasText: 'Phrase color coding' });
-  const soundSettings = page
-    .locator('.interruption-setting')
-    .filter({ hasText: 'Sound' });
+  const soundSettings = page.locator('.interruption-setting').filter({ hasText: 'Sound' });
   const musicSettings = soundSettings
     .locator('.interruption-audio-control')
     .filter({ hasText: 'Music' });
@@ -1785,24 +1679,15 @@ test('Pause settings apply to the resumed match', async ({
   await expect(voicesOn).toHaveAttribute('aria-pressed', 'true');
 
   await page.getByRole('button', { name: '15 seconds' }).click();
-  await autoCompleteSettings
-    .getByRole('button', { name: 'Off', exact: true })
-    .click();
-  await phraseColorCodingSettings
-    .getByRole('button', { name: 'Off', exact: true })
-    .click();
-  await musicSettings
-    .getByRole('button', { name: 'Off', exact: true })
-    .click();
-  await voicesSettings
-    .getByRole('button', { name: 'On', exact: true })
-    .click();
-  await voicesSettings
-    .getByRole('button', { name: 'Off', exact: true })
-    .click();
-  await expect(
-    page.getByRole('button', { name: '15 seconds' }),
-  ).toHaveAttribute('aria-pressed', 'true');
+  await autoCompleteSettings.getByRole('button', { name: 'Off', exact: true }).click();
+  await phraseColorCodingSettings.getByRole('button', { name: 'Off', exact: true }).click();
+  await musicSettings.getByRole('button', { name: 'Off', exact: true }).click();
+  await voicesSettings.getByRole('button', { name: 'On', exact: true }).click();
+  await voicesSettings.getByRole('button', { name: 'Off', exact: true }).click();
+  await expect(page.getByRole('button', { name: '15 seconds' })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
   await expect(
     autoCompleteSettings.getByRole('button', { name: 'Off', exact: true }),
   ).toHaveAttribute('aria-pressed', 'true');
@@ -1812,12 +1697,14 @@ test('Pause settings apply to the resumed match', async ({
       exact: true,
     }),
   ).toHaveAttribute('aria-pressed', 'true');
-  await expect(
-    musicSettings.getByRole('button', { name: 'Off', exact: true }),
-  ).toHaveAttribute('aria-pressed', 'true');
-  await expect(
-    voicesSettings.getByRole('button', { name: 'Off', exact: true }),
-  ).toHaveAttribute('aria-pressed', 'true');
+  await expect(musicSettings.getByRole('button', { name: 'Off', exact: true })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+  await expect(voicesSettings.getByRole('button', { name: 'Off', exact: true })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
   for (const viewport of [
     { width: 1024, height: 720 },
     { width: 1024, height: 768 },
@@ -1846,39 +1733,23 @@ test('Pause settings apply to the resumed match', async ({
         requiredFits: required.every((element) => {
           const box = element.getBoundingClientRect();
           return (
-            box.left >= 0 &&
-            box.top >= 0 &&
-            box.right <= innerWidth &&
-            box.bottom <= innerHeight
+            box.left >= 0 && box.top >= 0 && box.right <= innerWidth && box.bottom <= innerHeight
           );
         }),
         colorCodingStartsNewRow: colorCodingBox.top > timerBox.bottom,
         colorCodingFitsSettingsGrid:
           colorCodingBox.left >= timerBox.left &&
           colorCodingBox.right <=
-            document
-              .querySelector<HTMLElement>('.interruption-settings')!
-              .getBoundingClientRect().right,
+            document.querySelector<HTMLElement>('.interruption-settings')!.getBoundingClientRect()
+              .right,
       };
     });
-    expect(layout.documentFits, `${viewport.width}x${viewport.height}`).toBe(
-      true,
-    );
-    expect(layout.requiredFits, `${viewport.width}x${viewport.height}`).toBe(
-      true,
-    );
-    expect(
-      layout.colorCodingStartsNewRow,
-      `${viewport.width}x${viewport.height}`,
-    ).toBe(true);
-    expect(
-      layout.colorCodingFitsSettingsGrid,
-      `${viewport.width}x${viewport.height}`,
-    ).toBe(true);
+    expect(layout.documentFits, `${viewport.width}x${viewport.height}`).toBe(true);
+    expect(layout.requiredFits, `${viewport.width}x${viewport.height}`).toBe(true);
+    expect(layout.colorCodingStartsNewRow, `${viewport.width}x${viewport.height}`).toBe(true);
+    expect(layout.colorCodingFitsSettingsGrid, `${viewport.width}x${viewport.height}`).toBe(true);
     await page.screenshot({
-      path: testInfo.outputPath(
-        `pause-settings-${viewport.width}x${viewport.height}.png`,
-      ),
+      path: testInfo.outputPath(`pause-settings-${viewport.width}x${viewport.height}.png`),
       fullPage: true,
     });
   }
@@ -1886,22 +1757,11 @@ test('Pause settings apply to the resumed match', async ({
 
   await page.getByRole('button', { name: 'Resume', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Pause', exact: true })).toBeFocused();
-  await expect(page.locator('.timer-fact')).toHaveAttribute(
-    'data-timer',
-    /^(?:14|15)$/u,
-  );
-  await expect(page.locator('.match-screen')).toHaveAttribute(
-    'data-phrase-color-coding',
-    'off',
-  );
+  await expect(page.locator('.timer-fact')).toHaveAttribute('data-timer', /^(?:14|15)$/u);
+  await expect(page.locator('.match-screen')).toHaveAttribute('data-phrase-color-coding', 'off');
   const sentenceBefore = await page.locator('.sentence-preview').textContent();
-  await page
-    .locator('[data-role="noun"] button[data-card-state="legal"]')
-    .first()
-    .hover();
-  await expect(page.locator('.sentence-preview')).toHaveText(
-    sentenceBefore?.trim() ?? '',
-  );
+  await page.locator('[data-role="noun"] button[data-card-state="legal"]').first().hover();
+  await expect(page.locator('.sentence-preview')).toHaveText(sentenceBefore?.trim() ?? '');
 
   await page.getByRole('button', { name: 'Pause', exact: true }).click();
   await expect(
@@ -1918,10 +1778,7 @@ test('Pause settings apply to the resumed match', async ({
   ).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'Unlimited' }).click();
   await page.getByRole('button', { name: 'Resume', exact: true }).click();
-  await expect(page.locator('.timer-fact')).toHaveAttribute(
-    'data-timer',
-    'unlimited',
-  );
+  await expect(page.locator('.timer-fact')).toHaveAttribute('data-timer', 'unlimited');
   await expect(page.locator('.timer-fact dd')).toHaveText('Unlimited');
   for (const viewport of [
     { width: 1024, height: 720 },
@@ -1930,49 +1787,35 @@ test('Pause settings apply to the resumed match', async ({
     { width: 1920, height: 1080 },
   ]) {
     await page.setViewportSize(viewport);
-    const timerGeometry = await page
-      .locator('.timer-fact')
-      .evaluate((frame) => {
-        const frameBox = frame.getBoundingClientRect();
-        const text = frame.querySelector<HTMLElement>('dd')!;
-        const textBox = text.getBoundingClientRect();
-        return {
-          textFitsItsBox: text.scrollWidth <= text.clientWidth,
-          textFitsFrame:
-            textBox.left >= frameBox.left && textBox.right <= frameBox.right,
-        };
-      });
+    const timerGeometry = await page.locator('.timer-fact').evaluate((frame) => {
+      const frameBox = frame.getBoundingClientRect();
+      const text = frame.querySelector<HTMLElement>('dd')!;
+      const textBox = text.getBoundingClientRect();
+      return {
+        textFitsItsBox: text.scrollWidth <= text.clientWidth,
+        textFitsFrame: textBox.left >= frameBox.left && textBox.right <= frameBox.right,
+      };
+    });
     expect(timerGeometry, `${viewport.width}x${viewport.height}`).toEqual({
       textFitsItsBox: true,
       textFitsFrame: true,
     });
     await page.screenshot({
-      path: testInfo.outputPath(
-        `unlimited-timer-${viewport.width}x${viewport.height}.png`,
-      ),
+      path: testInfo.outputPath(`unlimited-timer-${viewport.width}x${viewport.height}.png`),
       fullPage: true,
     });
   }
   await page.waitForTimeout(1_100);
-  await expect(page.locator('.timer-fact')).toHaveAttribute(
-    'data-timer',
-    'unlimited',
-  );
+  await expect(page.locator('.timer-fact')).toHaveAttribute('data-timer', 'unlimited');
 });
 
-test('paused match returns to the menu only after confirmation', async ({
-  page,
-}, testInfo) => {
+test('paused match returns to the menu only after confirmation', async ({ page }, testInfo) => {
   await startMatch(page);
   await page.getByRole('button', { name: 'Pause', exact: true }).click();
   await page.getByRole('button', { name: 'Back to menu' }).click();
 
-  await expect(
-    page.getByRole('heading', { name: 'End this match?' }),
-  ).toBeVisible();
-  await expect(
-    page.getByText('Current match progress will be lost.'),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'End this match?' })).toBeVisible();
+  await expect(page.getByText('Current match progress will be lost.')).toBeVisible();
   await expect(page.locator('.match-screen')).toHaveCount(0);
   await expect(page.locator('.phrase-card')).toHaveCount(0);
   await expect(page.locator('[data-timer]')).toHaveCount(0);
@@ -1984,42 +1827,38 @@ test('paused match returns to the menu only after confirmation', async ({
     { width: 1920, height: 1080 },
   ]) {
     await page.setViewportSize(viewport);
-    const geometry = await page
-      .locator('.interruption-notice')
-      .evaluate((notice) => {
-        const viewportWidth = document.documentElement.clientWidth;
-        const viewportHeight = document.documentElement.clientHeight;
-        const noticeBox = notice.getBoundingClientRect();
-        const buttons = [...notice.querySelectorAll('button')].map((button) =>
-          button.getBoundingClientRect(),
-        );
-        return {
-          documentFits:
-            document.documentElement.scrollWidth <= viewportWidth &&
-            document.documentElement.scrollHeight <= viewportHeight,
-          noticeFits:
-            noticeBox.left >= 0 &&
-            noticeBox.top >= 0 &&
-            noticeBox.right <= viewportWidth &&
-            noticeBox.bottom <= viewportHeight,
-          controlsFit: buttons.every(
-            (button) =>
-              button.left >= noticeBox.left &&
-              button.top >= noticeBox.top &&
-              button.right <= noticeBox.right &&
-              button.bottom <= noticeBox.bottom,
-          ),
-        };
-      });
+    const geometry = await page.locator('.interruption-notice').evaluate((notice) => {
+      const viewportWidth = document.documentElement.clientWidth;
+      const viewportHeight = document.documentElement.clientHeight;
+      const noticeBox = notice.getBoundingClientRect();
+      const buttons = [...notice.querySelectorAll('button')].map((button) =>
+        button.getBoundingClientRect(),
+      );
+      return {
+        documentFits:
+          document.documentElement.scrollWidth <= viewportWidth &&
+          document.documentElement.scrollHeight <= viewportHeight,
+        noticeFits:
+          noticeBox.left >= 0 &&
+          noticeBox.top >= 0 &&
+          noticeBox.right <= viewportWidth &&
+          noticeBox.bottom <= viewportHeight,
+        controlsFit: buttons.every(
+          (button) =>
+            button.left >= noticeBox.left &&
+            button.top >= noticeBox.top &&
+            button.right <= noticeBox.right &&
+            button.bottom <= noticeBox.bottom,
+        ),
+      };
+    });
     expect(geometry, `${viewport.width}x${viewport.height}`).toEqual({
       controlsFit: true,
       documentFits: true,
       noticeFits: true,
     });
     await page.screenshot({
-      path: testInfo.outputPath(
-        `pause-exit-confirmation-${viewport.width}x${viewport.height}.png`,
-      ),
+      path: testInfo.outputPath(`pause-exit-confirmation-${viewport.width}x${viewport.height}.png`),
       fullPage: true,
     });
   }
@@ -2029,13 +1868,9 @@ test('paused match returns to the menu only after confirmation', async ({
   await page.getByRole('button', { name: 'Back to menu' }).click();
   await page.getByRole('button', { name: 'End match' }).click();
 
-  await expect(
-    page.getByRole('heading', { name: 'Grand Transition' }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
   await expect(page.locator('grand-transition-match')).toHaveCount(0);
-  await expect(
-    page.getByRole('button', { name: 'Multiplayer' }),
-  ).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Multiplayer' })).toBeVisible();
 });
 
 async function pauseMatchClock(page: Page): Promise<void> {
@@ -2048,9 +1883,7 @@ async function startMatch(page: Page): Promise<void> {
   await lockInSetup(page);
 
   await page.getByRole('button', { name: 'Start match' }).click();
-  await expect(
-    page.getByRole('heading', { name: /Round 1.*turn/u }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Round 1.*turn/u })).toBeVisible();
 }
 
 async function selectSetupCharacter(
@@ -2058,8 +1891,7 @@ async function selectSetupCharacter(
   player: 'one' | 'two',
   characterId: string,
 ): Promise<void> {
-  const fieldId =
-    player === 'one' ? '#playerOneCharacterId' : '#playerTwoCharacterId';
+  const fieldId = player === 'one' ? '#playerOneCharacterId' : '#playerTwoCharacterId';
   if (player === 'two') {
     await page.getByTestId('lock-player-one').click();
   }
@@ -2115,7 +1947,7 @@ async function setWaitingSentence(
   );
 }
 
-// Same value as NATIVE_ALPHA_MIN_OPACITY in tools/asset-pixels.mjs: native-alpha
+// Same value as NATIVE_ALPHA_MIN_OPACITY in tools/asset-pixels.ts: native-alpha
 // art is near-opaque at alpha 250 or more.
 const nativeAlphaMinOpacity = 250;
 
@@ -2138,114 +1970,109 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
     transparentRatio: number;
   }>[]
 > {
-  return portraits.evaluateAll((images: HTMLImageElement[], minimumOpacity) =>
-    images.map((image) => {
-      const canvas = document.createElement('canvas');
-      canvas.width = image.naturalWidth;
-      canvas.height = image.naturalHeight;
-      const context = canvas.getContext('2d')!;
-      context.drawImage(image, 0, 0);
-      const pixels = context.getImageData(
-        0,
-        0,
-        canvas.width,
-        canvas.height,
-      ).data;
-      let opaquePixels = 0;
-      let transparentPixels = 0;
-      let bottomRowOpaquePixels = 0;
-      let chromaKeyGreenPixels = 0;
-      let lowerThirdOpaquePixels = 0;
-      let minimumX = canvas.width;
-      let maximumX = -1;
-      let minimumY = canvas.height;
-      let maximumY = -1;
-      let topOpaqueRow = canvas.height;
-      let outsideDeskExtractionPixels = 0;
-      const deskFocalPixels: [number, number] = [0, 0];
-      for (
-        let pixelIndex = 0;
-        pixelIndex < canvas.width * canvas.height;
-        pixelIndex += 1
-      ) {
-        const pixelOffset = pixelIndex * 4;
-        const alpha = pixels[pixelOffset + 3];
-        const row = Math.floor(pixelIndex / canvas.width);
-        if (alpha === 0) transparentPixels += 1;
-        if (alpha > 0) {
-          const x = pixelIndex % canvas.width;
-          const normalizedX = x / canvas.width;
-          const normalizedY = row / canvas.height;
-          if (normalizedY < 0.54 || !(
-            (normalizedX >= 0.125 && normalizedX < 0.32) ||
-            (normalizedX >= 0.68 && normalizedX < 0.875)
-          )) outsideDeskExtractionPixels += 1;
-          if (normalizedY >= 0.56 && normalizedY < 0.72) {
-            if (normalizedX >= 0.26 && normalizedX < 0.32) deskFocalPixels[0] += 1;
-            if (normalizedX >= 0.68 && normalizedX < 0.74) deskFocalPixels[1] += 1;
+  return portraits.evaluateAll(
+    (images: HTMLImageElement[], minimumOpacity) =>
+      images.map((image) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        const context = canvas.getContext('2d')!;
+        context.drawImage(image, 0, 0);
+        const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+        let opaquePixels = 0;
+        let transparentPixels = 0;
+        let bottomRowOpaquePixels = 0;
+        let chromaKeyGreenPixels = 0;
+        let lowerThirdOpaquePixels = 0;
+        let minimumX = canvas.width;
+        let maximumX = -1;
+        let minimumY = canvas.height;
+        let maximumY = -1;
+        let topOpaqueRow = canvas.height;
+        let outsideDeskExtractionPixels = 0;
+        const deskFocalPixels: [number, number] = [0, 0];
+        for (let pixelIndex = 0; pixelIndex < canvas.width * canvas.height; pixelIndex += 1) {
+          const pixelOffset = pixelIndex * 4;
+          const alpha = pixels[pixelOffset + 3];
+          const row = Math.floor(pixelIndex / canvas.width);
+          if (alpha === 0) transparentPixels += 1;
+          if (alpha > 0) {
+            const x = pixelIndex % canvas.width;
+            const normalizedX = x / canvas.width;
+            const normalizedY = row / canvas.height;
+            if (
+              normalizedY < 0.54 ||
+              !(
+                (normalizedX >= 0.125 && normalizedX < 0.32) ||
+                (normalizedX >= 0.68 && normalizedX < 0.875)
+              )
+            )
+              outsideDeskExtractionPixels += 1;
+            if (normalizedY >= 0.56 && normalizedY < 0.72) {
+              if (normalizedX >= 0.26 && normalizedX < 0.32) deskFocalPixels[0] += 1;
+              if (normalizedX >= 0.68 && normalizedX < 0.74) deskFocalPixels[1] += 1;
+            }
+            minimumX = Math.min(minimumX, x);
+            maximumX = Math.max(maximumX, x);
+            minimumY = Math.min(minimumY, row);
+            maximumY = Math.max(maximumY, row);
           }
-          minimumX = Math.min(minimumX, x);
-          maximumX = Math.max(maximumX, x);
-          minimumY = Math.min(minimumY, row);
-          maximumY = Math.max(maximumY, row);
+          if (alpha >= minimumOpacity) opaquePixels += 1;
+          if (alpha > 0 && row === canvas.height - 1) {
+            bottomRowOpaquePixels += 1;
+          }
+          if (alpha > 0 && row >= Math.floor((canvas.height * 2) / 3)) {
+            lowerThirdOpaquePixels += 1;
+          }
+          if (alpha > 0 && row < topOpaqueRow) topOpaqueRow = row;
+          if (
+            alpha > 16 &&
+            pixels[pixelOffset + 1] >= 180 &&
+            pixels[pixelOffset] <= 80 &&
+            pixels[pixelOffset + 2] <= 80
+          ) {
+            chromaKeyGreenPixels += 1;
+          }
         }
-        if (alpha >= minimumOpacity) opaquePixels += 1;
-        if (alpha > 0 && row === canvas.height - 1) {
-          bottomRowOpaquePixels += 1;
-        }
-        if (alpha > 0 && row >= Math.floor((canvas.height * 2) / 3)) {
-          lowerThirdOpaquePixels += 1;
-        }
-        if (alpha > 0 && row < topOpaqueRow) topOpaqueRow = row;
-        if (
-          alpha > 16 &&
-          pixels[pixelOffset + 1] >= 180 &&
-          pixels[pixelOffset] <= 80 &&
-          pixels[pixelOffset + 2] <= 80
-        ) {
-          chromaKeyGreenPixels += 1;
-        }
-      }
-      const pixelCount = canvas.width * canvas.height;
-      return {
-        bottomRowOpaqueRatio: bottomRowOpaquePixels / canvas.width,
-        chromaKeyGreenRatio: chromaKeyGreenPixels / pixelCount,
-        cornerAlpha: [
-          context.getImageData(0, 0, 1, 1).data[3],
-          context.getImageData(canvas.width - 1, 0, 1, 1).data[3],
-          context.getImageData(0, canvas.height - 1, 1, 1).data[3],
-          context.getImageData(canvas.width - 1, canvas.height - 1, 1, 1)
-            .data[3],
-        ],
-        lowerThirdOpaqueRatio: lowerThirdOpaquePixels / pixelCount,
-        outsideDeskExtractionPixels,
-        deskFocalPixels,
-        nonTransparentBounds: {
-          left: minimumX / canvas.width,
-          right: (maximumX + 1) / canvas.width,
-          top: minimumY / canvas.height,
-          bottom: (maximumY + 1) / canvas.height,
-        },
-        opaqueRatio: opaquePixels / pixelCount,
-        topOpaqueRatio: topOpaqueRow / canvas.height,
-        transparentRatio: transparentPixels / pixelCount,
-      };
-    }),
-  nativeAlphaMinOpacity);
+        const pixelCount = canvas.width * canvas.height;
+        return {
+          bottomRowOpaqueRatio: bottomRowOpaquePixels / canvas.width,
+          chromaKeyGreenRatio: chromaKeyGreenPixels / pixelCount,
+          cornerAlpha: [
+            context.getImageData(0, 0, 1, 1).data[3],
+            context.getImageData(canvas.width - 1, 0, 1, 1).data[3],
+            context.getImageData(0, canvas.height - 1, 1, 1).data[3],
+            context.getImageData(canvas.width - 1, canvas.height - 1, 1, 1).data[3],
+          ],
+          lowerThirdOpaqueRatio: lowerThirdOpaquePixels / pixelCount,
+          outsideDeskExtractionPixels,
+          deskFocalPixels,
+          nonTransparentBounds: {
+            left: minimumX / canvas.width,
+            right: (maximumX + 1) / canvas.width,
+            top: minimumY / canvas.height,
+            bottom: (maximumY + 1) / canvas.height,
+          },
+          opaqueRatio: opaquePixels / pixelCount,
+          topOpaqueRatio: topOpaqueRow / canvas.height,
+          transparentRatio: transparentPixels / pixelCount,
+        };
+      }),
+    nativeAlphaMinOpacity,
+  );
 }
 
-async function expectModeratorFaceClearance(
-  page: Page,
-  label: string,
-): Promise<void> {
+async function expectModeratorFaceClearance(page: Page, label: string): Promise<void> {
   let measurement: Awaited<ReturnType<typeof readModeratorFaceClearance>> | undefined;
-  await expect.poll(
-    async () => {
-      measurement = await readModeratorFaceClearance(page);
-      return measurement;
-    },
-    { timeout: 15_000, message: label },
-  ).toMatchObject({ ready: true });
+  await expect
+    .poll(
+      async () => {
+        measurement = await readModeratorFaceClearance(page);
+        return measurement;
+      },
+      { timeout: 15_000, message: label },
+    )
+    .toMatchObject({ ready: true });
   expect(measurement, label).toMatchObject({
     backgroundDimensions: true,
     clear: true,
@@ -2255,12 +2082,8 @@ async function expectModeratorFaceClearance(
 
 async function readModeratorFaceClearance(page: Page) {
   return page.evaluate(() => {
-    const background = document.querySelector<HTMLImageElement>(
-      '.broadcast-stage-art',
-    );
-    const portraits = [
-      ...document.querySelectorAll<HTMLImageElement>('.character-portrait'),
-    ];
+    const background = document.querySelector<HTMLImageElement>('.broadcast-stage-art');
+    const portraits = [...document.querySelectorAll<HTMLImageElement>('.character-portrait')];
     if (!background || portraits.length !== 2) {
       return { ready: false, reason: 'The scene images are missing.' };
     }
@@ -2275,14 +2098,17 @@ async function readModeratorFaceClearance(page: Page) {
         height: box.height,
       };
     });
-    if (images.some((image) =>
-      !image.complete ||
-      !image.source ||
-      image.naturalWidth <= 0 ||
-      image.naturalHeight <= 0 ||
-      image.width <= 0 ||
-      image.height <= 0,
-    )) {
+    if (
+      images.some(
+        (image) =>
+          !image.complete ||
+          !image.source ||
+          image.naturalWidth <= 0 ||
+          image.naturalHeight <= 0 ||
+          image.width <= 0 ||
+          image.height <= 0,
+      )
+    ) {
       return { ready: false, images };
     }
     const backgroundBox = background.getBoundingClientRect();
@@ -2292,10 +2118,8 @@ async function readModeratorFaceClearance(page: Page) {
     );
     const drawnWidth = background.naturalWidth * scale;
     const drawnHeight = background.naturalHeight * scale;
-    const drawnLeft =
-      backgroundBox.left + (backgroundBox.width - drawnWidth) / 2;
-    const drawnTop =
-      backgroundBox.top + (backgroundBox.height - drawnHeight) / 2;
+    const drawnLeft = backgroundBox.left + (backgroundBox.width - drawnWidth) / 2;
+    const drawnTop = backgroundBox.top + (backgroundBox.height - drawnHeight) / 2;
     const picture = background.closest('picture')!;
     const [faceX, faceY] = picture
       .getAttribute('data-scene-focal-point')!
@@ -2344,10 +2168,7 @@ async function readModeratorFaceClearance(page: Page) {
         portrait.naturalWidth,
         Math.ceil((moderatorFace.right - portraitLeft) / portraitScale),
       );
-      const sourceTop = Math.max(
-        0,
-        Math.floor((moderatorFace.top - portraitTop) / portraitScale),
-      );
+      const sourceTop = Math.max(0, Math.floor((moderatorFace.top - portraitTop) / portraitScale));
       const sourceBottom = Math.min(
         portrait.naturalHeight,
         Math.ceil((moderatorFace.bottom - portraitTop) / portraitScale),
@@ -2373,11 +2194,8 @@ async function readModeratorFaceClearance(page: Page) {
     return {
       ready: true,
       backgroundDimensions:
-        background.getAttribute('width') === '3840' &&
-        background.getAttribute('height') === '2160',
-      clear: !draftingRegions.some((region) =>
-        overlaps(moderatorFace, region),
-      ),
+        background.getAttribute('width') === '3840' && background.getAttribute('height') === '2160',
+      clear: !draftingRegions.some((region) => overlaps(moderatorFace, region)),
       portraitClear: !portraitOverlapsFace,
     };
   });
@@ -2397,8 +2215,7 @@ async function expectDecodedSceneVariant(image: Locator): Promise<void> {
             valid:
               image.complete &&
               dimensions.some(
-                ([width, height]) =>
-                  image.naturalWidth === width && image.naturalHeight === height,
+                ([width, height]) => image.naturalWidth === width && image.naturalHeight === height,
               ),
           };
         }, sceneVariantDimensions),
@@ -2434,15 +2251,17 @@ async function decodeImages(images: Locator): Promise<void> {
 
 async function expectDecodedPortraitVariants(images: Locator): Promise<void> {
   const dimensions = await images.evaluateAll(async (elements: HTMLImageElement[]) =>
-    Promise.all(elements.map(async (image) => {
-      await image.decode();
-      // Natural dimensions are density-corrected by responsive sizes. The
-      // bitmap exposes the actual decoded raster dimensions.
-      const bitmap = await createImageBitmap(image);
-      const dimensions = [bitmap.width, bitmap.height];
-      bitmap.close();
-      return dimensions;
-    })),
+    Promise.all(
+      elements.map(async (image) => {
+        await image.decode();
+        // Natural dimensions are density-corrected by responsive sizes. The
+        // bitmap exposes the actual decoded raster dimensions.
+        const bitmap = await createImageBitmap(image);
+        const dimensions = [bitmap.width, bitmap.height];
+        bitmap.close();
+        return dimensions;
+      }),
+    ),
   );
   for (const [width, height] of dimensions) {
     expect([320, 640, 960]).toContain(width);
@@ -2482,9 +2301,7 @@ function expectDeskPlateBounds(
 
 async function moderatorFaceIsClearOfPortraits(page: Page): Promise<boolean> {
   return page.evaluate(() => {
-    const background = document.querySelector<HTMLImageElement>(
-      '.broadcast-stage-art',
-    )!;
+    const background = document.querySelector<HTMLImageElement>('.broadcast-stage-art')!;
     const backgroundBox = background.getBoundingClientRect();
     const picture = background.closest('picture')!;
     const focalPoint = picture.getAttribute('data-scene-focal-point');
@@ -2500,71 +2317,63 @@ async function moderatorFaceIsClearOfPortraits(page: Page): Promise<boolean> {
       bottom: backgroundBox.top + backgroundBox.height * (faceY + 0.035),
     };
 
-    return ![
-      ...document.querySelectorAll<HTMLImageElement>('.character-portrait'),
-    ].some((portrait) => {
-      const box = portrait.getBoundingClientRect();
-      if (
-        box.width <= 0 ||
-        box.height <= 0 ||
-        portrait.naturalWidth <= 0 ||
-        portrait.naturalHeight <= 0
-      ) {
-        // A portrait without a box or a decoded source has no drawn pixels, so
-        // it cannot cover the face. Measuring it would divide by zero and send
-        // getImageData a non-integer extent.
-        return false;
-      }
-      const scale = Math.min(
-        box.width / portrait.naturalWidth,
-        box.height / portrait.naturalHeight,
-      );
-      const drawnWidth = portrait.naturalWidth * scale;
-      const drawnHeight = portrait.naturalHeight * scale;
-      const drawnLeft = box.left + (box.width - drawnWidth) / 2;
-      const drawnTop = box.bottom - drawnHeight;
-      const sourceLeft = Math.max(
-        0,
-        Math.floor((moderatorFace.left - drawnLeft) / scale),
-      );
-      const sourceRight = Math.min(
-        portrait.naturalWidth,
-        Math.ceil((moderatorFace.right - drawnLeft) / scale),
-      );
-      const sourceTop = Math.max(
-        0,
-        Math.floor((moderatorFace.top - drawnTop) / scale),
-      );
-      const sourceBottom = Math.min(
-        portrait.naturalHeight,
-        Math.ceil((moderatorFace.bottom - drawnTop) / scale),
-      );
-      if (sourceLeft >= sourceRight || sourceTop >= sourceBottom) return false;
+    return ![...document.querySelectorAll<HTMLImageElement>('.character-portrait')].some(
+      (portrait) => {
+        const box = portrait.getBoundingClientRect();
+        if (
+          box.width <= 0 ||
+          box.height <= 0 ||
+          portrait.naturalWidth <= 0 ||
+          portrait.naturalHeight <= 0
+        ) {
+          // A portrait without a box or a decoded source has no drawn pixels, so
+          // it cannot cover the face. Measuring it would divide by zero and send
+          // getImageData a non-integer extent.
+          return false;
+        }
+        const scale = Math.min(
+          box.width / portrait.naturalWidth,
+          box.height / portrait.naturalHeight,
+        );
+        const drawnWidth = portrait.naturalWidth * scale;
+        const drawnHeight = portrait.naturalHeight * scale;
+        const drawnLeft = box.left + (box.width - drawnWidth) / 2;
+        const drawnTop = box.bottom - drawnHeight;
+        const sourceLeft = Math.max(0, Math.floor((moderatorFace.left - drawnLeft) / scale));
+        const sourceRight = Math.min(
+          portrait.naturalWidth,
+          Math.ceil((moderatorFace.right - drawnLeft) / scale),
+        );
+        const sourceTop = Math.max(0, Math.floor((moderatorFace.top - drawnTop) / scale));
+        const sourceBottom = Math.min(
+          portrait.naturalHeight,
+          Math.ceil((moderatorFace.bottom - drawnTop) / scale),
+        );
+        if (sourceLeft >= sourceRight || sourceTop >= sourceBottom) return false;
 
-      const canvas = document.createElement('canvas');
-      canvas.width = portrait.naturalWidth;
-      canvas.height = portrait.naturalHeight;
-      const context = canvas.getContext('2d', { willReadFrequently: true })!;
-      context.drawImage(portrait, 0, 0);
-      const pixels = context.getImageData(
-        sourceLeft,
-        sourceTop,
-        sourceRight - sourceLeft,
-        sourceBottom - sourceTop,
-      ).data;
-      for (let offset = 3; offset < pixels.length; offset += 4) {
-        if (pixels[offset]! > 0) return true;
-      }
-      return false;
-    });
+        const canvas = document.createElement('canvas');
+        canvas.width = portrait.naturalWidth;
+        canvas.height = portrait.naturalHeight;
+        const context = canvas.getContext('2d', { willReadFrequently: true })!;
+        context.drawImage(portrait, 0, 0);
+        const pixels = context.getImageData(
+          sourceLeft,
+          sourceTop,
+          sourceRight - sourceLeft,
+          sourceBottom - sourceTop,
+        ).data;
+        for (let offset = 3; offset < pixels.length; offset += 4) {
+          if (pixels[offset]! > 0) return true;
+        }
+        return false;
+      },
+    );
   });
 }
 
 async function topStatusRegionsDoNotOverlap(page: Page): Promise<boolean> {
   return page.evaluate(() => {
-    const center = document
-      .querySelector('.match-status-rail')!
-      .getBoundingClientRect();
+    const center = document.querySelector('.match-status-rail')!.getBoundingClientRect();
     return [...document.querySelectorAll('.player-hud')].every((hud) => {
       const box = hud.getBoundingClientRect();
       return box.right <= center.left || box.left >= center.right;
@@ -2580,8 +2389,7 @@ async function actionRailsUseBoardMargins(page: Page): Promise<boolean> {
 
     const boardBox = board.getBoundingClientRect();
     const boardMargin =
-      Number.parseFloat(getComputedStyle(document.documentElement).fontSize) *
-      0.8;
+      Number.parseFloat(getComputedStyle(document.documentElement).fontSize) * 0.8;
     const margins = (['red', 'blue'] as const).map((side) => {
       const probe = rail.cloneNode(true) as HTMLElement;
       probe.dataset.side = side;

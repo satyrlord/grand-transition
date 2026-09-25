@@ -1,8 +1,8 @@
-import { lockInSetup } from './helpers/setup';
+import { lockInSetup } from './helpers/setup.ts';
 import { expect, test, type Page } from '@playwright/test';
 import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
-import { loadGameContent } from '../tools/load-game-content';
-import { useFixedBrowserMatchSeed } from './helpers/match-flow';
+import { loadGameContent } from '../tools/load-game-content.ts';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 
 const { gameCatalog: catalog } = loadGameContent();
 
@@ -35,7 +35,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 for (const viewport of supportedViewports) {
-  test(`all roster skins and scene labels fit setup at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+  test(`all roster skins and scene labels fit setup at ${viewport.width}x${viewport.height}`, async ({
+    page,
+  }) => {
     test.setTimeout(180_000);
     await openSinglePlayerSetup(page, viewport);
     const stage = page.locator('#playerOneCharacterId');
@@ -43,7 +45,9 @@ for (const viewport of supportedViewports) {
 
     for (const character of catalog.characters) {
       await stage.click();
-      await page.locator(`.roster-choice[data-character-id="${character.id}"][data-skin-id="default"]`).click();
+      await page
+        .locator(`.roster-choice[data-character-id="${character.id}"][data-skin-id="default"]`)
+        .click();
       const expectedSkins = characterManifest.assets.filter(
         ({ ownerId }) => ownerId === character.id,
       );
@@ -55,16 +59,26 @@ for (const viewport of supportedViewports) {
         const expectedAsset = expectedSkins.find((asset) => asset.skinId === skinId)!;
         const portrait = stageSurface.locator('.contestant-portrait');
         await expect(portrait).toHaveAttribute('src', new RegExp(expectedAsset.id, 'u'));
-        await expect.poll(() => portrait.evaluate((image: HTMLImageElement) =>
-          image.complete && image.naturalWidth > 0,
-        )).toBe(true);
-        expect(await portrait.evaluate((image: HTMLImageElement) => {
-          const box = image.getBoundingClientRect();
-          const stageBox = image.closest('.contestant-stage')!.getBoundingClientRect();
-          return image.naturalWidth > 0 && box.left >= stageBox.left - 1 &&
-            box.right <= stageBox.right + 1 && box.top >= stageBox.top - 1 &&
-            box.bottom <= stageBox.bottom + 1;
-        })).toBe(true);
+        await expect
+          .poll(() =>
+            portrait.evaluate(
+              (image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
+            ),
+          )
+          .toBe(true);
+        expect(
+          await portrait.evaluate((image: HTMLImageElement) => {
+            const box = image.getBoundingClientRect();
+            const stageBox = image.closest('.contestant-stage')!.getBoundingClientRect();
+            return (
+              image.naturalWidth > 0 &&
+              box.left >= stageBox.left - 1 &&
+              box.right <= stageBox.right + 1 &&
+              box.top >= stageBox.top - 1 &&
+              box.bottom <= stageBox.bottom + 1
+            );
+          }),
+        ).toBe(true);
         if (expectedSkins.length > 1) {
           await page.locator('.contestant-stage--one .skin-cycle--next').click();
         }
@@ -85,8 +99,11 @@ for (const viewport of supportedViewports) {
       const style = getComputedStyle(select);
       const context = document.createElement('canvas').getContext('2d')!;
       context.font = style.font;
-      const available = select.clientWidth - Number.parseFloat(style.paddingLeft) -
-        Number.parseFloat(style.paddingRight) - 12;
+      const available =
+        select.clientWidth -
+        Number.parseFloat(style.paddingLeft) -
+        Number.parseFloat(style.paddingRight) -
+        12;
       return [...select.options].map((option) => ({
         text: option.text,
         fits: context.measureText(option.text).width <= available,
@@ -97,58 +114,58 @@ for (const viewport of supportedViewports) {
     const characterNames = catalog.characters.map(
       ({ nameKey }) => catalog.locales[0]!.messages[nameKey]!,
     );
-    const sceneNames = catalog.scenes.map(
-      ({ nameKey }) => catalog.locales[0]!.messages[nameKey]!,
-    );
+    const sceneNames = catalog.scenes.map(({ nameKey }) => catalog.locales[0]!.messages[nameKey]!);
     const longestCharacterName = characterNames.toSorted(
       (left, right) => right.length - left.length,
     )[0]!;
-    const longestSceneName = sceneNames.toSorted(
-      (left, right) => right.length - left.length,
-    )[0]!;
+    const longestSceneName = sceneNames.toSorted((left, right) => right.length - left.length)[0]!;
     const longestCharacter = catalog.characters.find(
       ({ nameKey }) => catalog.locales[0]!.messages[nameKey] === longestCharacterName,
     )!;
     await stage.click();
-    await page.locator(`.roster-choice[data-character-id="${longestCharacter.id}"][data-skin-id="default"]`).click();
-    const expandedLabels = await page.evaluate(({ characterName, sceneName }) => {
-      const expand = (value: string) =>
-        (value + ' ' + value).slice(0, Math.ceil(value.length * 1.4));
-      const character = document.querySelector<HTMLElement>(
-        '.contestant-stage--one .contestant-record strong',
-      )!;
-      const scene = document.querySelector<HTMLElement>(
-        '.scene-selected-text',
-      )!;
-      const sceneSelect = document.querySelector<HTMLSelectElement>('#sceneId')!;
-      const sceneOption = [...sceneSelect.options].find((option) => option.text === sceneName)!;
-      sceneSelect.value = sceneOption.value;
-      sceneOption.text = expand(sceneName);
-      character.textContent = expand(characterName);
-      scene.textContent = sceneOption.text;
-      const evidence = (element: HTMLElement, source: string) => {
-        const box = element.getBoundingClientRect();
-        const containerBox = element.parentElement!.getBoundingClientRect();
-        const textRange = document.createRange();
-        textRange.selectNodeContents(element);
-        const textBox = textRange.getBoundingClientRect();
-        return {
-          source,
-          rendered: element.textContent!,
-          targetLength: Math.ceil(source.length * 1.4),
-          horizontallyInside: box.left >= -1 && box.right <= innerWidth + 1,
-          textFits: textBox.left >= containerBox.left - 1 &&
-            textBox.right <= containerBox.right + 1 &&
-            textBox.top >= containerBox.top - 1 &&
-            textBox.bottom <= containerBox.bottom + 1,
+    await page
+      .locator(`.roster-choice[data-character-id="${longestCharacter.id}"][data-skin-id="default"]`)
+      .click();
+    const expandedLabels = await page.evaluate(
+      ({ characterName, sceneName }) => {
+        const expand = (value: string) =>
+          (value + ' ' + value).slice(0, Math.ceil(value.length * 1.4));
+        const character = document.querySelector<HTMLElement>(
+          '.contestant-stage--one .contestant-record strong',
+        )!;
+        const scene = document.querySelector<HTMLElement>('.scene-selected-text')!;
+        const sceneSelect = document.querySelector<HTMLSelectElement>('#sceneId')!;
+        const sceneOption = [...sceneSelect.options].find((option) => option.text === sceneName)!;
+        sceneSelect.value = sceneOption.value;
+        sceneOption.text = expand(sceneName);
+        character.textContent = expand(characterName);
+        scene.textContent = sceneOption.text;
+        const evidence = (element: HTMLElement, source: string) => {
+          const box = element.getBoundingClientRect();
+          const containerBox = element.parentElement!.getBoundingClientRect();
+          const textRange = document.createRange();
+          textRange.selectNodeContents(element);
+          const textBox = textRange.getBoundingClientRect();
+          return {
+            source,
+            rendered: element.textContent!,
+            targetLength: Math.ceil(source.length * 1.4),
+            horizontallyInside: box.left >= -1 && box.right <= innerWidth + 1,
+            textFits:
+              textBox.left >= containerBox.left - 1 &&
+              textBox.right <= containerBox.right + 1 &&
+              textBox.top >= containerBox.top - 1 &&
+              textBox.bottom <= containerBox.bottom + 1,
+          };
         };
-      };
-      return {
-        character: evidence(character, characterName),
-        scene: evidence(scene, sceneName),
-        pageFits: document.documentElement.scrollWidth <= innerWidth + 1,
-      };
-    }, { characterName: longestCharacterName, sceneName: longestSceneName });
+        return {
+          character: evidence(character, characterName),
+          scene: evidence(scene, sceneName),
+          pageFits: document.documentElement.scrollWidth <= innerWidth + 1,
+        };
+      },
+      { characterName: longestCharacterName, sceneName: longestSceneName },
+    );
     for (const [label, evidence] of [
       ['character', expandedLabels.character],
       ['scene', expandedLabels.scene],
@@ -166,23 +183,26 @@ for (const viewport of [
   { width: 1024, height: 720 },
   { width: 360, height: 640 },
 ] as const) {
-  test(`every discovered skin reaches both match sides at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+  test(`every discovered skin reaches both match sides at ${viewport.width}x${viewport.height}`, async ({
+    page,
+  }) => {
     test.setTimeout(300_000);
     for (const asset of characterManifest.assets) {
       await openSinglePlayerSetup(page, viewport);
       await selectSkin(page, 'one', asset);
       await page.getByTestId('lock-player-one').click();
       await selectSkin(page, 'two', asset);
-      const longestScene = catalog.scenes.toSorted((left, right) =>
-        catalog.locales[0]!.messages[right.nameKey]!.length -
-        catalog.locales[0]!.messages[left.nameKey]!.length)[0]!;
+      const longestScene = catalog.scenes.toSorted(
+        (left, right) =>
+          catalog.locales[0]!.messages[right.nameKey]!.length -
+          catalog.locales[0]!.messages[left.nameKey]!.length,
+      )[0]!;
       await page.getByLabel('Scene', { exact: true }).selectOption(longestScene.id);
       await lockInSetup(page);
       await page.getByRole('button', { name: 'Start match', exact: true }).click();
 
       const character = catalog.characters.find(({ id }) => id === asset.ownerId)!;
-      const expectedName = catalog.locales[0]!.messages[character.nameKey]!
-        .replace(/^The /u, '');
+      const expectedName = catalog.locales[0]!.messages[character.nameKey]!.replace(/^The /u, '');
       for (const side of ['red', 'blue'] as const) {
         const player = page.locator(`.match-player[data-side="${side}"]`);
         await expect(player.getByRole('heading')).toHaveText(expectedName);
@@ -195,7 +215,8 @@ for (const viewport of [
           const heading = element.querySelector<HTMLElement>('h2')!;
           return {
             horizontallyInside: box.left >= -1 && box.right <= innerWidth + 1,
-            nameFits: heading.scrollWidth <= heading.clientWidth + 1 &&
+            nameFits:
+              heading.scrollWidth <= heading.clientWidth + 1 &&
               heading.scrollHeight <= heading.clientHeight + 1,
           };
         });
@@ -204,31 +225,43 @@ for (const viewport of [
           nameFits: true,
         });
       }
-      expect(await page.evaluate(() =>
-        document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+      expect(
+        await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
+      ).toBe(true);
     }
   });
 }
 
 for (const scene of catalog.scenes) {
-  test(`${scene.id} stays horizontally contained at every compact viewport`, async ({ page }, testInfo) => {
+  test(`${scene.id} stays horizontally contained at every compact viewport`, async ({
+    page,
+  }, testInfo) => {
     await openSinglePlayerSetup(page, compactViewports[0]!);
     await page.getByLabel('Scene', { exact: true }).selectOption(scene.id);
     await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     for (const viewport of compactViewports) {
       await page.setViewportSize(viewport);
-      await expect.poll(async () => page.locator('img').evaluateAll((images) =>
-        images.every((image) => {
-          const candidate = image as HTMLImageElement;
-          return candidate.complete && candidate.naturalWidth > 0;
-        }),
-      )).toBe(true);
-      await expect(page.locator('.broadcast-stage-art')).toHaveAttribute('data-scene-asset', scene.id);
+      await expect
+        .poll(async () =>
+          page.locator('img').evaluateAll((images) =>
+            images.every((image) => {
+              const candidate = image as HTMLImageElement;
+              return candidate.complete && candidate.naturalWidth > 0;
+            }),
+          ),
+        )
+        .toBe(true);
+      await expect(page.locator('.broadcast-stage-art')).toHaveAttribute(
+        'data-scene-asset',
+        scene.id,
+      );
       const geometry = await page.evaluate(() => {
-        const required = [...document.querySelectorAll<HTMLElement>(
-          '.match-status-rail, .match-player, .sentence-ledger, .shared-board > li, .private-hand ol > li, .match-actions button, .match-pause',
-        )];
+        const required = [
+          ...document.querySelectorAll<HTMLElement>(
+            '.match-status-rail, .match-player, .sentence-ledger, .shared-board > li, .private-hand ol > li, .match-actions button, .match-pause',
+          ),
+        ];
         const stage = document.querySelector('.match-stage')!.getBoundingClientRect();
         const pool = document.querySelector('.common-phrases')!.getBoundingClientRect();
         return {
@@ -271,11 +304,17 @@ async function selectSkin(
   const field = page.locator(side === 'one' ? '#playerOneCharacterId' : '#playerTwoCharacterId');
   const stage = page.locator(`.contestant-stage--${side}`);
   await field.click();
-  await page.locator(`.roster-choice[data-character-id="${asset.ownerId}"][data-skin-id="default"]`).click();
+  await page
+    .locator(`.roster-choice[data-character-id="${asset.ownerId}"][data-skin-id="default"]`)
+    .click();
   const skinCount = characterManifest.assets.filter(
     ({ ownerId }) => ownerId === asset.ownerId,
   ).length;
-  for (let index = 0; index < skinCount && await field.getAttribute('data-skin-id') !== asset.skinId; index += 1) {
+  for (
+    let index = 0;
+    index < skinCount && (await field.getAttribute('data-skin-id')) !== asset.skinId;
+    index += 1
+  ) {
     await stage.locator('.skin-cycle--next').click();
   }
   await expect(field).toHaveAttribute('data-character-id', asset.ownerId);

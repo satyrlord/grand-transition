@@ -4,10 +4,10 @@ import {
   interfaceLocaleAutonyms,
   interfaceLocales,
   isInterfaceLocale,
-} from '../../src/localization/interface-locale';
-import { formatInterfaceNumber, formatInterfacePercent } from '../../src/app/interface-format';
-import { interfaceLocale } from '../../src/app/interface-localization';
-import { templates } from '../../src/localization/generated/ro-RO';
+} from '../../src/localization/interface-locale.ts';
+import { formatInterfaceNumber, formatInterfacePercent } from '../../src/app/interface-format.ts';
+import { interfaceLocale } from '../../src/app/interface-localization.ts';
+import { templates } from '../../src/localization/generated/ro-RO.ts';
 import {
   parseXliff,
   placeholderIds,
@@ -15,29 +15,25 @@ import {
   validateInterfaceLocales,
   validateMessageText,
   validateSourceCatalog,
-} from '../../tools/validate-interface-locales';
-import {
-  englishGameLocale,
-  romanianGameLocale,
-  gameCatalog,
-} from '../../src/game-content';
+} from '../../tools/validate-interface-locales.ts';
+import { englishGameLocale, romanianGameLocale, gameCatalog } from '../../src/game-content.ts';
 import {
   defaultGameLocale,
   gameLocales,
   referenceGameLocale,
-} from '../../src/localization/game-locale';
+} from '../../src/localization/game-locale.ts';
 import {
   displayCharacterName,
   displaySceneName,
   romanianCharacterNames,
   romanianSceneNames,
-} from '../../src/localization/romanian-display-names';
+} from '../../src/localization/romanian-display-names.ts';
 import {
   validateGameLocaleBundleText,
   validateGameLocaleBundles,
   type GameLocaleFailure,
-} from '../../src/localization/game-locale-validation';
-import type { GameLocaleBundle } from '../../src/localization/game-locale-schema';
+} from '../../src/localization/game-locale-validation.ts';
+import type { GameLocaleBundle } from '../../src/localization/game-locale-schema.ts';
 
 const xliffText = await readFile('xliff/ro-RO.xlf', 'utf8');
 const units = parseXliff(xliffText);
@@ -106,9 +102,7 @@ describe('Romanian interface catalog', () => {
   test('keeps the source placeholder references in every target', () => {
     for (const unit of units) {
       expect(unit.target, unit.source).not.toBeNull();
-      expect(placeholderIds(unit.target!), unit.source).toEqual(
-        placeholderIds(unit.source),
-      );
+      expect(placeholderIds(unit.target!), unit.source).toEqual(placeholderIds(unit.source));
     }
   });
 
@@ -124,8 +118,7 @@ describe('Romanian interface catalog', () => {
   });
 
   test('checks the Romanian disclaimer meaning without English words', () => {
-    const disclaimer =
-      'All characters and events are fictional composites created for satire.';
+    const disclaimer = 'All characters and events are fictional composites created for satire.';
     const translated = units.find((unit) => unit.source === disclaimer)?.target;
     expect(translated).toBe(
       'Toate personajele și evenimentele sunt compozite fictive create pentru satiră.',
@@ -134,9 +127,7 @@ describe('Romanian interface catalog', () => {
     expect(translated).toContain('satiră');
     expect(translated!.toLowerCase()).not.toContain('fictional');
     expect(translated!.toLowerCase()).not.toContain('satire');
-    expect(englishGameLocale.title.fictionalCompositeSatireDisclaimer).toBe(
-      disclaimer,
-    );
+    expect(englishGameLocale.title.fictionalCompositeSatireDisclaimer).toBe(disclaimer);
   });
 
   test('keeps the persisted fallback notice translated', () => {
@@ -181,12 +172,7 @@ describe('localization validation failures', () => {
 
   test('fails a placeholder mismatch and a missing generated template', () => {
     const failures = validateCatalog(
-      [
-        unit(
-          '<x id="0" equiv-text="${seconds}"/> seconds',
-          'secunde',
-        ),
-      ],
+      [unit('<x id="0" equiv-text="${seconds}"/> seconds', 'secunde')],
       [],
     );
     expect(failures.map(({ path, code }) => ({ path, code }))).toEqual([
@@ -200,14 +186,20 @@ describe('localization validation failures', () => {
 
   test('rejects a target placeholder that changes its source expression', () => {
     const failures = validateCatalog(
-      [unit('<x id="0" equiv-text="${seconds}"/> seconds',
-        '<x id="0" equiv-text="${differentValue}"/> secunde')],
+      [
+        unit(
+          '<x id="0" equiv-text="${seconds}"/> seconds',
+          '<x id="0" equiv-text="${differentValue}"/> secunde',
+        ),
+      ],
       ['s0000000000000001'],
     );
-    expect(failures).toContainEqual(expect.objectContaining({
-      path: 'xliff/ro-RO.xlf[s0000000000000001]',
-      code: 'placeholder-mismatch',
-    }));
+    expect(failures).toContainEqual(
+      expect.objectContaining({
+        path: 'xliff/ro-RO.xlf[s0000000000000001]',
+        code: 'placeholder-mismatch',
+      }),
+    );
   });
 
   test('fails a duplicate message id and an unused generated template', () => {
@@ -223,10 +215,7 @@ describe('localization validation failures', () => {
 
   test('rejects source changes, missing source keys, and stale catalog keys', () => {
     const failures = validateSourceCatalog(
-      [
-        unit('Old source', 'Traducere', 's1'),
-        unit('Removed source', 'Traducere', 's2'),
-      ],
+      [unit('Old source', 'Traducere', 's1'), unit('Removed source', 'Traducere', 's2')],
       [
         { name: 's1', contents: ['New source'] },
         { name: 's3', contents: ['New message'] },
@@ -249,12 +238,12 @@ describe('localization validation failures', () => {
     expect(validateMessageText('Setări \u015fi joc', 'ro-RO', 'ro-RO[legacy]')).toContainEqual(
       expect.objectContaining({ code: 'legacy-diacritic' }),
     );
-    expect(
-      validateMessageText('Setări électronice', 'ro-RO', 'ro-RO[accent]'),
-    ).toContainEqual(expect.objectContaining({ code: 'non-standard-letter' }));
-    expect(
-      validateMessageText('Set\u0061\u0306ri', 'ro-RO', 'ro-RO[unnormalized]'),
-    ).toMatchObject([{ code: 'not-normalized' }]);
+    expect(validateMessageText('Setări électronice', 'ro-RO', 'ro-RO[accent]')).toContainEqual(
+      expect.objectContaining({ code: 'non-standard-letter' }),
+    );
+    expect(validateMessageText('Set\u0061\u0306ri', 'ro-RO', 'ro-RO[unnormalized]')).toMatchObject([
+      { code: 'not-normalized' },
+    ]);
   });
 
   test('rejects unsafe text hidden behind XML entities', () => {
@@ -262,10 +251,12 @@ describe('localization validation failures', () => {
       [unit('Settings', '&lt;script&gt;alert(1)&lt;/script&gt;')],
       ['s0000000000000001'],
     );
-    expect(failures).toContainEqual(expect.objectContaining({
-      path: 'xliff/ro-RO.xlf[s0000000000000001]',
-      code: 'unsafe-text',
-    }));
+    expect(failures).toContainEqual(
+      expect.objectContaining({
+        path: 'xliff/ro-RO.xlf[s0000000000000001]',
+        code: 'unsafe-text',
+      }),
+    );
   });
 });
 
@@ -281,10 +272,7 @@ describe('Romanian game content', () => {
   const romanianKeys = Object.keys(romanianGameLocale.messages);
 
   /** Replace one Romanian message and report only that field path's failures. */
-  const troublesAt = (
-    key: string,
-    text: string,
-  ): readonly GameLocaleFailure[] =>
+  const troublesAt = (key: string, text: string): readonly GameLocaleFailure[] =>
     validateGameLocaleBundleText(
       {
         ...romanianGameLocale,
@@ -310,36 +298,26 @@ describe('Romanian game content', () => {
       .filter((phrase) => phrase.role === 'verb' || phrase.role === 'predicate')
       .flatMap((phrase) => [
         ...(!phrase.numberForms ? [`${phrase.textKey}.plural`] : []),
-        ...(!phrase.numberForms?.secondPersonKey
-          ? [`${phrase.textKey}.second-person`]
-          : []),
+        ...(!phrase.numberForms?.secondPersonKey ? [`${phrase.textKey}.second-person`] : []),
       ]);
-    expect(new Set(romanianKeys)).toEqual(
-      new Set([...englishKeys, ...expectedRomanianForms]),
+    expect(new Set(romanianKeys)).toEqual(new Set([...englishKeys, ...expectedRomanianForms]));
+    const withRomanianDiacritics = Object.values(romanianGameLocale.messages).filter((text) =>
+      /[ăâîșț]/u.test(text),
     );
-    const withRomanianDiacritics = Object.values(
-      romanianGameLocale.messages,
-    ).filter((text) => /[ăâîșț]/u.test(text));
     expect(withRomanianDiacritics.length).toBeGreaterThan(2_000);
   });
 
   test('states the Romanian title and disclaimer in Romanian', () => {
     expect(romanianGameLocale.locale).toBe('ro-RO');
-    expect(romanianGameLocale.title.name).toBe(
-      'Grand Transition: A Verbal Republic',
-    );
+    expect(romanianGameLocale.title.name).toBe('Grand Transition: A Verbal Republic');
     expect(romanianGameLocale.title.fictionalCompositeSatireDisclaimer).toBe(
       'Toate personajele și evenimentele sunt compozite fictive create pentru satiră.',
     );
   });
 
   test('fails a missing Romanian key at its field path', () => {
-    const key = romanianKeys.find((candidate) =>
-      candidate.startsWith('phrase.'),
-    )!;
-    expect(
-      validateGameLocaleBundles([englishGameLocale, withoutKey(key)], 'en'),
-    ).toContainEqual({
+    const key = romanianKeys.find((candidate) => candidate.startsWith('phrase.'))!;
+    expect(validateGameLocaleBundles([englishGameLocale, withoutKey(key)], 'en')).toContainEqual({
       path: `messages.${key}`,
       code: 'missing-translation',
       message: `Add the ro-RO game text for "${key}".`,
@@ -354,9 +332,7 @@ describe('Romanian game content', () => {
         'phrase.invented-romanian-card': 'un card inventat',
       },
     };
-    expect(
-      validateGameLocaleBundles([englishGameLocale, bundle], 'en'),
-    ).toContainEqual({
+    expect(validateGameLocaleBundles([englishGameLocale, bundle], 'en')).toContainEqual({
       path: 'messages.phrase.invented-romanian-card',
       code: 'unexpected-message',
       message:
@@ -365,9 +341,7 @@ describe('Romanian game content', () => {
   });
 
   test('fails incomplete, unsafe, and legacy-cedilla Romanian text at its path', () => {
-    const key = romanianKeys.find((candidate) =>
-      candidate.startsWith('phrase.'),
-    )!;
+    const key = romanianKeys.find((candidate) => candidate.startsWith('phrase.'))!;
     expect(troublesAt(key, '   ')).toEqual([
       {
         path: `messages.${key}`,
@@ -405,9 +379,7 @@ describe('Romanian game content', () => {
     const [first, second] = nameKeys;
     expect(first).toBeDefined();
     expect(second).toBeDefined();
-    expect(
-      troublesAt(second!, romanianGameLocale.messages[first!]!),
-    ).toContainEqual(
+    expect(troublesAt(second!, romanianGameLocale.messages[first!]!)).toContainEqual(
       expect.objectContaining({ code: 'duplicate-visible-text' }),
     );
   });

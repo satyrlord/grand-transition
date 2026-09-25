@@ -1,7 +1,12 @@
 import { describe, expect, test, vi } from 'vitest';
-import { BrowserAudio } from '../../src/audio/browser-audio';
-import { audioScene, effectIds, mixerGains, sceneMusicTrackIds } from '../../src/audio/audio-port';
-import { defaultSettings } from '../../src/persistence/codecs/settings-codec';
+import { BrowserAudio } from '../../src/audio/browser-audio.ts';
+import {
+  audioScene,
+  effectIds,
+  mixerGains,
+  sceneMusicTrackIds,
+} from '../../src/audio/audio-port.ts';
+import { defaultSettings } from '../../src/persistence/codecs/settings-codec.ts';
 
 function audioHarness() {
   const params: Array<{
@@ -9,16 +14,30 @@ function audioHarness() {
     curves: Float32Array[];
     cancelScheduledValues: ReturnType<typeof vi.fn>;
   }> = [];
-  const nodes: Array<{ buffer: { id?: string } | null; loop: boolean; onended: (() => void) | null; start: ReturnType<typeof vi.fn>;
-    stop: ReturnType<typeof vi.fn>; disconnect: ReturnType<typeof vi.fn> }> = [];
+  const nodes: Array<{
+    buffer: { id?: string } | null;
+    loop: boolean;
+    onended: (() => void) | null;
+    start: ReturnType<typeof vi.fn>;
+    stop: ReturnType<typeof vi.fn>;
+    disconnect: ReturnType<typeof vi.fn>;
+  }> = [];
   const context = {
-    currentTime: 10, state: 'running', destination: {},
-    resume: vi.fn(async () => {}), close: vi.fn(async () => {}),
-    decodeAudioData: vi.fn(async (input: ArrayBuffer & { id?: string }) => ({ duration: 1, id: input.id })),
+    currentTime: 10,
+    state: 'running',
+    destination: {},
+    resume: vi.fn(async () => {}),
+    close: vi.fn(async () => {}),
+    decodeAudioData: vi.fn(async (input: ArrayBuffer & { id?: string }) => ({
+      duration: 1,
+      id: input.id,
+    })),
     createGain: () => {
       let curveStart: number | null = null;
       let curveEnd = 0;
-      const parameter = { value: 1, curves: [] as Float32Array[],
+      const parameter = {
+        value: 1,
+        curves: [] as Float32Array[],
         setValueAtTime(value: number) {
           if (curveStart !== null && context.currentTime < curveEnd) {
             throw new DOMException("Can't add events during a curve event", 'NotSupportedError');
@@ -45,14 +64,22 @@ function audioHarness() {
       return { gain: parameter, connect: vi.fn(), disconnect: vi.fn() };
     },
     createBufferSource: () => {
-      const node = { buffer: null, loop: false, onended: null as (() => void) | null,
-        connect: vi.fn(), disconnect: vi.fn(), start: vi.fn(), stop: vi.fn() };
+      const node = {
+        buffer: null,
+        loop: false,
+        onended: null as (() => void) | null,
+        connect: vi.fn(),
+        disconnect: vi.fn(),
+        start: vi.fn(),
+        stop: vi.fn(),
+      };
       nodes.push(node);
       return node;
     },
   };
   const load = vi.fn(async (id: string, _format: 'ogg' | 'mp3'): Promise<ArrayBuffer> =>
-    Object.assign(new ArrayBuffer(1), { id }));
+    Object.assign(new ArrayBuffer(1), { id }),
+  );
   const changed = vi.fn();
   const createContext = vi.fn(() => context as unknown as AudioContext);
   const audio = new BrowserAudio(changed, { createContext, load });
@@ -63,10 +90,19 @@ describe('audio adapters', () => {
   const musicTrackIds = ['menu-theme', ...Object.values(sceneMusicTrackIds)];
 
   test.each([0, 1])('mixer equations at volume %s', (value) => {
-    expect(mixerGains({ masterVolume: value, musicVolume: value, effectsVolume: value, speechVolume: value }))
-      .toEqual({ music: value, effects: value, speech: value });
-    expect(mixerGains({ ...defaultSettings, masterVolume: value }))
-      .toEqual({ music: 0.1 * value, effects: 0.8 * value, speech: 0.8 * value });
+    expect(
+      mixerGains({
+        masterVolume: value,
+        musicVolume: value,
+        effectsVolume: value,
+        speechVolume: value,
+      }),
+    ).toEqual({ music: value, effects: value, speech: value });
+    expect(mixerGains({ ...defaultSettings, masterVolume: value })).toEqual({
+      music: 0.1 * value,
+      effects: 0.8 * value,
+      speech: 0.8 * value,
+    });
   });
 
   test('resumes in the gesture task, decodes once, and starts every distinct cue at the public event time', async () => {
@@ -90,9 +126,7 @@ describe('audio adapters', () => {
     await Promise.all([audio.enable(), audio.enable()]);
     expect(changed).toHaveBeenCalledTimes(notifications);
     expect(createContext).toHaveBeenCalledOnce();
-    expect(load.mock.calls.map(([id]) => id)).toEqual([
-      ...musicTrackIds, ...effectIds,
-    ]);
+    expect(load.mock.calls.map(([id]) => id)).toEqual([...musicTrackIds, ...effectIds]);
     expect(nodes.filter((node) => node.loop)).toHaveLength(1);
     audio.dispose();
     expect(context.close).toHaveBeenCalledOnce();
@@ -107,8 +141,7 @@ describe('audio adapters', () => {
     await audio.enable();
     expect(audio.status).toBe('ready');
     expect(load.mock.calls.map(([, format]) => format)).toEqual(
-      Array.from({ length: musicTrackIds.length + effectIds.length }, () =>
-        ['ogg', 'mp3']).flat(),
+      Array.from({ length: musicTrackIds.length + effectIds.length }, () => ['ogg', 'mp3']).flat(),
     );
     audio.dispose();
     const failed = audioHarness();
@@ -170,7 +203,8 @@ describe('audio adapters', () => {
     audio.configure(defaultSettings);
     expect(nodes).toHaveLength(1);
     audio.configure({ ...defaultSettings, musicVolume: 0, effectsVolume: 0 });
-    expect(params[1]!.value).toBe(0); expect(params[2]!.value).toBe(0);
+    expect(params[1]!.value).toBe(0);
+    expect(params[2]!.value).toBe(0);
     audio.setScene('transition-era-television-studio');
     expect(nodes).toHaveLength(1);
     audio.configure(defaultSettings);
@@ -181,14 +215,19 @@ describe('audio adapters', () => {
   test('disposal during decode prevents late playback or state updates', async () => {
     const { audio, load, nodes, changed } = audioHarness();
     let finish!: (value: ArrayBuffer) => void;
-    load.mockReturnValue(new Promise((resolve) => { finish = resolve; }));
+    load.mockReturnValue(
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+    );
     const pending = audio.enable();
     await Promise.resolve();
     audio.dispose();
     const calls = changed.mock.calls.length;
     finish(new ArrayBuffer(1));
     await pending;
-    expect(nodes).toHaveLength(0); expect(changed).toHaveBeenCalledTimes(calls);
+    expect(nodes).toHaveLength(0);
+    expect(changed).toHaveBeenCalledTimes(calls);
     expect(audio.status).toBe('idle');
     await audio.enable();
     expect(nodes).toHaveLength(0);
@@ -200,7 +239,7 @@ describe('audio adapters', () => {
     context.currentTime += 0.05;
     audio.setScene('transition-era-television-studio');
     const fade = params[3]!.curves.at(-1)!;
-    expect(fade[0]).toBeCloseTo(Math.sin(0.05 / 0.3 * Math.PI / 2));
+    expect(fade[0]).toBeCloseTo(Math.sin(((0.05 / 0.3) * Math.PI) / 2));
     // The interrupted fade-in curve cannot be removed, and Firefox rejects any
     // event scheduled during it, so the replacement fade starts when it ends.
     expect(params[3]!.cancelScheduledValues).toHaveBeenLastCalledWith(10.3);
@@ -212,9 +251,7 @@ describe('audio adapters', () => {
     audio.setScene(null);
     for (const node of nodes) {
       expect(node.stop).toHaveBeenCalledOnce();
-      expect(node.stop.mock.calls[0]![0]).toBeLessThanOrEqual(
-        context.currentTime + 2 * 0.3,
-      );
+      expect(node.stop.mock.calls[0]![0]).toBeLessThanOrEqual(context.currentTime + 2 * 0.3);
       node.onended!();
       expect(node.disconnect).toHaveBeenCalledOnce();
     }
@@ -225,22 +262,33 @@ describe('audio adapters', () => {
     const { audio, context, load, changed } = audioHarness();
     let finish!: (value: ArrayBuffer) => void;
     let rejectResume!: (reason: Error) => void;
-    load.mockReturnValue(new Promise((resolve) => { finish = resolve; }));
+    load.mockReturnValue(
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+    );
     const pending = audio.enable();
     await Promise.resolve();
-    context.resume.mockReturnValue(new Promise((_, reject) => { rejectResume = reject; }));
+    context.resume.mockReturnValue(
+      new Promise((_, reject) => {
+        rejectResume = reject;
+      }),
+    );
     const repeated = audio.enable();
     audio.dispose();
     const calls = changed.mock.calls.length;
     rejectResume(new Error('old context'));
     finish(new ArrayBuffer(1));
     await Promise.all([pending, repeated]);
-    expect(audio.status).toBe('idle'); expect(changed).toHaveBeenCalledTimes(calls);
+    expect(audio.status).toBe('idle');
+    expect(changed).toHaveBeenCalledTimes(calls);
   });
 
   test('unavailable construction and rejected resume leave no orphan source', async () => {
     const first = audioHarness();
-    first.createContext.mockImplementation(() => { throw new Error('unsupported'); });
+    first.createContext.mockImplementation(() => {
+      throw new Error('unsupported');
+    });
     await first.audio.enable();
     expect(first.audio.status).toBe('unavailable');
     const second = audioHarness();

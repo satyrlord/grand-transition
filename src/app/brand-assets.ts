@@ -1,7 +1,9 @@
 import manifest from '../assets/brand/brand-manifest.json' with { type: 'json' };
 
 const urls = import.meta.glob('../assets/brand/*.{png,avif,webp}', {
-  eager: true, import: 'default', query: '?url&no-inline',
+  eager: true,
+  import: 'default',
+  query: '?url&no-inline',
 }) as Record<string, string>;
 
 export function resolveBrandAsset(id: string) {
@@ -18,8 +20,12 @@ export function resolveBrandAsset(id: string) {
     return url(result.path);
   };
   return Object.freeze({
-    id, width: asset.variants[0]!.width, height: asset.variants[0]!.height,
-    avif: variant('avif'), webp: variant('webp'), png: url(asset.source.path),
+    id,
+    width: asset.variants[0]!.width,
+    height: asset.variants[0]!.height,
+    avif: variant('avif'),
+    webp: variant('webp'),
+    png: url(asset.source.path),
   });
 }
 

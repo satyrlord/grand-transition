@@ -1,12 +1,12 @@
-import type { Phrase } from '../content/schemas';
-import { seededRandomSource, type RandomSource } from './random-source';
+import type { Phrase } from '../content/schemas.ts';
+import { seededRandomSource, type RandomSource } from './random-source.ts';
 import {
   isClauseConnector,
   pickWeighted,
   preferredConnectors,
   rarityWeight,
   type WeightedPhrase,
-} from './weighted-selection';
+} from './weighted-selection.ts';
 
 export const privateHandSize = 2;
 
@@ -65,8 +65,7 @@ export function generatePrivateHand(
   seed = step.nextSeed;
 
   const connectors = remaining.filter(
-    (candidate) =>
-      candidate.phrase.role === 'conjunction' && isClauseConnector(candidate),
+    (candidate) => candidate.phrase.role === 'conjunction' && isClauseConnector(candidate),
   );
   if (step.value < 0.25 && connectors.length > 0) {
     step = randomSource.next(seed);
@@ -97,20 +96,13 @@ export function generatePrivateHand(
   };
 }
 
-export function privateHandAvailableCount(
-  request: PrivateHandGenerationRequest,
-): number {
+export function privateHandAvailableCount(request: PrivateHandGenerationRequest): number {
   return collectCandidates(request).length;
 }
 
-function collectCandidates(
-  request: PrivateHandGenerationRequest,
-): readonly WeightedPhrase[] {
+function collectCandidates(request: PrivateHandGenerationRequest): readonly WeightedPhrase[] {
   const characterPhraseIds = new Set(request.characterPhraseIds);
-  const sharedPhraseIds = new Set([
-    ...request.generalPhraseIds,
-    ...request.scenePhraseIds,
-  ]);
+  const sharedPhraseIds = new Set([...request.generalPhraseIds, ...request.scenePhraseIds]);
   const excludedPhraseIds = new Set(request.excludedPhraseIds ?? []);
   return request.phrases
     .flatMap((phrase) => {
@@ -123,8 +115,7 @@ function collectCandidates(
       let eligible: boolean;
       if (phrase.characterIds) {
         eligible =
-          phrase.characterIds.includes(request.characterId) &&
-          characterPhraseIds.has(phrase.id);
+          phrase.characterIds.includes(request.characterId) && characterPhraseIds.has(phrase.id);
       } else {
         eligible = sharedPhraseIds.has(phrase.id);
       }

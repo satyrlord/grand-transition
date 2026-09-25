@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import { gameCatalog } from '../../src/game-content';
+import { gameCatalog } from '../../src/game-content.ts';
 import {
   boardSlotCount,
   generateBoard,
   type BoardGenerationRequest,
-} from '../../src/engine/board-generation';
-import type { RandomSource } from '../../src/engine/random-source';
+} from '../../src/engine/board-generation.ts';
+import type { RandomSource } from '../../src/engine/random-source.ts';
 
 const scene = gameCatalog.scenes[0]!;
 const request = (seed = 20260822): BoardGenerationRequest => ({
@@ -43,24 +43,19 @@ describe('Hollywood Roast shared board generation', () => {
 
   test('always includes three nouns, three object-taking verbs, and one predicate', () => {
     const board = expectBoard();
-    const count = (role: string) =>
-      board.slots.filter((slot) => slot.role === role).length;
+    const count = (role: string) => board.slots.filter((slot) => slot.role === role).length;
     expect(count('noun')).toBeGreaterThanOrEqual(3);
     expect(count('verb')).toBeGreaterThanOrEqual(3);
     expect(count('predicate')).toBeGreaterThanOrEqual(1);
   });
 
   test('can draw a modifier only through a variable board slot', () => {
-    const board = Array.from({ length: 500 }, (_, seed) =>
-      expectBoard(seed),
-    ).find((candidate) =>
+    const board = Array.from({ length: 500 }, (_, seed) => expectBoard(seed)).find((candidate) =>
       candidate.slots.some((slot) => slot.role === 'modifier'),
     );
     expect(board).toBeDefined();
     expect(
-      board!.slots.filter((slot) =>
-        ['noun', 'verb', 'predicate'].includes(slot.role),
-      ),
+      board!.slots.filter((slot) => ['noun', 'verb', 'predicate'].includes(slot.role)),
     ).toHaveLength(7);
   });
 
@@ -78,12 +73,7 @@ describe('Hollywood Roast shared board generation', () => {
         next(seed) {
           calls += 1;
           return {
-            value:
-              calls === 9
-                ? connectorRoll
-                : calls === 10 && connectorRoll < 0.1
-                  ? 0
-                  : 0.01,
+            value: calls === 9 ? connectorRoll : calls === 10 && connectorRoll < 0.1 ? 0 : 0.01,
             nextSeed: seed + 1,
           };
         },
@@ -91,12 +81,10 @@ describe('Hollywood Roast shared board generation', () => {
       const result = generateBoard(request(1), random);
       expect(result.ok).toBe(true);
       if (!result.ok) return;
-      expect(
-        result.board.slots.filter((slot) => slot.role === 'conjunction'),
-      ).toHaveLength(expectedConnectors);
-      expect(
-        result.board.slots.filter((slot) => slot.role === 'continuation'),
-      ).toHaveLength(1);
+      expect(result.board.slots.filter((slot) => slot.role === 'conjunction')).toHaveLength(
+        expectedConnectors,
+      );
+      expect(result.board.slots.filter((slot) => slot.role === 'continuation')).toHaveLength(1);
     },
   );
 
@@ -111,9 +99,7 @@ describe('Hollywood Roast shared board generation', () => {
       error: {
         code: 'impossible-content-pool',
         facts: {
-          availableByRole: expect.arrayContaining([
-            { role: 'continuation', count: 0 },
-          ]),
+          availableByRole: expect.arrayContaining([{ role: 'continuation', count: 0 }]),
         },
       },
     });
@@ -138,21 +124,16 @@ describe('Hollywood Roast shared board generation', () => {
       const result = generateBoard(request(1), random);
       expect(result.ok).toBe(true);
       if (!result.ok) return;
-      const connector = result.board.slots.find(
-        (slot) => slot.role === 'conjunction',
-      )!;
+      const connector = result.board.slots.find((slot) => slot.role === 'conjunction')!;
       expect(expectedKinds).toContain(
-        gameCatalog.phrases.find((phrase) => phrase.id === connector.phraseId)
-          ?.connectorKind,
+        gameCatalog.phrases.find((phrase) => phrase.id === connector.phraseId)?.connectorKind,
       );
     },
   );
 
   test('deals without a forced connector when only clause connectors remain', () => {
     const scenePhraseIds = scene.phrasePool.filter((phraseId) => {
-      const phrase = gameCatalog.phrases.find(
-        (candidate) => candidate.id === phraseId,
-      );
+      const phrase = gameCatalog.phrases.find((candidate) => candidate.id === phraseId);
       return (
         phrase?.role !== 'conjunction' ||
         ['common-conjunction-003', 'common-conjunction-004'].includes(phrase.connectorKind ?? '')
@@ -162,21 +143,16 @@ describe('Hollywood Roast shared board generation', () => {
 
     expect(result.ok).toBe(true);
     if (!result.ok) return;
-    for (const slot of result.board.slots.filter(
-      (candidate) => candidate.role === 'conjunction',
-    )) {
+    for (const slot of result.board.slots.filter((candidate) => candidate.role === 'conjunction')) {
       expect(['common-conjunction-003', 'common-conjunction-004']).toContain(
-        gameCatalog.phrases.find((phrase) => phrase.id === slot.phraseId)
-          ?.connectorKind,
+        gameCatalog.phrases.find((phrase) => phrase.id === slot.phraseId)?.connectorKind,
       );
     }
   });
 
   test('never puts a character-restricted phrase on the common board', () => {
     const restricted = {
-      ...gameCatalog.phrases.find(
-        (phrase) => phrase.id === 'red-folded-chairman-noun-001',
-      )!,
+      ...gameCatalog.phrases.find((phrase) => phrase.id === 'red-folded-chairman-noun-001')!,
       characterIds: ['red-folded-chairman'],
     };
     const phrases = gameCatalog.phrases.map((phrase) =>
@@ -186,19 +162,18 @@ describe('Hollywood Roast shared board generation', () => {
     expect(result.ok).toBe(true);
     if (result.ok) {
       expect(
-        result.board.slots.some(
-          (slot) => slot.phraseId === 'red-folded-chairman-noun-001',
-        ),
+        result.board.slots.some((slot) => slot.phraseId === 'red-folded-chairman-noun-001'),
       ).toBe(false);
     }
   });
 
   test('rejects a pool that fills the fixed slots but not the variable slots', () => {
-    const open = gameCatalog.phrases.filter(
-      (phrase) => !phrase.characterIds && !phrase.sceneIds,
-    );
+    const open = gameCatalog.phrases.filter((phrase) => !phrase.characterIds && !phrase.sceneIds);
     const take = (role: string, count: number) =>
-      open.filter((phrase) => phrase.role === role).slice(0, count).map(({ id }) => id);
+      open
+        .filter((phrase) => phrase.role === role)
+        .slice(0, count)
+        .map(({ id }) => id);
     const scenePhraseIds = [
       ...take('noun', 3),
       ...take('verb', 3),

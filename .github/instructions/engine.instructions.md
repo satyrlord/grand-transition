@@ -1,5 +1,5 @@
 ---
-applyTo: "src/engine/**,src/ai/**,src/persistence/**,tests/unit/**/*.test.ts,tools/check-pure-boundaries.mjs,tools/simulate.ts"
+applyTo: "src/engine/**,src/ai/**,src/persistence/**,tests/unit/**/*.test.ts,tools/check-pure-boundaries.ts,tools/simulate.ts"
 ---
 
 # Engine and artificial intelligence instructions

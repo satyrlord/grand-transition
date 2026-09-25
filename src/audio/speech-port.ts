@@ -1,4 +1,4 @@
-import type { SpeechCancellationReason, SpeechDiagnostic } from './speech-diagnostics';
+import type { SpeechCancellationReason, SpeechDiagnostic } from './speech-diagnostics.ts';
 
 export interface SpeechRequest {
   readonly onDiagnostic?: (event: SpeechDiagnostic) => void;
@@ -42,11 +42,25 @@ export type SpeechVoice = Readonly<{
 
 export type NeuralSpeechCommand =
   | Readonly<{ type: 'load'; baseUrl: string }>
-  | Readonly<{ type: 'synthesize'; id: number; segments: readonly string[]; voiceId: string; rate: number; pitch: number }>;
+  | Readonly<{
+      type: 'synthesize';
+      id: number;
+      segments: readonly string[];
+      voiceId: string;
+      rate: number;
+      pitch: number;
+    }>;
 
 export type NeuralSpeechMessage =
   | Readonly<{ type: 'booted' }>
   | Readonly<{ type: 'progress'; loaded: number; total: number }>
   | Readonly<{ type: 'ready'; voices: readonly SpeechVoice[] }>
-  | Readonly<{ type: 'speech'; id: number; samples: Float32Array<ArrayBuffer>; markers: readonly Readonly<{ index: number; seconds: number }>[]; sampleRate: number; playbackRate: number }>
+  | Readonly<{
+      type: 'speech';
+      id: number;
+      samples: Float32Array<ArrayBuffer>;
+      markers: readonly Readonly<{ index: number; seconds: number }>[];
+      sampleRate: number;
+      playbackRate: number;
+    }>
   | Readonly<{ type: 'error'; id: number | null }>;

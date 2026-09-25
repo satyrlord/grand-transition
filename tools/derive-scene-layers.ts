@@ -3,7 +3,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
-import { sceneMasterSize } from './scene-resolution.mjs';
+import { sceneMasterSize } from './scene-resolution.ts';
 
 export const MASTER_WIDTH = sceneMasterSize().width;
 export const MASTER_HEIGHT = sceneMasterSize().height;
@@ -27,14 +27,25 @@ export const MODERATOR_FOCAL_RECTS = Object.freeze([
   Object.freeze({ x: 0.46, y: 0.35, width: 0.08, height: 0.14 }),
 ]);
 
+type NormalizedRect = Readonly<{ x: number; y: number; width: number; height: number }>;
+type PixelRect = Readonly<{ left: number; top: number; right: number; bottom: number; width: number; height: number }>;
+type PixelMask = ArrayLike<number>;
+export type SceneLayerPaths = Readonly<{
+  compositePath: string;
+  desklessPath: string;
+  backOutputPath: string;
+  foregroundOutputPath: string;
+  reportOutputPath: string;
+}>;
+
 sharp.cache(false);
 sharp.concurrency(1);
 
-function sha256(input) {
+function sha256(input: Uint8Array): string {
   return createHash('sha256').update(input).digest('hex');
 }
 
-function pixelRect(normalized, width = MASTER_WIDTH, height = MASTER_HEIGHT) {
+function pixelRect(normalized: NormalizedRect, width = MASTER_WIDTH, height = MASTER_HEIGHT): PixelRect {
   const left = Math.floor(normalized.x * width);
   const top = Math.floor(normalized.y * height);
   const right = Math.ceil((normalized.x + normalized.width) * width);
@@ -42,11 +53,11 @@ function pixelRect(normalized, width = MASTER_WIDTH, height = MASTER_HEIGHT) {
   return { left, top, right, bottom, width: right - left, height: bottom - top };
 }
 
-function contains(rect, x, y) {
+function contains(rect: PixelRect, x: number, y: number): boolean {
   return x >= rect.left && x < rect.right && y >= rect.top && y < rect.bottom;
 }
 
-function intersects(rect, other) {
+function intersects(rect: PixelRect, other: PixelRect): boolean {
   return !(
     rect.right <= other.left ||
     other.right <= rect.left ||
@@ -55,7 +66,7 @@ function intersects(rect, other) {
   );
 }
 
-function boundsForMask(mask, width, height) {
+function boundsForMask(mask: PixelMask, width: number, height: number) {
   let left = width;
   let top = height;
   let right = -1;
@@ -76,7 +87,7 @@ function boundsForMask(mask, width, height) {
     : { left, top, width: right - left + 1, height: bottom - top + 1 };
 }
 
-async function decodeNormalized(filePath) {
+async function decodeNormalized(filePath: string) {
   const input = await readFile(filePath);
   const metadata = await sharp(input).metadata();
   if (!metadata.width || !metadata.height) {
@@ -116,7 +127,7 @@ async function decodeNormalized(filePath) {
   };
 }
 
-function colorDelta(left, right, offset) {
+function colorDelta(left: PixelMask, right: PixelMask, offset: number): number {
   return Math.max(
     Math.abs(left[offset] - right[offset]),
     Math.abs(left[offset + 1] - right[offset + 1]),
@@ -124,12 +135,20 @@ function colorDelta(left, right, offset) {
   );
 }
 
-function extractSideMask(changed, edge, zone, focal, width, height, side) {
+function extractSideMask(
+  changed: PixelMask,
+  edge: PixelMask,
+  zone: PixelRect,
+  focal: PixelRect,
+  width: number,
+  height: number,
+  side: string,
+): Uint8Array {
   const visited = new Uint8Array(width * height);
   const retained = new Uint8Array(width * height);
   const queue = new Int32Array(zone.width * zone.height);
   let retainedComponentCount = 0;
-  const retainedComponentSizes = [];
+  const retainedComponentSizes: number[] = [];
   const minimumComponentPixels = Math.ceil(zone.width * zone.height * MIN_COMPONENT_AREA_RATIO);
 
   let candidate = new Uint8Array(width * height);
@@ -169,7 +188,7 @@ function extractSideMask(changed, edge, zone, focal, width, height, side) {
       queue[tail++] = start;
       visited[start] = 1;
       while (head < tail) {
-        const index = queue[head++];
+        const index = queue[head++]!;
         const currentX = index % width;
         const currentY = Math.floor(index / width);
         if (contains(focal, currentX, currentY)) touchesFocal = true;
@@ -190,7 +209,7 @@ function extractSideMask(changed, edge, zone, focal, width, height, side) {
       retainedComponentCount += 1;
       retainedComponentSizes.push(tail);
       for (let queueIndex = 0; queueIndex < tail; queueIndex += 1) {
-        retained[queue[queueIndex]] = 1;
+        retained[queue[queueIndex]!] = 1;
       }
     }
   }
@@ -213,7 +232,7 @@ export async function deriveSceneLayers({
   backOutputPath,
   foregroundOutputPath,
   reportOutputPath,
-}) {
+}: SceneLayerPaths) {
   assertDistinctPaths({
     compositePath,
     desklessPath,
@@ -280,7 +299,12 @@ export async function deriveSceneLayers({
 
   const maskBounds = boundsForMask(mask, MASTER_WIDTH, MASTER_HEIGHT);
   const moderatorRects = MODERATOR_FOCAL_RECTS.map((rect) => pixelRect(rect));
-  if (maskBounds && moderatorRects.some((rect) => intersects(maskBounds, rect))) {
+  const maskRect = maskBounds && {
+    ...maskBounds,
+    right: maskBounds.left + maskBounds.width,
+    bottom: maskBounds.top + maskBounds.height,
+  };
+  if (maskRect && moderatorRects.some((rect) => intersects(maskRect, rect))) {
     for (let index = 0; index < mask.length; index += 1) {
       if (mask[index] === 0) continue;
       const x = index % MASTER_WIDTH;
@@ -367,8 +391,8 @@ export async function deriveSceneLayers({
   return report;
 }
 
-function assertDistinctPaths(paths) {
-  const seen = new Map();
+function assertDistinctPaths(paths: Readonly<Record<string, unknown>>): void {
+  const seen = new Map<string, string>();
   for (const [name, filePath] of Object.entries(paths)) {
     if (typeof filePath !== 'string' || filePath.length === 0) {
       throw new Error(`The ${name} path must be a non-empty string.`);
@@ -385,8 +409,8 @@ function assertDistinctPaths(paths) {
   }
 }
 
-function parseArguments(args) {
-  const values = {};
+function parseArguments(args: readonly string[]): SceneLayerPaths {
+  const values: Record<string, string> = {};
   for (let index = 0; index < args.length; index += 2) {
     const key = args[index];
     const value = args[index + 1];
@@ -397,11 +421,11 @@ function parseArguments(args) {
     if (!values[name]) throw new Error(`Missing required argument --${name}.`);
   }
   return {
-    compositePath: path.resolve(values.composite),
-    desklessPath: path.resolve(values.deskless),
-    backOutputPath: path.resolve(values.back),
-    foregroundOutputPath: path.resolve(values.foreground),
-    reportOutputPath: path.resolve(values.report),
+    compositePath: path.resolve(values.composite!),
+    desklessPath: path.resolve(values.deskless!),
+    backOutputPath: path.resolve(values.back!),
+    foregroundOutputPath: path.resolve(values.foreground!),
+    reportOutputPath: path.resolve(values.report!),
   };
 }
 

@@ -4,7 +4,7 @@ import {
   catalogFoundationCounts,
   catalogFoundationShard,
   runCatalogFoundationCharacter,
-} from './helpers/catalog-foundation-workload';
+} from './helpers/catalog-foundation-workload.ts';
 
 // The catalog workload is split into five sibling files so that no single file
 // bounds the unit phase. See the shared helper for why the cases are not run

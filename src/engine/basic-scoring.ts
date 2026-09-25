@@ -1,7 +1,7 @@
-import type { BasicScoringBalance } from '../content/basic-scoring-balance';
-import type { Phrase } from '../content/schemas';
-import type { GrammarAnalysis } from './grammar/english-grammar-adapter';
-import { phraseIndex } from './phrase-index';
+import type { BasicScoringBalance } from '../content/basic-scoring-balance.ts';
+import type { Phrase } from '../content/schemas.ts';
+import type { GrammarAnalysis } from './grammar/english-grammar-adapter.ts';
+import { phraseIndex } from './phrase-index.ts';
 
 export type BasicScoreBreakdownItem =
   | Readonly<{
@@ -76,9 +76,7 @@ export type ScoredClause = Readonly<{
   scoreBeforeCombo: number;
 }>;
 
-export function scoreBasicConstruction(
-  request: BasicScoringRequest,
-): BasicScore {
+export function scoreBasicConstruction(request: BasicScoringRequest): BasicScore {
   if (!isScoreable(request.analysis)) {
     return zeroScore();
   }
@@ -86,12 +84,7 @@ export function scoreBasicConstruction(
   const clauses = extractScoreClauses(request.analysis, phraseById);
   const breakdown: BasicScoreBreakdownItem[] = [];
   for (const clause of clauses) {
-    const scored = scoreClause(
-      clause,
-      phraseById,
-      request.defenderWeaknessTags,
-      request.balance,
-    );
+    const scored = scoreClause(clause, phraseById, request.defenderWeaknessTags, request.balance);
     breakdown.push(...clauseNoteItems(clause, scored));
     breakdown.push({
       kind: 'clause-score',
@@ -173,9 +166,7 @@ function collectScoreClauses(
   analysis: GrammarAnalysis,
   phraseById: ReadonlyMap<string, Phrase>,
 ): Readonly<{ clauses: readonly ScoreClause[]; anchors: readonly number[] }> {
-  const phrases = analysis.renderedPhrases.filter(
-    (phrase) => phrase.role !== 'ending',
-  );
+  const phrases = analysis.renderedPhrases.filter((phrase) => phrase.role !== 'ending');
   const clauses: ScoreClause[] = [];
   const anchors: number[] = [];
   let currentPhraseIndex = 0;
@@ -210,11 +201,7 @@ function collectScoreClauses(
             const clause = clauses[clauseIndex]!;
             clauses[clauseIndex] = {
               ...clause,
-              phraseIds: [
-                ...clause.phraseIds,
-                copularNounComplementConnectorId!,
-                phrase.phraseId,
-              ],
+              phraseIds: [...clause.phraseIds, copularNounComplementConnectorId!, phrase.phraseId],
             };
           }
           subjects = [phrase.phraseId];
@@ -273,8 +260,7 @@ function collectScoreClauses(
           completedWithObjectVerb = true;
           copularNounComplementAllowed = false;
         } else if (connectorAfterComplete || frontBecauseAwaitingMain) {
-          const extendsFrontBecause =
-            connectorAfterComplete && frontBecauseAwaitingMain;
+          const extendsFrontBecause = connectorAfterComplete && frontBecauseAwaitingMain;
           subjects = [phrase.phraseId];
           complete = false;
           connectorAfterComplete = false;
@@ -313,8 +299,7 @@ function collectScoreClauses(
         conjunctionAfterObjectVerb = false;
         withComplementPending = false;
         copularNounComplementAllowed =
-          phraseById.get(phrase.phraseId)
-            ?.allowsCoordinatedNounComplement === true;
+          phraseById.get(phrase.phraseId)?.allowsCoordinatedNounComplement === true;
         copularNounComplementPending = false;
         copularNounComplementConnectorId = null;
         if (frontBecause) {
@@ -348,21 +333,13 @@ function collectScoreClauses(
           copularNounComplementConnectorId = null;
         } else if (phrase.connectorKind === 'because' && !complete) {
           frontBecause = true;
-        } else if (
-          phrase.connectorKind === 'and' &&
-          complete &&
-          completedWithObjectVerb
-        ) {
+        } else if (phrase.connectorKind === 'and' && complete && completedWithObjectVerb) {
           conjunctionAfterObjectVerb = true;
           connectorAfterComplete = false;
           copularNounComplementAllowed = false;
           copularNounComplementPending = false;
           copularNounComplementConnectorId = null;
-        } else if (
-          phrase.connectorKind === 'and' &&
-          complete &&
-          copularNounComplementAllowed
-        ) {
+        } else if (phrase.connectorKind === 'and' && complete && copularNounComplementAllowed) {
           copularNounComplementPending = true;
           copularNounComplementConnectorId = phrase.phraseId;
           connectorAfterComplete = false;
@@ -407,11 +384,7 @@ export function scoreClause(
     ),
   );
   const flavourMatch = relation.scorePreferences?.flavour.some((rule) =>
-    scorePreferenceMatches(
-      rule,
-      subject.scoreGroups?.flavour ?? [],
-      object?.scoreGroups?.flavour,
-    ),
+    scorePreferenceMatches(rule, subject.scoreGroups?.flavour ?? [], object?.scoreGroups?.flavour),
   );
   const compatibility =
     Number(Boolean(substanceMatch)) * balance.substanceGroupPoints +
@@ -420,27 +393,21 @@ export function scoreClause(
     (item) => item.leftNounId === subject.id && item.rightNounId === object?.id,
   )?.score;
   const modifierBonus =
-    clausePhrases.filter((phrase) => phrase.role === 'modifier').length *
-    balance.modifierPoints;
+    clausePhrases.filter((phrase) => phrase.role === 'modifier').length * balance.modifierPoints;
   const base =
-    (customScore ??
-      compatibility * balance.basePointsMultiplier + balance.basePointsMinimum) +
+    (customScore ?? compatibility * balance.basePointsMultiplier + balance.basePointsMinimum) +
     modifierBonus;
   const restrictedCount = clausePhrases.filter(
     (phrase) => phrase.sceneIds || phrase.characterIds,
   ).length;
-  const restrictionFactor =
-    balance.restrictedPhraseMultiplier ** restrictedCount;
+  const restrictionFactor = balance.restrictedPhraseMultiplier ** restrictedCount;
   const restrictedBase = Math.ceil(base * restrictionFactor);
   const weaknessMatches = defenderWeaknessTags.flatMap((defenderTag) =>
     clausePhrases.flatMap((phrase, phraseIndex) =>
-      phrase.tags.includes(defenderTag)
-        ? [{ defenderTag, phraseId: phrase.id, phraseIndex }]
-        : [],
+      phrase.tags.includes(defenderTag) ? [{ defenderTag, phraseId: phrase.id, phraseIndex }] : [],
     ),
   );
-  const weaknessFactor =
-    weaknessMatches.length > 0 ? balance.weaknessMultiplier : 1;
+  const weaknessFactor = weaknessMatches.length > 0 ? balance.weaknessMultiplier : 1;
   return {
     base,
     restrictionFactor,
@@ -464,8 +431,7 @@ export function replayBasicScoreBreakdown(
   breakdown: readonly BasicScoreBreakdownItem[],
 ): Readonly<{ unroundedTotal: number; finalDamage: number }> {
   const runningTotal = breakdown.reduce(
-    (total, item) =>
-      item.kind === 'clause-score' ? total + item.amount : total,
+    (total, item) => (item.kind === 'clause-score' ? total + item.amount : total),
     0,
   );
   return {

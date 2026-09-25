@@ -29,12 +29,12 @@ export const SCENE_MASTER_NAMES = Object.freeze([
   'transition-era-television-studio.png',
   'transition-era-television-studio-desks.png',
 ]);
-import { sceneMasterSize, sceneVariantSizes, SCENE_BYTE_BUDGETS } from './scene-resolution.mjs';
-export { SCENE_VARIANT_SIZES, SCENE_BYTE_BUDGETS } from './scene-resolution.mjs';
+import { sceneMasterSize, sceneVariantSizes, SCENE_BYTE_BUDGETS } from './scene-resolution.ts';
+export { SCENE_VARIANT_SIZES, SCENE_BYTE_BUDGETS } from './scene-resolution.ts';
 
 const SOURCE_DESCRIPTION =
   'Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.';
-const FINAL_SCENE_SOURCE_DESCRIPTIONS = Object.freeze({
+const FINAL_SCENE_SOURCE_DESCRIPTIONS: Readonly<Record<string, string>> = Object.freeze({
   ...Object.fromEntries([
     'county-council-ballroom', 'midnight-call-in-studio',
     'palace-press-hall', 'influencer-campaign-livestream',
@@ -69,14 +69,33 @@ const CROP = Object.freeze({
   strategy: 'symmetric-horizontal-bleed-to-four-by-three-core',
 });
 
+export type SceneFormat = 'avif' | 'webp';
+const SCENE_FORMATS: readonly SceneFormat[] = Object.freeze(['avif', 'webp']);
+type SceneIdentity = ReturnType<typeof sceneIdentity>;
+type SceneSize = Readonly<{ width: number; height: number }>;
+export type SceneVariant = {
+  path: string; width: number; height: number; bytes: number;
+  format: SceneFormat; quality: number; sha256: string;
+};
+type SceneMaster = { fileName: string; identity: SceneIdentity; input: Buffer; sourceSha256: string; bytes: number };
+type CachedVariant = SceneVariant & { output: Buffer };
+type StoredSceneManifest = {
+  schemaVersion: number;
+  assets: {
+    id: string;
+    source?: { sha256: string; path: string; bytes: number; width: number; height: number; format: string };
+    variants: SceneVariant[];
+  }[];
+};
+
 sharp.cache(false);
 sharp.concurrency(1);
 
-function sha256(input) {
+function sha256(input: Uint8Array): string {
   return createHash('sha256').update(input).digest('hex');
 }
 
-function sceneIdentity(fileName) {
+function sceneIdentity(fileName: string) {
   const id = path.basename(fileName, '.png');
   const suffix = ['-desks', '-foreground'].find((candidate) => id.endsWith(candidate));
   const isForeground = suffix !== undefined;
@@ -85,7 +104,7 @@ function sceneIdentity(fileName) {
   return { id, isForeground, ownerId, modern };
 }
 
-function focalContract(identity) {
+function focalContract(identity: SceneIdentity) {
   const hasModerator = ['modern-debate-studio', 'transition-era-television-studio'].includes(identity.ownerId);
   return {
     focalPoint: identity.isForeground
@@ -102,7 +121,7 @@ function focalContract(identity) {
   };
 }
 
-async function assertMasterSet(sceneRoot) {
+async function assertMasterSet(sceneRoot: string): Promise<void> {
   const entries = await readdir(sceneRoot, { withFileTypes: true });
   const actual = entries
     .filter((entry) => entry.isFile() && path.extname(entry.name).toLowerCase() === '.png')
@@ -116,7 +135,7 @@ async function assertMasterSet(sceneRoot) {
   }
 }
 
-async function inspectMaster(filePath, identity) {
+async function inspectMaster(filePath: string, identity: SceneIdentity) {
   const input = await readFile(filePath);
   const metadata = await sharp(input).metadata();
   const size = sceneMasterSize(identity.id);
@@ -134,9 +153,9 @@ async function inspectMaster(filePath, identity) {
   }
   const cornerOffsets = [
     3,
-    (metadata.width - 1) * 4 + 3,
-    (metadata.height - 1) * metadata.width * 4 + 3,
-    (metadata.width * metadata.height - 1) * 4 + 3,
+    (size.width - 1) * 4 + 3,
+    (size.height - 1) * size.width * 4 + 3,
+    (size.width * size.height - 1) * 4 + 3,
   ];
   if (identity.isForeground) {
     if (transparentCount === 0 || partialAlphaCount === 0) {
@@ -156,7 +175,7 @@ const FORMAT_SETTINGS = Object.freeze({
   webp: Object.freeze({ qualities: [86, 82, 78, 74, 70, 66], effort: 6 }),
 });
 
-async function encodeWithinBudget(input, size, format) {
+async function encodeWithinBudget(input: Buffer, size: SceneSize, format: SceneFormat) {
   const settings = FORMAT_SETTINGS[format];
   for (const quality of settings.qualities) {
     let image = sharp(input).resize({
@@ -182,7 +201,7 @@ async function encodeWithinBudget(input, size, format) {
   );
 }
 
-async function pathExists(filePath) {
+async function pathExists(filePath: string): Promise<boolean> {
   try {
     await access(filePath);
     return true;
@@ -191,7 +210,7 @@ async function pathExists(filePath) {
   }
 }
 
-export async function installOutputs(sceneRoot, stagingRoot, manifestText) {
+export async function installOutputs(sceneRoot: string, stagingRoot: string, manifestText: string): Promise<void> {
   const variantsPath = path.join(sceneRoot, 'variants');
   const manifestPath = path.join(sceneRoot, 'scene-manifest.json');
   const nonce = `${process.pid}-${Date.now()}`;
@@ -230,18 +249,22 @@ export async function installOutputs(sceneRoot, stagingRoot, manifestText) {
   if (manifestBackedUp) await rm(manifestBackup, { force: true });
 }
 
-function selectedAssetIds(only) {
+function selectedAssetIds(only: unknown): Set<string> | null {
   if (only === undefined) return null;
   const ids = new Set(SCENE_MASTER_NAMES.map((name) => sceneIdentity(name).id));
   if (!Array.isArray(only) || only.length === 0 || only.some((id) => !ids.has(id)) ||
     new Set(only).size !== only.length) {
     throw new Error('Selected scene IDs must be a non-empty list of distinct known asset IDs.');
   }
-  return new Set(only);
+  return new Set(only as string[]);
 }
 
-async function verifiedCachedVariants(sceneRoot, masters, selected) {
-  const manifest = JSON.parse(await readFile(path.join(sceneRoot, 'scene-manifest.json'), 'utf8'));
+async function verifiedCachedVariants(
+  sceneRoot: string,
+  masters: readonly SceneMaster[],
+  selected: ReadonlySet<string>,
+): Promise<Map<string, CachedVariant[]>> {
+  const manifest = JSON.parse(await readFile(path.join(sceneRoot, 'scene-manifest.json'), 'utf8')) as StoredSceneManifest;
   const expectedIds = masters.map((master) => master.identity.id);
   if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.assets) ||
     manifest.assets.length !== expectedIds.length ||
@@ -249,11 +272,11 @@ async function verifiedCachedVariants(sceneRoot, masters, selected) {
     manifest.assets.some((asset) => !expectedIds.includes(asset?.id))) {
     throw new Error('Selective scene builds require a complete existing scene manifest.');
   }
-  const cache = new Map();
+  const cache = new Map<string, CachedVariant[]>();
   for (const master of masters) {
     const id = master.identity.id;
     if (selected.has(id)) continue;
-    const asset = manifest.assets.find((entry) => entry.id === id);
+    const asset = manifest.assets.find((entry) => entry.id === id)!;
     const size = sceneMasterSize(id);
     if (asset.source?.sha256 !== master.sourceSha256 || asset.source.path !== master.fileName ||
       asset.source.bytes !== master.bytes || asset.source.width !== size.width ||
@@ -261,13 +284,13 @@ async function verifiedCachedVariants(sceneRoot, masters, selected) {
       throw new Error(`Cached scene source "${id}" changed or has invalid metadata; select it for rebuilding.`);
     }
     const expected = sceneVariantSizes(id).flatMap((variantSize) =>
-      ['avif', 'webp'].map((format) => ({ ...variantSize, format,
+      SCENE_FORMATS.map((format) => ({ ...variantSize, format,
         path: `variants/${id}-${variantSize.width}x${variantSize.height}.${format}` })));
     if (!Array.isArray(asset.variants) || asset.variants.length !== expected.length ||
       new Set(asset.variants.map((variant) => variant?.path)).size !== expected.length) {
       throw new Error(`Cached scene "${id}" has an invalid variant inventory.`);
     }
-    const variants = [];
+    const variants: CachedVariant[] = [];
     for (const requirement of expected) {
       const variant = asset.variants.find((entry) => entry?.path === requirement.path);
       if (!variant || variant.width !== requirement.width || variant.height !== requirement.height ||
@@ -294,12 +317,15 @@ async function verifiedCachedVariants(sceneRoot, masters, selected) {
   return cache;
 }
 
-export async function buildSceneAssets({ sceneRoot = path.resolve('src', 'assets', 'scenes'), only } = {}) {
+export async function buildSceneAssets({
+  sceneRoot = path.resolve('src', 'assets', 'scenes'),
+  only,
+}: { sceneRoot?: string; only?: readonly string[] } = {}) {
   const selected = selectedAssetIds(only);
   const resolvedRoot = path.resolve(sceneRoot);
   await assertMasterSet(resolvedRoot);
 
-  const masters = [];
+  const masters: SceneMaster[] = [];
   for (const fileName of SCENE_MASTER_NAMES) {
     const identity = sceneIdentity(fileName);
     const inspected = await inspectMaster(path.join(resolvedRoot, fileName), identity);
@@ -309,16 +335,16 @@ export async function buildSceneAssets({ sceneRoot = path.resolve('src', 'assets
     masters.push({ fileName, identity, ...inspected });
   }
 
-  const cached = selected ? await verifiedCachedVariants(resolvedRoot, masters, selected) : new Map();
+  const cached = selected ? await verifiedCachedVariants(resolvedRoot, masters, selected) : new Map<string, CachedVariant[]>();
   const stagingRoot = await mkdtemp(path.join(resolvedRoot, '.scene-build-'));
   const variantsRoot = path.join(stagingRoot, 'variants');
   await mkdir(variantsRoot);
   try {
     const assets = [];
     for (const master of masters) {
-      const variants = [];
+      const variants: SceneVariant[] = [];
       for (const size of sceneVariantSizes(master.identity.id)) {
-        for (const format of ['avif', 'webp']) {
+        for (const format of SCENE_FORMATS) {
           const reused = cached.get(master.identity.id)?.find((variant) =>
             variant.width === size.width && variant.format === format);
           const { output, quality } = reused ?? await encodeWithinBudget(master.input, size, format);
@@ -372,11 +398,11 @@ export async function buildSceneAssets({ sceneRoot = path.resolve('src', 'assets
 const isCli = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (isCli) {
   const args = process.argv.slice(2);
-  const sceneRoot = args[0] && !args[0].startsWith('--') ? path.resolve(args.shift()) : undefined;
+  const sceneRoot = args[0] && !args[0].startsWith('--') ? path.resolve(args.shift()!) : undefined;
   const validOptions = args.length === 0 || (args.length === 2 && args[0] === '--only');
   const only = args.length === 0 ? undefined : args[1]?.split(',');
   Promise.resolve().then(() => {
-    if (!validOptions) throw new Error('Use build-scene-assets.mjs [scene-root] [--only id1,id2].');
+    if (!validOptions) throw new Error('Use build-scene-assets.ts [scene-root] [--only id1,id2].');
     return buildSceneAssets({ sceneRoot, only });
   })
     .then((manifest) => process.stdout.write(`Built ${manifest.assets.length} scene masters.\n`))

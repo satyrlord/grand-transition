@@ -1,13 +1,15 @@
-import { lockInSetup } from './helpers/setup';
+import { lockInSetup } from './helpers/setup.ts';
 import { expect, test } from '@playwright/test';
-import { useFixedBrowserMatchSeed } from './helpers/match-flow';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 
 for (const viewport of [
   { width: 1024, height: 720 },
   { width: 1280, height: 720 },
   { width: 1920, height: 1080 },
 ]) {
-  test(`forced colors preserve setup and Pause choices at ${viewport.width}`, async ({ page }, testInfo) => {
+  test(`forced colors preserve setup and Pause choices at ${viewport.width}`, async ({
+    page,
+  }, testInfo) => {
     await page.setViewportSize(viewport);
     await page.emulateMedia({ forcedColors: 'active', reducedMotion: 'reduce' });
     await useFixedBrowserMatchSeed(page);
@@ -60,15 +62,20 @@ for (const viewport of [
       await expect(selected).toHaveCSS('outline-width', '3px');
       await expect(selected).toHaveCSS('outline-offset', '3px');
       await expect(selected).toHaveCSS('text-decoration-line', 'underline');
-      expect(await selected.evaluate((element) => {
-        const style = getComputedStyle(element);
-        return style.color !== style.backgroundColor;
-      })).toBe(true);
+      expect(
+        await selected.evaluate((element) => {
+          const style = getComputedStyle(element);
+          return style.color !== style.backgroundColor;
+        }),
+      ).toBe(true);
       await selected.hover();
       await expect(selected).toHaveCSS('text-decoration-line', 'underline');
       const other = group.locator('[aria-pressed="false"]').first();
       await expect(other).toHaveCSS('text-decoration-line', 'none');
-      const choice = group.getByRole('button', { name: (await other.textContent())!.trim(), exact: true });
+      const choice = group.getByRole('button', {
+        name: (await other.textContent())!.trim(),
+        exact: true,
+      });
       await choice.click();
       await expect(choice).toHaveAttribute('aria-pressed', 'true');
       await expect(choice).toHaveCSS('text-decoration-line', 'underline');

@@ -1,13 +1,13 @@
 import { describe, expect, test } from 'vitest';
-import type { SpeechPort, SpeechRequest } from '../../src/audio/speech-port';
+import type { SpeechPort, SpeechRequest } from '../../src/audio/speech-port.ts';
 import type {
   GameCommand,
   GameReducer,
   GameState,
   ReducerResult,
-} from '../../src/engine/game-contracts';
-import type { RandomSource } from '../../src/engine/random-source';
-import type { StoragePort } from '../../src/persistence/storage-port';
+} from '../../src/engine/game-contracts.ts';
+import type { RandomSource } from '../../src/engine/random-source.ts';
+import type { StoragePort } from '../../src/persistence/storage-port.ts';
 
 type TestCommand = GameCommand<'advance', { readonly amount: number }>;
 type TestState = GameState<
@@ -74,11 +74,7 @@ const randomSource: RandomSource = {
   next: (seed) => ({ value: 0.25, nextSeed: seed + 1 }),
 };
 
-const reducer: GameReducer<TestState, TestCommand> = (
-  state,
-  command,
-  random,
-) => {
+const reducer: GameReducer<TestState, TestCommand> = (state, command, random) => {
   if (command.payload.amount < 1) {
     return {
       ok: false,

@@ -1,32 +1,27 @@
-import { lockInSetup } from './setup-test-helpers';
+import { lockInSetup } from './setup-test-helpers.ts';
 import { page } from 'vitest/browser';
 import { afterEach, beforeEach, expect, onTestFinished, test, vi } from 'vitest';
-import { GrandTransitionApp } from '../../src/app/app-shell';
-import { NeuralVoiceRouter } from '../../src/audio/neural-voice-router';
+import { GrandTransitionApp } from '../../src/app/app-shell.ts';
+import { NeuralVoiceRouter } from '../../src/audio/neural-voice-router.ts';
 import {
   matchCommandEventName,
   type GrandTransitionMatch,
-} from '../../src/app/screens/match-screen';
-import { englishGameLocale, gameCatalog } from '../../src/game-content';
+} from '../../src/app/screens/match-screen.ts';
+import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
   type GrammarStep,
-} from '../../src/engine/grammar/english-grammar-adapter';
-import type { MatchState } from '../../src/engine/match-lifecycle';
-import {
-  decodeMatchHistory,
-  matchHistoryStorageKey,
-} from '../../src/persistence/match-history';
-import {
-  defaultSettings,
-  encodeSettings,
-} from '../../src/persistence/codecs/settings-codec';
-import { settingsStorageKey } from '../../src/persistence/settings';
+} from '../../src/engine/grammar/english-grammar-adapter.ts';
+import type { MatchState } from '../../src/engine/match-lifecycle.ts';
+import { decodeMatchHistoryEntry } from '../../src/persistence/match-history.ts';
+import { defaultSettings, encodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
+import { settingsStorageKey } from '../../src/persistence/settings.ts';
+import { reloadStoredData, resetStoredData, storedHistory } from './persistence-test-helpers.ts';
 
 beforeEach(async () => {
   await page.viewport(1280, 720);
-  localStorage.removeItem(matchHistoryStorageKey);
+  await resetStoredData();
 });
 
 afterEach(() => {
@@ -36,10 +31,9 @@ afterEach(() => {
 });
 
 test('keeps a singular predicate complement for you in the sentence bubble', async () => {
+  await reloadStoredData();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await lockInSetup();
@@ -88,9 +82,7 @@ test('keeps a singular predicate complement for you in the sentence bubble', asy
     },
   };
   await app.updateComplete;
-  const match = document.querySelector(
-    'grand-transition-match',
-  ) as GrandTransitionMatch;
+  const match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
   await match.updateComplete;
 
   expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(
@@ -99,10 +91,9 @@ test('keeps a singular predicate complement for you in the sentence bubble', asy
 });
 
 test('shows a coordinated copular complement as a complete sentence', async () => {
+  await reloadStoredData();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await lockInSetup();
@@ -126,10 +117,7 @@ test('shows a coordinated copular complement as a complete sentence', async () =
       englishGameLocale,
     ),
   }));
-  const steps: readonly GrammarStep[] = [
-    ...phraseSteps,
-    { kind: 'end' },
-  ];
+  const steps: readonly GrammarStep[] = [...phraseSteps, { kind: 'end' }];
   const result = englishGrammarAdapter.analyze({
     steps,
     subjectNumber: player.subjectNumber,
@@ -162,9 +150,7 @@ test('shows a coordinated copular complement as a complete sentence', async () =
     },
   };
   await app.updateComplete;
-  const match = document.querySelector(
-    'grand-transition-match',
-  ) as GrandTransitionMatch;
+  const match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
   await match.updateComplete;
 
   expect(match.snapshot?.sentenceComplete).toBe(true);
@@ -176,88 +162,87 @@ test('shows a coordinated copular complement as a complete sentence', async () =
 test.each([
   { width: 639, height: 320, pauseMode: 'viewport' },
   { width: 384, height: 832, pauseMode: 'hotseat-portrait' },
-])('shows the comeback inline and resumes both deliveries after $pauseMode', async ({ width, height, pauseMode }) => {
-  vi.useFakeTimers();
-  localStorage.setItem(settingsStorageKey, encodeSettings({
-    ...defaultSettings,
-    interfaceLocale: 'en',
-    gameLocale: 'en',
-    speechEnabled: false,
-    gpuVoices: false,
-  }));
-  document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
-  await app.updateComplete;
-  await page.getByRole('button', { name: 'Multiplayer' }).click();
-  await lockInSetup();
+])(
+  'shows the comeback inline and resumes both deliveries after $pauseMode',
+  async ({ width, height, pauseMode }) => {
+    vi.useFakeTimers();
+    localStorage.setItem(
+      settingsStorageKey,
+      encodeSettings({
+        ...defaultSettings,
+        interfaceLocale: 'en',
+        gameLocale: 'en',
+        speechEnabled: false,
+        gpuVoices: false,
+      }),
+    );
+    await reloadStoredData();
+    document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
+    const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
+    await app.updateComplete;
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
+    await lockInSetup();
 
-  await page.getByRole('button', { name: 'Start match' }).click();
+    await page.getByRole('button', { name: 'Start match' }).click();
 
-  prepareComebackExchange(app);
-  await app.updateComplete;
-  let match = document.querySelector(
-    'grand-transition-match',
-  ) as GrandTransitionMatch;
-  await match.updateComplete;
-  const sentenceBeforeComeback = match.snapshot!.sentenceText;
-  expect(match.snapshot?.activePlayerId).toBe('player-two');
-  expect(match.snapshot?.sentenceComplete).toBe(true);
-  expect(match.snapshot?.actions.comebackTiers).toContain('strong');
-  match.querySelector<HTMLButtonElement>('.action-secondary')!.click();
-  await app.updateComplete;
-  await match.updateComplete;
+    prepareComebackExchange(app);
+    await app.updateComplete;
+    let match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
+    await match.updateComplete;
+    const sentenceBeforeComeback = match.snapshot!.sentenceText;
+    expect(match.snapshot?.activePlayerId).toBe('player-two');
+    expect(match.snapshot?.sentenceComplete).toBe(true);
+    expect(match.snapshot?.actions.comebackTiers).toContain('strong');
+    match.querySelector<HTMLButtonElement>('.action-secondary')!.click();
+    await app.updateComplete;
+    await match.updateComplete;
 
-  expect(match.snapshot?.roundReview).toBe(true);
-  expect(match.snapshot?.sentenceText).toContain(sentenceBeforeComeback);
-  expect(match.snapshot?.sentenceText).toContain(
-    'I obey the rules. Your argument impersonated a thought.',
-  );
-  expect(match.querySelector('.sentence-preview')?.textContent).toContain(
-    'I obey the rules. Your argument impersonated a thought.',
-  );
-  expect(match.querySelector('.round-review-dialog')).toBeNull();
-  expect(match.querySelector('.timer-fact')).toBeNull();
-  expect(match.querySelector('.draft-table')).toBeNull();
-  expect(match.querySelector('.private-hand')).toBeNull();
-  expect(match.presentation?.speakerId).toBe('player-two');
-  await vi.advanceTimersByTimeAsync(3_000);
-  await app.updateComplete; await match.updateComplete;
-  expect(match.presentation?.phase).toBe('total');
-  expect(match.presentation?.speakerId).toBe('player-two');
-  expect(match.querySelector('[data-score-kind="comeback"]')?.textContent).toMatch(
-    /Comeback.*Your argument impersonated.*\+18/su,
-  );
-  const phase = match.presentation?.phase;
-  await page.viewport(width, height);
-  await vi.waitFor(() => expect(match.pauseMode).toBe(pauseMode));
-  await vi.advanceTimersByTimeAsync(10_000);
-  expect(match.presentation?.phase).toBe(phase);
-  await page.viewport(1280, 720);
-  await vi.waitFor(() => expect(match.pauseMode).toBe('running'));
-  await vi.advanceTimersByTimeAsync(20_000);
-  await app.updateComplete; await match.updateComplete;
-  expect(match.snapshot?.round).toBe(2);
-  expect(match.snapshot?.roundReview).toBe(false);
-  expect(match.querySelector('.round-review-dialog')).toBeNull();
-  expect(document.activeElement).toBe(match.querySelector('#match-title'));
+    expect(match.snapshot?.roundReview).toBe(true);
+    expect(match.snapshot?.sentenceText).toContain(sentenceBeforeComeback);
+    expect(match.snapshot?.sentenceText).toContain(
+      'I obey the rules. Your argument impersonated a thought.',
+    );
+    expect(match.querySelector('.sentence-preview')?.textContent).toContain(
+      'I obey the rules. Your argument impersonated a thought.',
+    );
+    expect(match.querySelector('.round-review-dialog')).toBeNull();
+    expect(match.querySelector('.timer-fact')).toBeNull();
+    expect(match.querySelector('.draft-table')).toBeNull();
+    expect(match.querySelector('.private-hand')).toBeNull();
+    expect(match.presentation?.speakerId).toBe('player-two');
+    await vi.advanceTimersByTimeAsync(3_000);
+    await app.updateComplete;
+    await match.updateComplete;
+    expect(match.presentation?.phase).toBe('total');
+    expect(match.presentation?.speakerId).toBe('player-two');
+    expect(match.querySelector('[data-score-kind="comeback"]')?.textContent).toMatch(
+      /Comeback.*Your argument impersonated.*\+18/su,
+    );
+    const phase = match.presentation?.phase;
+    await page.viewport(width, height);
+    await vi.waitFor(() => expect(match.pauseMode).toBe(pauseMode));
+    await vi.advanceTimersByTimeAsync(10_000);
+    expect(match.presentation?.phase).toBe(phase);
+    await page.viewport(1280, 720);
+    await vi.waitFor(() => expect(match.pauseMode).toBe('running'));
+    await vi.advanceTimersByTimeAsync(20_000);
+    await app.updateComplete;
+    await match.updateComplete;
+    expect(match.snapshot?.round).toBe(2);
+    expect(match.snapshot?.roundReview).toBe(false);
+    expect(match.querySelector('.round-review-dialog')).toBeNull();
+    expect(document.activeElement).toBe(match.querySelector('#match-title'));
 
-  match
-    .querySelector<HTMLButtonElement>(
-      '.shared-board [data-card-state="legal"]',
-    )!
-    .click();
-  await app.updateComplete;
-  match = document.querySelector(
-    'grand-transition-match',
-  ) as GrandTransitionMatch;
-  await match.updateComplete;
-  expect(match.snapshot?.round).toBe(2);
-  expect(match.snapshot?.roundReview).toBe(false);
-  expect(match.querySelector('.round-review-dialog')).toBeNull();
-  expect(match.querySelector('.draft-table')).not.toBeNull();
-});
+    match.querySelector<HTMLButtonElement>('.shared-board [data-card-state="legal"]')!.click();
+    await app.updateComplete;
+    match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
+    await match.updateComplete;
+    expect(match.snapshot?.round).toBe(2);
+    expect(match.snapshot?.roundReview).toBe(false);
+    expect(match.querySelector('.round-review-dialog')).toBeNull();
+    expect(match.querySelector('.draft-table')).not.toBeNull();
+  },
+);
 
 test('a lethal grammar mistake shows persistent victory and restores history after reload', async () => {
   // The replay records the speech setting of the match. Keep the neural
@@ -269,17 +254,19 @@ test('a lethal grammar mistake shows persistent victory and restores history aft
     if (previousSettings === null) localStorage.removeItem(settingsStorageKey);
     else localStorage.setItem(settingsStorageKey, previousSettings);
   });
-  localStorage.setItem(settingsStorageKey, encodeSettings({
-    ...defaultSettings,
-    interfaceLocale: 'en',
-    gameLocale: 'en',
-    speechEnabled: true,
-    gpuVoices: false,
-  }));
+  localStorage.setItem(
+    settingsStorageKey,
+    encodeSettings({
+      ...defaultSettings,
+      interfaceLocale: 'en',
+      gameLocale: 'en',
+      speechEnabled: true,
+      gpuVoices: false,
+    }),
+  );
+  await reloadStoredData();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
-  let app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  let app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await lockInSetup();
@@ -297,28 +284,20 @@ test('a lethal grammar mistake shows persistent victory and restores history aft
     },
   };
   await app.updateComplete;
-  let match = document.querySelector(
-    'grand-transition-match',
-  ) as GrandTransitionMatch;
+  let match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
   await match.updateComplete;
   match
-    .querySelector<HTMLButtonElement>(
-      '[data-role="predicate"] [data-card-state="legal"]',
-    )!
+    .querySelector<HTMLButtonElement>('[data-role="predicate"] [data-card-state="legal"]')!
     .click();
   await app.updateComplete;
-  match = document.querySelector(
-    'grand-transition-match',
-  ) as GrandTransitionMatch;
+  match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
   await match.updateComplete;
 
   expect(owner.matchState.phase).toBe('results');
   expect(document.querySelector('#round-review-title')).toBeNull();
   await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
   expect(match.snapshot?.victory?.winnerId).not.toBe(loserId);
-  expect(match.querySelector('#round-review-title')?.textContent?.trim()).toBe(
-    'Victory',
-  );
+  expect(match.querySelector('#round-review-title')?.textContent?.trim()).toBe('Victory');
   expect(match.querySelector('.round-review-dialog')?.textContent).toMatch(
     /wins the match.*1 completed round.*−3 Pride penalty.*Return to main menu/su,
   );
@@ -336,9 +315,7 @@ test('a lethal grammar mistake shows persistent victory and restores history aft
 
   window.dispatchEvent(new Event('resize'));
   await app.updateComplete;
-  expect(document.querySelector('#round-review-title')?.textContent?.trim()).toBe(
-    'Victory',
-  );
+  expect(document.querySelector('#round-review-title')?.textContent?.trim()).toBe('Victory');
   document.activeElement?.dispatchEvent(
     new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
   );
@@ -346,56 +323,45 @@ test('a lethal grammar mistake shows persistent victory and restores history aft
   expect(document.querySelector('#round-review-title')).not.toBeNull();
 
   window.history.back();
-  await vi.waitFor(() =>
-    expect(document.querySelector('#round-review-title')).not.toBeNull(),
-  );
+  await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
 
-  const storedBytes = localStorage.getItem(matchHistoryStorageKey);
-  expect(storedBytes).not.toBeNull();
-  const stored = decodeMatchHistory(storedBytes!);
-  expect(stored.ok && stored.value.entries).toHaveLength(1);
-  expect(stored.ok && stored.value.entries[0]!.replay.setup.speechEnabled).toBe(true);
+  const storedEntries = (await storedHistory()).map(decodeMatchHistoryEntry);
+  expect(storedEntries).toHaveLength(1);
+  const stored = storedEntries[0]!;
+  expect(stored.ok && stored.value?.replay.setup.speechEnabled).toBe(true);
 
-  match
-    .querySelector<HTMLButtonElement>('.round-review-primary')!
-    .click();
+  match.querySelector<HTMLButtonElement>('.round-review-primary')!.click();
   await app.updateComplete;
-  await expect
-    .element(page.getByRole('heading', { name: 'Grand Transition' }))
-    .toBeVisible();
-  const historyButton = document.querySelector<HTMLButtonElement>(
-    '.title-history-action',
-  )!;
+  await expect.element(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
+  const historyButton = document.querySelector<HTMLButtonElement>('.title-history-action')!;
   expect(historyButton.textContent).toMatch(/Match history.*\(1\)/su);
   historyButton.click();
   await app.updateComplete;
-  const modal = document.querySelector(
-    'grand-transition-match-history',
-  ) as HTMLElement & { updateComplete: Promise<boolean> };
+  const modal = document.querySelector('grand-transition-match-history') as HTMLElement & {
+    updateComplete: Promise<boolean>;
+  };
   await modal.updateComplete;
   expect(modal.querySelector('.match-history-entry')).not.toBeNull();
   const close = modal.querySelector<HTMLButtonElement>('.match-history-close')!;
   expect(document.activeElement).toBe(close);
-  close.dispatchEvent(
-    new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
-  );
+  close.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   await app.updateComplete;
   expect(document.querySelector('grand-transition-match-history')).toBeNull();
   expect(document.activeElement).toBe(historyButton);
 
+  await reloadStoredData();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;
-  expect(
-    document.querySelector('.title-history-action')?.textContent,
-  ).toMatch(/Match history.*\(1\)/su);
+  expect(document.querySelector('.title-history-action')?.textContent).toMatch(
+    /Match history.*\(1\)/su,
+  );
 });
 
 test('a lethal timeout shows victory instead of clearing the match', async () => {
+  await reloadStoredData();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await lockInSetup();
@@ -427,9 +393,7 @@ test('a lethal timeout shows victory instead of clearing the match', async () =>
     },
   };
   await app.updateComplete;
-  const match = document.querySelector(
-    'grand-transition-match',
-  ) as GrandTransitionMatch;
+  const match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
   match.dispatchEvent(
     new CustomEvent(matchCommandEventName, {
       bubbles: true,
@@ -447,21 +411,18 @@ test('a lethal timeout shows victory instead of clearing the match', async () =>
   expect(owner.matchState.phase).toBe('results');
   expect(document.querySelector('#round-review-title')).toBeNull();
   await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
-  expect(document.querySelector('#round-review-title')?.textContent?.trim()).toBe(
-    'Victory',
-  );
+  expect(document.querySelector('#round-review-title')?.textContent?.trim()).toBe('Victory');
   expect(document.querySelector('grand-transition-match')).not.toBeNull();
-  expect(localStorage.getItem(matchHistoryStorageKey)).not.toBeNull();
+  expect(await storedHistory()).toHaveLength(1);
 });
 
 test('storage quota failure preserves victory and reports session-only history on the title', async () => {
-  vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+  const put = vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementation(() => {
     throw new DOMException('Storage is full.', 'QuotaExceededError');
   });
+  await reloadStoredData();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await lockInSetup();
@@ -479,37 +440,30 @@ test('storage quota failure preserves victory and reports session-only history o
     },
   };
   await app.updateComplete;
-  let match = document.querySelector(
-    'grand-transition-match',
-  ) as GrandTransitionMatch;
+  let match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
   await match.updateComplete;
   match
-    .querySelector<HTMLButtonElement>(
-      '[data-role="predicate"] [data-card-state="legal"]',
-    )!
+    .querySelector<HTMLButtonElement>('[data-role="predicate"] [data-card-state="legal"]')!
     .click();
   await app.updateComplete;
 
   await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
-  expect(document.querySelector('#round-review-title')?.textContent?.trim()).toBe(
-    'Victory',
-  );
-  expect(localStorage.getItem(matchHistoryStorageKey)).toBeNull();
+  expect(document.querySelector('#round-review-title')?.textContent?.trim()).toBe('Victory');
+  put.mockRestore();
+  expect(await storedHistory()).toHaveLength(0);
   match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
   match.querySelector<HTMLButtonElement>('.round-review-primary')!.click();
   await app.updateComplete;
   expect(document.querySelector('.title-history-notice')?.textContent).toMatch(
     /will not persist/iu,
   );
-  const historyButton = document.querySelector<HTMLButtonElement>(
-    '.title-history-action',
-  )!;
+  const historyButton = document.querySelector<HTMLButtonElement>('.title-history-action')!;
   expect(historyButton.textContent).toMatch(/\(1\)/u);
   historyButton.click();
   await app.updateComplete;
-  const modal = document.querySelector(
-    'grand-transition-match-history',
-  ) as HTMLElement & { updateComplete: Promise<boolean> };
+  const modal = document.querySelector('grand-transition-match-history') as HTMLElement & {
+    updateComplete: Promise<boolean>;
+  };
   await modal.updateComplete;
   expect(modal.querySelector('.match-history-entry')).not.toBeNull();
   expect(modal.querySelector('.match-history-notice')?.textContent).toMatch(
@@ -533,9 +487,7 @@ function prepareComebackExchange(app: GrandTransitionApp): void {
         englishGameLocale,
       ),
     }));
-    const steps: readonly GrammarStep[] = ended
-      ? [...phraseSteps, { kind: 'end' }]
-      : phraseSteps;
+    const steps: readonly GrammarStep[] = ended ? [...phraseSteps, { kind: 'end' }] : phraseSteps;
     const result = englishGrammarAdapter.analyze({
       steps,
       subjectNumber: player.subjectNumber,

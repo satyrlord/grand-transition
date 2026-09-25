@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, gameCatalog } from '../../src/game-content';
-import type { Phrase } from '../../src/content/schemas';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
+import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
+import type { Phrase } from '../../src/content/schemas.ts';
 import {
   addComebackCharge,
   availableComebackTiers,
@@ -12,14 +12,14 @@ import {
   type ComebackSelection,
   type ComebackTier,
   type ContinuationComebackPlayerInput,
-} from '../../src/engine/continuation-comeback-resolution';
-import type { ComboChainState } from '../../src/engine/combo-finisher-scoring';
+} from '../../src/engine/continuation-comeback-resolution.ts';
+import type { ComboChainState } from '../../src/engine/combo-finisher-scoring.ts';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
   type GrammarAnalysis,
   type GrammarStep,
-} from '../../src/engine/grammar/english-grammar-adapter';
+} from '../../src/engine/grammar/english-grammar-adapter.ts';
 
 const players = ['first-player', 'second-player'] as const;
 const characters = gameCatalog.characters;
@@ -29,10 +29,7 @@ function completeConstruction(): Readonly<{
   analysis: GrammarAnalysis;
   publicText: string;
 }> {
-  const phraseIds = [
-    'common-noun-001',
-    'common-predicate-010-present',
-  ] as const;
+  const phraseIds = ['common-noun-001', 'common-predicate-010-present'] as const;
   const steps: readonly GrammarStep[] = phraseIds.map((phraseId) => ({
     kind: 'phrase',
     phrase: prepareEnglishGrammarPhrase(
@@ -75,8 +72,7 @@ function selection(tier: ComebackTier): ComebackSelection {
     tier,
     ...rule,
     closingLineKey: `comeback.red-folded-chairman.${tier}`,
-    closingLine:
-      englishGameLocale.messages[`comeback.red-folded-chairman.${tier}`]!,
+    closingLine: englishGameLocale.messages[`comeback.red-folded-chairman.${tier}`]!,
   };
 }
 
@@ -136,8 +132,7 @@ describe('continuation resolution', () => {
       });
       expect(
         resolved.continuation.restoredCarry?.steps.some(
-          (step) =>
-            step.kind === 'phrase' && step.phrase.role === 'continuation',
+          (step) => step.kind === 'phrase' && step.phrase.role === 'continuation',
         ),
       ).toBe(false);
       expect(result.comboState[players[0]]).toBeUndefined();
@@ -169,9 +164,7 @@ describe('continuation resolution', () => {
       previousNounIds: [],
       chainByNounId: {},
     });
-    expect(result.comboState[players[1]]!.previousNounIds).toEqual([
-      'common-noun-001',
-    ]);
+    expect(result.comboState[players[1]]!.previousNounIds).toEqual(['common-noun-001']);
   });
 
   test('strong comeback breaks a carry through its 18 damage bonus', () => {
@@ -198,18 +191,10 @@ describe('continuation resolution', () => {
         chainByNounId: { 'common-noun-001': 2 },
       },
     };
-    const carried = resolve(
-      playerInput(0, { carry: true }),
-      playerInput(1),
-      comboState,
-    );
+    const carried = resolve(playerInput(0, { carry: true }), playerInput(1), comboState);
     expect(carried.comboState[players[0]]).toEqual(comboState[players[0]]);
 
-    const committed = resolve(
-      playerInput(0, { damage: 1 }),
-      playerInput(1),
-      carried.comboState,
-    );
+    const committed = resolve(playerInput(0, { damage: 1 }), playerInput(1), carried.comboState);
     expect(committed.players[players[0]]!.score?.combo).toEqual({
       nounPhraseId: 'common-noun-001',
       phraseIndex: 0,
@@ -233,10 +218,7 @@ describe('comeback charge, selection, and scoring', () => {
 
   test('caps received opponent damage at 60 and does not use self-damage', () => {
     expect(addComebackCharge(59, 50)).toBe(60);
-    const result = resolve(
-      playerInput(0, { charge: 19 }),
-      playerInput(1, { damage: 4 }),
-    );
+    const result = resolve(playerInput(0, { charge: 19 }), playerInput(1, { damage: 4 }));
     expect(result.players[players[0]]!.comebackCharge).toBe(23);
   });
 
@@ -273,39 +255,36 @@ describe('comeback charge, selection, and scoring', () => {
     ['weak', 20, 4],
     ['medium', 40, 10],
     ['strong', 60, 18],
-  ] as const)(
-    '%s spends %i and adds %i after sentence scoring',
-    (tier, cost, bonus) => {
-      const chosen = selectComebackTier({
-        playerId: players[0],
-        character: characters[0]!,
-        tier,
-        phase: 'drafting',
-        constructionComplete: true,
-        selectedComeback: null,
-        charge: cost,
-        seed: 42,
-        locale: englishGameLocale,
-      });
-      expect(chosen.ok).toBe(true);
-      if (!chosen.ok) return;
-      expect(chosen.charge).toBe(0);
-      expect(chosen.selection.damageBonus).toBe(bonus);
+  ] as const)('%s spends %i and adds %i after sentence scoring', (tier, cost, bonus) => {
+    const chosen = selectComebackTier({
+      playerId: players[0],
+      character: characters[0]!,
+      tier,
+      phase: 'drafting',
+      constructionComplete: true,
+      selectedComeback: null,
+      charge: cost,
+      seed: 42,
+      locale: englishGameLocale,
+    });
+    expect(chosen.ok).toBe(true);
+    if (!chosen.ok) return;
+    expect(chosen.charge).toBe(0);
+    expect(chosen.selection.damageBonus).toBe(bonus);
 
-      const result = resolve(
-        {
-          ...playerInput(0, { damage: 7 }),
-          construction: {
-            ...playerInput(0, { damage: 7 }).construction,
-            selectedComeback: chosen.selection,
-          },
+    const result = resolve(
+      {
+        ...playerInput(0, { damage: 7 }),
+        construction: {
+          ...playerInput(0, { damage: 7 }).construction,
+          selectedComeback: chosen.selection,
         },
-        playerInput(1),
-      );
-      expect(result.players[players[0]]!.sentenceDamage).toBe(7);
-      expect(result.players[players[0]]!.outgoingDamage).toBe(7 + bonus);
-    },
-  );
+      },
+      playerInput(1),
+    );
+    expect(result.players[players[0]]!.sentenceDamage).toBe(7);
+    expect(result.players[players[0]]!.outgoingDamage).toBe(7 + bonus);
+  });
 
   test('reproduces the closing line and keeps it outside grammar and combos', () => {
     const request = {
@@ -361,34 +340,31 @@ describe('comeback charge, selection, and scoring', () => {
     ['sentence-incomplete', { constructionComplete: false }],
     ['comeback-already-selected', { selectedComeback: selection('weak') }],
     ['comeback-unaffordable', { charge: 19 }],
-  ] as const)(
-    'returns %s without changing charge or seed',
-    (code, overrides) => {
-      const result = selectComebackTier({
-        playerId: players[0],
-        character: characters[0]!,
-        tier: 'weak',
-        phase: 'drafting',
-        constructionComplete: true,
-        selectedComeback: null,
-        charge: 20,
-        seed: 42,
-        locale: englishGameLocale,
-        ...overrides,
-      });
-      expect(result).toEqual({
-        ok: false,
-        error: {
-          kind: 'rule-error',
-          code,
-          facts: {
-            playerId: players[0],
-            tier: 'weak',
-            charge: 'charge' in overrides ? overrides.charge : 20,
-          },
+  ] as const)('returns %s without changing charge or seed', (code, overrides) => {
+    const result = selectComebackTier({
+      playerId: players[0],
+      character: characters[0]!,
+      tier: 'weak',
+      phase: 'drafting',
+      constructionComplete: true,
+      selectedComeback: null,
+      charge: 20,
+      seed: 42,
+      locale: englishGameLocale,
+      ...overrides,
+    });
+    expect(result).toEqual({
+      ok: false,
+      error: {
+        kind: 'rule-error',
+        code,
+        facts: {
+          playerId: players[0],
+          tier: 'weak',
+          charge: 'charge' in overrides ? overrides.charge : 20,
         },
-      });
-      expect('nextSeed' in result).toBe(false);
-    },
-  );
+      },
+    });
+    expect('nextSeed' in result).toBe(false);
+  });
 });

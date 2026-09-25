@@ -3,13 +3,10 @@ import os from 'node:os';
 import path from 'node:path';
 import { afterAll, afterEach, beforeAll, describe, expect, test } from 'vitest';
 import baseline from '../../tools/character-replacement-baseline.json';
-// @ts-expect-error The production image validator is a native ECMAScript module.
-import * as characterValidator from '../../tools/validate-character-assets.mjs';
+import * as characterValidator from '../../tools/validate-character-assets.ts';
 
 const { validateCharacterAssets, validateCharacterSkinInventory } = characterValidator as {
-  validateCharacterAssets: (options: {
-    characterRoot: string;
-  }) => Promise<unknown>;
+  validateCharacterAssets: (options: { characterRoot: string }) => Promise<unknown>;
   validateCharacterSkinInventory: (
     assets: readonly Readonly<{ ownerId: string; skinId: string }>[],
   ) => unknown;
@@ -40,16 +37,11 @@ async function readManifest(): Promise<Record<string, unknown>> {
 let fixtureReady: Promise<void>;
 
 async function prepareFixture(): Promise<void> {
-  fixture = await mkdtemp(
-    path.join(os.tmpdir(), 'grand-transition-character-validation-'),
-  );
+  fixture = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-character-validation-'));
   await cp(path.resolve('src', 'assets', 'characters'), fixture, {
     recursive: true,
   });
-  baseManifestText = await readFile(
-    path.join(fixture, 'character-manifest.json'),
-    'utf8',
-  );
+  baseManifestText = await readFile(path.join(fixture, 'character-manifest.json'), 'utf8');
 }
 
 beforeAll(() => {
@@ -58,10 +50,7 @@ beforeAll(() => {
 });
 
 afterEach(async () => {
-  await writeFile(
-    path.join(fixture, 'character-manifest.json'),
-    baseManifestText,
-  );
+  await writeFile(path.join(fixture, 'character-manifest.json'), baseManifestText);
 });
 
 afterAll(async () => {
@@ -87,22 +76,21 @@ describe.sequential('character asset manifest validator', () => {
     );
   });
 
-  test.each([undefined, 'up', 'right'])('rejects missing or unreviewed facing %s', async (facing) => {
-    const manifest = await readManifest();
-    const assets = manifest.assets as Array<Record<string, unknown>>;
-    assets[0]!.facing = facing;
-    await writeFile(path.join(fixture, 'character-manifest.json'), JSON.stringify(manifest));
-    await expect(validateCharacterAssets({ characterRoot: fixture })).rejects.toThrow(/facing metadata/u);
-  });
-  test(
-    'accepts the complete fixed replacement package',
-    async () => {
-      await expect(
-        validateCharacterAssets({ characterRoot: fixture }),
-      ).resolves.toBeTruthy();
+  test.each([undefined, 'up', 'right'])(
+    'rejects missing or unreviewed facing %s',
+    async (facing) => {
+      const manifest = await readManifest();
+      const assets = manifest.assets as Array<Record<string, unknown>>;
+      assets[0]!.facing = facing;
+      await writeFile(path.join(fixture, 'character-manifest.json'), JSON.stringify(manifest));
+      await expect(validateCharacterAssets({ characterRoot: fixture })).rejects.toThrow(
+        /facing metadata/u,
+      );
     },
-    30_000,
   );
+  test('accepts the complete fixed replacement package', async () => {
+    await expect(validateCharacterAssets({ characterRoot: fixture })).resolves.toBeTruthy();
+  }, 30_000);
 
   test('rejects a missing license identifier', async () => {
     const manifest = await readManifest();
@@ -112,9 +100,9 @@ describe.sequential('character asset manifest validator', () => {
       path.join(fixture, 'character-manifest.json'),
       `${JSON.stringify(manifest, null, 2)}\n`,
     );
-    await expect(
-      validateCharacterAssets({ characterRoot: fixture }),
-    ).rejects.toThrow(/licenseIdentifier/iu);
+    await expect(validateCharacterAssets({ characterRoot: fixture })).rejects.toThrow(
+      /licenseIdentifier/iu,
+    );
   });
 
   test('rejects a source that still declares the replaced hash', async () => {
@@ -126,9 +114,9 @@ describe.sequential('character asset manifest validator', () => {
       path.join(fixture, 'character-manifest.json'),
       `${JSON.stringify(manifest, null, 2)}\n`,
     );
-    await expect(
-      validateCharacterAssets({ characterRoot: fixture }),
-    ).rejects.toThrow(/replaced baseline source hash/iu);
+    await expect(validateCharacterAssets({ characterRoot: fixture })).rejects.toThrow(
+      /replaced baseline source hash/iu,
+    );
   });
 
   test('rejects a missing runtime variant', async () => {
@@ -140,8 +128,8 @@ describe.sequential('character asset manifest validator', () => {
       path.join(fixture, 'character-manifest.json'),
       `${JSON.stringify(manifest, null, 2)}\n`,
     );
-    await expect(
-      validateCharacterAssets({ characterRoot: fixture }),
-    ).rejects.toThrow(/declare every runtime variant/iu);
+    await expect(validateCharacterAssets({ characterRoot: fixture })).rejects.toThrow(
+      /declare every runtime variant/iu,
+    );
   });
 });

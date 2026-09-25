@@ -6,8 +6,8 @@ import {
   sentencePoolRoles,
   sceneSchema,
   type Phrase,
-} from './schemas';
-import { gameLocaleBundleSchema } from '../localization/game-locale-schema';
+} from './schemas.ts';
+import { gameLocaleBundleSchema } from '../localization/game-locale-schema.ts';
 
 const minimumWeaknessTagCoverage = 2;
 
@@ -20,23 +20,14 @@ export const contentCatalogSchema = z
   })
   .strict()
   .superRefine((catalog, context) => {
-    const phraseById = new Map(
-      catalog.phrases.map((phrase) => [phrase.id, phrase]),
-    );
-    const characterIds = new Set(
-      catalog.characters.map((character) => character.id),
-    );
+    const phraseById = new Map(catalog.phrases.map((phrase) => [phrase.id, phrase]));
+    const characterIds = new Set(catalog.characters.map((character) => character.id));
     const sceneIds = new Set(catalog.scenes.map((scene) => scene.id));
 
     addDuplicateIssues(catalog.phrases, 'phrases', context);
     addDuplicateIssues(catalog.characters, 'characters', context);
     addDuplicateIssues(catalog.scenes, 'scenes', context);
-    addDuplicateIssues(
-      catalog.locales,
-      'locales',
-      context,
-      (locale) => locale.locale,
-    );
+    addDuplicateIssues(catalog.locales, 'locales', context, (locale) => locale.locale);
     requireRoles(
       catalog.phrases.map((phrase) => phrase.id),
       phraseById,
@@ -45,9 +36,7 @@ export const contentCatalogSchema = z
       phraseRoles,
       'Add sample content for every core phrase role.',
     );
-    const continuations = catalog.phrases.filter(
-      (phrase) => phrase.role === 'continuation',
-    );
+    const continuations = catalog.phrases.filter((phrase) => phrase.role === 'continuation');
     if (continuations.length !== 1) {
       issue(
         context,
@@ -57,10 +46,7 @@ export const contentCatalogSchema = z
     }
 
     catalog.phrases.forEach((phrase, phraseIndex) => {
-
-      for (const [scoreIndex, customScore] of (
-        phrase.customScores ?? []
-      ).entries()) {
+      for (const [scoreIndex, customScore] of (phrase.customScores ?? []).entries()) {
         for (const [field, nounId] of [
           ['leftNounId', customScore.leftNounId],
           ['rightNounId', customScore.rightNounId],
@@ -75,9 +61,7 @@ export const contentCatalogSchema = z
           }
         }
       }
-      for (const [restrictionIndex, characterId] of (
-        phrase.characterIds ?? []
-      ).entries()) {
+      for (const [restrictionIndex, characterId] of (phrase.characterIds ?? []).entries()) {
         if (!characterIds.has(characterId)) {
           issue(
             context,
@@ -86,9 +70,7 @@ export const contentCatalogSchema = z
           );
           continue;
         }
-        const owner = catalog.characters.find(
-          (character) => character.id === characterId,
-        )!;
+        const owner = catalog.characters.find((character) => character.id === characterId)!;
         if (!owner.characterPhraseIds.includes(phrase.id)) {
           issue(
             context,
@@ -97,9 +79,7 @@ export const contentCatalogSchema = z
           );
         }
       }
-      for (const [restrictionIndex, sceneId] of (
-        phrase.sceneIds ?? []
-      ).entries()) {
+      for (const [restrictionIndex, sceneId] of (phrase.sceneIds ?? []).entries()) {
         if (!sceneIds.has(sceneId)) {
           issue(
             context,
@@ -108,9 +88,7 @@ export const contentCatalogSchema = z
           );
           continue;
         }
-        const scene = catalog.scenes.find(
-          (candidate) => candidate.id === sceneId,
-        )!;
+        const scene = catalog.scenes.find((candidate) => candidate.id === sceneId)!;
         if (!scene.phrasePool.includes(phrase.id)) {
           issue(
             context,
@@ -128,8 +106,14 @@ export const contentCatalogSchema = z
       if (pool.length < 3 || pool.length > 40) {
         issue(context, poolPath, 'Supply 3 through 40 owned character phrases.');
       }
-      requireRoles(pool, phraseById, poolPath, context, ['noun', 'modifier', 'ending'],
-        'Supply a foundation noun, modifier, and ending for each character.');
+      requireRoles(
+        pool,
+        phraseById,
+        poolPath,
+        context,
+        ['noun', 'modifier', 'ending'],
+        'Supply a foundation noun, modifier, and ending for each character.',
+      );
       validatePhraseReferences(
         pool,
         phraseById,
@@ -146,41 +130,23 @@ export const contentCatalogSchema = z
           );
         }
       });
-      for (const [tier, keys] of Object.entries(
-        character.comebackLinesByTier,
-      )) {
+      for (const [tier, keys] of Object.entries(character.comebackLinesByTier)) {
         for (const [keyIndex, key] of keys.entries()) {
-          const path = [
-            'characters',
-            characterIndex,
-            'comebackLinesByTier',
-            tier,
-            keyIndex,
-          ];
+          const path = ['characters', characterIndex, 'comebackLinesByTier', tier, keyIndex];
           const expectedKey = `comeback.${character.id}.${tier}`;
           if (key !== expectedKey) {
-            issue(
-              context,
-              path,
-              `Use the exclusive character comeback key "${expectedKey}".`,
-            );
+            issue(context, path, `Use the exclusive character comeback key "${expectedKey}".`);
           }
           const previousOwner = comebackOwnerByKey.get(key);
           if (previousOwner) {
-            issue(
-              context,
-              path,
-              `Comeback line "${key}" is already owned by ${previousOwner}.`,
-            );
+            issue(context, path, `Comeback line "${key}" is already owned by ${previousOwner}.`);
           } else {
             comebackOwnerByKey.set(key, `${character.id}.${tier}`);
           }
         }
       }
       for (const [tagIndex, tag] of character.weaknessTags.entries()) {
-        const coverage = catalog.phrases.filter((phrase) =>
-          phrase.tags.includes(tag),
-        ).length;
+        const coverage = catalog.phrases.filter((phrase) => phrase.tags.includes(tag)).length;
         if (coverage < minimumWeaknessTagCoverage) {
           issue(
             context,
@@ -229,8 +195,7 @@ export const contentCatalogSchema = z
       const unrestricted = scene.phrasePool
         .map((phraseId) => phraseById.get(phraseId))
         .filter(
-          (phrase): phrase is Phrase =>
-            phrase !== undefined && phrase.characterIds === undefined,
+          (phrase): phrase is Phrase => phrase !== undefined && phrase.characterIds === undefined,
         );
       const roleCount = (role: Phrase['role']) =>
         unrestricted.filter((phrase) => phrase.role === role).length;
@@ -278,11 +243,7 @@ export function validateContentCatalog(input: CatalogInput): ContentCatalog {
   return contentCatalogSchema.parse(input);
 }
 
-function issue(
-  context: z.RefinementCtx,
-  path: PropertyKey[],
-  message: string,
-): void {
+function issue(context: z.RefinementCtx, path: PropertyKey[], message: string): void {
   context.addIssue({ code: 'custom', path, message });
 }
 
@@ -296,11 +257,7 @@ function addDuplicateIssues<T>(
   items.forEach((item, index) => {
     const id = getId(item);
     if (seen.has(id))
-      issue(
-        context,
-        [path, index],
-        `Use a unique identifier. "${id}" is duplicated.`,
-      );
+      issue(context, [path, index], `Use a unique identifier. "${id}" is duplicated.`);
     seen.add(id);
   });
 }
@@ -313,11 +270,7 @@ function validatePhraseReferences(
 ): void {
   ids.forEach((id, index) => {
     if (!phraseById.has(id))
-      issue(
-        context,
-        [...path, index],
-        `Reference an existing phrase. "${id}" is not defined.`,
-      );
+      issue(context, [...path, index], `Reference an existing phrase. "${id}" is not defined.`);
   });
 }
 
@@ -331,8 +284,7 @@ function requireRoles(
 ): void {
   const roles = new Set(ids.map((id) => phraseById.get(id)?.role));
   const missing = requiredRoles.filter((role) => !roles.has(role));
-  if (missing.length > 0)
-    issue(context, path, `${message} Missing: ${missing.join(', ')}.`);
+  if (missing.length > 0) issue(context, path, `${message} Missing: ${missing.join(', ')}.`);
 }
 
 function validateMedia(
@@ -341,11 +293,7 @@ function validateMedia(
   context: z.RefinementCtx,
 ): void {
   if (media.realLogo)
-    issue(
-      context,
-      [...path, 'realLogo'],
-      'Replace the real logo with original fictional media.',
-    );
+    issue(context, [...path, 'realLogo'], 'Replace the real logo with original fictional media.');
   if (media.copyrightedBroadcastGraphic)
     issue(
       context,
@@ -384,32 +332,27 @@ function validateLocaleKeys(
     requiredKeys.add(scene.descriptionKey);
   }
 
-  const referenceKeys = new Set(
-    Object.keys(catalog.locales[0]?.messages ?? {}),
-  );
+  const referenceKeys = new Set(Object.keys(catalog.locales[0]?.messages ?? {}));
   // Romanian has a polite second-person form for every relation. English
   // metadata declares only the forms it needs, so these extra keys belong to
   // the Romanian locale rather than the shared phrase schema.
   const romanianSecondPersonKeys = new Set(
     catalog.phrases
-      .filter((phrase) =>
-        (phrase.role === 'verb' || phrase.role === 'predicate') &&
-        !phrase.numberForms?.secondPersonKey,
+      .filter(
+        (phrase) =>
+          (phrase.role === 'verb' || phrase.role === 'predicate') &&
+          !phrase.numberForms?.secondPersonKey,
       )
       .map((phrase) => `phrase.${phrase.id}.second-person`),
   );
   const romanianPluralKeys = new Set(
     catalog.phrases
-      .filter((phrase) =>
-        (phrase.role === 'verb' || phrase.role === 'predicate') &&
-        !phrase.numberForms,
+      .filter(
+        (phrase) => (phrase.role === 'verb' || phrase.role === 'predicate') && !phrase.numberForms,
       )
       .map((phrase) => `phrase.${phrase.id}.plural`),
   );
-  const romanianInflectionKeys = new Set([
-    ...romanianSecondPersonKeys,
-    ...romanianPluralKeys,
-  ]);
+  const romanianInflectionKeys = new Set([...romanianSecondPersonKeys, ...romanianPluralKeys]);
   catalog.locales.forEach((locale, localeIndex) => {
     const keys = new Set(Object.keys(locale.messages));
     for (const key of requiredKeys) {

@@ -1,9 +1,14 @@
-import { lockInSetup } from './helpers/setup';
+import { lockInSetup } from './helpers/setup.ts';
 import { expect, test } from '@playwright/test';
 
-for (const scene of ['modern-debate-studio', 'transition-era-television-studio',
-  'county-council-ballroom', 'midnight-call-in-studio', 'palace-press-hall',
-  'influencer-campaign-livestream']) {
+for (const scene of [
+  'modern-debate-studio',
+  'transition-era-television-studio',
+  'county-council-ballroom',
+  'midnight-call-in-studio',
+  'palace-press-hall',
+  'influencer-campaign-livestream',
+]) {
   for (const sample of [
     { width: 1280, height: 720, dpr: 1, sourceWidth: 1280 },
     { width: 1920, height: 1080, dpr: 1, sourceWidth: 1920 },
@@ -12,7 +17,9 @@ for (const scene of ['modern-debate-studio', 'transition-era-television-studio',
     { width: 3840, height: 2160, dpr: 1, sourceWidth: 3840 },
     { width: 1920, height: 1080, dpr: 2, sourceWidth: 3840 },
   ]) {
-    test(`${scene} loads ${sample.sourceWidth}px artwork at ${sample.width}x${sample.height} DPR ${sample.dpr}`, async ({ browser }, testInfo) => {
+    test(`${scene} loads ${sample.sourceWidth}px artwork at ${sample.width}x${sample.height} DPR ${sample.dpr}`, async ({
+      browser,
+    }, testInfo) => {
       const context = await browser.newContext({
         viewport: { width: sample.width, height: sample.height },
         deviceScaleFactor: sample.dpr,
@@ -26,22 +33,29 @@ for (const scene of ['modern-debate-studio', 'transition-era-television-studio',
         await page.getByRole('button', { name: 'Start match', exact: true }).click();
         const layers = page.locator('.broadcast-stage-art, .broadcast-stage-foreground');
         await expect(layers).toHaveCount(2);
-        const facts = await layers.evaluateAll(async (elements) => Promise.all(elements.map(async (element) => {
-          const image = element as HTMLImageElement;
-          await image.decode();
-          const bitmap = await createImageBitmap(await (await fetch(image.currentSrc)).blob());
-          const sourceWidth = bitmap.width;
-          bitmap.close();
-          const box = image.getBoundingClientRect();
-          return {
-            sourceWidth,
-            masterWidth: image.getAttribute('width'),
-            masterHeight: image.getAttribute('height'),
-            covers: box.left <= 0.5 && box.top <= 0.5 &&
-              box.right >= innerWidth - 0.5 && box.bottom >= innerHeight - 0.5,
-            aspectRatio: box.width / box.height,
-          };
-        })));
+        const facts = await layers.evaluateAll(async (elements) =>
+          Promise.all(
+            elements.map(async (element) => {
+              const image = element as HTMLImageElement;
+              await image.decode();
+              const bitmap = await createImageBitmap(await (await fetch(image.currentSrc)).blob());
+              const sourceWidth = bitmap.width;
+              bitmap.close();
+              const box = image.getBoundingClientRect();
+              return {
+                sourceWidth,
+                masterWidth: image.getAttribute('width'),
+                masterHeight: image.getAttribute('height'),
+                covers:
+                  box.left <= 0.5 &&
+                  box.top <= 0.5 &&
+                  box.right >= innerWidth - 0.5 &&
+                  box.bottom >= innerHeight - 0.5,
+                aspectRatio: box.width / box.height,
+              };
+            }),
+          ),
+        );
         for (const fact of facts) {
           expect(fact.sourceWidth).toBe(sample.sourceWidth);
           expect(fact.masterWidth).toBe('3840');

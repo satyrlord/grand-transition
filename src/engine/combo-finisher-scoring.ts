@@ -1,14 +1,14 @@
-import type { BasicScoringBalance } from '../content/basic-scoring-balance';
-import type { Phrase } from '../content/schemas';
+import type { BasicScoringBalance } from '../content/basic-scoring-balance.ts';
+import type { Phrase } from '../content/schemas.ts';
 import {
   ceilDamage,
   clauseNoteItems,
   extractScoreClauses,
   scoreClause,
   type BasicScoreBreakdownItem,
-} from './basic-scoring';
-import type { GrammarAnalysis } from './grammar/english-grammar-adapter';
-import { phraseIndex } from './phrase-index';
+} from './basic-scoring.ts';
+import type { GrammarAnalysis } from './grammar/english-grammar-adapter.ts';
+import { phraseIndex } from './phrase-index.ts';
 
 export type PlayerComboChains = Readonly<{
   previousNounIds: readonly string[];
@@ -72,20 +72,15 @@ export function scoreComboFinisherConstruction(
   request: ComboFinisherScoringRequest,
 ): ComboFinisherScoringResult {
   const phraseById = phraseIndex(request.phrases);
-  const scoreable =
-    request.analysis.complete && request.analysis.sentenceStatus === 'complete';
+  const scoreable = request.analysis.complete && request.analysis.sentenceStatus === 'complete';
   const nounOccurrences = scoreable
     ? request.analysis.renderedPhrases.flatMap((phrase, phraseIndex) =>
-        phrase.role === 'noun'
-          ? [{ nounPhraseId: phrase.phraseId, phraseIndex }]
-          : [],
+        phrase.role === 'noun' ? [{ nounPhraseId: phrase.phraseId, phraseIndex }] : [],
       )
     : [];
   const uniqueNouns = nounOccurrences.filter(
     (noun, index, nouns) =>
-      nouns.findIndex(
-        (candidate) => candidate.nounPhraseId === noun.nounPhraseId,
-      ) === index,
+      nouns.findIndex((candidate) => candidate.nounPhraseId === noun.nounPhraseId) === index,
   );
   const previous = request.comboState[request.attackerPlayerId] ?? {
     previousNounIds: [],
@@ -106,16 +101,10 @@ export function scoreComboFinisherConstruction(
 
   if (scoreable) {
     for (const clause of extractScoreClauses(request.analysis, phraseById)) {
-      const scored = scoreClause(
-        clause,
-        phraseById,
-        request.defenderWeaknessTags,
-        request.balance,
-      );
+      const scored = scoreClause(clause, phraseById, request.defenderWeaknessTags, request.balance);
       breakdown.push(...clauseNoteItems(clause, scored));
       const comboFactor = clause.nounPhraseIds.reduce(
-        (factor, nounId) =>
-          factor * (nextPlayerChains.chainByNounId[nounId] ?? 1),
+        (factor, nounId) => factor * (nextPlayerChains.chainByNounId[nounId] ?? 1),
         1,
       );
       if (comboFactor > 1) {
@@ -142,15 +131,11 @@ export function scoreComboFinisherConstruction(
     );
     const finisher =
       finisherIndex >= 0
-        ? phraseById.get(
-            request.analysis.renderedPhrases[finisherIndex]!.phraseId,
-          )
+        ? phraseById.get(request.analysis.renderedPhrases[finisherIndex]!.phraseId)
         : undefined;
     if (finisher) {
       const restrictionFactor =
-        finisher.sceneIds || finisher.characterIds
-          ? request.balance.restrictedPhraseMultiplier
-          : 1;
+        finisher.sceneIds || finisher.characterIds ? request.balance.restrictedPhraseMultiplier : 1;
       const weaknessTags = request.defenderWeaknessTags.filter((tag) =>
         finisher.tags.includes(tag),
       );

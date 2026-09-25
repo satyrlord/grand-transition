@@ -1,17 +1,17 @@
 import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { msg, updateWhenLocaleChanges } from '@lit/localize';
-import { formatInterfaceNumber } from '../interface-format';
+import { formatInterfaceNumber } from '../interface-format.ts';
 import { styleMap } from 'lit/directives/style-map.js';
-import { brandImageSet, resolveBrandAsset } from '../brand-assets';
+import { brandImageSet, resolveBrandAsset } from '../brand-assets.ts';
 import type {
   MatchHistoryEntry,
   MatchHistoryFailureCode,
-} from '../../persistence/match-history';
-import { defaultSettings, type SettingsDocument } from '../../persistence/codecs/settings-codec';
-import type { AudioStatus } from '../../audio/audio-port';
-import type { NeuralSpeechStatus } from '../../audio/neural-speech';
-import './match-history-modal';
-import './settings-modal';
+} from '../../persistence/match-history.ts';
+import { defaultSettings, type SettingsDocument } from '../../persistence/codecs/settings-codec.ts';
+import type { AudioStatus } from '../../audio/audio-port.ts';
+import type { NeuralSpeechStatus } from '../../audio/neural-speech.ts';
+import './match-history-modal.ts';
+import './settings-modal.ts';
 
 const elementName = 'grand-transition-title';
 const emblem = resolveBrandAsset('grand-transition-emblem');
@@ -23,9 +23,7 @@ export const dismissSettingsNoticeEventName = 'dismiss-settings-notice';
 
 export type MenuMode = 'ai' | 'hotseat' | 'ladder';
 export type ShowSetupEvent = CustomEvent<Readonly<{ type: 'show-setup'; mode: MenuMode }>>;
-export type ShowMatchHistoryEvent = CustomEvent<
-  Readonly<{ type: 'show-match-history' }>
->;
+export type ShowMatchHistoryEvent = CustomEvent<Readonly<{ type: 'show-match-history' }>>;
 export type ShowSettingsEvent = CustomEvent<Readonly<{ type: 'show-settings' }>>;
 
 export class GrandTransitionTitle extends LitElement {
@@ -116,24 +114,37 @@ export class GrandTransitionTitle extends LitElement {
         <div class="title-transmission">
           <p class="status">${msg('Live now, on NTV Channel 3!')}</p>
           <nav class="title-mode-actions" aria-label=${msg('Main Menu')}>
-            ${([
-              ['ai', msg('Single Player')],
-              ['hotseat', msg('Multiplayer')],
-              ['ladder', msg('Ladder')],
-            ] as const).map(([mode, label]) => html`
+            ${(
+              [
+                ['ai', msg('Single Player')],
+                ['hotseat', msg('Multiplayer')],
+                ['ladder', msg('Ladder')],
+              ] as const
+            ).map(
+              ([mode, label]) => html`
               <button
                 type="button"
                 class="title-setup-action"
                 ?disabled=${mode === 'hotseat' && !this.hotseatAvailable}
-                aria-describedby=${mode === 'hotseat' && !this.hotseatAvailable
-                  ? 'hotseat-orientation-note' : this.gpuLoading ? 'title-gpu-status' : nothing}
+                aria-describedby=${
+                  mode === 'hotseat' && !this.hotseatAvailable
+                    ? 'hotseat-orientation-note'
+                    : this.gpuLoading
+                      ? 'title-gpu-status'
+                      : nothing
+                }
                 @click=${() => this.showSetup(mode)}
               >${label}</button>
-            `)}
+            `,
+            )}
           </nav>
-          ${!this.hotseatAvailable ? html`<p id="hotseat-orientation-note" class="orientation-note">
+          ${
+            !this.hotseatAvailable
+              ? html`<p id="hotseat-orientation-note" class="orientation-note">
             ${msg('Multiplayer requires landscape mode.')}
-          </p>` : nothing}
+          </p>`
+              : nothing
+          }
           <div class="title-secondary-actions">
             <button
               type="button"
@@ -153,15 +164,18 @@ export class GrandTransitionTitle extends LitElement {
             </button>
           </div>
           ${this.renderGpuStatus()}
-          ${this.historyPersistenceFailure === null
-            ? nothing
-            : html`<p class="title-history-notice" role="status">
+          ${
+            this.historyPersistenceFailure === null
+              ? nothing
+              : html`<p class="title-history-notice" role="status">
                 ${msg(
                   'Match history will not persist after this page closes. Open Match history for recovery steps.',
                 )}
-              </p>`}
-          ${this.showSettingsPersistenceNotice && !this.settingsOpen
-            ? html`<div class="title-settings-notice" role="status">
+              </p>`
+          }
+          ${
+            this.showSettingsPersistenceNotice && !this.settingsOpen
+              ? html`<div class="title-settings-notice" role="status">
                 <p>
                   ${msg(
                     'Settings storage is unavailable. Changes will not persist after this page closes.',
@@ -171,22 +185,24 @@ export class GrandTransitionTitle extends LitElement {
                   ${msg('Dismiss')}
                 </button>
               </div>`
-            : nothing}
+              : nothing
+          }
         </div>
 
         <p class="title-disclaimer">
-          ${msg(
-            'All characters and events are fictional composites created for satire.',
-          )}
+          ${msg('All characters and events are fictional composites created for satire.')}
         </p>
-        ${this.historyOpen
-          ? html`<grand-transition-match-history
+        ${
+          this.historyOpen
+            ? html`<grand-transition-match-history
               .entries=${this.historyEntries}
               .persistenceFailure=${this.historyPersistenceFailure}
             ></grand-transition-match-history>`
-          : nothing}
-        ${this.settingsOpen
-          ? html`<grand-transition-settings
+            : nothing
+        }
+        ${
+          this.settingsOpen
+            ? html`<grand-transition-settings
               .settings=${this.settings}
               .audioStatus=${this.audioStatus}
               .speechAvailable=${this.speechAvailable}
@@ -194,22 +210,17 @@ export class GrandTransitionTitle extends LitElement {
               .speechProgress=${this.speechProgress}
               .showPersistenceNotice=${this.showSettingsPersistenceNotice}
             ></grand-transition-settings>`
-          : nothing}
+            : nothing
+        }
       </main>
     `;
   }
 
   protected override updated(changedProperties: PropertyValues<this>): void {
-    if (
-      changedProperties.get('historyOpen') === true &&
-      this.historyOpen === false
-    ) {
+    if (changedProperties.get('historyOpen') === true && this.historyOpen === false) {
       this.querySelector<HTMLButtonElement>('.title-history-action')?.focus();
     }
-    if (
-      changedProperties.get('settingsOpen') === true &&
-      this.settingsOpen === false
-    ) {
+    if (changedProperties.get('settingsOpen') === true && this.settingsOpen === false) {
       this.querySelector<HTMLButtonElement>('.title-settings-action')?.focus();
     }
   }
@@ -226,8 +237,11 @@ export class GrandTransitionTitle extends LitElement {
   };
 
   private get gpuLoading(): boolean {
-    return this.settings.speechEnabled && this.settings.gpuVoices &&
-      (this.gpuStatus === 'idle' || this.gpuStatus === 'checking' || this.gpuStatus === 'loading');
+    return (
+      this.settings.speechEnabled &&
+      this.settings.gpuVoices &&
+      (this.gpuStatus === 'idle' || this.gpuStatus === 'checking' || this.gpuStatus === 'loading')
+    );
   }
 
   private renderGpuStatus() {
@@ -238,9 +252,12 @@ export class GrandTransitionTitle extends LitElement {
       </p>`;
     }
     if (!this.gpuLoading) return nothing;
-    const progress = this.gpuStatus === 'loading' && this.gpuProgress !== null &&
-      Number.isFinite(this.gpuProgress) ? Math.min(1, Math.max(0, this.gpuProgress)) : null;
-    const label = this.gpuStatus === 'loading' ? msg('Loading GPU voices…') : msg('Preparing GPU voices…');
+    const progress =
+      this.gpuStatus === 'loading' && this.gpuProgress !== null && Number.isFinite(this.gpuProgress)
+        ? Math.min(1, Math.max(0, this.gpuProgress))
+        : null;
+    const label =
+      this.gpuStatus === 'loading' ? msg('Loading GPU voices…') : msg('Preparing GPU voices…');
     return html`<div class="title-voice-feedback title-voice-loader">
       <p id="title-gpu-status" class="title-voice-label" role="status">
         <span>${label}</span>
@@ -258,9 +275,7 @@ export class GrandTransitionTitle extends LitElement {
 
   private readonly revealEmblem = (event: Event): void => {
     const image = event.currentTarget as HTMLImageElement;
-    image
-      .closest<HTMLElement>('.title-emblem-frame')
-      ?.classList.add('title-emblem-frame--loaded');
+    image.closest<HTMLElement>('.title-emblem-frame')?.classList.add('title-emblem-frame--loaded');
   };
 
   private readonly showMatchHistory = (): void => {

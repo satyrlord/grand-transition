@@ -1,15 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import type { GameLocaleBundle } from '../../src/localization/game-locale-schema';
-import {
-  gameLocaleBundle,
-  gameLocaleBundles,
-  gameCatalog,
-} from '../../src/game-content';
+import type { GameLocaleBundle } from '../../src/localization/game-locale-schema.ts';
+import { gameLocaleBundle, gameLocaleBundles, gameCatalog } from '../../src/game-content.ts';
 import {
   indexGameLocaleBundles,
   selectGameLocaleBundle,
   shippedGameLocales,
-} from '../../src/localization/game-locale-bundles';
+} from '../../src/localization/game-locale-bundles.ts';
 
 const englishBundle: GameLocaleBundle = Object.freeze({
   locale: 'en',
@@ -41,14 +37,12 @@ describe('game-locale bundles', () => {
   });
 
   test('refuses to ship the same locale twice or an unshipped locale tag', () => {
-    expect(() =>
-      indexGameLocaleBundles([englishBundle, englishBundle]),
-    ).toThrow(/"en" is duplicated/u);
-    expect(() =>
-      indexGameLocaleBundles([
-        { ...englishBundle, locale: 'ro' },
-      ]),
-    ).toThrow(/"ro" is not a shipped game locale/u);
+    expect(() => indexGameLocaleBundles([englishBundle, englishBundle])).toThrow(
+      /"en" is duplicated/u,
+    );
+    expect(() => indexGameLocaleBundles([{ ...englishBundle, locale: 'ro' }])).toThrow(
+      /"ro" is not a shipped game locale/u,
+    );
   });
 
   test('selects a bundle by locale and names the shipped locales on a miss', () => {

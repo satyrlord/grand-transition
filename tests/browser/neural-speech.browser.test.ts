@@ -1,1 +1,1 @@
-import '../unit/neural-speech.test';
+import '../unit/neural-speech.test.ts';

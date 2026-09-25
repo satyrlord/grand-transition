@@ -3,8 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
 import { afterEach, describe, expect, test } from 'vitest';
-// @ts-expect-error The production image tool is a native ECMAScript module.
-import * as sceneBuilder from '../../tools/build-scene-assets.mjs';
+import * as sceneBuilder from '../../tools/build-scene-assets.ts';
 
 const { buildSceneAssets, SCENE_BYTE_BUDGETS, SCENE_MASTER_NAMES } = sceneBuilder;
 
@@ -20,7 +19,12 @@ async function fixtureRoot(): Promise<string> {
   return root;
 }
 
-async function writeMaster(root: string, fileName: string, width = 3840, height = width * 9 / 16) {
+async function writeMaster(
+  root: string,
+  fileName: string,
+  width = 3840,
+  height = (width * 9) / 16,
+) {
   const foreground = fileName.includes('-desks') || fileName.includes('-foreground');
   if (!foreground) {
     await sharp({
@@ -72,8 +76,15 @@ describe('scene asset build', () => {
     const only = ['county-council-ballroom'];
     const cachedId = 'county-council-ballroom-foreground';
     const manifestPath = path.join(root, 'scene-manifest.json');
-    for (const defect of ['source hash', 'variant hash', 'variant width', 'variant path',
-      'variant quality', 'missing variant', 'duplicate asset']) {
+    for (const defect of [
+      'source hash',
+      'variant hash',
+      'variant width',
+      'variant path',
+      'variant quality',
+      'missing variant',
+      'duplicate asset',
+    ]) {
       const changed = JSON.parse(firstManifestText);
       const cached = changed.assets.find((asset: { id: string }) => asset.id === cachedId);
       if (defect === 'source hash') cached.source.sha256 = '0'.repeat(64);
@@ -90,7 +101,7 @@ describe('scene asset build', () => {
     }
     await writeFile(manifestPath, firstManifestText);
     const cachedAsset = first.assets.find((asset: { id: string }) => asset.id === cachedId);
-    const cachedPath = path.join(root, cachedAsset.variants[0].path);
+    const cachedPath = path.join(root, cachedAsset!.variants[0]!.path);
     const cachedBytes = await readFile(cachedPath);
     await writeFile(cachedPath, Buffer.concat([cachedBytes, Buffer.from([0])]));
     await expect(buildSceneAssets({ sceneRoot: root, only })).rejects.toThrow('failed byte');
@@ -99,8 +110,7 @@ describe('scene asset build', () => {
     await expect(buildSceneAssets({ sceneRoot: root, only })).rejects.toThrow();
     await writeFile(cachedPath, cachedBytes);
 
-    const selectedAsset = first.assets.find((asset: { id: string }) =>
-      asset.id === only[0])!;
+    const selectedAsset = first.assets.find((asset: { id: string }) => asset.id === only[0])!;
     const selectedPath = path.join(root, selectedAsset.variants[0].path);
     await writeFile(selectedPath, Buffer.from('replace this selected cache'));
     const second = await buildSceneAssets({ sceneRoot: root, only });
@@ -121,20 +131,48 @@ describe('scene asset build', () => {
     expect(
       first.assets
         .filter((asset: { layerRole: string }) => asset.layerRole === 'foreground')
-        .map(({ id, ownerId, source }: { id: string; ownerId: string; source: { path: string } }) => ({
-          id,
-          ownerId,
-          sourcePath: source.path,
-        })),
+        .map(
+          ({ id, ownerId, source }: { id: string; ownerId: string; source: { path: string } }) => ({
+            id,
+            ownerId,
+            sourcePath: source.path,
+          }),
+        ),
     ).toEqual([
-      { id: 'county-council-ballroom-foreground', ownerId: 'county-council-ballroom', sourcePath: 'county-council-ballroom-foreground.png' },
-      { id: 'midnight-call-in-studio-foreground', ownerId: 'midnight-call-in-studio', sourcePath: 'midnight-call-in-studio-foreground.png' },
-      { id: 'palace-press-hall-foreground', ownerId: 'palace-press-hall', sourcePath: 'palace-press-hall-foreground.png' },
-      { id: 'influencer-campaign-livestream-foreground', ownerId: 'influencer-campaign-livestream', sourcePath: 'influencer-campaign-livestream-foreground.png' },
-      { id: 'modern-debate-studio-desks', ownerId: 'modern-debate-studio', sourcePath: 'modern-debate-studio-desks.png' },
-      { id: 'transition-era-television-studio-desks', ownerId: 'transition-era-television-studio', sourcePath: 'transition-era-television-studio-desks.png' },
+      {
+        id: 'county-council-ballroom-foreground',
+        ownerId: 'county-council-ballroom',
+        sourcePath: 'county-council-ballroom-foreground.png',
+      },
+      {
+        id: 'midnight-call-in-studio-foreground',
+        ownerId: 'midnight-call-in-studio',
+        sourcePath: 'midnight-call-in-studio-foreground.png',
+      },
+      {
+        id: 'palace-press-hall-foreground',
+        ownerId: 'palace-press-hall',
+        sourcePath: 'palace-press-hall-foreground.png',
+      },
+      {
+        id: 'influencer-campaign-livestream-foreground',
+        ownerId: 'influencer-campaign-livestream',
+        sourcePath: 'influencer-campaign-livestream-foreground.png',
+      },
+      {
+        id: 'modern-debate-studio-desks',
+        ownerId: 'modern-debate-studio',
+        sourcePath: 'modern-debate-studio-desks.png',
+      },
+      {
+        id: 'transition-era-television-studio-desks',
+        ownerId: 'transition-era-television-studio',
+        sourcePath: 'transition-era-television-studio-desks.png',
+      },
     ]);
-    expect(first.assets.filter((asset: { layerRole: string }) => asset.layerRole === 'back')).toHaveLength(7);
+    expect(
+      first.assets.filter((asset: { layerRole: string }) => asset.layerRole === 'back'),
+    ).toHaveLength(7);
 
     for (const asset of first.assets) {
       expect(asset.ownerType).toBe('scene');
@@ -160,16 +198,20 @@ describe('scene asset build', () => {
   }, 1_200_000);
 
   test.each([[], ['unknown-scene'], ['county-council-ballroom', 'county-council-ballroom']])(
-    'rejects invalid selected asset IDs %j before reading masters', async (...only) => {
-      await expect(buildSceneAssets({ sceneRoot: path.join(await fixtureRoot(), 'missing'), only }))
-        .rejects.toThrow('distinct known asset IDs');
-    });
+    'rejects invalid selected asset IDs %j before reading masters',
+    async (...only) => {
+      await expect(
+        buildSceneAssets({ sceneRoot: path.join(await fixtureRoot(), 'missing'), only }),
+      ).rejects.toThrow('distinct known asset IDs');
+    },
+  );
 
   test('requires an existing manifest for selective rebuilding', async () => {
     const root = await fixtureRoot();
     await writeMasterSet(root);
-    await expect(buildSceneAssets({ sceneRoot: root, only: ['county-council-ballroom'] }))
-      .rejects.toThrow('scene-manifest.json');
+    await expect(
+      buildSceneAssets({ sceneRoot: root, only: ['county-council-ballroom'] }),
+    ).rejects.toThrow('scene-manifest.json');
     await expect(readdir(path.join(root, 'variants'))).rejects.toThrow();
   });
 
@@ -181,9 +223,13 @@ describe('scene asset build', () => {
     await expect(readdir(path.join(root, 'variants'))).rejects.toThrow();
   });
 
-  test.each(['modern-debate-studio', 'county-council-ballroom', 'midnight-call-in-studio',
-    'palace-press-hall', 'influencer-campaign-livestream'])(
-    'rejects a 1080p %s master before replacing runtime variants', async (sceneId) => {
+  test.each([
+    'modern-debate-studio',
+    'county-council-ballroom',
+    'midnight-call-in-studio',
+    'palace-press-hall',
+    'influencer-campaign-livestream',
+  ])('rejects a 1080p %s master before replacing runtime variants', async (sceneId) => {
     const root = path.join(await fixtureRoot(), 'scenes');
     await writeMasterSet(root);
     await writeMaster(root, `${sceneId}.png`, 1920, 1080);
@@ -195,8 +241,6 @@ describe('scene asset build', () => {
     const root = path.join(await fixtureRoot(), 'scenes');
     await mkdir(root, { recursive: true });
     await writeMaster(root, SCENE_MASTER_NAMES[0]!);
-    await expect(buildSceneAssets({ sceneRoot: root })).rejects.toThrow(
-      'must contain exactly',
-    );
+    await expect(buildSceneAssets({ sceneRoot: root })).rejects.toThrow('must contain exactly');
   });
 });

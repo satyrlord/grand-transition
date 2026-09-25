@@ -1,12 +1,16 @@
-import { finishPresentation } from './helpers/presentation';
+import { finishPresentation } from './helpers/presentation.ts';
 import { expect, test, type Page } from '@playwright/test';
-import { ladderProgressStorageKey } from '../src/persistence/ladder-progress';
-import { useFixedBrowserMatchSeed } from './helpers/match-flow';
-import { decidePalaceOperator } from '../src/ai/advanced-ai';
-import { basicScoringBalance } from '../src/content/basic-scoring-balance';
-import type { MatchEngineContext, MatchState } from '../src/engine/match-lifecycle';
-import { loadGameContent } from '../tools/load-game-content';
-import { fullQualityGateRequested } from '../tools/quality-gate-mode';
+import {
+  ladderProgressStorageKey,
+  removeStoredDocument,
+  storedJson,
+} from './helpers/stored-data.ts';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
+import { decidePalaceOperator } from '../src/ai/advanced-ai.ts';
+import { basicScoringBalance } from '../src/content/basic-scoring-balance.ts';
+import type { MatchEngineContext, MatchState } from '../src/engine/match-lifecycle.ts';
+import { loadGameContent } from '../tools/load-game-content.ts';
+import { fullQualityGateRequested } from '../tools/quality-gate-mode.ts';
 
 // The persistence case plays the fixed-seed ladder until it wins every rung,
 // one per playable scene. Nine rungs needed up to twenty-one full matches
@@ -30,9 +34,7 @@ for (const viewport of [
   { width: 1_280, height: 720 },
   { width: 1_920, height: 1_080 },
 ] as const) {
-  test(`ladder setup fits ${viewport.width} by ${viewport.height}`, async ({
-    page,
-  }) => {
+  test(`ladder setup fits ${viewport.width} by ${viewport.height}`, async ({ page }) => {
     await page.setViewportSize(viewport);
     await page.clock.install();
     await useFixedBrowserMatchSeed(page, 1);
@@ -65,9 +67,7 @@ for (const viewport of [
         viewportHeight: document.documentElement.clientHeight,
         rosterRowCounts: (() => {
           const rows = new Map<number, number>();
-          for (const choice of roster.querySelectorAll<HTMLElement>(
-            '.roster-choice',
-          )) {
+          for (const choice of roster.querySelectorAll<HTMLElement>('.roster-choice')) {
             const top = Math.round(choice.getBoundingClientRect().top);
             rows.set(top, (rows.get(top) ?? 0) + 1);
           }
@@ -84,9 +84,7 @@ for (const viewport of [
         rosterVerticallyContained:
           rosterBox.top >= rosterZoneBox.top - 0.5 &&
           rosterBox.bottom <= rosterZoneBox.bottom + 0.5,
-        nonRosterControlsInside: [
-          ...screen.querySelectorAll<HTMLElement>('button, select'),
-        ]
+        nonRosterControlsInside: [...screen.querySelectorAll<HTMLElement>('button, select')]
           .filter((control) => !control.matches('.roster-choice'))
           .every((control) => {
             const box = control.getBoundingClientRect();
@@ -108,9 +106,7 @@ for (const viewport of [
     expect(geometry.rosterVerticallyContained).toBe(true);
     expect(geometry.nonRosterControlsInside).toBe(true);
     const rosterReadability = await page.locator('.setup-screen').evaluate((screen) => {
-      const choices = [
-        ...screen.querySelectorAll<HTMLElement>('.roster-choice'),
-      ];
+      const choices = [...screen.querySelectorAll<HTMLElement>('.roster-choice')];
       const ladderRecord = screen.querySelector<HTMLElement>('.ladder-record span');
       const reset = screen.querySelector<HTMLElement>('.ladder-inline-reset');
       return {
@@ -122,9 +118,7 @@ for (const viewport of [
             choice.querySelector('.visually-hidden')?.textContent?.replaceAll(/\s+/gu, ' ') ?? '',
           ),
         ),
-        ladderTextSize: Number.parseFloat(
-          getComputedStyle(ladderRecord!).fontSize,
-        ),
+        ladderTextSize: Number.parseFloat(getComputedStyle(ladderRecord!).fontSize),
         resetTextSize: Number.parseFloat(getComputedStyle(reset!).fontSize),
       };
     });
@@ -157,10 +151,7 @@ test('the production ladder completes one persisted rung per scene and resumes e
   await page.clock.install();
   await useFixedBrowserMatchSeed(page, 5);
   await page.goto('/grand-transition/');
-  await page.evaluate(
-    (storageKey) => localStorage.removeItem(storageKey),
-    ladderProgressStorageKey,
-  );
+  await removeStoredDocument(page, ladderProgressStorageKey);
   await page.reload();
   await page.getByRole('button', { name: 'Ladder' }).click();
   await page
@@ -171,9 +162,7 @@ test('the production ladder completes one persisted rung per scene and resumes e
   let attempts = 0;
   while (wins < rungCount && attempts < 30) {
     attempts += 1;
-    await expect(page.locator('.ladder-record')).toContainText(
-      `Rung ${wins + 1}/${rungCount}`,
-    );
+    await expect(page.locator('.ladder-record')).toContainText(`Rung ${wins + 1}/${rungCount}`);
     await page.getByTestId('lock-player-one').click();
     await page
       .getByRole('button', {
@@ -195,31 +184,23 @@ test('the production ladder completes one persisted rung per scene and resumes e
       await page.getByRole('button', { name: 'Ladder' }).click();
       await expect(page.getByLabel('Mode', { exact: true })).toHaveCount(0);
       if (wins < rungCount) {
-        await expect(page.locator('.ladder-record')).toContainText(
-          `Rung ${wins + 1}/${rungCount}`,
-        );
+        await expect(page.locator('.ladder-record')).toContainText(`Rung ${wins + 1}/${rungCount}`);
       }
     } else {
       expect(progress.rungIndex).toBe(wins);
       expect(progress.losses).toBeGreaterThan(0);
       await page.getByRole('button', { name: 'Continue ladder' }).click();
-      await expect(page.locator('.ladder-record')).toContainText(
-        `Rung ${wins + 1}/${rungCount}`,
-      );
+      await expect(page.locator('.ladder-record')).toContainText(`Rung ${wins + 1}/${rungCount}`);
     }
   }
 
   expect(wins).toBe(rungCount);
   await expect(page.locator('.ladder-record')).toContainText('Ladder complete');
-  await expect(page.locator('.ladder-record')).toContainText(
-    `Victories recorded: ${rungCount}`,
+  await expect(page.locator('.ladder-record')).toContainText(`Victories recorded: ${rungCount}`);
+  await expect(page.locator('.contestant-stage--two .contestant-player')).toHaveText(
+    'Ladder complete',
   );
-  await expect(
-    page.locator('.contestant-stage--two .contestant-player'),
-  ).toHaveText('Ladder complete');
-  await expect(
-    page.getByRole('button', { name: 'Ladder complete', exact: true }),
-  ).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Ladder complete', exact: true })).toBeDisabled();
   const completed = await storedProgress(page);
   expect(completed).toMatchObject({
     rungIndex: rungCount,
@@ -238,7 +219,10 @@ async function playHumanMatch(page: Page): Promise<string> {
         thinking: Boolean(app.querySelector('.ai-thinking-record')),
       };
     });
-    if (observed.reviewing) { await finishPresentation(page); continue; }
+    if (observed.reviewing) {
+      await finishPresentation(page);
+      continue;
+    }
     const state = observed.state;
     if (state?.phase === 'results') {
       await expect(page.getByRole('heading', { name: 'Victory' })).toBeVisible();
@@ -250,8 +234,10 @@ async function playHumanMatch(page: Page): Promise<string> {
       await expect(thinking).toHaveCount(0, { timeout: 4_000 });
       continue;
     }
-    if (state?.activePlayerId !== 'player-one' ||
-      (state.phase !== 'drafting' && state.phase !== 'sudden-death')) {
+    if (
+      state?.activePlayerId !== 'player-one' ||
+      (state.phase !== 'drafting' && state.phase !== 'sudden-death')
+    ) {
       await page.waitForTimeout(10);
       continue;
     }
@@ -277,9 +263,7 @@ async function activateDecision(
     return;
   }
   if (command.type === 'redraw-hand') {
-    await page
-      .getByRole('button', { name: 'Reshuffle private phrases' })
-      .click();
+    await page.getByRole('button', { name: 'Reshuffle private phrases' }).click();
     return;
   }
   if (command.type === 'select-comeback') {
@@ -296,9 +280,12 @@ async function storedProgress(page: Page): Promise<{
   losses: number;
   completed: boolean;
 }> {
-  return page.evaluate((storageKey) => {
-    const bytes = localStorage.getItem(storageKey);
-    if (!bytes) throw new Error('Ladder progress is missing.');
-    return JSON.parse(bytes);
-  }, ladderProgressStorageKey);
+  const progress = await storedJson<{
+    rungIndex: number;
+    wins: number;
+    losses: number;
+    completed: boolean;
+  }>(page, ladderProgressStorageKey);
+  if (!progress) throw new Error('Ladder progress is missing.');
+  return progress;
 }

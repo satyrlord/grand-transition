@@ -1,5 +1,5 @@
-import { lockInSetup } from './helpers/setup';
-import { finishPresentation } from './helpers/presentation';
+import { lockInSetup } from './helpers/setup.ts';
+import { finishPresentation } from './helpers/presentation.ts';
 import { expect, test, type Page } from '@playwright/test';
 import { readFile, readdir, rm } from 'node:fs/promises';
 import path from 'node:path';
@@ -7,7 +7,7 @@ import {
   planMatchBrowserFlow,
   type MatchBrowserAction,
   useFixedBrowserMatchSeed,
-} from './helpers/match-flow';
+} from './helpers/match-flow.ts';
 
 const productionOrigin = 'http://127.0.0.1:4173';
 const developmentUrl = 'http://127.0.0.1:5174/grand-transition/';
@@ -30,9 +30,7 @@ test.setTimeout(90_000);
 
 test('production JavaScript chunks stay within the default Vite warning limit', async () => {
   const assetDirectory = path.resolve('dist/assets');
-  const scripts = (await readdir(assetDirectory)).filter((name) =>
-    name.endsWith('.js'),
-  );
+  const scripts = (await readdir(assetDirectory)).filter((name) => name.endsWith('.js'));
   expect(scripts.length).toBeGreaterThan(0);
   for (const name of scripts) {
     const script = await readFile(path.join(assetDirectory, name));
@@ -76,9 +74,7 @@ test('production preview loads the subpath shell and local assets after refresh'
     );
   });
   page.on('response', (response) => {
-    if (
-      response.url().startsWith(`${productionOrigin}/grand-transition/assets/`)
-    ) {
+    if (response.url().startsWith(`${productionOrigin}/grand-transition/assets/`)) {
       loadedAssetTypes.add(response.request().resourceType());
     }
   });
@@ -86,22 +82,14 @@ test('production preview loads the subpath shell and local assets after refresh'
   const response = await page.goto('./');
   expect(response?.status()).toBe(200);
   await expect(page).toHaveURL(`${productionOrigin}/grand-transition/`);
-  await expect(
-    page.getByRole('heading', { name: 'Grand Transition' }),
-  ).toBeVisible();
-  await expect(
-    page.getByText('A Verbal Republic', { exact: true }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
+  await expect(page.getByText('A Verbal Republic', { exact: true })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   expect(await page.evaluate(() => Reflect.get(window, 'startupPolicyViolations'))).toEqual([]);
-  expect(loadedAssetTypes).toEqual(
-    new Set(['font', 'image', 'script', 'stylesheet']),
-  );
+  expect(loadedAssetTypes).toEqual(new Set(['font', 'image', 'script', 'stylesheet']));
 
   await page.reload();
-  await expect(
-    page.getByRole('heading', { name: 'Grand Transition' }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
   expect(remoteRequests).toEqual([]);
   expect(failedRequests).toEqual([]);
   expect(consoleErrors).toEqual([]);
@@ -109,18 +97,17 @@ test('production preview loads the subpath shell and local assets after refresh'
   expect(await page.evaluate(() => Reflect.get(window, 'startupPolicyViolations'))).toEqual([]);
 });
 
-test('production injects the exact policy and blocks a remote connection', async ({
-  page,
-}) => {
+test('production injects the exact policy and blocks a remote connection', async ({ page }) => {
   let remoteConnectionReachedNetwork = false;
   await page.route('https://network.invalid/**', async (route) => {
     remoteConnectionReachedNetwork = true;
     await route.abort();
   });
   await page.goto('./');
-  await expect(
-    page.locator('meta[http-equiv="Content-Security-Policy"]'),
-  ).toHaveAttribute('content', productionContentSecurityPolicy);
+  await expect(page.locator('meta[http-equiv="Content-Security-Policy"]')).toHaveAttribute(
+    'content',
+    productionContentSecurityPolicy,
+  );
   const result = await page.evaluate(async () => {
     try {
       await fetch('https://network.invalid/csp-probe');
@@ -137,9 +124,7 @@ test('development and production render the same game UI with no tool surface', 
   page,
 }) => {
   await page.goto('./');
-  await expect(
-    page.getByRole('heading', { name: 'Grand Transition' }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   const productionUi = await uiSignature(page);
 
@@ -147,15 +132,11 @@ test('development and production render the same game UI with no tool surface', 
   await page.evaluate(async () => {
     await customElements.whenDefined('grand-transition-app');
   });
-  await expect(
-    page.getByRole('heading', { name: 'Grand Transition' }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   const developmentUi = await uiSignature(page);
   expect(developmentUi).toEqual(productionUi);
-  await expect(
-    page.locator('meta[http-equiv="Content-Security-Policy"]'),
-  ).toHaveCount(0);
+  await expect(page.locator('meta[http-equiv="Content-Security-Policy"]')).toHaveCount(0);
   await expect(
     page.locator(
       'grand-transition-click-audit, grand-transition-game-audit, grand-transition-developer-controls',
@@ -168,9 +149,7 @@ test('development and production render the same game UI with no tool surface', 
   ).toHaveCount(0);
 });
 
-test('production omits development logger and tool code from the bundle', async ({
-  page,
-}) => {
+test('production omits development logger and tool code from the bundle', async ({ page }) => {
   await page.goto('./');
   const assetsDirectory = path.resolve(process.cwd(), 'dist', 'assets');
   const assetFiles = await readdir(assetsDirectory);
@@ -186,9 +165,7 @@ test('production omits development logger and tool code from the bundle', async 
   );
 });
 
-test('development automatically writes one completed match text log', async ({
-  page,
-}) => {
+test('development automatically writes one completed match text log', async ({ page }) => {
   await rm(developmentGameLogDirectory, { force: true, recursive: true });
   try {
     const plan = planMatchBrowserFlow();
@@ -207,15 +184,9 @@ test('development automatically writes one completed match text log', async ({
     await expect.poll(async () => logFiles()).toHaveLength(1);
     const [filename] = await logFiles();
     expect(filename).toMatch(
-      new RegExp(
-        `^match-\\d{4}-\\d{2}-\\d{2}-seed-${String(plan.seed)}\\.log$`,
-        'u',
-      ),
+      new RegExp(`^match-\\d{4}-\\d{2}-\\d{2}-seed-${String(plan.seed)}\\.log$`, 'u'),
     );
-    const text = await readFile(
-      path.join(developmentGameLogDirectory, filename!),
-      'utf8',
-    );
+    const text = await readFile(path.join(developmentGameLogDirectory, filename!), 'utf8');
     const records = text
       .trim()
       .split('\n')
@@ -234,7 +205,9 @@ test('development automatically writes one completed match text log', async ({
         speechDiagnostics: expect.objectContaining({ status: 'finished' }),
       }),
     );
-    expect(records.at(-1)!.speechDiagnostics.events).toContainEqual(expect.objectContaining({ type: 'presentation-end' }));
+    expect(records.at(-1)!.speechDiagnostics.events).toContainEqual(
+      expect.objectContaining({ type: 'presentation-end' }),
+    );
     expect(
       records.some(
         (record) =>
@@ -245,9 +218,7 @@ test('development automatically writes one completed match text log', async ({
       ),
     ).toBe(true);
     expect(
-      records
-        .filter((record) => record.type === 'action')
-        .map((record) => record.command),
+      records.filter((record) => record.type === 'action').map((record) => record.command),
     ).toEqual(plan.finalState.commandHistory);
     expect(text).not.toMatch(/"hand"|userAgent|machine/iu);
   } finally {
@@ -259,35 +230,21 @@ test('production bundles only the four approved font families and subsets', asyn
   const assetsDirectory = path.resolve(process.cwd(), 'dist', 'assets');
   const assetFiles = await readdir(assetsDirectory);
   const fontFiles = assetFiles.filter((file) => /\.woff2?$/u.test(file));
-  const variableFontFiles = assetFiles.filter((file) =>
-    /^(?:nunito|rubik)-.*\.woff2$/u.test(file),
-  );
+  const variableFontFiles = assetFiles.filter((file) => /^(?:nunito|rubik)-.*\.woff2$/u.test(file));
   expect(fontFiles).toHaveLength(7);
   expect(variableFontFiles).toHaveLength(4);
   for (const font of ['nunito', 'rubik']) {
+    expect(variableFontFiles.some((file) => file.startsWith(`${font}-latin-wght-normal-`))).toBe(
+      true,
+    );
     expect(
-      variableFontFiles.some((file) =>
-        file.startsWith(`${font}-latin-wght-normal-`),
-      ),
-    ).toBe(true);
-    expect(
-      variableFontFiles.some((file) =>
-        file.startsWith(`${font}-latin-ext-wght-normal-`),
-      ),
+      variableFontFiles.some((file) => file.startsWith(`${font}-latin-ext-wght-normal-`)),
     ).toBe(true);
   }
-  expect(assetFiles.join('\n')).not.toMatch(
-    /arabic|barlow|cyrillic|hebrew|vietnamese|\.woff$/u,
-  );
-  expect(fontFiles.some((file) => file.startsWith('poiret-one-latin-'))).toBe(
-    true,
-  );
-  expect(fontFiles.some((file) => file.startsWith('poiret-one-latin-ext-'))).toBe(
-    true,
-  );
-  expect(
-    fontFiles.some((file) => file.startsWith('share-tech-mono-latin-')),
-  ).toBe(true);
+  expect(assetFiles.join('\n')).not.toMatch(/arabic|barlow|cyrillic|hebrew|vietnamese|\.woff$/u);
+  expect(fontFiles.some((file) => file.startsWith('poiret-one-latin-'))).toBe(true);
+  expect(fontFiles.some((file) => file.startsWith('poiret-one-latin-ext-'))).toBe(true);
+  expect(fontFiles.some((file) => file.startsWith('share-tech-mono-latin-'))).toBe(true);
 });
 
 async function uiSignature(page: Page) {
@@ -325,10 +282,7 @@ async function logFiles(): Promise<string[]> {
   return readdir(developmentGameLogDirectory).catch(() => []);
 }
 
-async function executeDraftAction(
-  page: Page,
-  action: MatchBrowserAction,
-): Promise<void> {
+async function executeDraftAction(page: Page, action: MatchBrowserAction): Promise<void> {
   const command = action.command;
   switch (command.type) {
     case 'select-phrase':
@@ -342,9 +296,7 @@ async function executeDraftAction(
       await page.getByRole('button', { name: 'End', exact: true }).click();
       return;
     case 'redraw-hand':
-      await page
-        .getByRole('button', { name: 'Reshuffle private phrases' })
-        .click();
+      await page.getByRole('button', { name: 'Reshuffle private phrases' }).click();
       return;
     case 'select-comeback':
       await page.getByRole('button', { name: 'Comeback' }).click();

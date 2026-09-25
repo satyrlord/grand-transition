@@ -17,7 +17,9 @@ export class GrandTransitionSceneAmbience extends LitElement {
     this.paused = false;
     this.sceneId = 'transition-era-television-studio';
   }
-  protected override createRenderRoot(): HTMLElement { return this; }
+  protected override createRenderRoot(): HTMLElement {
+    return this;
+  }
 
   override connectedCallback(): void {
     super.connectedCallback();

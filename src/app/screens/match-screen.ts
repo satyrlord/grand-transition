@@ -1,19 +1,12 @@
 import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
-import { formatInterfaceNumber } from '../interface-format';
-import { gameTextLanguage } from '../game-text-language';
+import { formatInterfaceNumber } from '../interface-format.ts';
+import { gameTextLanguage } from '../game-text-language.ts';
 import { styleMap } from 'lit/directives/style-map.js';
-import {
-  LitElement,
-  html,
-  nothing,
-  svg,
-  type PropertyValues,
-  type TemplateResult,
-} from 'lit';
-import type { MatchCommand } from '../../engine/match-lifecycle';
-import type { RoundPresentationFrame } from '../round-presentation';
-import { deepFreeze } from '../../engine/plain-values';
-import { interfaceWeaknessName } from '../interface-names';
+import { LitElement, html, nothing, svg, type PropertyValues, type TemplateResult } from 'lit';
+import type { MatchCommand } from '../../engine/match-lifecycle.ts';
+import type { RoundPresentationFrame } from '../round-presentation.ts';
+import { deepFreeze } from '../../engine/plain-values.ts';
+import { interfaceWeaknessName } from '../interface-names.ts';
 import type {
   MatchCardView,
   MatchPlayerView,
@@ -21,12 +14,12 @@ import type {
   MatchManifestSceneLayerView,
   MatchSceneLayerView,
   MatchScreenSnapshot,
-} from '../match-screen-snapshot';
-import './interruption-screen';
-import '../../components/character-presenter';
-import '../../components/scene-ambience';
-import type { TurnTimerSeconds } from './interruption-screen';
-import { ApplicationTurnClock } from '../turn-clock';
+} from '../match-screen-snapshot.ts';
+import './interruption-screen.ts';
+import '../../components/character-presenter.ts';
+import '../../components/scene-ambience.ts';
+import type { TurnTimerSeconds } from './interruption-screen.ts';
+import { ApplicationTurnClock } from '../turn-clock.ts';
 
 const elementName = 'grand-transition-match';
 export const matchCommandEventName = 'match-command';
@@ -35,7 +28,8 @@ export const returnToMainMenuEventName = 'return-to-main-menu';
 export const timerTickEventName = 'timer-tick';
 export const timerTickSeconds = 5;
 
-export type MatchPauseMode = 'manual' | 'running' | 'viewport' | 'hotseat-portrait' | 'landscape-recommended';
+export type MatchPauseMode =
+  'manual' | 'running' | 'viewport' | 'hotseat-portrait' | 'landscape-recommended';
 
 export type MatchCommandEvent = CustomEvent<MatchCommand>;
 export type ReturnToMainMenuEvent = CustomEvent<Record<never, never>>;
@@ -151,21 +145,13 @@ export class GrandTransitionMatch extends LitElement {
       this.discardedPortraitSequence = this.snapshot.revision;
     }
     if (changed.has('snapshot')) {
-      const previousSnapshot = changed.get('snapshot') as
-        MatchScreenSnapshot | undefined;
-      const previousWaitingPlayer = previousSnapshot?.players.find(
-        (player) => !player.isActive,
-      );
-      const currentWaitingPlayer = this.snapshot?.players.find(
-        (player) => !player.isActive,
-      );
+      const previousSnapshot = changed.get('snapshot') as MatchScreenSnapshot | undefined;
+      const previousWaitingPlayer = previousSnapshot?.players.find((player) => !player.isActive);
+      const currentWaitingPlayer = this.snapshot?.players.find((player) => !player.isActive);
       this.previewText = null;
       this.commandPending = false;
       this.revealedWaitingPlayerId = null;
-      this.syncAutomaticWaitingSentenceReveal(
-        previousSnapshot,
-        currentWaitingPlayer,
-      );
+      this.syncAutomaticWaitingSentenceReveal(previousSnapshot, currentWaitingPlayer);
       if (
         !currentWaitingPlayer?.sentence?.trim() ||
         currentWaitingPlayer.playerId !== previousWaitingPlayer?.playerId
@@ -194,31 +180,38 @@ export class GrandTransitionMatch extends LitElement {
     const sentence = this.querySelector<HTMLElement>('.sentence-preview');
     const sentenceScrollKey = JSON.stringify([
       this.presentation?.speakerId ?? this.snapshot?.activePlayerId,
-      this.snapshot?.round, sentence?.textContent?.trim(),
+      this.snapshot?.round,
+      sentence?.textContent?.trim(),
     ]);
     if (sentenceScrollKey !== this.sentenceScrollKey) {
       if (sentence) sentence.scrollTop = 0;
       this.sentenceScrollKey = sentenceScrollKey;
     }
-    const previousPresentation = changed.get('presentation') as RoundPresentationFrame | null | undefined;
-    if (this.presentation && (changed.has('pauseMode') ||
-      previousPresentation?.speakerId !== this.presentation.speakerId ||
-      previousPresentation?.components.length !== this.presentation.components.length ||
-      previousPresentation?.total !== this.presentation.total ||
-      previousPresentation?.emphasis.length !== this.presentation.emphasis.length)) {
+    const previousPresentation = changed.get('presentation') as
+      RoundPresentationFrame | null | undefined;
+    if (
+      this.presentation &&
+      (changed.has('pauseMode') ||
+        previousPresentation?.speakerId !== this.presentation.speakerId ||
+        previousPresentation?.components.length !== this.presentation.components.length ||
+        previousPresentation?.total !== this.presentation.total ||
+        previousPresentation?.emphasis.length !== this.presentation.emphasis.length)
+    ) {
       this.followLatestScore();
     }
-    const previousPauseMode = changed.get('pauseMode') as
-      MatchPauseMode | undefined;
+    const previousPauseMode = changed.get('pauseMode') as MatchPauseMode | undefined;
     if (previousPauseMode && previousPauseMode !== 'running' && this.pauseMode === 'running') {
       this.querySelector<HTMLButtonElement>('.match-pause')?.focus();
     }
-    if ((changed.has('snapshot') || changed.has('presentation')) && this.snapshot?.victory && !this.presentation) {
+    if (
+      (changed.has('snapshot') || changed.has('presentation')) &&
+      this.snapshot?.victory &&
+      !this.presentation
+    ) {
       this.querySelector<HTMLButtonElement>('.round-review-primary')?.focus();
       return;
     }
-    const previousSnapshot = changed.get('snapshot') as
-      MatchScreenSnapshot | undefined;
+    const previousSnapshot = changed.get('snapshot') as MatchScreenSnapshot | undefined;
     if (previousSnapshot?.roundReview && this.snapshot) {
       this.querySelector<HTMLElement>('#match-title')?.focus();
     }
@@ -246,46 +239,46 @@ export class GrandTransitionMatch extends LitElement {
         .voicesEnabled=${this.voicesEnabled}
       ></grand-transition-interruption>`;
     }
-    const players = this.snapshot.players.map((player) => this.presentation ? {
-      ...player,
-      isActive: player.playerId === this.presentation.speakerId,
-      pride: this.presentation.pride[player.playerId] ?? player.pride,
-      portraitCue: this.presentation.cues[player.playerId] ?? player.portraitCue,
-    } : player);
+    const players = this.snapshot.players.map((player) =>
+      this.presentation
+        ? {
+            ...player,
+            isActive: player.playerId === this.presentation.speakerId,
+            pride: this.presentation.pride[player.playerId] ?? player.pride,
+            portraitCue: this.presentation.cues[player.playerId] ?? player.portraitCue,
+          }
+        : player,
+    );
     const first = players[0]!;
     const second = players[1]!;
     const activeDraftPlayer = this.snapshot.players.find((player) => player.isActive)!;
     const timerValue = this.turnClock.remainingSeconds;
     const timerLabel =
-      timerValue === null
-        ? msg('Unlimited turn timer')
-        : msg(str`${timerValue} seconds`);
+      timerValue === null ? msg('Unlimited turn timer') : msg(str`${timerValue} seconds`);
     const timerText = timerValue === null ? msg('Unlimited') : formatInterfaceNumber(timerValue);
     const displayedSentence = this.presentation
       ? this.presentation.text || msg('No public sentence was completed.')
-      : this.thinking &&
-      this.snapshot.sentenceText === msg('Select a noun to begin.')
+      : this.thinking && this.snapshot.sentenceText === msg('Select a noun to begin.')
         ? msg(str`Waiting for ${this.aiName}…`)
         : (this.previewText ?? this.snapshot.sentenceText);
-    const displayedSentenceIsGameText = displayedSentence !== msg('No public sentence was completed.') &&
+    const displayedSentenceIsGameText =
+      displayedSentence !== msg('No public sentence was completed.') &&
       displayedSentence !== msg('Select a noun to begin.') &&
       !(this.thinking && displayedSentence === msg(str`Waiting for ${this.aiName}…`));
-    const arenaReaction = this.snapshot.arenaReaction?.kind === 'grammar-mistake' &&
+    const arenaReaction =
+      this.snapshot.arenaReaction?.kind === 'grammar-mistake' &&
       this.snapshot.arenaReaction.sequence === this.expiredGrammarStrikeSequence
-      ? null
-      : this.snapshot.arenaReaction;
+        ? null
+        : this.snapshot.arenaReaction;
     const roundReview = this.snapshot.roundReview;
-    const backgroundLayers = this.snapshot.sceneLayers.filter(
-      ({ depth }) => depth < 0.5,
-    );
-    const foregroundLayers = this.snapshot.sceneLayers.filter(
-      ({ depth }) => depth >= 0.5,
-    );
-    const reactionSide = arenaReaction?.kind === 'grammar-mistake'
-      ? first.playerId === arenaReaction.playerId
-        ? 'red'
-        : 'blue'
-      : null;
+    const backgroundLayers = this.snapshot.sceneLayers.filter(({ depth }) => depth < 0.5);
+    const foregroundLayers = this.snapshot.sceneLayers.filter(({ depth }) => depth >= 0.5);
+    const reactionSide =
+      arenaReaction?.kind === 'grammar-mistake'
+        ? first.playerId === arenaReaction.playerId
+          ? 'red'
+          : 'blue'
+        : null;
 
     return html`
       <main
@@ -305,15 +298,15 @@ export class GrandTransitionMatch extends LitElement {
           data-arena-reaction=${arenaReaction?.kind ?? nothing}
           data-reaction-side=${reactionSide ?? nothing}
         >
-          ${backgroundLayers.map((layer) =>
-            this.renderSceneLayer(layer, 'broadcast-stage-art'),
-          )}
-          ${backgroundLayers[0]
-            ? html`<grand-transition-scene-ambience
+          ${backgroundLayers.map((layer) => this.renderSceneLayer(layer, 'broadcast-stage-art'))}
+          ${
+            backgroundLayers[0]
+              ? html`<grand-transition-scene-ambience
                 .sceneId=${backgroundLayers[0].assetId}
                 style=${backgroundLayers[0].kind === 'manifest' ? sceneLayerStyle(backgroundLayers[0]) : nothing}
               ></grand-transition-scene-ambience>`
-            : nothing}
+              : nothing
+          }
           <header class="match-status-rail">
             <div class="match-header-controls">
               <button
@@ -322,34 +315,38 @@ export class GrandTransitionMatch extends LitElement {
                 ?disabled=${roundReview && !this.presentation}
                 @click=${this.pause}
               >
-                ${this.presentation ? msg('Pause') : this.snapshot.victory
-                  ? msg('Final')
-                  : roundReview
-                    ? msg('Paused')
-                    : msg('Pause')}
+                ${
+                  this.presentation
+                    ? msg('Pause')
+                    : this.snapshot.victory
+                      ? msg('Final')
+                      : roundReview
+                        ? msg('Paused')
+                        : msg('Pause')
+                }
               </button>
-              ${roundReview
-                ? nothing
-                : html`<dl
-                    class="match-facts ${
-                      timerValue === null ? 'match-facts--unlimited' : ''
-                    }"
+              ${
+                roundReview
+                  ? nothing
+                  : html`<dl
+                    class="match-facts ${timerValue === null ? 'match-facts--unlimited' : ''}"
                   >
                     <div
                       class="timer-fact"
-                      data-timer=${
-                        timerValue === null ? 'unlimited' : timerValue
-                      }
+                      data-timer=${timerValue === null ? 'unlimited' : timerValue}
                     >
                       <dt class="visually-hidden">${msg('Timer')}</dt>
                       <dd aria-label=${timerLabel}>${timerText}</dd>
                     </div>
-                  </dl>`}
+                  </dl>`
+              }
               <div class="match-turn-heading">
                 <h1 id="match-title" tabindex="-1">
-                  <span>${this.snapshot.cliffhanger
-                    ? msg(str`Cliffhanger · Round ${this.snapshot.round}`)
-                    : msg(str`Round ${this.snapshot.round}`)}</span>
+                  <span>${
+                    this.snapshot.cliffhanger
+                      ? msg(str`Cliffhanger · Round ${this.snapshot.round}`)
+                      : msg(str`Round ${this.snapshot.round}`)
+                  }</span>
                   <span class="visually-hidden">
                     ${roundReview ? msg('Insult delivery') : msg(str`${this.snapshot.activePlayerName}'s turn`)}
                   </span>
@@ -387,7 +384,8 @@ export class GrandTransitionMatch extends LitElement {
                 arenaReaction.playerId === second.playerId,
             )}
             ${foregroundLayers.map((layer) =>
-              this.renderSceneLayer(layer, 'broadcast-stage-foreground'))}
+              this.renderSceneLayer(layer, 'broadcast-stage-foreground'),
+            )}
           </section>
 
           <section
@@ -401,7 +399,7 @@ export class GrandTransitionMatch extends LitElement {
             </h2>
             <p
               class="sentence-preview"
-              lang=${displayedSentenceIsGameText ? gameTextLanguage() ?? nothing : nothing}
+              lang=${displayedSentenceIsGameText ? (gameTextLanguage() ?? nothing) : nothing}
               data-density=${sentenceDensity(displayedSentence)}
               tabindex="0"
               role="region"
@@ -419,19 +417,21 @@ export class GrandTransitionMatch extends LitElement {
                     : msg('Choose a phrase or end the sentence')
               }
             </p>
-            ${arenaReaction?.kind === 'cliffhanger'
-              ? this.renderArenaReaction(arenaReaction)
-              : nothing}
+            ${
+              arenaReaction?.kind === 'cliffhanger'
+                ? this.renderArenaReaction(arenaReaction)
+                : nothing
+            }
           </section>
 
           ${
             this.presentation
               ? this.renderDelivery(first, second)
               : this.snapshot.victory
-              ? this.renderVictory(first, second)
-              : arenaReaction?.kind === 'grammar-mistake'
-                ? this.renderArenaReaction(arenaReaction)
-                : nothing
+                ? this.renderVictory(first, second)
+                : arenaReaction?.kind === 'grammar-mistake'
+                  ? this.renderArenaReaction(arenaReaction)
+                  : nothing
           }
           ${
             roundReview
@@ -480,13 +480,12 @@ export class GrandTransitionMatch extends LitElement {
                       <button
                         type="button"
                         class="action-reshuffle"
-                        aria-label=${this.snapshot.actions.redrawUsed
-                          ? msg('Reshuffle used')
-                          : msg('Reshuffle private phrases')}
-                        ?disabled=${
-                          !this.snapshot.actions.canRedraw ||
-                          this.commandPending
+                        aria-label=${
+                          this.snapshot.actions.redrawUsed
+                            ? msg('Reshuffle used')
+                            : msg('Reshuffle private phrases')
                         }
+                        ?disabled=${!this.snapshot.actions.canRedraw || this.commandPending}
                         @click=${this.redraw}
                       >
                         ${this.actionIcon()}
@@ -502,9 +501,7 @@ export class GrandTransitionMatch extends LitElement {
                     <button
                       type="button"
                       class="action-primary"
-                      ?disabled=${
-                        !this.snapshot.actions.canCommit || this.commandPending
-                      }
+                      ?disabled=${!this.snapshot.actions.canCommit || this.commandPending}
                       @click=${this.commit}
                     >
                       <span class="action-title">${msg('End')}</span>
@@ -527,9 +524,7 @@ export class GrandTransitionMatch extends LitElement {
     const activeTurn = player.isActive && !this.snapshot?.roundReview;
     const hasWaitingSentence = Boolean(player.sentence?.trim());
     const waitingSentence = player.sentence?.trim() || msg('No sentence yet.');
-    const waitingSentenceRevealed = this.isWaitingSentenceRevealed(
-      player.playerId,
-    );
+    const waitingSentenceRevealed = this.isWaitingSentenceRevealed(player.playerId);
     return html`
       <article
         class="match-player ${
@@ -572,20 +567,27 @@ export class GrandTransitionMatch extends LitElement {
         <div class="character-frame" aria-hidden="true"
           data-source-facing=${player.portraitFacing}
           data-mirrored=${(side === 'red' ? player.portraitFacing === 'left' : player.portraitFacing === 'right') ? 'true' : 'false'}>
-          ${player.portraitFrames ? html`<grand-transition-character
+          ${
+            player.portraitFrames
+              ? html`<grand-transition-character
             .frames=${player.portraitFrames}
-            .cue=${!this.presentation && player.portraitCue.sequence <= this.discardedPortraitSequence
-              ? { stateId: 'idle', sequence: player.portraitCue.sequence }
-              : player.portraitCue}
+            .cue=${
+              !this.presentation && player.portraitCue.sequence <= this.discardedPortraitSequence
+                ? { stateId: 'idle', sequence: player.portraitCue.sequence }
+                : player.portraitCue
+            }
               .restState=${player.isActive && !this.snapshot?.roundReview ? 'thinking' : 'idle'}
-          ></grand-transition-character>` : html`<picture>
-            ${player.portraitAvifSrcSet
-              ? html`<source
+          ></grand-transition-character>`
+              : html`<picture>
+            ${
+              player.portraitAvifSrcSet
+                ? html`<source
                   type="image/avif"
                   srcset=${player.portraitAvifSrcSet}
                   sizes=${player.portraitSizes}
                 />`
-              : nothing}
+                : nothing
+            }
             <img
               class="character-portrait"
               src=${player.portraitUrl}
@@ -596,7 +598,8 @@ export class GrandTransitionMatch extends LitElement {
               height=${player.portraitHeight}
               draggable="false"
             />
-          </picture>`}
+          </picture>`
+          }
         </div>
         ${
           player.isActive
@@ -615,11 +618,9 @@ export class GrandTransitionMatch extends LitElement {
                   data-revealed=${waitingSentenceRevealed ? 'true' : 'false'}
                   aria-expanded=${waitingSentenceRevealed}
                   aria-labelledby=${`waiting-name-${player.playerId} waiting-text-${player.playerId}`}
-                  @pointerenter=${() =>
-                    this.setHoveredWaitingSentence(player.playerId)}
+                  @pointerenter=${() => this.setHoveredWaitingSentence(player.playerId)}
                   @pointerleave=${() => this.setHoveredWaitingSentence(null)}
-                  @focus=${() =>
-                    this.setFocusedWaitingSentence(player.playerId)}
+                  @focus=${() => this.setFocusedWaitingSentence(player.playerId)}
                   @blur=${() => this.setFocusedWaitingSentence(null)}
                   @click=${(event: MouseEvent) =>
                     this.revealWaitingSentence(event, player.playerId)}
@@ -629,13 +630,13 @@ export class GrandTransitionMatch extends LitElement {
                     ${hasWaitingSentence ? msg('said:') : ':'}
                   </span>
                   <span id=${`waiting-text-${player.playerId}`} class="visually-hidden"
-                    lang=${hasWaitingSentence ? gameTextLanguage() ?? nothing : nothing}>${waitingSentence}</span>
+                    lang=${hasWaitingSentence ? (gameTextLanguage() ?? nothing) : nothing}>${waitingSentence}</span>
                   <span class="waiting-sentence-ellipsis" aria-hidden="true"
                     >…</span
                   >
                   <span class="waiting-sentence-content"
                     aria-hidden="true"
-                    lang=${hasWaitingSentence ? gameTextLanguage() ?? nothing : nothing}
+                    lang=${hasWaitingSentence ? (gameTextLanguage() ?? nothing) : nothing}
                     >${waitingSentence}</span
                   >
                 </button>`
@@ -647,10 +648,11 @@ export class GrandTransitionMatch extends LitElement {
   private renderDelivery(first: MatchPlayerView, second: MatchPlayerView): TemplateResult {
     const frame = this.presentation!;
     const speaker = frame.speakerId === first.playerId ? first : second;
-    const side = (id: string) => id === first.playerId ? 'red' : 'blue';
+    const side = (id: string) => (id === first.playerId ? 'red' : 'blue');
     const impacted = frame.impact?.playerId === first.playerId ? first : second;
-    return html`${speaker.comebackLine && speaker.comebackSidekickUrl
-      ? html`<div
+    return html`${
+      speaker.comebackLine && speaker.comebackSidekickUrl
+        ? html`<div
           class="comeback-sidekick"
           data-side=${side(speaker.playerId)}
           data-visible=${frame.comebackActive ? 'true' : 'false'}
@@ -665,7 +667,8 @@ export class GrandTransitionMatch extends LitElement {
             draggable="false"
           />
         </div>`
-      : nothing}
+        : nothing
+    }
     <section class="delivery-receipt" data-speaker=${frame.speakerId}
       data-side=${side(speaker.playerId)} role="log" aria-live="polite" aria-relevant="additions text"
       aria-label=${msg(str`${speaker.characterName}'s score`)}>
@@ -679,33 +682,47 @@ export class GrandTransitionMatch extends LitElement {
       </div>
       ${frame.total === null ? nothing : html`<p class="delivery-total"><span>${msg('Total')}</span><strong>${frame.total}</strong></p>`}
     </section>
-    ${frame.impact && ['strike', 'points', 'damage'].includes(frame.phase)
-      ? this.renderDeliveryImpact(impacted, side(impacted.playerId))
-      : nothing}
-    ${[first, second].filter((player) => player.playerId !== speaker.playerId)
-      .map((player) => html`<div class="delivery-emphasis" data-side=${side(player.playerId)} aria-live="polite">
-      ${frame.phase === 'reciting' || frame.phase === 'total'
-        ? this.renderDeliveryEmphasis(player.playerId)
-        : nothing}
-    </div>`)}`;
+    ${
+      frame.impact && ['strike', 'points', 'damage'].includes(frame.phase)
+        ? this.renderDeliveryImpact(impacted, side(impacted.playerId))
+        : nothing
+    }
+    ${[first, second]
+      .filter((player) => player.playerId !== speaker.playerId)
+      .map(
+        (
+          player,
+        ) => html`<div class="delivery-emphasis" data-side=${side(player.playerId)} aria-live="polite">
+      ${
+        frame.phase === 'reciting' || frame.phase === 'total'
+          ? this.renderDeliveryEmphasis(player.playerId)
+          : nothing
+      }
+    </div>`,
+      )}`;
   }
 
   private renderComebackAction(player: MatchPlayerView): TemplateResult {
-    const fill = player.comeback.cap > 0
-      ? Math.min(1, Math.max(0, player.comeback.charge / player.comeback.cap))
-      : 0;
+    const fill =
+      player.comeback.cap > 0
+        ? Math.min(1, Math.max(0, player.comeback.charge / player.comeback.cap))
+        : 0;
     const tier = this.snapshot!.actions.comebackTier;
-    const tierLabel = tier === 'strong'
-      ? msg('Strong')
-      : tier === 'medium'
-        ? msg('Medium')
-        : tier === 'weak'
-          ? msg('Weak')
-          : null;
+    const tierLabel =
+      tier === 'strong'
+        ? msg('Strong')
+        : tier === 'medium'
+          ? msg('Medium')
+          : tier === 'weak'
+            ? msg('Weak')
+            : null;
     const damageBonus = this.snapshot!.actions.comebackDamageBonus;
-    const accessibleLabel = tierLabel && damageBonus !== null
-      ? msg(str`Comeback: ${tierLabel}, ${damageBonus} bonus damage, ${player.comeback.charge} of ${player.comeback.cap} charge`)
-      : msg(str`Comeback: ${player.comeback.charge} of ${player.comeback.cap} charge`);
+    const accessibleLabel =
+      tierLabel && damageBonus !== null
+        ? msg(
+            str`Comeback: ${tierLabel}, ${damageBonus} bonus damage, ${player.comeback.charge} of ${player.comeback.cap} charge`,
+          )
+        : msg(str`Comeback: ${player.comeback.charge} of ${player.comeback.cap} charge`);
     return html`<button
       type="button"
       class="action-secondary comeback-action"
@@ -723,60 +740,69 @@ export class GrandTransitionMatch extends LitElement {
         style=${styleMap({ transform: `scaleX(${fill})` })}
       ></span>
       <span class="comeback-action__segments" aria-hidden="true">
-        ${Array.from(
-          { length: player.comeback.segments },
-          () => html`<span></span>`,
-        )}
+        ${Array.from({ length: player.comeback.segments }, () => html`<span></span>`)}
       </span>
       <span class="action-title">${msg('Comeback')}</span>
     </button>`;
   }
 
   private renderDeliveryEmphasis(playerId: string): TemplateResult[] {
-    return this.presentation!.emphasis.filter((item) => item.playerId === playerId).map((item) => html`<p data-emphasis=${item.kind}>
-      ${item.kind === 'combo' ? html`<strong>${msg('Combo')}</strong> ${item.text} ×${item.value}`
-        : item.kind === 'weakness' ? html`<span>${item.text.split(' · ').map(interfaceWeaknessName).join(' · ')}</span> ×${formatScoreNumber(item.value)}`
-          : html`${msg('Comeback')} +${item.value}`}
-    </p>`);
+    return this.presentation!.emphasis.filter((item) => item.playerId === playerId).map(
+      (item) => html`<p data-emphasis=${item.kind}>
+      ${
+        item.kind === 'combo'
+          ? html`<strong>${msg('Combo')}</strong> ${item.text} ×${item.value}`
+          : item.kind === 'weakness'
+            ? html`<span>${item.text.split(' · ').map(interfaceWeaknessName).join(' · ')}</span> ×${formatScoreNumber(item.value)}`
+            : html`${msg('Comeback')} +${item.value}`
+      }
+    </p>`,
+    );
   }
 
   private renderDeliveryOutcome(player: MatchPlayerView): TemplateResult {
     const outcome = this.presentation!.outcome;
-    if (!outcome || outcome.playerId !== player.playerId || outcome.kind === 'continuation-broken') {
+    if (
+      !outcome ||
+      outcome.playerId !== player.playerId ||
+      outcome.kind === 'continuation-broken'
+    ) {
       return html``;
     }
-    const [label, detail] = outcome.kind === 'continuation-held'
-      ? [msg('Continuation held'), msg(str`${player.characterName}: 0 Pride damage`)]
-      : outcome.kind === 'incomplete-statement'
-        ? [msg('Incomplete statement'), msg(str`${player.characterName}: 0 Pride damage`)]
-        : outcome.kind === 'grammar-mistake'
-          ? [msg('Grammar mistake'), player.characterName]
-          : [msg('Turn expired'), player.characterName];
+    const [label, detail] =
+      outcome.kind === 'continuation-held'
+        ? [msg('Continuation held'), msg(str`${player.characterName}: 0 Pride damage`)]
+        : outcome.kind === 'incomplete-statement'
+          ? [msg('Incomplete statement'), msg(str`${player.characterName}: 0 Pride damage`)]
+          : outcome.kind === 'grammar-mistake'
+            ? [msg('Grammar mistake'), player.characterName]
+            : [msg('Turn expired'), player.characterName];
     return html`<p class="delivery-outcome" data-outcome=${outcome.kind}
       aria-label=${msg(str`${label}. ${detail}.`)}>
       <strong>${label}</strong><span>${detail}</span>
     </p>`;
   }
 
-  private renderDeliveryImpact(
-    player: MatchPlayerView,
-    side: 'red' | 'blue',
-  ): TemplateResult {
+  private renderDeliveryImpact(player: MatchPlayerView, side: 'red' | 'blue'): TemplateResult {
     const frame = this.presentation!;
     const impact = frame.impact!;
     const broken = frame.outcome?.kind === 'continuation-broken';
-    const label = frame.phase === 'strike'
-      ? msg('Pride impact')
-      : frame.phase === 'points'
-        ? msg('Pride tally')
-        : broken
-          ? msg('Continuation broken')
-          : msg('Pride loss');
-    const detail = frame.phase === 'damage'
-      ? impact.amount === 0
-        ? msg(str`${player.characterName}: 0 Pride lost · ${impact.prideAfter} Pride remains`)
-        : msg(str`${player.characterName}: −${impact.amount} Pride · ${impact.prideAfter} Pride remains`)
-      : player.characterName;
+    const label =
+      frame.phase === 'strike'
+        ? msg('Pride impact')
+        : frame.phase === 'points'
+          ? msg('Pride tally')
+          : broken
+            ? msg('Continuation broken')
+            : msg('Pride loss');
+    const detail =
+      frame.phase === 'damage'
+        ? impact.amount === 0
+          ? msg(str`${player.characterName}: 0 Pride lost · ${impact.prideAfter} Pride remains`)
+          : msg(
+              str`${player.characterName}: −${impact.amount} Pride · ${impact.prideAfter} Pride remains`,
+            )
+        : player.characterName;
     return html`<aside class="delivery-impact-record ${frame.phase === 'damage' ? 'delivery-damage' : ''}"
       data-impact-phase=${frame.phase} data-side=${side}
       aria-label=${msg(str`${label}. ${detail}.`)}>
@@ -790,24 +816,30 @@ export class GrandTransitionMatch extends LitElement {
   ): void {
     const frame = this.presentation;
     if (frame?.phase === 'damage' && frame.impact) {
-      const player = this.snapshot?.players.find(({ playerId }) => playerId === frame.impact!.playerId);
+      const player = this.snapshot?.players.find(
+        ({ playerId }) => playerId === frame.impact!.playerId,
+      );
       if (player) {
         const key = `${this.snapshot!.round}:${frame.speakerId}:${player.playerId}:${frame.impact.amount}:${frame.outcome?.kind ?? 'damage'}`;
         if (!this.presentationAnnouncementKeys.has(key)) {
-          const cause = frame.outcome?.kind === 'continuation-broken'
-            ? msg('Continuation broken')
-            : frame.outcome?.kind === 'grammar-mistake'
-              ? msg('Grammar mistake')
-              : frame.outcome?.kind === 'turn-timeout'
-                ? msg('Turn expired')
-                : msg('Pride loss');
-          const amount = frame.impact.amount === 0
-            ? msg('0 Pride lost')
-            : msg(str`${frame.impact.amount} Pride lost`);
+          const cause =
+            frame.outcome?.kind === 'continuation-broken'
+              ? msg('Continuation broken')
+              : frame.outcome?.kind === 'grammar-mistake'
+                ? msg('Grammar mistake')
+                : frame.outcome?.kind === 'turn-timeout'
+                  ? msg('Turn expired')
+                  : msg('Pride loss');
+          const amount =
+            frame.impact.amount === 0
+              ? msg('0 Pride lost')
+              : msg(str`${frame.impact.amount} Pride lost`);
           this.presentationAnnouncementKeys.add(key);
           this.presentationAnnouncements = [
             ...this.presentationAnnouncements,
-            msg(str`${cause}. ${player.characterName}: ${amount}. ${frame.impact.prideAfter} Pride remains.`),
+            msg(
+              str`${cause}. ${player.characterName}: ${amount}. ${frame.impact.prideAfter} Pride remains.`,
+            ),
           ];
         }
       }
@@ -816,8 +848,13 @@ export class GrandTransitionMatch extends LitElement {
       this.postPresentationRevision = this.snapshot?.revision ?? null;
       return;
     }
-    if (snapshotChanged && !frame && previous === undefined && this.postPresentationRevision !== null &&
-      (this.snapshot?.revision ?? this.postPresentationRevision) > this.postPresentationRevision) {
+    if (
+      snapshotChanged &&
+      !frame &&
+      previous === undefined &&
+      this.postPresentationRevision !== null &&
+      (this.snapshot?.revision ?? this.postPresentationRevision) > this.postPresentationRevision
+    ) {
       this.clearPresentationAnnouncements();
     }
   }
@@ -829,7 +866,12 @@ export class GrandTransitionMatch extends LitElement {
   }
 
   private renderInlineScore(component: MatchScoreComponentView, index: number): TemplateResult {
-    const kindLabel = component.kind === 'finisher' ? msg('Finisher') : component.kind === 'comeback' ? msg('Comeback') : '';
+    const kindLabel =
+      component.kind === 'finisher'
+        ? msg('Finisher')
+        : component.kind === 'comeback'
+          ? msg('Comeback')
+          : '';
     const phraseId = `delivery-score-phrase-${index}`;
     const summaryId = `delivery-score-summary-${index}`;
     return html`<li class="delivery-score" data-score-kind=${component.kind} data-score-amount=${component.amount}
@@ -837,25 +879,43 @@ export class GrandTransitionMatch extends LitElement {
       <span class="delivery-score-text">${kindLabel ? html`${kindLabel}: ` : nothing}<span
         id=${phraseId} lang=${gameTextLanguage() ?? nothing}>${component.phraseText}</span></span>
       <span id=${summaryId} class="visually-hidden">${scoreComponentSummary(component, kindLabel)}
-        ${component.weaknessTags.length ? html`${msg('Weakness')}:
-          <span>${component.weaknessTags.map(interfaceWeaknessName).join(', ')}</span>.` : nothing}
+        ${
+          component.weaknessTags.length
+            ? html`${msg('Weakness')}:
+          <span>${component.weaknessTags.map(interfaceWeaknessName).join(', ')}</span>.`
+            : nothing
+        }
       </span>
       <span class="delivery-score-math">
-        ${component.kind === 'comeback' ? html`+${formatScoreNumber(component.amount)}` : html`${formatScoreNumber(component.base)}${
-          component.restrictionFactor > 1 ? html` <span>×${formatScoreNumber(component.restrictionFactor)}</span>` : nothing}${
-          component.weaknessFactor > 1 ? html` <span class="score-factor--weakness">×${formatScoreNumber(component.weaknessFactor)}</span>` : nothing}${
-          component.comboFactor > 1 ? html` <span class="score-factor--combo">×${formatScoreNumber(component.comboFactor)}</span>` : nothing}
-          = ${formatScoreNumber(component.amount)}`}
+        ${
+          component.kind === 'comeback'
+            ? html`+${formatScoreNumber(component.amount)}`
+            : html`${formatScoreNumber(component.base)}${
+                component.restrictionFactor > 1
+                  ? html` <span>×${formatScoreNumber(component.restrictionFactor)}</span>`
+                  : nothing
+              }${
+                component.weaknessFactor > 1
+                  ? html` <span class="score-factor--weakness">×${formatScoreNumber(component.weaknessFactor)}</span>`
+                  : nothing
+              }${
+                component.comboFactor > 1
+                  ? html` <span class="score-factor--combo">×${formatScoreNumber(component.comboFactor)}</span>`
+                  : nothing
+              }
+          = ${formatScoreNumber(component.amount)}`
+        }
       </span>
-      ${component.weaknessTags.length ? html`<span class="delivery-score-weakness"
-        >${component.weaknessTags.map(interfaceWeaknessName).join(' · ')}</span>` : nothing}
+      ${
+        component.weaknessTags.length
+          ? html`<span class="delivery-score-weakness"
+        >${component.weaknessTags.map(interfaceWeaknessName).join(' · ')}</span>`
+          : nothing
+      }
     </li>`;
   }
 
-  private renderVictory(
-    first: MatchPlayerView,
-    second: MatchPlayerView,
-  ): TemplateResult {
+  private renderVictory(first: MatchPlayerView, second: MatchPlayerView): TemplateResult {
     const round = this.snapshot!.reaction.round!;
     const victory = this.snapshot!.victory!;
     return html`
@@ -878,13 +938,17 @@ export class GrandTransitionMatch extends LitElement {
             <strong>
               ${msg(str`${victory.winnerName} wins the match`)}
             </strong>
-            ${victory
-              ? html`<span>
-                  ${victory.completedRounds === 1
-                    ? msg('1 completed round')
-                    : msg(str`${victory.completedRounds} completed rounds`)}
+            ${
+              victory
+                ? html`<span>
+                  ${
+                    victory.completedRounds === 1
+                      ? msg('1 completed round')
+                      : msg(str`${victory.completedRounds} completed rounds`)
+                  }
                 </span>`
-              : nothing}
+                : nothing
+            }
           </p>
           <dl class="reaction-scores">
             ${this.renderReactionScore(first, 'red')}
@@ -895,9 +959,7 @@ export class GrandTransitionMatch extends LitElement {
             class="round-review-continue round-review-primary"
             @click=${this.returnToMainMenu}
           >
-            ${
-              victory.ladder ? msg('Continue ladder') : msg('Return to main menu')
-            }
+            ${victory.ladder ? msg('Continue ladder') : msg('Return to main menu')}
           </button>
         </section>
       </div>
@@ -912,9 +974,7 @@ export class GrandTransitionMatch extends LitElement {
 
   private syncGrammarStrike(): void {
     const reaction = this.snapshot?.arenaReaction;
-    const sequence = reaction?.kind === 'grammar-mistake'
-      ? reaction.sequence
-      : undefined;
+    const sequence = reaction?.kind === 'grammar-mistake' ? reaction.sequence : undefined;
     if (this.pauseMode !== 'running' || this.snapshot?.roundReview || sequence === undefined) {
       this.clearGrammarStrike();
       this.grammarStrikeSequence = sequence;
@@ -965,10 +1025,7 @@ export class GrandTransitionMatch extends LitElement {
     `;
   }
 
-  private renderReactionScore(
-    player: MatchPlayerView,
-    side: 'red' | 'blue',
-  ): TemplateResult {
+  private renderReactionScore(player: MatchPlayerView, side: 'red' | 'blue'): TemplateResult {
     const reaction = this.snapshot!.reaction.players[player.playerId]!;
     return html`
       <div data-round-player=${player.playerId} data-round-side=${side}>
@@ -989,11 +1046,13 @@ export class GrandTransitionMatch extends LitElement {
                   ${msg('No scored sentence')}
                 </p>`
           }
-          ${reaction.selfDamage > 0
-            ? html`<small class="self-damage">
+          ${
+            reaction.selfDamage > 0
+              ? html`<small class="self-damage">
                 ${msg(str`−${reaction.selfDamage} Pride penalty`)}
               </small>`
-            : nothing}
+              : nothing
+          }
           ${
             reaction.comboFactor > 1
               ? html`<span class="combo-bonus combo-bonus--active">
@@ -1052,43 +1111,55 @@ export class GrandTransitionMatch extends LitElement {
         <span class="score-breakdown-copy">
           ${kindLabel ? html`<small>${kindLabel}</small>` : nothing}
            <span id=${phraseId} lang=${gameTextLanguage() ?? nothing}>${component.phraseText}</span>
-          ${component.weaknessTags.length > 0
-            ? html`<em>
+          ${
+            component.weaknessTags.length > 0
+              ? html`<em>
                 ${msg('Weakness')}: <span>${component.weaknessTags
                   .map(interfaceWeaknessName)
                   .join(' · ')}</span>
               </em>`
-            : nothing}
+              : nothing
+          }
         </span>
         <span id=${summaryId} class="visually-hidden">${scoreComponentSummary(component, kindLabel)}
-          ${component.weaknessTags.length ? html`${msg('Weakness')}:
-            <span>${component.weaknessTags.map(interfaceWeaknessName).join(', ')}</span>.` : nothing}
+          ${
+            component.weaknessTags.length
+              ? html`${msg('Weakness')}:
+            <span>${component.weaknessTags.map(interfaceWeaknessName).join(', ')}</span>.`
+              : nothing
+          }
         </span>
         <span class="score-breakdown-math">
-          ${component.kind === 'comeback'
-            ? html`<strong>+${formatScoreNumber(component.amount)}</strong>`
-            : html`
+          ${
+            component.kind === 'comeback'
+              ? html`<strong>+${formatScoreNumber(component.amount)}</strong>`
+              : html`
                 <span>${formatScoreNumber(component.base)}</span>
-                ${component.restrictionFactor > 1
-                  ? html`<mark
-                      >×${formatScoreNumber(
-                        component.restrictionFactor,
-                      )}</mark
+                ${
+                  component.restrictionFactor > 1
+                    ? html`<mark
+                      >×${formatScoreNumber(component.restrictionFactor)}</mark
                     >`
-                  : nothing}
-                ${component.weaknessFactor > 1
-                  ? html`<mark class="score-factor--weakness"
+                    : nothing
+                }
+                ${
+                  component.weaknessFactor > 1
+                    ? html`<mark class="score-factor--weakness"
                       >×${formatScoreNumber(component.weaknessFactor)}</mark
                     >`
-                  : nothing}
-                ${component.comboFactor > 1
-                  ? html`<mark class="score-factor--combo"
+                    : nothing
+                }
+                ${
+                  component.comboFactor > 1
+                    ? html`<mark class="score-factor--combo"
                       >×${formatScoreNumber(component.comboFactor)}</mark
                     >`
-                  : nothing}
+                    : nothing
+                }
                 <span aria-hidden="true">=</span>
                 <strong>${formatScoreNumber(component.amount)}</strong>
-              `}
+              `
+          }
         </span>
       </li>
     `;
@@ -1096,10 +1167,16 @@ export class GrandTransitionMatch extends LitElement {
 
   private renderCard(card: MatchCardView): TemplateResult {
     const empty = !card.reference;
-    const tutorialChoice = this.tutorialMode && card.grammarAccepted &&
-      card.action !== null && !this.commandPending && !this.thinking &&
-      this.pauseMode === 'running' && !this.presentation &&
-      !this.snapshot?.roundReview && !this.snapshot?.victory;
+    const tutorialChoice =
+      this.tutorialMode &&
+      card.grammarAccepted &&
+      card.action !== null &&
+      !this.commandPending &&
+      !this.thinking &&
+      this.pauseMode === 'running' &&
+      !this.presentation &&
+      !this.snapshot?.roundReview &&
+      !this.snapshot?.victory;
     const ownershipLabel = card.ownership === 'Private' ? msg('Private') : msg('Shared');
     const details = [
       card.stateLabel,
@@ -1135,9 +1212,7 @@ export class GrandTransitionMatch extends LitElement {
                 data-rarity=${card.rarity}
                 data-tutorial=${tutorialChoice ? 'true' : nothing}
                  aria-labelledby=${`${labelId} ${detailsId}`}
-                ?disabled=${
-                  card.action === null || this.commandPending || this.thinking
-                }
+                ?disabled=${card.action === null || this.commandPending || this.thinking}
                 @pointerenter=${() => this.preview(card)}
                 @pointerleave=${this.clearPreview}
                 @focus=${() => this.preview(card)}
@@ -1150,9 +1225,13 @@ export class GrandTransitionMatch extends LitElement {
                <span id=${detailsId} class="visually-hidden">
                  <span lang=${gameTextLanguage() ?? nothing}>${card.role}</span>.
                  ${ownershipLabel}. ${details.join('. ')}.
-                 ${card.knownWeaknesses.length > 0 ? html`
+                 ${
+                   card.knownWeaknesses.length > 0
+                     ? html`
                    ${msg('Weakness')}: <span>${card.knownWeaknesses.map(interfaceWeaknessName).join(', ')}</span>.
-                 ` : nothing}
+                 `
+                     : nothing
+                 }
                </span>`
         }
       </li>
@@ -1180,8 +1259,7 @@ export class GrandTransitionMatch extends LitElement {
 
   private preview(card: MatchCardView): void {
     if (!this.autoComplete) return;
-    const previewText =
-      card.previewText.trim() || this.snapshot?.sentenceText || null;
+    const previewText = card.previewText.trim() || this.snapshot?.sentenceText || null;
     if (previewText === this.previewText) return;
     this.previewText = previewText;
     this.requestUpdate();
@@ -1260,13 +1338,7 @@ export class GrandTransitionMatch extends LitElement {
   };
 
   private activateCard(card: MatchCardView): void {
-    if (
-      !this.snapshot ||
-      this.thinking ||
-      this.commandPending ||
-      !card.reference
-    )
-      return;
+    if (!this.snapshot || this.thinking || this.commandPending || !card.reference) return;
     if (card.action === 'select') {
       this.dispatchMatchCommand('select-phrase', { card: card.reference });
     }
@@ -1296,10 +1368,7 @@ export class GrandTransitionMatch extends LitElement {
     this.dispatchMatchCommand('select-comeback', {});
   };
 
-  private dispatchMatchCommand(
-    type: MatchCommand['type'],
-    payload: MatchCommand['payload'],
-  ): void {
+  private dispatchMatchCommand(type: MatchCommand['type'], payload: MatchCommand['payload']): void {
     if (
       this.pauseMode !== 'running' ||
       this.thinking ||
@@ -1351,10 +1420,7 @@ export class GrandTransitionMatch extends LitElement {
     ) {
       return;
     }
-    this.turnClock.reset(
-      this.turnTimerSeconds,
-      this.pauseMode === 'running',
-    );
+    this.turnClock.reset(this.turnTimerSeconds, this.pauseMode === 'running');
   }
 
   private syncPauseMode(): void {
@@ -1408,31 +1474,29 @@ export class GrandTransitionMatch extends LitElement {
         data-scene-asset=${layer.assetId}
         data-scene-depth=${layer.depth}
         data-scene-kind=${layer.kind}
-        data-scene-focal-point=${manifestLayer
-          ? `${manifestLayer.focalPoint.x},${manifestLayer.focalPoint.y}`
-          : nothing}
-        data-scene-focal-rectangles=${manifestLayer
-          ? JSON.stringify(manifestLayer.focalRectangles)
-          : nothing}
-        data-scene-safe-rectangles=${manifestLayer
-          ? JSON.stringify(manifestLayer.sharedSafeRectangles)
-          : nothing}
-        data-scene-crop-core=${manifestLayer
-          ? JSON.stringify(manifestLayer.crop.core)
-          : nothing}
-        data-scene-crop-strategy=${manifestLayer
-          ? manifestLayer.crop.strategy
-          : nothing}
+        data-scene-focal-point=${
+          manifestLayer ? `${manifestLayer.focalPoint.x},${manifestLayer.focalPoint.y}` : nothing
+        }
+        data-scene-focal-rectangles=${
+          manifestLayer ? JSON.stringify(manifestLayer.focalRectangles) : nothing
+        }
+        data-scene-safe-rectangles=${
+          manifestLayer ? JSON.stringify(manifestLayer.sharedSafeRectangles) : nothing
+        }
+        data-scene-crop-core=${manifestLayer ? JSON.stringify(manifestLayer.crop.core) : nothing}
+        data-scene-crop-strategy=${manifestLayer ? manifestLayer.crop.strategy : nothing}
         style=${manifestLayer ? sceneLayerStyle(manifestLayer) : nothing}
       >
-        ${layer.avif
-          ? html`<source
+        ${
+          layer.avif
+            ? html`<source
               data-scene-format="avif"
               type="image/avif"
               srcset=${layer.avif.srcSet}
               sizes=${layer.sizes}
             />`
-          : nothing}
+            : nothing
+        }
         <source
           data-scene-format="webp"
           type="image/webp"
@@ -1465,26 +1529,15 @@ function sentenceDensity(text: string): 'compact' | 'dense' | 'regular' {
 function formatScoreNumber(value: number): string {
   return formatInterfaceNumber(
     value,
-    Number.isInteger(value)
-      ? undefined
-      : { minimumFractionDigits: 1, maximumFractionDigits: 1 },
+    Number.isInteger(value) ? undefined : { minimumFractionDigits: 1, maximumFractionDigits: 1 },
   );
 }
 
-function scoreComponentSummary(
-  component: MatchScoreComponentView,
-  kindLabel: string,
-): string {
+function scoreComponentSummary(component: MatchScoreComponentView, kindLabel: string): string {
   if (component.kind === 'comeback') {
-    return msg(
-      str`${kindLabel}: ${formatScoreNumber(component.amount)} bonus damage.`,
-    );
+    return msg(str`${kindLabel}: ${formatScoreNumber(component.amount)} bonus damage.`);
   }
-  const factors = [
-    component.restrictionFactor,
-    component.weaknessFactor,
-    component.comboFactor,
-  ]
+  const factors = [component.restrictionFactor, component.weaknessFactor, component.comboFactor]
     .filter((factor) => factor > 1)
     .map((factor) => msg(str` times ${formatScoreNumber(factor)}`))
     .join('');

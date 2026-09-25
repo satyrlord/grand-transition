@@ -8,7 +8,15 @@ import { fileURLToPath } from 'node:url';
 
 const skillsRoot = path.resolve(fileURLToPath(new URL('.', import.meta.url)), '..', '..');
 const validatorName = 'quick_validate.py';
-const pythonArguments = ['run', '--no-project', '--with', 'pyyaml', '--python-preference', 'only-system', 'python'];
+const pythonArguments = [
+  'run',
+  '--no-project',
+  '--with',
+  'pyyaml',
+  '--python-preference',
+  'only-system',
+  'python',
+];
 
 function findExecutable(name) {
   const extensions = process.platform === 'win32' ? ['.exe', ''] : [''];
@@ -35,7 +43,10 @@ function findValidator() {
 
 function findInterpreter() {
   const uv = findExecutable('uv');
-  if (uv && spawnSync(uv, [...pythonArguments, '-c', 'import yaml'], { stdio: 'ignore' }).status === 0) {
+  if (
+    uv &&
+    spawnSync(uv, [...pythonArguments, '-c', 'import yaml'], { stdio: 'ignore' }).status === 0
+  ) {
     return { command: uv, args: pythonArguments };
   }
   for (const name of ['python3', 'python', 'py']) {
@@ -51,10 +62,14 @@ function findInterpreter() {
 
 function skillFolders(args) {
   if (args.length > 0) {
-    return args.map((argument) => (existsSync(argument) ? path.resolve(argument) : path.join(skillsRoot, argument)));
+    return args.map((argument) =>
+      existsSync(argument) ? path.resolve(argument) : path.join(skillsRoot, argument),
+    );
   }
   return readdirSync(skillsRoot, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && existsSync(path.join(skillsRoot, entry.name, 'SKILL.md')))
+    .filter(
+      (entry) => entry.isDirectory() && existsSync(path.join(skillsRoot, entry.name, 'SKILL.md')),
+    )
     .map((entry) => path.join(skillsRoot, entry.name))
     .sort();
 }
@@ -66,18 +81,24 @@ function reportBlocked(reason) {
 
 const validator = findValidator();
 if (!validator) {
-  reportBlocked('the skill-creator package is not installed. Install it or set CODEX_HOME to its parent folder.');
+  reportBlocked(
+    'the skill-creator package is not installed. Install it or set CODEX_HOME to its parent folder.',
+  );
 }
 const interpreter = findInterpreter();
 if (!interpreter) {
-  reportBlocked('no Python environment with PyYAML is available. Install uv or add PyYAML to Python.');
+  reportBlocked(
+    'no Python environment with PyYAML is available. Install uv or add PyYAML to Python.',
+  );
 }
 
 const failures = [];
 const folders = skillFolders(process.argv.slice(2));
 for (const folder of folders) {
   const name = path.relative(skillsRoot, folder) || folder;
-  const result = spawnSync(interpreter.command, [...interpreter.args, validator, folder], { encoding: 'utf8' });
+  const result = spawnSync(interpreter.command, [...interpreter.args, validator, folder], {
+    encoding: 'utf8',
+  });
   const output = `${result.stdout ?? ''}${result.stderr ?? ''}`.trim();
   if (result.status === 0) {
     process.stdout.write(`PASS ${name}: ${output}\n`);

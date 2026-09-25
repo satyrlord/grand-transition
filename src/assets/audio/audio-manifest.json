@@ -416,7 +416,7 @@
       "kind": "effect",
       "duration": 0.16,
       "owner": "Grand Transition contributors",
-      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "source": "Original procedural composition; tools/audio-assets.ts",
       "license": "CC-BY-NC-4.0",
       "files": [
         {
@@ -456,7 +456,7 @@
       "kind": "effect",
       "duration": 0.32,
       "owner": "Grand Transition contributors",
-      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "source": "Original procedural composition; tools/audio-assets.ts",
       "license": "CC-BY-NC-4.0",
       "files": [
         {
@@ -496,7 +496,7 @@
       "kind": "effect",
       "duration": 0.28,
       "owner": "Grand Transition contributors",
-      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "source": "Original procedural composition; tools/audio-assets.ts",
       "license": "CC-BY-NC-4.0",
       "files": [
         {
@@ -536,7 +536,7 @@
       "kind": "effect",
       "duration": 0.55,
       "owner": "Grand Transition contributors",
-      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "source": "Original procedural composition; tools/audio-assets.ts",
       "license": "CC-BY-NC-4.0",
       "files": [
         {
@@ -576,7 +576,7 @@
       "kind": "effect",
       "duration": 0.45,
       "owner": "Grand Transition contributors",
-      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "source": "Original procedural composition; tools/audio-assets.ts",
       "license": "CC-BY-NC-4.0",
       "files": [
         {
@@ -616,7 +616,7 @@
       "kind": "effect",
       "duration": 0.6,
       "owner": "Grand Transition contributors",
-      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "source": "Original procedural composition; tools/audio-assets.ts",
       "license": "CC-BY-NC-4.0",
       "files": [
         {
@@ -656,7 +656,7 @@
       "kind": "effect",
       "duration": 0.45,
       "owner": "Grand Transition contributors",
-      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "source": "Original procedural composition; tools/audio-assets.ts",
       "license": "CC-BY-NC-4.0",
       "files": [
         {
@@ -696,7 +696,7 @@
       "kind": "effect",
       "duration": 0.75,
       "owner": "Grand Transition contributors",
-      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "source": "Original procedural composition; tools/audio-assets.ts",
       "license": "CC-BY-NC-4.0",
       "files": [
         {
@@ -736,7 +736,7 @@
       "kind": "effect",
       "duration": 0.3,
       "owner": "Grand Transition contributors",
-      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "source": "Original procedural composition; tools/audio-assets.ts",
       "license": "CC-BY-NC-4.0",
       "files": [
         {
@@ -776,7 +776,7 @@
       "kind": "effect",
       "duration": 0.07,
       "owner": "Grand Transition contributors",
-      "source": "Original procedural composition; tools/audio-assets.mjs",
+      "source": "Original procedural composition; tools/audio-assets.ts",
       "license": "CC-BY-NC-4.0",
       "files": [
         {

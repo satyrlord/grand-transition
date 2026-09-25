@@ -5,7 +5,7 @@ import {
   NATIVE_ALPHA_MAX_CONTOUR_DISTANCE,
   NATIVE_ALPHA_MIN_CONTOUR_RATIO,
   NATIVE_ALPHA_MIN_OPACITY,
-} from './asset-pixels.mjs';
+} from './asset-pixels.ts';
 import { createHash } from 'node:crypto';
 import { lstat, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -18,33 +18,34 @@ import {
   CHARACTER_VARIANT_FORMATS,
   CHARACTER_VARIANT_SIZES,
   readCharacterLayout,
-} from './build-character-assets.mjs';
+} from './build-character-assets.ts';
 
 const hashPattern = /^[0-9a-f]{64}$/u;
 const baselineHashByFile = new Map(baseline.assets.map(({ file, sha256 }) => [file, sha256]));
-const sha256 = (input) => createHash('sha256').update(input).digest('hex');
-const isRecord = (value) => typeof value === 'object' && value !== null && !Array.isArray(value);
+const sha256 = (input: Uint8Array) => createHash('sha256').update(input).digest('hex');
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value);
 
-function requireString(value, context) {
+function requireString(value: unknown, context: string): string {
   if (typeof value !== 'string' || !value.trim()) throw new Error(`${context} must be a non-empty string.`);
   return value;
 }
 
-function requireHash(value, context) {
+function requireHash(value: unknown, context: string): string {
   if (typeof value !== 'string' || !hashPattern.test(value)) throw new Error(`${context} must be a lowercase SHA-256 hash.`);
   return value;
 }
 
-function requireInteger(value, context) {
-  if (!Number.isInteger(value) || value < 0) throw new Error(`${context} must be a non-negative integer.`);
+function requireInteger(value: unknown, context: string): number {
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 0) throw new Error(`${context} must be a non-negative integer.`);
   return value;
 }
 
-export function validateCharacterSkinInventory(assets) {
+export function validateCharacterSkinInventory(assets: unknown): unknown[] {
   if (!Array.isArray(assets)) {
     throw new Error('Character manifest must declare an assets array.');
   }
-  const countsByOwner = new Map();
+  const countsByOwner = new Map<string, { defaults: number; alternates: number }>();
   for (const [index, asset] of assets.entries()) {
     if (!isRecord(asset)) throw new Error(`Character manifest asset ${index} must be an object.`);
     const ownerId = requireString(asset.ownerId, `Character manifest asset ${index}.ownerId`);
@@ -69,14 +70,20 @@ export function validateCharacterSkinInventory(assets) {
   return assets;
 }
 
-async function assertRegularFile(filePath, context) {
+async function assertRegularFile(filePath: string, context: string): Promise<void> {
   const stats = await lstat(filePath).catch((error) => {
     throw new Error(`${context} is missing: ${filePath}.`, { cause: error });
   });
   if (!stats.isFile()) throw new Error(`${context} is not a regular file: ${filePath}.`);
 }
 
-export async function inspectRaster(filePath, expectedFormat, expectedWidth, expectedHeight, context) {
+export async function inspectRaster(
+  filePath: string,
+  expectedFormat: string,
+  expectedWidth: number,
+  expectedHeight: number,
+  context: string,
+) {
   await assertRegularFile(filePath, context);
   const input = await readFile(filePath);
   const metadata = await sharp(input).metadata();
@@ -87,7 +94,7 @@ export async function inspectRaster(filePath, expectedFormat, expectedWidth, exp
   return { input, metadata };
 }
 
-export async function inspectAlpha(input, context, { nativeAlpha = false } = {}) {
+export async function inspectAlpha(input: Buffer, context: string, { nativeAlpha = false } = {}): Promise<void> {
   const { data, info } = await sharp(input).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   let transparent = 0;
   let opaque = 0;
@@ -147,7 +154,7 @@ export async function inspectAlpha(input, context, { nativeAlpha = false } = {})
   }
 }
 
-async function readJson(filePath) {
+async function readJson(filePath: string): Promise<unknown> {
   try {
     return JSON.parse(await readFile(filePath, 'utf8'));
   } catch (error) {
@@ -155,7 +162,7 @@ async function readJson(filePath) {
   }
 }
 
-async function assertExactMasterSet(characterRoot) {
+async function assertExactMasterSet(characterRoot: string): Promise<void> {
   const actual = (await readdir(characterRoot, { withFileTypes: true }))
     .filter((entry) => entry.isFile() && path.extname(entry.name).toLowerCase() === '.png')
     .map((entry) => entry.name)
@@ -175,14 +182,14 @@ async function assertExactMasterSet(characterRoot) {
   }
 }
 
-async function listVariantFiles(variantsRoot) {
+async function listVariantFiles(variantsRoot: string): Promise<string[]> {
   const entries = await readdir(variantsRoot, { withFileTypes: true });
   return entries.filter((entry) => entry.isFile()).map((entry) => `variants/${entry.name}`).toSorted((left, right) => left.localeCompare(right, 'en'));
 }
 
 export async function validateCharacterAssets({
   characterRoot = path.resolve('src', 'assets', 'characters'),
-} = {}) {
+}: { characterRoot?: string } = {}) {
   const root = path.resolve(characterRoot);
   await assertExactMasterSet(root);
   const layout = await readCharacterLayout(root);
@@ -195,8 +202,8 @@ export async function validateCharacterAssets({
   }
   validateCharacterSkinInventory(manifest.assets);
   const expectedIds = new Set(CHARACTER_MASTER_NAMES.map((file) => path.parse(file).name));
-  const seenIds = new Set();
-  const declaredVariants = new Set();
+  const seenIds = new Set<string>();
+  const declaredVariants = new Set<string>();
   for (const [index, asset] of manifest.assets.entries()) {
     const context = `Character manifest asset ${index}`;
     if (!isRecord(asset)) throw new Error(`${context} must be an object.`);
@@ -240,13 +247,13 @@ export async function validateCharacterAssets({
     if (!Array.isArray(asset.variants) || asset.variants.length !== CHARACTER_VARIANT_SIZES.length * CHARACTER_VARIANT_FORMATS.length) {
       throw new Error(`Character asset "${id}" must declare every runtime variant.`);
     }
-    const variantKeys = new Set();
+    const variantKeys = new Set<string>();
     for (const [variantIndex, variant] of asset.variants.entries()) {
       const variantContext = `Character asset "${id}" variant ${variantIndex}`;
       if (!isRecord(variant)) throw new Error(`${variantContext} must be an object.`);
       const width = requireInteger(variant.width, `${variantContext}.width`);
       const height = requireInteger(variant.height, `${variantContext}.height`);
-      const format = variant.format;
+      const format = variant.format as (typeof CHARACTER_VARIANT_FORMATS)[number];
       if (!CHARACTER_VARIANT_SIZES.includes(width) || height !== width || !CHARACTER_VARIANT_FORMATS.includes(format)) {
         throw new Error(`${variantContext} has unsupported dimensions or format.`);
       }
@@ -269,7 +276,7 @@ export async function validateCharacterAssets({
   const actualVariants = await listVariantFiles(path.join(root, 'variants'));
   const expectedVariants = [...declaredVariants].toSorted((left, right) => left.localeCompare(right, 'en'));
   if (JSON.stringify(actualVariants) !== JSON.stringify(expectedVariants)) throw new Error('Character variant directory contains a missing or extra file.');
-  return manifest;
+  return manifest as { assets: unknown[] };
 }
 
 const invokedScript = process.argv[1] ? path.resolve(process.argv[1]) : undefined;

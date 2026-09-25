@@ -10,7 +10,18 @@ export function createPiperClarity(context: BaseAudioContext) {
   presence.gain.value = 2;
   const headroom = context.createGain();
   headroom.gain.value = 10 ** (-3 / 20);
-  highpass.connect(presence); presence.connect(headroom); headroom.connect(context.destination);
-  return { input: highpass, highpass, presence, headroom,
-    disconnect: () => { highpass.disconnect(); presence.disconnect(); headroom.disconnect(); } };
+  highpass.connect(presence);
+  presence.connect(headroom);
+  headroom.connect(context.destination);
+  return {
+    input: highpass,
+    highpass,
+    presence,
+    headroom,
+    disconnect: () => {
+      highpass.disconnect();
+      presence.disconnect();
+      headroom.disconnect();
+    },
+  };
 }

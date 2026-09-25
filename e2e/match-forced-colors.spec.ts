@@ -1,9 +1,11 @@
-import { lockInSetup } from './helpers/setup';
+import { lockInSetup } from './helpers/setup.ts';
 import { expect, test, type Page } from '@playwright/test';
 import sharp from 'sharp';
-import { useFixedBrowserMatchSeed } from './helpers/match-flow';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 
-test('forced colors keep phrase text and both player records readable through turn changes', async ({ page }) => {
+test('forced colors keep phrase text and both player records readable through turn changes', async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 1024, height: 720 });
   await useFixedBrowserMatchSeed(page);
   await page.goto('/grand-transition/');
@@ -22,7 +24,9 @@ test('forced colors keep phrase text and both player records readable through tu
     await page.keyboard.press('Tab');
     await choice.focus();
     await expect(choice).toBeFocused();
-    expect(await choice.evaluate((element) => getComputedStyle(element).outlineStyle)).toBe('solid');
+    expect(await choice.evaluate((element) => getComputedStyle(element).outlineStyle)).toBe(
+      'solid',
+    );
     await choice.hover();
     await assertSystemColors(page);
     await page.locator('.private-hand button.phrase-card').first().hover();
@@ -34,12 +38,17 @@ test('forced colors keep phrase text and both player records readable through tu
   }
 
   await page.getByRole('button', { name: 'Pause', exact: true }).click();
-  await page.locator('.interruption-setting-options[aria-label="Phrase color coding"]').getByRole('button', { name: 'Off', exact: true }).click();
+  await page
+    .locator('.interruption-setting-options[aria-label="Phrase color coding"]')
+    .getByRole('button', { name: 'Off', exact: true })
+    .click();
   await page.getByRole('button', { name: 'Resume', exact: true }).click();
   await assertSystemColors(page);
 });
 
-test('forced colors preserve readable disabled choices during the computer turn', async ({ page }) => {
+test('forced colors preserve readable disabled choices during the computer turn', async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 1024, height: 720 });
   await page.emulateMedia({ forcedColors: 'active', reducedMotion: 'reduce' });
   await useFixedBrowserMatchSeed(page);
@@ -65,26 +74,42 @@ test('forced colors preserve readable disabled choices during the computer turn'
     return {
       present: cards.length > 0,
       disabled: cards.every((card) => card.disabled),
-      text: cards.every((card) => getComputedStyle(card.querySelector('.card-phrase')!).color === gray),
+      text: cards.every(
+        (card) => getComputedStyle(card.querySelector('.card-phrase')!).color === gray,
+      ),
       filter: style.filter,
       opacity: style.opacity,
     };
   });
-  expect(facts).toEqual({ present: true, disabled: true, text: true, filter: 'none', opacity: '1' });
+  expect(facts).toEqual({
+    present: true,
+    disabled: true,
+    text: true,
+    filter: 'none',
+    opacity: '1',
+  });
 });
 
 async function assertPrideMeters(page: Page): Promise<void> {
-  const highlight = await page.locator('.player-turn-status:not([hidden])').evaluate((element) =>
-    getComputedStyle(element).backgroundColor.match(/\d+/gu)!.map(Number),
-  );
+  const highlight = await page
+    .locator('.player-turn-status:not([hidden])')
+    .evaluate((element) => getComputedStyle(element).backgroundColor.match(/\d+/gu)!.map(Number));
   for (const meter of await page.locator('.player-health meter').all()) {
     await expect(meter).toHaveAttribute('value', '100');
-    const { data, info } = await sharp(await meter.screenshot()).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+    const { data, info } = await sharp(await meter.screenshot())
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
     let filledPixels = 0;
     for (let index = 0; index < data.length; index += 4) {
-      if (data[index] === highlight[0] && data[index + 1] === highlight[1] && data[index + 2] === highlight[2]) filledPixels += 1;
+      if (
+        data[index] === highlight[0] &&
+        data[index + 1] === highlight[1] &&
+        data[index + 2] === highlight[2]
+      )
+        filledPixels += 1;
     }
-    expect(filledPixels).toBeGreaterThan(info.width * info.height / 4);
+    expect(filledPixels).toBeGreaterThan((info.width * info.height) / 4);
   }
 }
 
@@ -103,7 +128,9 @@ async function assertSystemColors(page: Page): Promise<void> {
     const phrases = [...element.querySelectorAll('.card-phrase')];
     const cards = [...element.querySelectorAll('button.phrase-card')];
     const records = [...element.querySelectorAll('.player-hud')];
-    const labels = [...element.querySelectorAll('.player-hud h2, .player-health-label, .player-health strong')];
+    const labels = [
+      ...element.querySelectorAll('.player-hud h2, .player-health-label, .player-health strong'),
+    ];
     const badge = getComputedStyle(element.querySelector('.player-turn-status:not([hidden])')!);
     return {
       phrasesPresent: phrases.length > 0,
@@ -119,8 +146,12 @@ async function assertSystemColors(page: Page): Promise<void> {
     };
   });
   expect(facts).toEqual({
-    phrasesPresent: true, recordsPresent: true,
-    phraseColors: true, cardSurfaces: true, labelColors: true,
-    activeBadge: true, recordSurfaces: true,
+    phrasesPresent: true,
+    recordsPresent: true,
+    phraseColors: true,
+    cardSurfaces: true,
+    labelColors: true,
+    activeBadge: true,
+    recordSurfaces: true,
   });
 }

@@ -1,10 +1,18 @@
-import type { SettingsDocument } from '../persistence/codecs/settings-codec';
+import type { SettingsDocument } from '../persistence/codecs/settings-codec.ts';
 
 export const effectIds = [
-  'role-select', 'commit', 'hit-light', 'hit-heavy', 'weakness', 'combo',
-  'continuation-break', 'comeback', 'grammar-mistake', 'timer-tick',
+  'role-select',
+  'commit',
+  'hit-light',
+  'hit-heavy',
+  'weakness',
+  'combo',
+  'continuation-break',
+  'comeback',
+  'grammar-mistake',
+  'timer-tick',
 ] as const;
-export type EffectId = typeof effectIds[number];
+export type EffectId = (typeof effectIds)[number];
 export const sceneMusicTrackIds = {
   'transition-era-television-studio': 'transition-era-television-studio-theme',
   'modern-debate-studio': 'modern-debate-studio-theme',
@@ -17,8 +25,10 @@ export const sceneMusicTrackIds = {
 export type SceneAudioId = keyof typeof sceneMusicTrackIds;
 export type AudioScene = 'menu' | SceneAudioId | null;
 export type AudioStatus = 'idle' | 'loading' | 'ready' | 'unavailable';
-export type MixerSettings = Pick<SettingsDocument,
-  'masterVolume' | 'musicVolume' | 'effectsVolume' | 'speechVolume'>;
+export type MixerSettings = Pick<
+  SettingsDocument,
+  'masterVolume' | 'musicVolume' | 'effectsVolume' | 'speechVolume'
+>;
 
 export function mixerGains(settings: MixerSettings) {
   return {
@@ -38,7 +48,5 @@ export interface AudioPort {
 }
 
 export function audioScene(value: string | undefined): SceneAudioId | null {
-  return value && Object.hasOwn(sceneMusicTrackIds, value)
-    ? value as SceneAudioId
-    : null;
+  return value && Object.hasOwn(sceneMusicTrackIds, value) ? (value as SceneAudioId) : null;
 }

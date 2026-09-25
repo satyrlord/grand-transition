@@ -1,21 +1,21 @@
 import { describe, expect, test } from 'vitest';
-import { contentCatalogSchema } from '../../src/content/content-catalog';
+import { contentCatalogSchema } from '../../src/content/content-catalog.ts';
 import commonPhraseCards from '../../src/content/common-phrase-cards.json' with { type: 'json' };
-import { finalContentVolumeIssues } from '../../tools/final-content-volumes';
-import { createGameCatalog } from '../../src/content/game-catalog';
-import { createEnglishGameLocale } from '../../src/localization/en-game-locale';
+import { finalContentVolumeIssues } from '../../tools/final-content-volumes.ts';
+import { createGameCatalog } from '../../src/content/game-catalog.ts';
+import { createEnglishGameLocale } from '../../src/localization/en-game-locale.ts';
 import {
   buildPhraseCardCatalog,
   combinePhraseCardCorpora,
   parseCharacterCardFile,
   parsePhraseCardCorpus,
-} from '../../src/content/phrase-card-catalog';
+} from '../../src/content/phrase-card-catalog.ts';
 import {
   characterPortraitUrls,
   characterSkins,
   phraseCardCatalog,
   gameCatalog,
-} from '../../src/game-content';
+} from '../../src/game-content.ts';
 
 type MutableCatalog = ReturnType<typeof cloneCatalog>;
 
@@ -42,9 +42,7 @@ const numericBoundaryCases: readonly NumericBoundaryCase[] = [
     immediatelyBelow: -1,
     immediatelyAbove: 101,
     setValue: (catalog, value) => {
-      catalog.phrases[4]!.customScores = [
-        { leftNounId: 'common-noun-001', score: value },
-      ];
+      catalog.phrases[4]!.customScores = [{ leftNounId: 'common-noun-001', score: value }];
     },
   },
   {
@@ -55,24 +53,20 @@ const numericBoundaryCases: readonly NumericBoundaryCase[] = [
     immediatelyBelow: 0,
     immediatelyAbove: 21,
     setValue: (catalog, value) => {
-      catalog.phrases.find(
-        (phrase) => phrase.id === 'common-ending-001',
-      )!.finisherBonus = value;
+      catalog.phrases.find((phrase) => phrase.id === 'common-ending-001')!.finisherBonus = value;
     },
   },
-  ...(['aggression', 'denial', 'risk'] as const).map(
-    (field): NumericBoundaryCase => ({
-      name: `AI personality ${field}`,
-      pathPart: `characters.0.aiPersonality.${field}`,
-      minimum: 0,
-      maximum: 1,
-      immediatelyBelow: -0.01,
-      immediatelyAbove: 1.01,
-      setValue: (catalog, value) => {
-        catalog.characters[0]!.aiPersonality[field] = value;
-      },
-    }),
-  ),
+  ...(['aggression', 'denial', 'risk'] as const).map((field): NumericBoundaryCase => ({
+    name: `AI personality ${field}`,
+    pathPart: `characters.0.aiPersonality.${field}`,
+    minimum: 0,
+    maximum: 1,
+    immediatelyBelow: -0.01,
+    immediatelyAbove: 1.01,
+    setValue: (catalog, value) => {
+      catalog.characters[0]!.aiPersonality[field] = value;
+    },
+  })),
   {
     name: 'voice rate',
     pathPart: 'characters.0.voiceProfile.rate',
@@ -108,11 +102,7 @@ const numericBoundaryCases: readonly NumericBoundaryCase[] = [
   },
 ];
 
-function expectFailure(
-  catalog: MutableCatalog,
-  pathPart: string,
-  messagePart: RegExp,
-): void {
+function expectFailure(catalog: MutableCatalog, pathPart: string, messagePart: RegExp): void {
   const result = contentCatalogSchema.safeParse(catalog);
   expect(result.success).toBe(false);
   if (result.success) return;
@@ -125,7 +115,6 @@ function expectFailure(
 }
 
 describe('content schemas', () => {
-
   test('empty phrase tags are valid for every role while the field remains required', () => {
     const catalog = cloneCatalog();
     const tagged = new Set<string>();
@@ -162,18 +151,21 @@ describe('content schemas', () => {
       ]) {
         const text = key ? phraseCardCatalog.englishMessages[key] : undefined;
         if (!text) continue;
-        expect(text.trim().split(/\s+/u).length, `${phrase.id} ${phrase.role}`)
-          .toBeLessThanOrEqual(ceiling);
+        expect(text.trim().split(/\s+/u).length, `${phrase.id} ${phrase.role}`).toBeLessThanOrEqual(
+          ceiling,
+        );
       }
     }
 
-    const overlongModifier = [{
-      id: 'overlong-modifier-fixture',
-      role: 'modifier',
-      text: 'one two three four five six seven eight nine ten',
-      tags: [],
-      rarity: 'common',
-    }];
+    const overlongModifier = [
+      {
+        id: 'overlong-modifier-fixture',
+        role: 'modifier',
+        text: 'one two three four five six seven eight nine ten',
+        tags: [],
+        rarity: 'common',
+      },
+    ];
     expect(() => parsePhraseCardCorpus(overlongModifier)).toThrow(
       /modifier text to 9 words or fewer/iu,
     );
@@ -200,47 +192,56 @@ describe('content schemas', () => {
       aiPersonality: { aggression: 0.5, denial: 0.5, risk: 0.5 },
       voiceProfile: { voiceHint: 'measured', rate: 1, pitch: 1 },
       animationSet: { idle: 'test-idle', speak: 'test-speak', react: 'test-react' },
-      phrases: [{
-        id: 'test-noun', role: 'noun', text: 'a test noun', tags: ['paperwork'],
-        scoreGroups: { substance: ['personal'], flavour: ['politics'] },
-        rarity: 'common',
-      }],
+      phrases: [
+        {
+          id: 'test-noun',
+          role: 'noun',
+          text: 'a test noun',
+          tags: ['paperwork'],
+          scoreGroups: { substance: ['personal'], flavour: ['politics'] },
+          rarity: 'common',
+        },
+      ],
     } as const;
 
-    expect(() => parseCharacterCardFile(
-      source,
-      'characters/test-character-phrase-cards.json',
-    ))
-      .not.toThrow();
-    expect(() => parseCharacterCardFile({
-      ...source,
-      comebacks: {
-        ...source.comebacks,
-        medium: 'one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen',
-      },
-    }, 'characters/test-character-phrase-cards.json'))
-      .toThrow(/comeback text to 16 words or fewer/iu);
+    expect(() =>
+      parseCharacterCardFile(source, 'characters/test-character-phrase-cards.json'),
+    ).not.toThrow();
+    expect(() =>
+      parseCharacterCardFile(
+        {
+          ...source,
+          comebacks: {
+            ...source.comebacks,
+            medium:
+              'one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen',
+          },
+        },
+        'characters/test-character-phrase-cards.json',
+      ),
+    ).toThrow(/comeback text to 16 words or fewer/iu);
   });
 
   test('limits every player-visible phrase form to 11 words', () => {
-    const visibleForms = Object.entries(phraseCardCatalog.englishMessages)
-      .filter(([key]) => key.startsWith('phrase.'));
+    const visibleForms = Object.entries(phraseCardCatalog.englishMessages).filter(([key]) =>
+      key.startsWith('phrase.'),
+    );
     for (const [key, value] of visibleForms) {
       expect(value.trim().split(/\s+/u).length, key).toBeLessThanOrEqual(11);
     }
 
-    const source = [{
-      id: 'overlong-fixture',
-      role: 'noun',
-      text: 'one two three four five six seven eight nine ten eleven twelve',
-      tags: [],
-      grammaticalNumber: 'singular',
-      scoreGroups: { substance: ['personal'], flavour: ['politics'] },
-      rarity: 'common',
-    }];
-    expect(() => parsePhraseCardCorpus(source)).toThrow(
-      /11 words or fewer/iu,
-    );
+    const source = [
+      {
+        id: 'overlong-fixture',
+        role: 'noun',
+        text: 'one two three four five six seven eight nine ten eleven twelve',
+        tags: [],
+        grammaticalNumber: 'singular',
+        scoreGroups: { substance: ['personal'], flavour: ['politics'] },
+        rarity: 'common',
+      },
+    ];
+    expect(() => parsePhraseCardCorpus(source)).toThrow(/11 words or fewer/iu);
   });
 
   test('keeps every required role in the common corpus', () => {
@@ -248,15 +249,7 @@ describe('content schemas', () => {
       phraseCardCatalog.commonPhraseIds.includes(phrase.id),
     );
     expect(new Set(commonPhrases.map((phrase) => phrase.role))).toEqual(
-      new Set([
-        'noun',
-        'verb',
-        'predicate',
-        'modifier',
-        'conjunction',
-        'ending',
-        'continuation',
-      ]),
+      new Set(['noun', 'verb', 'predicate', 'modifier', 'conjunction', 'ending', 'continuation']),
     );
   });
 
@@ -280,9 +273,7 @@ describe('content schemas', () => {
     for (const [family, members] of families) {
       const expectedTenses = ['future', 'past', 'present'];
       expect(members, family).toHaveLength(expectedTenses.length);
-      expect(new Set(members.map((member) => member.role))).toEqual(
-        new Set([members[0]!.role]),
-      );
+      expect(new Set(members.map((member) => member.role))).toEqual(new Set([members[0]!.role]));
       expect(
         members
           .map((member) => member.tense)
@@ -291,9 +282,7 @@ describe('content schemas', () => {
           }),
       ).toEqual(expectedTenses);
       for (const member of members) {
-        expect(member.rarity, family + ' ' + member.id).toBe(
-          expectedRarity[member.tense!],
-        );
+        expect(member.rarity, family + ' ' + member.id).toBe(expectedRarity[member.tense!]);
       }
     }
   });
@@ -302,8 +291,7 @@ describe('content schemas', () => {
     const commonModifierIds = phraseCardCatalog.phrases
       .filter(
         (phrase) =>
-          phrase.role === 'modifier' &&
-          phraseCardCatalog.commonPhraseIds.includes(phrase.id),
+          phrase.role === 'modifier' && phraseCardCatalog.commonPhraseIds.includes(phrase.id),
       )
       .map((phrase) => phrase.id)
       .toSorted();
@@ -334,10 +322,7 @@ describe('content schemas', () => {
     );
     expect(
       phraseCardCatalog.phrases
-        .filter(
-          (phrase) =>
-            phrase.role === 'modifier' && phrase.characterIds !== undefined,
-        )
+        .filter((phrase) => phrase.role === 'modifier' && phrase.characterIds !== undefined)
         .map((phrase) => phrase.id)
         .toSorted(),
     ).toEqual(
@@ -351,21 +336,16 @@ describe('content schemas', () => {
       phraseCardCatalog.phrases
         .filter((phrase) => phrase.role === 'modifier')
         .every(
-          (phrase) =>
-            phrase.scorePreferences === undefined &&
-            phrase.customScores === undefined,
+          (phrase) => phrase.scorePreferences === undefined && phrase.customScores === undefined,
         ),
     ).toBe(true);
   });
 
   test('keeps every character predicate as a clause-completing verb phrase', () => {
     const predicates = phraseCardCatalog.phrases.filter(
-      (phrase) =>
-        phrase.role === 'predicate' && phrase.characterIds !== undefined,
+      (phrase) => phrase.role === 'predicate' && phrase.characterIds !== undefined,
     );
-    expect(
-      [...new Set(predicates.map((phrase) => phrase.tenseFamily))],
-    ).toEqual(
+    expect([...new Set(predicates.map((phrase) => phrase.tenseFamily))]).toEqual(
       expect.arrayContaining([
         'red-folded-chairman-predicate-001',
         'red-folded-chairman-predicate-002',
@@ -378,9 +358,7 @@ describe('content schemas', () => {
     );
     expect(
       predicates.every(
-        (phrase) =>
-          phrase.scorePreferences !== undefined ||
-          phrase.customScores !== undefined,
+        (phrase) => phrase.scorePreferences !== undefined || phrase.customScores !== undefined,
       ),
     ).toBe(true);
   });
@@ -392,18 +370,13 @@ describe('content schemas', () => {
     expect(phrase).toBeDefined();
     if (!phrase) return;
 
-    expect(phraseCardCatalog.englishMessages[phrase.textKey]).toBe(
-      'a nosy do-gooder',
-    );
+    expect(phraseCardCatalog.englishMessages[phrase.textKey]).toBe('a nosy do-gooder');
     const related = phraseCardCatalog.phrases.filter((candidate) =>
       candidate.id.includes('somaldoaca'),
     );
     expect(
       related.every(
-        (candidate) =>
-          !phraseCardCatalog.englishMessages[candidate.textKey]?.includes(
-            'Karen',
-          ),
+        (candidate) => !phraseCardCatalog.englishMessages[candidate.textKey]?.includes('Karen'),
       ),
     ).toBe(true);
   });
@@ -416,19 +389,13 @@ describe('content schemas', () => {
     expect(continuations).toHaveLength(1);
     const continuation = continuations[0]!;
     expect(continuation.characterIds).toBeUndefined();
-    expect(phraseCardCatalog.englishMessages[continuation.textKey]).toBe(
-      '[...]',
-    );
+    expect(phraseCardCatalog.englishMessages[continuation.textKey]).toBe('[...]');
   });
 
   test('requires every ending text to include a terminal full stop', () => {
-    const endings = phraseCardCatalog.phrases.filter(
-      (phrase) => phrase.role === 'ending',
-    );
+    const endings = phraseCardCatalog.phrases.filter((phrase) => phrase.role === 'ending');
     expect(
-      endings.every((phrase) =>
-        phraseCardCatalog.englishMessages[phrase.textKey]?.endsWith('.'),
-      ),
+      endings.every((phrase) => phraseCardCatalog.englishMessages[phrase.textKey]?.endsWith('.')),
     ).toBe(true);
 
     expect(() =>
@@ -474,18 +441,13 @@ describe('content schemas', () => {
     expect(loaded.englishMessages).toEqual({
       'phrase.manual-card': 'a manual card',
     });
-    expect(() => parsePhraseCardCorpus([source, source])).toThrow(
-      /duplicated/iu,
-    );
+    expect(() => parsePhraseCardCorpus([source, source])).toThrow(/duplicated/iu);
     expect(() =>
-      parsePhraseCardCorpus([
-        source,
-        { ...source, id: 'manual-card-with-repeated-text' },
-      ]),
+      parsePhraseCardCorpus([source, { ...source, id: 'manual-card-with-repeated-text' }]),
     ).toThrow(/unique player-visible phrase text/iu);
-    expect(() =>
-      parsePhraseCardCorpus([{ ...source, singularText: 'a manual card' }]),
-    ).toThrow(/both singularText and pluralText/iu);
+    expect(() => parsePhraseCardCorpus([{ ...source, singularText: 'a manual card' }])).toThrow(
+      /both singularText and pluralText/iu,
+    );
     expect(() =>
       combinePhraseCardCorpora({
         common: loaded,
@@ -525,13 +487,12 @@ describe('content schemas', () => {
     const loaded = parsePhraseCardCorpus([source]);
 
     expect(loaded.englishMessages).toMatchObject({
-      'phrase.manual-person-agreement.personal-singular':
-        'guards their own notes',
+      'phrase.manual-person-agreement.personal-singular': 'guards their own notes',
       'phrase.manual-person-agreement.second-person': 'guard your own notes',
     });
-    expect(() =>
-      parsePhraseCardCorpus([{ ...source, secondPersonText: undefined }]),
-    ).toThrow(/both personalSingularText and secondPersonText/iu);
+    expect(() => parsePhraseCardCorpus([{ ...source, secondPersonText: undefined }])).toThrow(
+      /both personalSingularText and secondPersonText/iu,
+    );
   });
 
   test('builds a complete character and locale messages from one JSON source', () => {
@@ -600,10 +561,7 @@ describe('content schemas', () => {
         },
       ],
     } as const;
-    const parsed = parseCharacterCardFile(
-      source,
-      'characters/test-character-phrase-cards.json',
-    );
+    const parsed = parseCharacterCardFile(source, 'characters/test-character-phrase-cards.json');
     expect(parsed.character).toMatchObject({
       id: 'test-character',
       nameKey: 'character.test-character.name',
@@ -637,8 +595,7 @@ describe('content schemas', () => {
     expect(catalog.characters).toHaveLength(1);
     expect(catalog.englishMessages).toMatchObject({
       'character.test-character.name': 'The Test Character',
-      'comeback.test-character.strong':
-        'Your entire mandate is an invalid fixture.',
+      'comeback.test-character.strong': 'Your entire mandate is an invalid fixture.',
       'phrase.test-character-noun-001': 'a test character card',
     });
     const expandedCatalog = {
@@ -657,33 +614,29 @@ describe('content schemas', () => {
     const completeCatalog = createGameCatalog(expandedCatalog, [
       createEnglishGameLocale(expandedCatalog.englishMessages),
     ]);
-    expect(completeCatalog.characters).toHaveLength(
-      gameCatalog.characters.length + 1,
-    );
+    expect(completeCatalog.characters).toHaveLength(gameCatalog.characters.length + 1);
     expect(completeCatalog.characters.at(-1)?.characterPhraseIds).toEqual([
       'test-character-noun-001',
       'test-character-modifier-001',
       'test-character-ending-001',
     ]);
-    expect(() =>
-      parseCharacterCardFile(source, 'characters/wrong-name.json'),
-    ).toThrow(/must be named "test-character-phrase-cards\.json"/iu);
+    expect(() => parseCharacterCardFile(source, 'characters/wrong-name.json')).toThrow(
+      /must be named "test-character-phrase-cards\.json"/iu,
+    );
   });
 
   test('builds the same catalog when the production bundle skips validation', () => {
-    const characterSources = import.meta.glob(
-      '../../src/content/characters/*-phrase-cards.json',
-      { eager: true, import: 'default' },
-    ) as Record<string, unknown>;
+    const characterSources = import.meta.glob('../../src/content/characters/*-phrase-cards.json', {
+      eager: true,
+      import: 'default',
+    }) as Record<string, unknown>;
     const trusted = buildPhraseCardCatalog(commonPhraseCards, characterSources, {
       validate: false,
     });
-    expect(trusted).toEqual(
-      buildPhraseCardCatalog(commonPhraseCards, characterSources),
+    expect(trusted).toEqual(buildPhraseCardCatalog(commonPhraseCards, characterSources));
+    expect(createGameCatalog(trusted, gameCatalog.locales, { validate: false })).toEqual(
+      createGameCatalog(phraseCardCatalog, gameCatalog.locales),
     );
-    expect(
-      createGameCatalog(trusted, gameCatalog.locales, { validate: false }),
-    ).toEqual(createGameCatalog(phraseCardCatalog, gameCatalog.locales));
   });
 
   test('rejects text-derived phrase and tense-family identifiers', () => {
@@ -695,9 +648,7 @@ describe('content schemas', () => {
       scoreGroups: { substance: ['fixture'], flavour: ['fixture'] },
       rarity: 'common',
     } as const;
-    expect(() => buildPhraseCardCatalog([noun], {})).toThrow(
-      /content-neutral identifier/iu,
-    );
+    expect(() => buildPhraseCardCatalog([noun], {})).toThrow(/content-neutral identifier/iu);
 
     const verb = {
       id: 'common-verb-999-past',
@@ -712,9 +663,7 @@ describe('content schemas', () => {
       },
       rarity: 'common',
     } as const;
-    expect(() => buildPhraseCardCatalog([verb], {})).toThrow(
-      /content-neutral tense family/iu,
-    );
+    expect(() => buildPhraseCardCatalog([verb], {})).toThrow(/content-neutral tense family/iu);
   });
 
   test('keeps discovered character portraits in catalog parity', () => {
@@ -740,32 +689,21 @@ describe('content schemas', () => {
         character.id === 'government-ai'
           ? ['default', 'alternate', 'schoolteacher']
           : character.id === 'velvet-mogul'
-          ? [
-              'default',
-              'boardroom-patriarch',
-              'silk-diplomat',
-              'velvet-statesman',
-            ]
-          : character.id === 'retiring-cassandra'
-            ? ['default', 'statesman']
-            : character.id === 'county-baron'
-              ? ['default', 'municipal-patron']
-            : alternateSkinIds.has(character.id)
-              ? ['default', 'alternate']
-              : ['default'],
+            ? ['default', 'boardroom-patriarch', 'silk-diplomat', 'velvet-statesman']
+            : character.id === 'retiring-cassandra'
+              ? ['default', 'statesman']
+              : character.id === 'county-baron'
+                ? ['default', 'municipal-patron']
+                : alternateSkinIds.has(character.id)
+                  ? ['default', 'alternate']
+                  : ['default'],
       );
       expect(characterPortraitUrls[character.id]).toBe(
         characterSkins[character.id]?.[0]?.portraitUrl,
       );
-      const skinIds = new Set(
-        characterSkins[character.id]?.map(({ id }) => id),
-      );
-      for (const voiceSkinId of Object.keys(
-        character.voiceProfile.skinVoices ?? {},
-      )) {
-        expect(skinIds.has(voiceSkinId), `${character.id}:${voiceSkinId}`).toBe(
-          true,
-        );
+      const skinIds = new Set(characterSkins[character.id]?.map(({ id }) => id));
+      for (const voiceSkinId of Object.keys(character.voiceProfile.skinVoices ?? {})) {
+        expect(skinIds.has(voiceSkinId), `${character.id}:${voiceSkinId}`).toBe(true);
       }
     }
   });
@@ -773,22 +711,20 @@ describe('content schemas', () => {
   test.each([
     ['human', 0, 'david', /George or Emma/u],
     ['robot', 17, 'george', /David, Mark, or Zira/u],
-  ] as const)('rejects a %s skin voice from the wrong provider family', (
-    _species,
-    characterIndex,
-    voice,
-    message,
-  ) => {
-    const catalog = cloneCatalog();
-    catalog.characters[characterIndex]!.voiceProfile.skinVoices = {
-      default: voice,
-    };
-    expectFailure(
-      catalog,
-      `characters.${characterIndex}.voiceProfile.skinVoices.default`,
-      message,
-    );
-  });
+  ] as const)(
+    'rejects a %s skin voice from the wrong provider family',
+    (_species, characterIndex, voice, message) => {
+      const catalog = cloneCatalog();
+      catalog.characters[characterIndex]!.voiceProfile.skinVoices = {
+        default: voice,
+      };
+      expectFailure(
+        catalog,
+        `characters.${characterIndex}.voiceProfile.skinVoices.default`,
+        message,
+      );
+    },
+  );
 
   test('accepts the ordered 19-character and seven-scene catalog', () => {
     const result = contentCatalogSchema.parse(gameCatalog);
@@ -817,9 +753,9 @@ describe('content schemas', () => {
     const localBaron = result.characters.find(({ id }) => id === 'county-baron')!;
     expect(localBaron.nameKey).toBe('character.county-baron.name');
     expect(result.locales[0]!.messages[localBaron.nameKey]).toBe('Local Baron');
-    expect(
-      new Set(result.characters.map((character) => character.species)),
-    ).toEqual(new Set(['human', 'robot']));
+    expect(new Set(result.characters.map((character) => character.species))).toEqual(
+      new Set(['human', 'robot']),
+    );
     expect(result.scenes.every((scene) => !('ambience' in scene))).toBe(true);
     expect(result.scenes.map((scene) => scene.id)).toEqual([
       'transition-era-television-studio',
@@ -831,15 +767,7 @@ describe('content schemas', () => {
       'civic-cypher-boxing-ring',
     ]);
     expect(new Set(result.phrases.map((phrase) => phrase.role))).toEqual(
-      new Set([
-        'noun',
-        'verb',
-        'predicate',
-        'modifier',
-        'conjunction',
-        'ending',
-        'continuation',
-      ]),
+      new Set(['noun', 'verb', 'predicate', 'modifier', 'conjunction', 'ending', 'continuation']),
     );
     expect(result.locales[0]?.title.fictionalCompositeSatireDisclaimer).toMatch(
       /fictional composites/iu,
@@ -855,11 +783,7 @@ describe('content schemas', () => {
   test('rejects an unsupported character species', () => {
     const catalog = cloneCatalog();
     (catalog.characters[0] as { species: string }).species = 'animal';
-    expectFailure(
-      catalog,
-      'characters.0.species',
-      /supported character species/iu,
-    );
+    expectFailure(catalog, 'characters.0.species', /supported character species/iu);
   });
 
   test('rejects duplicate identifiers', () => {
@@ -870,9 +794,7 @@ describe('content schemas', () => {
 
   test('rejects invalid number forms with a corrective message', () => {
     const catalog = cloneCatalog();
-    const phraseIndex = catalog.phrases.findIndex(
-      (phrase) => phrase.id === 'common-verb-001-past',
-    );
+    const phraseIndex = catalog.phrases.findIndex((phrase) => phrase.id === 'common-verb-001-past');
     const forms = catalog.phrases[phraseIndex]!.numberForms!;
     forms.pluralKey = forms.singularKey;
     expectFailure(catalog, 'phrases.' + phraseIndex + '.numberForms', /different locale key/iu);
@@ -891,15 +813,9 @@ describe('content schemas', () => {
     );
 
     const invalidSecondPerson = cloneCatalog();
-    const you = invalidSecondPerson.phrases.find(
-      (phrase) => phrase.id === 'common-noun-028',
-    )!;
+    const you = invalidSecondPerson.phrases.find((phrase) => phrase.id === 'common-noun-028')!;
     you.referentKind = 'nonpersonal';
-    expectFailure(
-      invalidSecondPerson,
-      'referentKind',
-      /second-person noun.*personal referent/iu,
-    );
+    expectFailure(invalidSecondPerson, 'referentKind', /second-person noun.*personal referent/iu);
   });
 
   test('requires one exclusive comeback line for every character and tier', () => {
@@ -915,9 +831,7 @@ describe('content schemas', () => {
     );
 
     const shared = cloneCatalog();
-    shared.characters[1]!.comebackLinesByTier.weak = [
-      'comeback.red-folded-chairman.weak',
-    ];
+    shared.characters[1]!.comebackLinesByTier.weak = ['comeback.red-folded-chairman.weak'];
     expectFailure(
       shared,
       'characters.1.comebackLinesByTier.weak.0',
@@ -926,14 +840,14 @@ describe('content schemas', () => {
   });
 
   test.each(['characters', 'scenes'] as const)(
-    'rejects duplicate normalized English %s names at the second locale key', (collection) => {
+    'rejects duplicate normalized English %s names at the second locale key',
+    (collection) => {
       const catalog = cloneCatalog();
       const first = catalog[collection][0]!;
       const duplicate = catalog[collection][1]!;
-      catalog.locales[0]!.messages[duplicate.nameKey] = `  ${catalog.locales[0]!
-        .messages[first.nameKey]!
-        .toLocaleUpperCase('en-US')
-        .replaceAll(' ', '   ')}  `;
+      catalog.locales[0]!.messages[duplicate.nameKey] = `  ${catalog.locales[0]!.messages[
+        first.nameKey
+      ]!.toLocaleUpperCase('en-US').replaceAll(' ', '   ')}  `;
 
       expectFailure(
         catalog,
@@ -947,10 +861,9 @@ describe('content schemas', () => {
     const catalog = cloneCatalog();
     const firstKey = catalog.characters[0]!.comebackLinesByTier.weak[0]!;
     const duplicateKey = catalog.characters[1]!.comebackLinesByTier.strong[0]!;
-    catalog.locales[0]!.messages[duplicateKey] = `  ${catalog.locales[0]!
-      .messages[firstKey]!
-      .toLocaleUpperCase('en-US')
-      .replaceAll(' ', '   ')}  `;
+    catalog.locales[0]!.messages[duplicateKey] = `  ${catalog.locales[0]!.messages[
+      firstKey
+    ]!.toLocaleUpperCase('en-US').replaceAll(' ', '   ')}  `;
 
     expectFailure(
       catalog,
@@ -961,9 +874,8 @@ describe('content schemas', () => {
 
   test('rejects grammar and scoring fields on the wrong phrase role', () => {
     const modifierFinisher = cloneCatalog();
-    modifierFinisher.phrases.find(
-      (phrase) => phrase.id === 'common-modifier-001',
-    )!.finisherBonus = 2;
+    modifierFinisher.phrases.find((phrase) => phrase.id === 'common-modifier-001')!.finisherBonus =
+      2;
     expectFailure(modifierFinisher, 'finisherBonus', /Only an ending/iu);
 
     const modifierRelation = cloneCatalog();
@@ -973,16 +885,11 @@ describe('content schemas', () => {
       substance: [{ left: ['bureaucracy'] }],
       flavour: [],
     };
-    expectFailure(
-      modifierRelation,
-      'scorePreferences',
-      /Only a verb or predicate/iu,
-    );
+    expectFailure(modifierRelation, 'scorePreferences', /Only a verb or predicate/iu);
 
     const endingWithoutScore = cloneCatalog();
-    endingWithoutScore.phrases.find(
-      (phrase) => phrase.id === 'common-ending-001',
-    )!.finisherBonus = undefined;
+    endingWithoutScore.phrases.find((phrase) => phrase.id === 'common-ending-001')!.finisherBonus =
+      undefined;
     expectFailure(endingWithoutScore, 'finisherBonus', /each ending/iu);
 
     const nounConnector = cloneCatalog();
@@ -991,21 +898,13 @@ describe('content schemas', () => {
 
     const nounCopularComplement = cloneCatalog();
     nounCopularComplement.phrases[0]!.allowsCoordinatedNounComplement = true;
-    expectFailure(
-      nounCopularComplement,
-      'allowsCoordinatedNounComplement',
-      /Only a predicate/iu,
-    );
+    expectFailure(nounCopularComplement, 'allowsCoordinatedNounComplement', /Only a predicate/iu);
   });
 
   test('rejects empty restrictions, empty custom scores, and duplicate custom relations', () => {
     const emptyRestriction = cloneCatalog();
     emptyRestriction.phrases[0]!.characterIds = [];
-    expectFailure(
-      emptyRestriction,
-      'phrases.0.characterIds',
-      /too small|at least 1/iu,
-    );
+    expectFailure(emptyRestriction, 'phrases.0.characterIds', /too small|at least 1/iu);
 
     const emptyScores = cloneCatalog();
     const relation = emptyScores.phrases.find(
@@ -1022,23 +921,12 @@ describe('content schemas', () => {
       { leftNounId: 'common-noun-001', score: 4 },
       { leftNounId: 'common-noun-001', score: 9 },
     ];
-    expectFailure(
-      duplicateScores,
-      'customScores.1',
-      /custom score only once/iu,
-    );
+    expectFailure(duplicateScores, 'customScores.1', /custom score only once/iu);
   });
 
   test.each(numericBoundaryCases)(
     '$name accepts both endpoints and rejects values immediately outside them',
-    ({
-      pathPart,
-      minimum,
-      maximum,
-      immediatelyBelow,
-      immediatelyAbove,
-      setValue,
-    }) => {
+    ({ pathPart, minimum, maximum, immediatelyBelow, immediatelyAbove, setValue }) => {
       for (const value of [minimum, maximum]) {
         const catalog = cloneCatalog();
         setValue(catalog, value);
@@ -1063,21 +951,13 @@ describe('content schemas', () => {
     const catalog = cloneCatalog();
     const missingIndex = catalog.characters[0]!.characterPhraseIds.length;
     catalog.characters[0]!.characterPhraseIds.push('missing-phrase');
-    expectFailure(
-      catalog,
-      `characters.0.characterPhraseIds.${missingIndex}`,
-      /existing phrase/iu,
-    );
+    expectFailure(catalog, `characters.0.characterPhraseIds.${missingIndex}`, /existing phrase/iu);
   });
 
   test('rejects missing character and scene restriction references', () => {
     const missingCharacter = cloneCatalog();
     missingCharacter.phrases[0]!.characterIds = ['missing-character'];
-    expectFailure(
-      missingCharacter,
-      'phrases.0.characterIds.0',
-      /existing character/iu,
-    );
+    expectFailure(missingCharacter, 'phrases.0.characterIds.0', /existing character/iu);
 
     const missingScene = cloneCatalog();
     missingScene.phrases[0]!.sceneIds = ['missing-scene'];
@@ -1089,11 +969,8 @@ describe('content schemas', () => {
     wrongCharacter.phrases.find(
       (phrase) => phrase.id === 'red-folded-chairman-noun-001',
     )!.characterIds = ['red-folded-chairman'];
-    const wrongCharacterIndex =
-      wrongCharacter.characters[1]!.characterPhraseIds.length;
-    wrongCharacter.characters[1]!.characterPhraseIds.push(
-      'red-folded-chairman-noun-001',
-    );
+    const wrongCharacterIndex = wrongCharacter.characters[1]!.characterPhraseIds.length;
+    wrongCharacter.characters[1]!.characterPhraseIds.push('red-folded-chairman-noun-001');
     expectFailure(
       wrongCharacter,
       `characters.1.characterPhraseIds.${wrongCharacterIndex}`,
@@ -1106,20 +983,13 @@ describe('content schemas', () => {
       ...structuredClone(wrongScene.scenes[0]!),
       id: 'other-scene',
     });
-    expectFailure(
-      wrongScene,
-      'scenes.0.phrasePool.0',
-      /not available in scene/iu,
-    );
+    expectFailure(wrongScene, 'scenes.0.phrasePool.0', /not available in scene/iu);
   });
 
   test('requires character and scene restriction membership in both directions', () => {
     const unrestrictedCharacterPhrase = cloneCatalog();
-    const unrestrictedIndex =
-      unrestrictedCharacterPhrase.characters[0]!.characterPhraseIds.length;
-    unrestrictedCharacterPhrase.characters[0]!.characterPhraseIds.push(
-      'common-noun-001',
-    );
+    const unrestrictedIndex = unrestrictedCharacterPhrase.characters[0]!.characterPhraseIds.length;
+    unrestrictedCharacterPhrase.characters[0]!.characterPhraseIds.push('common-noun-001');
     expectFailure(
       unrestrictedCharacterPhrase,
       `characters.0.characterPhraseIds.${unrestrictedIndex}`,
@@ -1179,9 +1049,7 @@ describe('content schemas', () => {
 
   test('rejects a continuation that looks like an ordinary phrase', () => {
     const catalog = cloneCatalog();
-    const continuation = catalog.phrases.find(
-      (phrase) => phrase.role === 'continuation',
-    )!;
+    const continuation = catalog.phrases.find((phrase) => phrase.role === 'continuation')!;
     catalog.locales[0]!.messages[continuation.textKey] = 'continue later';
 
     expectFailure(
@@ -1198,9 +1066,8 @@ describe('content schemas', () => {
     // Derive both the key and the appended index from the catalog so this
     // fixture cannot go stale when the corpus or the shipped locale list is
     // revised.
-    const requiredKey = catalog.phrases.find(
-      (phrase) => phrase.numberForms,
-    )!.numberForms!.singularKey;
+    const requiredKey = catalog.phrases.find((phrase) => phrase.numberForms)!.numberForms!
+      .singularKey;
     const appendedIndex = catalog.locales.length;
     delete secondLocale.messages[requiredKey];
     catalog.locales.push(secondLocale);
@@ -1219,22 +1086,15 @@ describe('content schemas', () => {
 
   test('rejects missing locale keys for number forms', () => {
     const catalog = cloneCatalog();
-    const pluralKey = catalog.phrases.find(
-      (phrase) => phrase.id === 'common-verb-001-past',
-    )!.numberForms!.pluralKey;
+    const pluralKey = catalog.phrases.find((phrase) => phrase.id === 'common-verb-001-past')!
+      .numberForms!.pluralKey;
     delete catalog.locales[0]!.messages[pluralKey];
-    expectFailure(
-      catalog,
-      'locales.0.messages.' + pluralKey,
-      /required locale message/iu,
-    );
+    expectFailure(catalog, 'locales.0.messages.' + pluralKey, /required locale message/iu);
   });
 
   test('rejects a missing locale key for person agreement', () => {
     const catalog = cloneCatalog();
-    delete catalog.locales[0]!.messages[
-      'phrase.common-predicate-011-past.second-person'
-    ];
+    delete catalog.locales[0]!.messages['phrase.common-predicate-011-past.second-person'];
     expectFailure(
       catalog,
       'locales.0.messages.phrase.common-predicate-011-past.second-person',
@@ -1250,11 +1110,7 @@ describe('content schemas', () => {
       const catalog = cloneCatalog();
       const key = `phrase.${id}.${suffix}`;
       delete catalog.locales.find((locale) => locale.locale === 'ro-RO')!.messages[key];
-      expectFailure(
-        catalog,
-        `locales.1.messages.${key}`,
-        /required Romanian relation form/iu,
-      );
+      expectFailure(catalog, `locales.1.messages.${key}`, /required Romanian relation form/iu);
     }
   });
 
@@ -1280,8 +1136,9 @@ describe('content schemas', () => {
         expect(english.messages[phrase.textKey]).toMatch(/ for$/u);
         expect(romanian.messages[phrase.textKey]).toMatch(/ pentru$/u);
         for (const nounText of ['dumneavoastră', 'dezacordul vostru unanim']) {
-          expect(`${romanian.messages[phrase.textKey]} ${nounText}`)
-            .toMatch(/ pentru (?:dumneavoastră|dezacordul vostru unanim)$/u);
+          expect(`${romanian.messages[phrase.textKey]} ${nounText}`).toMatch(
+            / pentru (?:dumneavoastră|dezacordul vostru unanim)$/u,
+          );
         }
       }
     }
@@ -1291,11 +1148,7 @@ describe('content schemas', () => {
     const catalog = cloneCatalog();
     catalog.locales[0]!.messages['phrase.common-verb-001-past'] =
       '<img src=x onerror=alert(1)>denounced';
-    expectFailure(
-      catalog,
-      'locales.0.messages.phrase.common-verb-001-past',
-      /Remove HTML/iu,
-    );
+    expectFailure(catalog, 'locales.0.messages.phrase.common-verb-001-past', /Remove HTML/iu);
   });
 
   test('rejects a missing fictional-composite satire disclaimer', () => {
@@ -1312,11 +1165,7 @@ describe('content schemas', () => {
   test('rejects real logos in referenced media', () => {
     const catalog = cloneCatalog();
     catalog.characters[0]!.assets.portrait.realLogo = true;
-    expectFailure(
-      catalog,
-      'characters.0.assets.portrait.realLogo',
-      /original fictional media/iu,
-    );
+    expectFailure(catalog, 'characters.0.assets.portrait.realLogo', /original fictional media/iu);
   });
 
   test('rejects copyrighted broadcast graphics in referenced media', () => {
@@ -1332,11 +1181,7 @@ describe('content schemas', () => {
   test('rejects weak weakness-tag coverage', () => {
     const catalog = cloneCatalog();
     catalog.characters[0]!.weaknessTags[0] = 'uncovered-flaw';
-    expectFailure(
-      catalog,
-      'characters.0.weaknessTags.0',
-      /at least 2 matching phrases/iu,
-    );
+    expectFailure(catalog, 'characters.0.weaknessTags.0', /at least 2 matching phrases/iu);
   });
 
   test('rejects a scene pool without nouns, verbs, and predicates', () => {
@@ -1350,31 +1195,43 @@ describe('content schemas', () => {
   });
 });
 
-
-test.each(['modifier', 'ending', 'noun'] as const)('rejects a character missing its foundation %s', (role) => {
-  const catalog = cloneCatalog();
-  const characterIndex = catalog.characters.findIndex(({ id }) => id === 'algorithmic-prophet');
-  const character = catalog.characters[characterIndex]!;
-  const owned = catalog.phrases.filter((phrase) => character.characterPhraseIds.includes(phrase.id));
-  const replacement = owned.find((phrase) => phrase.role !== role)!;
-  catalog.phrases = catalog.phrases.map((phrase) => owned.includes(phrase) && phrase.role === role
-    ? { ...replacement, id: phrase.id } : phrase);
-  const result = contentCatalogSchema.safeParse(catalog);
-  expect(result.success).toBe(false);
-  if (!result.success) expect(result.error.issues).toContainEqual(expect.objectContaining({
-    path: ['characters', characterIndex, 'characterPhraseIds'],
-    message: expect.stringContaining(`Missing: ${role}`),
-  }));
-});
+test.each(['modifier', 'ending', 'noun'] as const)(
+  'rejects a character missing its foundation %s',
+  (role) => {
+    const catalog = cloneCatalog();
+    const characterIndex = catalog.characters.findIndex(({ id }) => id === 'algorithmic-prophet');
+    const character = catalog.characters[characterIndex]!;
+    const owned = catalog.phrases.filter((phrase) =>
+      character.characterPhraseIds.includes(phrase.id),
+    );
+    const replacement = owned.find((phrase) => phrase.role !== role)!;
+    catalog.phrases = catalog.phrases.map((phrase) =>
+      owned.includes(phrase) && phrase.role === role ? { ...replacement, id: phrase.id } : phrase,
+    );
+    const result = contentCatalogSchema.safeParse(catalog);
+    expect(result.success).toBe(false);
+    if (!result.success)
+      expect(result.error.issues).toContainEqual(
+        expect.objectContaining({
+          path: ['characters', characterIndex, 'characterPhraseIds'],
+          message: expect.stringContaining(`Missing: ${role}`),
+        }),
+      );
+  },
+);
 
 test('rejects a two-noun character pool at the owning character path', () => {
   const catalog = cloneCatalog();
   const characterIndex = catalog.characters.findIndex(({ id }) => id === 'algorithmic-prophet');
   const character = catalog.characters[characterIndex]!;
-  const retained = new Set(catalog.phrases
-    .filter((phrase) => character.characterPhraseIds.includes(phrase.id) && phrase.role === 'noun')
-    .slice(0, 2)
-    .map(({ id }) => id));
+  const retained = new Set(
+    catalog.phrases
+      .filter(
+        (phrase) => character.characterPhraseIds.includes(phrase.id) && phrase.role === 'noun',
+      )
+      .slice(0, 2)
+      .map(({ id }) => id),
+  );
   expect(retained.size).toBe(2);
   const removed = new Set(character.characterPhraseIds.filter((id) => !retained.has(id)));
   character.characterPhraseIds = [...retained];
@@ -1389,10 +1246,12 @@ test('rejects a two-noun character pool at the owning character path', () => {
       'Supply 3 through 40 owned character phrases.',
       'Supply a foundation noun, modifier, and ending for each character. Missing: modifier, ending.',
     ]) {
-      expect(result.error.issues).toContainEqual(expect.objectContaining({
-        path: ['characters', characterIndex, 'characterPhraseIds'],
-        message,
-      }));
+      expect(result.error.issues).toContainEqual(
+        expect.objectContaining({
+          path: ['characters', characterIndex, 'characterPhraseIds'],
+          message,
+        }),
+      );
     }
   }
 });
@@ -1408,7 +1267,13 @@ test('rejects more than 40 character phrases at the character path', () => {
   }
   const result = contentCatalogSchema.safeParse(catalog);
   expect(result.success).toBe(false);
-  if (!result.success) expect(result.error.issues).toContainEqual(expect.objectContaining({ path: ['characters', 0, 'characterPhraseIds'], message: 'Supply 3 through 40 owned character phrases.' }));
+  if (!result.success)
+    expect(result.error.issues).toContainEqual(
+      expect.objectContaining({
+        path: ['characters', 0, 'characterPhraseIds'],
+        message: 'Supply 3 through 40 owned character phrases.',
+      }),
+    );
 });
 
 const finalRoles = [
@@ -1425,43 +1290,60 @@ test('the production catalog meets every Milestone 028 final volume', () => {
   expect(finalContentVolumeIssues(gameCatalog)).toEqual([]);
 });
 
-test.each(finalRoles)('rejects general %s one below and above its final total', (role, required) => {
-  for (const target of [required - 1, required + 1]) {
-    const catalog = cloneCatalog();
-    const general = catalog.phrases.filter((phrase) =>
-      !phrase.characterIds && !phrase.sceneIds && phrase.role === role);
-    const template = general[0]!;
-    catalog.phrases = catalog.phrases.filter((phrase) => !general.includes(phrase));
-    catalog.phrases.push(...Array.from({ length: target }, (_, index) => ({
-      ...template,
-      id: `final-volume-${role}-${index}`,
-    })));
-    expect(finalContentVolumeIssues(catalog)).toContainEqual(
-      expect.stringMatching(new RegExp(`^General ${role}: found ${target};`)),
-    );
-  }
-});
+test.each(finalRoles)(
+  'rejects general %s one below and above its final total',
+  (role, required) => {
+    for (const target of [required - 1, required + 1]) {
+      const catalog = cloneCatalog();
+      const general = catalog.phrases.filter(
+        (phrase) => !phrase.characterIds && !phrase.sceneIds && phrase.role === role,
+      );
+      const template = general[0]!;
+      catalog.phrases = catalog.phrases.filter((phrase) => !general.includes(phrase));
+      catalog.phrases.push(
+        ...Array.from({ length: target }, (_, index) => ({
+          ...template,
+          id: `final-volume-${role}-${index}`,
+        })),
+      );
+      expect(finalContentVolumeIssues(catalog)).toContainEqual(
+        expect.stringMatching(new RegExp(`^General ${role}: found ${target};`)),
+      );
+    }
+  },
+);
 
 test.each([
   ['character', 'apartment-block-geopolitician', 40],
   ['scene', 'transition-era-television-studio', 34],
-] as const)('rejects %s phrase totals one below and above the final total', (kind, owner, required) => {
-  for (const target of [required - 1, required + 1]) {
-    const catalog = cloneCatalog();
-    const owned = catalog.phrases.filter((phrase) => kind === 'character'
-      ? phrase.characterIds?.includes(owner)
-      : phrase.sceneIds?.includes(owner));
-    const template = owned.find((phrase) => phrase.role === 'noun')!;
-    catalog.phrases = catalog.phrases.filter((phrase) => !owned.includes(phrase));
-    catalog.phrases.push(...Array.from({ length: target }, (_, index) => ({
-      ...template,
-      id: `final-volume-${kind}-${index}`,
-    })));
-    expect(finalContentVolumeIssues(catalog)).toContainEqual(
-      expect.stringMatching(new RegExp(`^${owner} ${kind === 'scene' ? 'scene-owned ' : ''}phrases: found ${target};`)),
-    );
-  }
-});
+] as const)(
+  'rejects %s phrase totals one below and above the final total',
+  (kind, owner, required) => {
+    for (const target of [required - 1, required + 1]) {
+      const catalog = cloneCatalog();
+      const owned = catalog.phrases.filter((phrase) =>
+        kind === 'character'
+          ? phrase.characterIds?.includes(owner)
+          : phrase.sceneIds?.includes(owner),
+      );
+      const template = owned.find((phrase) => phrase.role === 'noun')!;
+      catalog.phrases = catalog.phrases.filter((phrase) => !owned.includes(phrase));
+      catalog.phrases.push(
+        ...Array.from({ length: target }, (_, index) => ({
+          ...template,
+          id: `final-volume-${kind}-${index}`,
+        })),
+      );
+      expect(finalContentVolumeIssues(catalog)).toContainEqual(
+        expect.stringMatching(
+          new RegExp(
+            `^${owner} ${kind === 'scene' ? 'scene-owned ' : ''}phrases: found ${target};`,
+          ),
+        ),
+      );
+    }
+  },
+);
 
 test.each([
   ['character', 'apartment-block-geopolitician', 'noun', 10],
@@ -1478,9 +1360,9 @@ test.each([
   ['scene', 'transition-era-television-studio', 'ending', 3],
 ] as const)('rejects %s %s below its %s role total', (kind, owner, role, required) => {
   const catalog = cloneCatalog();
-  const owned = catalog.phrases.filter((phrase) => kind === 'character'
-    ? phrase.characterIds?.includes(owner)
-    : phrase.sceneIds?.includes(owner));
+  const owned = catalog.phrases.filter((phrase) =>
+    kind === 'character' ? phrase.characterIds?.includes(owner) : phrase.sceneIds?.includes(owner),
+  );
   const selected = owned.filter((phrase) => phrase.role === role);
   const remove = selected.slice(0, selected.length - (required - 1));
   catalog.phrases = catalog.phrases.filter((phrase) => !remove.includes(phrase));

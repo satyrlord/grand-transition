@@ -6,11 +6,7 @@ import { promisify } from 'node:util';
 import { describe, expect, test } from 'vitest';
 
 const execFileAsync = promisify(execFile);
-const validatorPath = path.resolve(
-  process.cwd(),
-  'tools',
-  'validate-scaffold.mjs',
-);
+const validatorPath = path.resolve(process.cwd(), 'tools', 'validate-scaffold.ts');
 
 async function temporaryAssetRoot(files: string[]): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-assets-'));
@@ -49,13 +45,7 @@ describe('assets scaffold audio formats', () => {
 
     try {
       await expect(
-        execFileAsync(process.execPath, [
-          validatorPath,
-          '--domain',
-          'assets',
-          '--root',
-          root,
-        ]),
+        execFileAsync(process.execPath, [validatorPath, '--domain', 'assets', '--root', root]),
       ).rejects.toThrow(/not allowed/);
     } finally {
       await rm(root, { recursive: true, force: true });

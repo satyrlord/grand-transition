@@ -2,34 +2,31 @@
 
 import commonSource from './content/common-phrase-cards.json' with { type: 'json' };
 import portraitSources from 'virtual:character-portrait-fallbacks';
-import {
-  buildPhraseCardCatalog,
-  type PhraseCardCatalog,
-} from './content/phrase-card-catalog';
-import { createGameCatalog } from './content/game-catalog';
+import { buildPhraseCardCatalog, type PhraseCardCatalog } from './content/phrase-card-catalog.ts';
+import { createGameCatalog } from './content/game-catalog.ts';
 import {
   indexGameLocaleBundles,
   selectGameLocaleBundle,
   type GameLocaleBundles,
-} from './localization/game-locale-bundles';
-import { createEnglishGameLocale } from './localization/en-game-locale';
+} from './localization/game-locale-bundles.ts';
+import { createEnglishGameLocale } from './localization/en-game-locale.ts';
 import {
   createRomanianGameLocale,
   mergeRomanianMessageFiles,
-} from './localization/ro-game-locale';
-import type { GameLocale } from './localization/game-locale';
-import type { GameLocaleBundle } from './localization/game-locale-schema';
+} from './localization/ro-game-locale.ts';
+import type { GameLocale } from './localization/game-locale.ts';
+import type { GameLocaleBundle } from './localization/game-locale-schema.ts';
 import {
   characterAssetManifest,
   characterImageSizes,
   type CharacterAssetSource,
   type CharacterFacing,
-} from './app/character-assets';
+} from './app/character-assets.ts';
 
-const characterSources = import.meta.glob(
-  './content/characters/*-phrase-cards.json',
-  { eager: true, import: 'default' },
-) as Record<string, unknown>;
+const characterSources = import.meta.glob('./content/characters/*-phrase-cards.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, unknown>;
 
 // The authored Romanian content tree is a flat locale-key map spread across
 // several files, so every file is merged into one message record.
@@ -60,9 +57,7 @@ export const phraseCardCatalog: PhraseCardCatalog = buildPhraseCardCatalog(
   catalogBuildOptions,
 );
 
-export const englishGameLocale = createEnglishGameLocale(
-  phraseCardCatalog.englishMessages,
-);
+export const englishGameLocale = createEnglishGameLocale(phraseCardCatalog.englishMessages);
 
 export const romanianGameLocale = createRomanianGameLocale(
   mergeRomanianMessageFiles(romanianSources),
@@ -75,9 +70,7 @@ export const gameCatalog = createGameCatalog(
 );
 
 // Every shipped game-locale bundle, indexed by the locale it renders.
-export const gameLocaleBundles: GameLocaleBundles = indexGameLocaleBundles(
-  gameCatalog.locales,
-);
+export const gameLocaleBundles: GameLocaleBundles = indexGameLocaleBundles(gameCatalog.locales);
 
 // The bundle that renders a match's captured game locale. A locale without a
 // bundle fails here rather than falling back to another language.
@@ -85,18 +78,12 @@ export function gameLocaleBundle(locale: GameLocale): GameLocaleBundle {
   return selectGameLocaleBundle(gameLocaleBundles, locale);
 }
 
-const portraitUrlByStem = new Map(
-  Object.entries(portraitSources),
-);
+const portraitUrlByStem = new Map(Object.entries(portraitSources));
 
-export const characterSkins: Readonly<
-  Record<string, readonly CharacterSkin[]>
-> = Object.freeze(
+export const characterSkins: Readonly<Record<string, readonly CharacterSkin[]>> = Object.freeze(
   Object.fromEntries(
     phraseCardCatalog.characters.map((character) => {
-      const assets = characterAssetManifest.filter(
-        (asset) => asset.ownerId === character.id,
-      );
+      const assets = characterAssetManifest.filter((asset) => asset.ownerId === character.id);
       const skinFromAsset = (asset: (typeof assets)[number]) =>
         Object.freeze({
           id: asset.skinId,
@@ -114,15 +101,11 @@ export const characterSkins: Readonly<
       const rawSkins = [...portraitUrlByStem.entries()]
         .filter(
           ([stem]) =>
-            (stem === character.id || stem.startsWith(alternatePrefix)) &&
-            !manifestIds.has(stem),
+            (stem === character.id || stem.startsWith(alternatePrefix)) && !manifestIds.has(stem),
         )
         .map(([stem, portraitUrl]) =>
           Object.freeze({
-            id:
-              stem === character.id
-                ? 'default'
-                : stem.slice(alternatePrefix.length),
+            id: stem === character.id ? 'default' : stem.slice(alternatePrefix.length),
             portraitUrl,
             facing: 'right' as const,
             width: 2048 as const,
@@ -135,30 +118,21 @@ export const characterSkins: Readonly<
       const discoveredSkins = [...manifestSkins, ...rawSkins];
       const defaultSkin = discoveredSkins.find((skin) => skin.id === 'default');
       if (!defaultSkin) {
-        throw new Error(
-          `Add the default skin "src/assets/characters/${character.id}.png".`,
-        );
+        throw new Error(`Add the default skin "src/assets/characters/${character.id}.png".`);
       }
       const alternates = discoveredSkins
         .filter((skin) => skin.id !== 'default')
         .toSorted((left, right) => left.id.localeCompare(right.id));
-      return [
-        character.id,
-        Object.freeze([
-          defaultSkin,
-          ...alternates,
-        ]),
-      ];
+      return [character.id, Object.freeze([defaultSkin, ...alternates])];
     }),
   ),
 );
 
-export const characterPortraitUrls: Readonly<Record<string, string>> =
-  Object.freeze(
-    Object.fromEntries(
-      phraseCardCatalog.characters.map((character) => [
-        character.id,
-        characterSkins[character.id]?.[0]?.portraitUrl,
-      ]),
-    ),
-  );
+export const characterPortraitUrls: Readonly<Record<string, string>> = Object.freeze(
+  Object.fromEntries(
+    phraseCardCatalog.characters.map((character) => [
+      character.id,
+      characterSkins[character.id]?.[0]?.portraitUrl,
+    ]),
+  ),
+);

@@ -1,27 +1,17 @@
 import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
-import { interfaceLocale } from '../interface-localization';
+import { interfaceLocale } from '../interface-localization.ts';
 import {
   interfaceCharacterName,
   interfaceSceneName,
   interfaceWeaknessName,
-} from '../interface-names';
-import {
-  LitElement,
-  html,
-  nothing,
-  type PropertyValues,
-  type TemplateResult,
-} from 'lit';
-import {
-  characterSkins,
-  gameCatalog,
-  type CharacterSkin,
-} from '../../game-content';
-import { resolveBrandAsset } from '../brand-assets';
-import type { MatchMode } from '../../engine/match-lifecycle';
-import type { LadderProgress } from '../../engine/ladder';
-import { ladderDifficulty, ladderRungCount } from '../../engine/ladder';
-import type { LadderProgressFailureCode } from '../../persistence/ladder-progress';
+} from '../interface-names.ts';
+import { LitElement, html, nothing, type PropertyValues, type TemplateResult } from 'lit';
+import { characterSkins, gameCatalog, type CharacterSkin } from '../../game-content.ts';
+import { resolveBrandAsset } from '../brand-assets.ts';
+import type { MatchMode } from '../../engine/match-lifecycle.ts';
+import type { LadderProgress } from '../../engine/ladder.ts';
+import { ladderDifficulty, ladderRungCount } from '../../engine/ladder.ts';
+import type { LadderProgressFailureCode } from '../../persistence/ladder-progress.ts';
 
 const elementName = 'grand-transition-setup';
 const portraitFrame = resolveBrandAsset('politburo-portrait-frame');
@@ -40,10 +30,7 @@ export type SetupField =
   | 'playerTwoSkinId'
   | 'sceneId';
 
-type CharacterField = Extract<
-  SetupField,
-  'playerOneCharacterId' | 'playerTwoCharacterId'
->;
+type CharacterField = Extract<SetupField, 'playerOneCharacterId' | 'playerTwoCharacterId'>;
 
 type SkinField = Extract<SetupField, 'playerOneSkinId' | 'playerTwoSkinId'>;
 
@@ -166,9 +153,7 @@ export class GrandTransitionSetup extends LitElement {
       this.snapshot.playerTwoCharacterId,
       this.snapshot.playerTwoSkinId,
     );
-    const preview = this.previewCharacterId
-      ? characterView(this.previewCharacterId)
-      : undefined;
+    const preview = this.previewCharacterId ? characterView(this.previewCharacterId) : undefined;
     const bothPlayersLocked = this.bothPlayersLocked();
 
     return html`
@@ -187,12 +172,8 @@ export class GrandTransitionSetup extends LitElement {
           <p>
             ${
               this.snapshot.mode === 'ladder'
-                ? msg(
-                    'Choose your debater. Your opponent and scene follow ladder progress.',
-                  )
-                : msg(
-                    'Choose both contestants, confirm the studio, and open the transmission.',
-                  )
+                ? msg('Choose your debater. Your opponent and scene follow ladder progress.')
+                : msg('Choose both contestants, confirm the studio, and open the transmission.')
             }
           </p>
         </header>
@@ -205,10 +186,7 @@ export class GrandTransitionSetup extends LitElement {
           >
             ${this.contestantStage({
               field: 'playerOneCharacterId',
-              playerLabel:
-                isSinglePlayerMode(this.snapshot.mode)
-                  ? msg('You')
-                  : msg('Player one'),
+              playerLabel: isSinglePlayerMode(this.snapshot.mode) ? msg('You') : msg('Player one'),
               side: 'one',
               character: playerOne,
               skin: playerOneSkin,
@@ -227,10 +205,10 @@ export class GrandTransitionSetup extends LitElement {
                     bothPlayersLocked
                       ? msg(str`${portraits.length} portraits · Both players locked in`)
                       : this.snapshot.mode === 'ladder'
-                      ? msg(str`${portraits.length} portraits · Selecting your ladder character`)
-                      : this.selectionTarget === 'playerOneCharacterId'
-                        ? msg(str`${portraits.length} portraits · Selecting for player one`)
-                        : msg(str`${portraits.length} portraits · Selecting for player two`)
+                        ? msg(str`${portraits.length} portraits · Selecting your ladder character`)
+                        : this.selectionTarget === 'playerOneCharacterId'
+                          ? msg(str`${portraits.length} portraits · Selecting for player one`)
+                          : msg(str`${portraits.length} portraits · Selecting for player two`)
                   }
                 </p>
               </div>
@@ -243,17 +221,13 @@ export class GrandTransitionSetup extends LitElement {
                 aria-label=${msg(str`Contestant portrait roster, ${portraits.length} portraits`)}
                 tabindex="0"
               >
-                ${portraits.map((portrait) =>
-                  this.rosterChoice(portrait),
-                )}
+                ${portraits.map((portrait) => this.rosterChoice(portrait))}
               </div>
 
               <p class="setup-note">
                 ${
                   this.snapshot.mode === 'ladder'
-                    ? msg(
-                        'Opponent and scene are fixed by local ladder progress.',
-                      )
+                    ? msg('Opponent and scene are fixed by local ladder progress.')
                     : msg('Both players can choose the same character.')
                 }
               </p>
@@ -268,7 +242,7 @@ export class GrandTransitionSetup extends LitElement {
                     : difficultyLabel(currentDifficulty(this.ladderProgress))
                   : this.snapshot.mode === 'ai'
                     ? difficultyLabel(this.snapshot.aiDifficulty)
-                  : msg('Player two'),
+                    : msg('Player two'),
               side: 'two',
               character: playerTwo,
               skin: playerTwoSkin,
@@ -344,9 +318,11 @@ export class GrandTransitionSetup extends LitElement {
           </fieldset>
 
           <div class="setup-actions">
-            ${this.snapshot.mode === 'hotseat' && !this.hotseatAvailable
-              ? html`<p class="orientation-note">${msg('Rotate to landscape to start Multiplayer.')}</p>`
-              : nothing}
+            ${
+              this.snapshot.mode === 'hotseat' && !this.hotseatAvailable
+                ? html`<p class="orientation-note">${msg('Rotate to landscape to start Multiplayer.')}</p>`
+                : nothing
+            }
             <button type="button" class="secondary-action" @click=${this.back}>
               ${msg('Back')}
             </button>
@@ -357,7 +333,7 @@ export class GrandTransitionSetup extends LitElement {
                 (this.snapshot.mode === 'hotseat' && !this.hotseatAvailable) ||
                 !bothPlayersLocked ||
                 (this.snapshot.mode === 'ladder' &&
-                (this.ladderProgress === null || this.ladderProgress.completed))
+                  (this.ladderProgress === null || this.ladderProgress.completed))
               }
             >
               ${
@@ -390,8 +366,7 @@ export class GrandTransitionSetup extends LitElement {
   }): TemplateResult {
     const characterErrorId = config.field + '-error';
     const skinErrorId = config.skinField + '-error';
-    const targetActive =
-      this.selectionTarget === config.field && !config.locked;
+    const targetActive = this.selectionTarget === config.field && !config.locked;
     const canUnlock = config.locked && !config.fixed && this.bothPlayersLocked();
     const canLock = !config.locked && targetActive;
     const romanianInterface = interfaceLocale() === 'ro-RO';
@@ -414,23 +389,25 @@ export class GrandTransitionSetup extends LitElement {
           data-skin-id=${config.skin?.id ?? ''}
           aria-pressed=${targetActive}
           ?disabled=${!targetActive}
-          aria-describedby=${
-            config.characterError ? characterErrorId : nothing
-          }
+          aria-describedby=${config.characterError ? characterErrorId : nothing}
           @click=${this.chooseSelectionTarget}
           @keydown=${this.handleStageKeyDown}
           @contextmenu=${this.cycleSkinFromContextMenu}
         >
           <span class="visually-hidden">
             ${config.playerLabel}${romanianInterface ? ',' : nothing}
-            ${config.character
-              ? html`${config.locked
-                  ? config.fixed
-                    ? msg('opponent fixed by rung:')
-                    : msg('locked in:')
-                  : msg('character:')}
+            ${
+              config.character
+                ? html`${
+                    config.locked
+                      ? config.fixed
+                        ? msg('opponent fixed by rung:')
+                        : msg('locked in:')
+                      : msg('character:')
+                  }
                   <span>${config.character.name}</span>`
-              : msg('character')}
+                : msg('character')
+            }
           </span>
         </button>
         <span class="contestant-player">${config.playerLabel}</span>
@@ -439,13 +416,15 @@ export class GrandTransitionSetup extends LitElement {
             ? html`
                 <span class="contestant-portrait-frame">
                   <picture>
-                    ${config.skin.avif
-                      ? html`<source
+                    ${
+                      config.skin.avif
+                        ? html`<source
                           type=${config.skin.avif.mimeType}
                           srcset=${config.skin.avif.srcSet}
                           sizes=${config.skin.sizes}
                         />`
-                      : nothing}
+                        : nothing
+                    }
                     <img
                       class="contestant-portrait"
                       src=${config.skin.portraitUrl}
@@ -498,13 +477,15 @@ export class GrandTransitionSetup extends LitElement {
           ?disabled=${!canLock && !canUnlock}
           @click=${this.togglePlayerLock}
         >
-          ${config.fixed
-            ? msg('Opponent locked in')
-            : canUnlock
-              ? msg('Change selection')
-              : config.locked
-                ? msg('Selection confirmed')
-                : msg('Confirm selection')}
+          ${
+            config.fixed
+              ? msg('Opponent locked in')
+              : canUnlock
+                ? msg('Change selection')
+                : config.locked
+                  ? msg('Selection confirmed')
+                  : msg('Confirm selection')
+          }
         </button>
       </section>
       ${
@@ -539,9 +520,7 @@ export class GrandTransitionSetup extends LitElement {
         class="skin-selector"
         role="group"
         aria-label=${
-          config.playerLabel +
-          ': ' +
-          skinAccessibleLabel(config.skin.id, config.species)
+          config.playerLabel + ': ' + skinAccessibleLabel(config.skin.id, config.species)
         }
         aria-describedby=${config.errorId ?? nothing}
       >
@@ -589,12 +568,8 @@ export class GrandTransitionSetup extends LitElement {
       this.snapshot[this.selectionTarget] === character.id &&
       this.snapshot[skinFieldForCharacterField(this.selectionTarget)] === skin.id;
     const playerLabel =
-      this.selectionTarget === 'playerOneCharacterId'
-        ? msg('player one')
-        : msg('player two');
-    const weaknessNames = character.weaknessTags
-      .map(interfaceWeaknessName)
-      .join(', ');
+      this.selectionTarget === 'playerOneCharacterId' ? msg('player one') : msg('player two');
+    const weaknessNames = character.weaknessTags.map(interfaceWeaknessName).join(', ');
     const selectedFor = [
       playerOneSelected ? msg('Selected for player one.') : '',
       playerTwoSelected ? msg('Selected for player two.') : '',
@@ -613,9 +588,7 @@ export class GrandTransitionSetup extends LitElement {
         data-player-two-selected=${playerTwoSelected ? 'true' : 'false'}
         aria-pressed=${currentTargetSelected}
         aria-describedby=${
-          this.previewCharacterId === character.id
-            ? characterInspectorId
-            : nothing
+          this.previewCharacterId === character.id ? characterInspectorId : nothing
         }
         ?disabled=${!this.canSelectRosterCharacter(character.id)}
         @click=${this.selectRosterCharacter}
@@ -627,13 +600,15 @@ export class GrandTransitionSetup extends LitElement {
       >
         <span class="roster-portrait-window">
           <picture>
-            ${skin.avif
-              ? html`<source
+            ${
+              skin.avif
+                ? html`<source
                   type=${skin.avif.mimeType}
                   srcset=${skin.avif.srcSet}
                   sizes=${skin.sizes}
                 />`
-              : nothing}
+                : nothing
+            }
             <img
               class="roster-headshot"
               src=${skin.portraitUrl}
@@ -659,16 +634,8 @@ export class GrandTransitionSetup extends LitElement {
         />
         </picture>
         <span class="roster-markers" aria-hidden="true">
-          ${
-            playerOneSelected
-              ? html`<span class="roster-marker--one">1</span>`
-              : nothing
-          }
-          ${
-            playerTwoSelected
-              ? html`<span class="roster-marker--two">2</span>`
-              : nothing
-          }
+          ${playerOneSelected ? html`<span class="roster-marker--one">1</span>` : nothing}
+          ${playerTwoSelected ? html`<span class="roster-marker--two">2</span>` : nothing}
         </span>
         <span class="visually-hidden">
           <span>${character.name}</span> —
@@ -691,11 +658,7 @@ export class GrandTransitionSetup extends LitElement {
         data-pinned=${this.previewPinned ? 'true' : 'false'}
       >
         <span class="character-inspector-status">
-          ${
-            this.previewPinned
-              ? msg('Pinned dossier')
-              : msg('Character dossier')
-          }
+          ${this.previewPinned ? msg('Pinned dossier') : msg('Character dossier')}
         </span>
         <strong>${character.name}</strong>
         <span>${msg('Weaknesses')}</span>
@@ -735,17 +698,15 @@ export class GrandTransitionSetup extends LitElement {
             `,
           )}
         </select>
-        ${config.field === 'sceneId'
-          ? html`<span class="scene-selected-text" aria-hidden="true">${
-              config.options.find((option) => option.value === config.value)?.label
-            }</span>`
-          : nothing}
-        </div>
         ${
-          config.error
-            ? html`<p class="field-error" id=${errorId}>${config.error}</p>`
+          config.field === 'sceneId'
+            ? html`<span class="scene-selected-text" aria-hidden="true">${
+                config.options.find((option) => option.value === config.value)?.label
+              }</span>`
             : nothing
         }
+        </div>
+        ${config.error ? html`<p class="field-error" id=${errorId}>${config.error}</p>` : nothing}
       </div>
     `;
   }
@@ -788,9 +749,8 @@ export class GrandTransitionSetup extends LitElement {
       this.validationAttempted = true;
       this.requestUpdate();
       void this.updateComplete.then(() => {
-        const controlId = firstInvalidField === skinField
-          ? firstInvalidField + '-previous'
-          : firstInvalidField;
+        const controlId =
+          firstInvalidField === skinField ? firstInvalidField + '-previous' : firstInvalidField;
         this.querySelector<HTMLElement>('#' + controlId)?.focus();
       });
       return;
@@ -809,9 +769,7 @@ export class GrandTransitionSetup extends LitElement {
     if (!characterId) return;
 
     const changedField =
-      this.snapshot?.mode === 'ladder'
-        ? 'playerOneCharacterId'
-        : this.selectionTarget;
+      this.snapshot?.mode === 'ladder' ? 'playerOneCharacterId' : this.selectionTarget;
     if (!this.canSelectRosterCharacter(characterId)) return;
     this.dispatchSetupChange(changedField, characterId);
     const skinField = skinFieldForCharacterField(changedField);
@@ -820,10 +778,7 @@ export class GrandTransitionSetup extends LitElement {
     const requestedSkinId = control.dataset.skinId;
     if (requestedSkinId) {
       this.dispatchSetupChange(skinField, requestedSkinId);
-    } else if (
-      currentSkinId &&
-      !nextCharacterSkins.some((skin) => skin.id === currentSkinId)
-    ) {
+    } else if (currentSkinId && !nextCharacterSkins.some((skin) => skin.id === currentSkinId)) {
       this.dispatchSetupChange(skinField, nextCharacterSkins[0]?.id ?? '');
     }
     this.previewCharacterId = characterId;
@@ -862,9 +817,7 @@ export class GrandTransitionSetup extends LitElement {
     const characterId = this.snapshot[characterField];
     const skins = characterSkinViews(characterId);
     if (skins.length < 2) return;
-    const currentIndex = skins.findIndex(
-      (skin) => skin.id === this.snapshot?.[skinField],
-    );
+    const currentIndex = skins.findIndex((skin) => skin.id === this.snapshot?.[skinField]);
     const normalizedIndex = currentIndex < 0 ? 0 : currentIndex;
     const nextIndex = (normalizedIndex + direction + skins.length) % skins.length;
     this.dispatchSetupChange(skinField, skins[nextIndex]!.id);
@@ -896,8 +849,7 @@ export class GrandTransitionSetup extends LitElement {
       .some(
         (node) =>
           node instanceof Element &&
-          (node.matches('.roster-choice') ||
-            node.matches('.character-inspector')),
+          (node.matches('.roster-choice') || node.matches('.character-inspector')),
       );
     if (!insideRosterOrPanel) {
       this.dismissPreview();
@@ -921,10 +873,7 @@ export class GrandTransitionSetup extends LitElement {
     this.dispatchSetupChange(control.name as SetupField, control.value);
   };
 
-  private dispatchSetupChange(
-    field: SetupField,
-    value: string | number | null,
-  ): void {
+  private dispatchSetupChange(field: SetupField, value: string | number | null): void {
     this.submissionLocked = false;
     this.dispatchEvent(
       new CustomEvent(setupChangeEventName, {
@@ -957,8 +906,7 @@ export class GrandTransitionSetup extends LitElement {
       this.requestUpdate();
       void this.updateComplete.then(() => {
         const controlId =
-          firstInvalidField === 'playerOneSkinId' ||
-          firstInvalidField === 'playerTwoSkinId'
+          firstInvalidField === 'playerOneSkinId' || firstInvalidField === 'playerTwoSkinId'
             ? firstInvalidField + '-previous'
             : firstInvalidField;
         this.querySelector<HTMLElement>('#' + controlId)?.focus();
@@ -980,15 +928,15 @@ export class GrandTransitionSetup extends LitElement {
 
   private canSelectRosterCharacter(characterId: string): boolean {
     if (!this.snapshot || this.isPlayerLocked(this.selectionTarget)) return false;
-    const characterFixed = this.snapshot.mode === 'ladder' &&
+    const characterFixed =
+      this.snapshot.mode === 'ladder' &&
       this.ladderProgress !== null &&
       (this.ladderProgress.rungIndex > 0 || this.ladderProgress.losses > 0);
     return !characterFixed || characterId === this.snapshot.playerOneCharacterId;
   }
 
   private bothPlayersLocked(): boolean {
-    return this.playerOneLocked &&
-      (this.snapshot?.mode === 'ladder' || this.playerTwoLocked);
+    return this.playerOneLocked && (this.snapshot?.mode === 'ladder' || this.playerTwoLocked);
   }
 
   private isPlayerLocked(field: CharacterField): boolean {
@@ -1081,19 +1029,15 @@ const setupFieldOrder: readonly SetupField[] = [
 ];
 
 export function validateSetup(snapshot: SetupSnapshot): SetupErrors {
-  const characterIds = new Set(
-    gameCatalog.characters.map((character) => character.id),
-  );
+  const characterIds = new Set(gameCatalog.characters.map((character) => character.id));
   const sceneIds = new Set(gameCatalog.scenes.map((scene) => scene.id));
   const errors: SetupErrors = {};
 
   if (!snapshot.mode) {
-    errors.mode = msg('Mode is missing. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.');
-  } else if (
-    snapshot.mode !== 'ai' &&
-    snapshot.mode !== 'hotseat' &&
-    snapshot.mode !== 'ladder'
-  ) {
+    errors.mode = msg(
+      'Mode is missing. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.',
+    );
+  } else if (snapshot.mode !== 'ai' && snapshot.mode !== 'hotseat' && snapshot.mode !== 'ladder') {
     errors.mode = msg(
       'Mode is not supported. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.',
     );
@@ -1101,9 +1045,7 @@ export function validateSetup(snapshot: SetupSnapshot): SetupErrors {
 
   if (
     snapshot.mode === 'ai' &&
-    !['local-radio-caller', 'party-strategist', 'palace-operator'].includes(
-      snapshot.aiDifficulty,
-    )
+    !['local-radio-caller', 'party-strategist', 'palace-operator'].includes(snapshot.aiDifficulty)
   ) {
     errors.aiDifficulty = msg('Choose a listed artificial intelligence difficulty.');
   }
@@ -1117,9 +1059,7 @@ export function validateSetup(snapshot: SetupSnapshot): SetupErrors {
   if (!errors.playerOneCharacterId) {
     errors.playerOneSkinId = identifierError(
       snapshot.playerOneSkinId,
-      new Set(
-        characterSkinViews(snapshot.playerOneCharacterId).map(({ id }) => id),
-      ),
+      new Set(characterSkinViews(snapshot.playerOneCharacterId).map(({ id }) => id)),
       msg('Player one skin is missing. Choose an available skin.'),
       msg('Player one skin is unknown. Choose an available skin.'),
     );
@@ -1133,9 +1073,7 @@ export function validateSetup(snapshot: SetupSnapshot): SetupErrors {
   if (!errors.playerTwoCharacterId) {
     errors.playerTwoSkinId = identifierError(
       snapshot.playerTwoSkinId,
-      new Set(
-        characterSkinViews(snapshot.playerTwoCharacterId).map(({ id }) => id),
-      ),
+      new Set(characterSkinViews(snapshot.playerTwoCharacterId).map(({ id }) => id)),
       msg('Player two skin is missing. Choose an available skin.'),
       msg('Player two skin is unknown. Choose an available skin.'),
     );
@@ -1147,9 +1085,7 @@ export function validateSetup(snapshot: SetupSnapshot): SetupErrors {
     msg('Scene is unknown. Choose a listed scene.'),
   );
 
-  return Object.fromEntries(
-    Object.entries(errors).filter(([, message]) => message !== undefined),
-  );
+  return Object.fromEntries(Object.entries(errors).filter(([, message]) => message !== undefined));
 }
 
 function identifierError(
@@ -1163,9 +1099,7 @@ function identifierError(
   return undefined;
 }
 
-function immutableStartMatchPayload(
-  snapshot: SetupSnapshot,
-): StartMatchPayload {
+function immutableStartMatchPayload(snapshot: SetupSnapshot): StartMatchPayload {
   return Object.freeze({
     mode: snapshot.mode as MatchMode | 'ladder',
     aiDifficulty: snapshot.aiDifficulty,
@@ -1181,9 +1115,7 @@ function characterViews(): readonly CharacterView[] {
   return gameCatalog.characters.map((character) => {
     const portrait = characterSkins[character.id]?.[0];
     if (!portrait) {
-      throw new Error(
-        'Character "' + character.id + '" has no setup portrait asset.',
-      );
+      throw new Error('Character "' + character.id + '" has no setup portrait asset.');
     }
     return {
       id: character.id,
@@ -1224,10 +1156,7 @@ function characterSkinViews(characterId: string): readonly CharacterSkinView[] {
   }));
 }
 
-function selectedSkinView(
-  characterId: string,
-  skinId: string,
-): CharacterSkinView | undefined {
+function selectedSkinView(characterId: string, skinId: string): CharacterSkinView | undefined {
   const skins = characterSkinViews(characterId);
   return skins.find((skin) => skin.id === skinId) ?? skins[0];
 }
@@ -1238,29 +1167,20 @@ function skinLabel(skinId: string): string {
   return titleCase(skinId);
 }
 
-function skinAccessibleLabel(
-  skinId: string,
-  species: CharacterView['species'],
-): string {
+function skinAccessibleLabel(skinId: string, species: CharacterView['species']): string {
   if (skinId === 'default') return msg('Original skin');
   if (skinId === 'alternate') {
-    return species === 'robot'
-      ? msg('Alternate chassis')
-      : msg('Alternate skin');
+    return species === 'robot' ? msg('Alternate chassis') : msg('Alternate skin');
   }
   return skinLabel(skinId) + ' ' + msg('skin');
 }
 
 function skinFieldForCharacterField(field: CharacterField): SkinField {
-  return field === 'playerOneCharacterId'
-    ? 'playerOneSkinId'
-    : 'playerTwoSkinId';
+  return field === 'playerOneCharacterId' ? 'playerOneSkinId' : 'playerTwoSkinId';
 }
 
 function characterFieldForSkinField(field: SkinField): CharacterField {
-  return field === 'playerOneSkinId'
-    ? 'playerOneCharacterId'
-    : 'playerTwoCharacterId';
+  return field === 'playerOneSkinId' ? 'playerOneCharacterId' : 'playerTwoCharacterId';
 }
 
 function titleCase(value: string): string {

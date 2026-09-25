@@ -1,6 +1,6 @@
-import type { GameLocaleBundle } from '../localization/game-locale-schema';
-import { validateContentCatalog, type ContentCatalog } from './content-catalog';
-import type { CatalogBuildOptions, PhraseCardCatalog } from './phrase-card-catalog';
+import type { GameLocaleBundle } from '../localization/game-locale-schema.ts';
+import { validateContentCatalog, type ContentCatalog } from './content-catalog.ts';
+import type { CatalogBuildOptions, PhraseCardCatalog } from './phrase-card-catalog.ts';
 
 const media = (assetId: string) => ({
   assetId,
@@ -76,21 +76,9 @@ export function createGameCatalog(
         phrasePool: [...scenePhraseIds('modern-debate-studio')],
         effectIds: ['led-light-sweep', 'floor-reflection-pulse'],
       },
-      foundationScene(
-        'county-council-ballroom',
-        1,
-        scenePhraseIds('county-council-ballroom'),
-      ),
-      foundationScene(
-        'midnight-call-in-studio',
-        0,
-        scenePhraseIds('midnight-call-in-studio'),
-      ),
-      foundationScene(
-        'palace-press-hall',
-        1,
-        scenePhraseIds('palace-press-hall'),
-      ),
+      foundationScene('county-council-ballroom', 1, scenePhraseIds('county-council-ballroom')),
+      foundationScene('midnight-call-in-studio', 0, scenePhraseIds('midnight-call-in-studio')),
+      foundationScene('palace-press-hall', 1, scenePhraseIds('palace-press-hall')),
       foundationScene(
         'influencer-campaign-livestream',
         0,
@@ -101,9 +89,7 @@ export function createGameCatalog(
         openingPlayerIndex: 1,
         nameKey: 'scene.civic-cypher-boxing-ring.name',
         descriptionKey: 'scene.civic-cypher-boxing-ring.description',
-        backgroundLayers: [
-          { media: media('civic-cypher-boxing-ring'), depth: 0 },
-        ],
+        backgroundLayers: [{ media: media('civic-cypher-boxing-ring'), depth: 0 }],
         animationId: 'civic-cypher-crowd-bounce',
         music: media('civic-cypher-boxing-ring-theme'),
         phrasePool: [...scenePhraseIds('civic-cypher-boxing-ring')],
@@ -112,9 +98,7 @@ export function createGameCatalog(
     ],
     locales: [...gameLocaleBundles],
   };
-  return options.validate === false
-    ? (catalog as ContentCatalog)
-    : validateContentCatalog(catalog);
+  return options.validate === false ? (catalog as ContentCatalog) : validateContentCatalog(catalog);
 }
 
 function foundationScene(

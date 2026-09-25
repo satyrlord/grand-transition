@@ -1,10 +1,7 @@
-import { lockInSetup } from './setup-test-helpers';
+import { lockInSetup } from './setup-test-helpers.ts';
 import { page } from 'vitest/browser';
 import { afterEach, expect, test, vi } from 'vitest';
-import {
-  GrandTransitionApp,
-  createDefaultSetupSnapshot,
-} from '../../src/app/app-shell';
+import { GrandTransitionApp, createDefaultSetupSnapshot } from '../../src/app/app-shell.ts';
 import {
   GrandTransitionSetup,
   setupChangeEventName,
@@ -12,26 +9,24 @@ import {
   type SetupChangeEvent,
   type SetupSnapshot,
   type StartMatchEvent,
-} from '../../src/app/screens/setup-screen';
-import { gameCatalog } from '../../src/game-content';
-import { displayWeaknessName } from '../../src/localization/romanian-display-names';
-import {
-  createLadderProgress,
-  recordLadderResult,
-} from '../../src/engine/ladder';
+} from '../../src/app/screens/setup-screen.ts';
+import { gameCatalog } from '../../src/game-content.ts';
+import { displayWeaknessName } from '../../src/localization/romanian-display-names.ts';
+import { createLadderProgress, recordLadderResult } from '../../src/engine/ladder.ts';
 import {
   decodeLadderProgress,
   encodeLadderProgress,
-} from '../../src/persistence/codecs/ladder-progress-codec';
-import { ladderProgressStorageKey } from '../../src/persistence/ladder-progress';
+} from '../../src/persistence/codecs/ladder-progress-codec.ts';
+import { ladderProgressStorageKey } from '../../src/persistence/ladder-progress.ts';
+import { reloadStoredData, resetStoredData, storedDocument } from './persistence-test-helpers.ts';
 
 // The ladder has one rung per playable scene.
 const shippedRungCount = gameCatalog.scenes.length;
 
-afterEach(() => {
+afterEach(async () => {
   vi.restoreAllMocks();
-  localStorage.removeItem(ladderProgressStorageKey);
   document.body.innerHTML = '';
+  await resetStoredData();
 });
 
 // Tests address controls by test id and assert their state, so visible copy and
@@ -40,19 +35,18 @@ const lockButton = (side: 'one' | 'two'): HTMLButtonElement | null =>
   document.querySelector<HTMLButtonElement>(`[data-testid="lock-player-${side}"]`);
 
 const publicWeaknesses = (characterId: string): string =>
-  gameCatalog.characters.find(({ id }) => id === characterId)!.weaknessTags
-    .map((tag) => displayWeaknessName(tag, 'en')).join(' · ');
+  gameCatalog.characters
+    .find(({ id }) => id === characterId)!
+    .weaknessTags.map((tag) => displayWeaknessName(tag, 'en'))
+    .join(' · ');
 
 test('roster crops and selected stages keep full responsive portrait sources', async () => {
   const setup = await mountSetup(createDefaultSetupSnapshot());
   const roster = [...setup.querySelectorAll<HTMLImageElement>('.roster-headshot')];
   expect(roster).toHaveLength(30);
   expect(
-    new Set(
-      roster.map(
-        (image) => image.closest<HTMLElement>('.roster-choice')?.dataset.portraitId,
-      ),
-    ).size,
+    new Set(roster.map((image) => image.closest<HTMLElement>('.roster-choice')?.dataset.portraitId))
+      .size,
   ).toBe(30);
   for (const image of roster) {
     expect(image.getAttribute('src')).toContain('960x960.webp');
@@ -84,8 +78,13 @@ test('keeps wrapping scene text synchronized with the native accessible selectio
 });
 
 test('explains the historical secret-police weakness in plain English', async () => {
-  const setup = await mountSetup({ ...createDefaultSetupSnapshot(), playerOneCharacterId: 'black-sea-captain' });
-  expect(setup.querySelector('.contestant-weaknesses')?.textContent).toContain('Former secret police');
+  const setup = await mountSetup({
+    ...createDefaultSetupSnapshot(),
+    playerOneCharacterId: 'black-sea-captain',
+  });
+  expect(setup.querySelector('.contestant-weaknesses')?.textContent).toContain(
+    'Former secret police',
+  );
   expect(setup.querySelector('.contestant-weaknesses')?.textContent).not.toContain('Securitate');
 });
 
@@ -121,17 +120,18 @@ test('moves through the two-state graph on one URL and restores setup values', a
 
   await expect
     .element(
-      page.getByText(
-        'All characters and events are fictional composites created for satire.',
-        { exact: true },
-      ),
+      page.getByText('All characters and events are fictional composites created for satire.', {
+        exact: true,
+      }),
     )
     .toBeVisible();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   expect(window.location.href).toBe(originalUrl);
   await vi.waitFor(() => expect(document.activeElement?.id).toBe('setup-title'));
 
-  expect(document.querySelector<GrandTransitionSetup>('grand-transition-setup')?.snapshot?.mode).toBe('hotseat');
+  expect(
+    document.querySelector<GrandTransitionSetup>('grand-transition-setup')?.snapshot?.mode,
+  ).toBe('hotseat');
   expect(document.querySelector('select#mode')).toBeNull();
   await expect
     .element(
@@ -152,12 +152,8 @@ test('moves through the two-state graph on one URL and restores setup values', a
     .toHaveValue('transition-era-television-studio');
   const weaknesses = document.querySelectorAll('.contestant-weaknesses');
   expect(weaknesses).toHaveLength(2);
-  expect(weaknesses[0]!.textContent?.trim()).toBe(
-    publicWeaknesses('red-folded-chairman'),
-  );
-  expect(weaknesses[1]!.textContent?.trim()).toBe(
-    publicWeaknesses('thunder-tribune'),
-  );
+  expect(weaknesses[0]!.textContent?.trim()).toBe(publicWeaknesses('red-folded-chairman'));
+  expect(weaknesses[1]!.textContent?.trim()).toBe(publicWeaknesses('thunder-tribune'));
   const weaknessFixture = document.createElement('span');
   weaknessFixture.className = 'contestant-weaknesses';
   weaknessFixture.style.width = '12rem';
@@ -186,16 +182,12 @@ test('moves through the two-state graph on one URL and restores setup values', a
     .poll(
       () =>
         [...document.querySelectorAll('.contestant-weaknesses')].filter(
-          (record) =>
-            record.textContent?.trim() ===
-            publicWeaknesses('red-folded-chairman'),
+          (record) => record.textContent?.trim() === publicWeaknesses('red-folded-chairman'),
         ).length,
     )
     .toBe(2);
   await page.getByRole('button', { name: 'Back' }).click();
-  await expect
-    .element(page.getByRole('heading', { name: 'Grand Transition' }))
-    .toBeVisible();
+  await expect.element(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
   await vi.waitFor(() => expect(document.activeElement?.id).toBe('game-title'));
   expect(window.location.href).toBe(originalUrl);
 
@@ -209,9 +201,7 @@ test('moves through the two-state graph on one URL and restores setup values', a
     .toHaveAttribute('data-character-id', 'red-folded-chairman');
 
   window.history.back();
-  await expect
-    .element(page.getByRole('heading', { name: 'Grand Transition' }))
-    .toBeVisible();
+  await expect.element(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
   await vi.waitFor(() => expect(document.activeElement?.id).toBe('game-title'));
   expect(window.location.href).toBe(originalUrl);
 });
@@ -225,9 +215,7 @@ test('shows transient and pinned character dossiers with exact public weaknesses
   captain.focus();
   await setup.updateComplete;
   const transient = setup.querySelector('.character-inspector')!;
-  expect(transient.textContent).toMatch(
-    /Character dossier.*Black Sea Captain/su,
-  );
+  expect(transient.textContent).toMatch(/Character dossier.*Black Sea Captain/su);
   expect(transient.textContent).toContain(publicWeaknesses('black-sea-captain'));
   expect(transient.getAttribute('data-pinned')).toBe('false');
 
@@ -244,14 +232,10 @@ test('shows transient and pinned character dossiers with exact public weaknesses
   await setup.updateComplete;
   const pinned = setup.querySelector('.character-inspector')!;
   expect(pinned.getAttribute('data-pinned')).toBe('true');
-  expect(pinned.textContent).toMatch(
-    /Pinned dossier.*Black Sea Captain/su,
-  );
+  expect(pinned.textContent).toMatch(/Pinned dossier.*Black Sea Captain/su);
   expect(pinned.textContent).toContain(publicWeaknesses('black-sea-captain'));
 
-  const playerOneTarget = setup.querySelector<HTMLButtonElement>(
-    '#playerOneCharacterId',
-  )!;
+  const playerOneTarget = setup.querySelector<HTMLButtonElement>('#playerOneCharacterId')!;
   playerOneTarget.focus();
   playerOneTarget.click();
   await setup.updateComplete;
@@ -268,9 +252,7 @@ test('shows transient and pinned character dossiers with exact public weaknesses
 
   setup
     .querySelector('main')!
-    .dispatchEvent(
-      new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
-    );
+    .dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   await setup.updateComplete;
   expect(setup.querySelector('.character-inspector')).toBeNull();
 });
@@ -278,9 +260,7 @@ test('shows transient and pinned character dossiers with exact public weaknesses
 test('selects Government AI and exposes both robot portrait skins', async () => {
   await mountApp();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  const setup = document.querySelector(
-    'grand-transition-setup',
-  ) as GrandTransitionSetup;
+  const setup = document.querySelector('grand-transition-setup') as GrandTransitionSetup;
   expect(setup.querySelectorAll('.roster-choice')).toHaveLength(30);
 
   const governmentAi = setup.querySelector<HTMLButtonElement>(
@@ -291,47 +271,37 @@ test('selects Government AI and exposes both robot portrait skins', async () => 
   expect(governmentAi.querySelector('.visually-hidden')?.textContent).toContain('Government AI');
   governmentAi.focus();
   await setup.updateComplete;
-  expect(setup.querySelector('.character-inspector')?.textContent).toMatch(
-    /Government AI/su,
+  expect(setup.querySelector('.character-inspector')?.textContent).toMatch(/Government AI/su);
+  expect(setup.querySelector('.character-inspector')?.textContent).toContain(
+    publicWeaknesses('government-ai'),
   );
-  expect(setup.querySelector('.character-inspector')?.textContent).toContain(publicWeaknesses('government-ai'));
 
-  await page
-    .getByRole('button', { name: /Government AI.*Select for player one/u })
-    .click();
-  const playerOneStage = setup.querySelector<HTMLElement>(
-    '.contestant-stage--one',
-  )!;
-  await expect
-    .poll(() => playerOneStage.dataset.characterId)
-    .toBe('government-ai');
+  await page.getByRole('button', { name: /Government AI.*Select for player one/u }).click();
+  const playerOneStage = setup.querySelector<HTMLElement>('.contestant-stage--one')!;
+  await expect.poll(() => playerOneStage.dataset.characterId).toBe('government-ai');
   expect(playerOneStage.querySelector('.contestant-weaknesses')?.textContent?.trim()).toBe(
     publicWeaknesses('government-ai'),
   );
-  expect(
-    playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src,
-  ).toContain('government-ai-960x960.webp');
+  expect(playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src).toContain(
+    'government-ai-960x960.webp',
+  );
 
   await page.getByRole('button', { name: 'Next skin for Player one' }).click();
   await expect.poll(() => playerOneStage.dataset.skinId).toBe('alternate');
-  expect(
-    playerOneStage.querySelector('.skin-selector')?.getAttribute('aria-label'),
-  ).toBe('Player one: Alternate chassis');
-  expect(
-    playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src,
-  ).toContain('government-ai--alternate-960x960.webp');
+  expect(playerOneStage.querySelector('.skin-selector')?.getAttribute('aria-label')).toBe(
+    'Player one: Alternate chassis',
+  );
+  expect(playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src).toContain(
+    'government-ai--alternate-960x960.webp',
+  );
 });
 
 test('selects an alternate portrait directly from the roster', async () => {
   await mountApp();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  const setup = document.querySelector(
-    'grand-transition-setup',
-  ) as GrandTransitionSetup;
+  const setup = document.querySelector('grand-transition-setup') as GrandTransitionSetup;
 
-  await page
-    .getByRole('button', { name: 'Player one character: The Red-Folded Chairman' })
-    .click();
+  await page.getByRole('button', { name: 'Player one character: The Red-Folded Chairman' }).click();
   await page
     .getByRole('button', {
       name: /Red-Folded Chairman — Alternate.*Select portrait for player one/u,
@@ -339,29 +309,23 @@ test('selects an alternate portrait directly from the roster', async () => {
     .click();
 
   await expect
-    .poll(
-      () => setup.querySelector<HTMLElement>('.contestant-stage--one')?.dataset.skinId,
-    )
+    .poll(() => setup.querySelector<HTMLElement>('.contestant-stage--one')?.dataset.skinId)
     .toBe('alternate');
   expect(
-    setup.querySelector<HTMLButtonElement>(
-      '.roster-choice[data-portrait-id="red-folded-chairman--alternate"]',
-    )?.getAttribute('data-player-one-selected'),
+    setup
+      .querySelector<HTMLButtonElement>(
+        '.roster-choice[data-portrait-id="red-folded-chairman--alternate"]',
+      )
+      ?.getAttribute('data-player-one-selected'),
   ).toBe('true');
 });
 
 test('cycles selected skins without changing the portrait catalog or character IDs', async () => {
   await mountApp();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  const setup = document.querySelector(
-    'grand-transition-setup',
-  ) as GrandTransitionSetup;
-  const playerOneStage = setup.querySelector<HTMLElement>(
-    '.contestant-stage--one',
-  )!;
-  const playerOneTarget = setup.querySelector<HTMLButtonElement>(
-    '#playerOneCharacterId',
-  )!;
+  const setup = document.querySelector('grand-transition-setup') as GrandTransitionSetup;
+  const playerOneStage = setup.querySelector<HTMLElement>('.contestant-stage--one')!;
+  const playerOneTarget = setup.querySelector<HTMLButtonElement>('#playerOneCharacterId')!;
   const rosterSources = [...setup.querySelectorAll<HTMLImageElement>('.roster-headshot')].map(
     ({ src }) => src,
   );
@@ -369,22 +333,18 @@ test('cycles selected skins without changing the portrait catalog or character I
   expect(playerOneStage.dataset.characterId).toBe('red-folded-chairman');
   expect(playerOneStage.dataset.skinId).toBe('default');
   await page.getByRole('button', { name: 'Next skin for Player one' }).click();
-  await expect
-    .poll(() => playerOneStage.dataset.skinId)
-    .toBe('alternate');
+  await expect.poll(() => playerOneStage.dataset.skinId).toBe('alternate');
+  expect(playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src).toContain(
+    'red-folded-chairman--alternate',
+  );
+  expect(playerOneStage.querySelector('.skin-selector')?.getAttribute('aria-label')).toBe(
+    'Player one: Alternate skin',
+  );
+  expect(setup.querySelector<HTMLElement>('.contestant-stage--two')!.dataset.skinId).toBe(
+    'default',
+  );
   expect(
-    playerOneStage.querySelector<HTMLImageElement>('.contestant-portrait')!.src,
-  ).toContain('red-folded-chairman--alternate');
-  expect(
-    playerOneStage.querySelector('.skin-selector')?.getAttribute('aria-label'),
-  ).toBe('Player one: Alternate skin');
-  expect(
-    setup.querySelector<HTMLElement>('.contestant-stage--two')!.dataset.skinId,
-  ).toBe('default');
-  expect(
-    [...setup.querySelectorAll<HTMLImageElement>('.roster-headshot')].map(
-      ({ src }) => src,
-    ),
+    [...setup.querySelectorAll<HTMLImageElement>('.roster-headshot')].map(({ src }) => src),
   ).toEqual(rosterSources);
   expect(rosterSources.some((src) => src.includes('--alternate'))).toBe(true);
 
@@ -396,9 +356,7 @@ test('cycles selected skins without changing the portrait catalog or character I
   await expect.poll(() => playerOneStage.dataset.skinId).toBe('default');
 
   playerOneTarget.focus();
-  playerOneTarget.dispatchEvent(
-    new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }),
-  );
+  playerOneTarget.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
   await expect.poll(() => playerOneStage.dataset.skinId).toBe('alternate');
   expect(playerOneStage.dataset.characterId).toBe('red-folded-chairman');
 });
@@ -422,9 +380,9 @@ test('requires ordered lock-in and lets either player reopen only after both loc
   )!;
   governmentAi.click();
   await vi.waitFor(() =>
-    expect(
-      document.querySelector<HTMLElement>('.contestant-stage--one')?.dataset.characterId,
-    ).toBe('government-ai'),
+    expect(document.querySelector<HTMLElement>('.contestant-stage--one')?.dataset.characterId).toBe(
+      'government-ai',
+    ),
   );
   governmentAi.click();
   await expect.element(start).toBeDisabled();
@@ -456,8 +414,10 @@ test('ignores selection and skin events on stages outside the current unlocked s
     const stage = setup.querySelector<HTMLButtonElement>(`#player${side}CharacterId`)!;
     expect(stage.disabled).toBe(true);
     const selectionStatus = setup.querySelector('.roster-heading')!.textContent;
-    const lockAvailability = () => [...setup.querySelectorAll<HTMLButtonElement>('[data-testid^="lock-player-"]')]
-      .map(control => control.disabled);
+    const lockAvailability = () =>
+      [...setup.querySelectorAll<HTMLButtonElement>('[data-testid^="lock-player-"]')].map(
+        (control) => control.disabled,
+      );
     const beforeLocks = lockAvailability();
     changed.mockClear();
     stage.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -502,74 +462,57 @@ test.each([
     name: 'mirror match',
     playerTwoCharacterId: 'red-folded-chairman',
   },
-] as const)(
-  'emits one exact immutable payload for $name',
-  async ({ playerTwoCharacterId }) => {
-    const host = document.createElement('section');
-    const setup = document.createElement(
-      'grand-transition-setup',
-    ) as GrandTransitionSetup;
-    setup.snapshot = Object.freeze({
-      ...createDefaultSetupSnapshot(),
-      playerTwoCharacterId,
-    });
-    const listener = vi.fn<(event: StartMatchEvent) => void>();
-    host.addEventListener(startMatchEventName, listener);
-    host.append(setup);
-    document.body.append(host);
-    await setup.updateComplete;
-    await lockInSetup();
+] as const)('emits one exact immutable payload for $name', async ({ playerTwoCharacterId }) => {
+  const host = document.createElement('section');
+  const setup = document.createElement('grand-transition-setup') as GrandTransitionSetup;
+  setup.snapshot = Object.freeze({
+    ...createDefaultSetupSnapshot(),
+    playerTwoCharacterId,
+  });
+  const listener = vi.fn<(event: StartMatchEvent) => void>();
+  host.addEventListener(startMatchEventName, listener);
+  host.append(setup);
+  document.body.append(host);
+  await setup.updateComplete;
+  await lockInSetup();
 
-    const form = setup.querySelector('form')!;
-    form.dispatchEvent(
-      new SubmitEvent('submit', { bubbles: true, cancelable: true }),
-    );
-    form.dispatchEvent(
-      new SubmitEvent('submit', { bubbles: true, cancelable: true }),
-    );
+  const form = setup.querySelector('form')!;
+  form.dispatchEvent(new SubmitEvent('submit', { bubbles: true, cancelable: true }));
+  form.dispatchEvent(new SubmitEvent('submit', { bubbles: true, cancelable: true }));
 
-    expect(listener).toHaveBeenCalledTimes(1);
-    const event = listener.mock.calls[0]![0];
-    expect(event.bubbles).toBe(true);
-    expect(event.composed).toBe(true);
-    expect(Object.isFrozen(event.detail)).toBe(true);
-    expect(event.detail).toEqual({
-      mode: 'hotseat',
-      aiDifficulty: 'local-radio-caller',
-      playerOneCharacterId: 'red-folded-chairman',
-      playerOneSkinId: 'default',
-      playerTwoCharacterId,
-      playerTwoSkinId: 'default',
-      sceneId: 'transition-era-television-studio',
-    });
-  },
-);
+  expect(listener).toHaveBeenCalledTimes(1);
+  const event = listener.mock.calls[0]![0];
+  expect(event.bubbles).toBe(true);
+  expect(event.composed).toBe(true);
+  expect(Object.isFrozen(event.detail)).toBe(true);
+  expect(event.detail).toEqual({
+    mode: 'hotseat',
+    aiDifficulty: 'local-radio-caller',
+    playerOneCharacterId: 'red-folded-chairman',
+    playerOneSkinId: 'default',
+    playerTwoCharacterId,
+    playerTwoSkinId: 'default',
+    sceneId: 'transition-era-television-studio',
+  });
+});
 
 test('emits the custom single-player setup with the fixed AI policy', async () => {
-  const setup = await mountSetup(
-    Object.freeze({ ...createDefaultSetupSnapshot(), mode: 'ai' }),
-  );
+  const setup = await mountSetup(Object.freeze({ ...createDefaultSetupSnapshot(), mode: 'ai' }));
   const listener = vi.fn<(event: StartMatchEvent) => void>();
   setup.addEventListener(startMatchEventName, listener);
 
   expect(setup.snapshot?.mode).toBe('ai');
   expect(setup.querySelector('select#mode')).toBeNull();
   expect(setup.textContent).toContain('Match settings');
-  expect(
-    setup.querySelector<HTMLSelectElement>('#aiDifficulty')?.value,
-  ).toBe('local-radio-caller');
-  expect(setup.querySelector('#aiDifficulty')?.textContent).toContain(
-    'Local Radio Caller',
-  );
+  expect(setup.querySelector<HTMLSelectElement>('#aiDifficulty')?.value).toBe('local-radio-caller');
+  expect(setup.querySelector('#aiDifficulty')?.textContent).toContain('Local Radio Caller');
   expect(
     setup.querySelector('#playerTwoCharacterId')?.textContent?.replaceAll(/\s+/gu, ' ').trim(),
   ).toContain('Local Radio Caller character:');
   await lockInSetup();
   setup
     .querySelector('form')!
-    .dispatchEvent(
-      new SubmitEvent('submit', { bubbles: true, cancelable: true }),
-    );
+    .dispatchEvent(new SubmitEvent('submit', { bubbles: true, cancelable: true }));
 
   expect(listener).toHaveBeenCalledTimes(1);
   expect(listener.mock.calls[0]![0].detail).toMatchObject({
@@ -594,24 +537,17 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
     ),
   );
   expect(
-    document.querySelector('.contestant-stage--two .contestant-player')
-      ?.textContent,
+    document.querySelector('.contestant-stage--two .contestant-player')?.textContent,
   ).toContain('Local Radio Caller');
-  expect(
-    document.querySelector<HTMLButtonElement>('#playerTwoCharacterId')?.disabled,
-  ).toBe(true);
-  await page
-    .getByRole('button', { name: /Black Sea Captain.*Select for player one/u })
-    .click();
+  expect(document.querySelector<HTMLButtonElement>('#playerTwoCharacterId')?.disabled).toBe(true);
+  await page.getByRole('button', { name: /Black Sea Captain.*Select for player one/u }).click();
   await vi.waitFor(() =>
-    expect(
-      document.querySelector<HTMLElement>('.contestant-stage--one')?.dataset
-        .characterId,
-    ).toBe('black-sea-captain'),
+    expect(document.querySelector<HTMLElement>('.contestant-stage--one')?.dataset.characterId).toBe(
+      'black-sea-captain',
+    ),
   );
   expect(
-    document.querySelector<HTMLElement>('.contestant-stage--two')?.dataset
-      .characterId,
+    document.querySelector<HTMLElement>('.contestant-stage--two')?.dataset.characterId,
   ).not.toBe('black-sea-captain');
   expect(
     document
@@ -632,21 +568,15 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
     }),
   );
   expect(
-    document.querySelector<HTMLElement>('.contestant-stage--two')?.dataset
-      .characterId,
+    document.querySelector<HTMLElement>('.contestant-stage--two')?.dataset.characterId,
   ).not.toBe('black-sea-captain');
   expect(document.querySelector('.setup-heading')?.textContent).toContain(
     'Choose your debater. Your opponent and scene follow ladder progress.',
   );
-  expect(document.querySelector('.roster-heading')?.textContent).toContain(
-    '30 portraits',
-  );
+  expect(document.querySelector('.roster-heading')?.textContent).toContain('30 portraits');
+  expect(document.querySelectorAll('.contestant-stage--two .skin-cycle')).toHaveLength(0);
   expect(
-    document.querySelectorAll('.contestant-stage--two .skin-cycle'),
-  ).toHaveLength(0);
-  expect(
-    document.querySelector('.contestant-stage--two .contestant-locked-state')
-      ?.textContent,
+    document.querySelector('.contestant-stage--two .contestant-locked-state')?.textContent,
   ).toContain('Opponent fixed by rung');
   expect(document.querySelector('.ladder-field-label')?.textContent).toContain(
     'Rung scene — fixed',
@@ -654,16 +584,16 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
   expect(document.querySelector('.setup-note')?.textContent).toContain(
     'Opponent and scene are fixed by local ladder progress.',
   );
-  expect(localStorage.getItem(ladderProgressStorageKey)).not.toBeNull();
+  expect(await storedDocument(ladderProgressStorageKey)).not.toBeNull();
   await page.getByTestId('lock-player-one').click();
-  await expect
-    .element(page.getByRole('button', { name: 'Start ladder' }))
-    .toBeEnabled();
+  await expect.element(page.getByRole('button', { name: 'Start ladder' })).toBeEnabled();
 
   document.body.innerHTML = '';
   app = await mountApp();
   await page.getByRole('button', { name: 'Ladder', exact: true }).click();
-  expect(document.querySelector<GrandTransitionSetup>('grand-transition-setup')?.snapshot?.mode).toBe('ladder');
+  expect(
+    document.querySelector<GrandTransitionSetup>('grand-transition-setup')?.snapshot?.mode,
+  ).toBe('ladder');
   expect(document.querySelector('.ladder-record')?.textContent).toContain(
     `Rung 1/${shippedRungCount}`,
   );
@@ -671,80 +601,99 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
 
   vi.spyOn(globalThis, 'confirm').mockReturnValue(true);
   await page.getByRole('button', { name: 'Reset ladder' }).click();
-  await vi.waitFor(() =>
-    expect(localStorage.getItem(ladderProgressStorageKey)).not.toBeNull(),
+  await vi.waitFor(async () =>
+    expect(await storedDocument(ladderProgressStorageKey)).not.toBeNull(),
   );
-  expect(document.querySelector<GrandTransitionSetup>('grand-transition-setup')?.snapshot?.mode).toBe('ladder');
-  expect(document.querySelector('.ladder-record')?.textContent).toContain(`Rung 1/${shippedRungCount}`);
+  expect(
+    document.querySelector<GrandTransitionSetup>('grand-transition-setup')?.snapshot?.mode,
+  ).toBe('ladder');
+  expect(document.querySelector('.ladder-record')?.textContent).toContain(
+    `Rung 1/${shippedRungCount}`,
+  );
   await expect
     .element(page.getByRole('button', { name: 'Ladder complete', exact: true }))
     .not.toBeInTheDocument();
 });
-
 
 test.each([
   ['win', 'black-sea-captain', 'default', 'red-folded-chairman', 'alternate'],
   ['loss', 'black-sea-captain', 'default', 'red-folded-chairman', 'alternate'],
   ['win', 'red-folded-chairman', 'alternate', 'black-sea-captain', 'default'],
   ['loss', 'red-folded-chairman', 'alternate', 'black-sea-captain', 'default'],
-] as const)('a Ladder %s fixes %s while preserving its available skin choices', async (
-  result, characterId, skinId, otherCharacterId, otherSkinId,
-) => {
-  const progress = recordLadderResult(createLadderProgress(
-    characterId, 22_026,
-    gameCatalog.characters.map(({ id }) => id),
-    gameCatalog.scenes.map(({ id }) => id),
-  ), result);
-  const saved = encodeLadderProgress(progress);
-  localStorage.setItem(ladderProgressStorageKey, saved);
-  await mountApp();
-  await page.getByRole('button', { name: 'Ladder', exact: true }).click();
-  const setup = document.querySelector<GrandTransitionSetup>('grand-transition-setup')!;
-  const ownPortrait = setup.querySelector<HTMLButtonElement>(
-    `[data-portrait-id="${characterId}--${skinId}"]`,
-  )!;
-  expect(ownPortrait.disabled).toBe(false);
-  ownPortrait.click();
-  await expect.poll(() => setup.snapshot?.playerOneSkinId).toBe(skinId);
-  const before = setup.snapshot;
-  const otherPortrait = setup.querySelector<HTMLButtonElement>(
-    `[data-portrait-id="${otherCharacterId}--${otherSkinId}"]`,
-  )!;
-  expect(otherPortrait.disabled).toBe(true);
-  const changed = vi.fn();
-  setup.addEventListener(setupChangeEventName, changed);
-  otherPortrait.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-  await setup.updateComplete;
-  expect(changed).not.toHaveBeenCalled();
-  expect(setup.snapshot).toBe(before);
-  expect(localStorage.getItem(ladderProgressStorageKey)).toBe(saved);
-  await page.getByTestId('lock-player-one').click();
-  expect(setup.querySelector('.contestant-error')).toBeNull();
-  expect(setup.querySelector<HTMLButtonElement>('.primary-action')?.disabled).toBe(false);
-});
+] as const)(
+  'a Ladder %s fixes %s while preserving its available skin choices',
+  async (result, characterId, skinId, otherCharacterId, otherSkinId) => {
+    const progress = recordLadderResult(
+      createLadderProgress(
+        characterId,
+        22_026,
+        gameCatalog.characters.map(({ id }) => id),
+        gameCatalog.scenes.map(({ id }) => id),
+      ),
+      result,
+    );
+    const saved = encodeLadderProgress(progress);
+    localStorage.setItem(ladderProgressStorageKey, saved);
+    await mountApp();
+    await page.getByRole('button', { name: 'Ladder', exact: true }).click();
+    const setup = document.querySelector<GrandTransitionSetup>('grand-transition-setup')!;
+    const ownPortrait = setup.querySelector<HTMLButtonElement>(
+      `[data-portrait-id="${characterId}--${skinId}"]`,
+    )!;
+    expect(ownPortrait.disabled).toBe(false);
+    ownPortrait.click();
+    await expect.poll(() => setup.snapshot?.playerOneSkinId).toBe(skinId);
+    const before = setup.snapshot;
+    const otherPortrait = setup.querySelector<HTMLButtonElement>(
+      `[data-portrait-id="${otherCharacterId}--${otherSkinId}"]`,
+    )!;
+    expect(otherPortrait.disabled).toBe(true);
+    const changed = vi.fn();
+    setup.addEventListener(setupChangeEventName, changed);
+    otherPortrait.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await setup.updateComplete;
+    expect(changed).not.toHaveBeenCalled();
+    expect(setup.snapshot).toBe(before);
+    expect(await storedDocument(ladderProgressStorageKey)).toBe(saved);
+    await page.getByTestId('lock-player-one').click();
+    expect(setup.querySelector('.contestant-error')).toBeNull();
+    expect(setup.querySelector<HTMLButtonElement>('.primary-action')?.disabled).toBe(false);
+  },
+);
 
 test('Main Menu selects each mode without replacing saved ladder progress', async () => {
-  const progress = recordLadderResult(createLadderProgress(
-    'black-sea-captain', 22_026,
-    gameCatalog.characters.map(({ id }) => id),
-    gameCatalog.scenes.map(({ id }) => id),
-  ), 'win');
+  const progress = recordLadderResult(
+    createLadderProgress(
+      'black-sea-captain',
+      22_026,
+      gameCatalog.characters.map(({ id }) => id),
+      gameCatalog.scenes.map(({ id }) => id),
+    ),
+    'win',
+  );
   const saved = encodeLadderProgress(progress);
   localStorage.setItem(ladderProgressStorageKey, saved);
   await mountApp();
-  for (const [label, mode] of [['Single Player', 'ai'], ['Ladder', 'ladder'], ['Multiplayer', 'hotseat'], ['Ladder', 'ladder']] as const) {
+  for (const [label, mode] of [
+    ['Single Player', 'ai'],
+    ['Ladder', 'ladder'],
+    ['Multiplayer', 'hotseat'],
+    ['Ladder', 'ladder'],
+  ] as const) {
     await page.getByRole('button', { name: label, exact: true }).click();
     const setup = document.querySelector<GrandTransitionSetup>('grand-transition-setup')!;
     expect(setup.snapshot?.mode).toBe(mode);
     expect(setup.querySelector('select#mode')).toBeNull();
     if (mode === 'ladder') {
-      expect(setup.querySelector('.ladder-record')?.textContent).toContain(`Rung 2/${shippedRungCount}`);
+      expect(setup.querySelector('.ladder-record')?.textContent).toContain(
+        `Rung 2/${shippedRungCount}`,
+      );
       expect(setup.snapshot?.playerOneCharacterId).toBe('black-sea-captain');
     } else {
       expect(setup.querySelector('.ladder-record')).toBeNull();
       expect(setup.querySelector('#aiDifficulty') !== null).toBe(mode === 'ai');
     }
-    expect(localStorage.getItem(ladderProgressStorageKey)).toBe(saved);
+    expect(await storedDocument(ladderProgressStorageKey)).toBe(saved);
     await page.getByRole('button', { name: 'Back', exact: true }).click();
   }
 });
@@ -754,22 +703,20 @@ test('reconciles saved Ladder scenes with the current catalog', async () => {
     .map(({ id }) => id)
     .filter((id) => id !== 'civic-cypher-boxing-ring')
     .concat('retired-scene');
-  const previousProgress = recordLadderResult(createLadderProgress(
-    'black-sea-captain',
-    22_026,
-    gameCatalog.characters.map(({ id }) => id),
-    previousSceneIds,
-  ), 'win');
-  localStorage.setItem(
-    ladderProgressStorageKey,
-    encodeLadderProgress(previousProgress),
+  const previousProgress = recordLadderResult(
+    createLadderProgress(
+      'black-sea-captain',
+      22_026,
+      gameCatalog.characters.map(({ id }) => id),
+      previousSceneIds,
+    ),
+    'win',
   );
+  localStorage.setItem(ladderProgressStorageKey, encodeLadderProgress(previousProgress));
 
   await mountApp();
 
-  const decoded = decodeLadderProgress(
-    localStorage.getItem(ladderProgressStorageKey)!,
-  );
+  const decoded = decodeLadderProgress((await storedDocument(ladderProgressStorageKey))!);
   expect(decoded.ok).toBe(true);
   if (!decoded.ok) return;
   expect(decoded.value).toMatchObject({
@@ -784,17 +731,21 @@ test('reconciles saved Ladder scenes with the current catalog', async () => {
   // to the only scene that the ladder does not use yet.
   expect(decoded.value.sceneOrder).toEqual(
     previousProgress.sceneOrder.map((sceneId) =>
-      sceneId === 'retired-scene' ? 'civic-cypher-boxing-ring' : sceneId),
+      sceneId === 'retired-scene' ? 'civic-cypher-boxing-ring' : sceneId,
+    ),
   );
 });
 
 test('stores migrated nine-rung Ladder progress as one rung per scene', async () => {
-  const progress = recordLadderResult(createLadderProgress(
-    'black-sea-captain',
-    22_026,
-    gameCatalog.characters.map(({ id }) => id),
-    gameCatalog.scenes.map(({ id }) => id),
-  ), 'win');
+  const progress = recordLadderResult(
+    createLadderProgress(
+      'black-sea-captain',
+      22_026,
+      gameCatalog.characters.map(({ id }) => id),
+      gameCatalog.scenes.map(({ id }) => id),
+    ),
+    'win',
+  );
   const unusedOpponents = gameCatalog.characters
     .map(({ id }) => id)
     .filter((id) => id !== progress.selectedCharacterId && !progress.opponentIds.includes(id));
@@ -807,9 +758,7 @@ test('stores migrated nine-rung Ladder progress as one rung per scene', async ()
 
   await mountApp();
 
-  expect(localStorage.getItem(ladderProgressStorageKey)).toBe(
-    encodeLadderProgress(progress),
-  );
+  expect(await storedDocument(ladderProgressStorageKey)).toBe(encodeLadderProgress(progress));
   await page.getByRole('button', { name: 'Ladder', exact: true }).click();
   expect(document.querySelector('.ladder-record')?.textContent).toContain(
     `Rung 2/${shippedRungCount}`,
@@ -830,25 +779,19 @@ test('shows completed progress without starting a locked rung', async () => {
 
   await mountApp();
   await page.getByRole('button', { name: 'Ladder', exact: true }).click();
-  expect(document.querySelector('.ladder-record')?.textContent).toContain(
-    'Ladder complete',
-  );
+  expect(document.querySelector('.ladder-record')?.textContent).toContain('Ladder complete');
   expect(document.querySelector('.ladder-record')?.textContent).toContain(
     `Victories recorded: ${shippedRungCount}`,
   );
   expect(
-    document.querySelector('.contestant-stage--two .contestant-player')
-      ?.textContent,
+    document.querySelector('.contestant-stage--two .contestant-player')?.textContent,
   ).toContain('Ladder complete');
   expect(
-    document.querySelector('.contestant-stage--two .contestant-player')
-      ?.textContent,
+    document.querySelector('.contestant-stage--two .contestant-player')?.textContent,
   ).not.toContain('Local Radio Caller');
   expect(
     Number.parseFloat(
-      getComputedStyle(
-        document.querySelector<HTMLElement>('.contestant-locked-state')!,
-      ).fontSize,
+      getComputedStyle(document.querySelector<HTMLElement>('.contestant-locked-state')!).fontSize,
     ),
   ).toBeGreaterThanOrEqual(11);
   await expect
@@ -873,9 +816,7 @@ test('shows every missing-field error and emits no command', async () => {
 
   setup
     .querySelector('form')!
-    .dispatchEvent(
-      new SubmitEvent('submit', { bubbles: true, cancelable: true }),
-    );
+    .dispatchEvent(new SubmitEvent('submit', { bubbles: true, cancelable: true }));
   await setup.updateComplete;
 
   expect(listener).not.toHaveBeenCalled();
@@ -892,9 +833,7 @@ test('shows every missing-field error and emits no command', async () => {
   expect(setup.textContent).toContain(
     'Player two character is missing. Choose a listed character.',
   );
-  expect(setup.textContent).toContain(
-    'Scene is missing. Choose a listed scene.',
-  );
+  expect(setup.textContent).toContain('Scene is missing. Choose a listed scene.');
 });
 
 test('shows unknown-value errors and revalidates after change', async () => {
@@ -918,9 +857,7 @@ test('shows unknown-value errors and revalidates after change', async () => {
 
   setup
     .querySelector('form')!
-    .dispatchEvent(
-      new SubmitEvent('submit', { bubbles: true, cancelable: true }),
-    );
+    .dispatchEvent(new SubmitEvent('submit', { bubbles: true, cancelable: true }));
   await setup.updateComplete;
 
   expect(setup.textContent).toContain(
@@ -943,7 +880,8 @@ test.each([
     name: 'missing mode',
     field: 'mode',
     value: '',
-    message: 'Mode is missing. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.',
+    message:
+      'Mode is missing. Return to the Main Menu and choose Single Player, Multiplayer, or Ladder.',
   },
   {
     name: 'unsupported mode',
@@ -1023,17 +961,13 @@ test.each([
 
     setup
       .querySelector('form')!
-      .dispatchEvent(
-        new SubmitEvent('submit', { bubbles: true, cancelable: true }),
-      );
+      .dispatchEvent(new SubmitEvent('submit', { bubbles: true, cancelable: true }));
     await setup.updateComplete;
 
     expect(listener).not.toHaveBeenCalled();
     expect(setup.querySelectorAll('.field-error, #mode[role="alert"]')).toHaveLength(1);
     expect(setup.textContent).toContain(message);
-    for (const defaultField of Object.keys(
-      defaults,
-    ) as (keyof SetupSnapshot)[]) {
+    for (const defaultField of Object.keys(defaults) as (keyof SetupSnapshot)[]) {
       if (defaultField !== field) {
         expect(setup.snapshot?.[defaultField]).toBe(defaults[defaultField]);
       }
@@ -1044,9 +978,7 @@ test.each([
 test('keeps one frozen shell snapshot and does not own match-state fields', async () => {
   const app = await mountApp();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  const setup = document.querySelector(
-    'grand-transition-setup',
-  ) as GrandTransitionSetup;
+  const setup = document.querySelector('grand-transition-setup') as GrandTransitionSetup;
 
   expect(Object.isFrozen(setup.snapshot)).toBe(true);
   expect(setup.snapshot).toEqual(createDefaultSetupSnapshot());
@@ -1065,14 +997,10 @@ test.each([
 ])('blocks an unsupported $width by $height viewport', async (viewport) => {
   await page.viewport(viewport.width, viewport.height);
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;
 
-  expect(
-    app.querySelector('[data-interruption="unsupported-viewport"]'),
-  ).not.toBeNull();
+  expect(app.querySelector('[data-interruption="unsupported-viewport"]')).not.toBeNull();
   expect(app.querySelector('grand-transition-title')).toBeNull();
   expect(app.textContent).toContain('640 × 320 landscape · 360 × 640 portrait');
   expect(app.textContent).toContain('1920 × 1080 on PC');
@@ -1090,16 +1018,12 @@ test('restores setup state after the viewport becomes supported again', async ()
 
   await page.viewport(639, 320);
   await vi.waitFor(() =>
-    expect(
-      app.querySelector('[data-interruption="unsupported-viewport"]'),
-    ).not.toBeNull(),
+    expect(app.querySelector('[data-interruption="unsupported-viewport"]')).not.toBeNull(),
   );
   expect(app.querySelector('grand-transition-setup')).toBeNull();
 
   await page.viewport(1024, 720);
-  await vi.waitFor(() =>
-    expect(app.querySelector('grand-transition-setup')).not.toBeNull(),
-  );
+  await vi.waitFor(() => expect(app.querySelector('grand-transition-setup')).not.toBeNull());
   await expect
     .element(
       page.getByRole('button', {
@@ -1116,7 +1040,9 @@ test('rotated hotseat setup disables Start and rejects submit and stale start co
   const snapshot = originalSetup.snapshot!;
   await lockInSetup();
   await page.viewport(384, 832);
-  await vi.waitFor(() => expect(app.querySelector('[data-interruption="landscape-recommended"]')).not.toBeNull());
+  await vi.waitFor(() =>
+    expect(app.querySelector('[data-interruption="landscape-recommended"]')).not.toBeNull(),
+  );
   await page.getByRole('button', { name: 'Continue in portrait' }).click();
   const setup = app.querySelector('grand-transition-setup') as GrandTransitionSetup;
   await setup.updateComplete;
@@ -1124,14 +1050,18 @@ test('rotated hotseat setup disables Start and rejects submit and stale start co
   expect(setup.snapshot).toEqual(snapshot);
   const listener = vi.fn();
   setup.addEventListener(startMatchEventName, listener);
-  setup.querySelector('form')!.dispatchEvent(new SubmitEvent('submit', { bubbles: true, cancelable: true }));
+  setup
+    .querySelector('form')!
+    .dispatchEvent(new SubmitEvent('submit', { bubbles: true, cancelable: true }));
   await setup.updateComplete;
   expect(listener).not.toHaveBeenCalled();
-  setup.dispatchEvent(new CustomEvent(startMatchEventName, {
-    bubbles: true,
-    composed: true,
-    detail: { ...snapshot },
-  }));
+  setup.dispatchEvent(
+    new CustomEvent(startMatchEventName, {
+      bubbles: true,
+      composed: true,
+      detail: { ...snapshot },
+    }),
+  );
   await app.updateComplete;
   expect(app.querySelector('grand-transition-match')).toBeNull();
   expect(app.querySelector('grand-transition-setup')).not.toBeNull();
@@ -1145,10 +1075,9 @@ test('rotated hotseat setup disables Start and rejects submit and stale start co
 
 async function mountApp(): Promise<GrandTransitionApp> {
   await page.viewport(1280, 720);
+  await reloadStoredData();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;
   return app;
 }
@@ -1161,13 +1090,9 @@ function readInitialSeed(app: GrandTransitionApp): number | null {
   ).matchInitialSeed;
 }
 
-async function mountSetup(
-  snapshot: SetupSnapshot,
-): Promise<GrandTransitionSetup> {
+async function mountSetup(snapshot: SetupSnapshot): Promise<GrandTransitionSetup> {
   await page.viewport(1280, 720);
-  const setup = document.createElement(
-    'grand-transition-setup',
-  ) as GrandTransitionSetup;
+  const setup = document.createElement('grand-transition-setup') as GrandTransitionSetup;
   setup.snapshot = snapshot;
   document.body.append(setup);
   await setup.updateComplete;

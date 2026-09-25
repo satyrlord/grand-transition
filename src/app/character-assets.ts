@@ -1,7 +1,5 @@
-import characterManifest from '../assets/characters/character-manifest.json' with {
-  type: 'json',
-};
-import { isRecord } from '../engine/plain-values';
+import characterManifest from '../assets/characters/character-manifest.json' with { type: 'json' };
+import { isRecord } from '../engine/plain-values.ts';
 
 const characterVariantUrls = {
   ...import.meta.glob('../assets/characters/variants/*.avif', {
@@ -128,10 +126,7 @@ function readManifestAssets(value: unknown): readonly ManifestAsset[] {
           rawAsset.ownerId,
           `Character asset "${id}" is missing its owner ID.`,
         ),
-        skinId: requireString(
-          rawAsset.skinId,
-          `Character asset "${id}" is missing its skin ID.`,
-        ),
+        skinId: requireString(rawAsset.skinId, `Character asset "${id}" is missing its skin ID.`),
         stateId: requireSelection(rawAsset.stateId, id, 'state'),
         poseId: requireSelection(rawAsset.poseId, id, 'pose'),
         expressionId: requireSelection(rawAsset.expressionId, id, 'expression'),
@@ -149,9 +144,7 @@ function readVariants(id: string, value: unknown): ManifestAsset['variants'] {
     throw new Error(`Character asset "${id}" is missing its variants.`);
   }
   const expected = new Set(
-    supportedWidths.flatMap((width) =>
-      supportedFormats.map((format) => `${width}:${format}`),
-    ),
+    supportedWidths.flatMap((width) => supportedFormats.map((format) => `${width}:${format}`)),
   );
   const variants = value.map((rawVariant, index) => {
     if (!isRecord(rawVariant)) {
@@ -182,9 +175,7 @@ function readVariants(id: string, value: unknown): ManifestAsset['variants'] {
     };
   });
   if (expected.size > 0) {
-    throw new Error(
-      `Character asset "${id}" is missing variants: ${[...expected].join(', ')}.`,
-    );
+    throw new Error(`Character asset "${id}" is missing variants: ${[...expected].join(', ')}.`);
   }
   return variants;
 }

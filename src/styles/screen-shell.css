@@ -10,12 +10,7 @@
     padding: clamp(0.75rem, 1.7vh, 1.2rem) clamp(0.85rem, 2vw, 2rem);
     overflow: hidden;
     background:
-      linear-gradient(
-        90deg,
-        rgb(143 40 34 / 35%),
-        transparent 24% 76%,
-        rgb(18 71 127 / 38%)
-      ),
+      linear-gradient(90deg, rgb(143 40 34 / 35%), transparent 24% 76%, rgb(18 71 127 / 38%)),
       linear-gradient(180deg, #101f2f 0 12%, #05080b 38% 100%);
     color: var(--broadcast-paper-light);
     font-family: var(--font-interface);
@@ -154,11 +149,7 @@
     position: absolute;
     z-index: -1;
     inset: 0;
-    background: radial-gradient(
-      ellipse at 50% 12%,
-      rgb(228 193 125 / 24%),
-      transparent 44%
-    );
+    background: radial-gradient(ellipse at 50% 12%, rgb(228 193 125 / 24%), transparent 44%);
     content: '';
     opacity: 0;
     transition: opacity 180ms ease-out;
@@ -166,14 +157,12 @@
 
   .contestant-stage--one {
     background:
-      linear-gradient(180deg, rgb(143 40 34 / 78%), rgb(11 23 34 / 92%) 25%),
-      var(--broadcast-ink);
+      linear-gradient(180deg, rgb(143 40 34 / 78%), rgb(11 23 34 / 92%) 25%), var(--broadcast-ink);
   }
 
   .contestant-stage--two {
     background:
-      linear-gradient(180deg, rgb(18 71 127 / 82%), rgb(11 23 34 / 92%) 25%),
-      var(--broadcast-ink);
+      linear-gradient(180deg, rgb(18 71 127 / 82%), rgb(11 23 34 / 92%) 25%), var(--broadcast-ink);
   }
 
   .contestant-stage[data-selection-target='true'] {
@@ -984,7 +973,6 @@
         minmax(19rem, 1.2fr)
         minmax(12.4rem, 0.72fr);
     }
-
   }
 
   @media (max-height: 47rem) {

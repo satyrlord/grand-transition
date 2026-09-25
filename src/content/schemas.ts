@@ -36,14 +36,7 @@ export const phraseTenses = ['past', 'present', 'future'] as const;
 export const phraseTenseSchema = z.enum(phraseTenses);
 export const grammaticalPersonSchema = z.enum(['second', 'third']);
 export const referentKindSchema = z.enum(['personal', 'nonpersonal']);
-export const connectorKindSchema = z.enum([
-  'and',
-  'because',
-  'but',
-  'so',
-  'yet',
-  'with',
-]);
+export const connectorKindSchema = z.enum(['and', 'because', 'but', 'so', 'yet', 'with']);
 
 export const mediaReferenceSchema = z
   .object({
@@ -55,27 +48,15 @@ export const mediaReferenceSchema = z
 
 const scoreGroupsSchema = z
   .object({
-    substance: uniqueArray(
-      identifierSchema,
-      'List each substance group only once.',
-    ),
-    flavour: uniqueArray(
-      identifierSchema,
-      'List each flavour group only once.',
-    ),
+    substance: uniqueArray(identifierSchema, 'List each substance group only once.'),
+    flavour: uniqueArray(identifierSchema, 'List each flavour group only once.'),
   })
   .strict();
 
 const scorePreferenceSchema = z
   .object({
-    left: uniqueArray(
-      identifierSchema,
-      'List each left score group only once.',
-    ).min(1),
-    right: uniqueArray(
-      identifierSchema,
-      'List each right score group only once.',
-    )
+    left: uniqueArray(identifierSchema, 'List each left score group only once.').min(1),
+    right: uniqueArray(identifierSchema, 'List each right score group only once.')
       .min(1)
       .optional(),
   })
@@ -138,13 +119,10 @@ export const phraseDefinitionSchema = z
       })
       .strict()
       .superRefine((forms, context) => {
-        if (
-          Boolean(forms.personalSingularKey) !== Boolean(forms.secondPersonKey)
-        ) {
+        if (Boolean(forms.personalSingularKey) !== Boolean(forms.secondPersonKey)) {
           context.addIssue({
             code: 'custom',
-            message:
-              'Add both personal-singular and second-person keys, or omit both.',
+            message: 'Add both personal-singular and second-person keys, or omit both.',
           });
         }
         const keys = [
@@ -162,16 +140,10 @@ export const phraseDefinitionSchema = z
       })
       .optional(),
     tags: uniqueArray(identifierSchema, 'List each phrase tag only once.'),
-    characterIds: uniqueArray(
-      identifierSchema,
-      'List each character restriction only once.',
-    )
+    characterIds: uniqueArray(identifierSchema, 'List each character restriction only once.')
       .min(1)
       .optional(),
-    sceneIds: uniqueArray(
-      identifierSchema,
-      'List each scene restriction only once.',
-    )
+    sceneIds: uniqueArray(identifierSchema, 'List each scene restriction only once.')
       .min(1)
       .optional(),
     rarity: z.enum(['common', 'uncommon', 'rare']),
@@ -179,123 +151,86 @@ export const phraseDefinitionSchema = z
   })
   .strict();
 
-export const phraseSchema = phraseDefinitionSchema.superRefine(
-  (phrase, context) => {
-    const issue = (field: string, message: string) =>
-      context.addIssue({ code: 'custom', path: [field], message });
-    const relation = phrase.role === 'verb' || phrase.role === 'predicate';
+export const phraseSchema = phraseDefinitionSchema.superRefine((phrase, context) => {
+  const issue = (field: string, message: string) =>
+    context.addIssue({ code: 'custom', path: [field], message });
+  const relation = phrase.role === 'verb' || phrase.role === 'predicate';
 
-    if (relation && (!phrase.tense || !phrase.tenseFamily)) {
-      issue(
-        'tense',
-        'Give each verb and predicate its tense and tense family.',
-      );
-    } else if (!relation && (phrase.tense || phrase.tenseFamily)) {
-      issue(
-        phrase.tense ? 'tense' : 'tenseFamily',
-        'Only a verb or predicate can declare tense data.',
-      );
-    }
+  if (relation && (!phrase.tense || !phrase.tenseFamily)) {
+    issue('tense', 'Give each verb and predicate its tense and tense family.');
+  } else if (!relation && (phrase.tense || phrase.tenseFamily)) {
+    issue(
+      phrase.tense ? 'tense' : 'tenseFamily',
+      'Only a verb or predicate can declare tense data.',
+    );
+  }
 
-    if (phrase.role === 'noun' && !phrase.scoreGroups) {
-      issue(
-        'scoreGroups',
-        'Give each noun substance and flavour score groups.',
-      );
-    } else if (phrase.role !== 'noun' && phrase.scoreGroups) {
-      issue('scoreGroups', 'Only a noun can declare noun score groups.');
-    }
+  if (phrase.role === 'noun' && !phrase.scoreGroups) {
+    issue('scoreGroups', 'Give each noun substance and flavour score groups.');
+  } else if (phrase.role !== 'noun' && phrase.scoreGroups) {
+    issue('scoreGroups', 'Only a noun can declare noun score groups.');
+  }
 
-    if (relation && !phrase.scorePreferences && !phrase.customScores) {
-      issue(
-        'scorePreferences',
-        'Give each relation score preferences or a custom score.',
-      );
-    } else if (!relation && (phrase.scorePreferences || phrase.customScores)) {
-      issue(
-        phrase.scorePreferences ? 'scorePreferences' : 'customScores',
-        'Only a verb or predicate can declare relation scoring data.',
-      );
-    }
+  if (relation && !phrase.scorePreferences && !phrase.customScores) {
+    issue('scorePreferences', 'Give each relation score preferences or a custom score.');
+  } else if (!relation && (phrase.scorePreferences || phrase.customScores)) {
+    issue(
+      phrase.scorePreferences ? 'scorePreferences' : 'customScores',
+      'Only a verb or predicate can declare relation scoring data.',
+    );
+  }
 
-    if (phrase.role === 'conjunction' && !phrase.connectorKind) {
-      issue(
-        'connectorKind',
-        'Declare and, because, but, so, yet, or with for each conjunction.',
-      );
-    } else if (phrase.role !== 'conjunction' && phrase.connectorKind) {
-      issue(
-        'connectorKind',
-        'Only a conjunction can declare a connector kind.',
-      );
-    }
+  if (phrase.role === 'conjunction' && !phrase.connectorKind) {
+    issue('connectorKind', 'Declare and, because, but, so, yet, or with for each conjunction.');
+  } else if (phrase.role !== 'conjunction' && phrase.connectorKind) {
+    issue('connectorKind', 'Only a conjunction can declare a connector kind.');
+  }
 
-    if (
-      phrase.allowsCoordinatedNounComplement &&
-      phrase.role !== 'predicate'
-    ) {
-      issue(
-        'allowsCoordinatedNounComplement',
-        'Only a predicate can allow a coordinated noun complement.',
-      );
-    }
+  if (phrase.allowsCoordinatedNounComplement && phrase.role !== 'predicate') {
+    issue(
+      'allowsCoordinatedNounComplement',
+      'Only a predicate can allow a coordinated noun complement.',
+    );
+  }
 
-    if (phrase.role === 'ending' && phrase.finisherBonus === undefined) {
-      issue('finisherBonus', 'Give each ending its configured finisher score.');
-    } else if (phrase.role !== 'ending' && phrase.finisherBonus !== undefined) {
-      issue('finisherBonus', 'Only an ending can declare a finisher score.');
-    }
+  if (phrase.role === 'ending' && phrase.finisherBonus === undefined) {
+    issue('finisherBonus', 'Give each ending its configured finisher score.');
+  } else if (phrase.role !== 'ending' && phrase.finisherBonus !== undefined) {
+    issue('finisherBonus', 'Only an ending can declare a finisher score.');
+  }
 
-    if (
-      phrase.role !== 'noun' &&
-      (phrase.grammaticalNumber ||
-        phrase.grammaticalPerson ||
-        phrase.referentKind)
-    ) {
-      issue(
-        phrase.grammaticalNumber
-          ? 'grammaticalNumber'
-          : phrase.grammaticalPerson
-            ? 'grammaticalPerson'
-            : 'referentKind',
-        'Only a noun can declare grammatical number, person, or referent kind.',
-      );
-    }
+  if (
+    phrase.role !== 'noun' &&
+    (phrase.grammaticalNumber || phrase.grammaticalPerson || phrase.referentKind)
+  ) {
+    issue(
+      phrase.grammaticalNumber
+        ? 'grammaticalNumber'
+        : phrase.grammaticalPerson
+          ? 'grammaticalPerson'
+          : 'referentKind',
+      'Only a noun can declare grammatical number, person, or referent kind.',
+    );
+  }
 
-    if (
-      phrase.grammaticalPerson === 'second' &&
-      phrase.referentKind !== 'personal'
-    ) {
-      issue(
-        'referentKind',
-        'A second-person noun must declare a personal referent kind.',
-      );
-    }
+  if (phrase.grammaticalPerson === 'second' && phrase.referentKind !== 'personal') {
+    issue('referentKind', 'A second-person noun must declare a personal referent kind.');
+  }
 
-    if (
-      phrase.numberForms?.personalSingularKey &&
-      phrase.role !== 'verb' &&
-      phrase.role !== 'predicate'
-    ) {
-      issue(
-        'numberForms',
-        'Only a verb or predicate can declare person-specific agreement forms.',
-      );
-    }
-  },
-);
+  if (
+    phrase.numberForms?.personalSingularKey &&
+    phrase.role !== 'verb' &&
+    phrase.role !== 'predicate'
+  ) {
+    issue('numberForms', 'Only a verb or predicate can declare person-specific agreement forms.');
+  }
+});
 
 const paletteSchema = z
   .object({
-    primary: z
-      .string()
-      .regex(/^#[0-9a-f]{6}$/u, 'Use a six-digit lower-case hex color.'),
-    secondary: z
-      .string()
-      .regex(/^#[0-9a-f]{6}$/u, 'Use a six-digit lower-case hex color.'),
-    accent: z
-      .string()
-      .regex(/^#[0-9a-f]{6}$/u, 'Use a six-digit lower-case hex color.'),
+    primary: z.string().regex(/^#[0-9a-f]{6}$/u, 'Use a six-digit lower-case hex color.'),
+    secondary: z.string().regex(/^#[0-9a-f]{6}$/u, 'Use a six-digit lower-case hex color.'),
+    accent: z.string().regex(/^#[0-9a-f]{6}$/u, 'Use a six-digit lower-case hex color.'),
   })
   .strict();
 
@@ -314,30 +249,22 @@ export const characterDefinitionSchema = z
       })
       .strict(),
     palette: paletteSchema,
-    weaknessTags: uniqueArray(
-      identifierSchema,
-      'List each weakness tag only once.',
-    )
-      .min(2)
-      .max(4),
-    characterPhraseIds: uniqueArray(
-      identifierSchema,
-      'List each character phrase only once.',
-    ),
+    weaknessTags: uniqueArray(identifierSchema, 'List each weakness tag only once.').min(2).max(4),
+    characterPhraseIds: uniqueArray(identifierSchema, 'List each character phrase only once.'),
     comebackLinesByTier: z
       .object({
-        weak: uniqueArray(
-          localeKeySchema,
-          'List each weak-tier comeback only once.',
-        ).length(1, 'Give the character exactly one weak-tier comeback.'),
-        medium: uniqueArray(
-          localeKeySchema,
-          'List each medium-tier comeback only once.',
-        ).length(1, 'Give the character exactly one medium-tier comeback.'),
-        strong: uniqueArray(
-          localeKeySchema,
-          'List each strong-tier comeback only once.',
-        ).length(1, 'Give the character exactly one strong-tier comeback.'),
+        weak: uniqueArray(localeKeySchema, 'List each weak-tier comeback only once.').length(
+          1,
+          'Give the character exactly one weak-tier comeback.',
+        ),
+        medium: uniqueArray(localeKeySchema, 'List each medium-tier comeback only once.').length(
+          1,
+          'Give the character exactly one medium-tier comeback.',
+        ),
+        strong: uniqueArray(localeKeySchema, 'List each strong-tier comeback only once.').length(
+          1,
+          'Give the character exactly one strong-tier comeback.',
+        ),
       })
       .strict(),
     aiPersonality: z
@@ -352,7 +279,9 @@ export const characterDefinitionSchema = z
         voiceHint: z.enum(['bright', 'grounded', 'measured', 'sharp']),
         rate: z.number().min(0.5).max(2),
         pitch: z.number().min(0).max(2),
-        skinVoices: z.record(identifierSchema, z.enum(['george', 'emma', 'david', 'mark', 'zira'])).optional(),
+        skinVoices: z
+          .record(identifierSchema, z.enum(['george', 'emma', 'david', 'mark', 'zira']))
+          .optional(),
       })
       .strict(),
     animationSet: z
@@ -373,38 +302,32 @@ type CharacterVoiceAssignment = Readonly<{
 }>;
 
 type CharacterVoiceIssueContext = {
-  addIssue: (issue: {
-    code: 'custom';
-    path: (string | number)[];
-    message: string;
-  }) => void;
+  addIssue: (issue: { code: 'custom'; path: (string | number)[]; message: string }) => void;
 };
 
 export function validateCharacterSkinVoices(
   character: CharacterVoiceAssignment,
   context: CharacterVoiceIssueContext,
 ): void {
-  for (const [skinId, voice] of Object.entries(
-    character.voiceProfile.skinVoices ?? {},
-  )) {
-    const valid = character.species === 'human'
-      ? voice === 'george' || voice === 'emma'
-      : voice === 'david' || voice === 'mark' || voice === 'zira';
+  for (const [skinId, voice] of Object.entries(character.voiceProfile.skinVoices ?? {})) {
+    const valid =
+      character.species === 'human'
+        ? voice === 'george' || voice === 'emma'
+        : voice === 'david' || voice === 'mark' || voice === 'zira';
     if (!valid) {
       context.addIssue({
         code: 'custom',
         path: ['voiceProfile', 'skinVoices', skinId],
-        message: character.species === 'human'
-          ? 'Assign George or Emma to a human skin.'
-          : 'Assign David, Mark, or Zira to a robot skin.',
+        message:
+          character.species === 'human'
+            ? 'Assign George or Emma to a human skin.'
+            : 'Assign David, Mark, or Zira to a robot skin.',
       });
     }
   }
 }
 
-export const characterSchema = characterDefinitionSchema.superRefine(
-  validateCharacterSkinVoices,
-);
+export const characterSchema = characterDefinitionSchema.superRefine(validateCharacterSkinVoices);
 
 export const sceneSchema = z
   .object({
@@ -424,14 +347,8 @@ export const sceneSchema = z
       .min(1),
     animationId: identifierSchema,
     music: mediaReferenceSchema,
-    phrasePool: uniqueArray(
-      identifierSchema,
-      'List each scene phrase only once.',
-    ).min(3),
-    effectIds: uniqueArray(
-      identifierSchema,
-      'List each scene effect only once.',
-    ),
+    phrasePool: uniqueArray(identifierSchema, 'List each scene phrase only once.').min(3),
+    effectIds: uniqueArray(identifierSchema, 'List each scene effect only once.'),
   })
   .strict();
 

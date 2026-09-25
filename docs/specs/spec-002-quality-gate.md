@@ -14,19 +14,21 @@
 
 ## Deliver
 
-Configure Oxlint with TypeScript 7 type-aware linting, markdownlint-cli2, Vitest, coverage, Vitest Browser Mode, Playwright, and the necessary package scripts.
+Configure Oxlint with TypeScript 7 type-aware linting, markdownlint-cli2, Prettier, Vitest, coverage, Vitest Browser Mode, Playwright, and the necessary package scripts.
 For Markdown checks, use only the `markdownlint-cli2` command.
+Prettier formats TypeScript, JavaScript, and CSS sources only.
+It does not format JSON, because hashes pin some JSON files, or Markdown, generated localization output, and public assets.
 Add small smoke tests and a pull-request workflow that does not deploy.
 `validate` and `ci` use the sequence below.
 
 Give the scripts `dev`, `prod`, `preview`, `build`, `assets:build`, `assets:validate`, `lint`, and `typecheck`.
-Give the scripts `test`, `test:coverage`, `test:browser`, `test:e2e`, `markdown:lint`, `content:validate`, and `balance:validate`.
+Give the scripts `test`, `test:coverage`, `test:browser`, `test:e2e`, `markdown:lint`, `format`, `format:check`, `content:validate`, and `balance:validate`.
 Also give the scripts `localization:validate`, `boundaries:check`, `validate`, and `ci`.
 
 `assets:build` builds the scene manifest, the fixed-baseline character manifest, and their deterministic AVIF and WebP variants.
 It also runs the audio generation of Milestone 024.
 `assets:validate` validates the two packages before it runs the shared provenance, alpha, and color checks.
-`validate` runs markdownlint-cli2, assets, content, localization, pure boundaries, typed lint, and types in that sequence.
+`validate` runs markdownlint-cli2, the Prettier format check, assets, content, localization, pure boundaries, typed lint, and types in that sequence.
 Asset validation examines the scaffold, the raster provenance and alpha workflow, and the global-color-cast guard.
 
 It also validates the audio manifest and the measurements of the encoded files.
@@ -62,7 +64,7 @@ After the validation, the full gate calls `balance:validate` and the internal `t
 The validator fails before it loads the catalog, unless the two full-gate environment markers are present.
 The validator contains its 500-match matrix and its 64 structural samples as fixed values.
 No environment setting can change the workload.
-Only `run-quality-gate.mjs full` gives the runner marker.
+Only `run-quality-gate.ts full` gives the runner marker.
 End-to-end tests build the production output before the preview.
 
 Pure tests use Vitest in Node and `*.test.ts`.
@@ -103,8 +105,8 @@ Make sure that the global minimum values are 70 percent for statements, branches
 - **AC-002-05:** The pull-request workflow runs the quality gate with read-only repository access, and it contains no deployment job.
   It pins each third-party action to a full commit SHA with a tag comment, and `.github/dependabot.yml` updates the `github-actions` pins.
 - **AC-002-06:** Markdown checks use `markdownlint-cli2`.
-  The quality gate has no formatter script and no formatter configuration.
-  Do the check in `tests/unit/quality-gate.test.ts` and with a search of the full repository.
+  `format:check` runs Prettier on TypeScript, JavaScript, and CSS sources, and `.prettierignore` keeps JSON, Markdown, and generated localization output out of its scope.
+  Do the check in `tests/unit/quality-gate.test.ts`.
 - **AC-002-07:** Asset validation does not accept a broad yellow color cast over muted or neutral pixels.
   It accepts local warm materials when a neutral or cool anchor stays.
   An image without a neutral or cool anchor that the tool can measure fails the automated color validation.

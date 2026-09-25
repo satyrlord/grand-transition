@@ -114,7 +114,7 @@ Record one review for the full skin.
 In selection mode, do not do the steps in this section.
 Stage from the shipping character tree as it is at that time.
 Replace only the files in the given work unit.
-Run `node tools/build-character-package.mjs <staged-character-root> --skin <skin-id>`.
+Run `node tools/build-character-package.ts <staged-character-root> --skin <skin-id>`.
 
 Use this targeted builder for one skin that you generated again.
 Do not run the full-tree builders for one work unit.

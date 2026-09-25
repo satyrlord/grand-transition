@@ -116,7 +116,7 @@ Add no room tone and no runtime network request.
 ## Objective verifiers
 
 - `npm run content:validate` does checks of AC-032-01.
-- `tools/validate-scene-assets.mjs`, `tools/validate-asset-color.mjs`,
+- `tools/validate-scene-assets.ts`, `tools/validate-asset-color.ts`,
   `tests/unit/build-scene-assets.test.ts`, and
   `tests/unit/scene-assets.test.ts` do checks of AC-032-02 and of the parts of AC-032-03 that a tool can measure.
 - The kept private generation review and the inspection at source scale do checks of the subjective parts of AC-032-03.

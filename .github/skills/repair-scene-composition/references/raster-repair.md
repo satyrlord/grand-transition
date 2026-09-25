@@ -71,14 +71,14 @@ Do not accept chroma-green residue in PNG masters from a color key.
 Native output can contain green material that is part of the design.
 Apply the Milestone 023 exception for alpha at 16 or lower only to lossy AV1 Image File Format (AVIF) variants and WebP variants.
 
-After adoption or conversion, run `node tools/validate-asset-color.mjs validate <asset-root>`.
+After adoption or conversion, run `node tools/validate-asset-color.ts validate <asset-root>`.
 Run this check before visual approval.
 The color guard does not examine transparent pixels or the temporary green matte.
 It does not accept a yellow bias across large areas of muted or neutral pixels.
 An asset must have a manual review when the tool cannot measure a neutral or cool anchor in it.
 
 Do not use the average red, green, and blue (RGB) values as the only color test.
-To validate a private prompt directly, run `node tools/validate-generation-prompt.mjs <prompt-file>`.
+To validate a private prompt directly, run `node tools/validate-generation-prompt.ts <prompt-file>`.
 The green conversion workflow runs the same prompt guard before it writes a shipping raster.
 
 Keep temporary renders and working prompts in the temporary folder.

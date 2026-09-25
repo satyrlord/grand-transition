@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, gameCatalog } from '../../src/game-content';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
+import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
 import {
   createMatchReducer,
   createMatchSetupState,
@@ -9,8 +9,8 @@ import {
   type MatchConfiguredPlayer,
   type MatchEngineContext,
   type MatchState,
-} from '../../src/engine/match-lifecycle';
-import { seededRandomSource } from '../../src/engine/random-source';
+} from '../../src/engine/match-lifecycle.ts';
+import { seededRandomSource } from '../../src/engine/random-source.ts';
 
 const playerIds = ['first-player', 'second-player'] as const;
 const context: MatchEngineContext = {
@@ -47,9 +47,7 @@ function setup(): MatchState {
 
 function run(state: MatchState, command: MatchCommand): MatchState {
   const result = reducer(state, command, seededRandomSource);
-  expect(result.ok, result.ok ? undefined : JSON.stringify(result.error)).toBe(
-    true,
-  );
+  expect(result.ok, result.ok ? undefined : JSON.stringify(result.error)).toBe(true);
   if (!result.ok) throw new Error(result.error.code);
   return result.state;
 }
@@ -76,10 +74,7 @@ function withPrivateCard(
         ...draft.playerStates,
         [playerId]: {
           ...draft.playerStates[playerId]!,
-          hand: [
-            ...draft.playerStates[playerId]!.hand,
-            { id: `test-${suffix}`, phraseId },
-          ],
+          hand: [...draft.playerStates[playerId]!.hand, { id: `test-${suffix}`, phraseId }],
         },
       },
     },
@@ -124,12 +119,7 @@ function finishDraft(
       const noun = nounByPlayer[actorId]!;
       state = selectPrivate(state, actorId, noun, `noun-${index}`);
     } else if (!construction.analysis.complete) {
-      state = selectPrivate(
-        state,
-        actorId,
-        predicateByPlayer[actorId]!,
-        `predicate-${index}`,
-      );
+      state = selectPrivate(state, actorId, predicateByPlayer[actorId]!, `predicate-${index}`);
     } else {
       state = run(state, {
         type: 'commit-sentence',
@@ -153,17 +143,10 @@ describe('Hollywood Roast match lifecycle', () => {
   });
 
   test('a grammar mistake immediately costs 3 Pride without charging a comeback', () => {
-    const state = selectPrivate(
-      started(),
-      playerIds[0],
-      'common-modifier-001',
-      'wrong',
-    );
+    const state = selectPrivate(started(), playerIds[0], 'common-modifier-001', 'wrong');
     expect(state.playerStates[playerIds[0]]!.pride).toBe(97);
     expect(state.playerStates[playerIds[0]]!.comebackCharge).toBe(0);
-    expect(
-      state.draft!.playerStates[playerIds[0]]!.construction.grammarMistakes,
-    ).toBe(1);
+    expect(state.draft!.playerStates[playerIds[0]]!.construction.grammarMistakes).toBe(1);
   });
 
   test('a lethal grammar mistake ends the match immediately', () => {
@@ -175,12 +158,7 @@ describe('Hollywood Roast match lifecycle', () => {
         [playerIds[0]]: { ...state.playerStates[playerIds[0]]!, pride: 3 },
       },
     };
-    state = selectPrivate(
-      state,
-      playerIds[0],
-      'common-modifier-001',
-      'lethal-wrong',
-    );
+    state = selectPrivate(state, playerIds[0], 'common-modifier-001', 'lethal-wrong');
     expect(state.phase).toBe('results');
     expect(state.winner).toBe(playerIds[1]);
     expect(state.pendingResolution?.players[playerIds[0]]!.selfDamage).toBe(3);
@@ -230,8 +208,7 @@ describe('Hollywood Roast match lifecycle', () => {
     expect(
       dealtPhraseIds.every(
         (phraseId) =>
-          gameCatalog.phrases.find((phrase) => phrase.id === phraseId)
-            ?.role !== 'continuation',
+          gameCatalog.phrases.find((phrase) => phrase.id === phraseId)?.role !== 'continuation',
       ),
     ).toBe(true);
   });
@@ -345,12 +322,7 @@ describe('Hollywood Roast match lifecycle', () => {
   });
 
   test('statistics record grammar mistakes', () => {
-    let state = selectPrivate(
-      started(),
-      playerIds[0],
-      'common-modifier-001',
-      'mistake-stat',
-    );
+    let state = selectPrivate(started(), playerIds[0], 'common-modifier-001', 'mistake-stat');
     state = finishDraft(state);
     state = lifecycle(state, 'resolve-round');
     expect(state.statistics.grammarMistakes).toBe(1);
@@ -400,9 +372,7 @@ describe('Hollywood Roast match lifecycle', () => {
       });
       const dealt = [
         ...prepared.draft!.board.slots.map((slot) => slot.phraseId),
-        ...refreshed.draft!.playerStates[actorId]!.hand.map(
-          (card) => card.phraseId,
-        ),
+        ...refreshed.draft!.playerStates[actorId]!.hand.map((card) => card.phraseId),
       ];
       expect(
         dealt.filter((phraseId) => continuationIds.has(phraseId)),

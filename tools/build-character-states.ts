@@ -4,14 +4,36 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import contract from '../src/assets/characters/state-contract.json' with { type: 'json' };
-import { CHARACTER_BYTE_BUDGETS, encodeVariant, mapWithConcurrency } from './build-character-assets.mjs';
+import {
+  CHARACTER_BYTE_BUDGETS,
+  encodeVariant,
+  mapWithConcurrency,
+  type CharacterAsset,
+  type CharacterVariant,
+  type CharacterVariantFormat,
+} from './build-character-assets.ts';
 
-const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
-export const stateWidths = Object.freeze([320, 640, 960]);
-export const stateFormats = Object.freeze(['avif', 'webp']);
+const sha256 = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
+export const stateWidths: readonly number[] = Object.freeze([320, 640, 960]);
+export const stateFormats: readonly CharacterVariantFormat[] = Object.freeze(['avif', 'webp']);
+
+type ContractState = (typeof contract.states)[number];
+export type StatePackage = {
+  ownerId: string;
+  skinId: string;
+  states: { stateId: string; assetId: string; durationMs: number; loop: boolean }[];
+};
+export type StateManifest = { schemaVersion: number; packages: StatePackage[]; assets: CharacterAsset[] };
+type StateSkin = Pick<CharacterAsset, 'id' | 'ownerId' | 'skinId'>;
+type PreparedStatePackage = {
+  skin: StateSkin;
+  sources: { skin: StateSkin; state: ContractState; relativePath: string; input: Buffer }[];
+  availableStateIds: Set<string>;
+};
+type BuiltStatePackage = { manifestPackage: StatePackage; assets: CharacterAsset[] };
 
 /** Derive skins from the selection manifest, never from a separate skin list. */
-export function statePackages(selectionManifest) {
+export function statePackages(selectionManifest: { assets?: unknown } | null | undefined): CharacterAsset[] {
   if (!selectionManifest || !Array.isArray(selectionManifest.assets)) {
     throw new Error('Character selection manifest must declare an asset inventory.');
   }
@@ -20,7 +42,7 @@ export function statePackages(selectionManifest) {
       new Set(contract.selectionArtFallbackSkinIds).size !== 2) {
     throw new Error('Character state contract must declare exactly two unique selection-art fallbacks.');
   }
-  const relevant = selectionManifest.assets.filter((asset) => contract.characterIds.includes(asset.ownerId));
+  const relevant = (selectionManifest.assets as CharacterAsset[]).filter((asset) => contract.characterIds.includes(asset.ownerId));
   for (const characterId of contract.characterIds) {
     if (!relevant.some((asset) => asset.ownerId === characterId)) {
       throw new Error(`${characterId}: selection portrait is missing from the final character state inventory.`);
@@ -42,9 +64,9 @@ export function statePackages(selectionManifest) {
   return packages;
 }
 
-export function stateAssetId(skinId, stateId, availableStateIds) {
+export function stateAssetId(skinId: string, stateId: string, availableStateIds: ReadonlySet<string>): string {
   if (stateId === 'selection') return skinId;
-  const reusedStateId = contract.stateAssetReuse[stateId];
+  const reusedStateId = (contract.stateAssetReuse as Readonly<Record<string, string | undefined>>)[stateId];
   if (reusedStateId === 'selection') return skinId;
   if (reusedStateId && availableStateIds.has(reusedStateId)) {
     return `${skinId}--${reusedStateId}`;
@@ -55,23 +77,27 @@ export function stateAssetId(skinId, stateId, availableStateIds) {
   throw new Error(`${skinId}/${stateId}: required state master is missing and has no available declared reuse.`);
 }
 
-export function selectedStatePackageIds(only, packages) {
+export function selectedStatePackageIds(only: unknown, packages: readonly { id: string }[]): Set<string> | null {
   if (only === undefined) return null;
   const ids = new Set(packages.map(({ id }) => id));
   if (!Array.isArray(only) || only.length === 0 || only.some((id) => !ids.has(id)) ||
     new Set(only).size !== only.length) {
     throw new Error('Selected state package IDs must be a non-empty list of distinct known skin IDs.');
   }
-  return new Set(only);
+  return new Set(only as string[]);
 }
 
-async function verifiedCachedStatePackages(characterRoot, packages, selected) {
-  const manifest = JSON.parse(await readFile(path.join(characterRoot, 'states/state-manifest.json'), 'utf8'));
+async function verifiedCachedStatePackages(
+  characterRoot: string,
+  packages: readonly CharacterAsset[],
+  selected: ReadonlySet<string>,
+): Promise<Map<string, { group: StatePackage; assets: CharacterAsset[] }>> {
+  const manifest = JSON.parse(await readFile(path.join(characterRoot, 'states/state-manifest.json'), 'utf8')) as StateManifest;
   if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.packages) || !Array.isArray(manifest.assets) ||
     manifest.packages.length !== packages.length || manifest.assets.length !== contract.expectedStateMasterCount) {
     throw new Error('Selective state builds require a complete existing state manifest.');
   }
-  const cache = new Map();
+  const cache = new Map<string, { group: StatePackage; assets: CharacterAsset[] }>();
   for (const skin of packages) {
     if (selected.has(skin.id)) continue;
     const group = manifest.packages.find((entry) => entry.ownerId === skin.ownerId && entry.skinId === skin.skinId);
@@ -101,7 +127,7 @@ async function verifiedCachedStatePackages(characterRoot, packages, selected) {
           const expectedPath = `states/variants/${asset.id}-${width}x${width}.${format}`;
           const variants = asset.variants.filter((variant) => variant.path === expectedPath);
           if (variants.length !== 1) throw new Error(`Cached state variant "${expectedPath}" is missing or duplicated.`);
-          const variant = variants[0];
+          const variant = variants[0]!;
           const output = await readFile(path.join(characterRoot, expectedPath));
           let metadata;
           try {
@@ -124,7 +150,7 @@ async function verifiedCachedStatePackages(characterRoot, packages, selected) {
   return cache;
 }
 
-export async function prepareCharacterStatePackage(characterRoot, skin) {
+export async function prepareCharacterStatePackage(characterRoot: string, skin: StateSkin): Promise<PreparedStatePackage> {
   const stateRoot = path.join(characterRoot, 'states', skin.id);
   const expectedFiles = contract.stateMasterIds.map((stateId) => `${stateId}.png`).toSorted();
   const actualFiles = (await readdir(stateRoot, { withFileTypes: true }))
@@ -134,8 +160,8 @@ export async function prepareCharacterStatePackage(characterRoot, skin) {
   if (actualFiles.length !== expectedFiles.length || actualFiles.some((file, index) => file !== expectedFiles[index])) {
     throw new Error(`${skin.id}: state master inventory must contain exactly ${expectedFiles.join(', ')}.`);
   }
-  const sources = [];
-  const availableStateIds = new Set();
+  const sources: PreparedStatePackage['sources'] = [];
+  const availableStateIds = new Set<string>();
   for (const stateId of contract.stateMasterIds) {
     const state = contract.states.find(({ id }) => id === stateId);
     if (!state) throw new Error(`${skin.id}/${stateId}: state master is absent from the timing contract.`);
@@ -152,11 +178,11 @@ export async function prepareCharacterStatePackage(characterRoot, skin) {
   return { skin, sources, availableStateIds };
 }
 
-export async function buildCharacterStatePackage(prepared, variantsRoot) {
+export async function buildCharacterStatePackage(prepared: PreparedStatePackage, variantsRoot: string): Promise<BuiltStatePackage> {
   const { skin, sources, availableStateIds } = prepared;
-  const assets = await mapWithConcurrency(sources, 3, async ({ state, relativePath, input }) => {
+  const assets = await mapWithConcurrency(sources, 3, async ({ state, relativePath, input }): Promise<CharacterAsset> => {
     const id = `${skin.id}--${state.id}`;
-    const variants = [];
+    const variants: CharacterVariant[] = [];
     for (const width of stateWidths) {
       for (const format of stateFormats) {
         const output = await encodeVariant(input, width, format);
@@ -192,13 +218,18 @@ export async function buildCharacterStatePackage(prepared, variantsRoot) {
   };
 }
 
-export async function buildCharacterStates({ characterRoot = path.resolve('src/assets/characters'), only } = {}) {
+export async function buildCharacterStates({
+  characterRoot = path.resolve('src/assets/characters'),
+  only,
+}: { characterRoot?: string; only?: readonly string[] } = {}): Promise<StateManifest> {
   const root = path.resolve(characterRoot);
   const selectionManifest = JSON.parse(await readFile(path.join(root, 'character-manifest.json'), 'utf8'));
   const packages = statePackages(selectionManifest);
   const selected = selectedStatePackageIds(only, packages);
-  const cached = selected ? await verifiedCachedStatePackages(root, packages, selected) : new Map();
-  const preparedPackages = [];
+  const cached = selected
+    ? await verifiedCachedStatePackages(root, packages, selected)
+    : new Map<string, { group: StatePackage; assets: CharacterAsset[] }>();
+  const preparedPackages: PreparedStatePackage[] = [];
   // Complete preflight before any output changes. Selection reuses its approved baseline.
   for (const skin of packages) {
     if (!cached.has(skin.id)) preparedPackages.push(await prepareCharacterStatePackage(root, skin));
@@ -207,7 +238,7 @@ export async function buildCharacterStates({ characterRoot = path.resolve('src/a
   try {
     const variantsRoot = path.join(work, 'variants');
     await mkdir(variantsRoot);
-    const builtPackages = [];
+    const builtPackages: BuiltStatePackage[] = [];
     for (const skin of packages) {
       const reused = cached.get(skin.id);
       if (reused) {
@@ -244,11 +275,11 @@ export async function buildCharacterStates({ characterRoot = path.resolve('src/a
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2);
-  const characterRoot = args[0] && !args[0].startsWith('--') ? path.resolve(args.shift()) : undefined;
+  const characterRoot = args[0] && !args[0].startsWith('--') ? path.resolve(args.shift()!) : undefined;
   const validOptions = args.length === 0 || (args.length === 2 && args[0] === '--only');
   const only = args.length === 0 ? undefined : args[1]?.split(',');
   Promise.resolve().then(() => {
-    if (!validOptions) throw new Error('Use build-character-states.mjs [character-root] [--only id1,id2].');
+    if (!validOptions) throw new Error('Use build-character-states.ts [character-root] [--only id1,id2].');
     return buildCharacterStates({ characterRoot, only });
   }).then((manifest) => {
     process.stdout.write(`Built ${manifest.packages.length} character state packages and ${manifest.assets.length} state masters.\n`);

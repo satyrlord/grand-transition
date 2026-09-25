@@ -1,24 +1,19 @@
 import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
-import { formatInterfaceNumber } from '../interface-format';
-import { gameTextLanguage } from '../game-text-language';
-import { interfaceLocale } from '../interface-localization';
-import {
-  interfaceCharacterName,
-  interfaceSceneName,
-} from '../interface-names';
+import { formatInterfaceNumber } from '../interface-format.ts';
+import { gameTextLanguage } from '../game-text-language.ts';
+import { interfaceLocale } from '../interface-localization.ts';
+import { interfaceCharacterName, interfaceSceneName } from '../interface-names.ts';
 import { LitElement, html, nothing, type TemplateResult } from 'lit';
-import { normalizedJson } from '../../persistence/codecs/replay-codec';
+import { normalizedJson } from '../../persistence/codecs/replay-codec.ts';
 import type {
   MatchHistoryEntry,
   MatchHistoryFailureCode,
-} from '../../persistence/match-history';
+} from '../../persistence/match-history.ts';
 
 const elementName = 'grand-transition-match-history';
 export const closeMatchHistoryEventName = 'close-match-history';
 
-export type CloseMatchHistoryEvent = CustomEvent<
-  Readonly<{ type: 'close-match-history' }>
->;
+export type CloseMatchHistoryEvent = CustomEvent<Readonly<{ type: 'close-match-history' }>>;
 
 export class GrandTransitionMatchHistory extends LitElement {
   static properties = {
@@ -73,11 +68,13 @@ export class GrandTransitionMatchHistory extends LitElement {
           </p>
           ${this.renderPersistenceNotice()}
           <div class="match-history-list" tabindex="0">
-            ${this.entries.length === 0
-              ? html`<p class="match-history-empty">
+            ${
+              this.entries.length === 0
+                ? html`<p class="match-history-empty">
                   ${msg('No completed matches yet.')}
                 </p>`
-              : this.entries.map((entry) => this.renderEntry(entry))}
+                : this.entries.map((entry) => this.renderEntry(entry))
+            }
           </div>
         </section>
       </div>
@@ -97,12 +94,8 @@ export class GrandTransitionMatchHistory extends LitElement {
 
   private renderEntry(entry: MatchHistoryEntry): TemplateResult {
     const log = entry.matchLog;
-    const winner = log.setup.players.find(
-      (player) => player.playerId === log.winner,
-    )!;
-    const opponent = log.setup.players.find(
-      (player) => player.playerId !== log.winner,
-    )!;
+    const winner = log.setup.players.find((player) => player.playerId === log.winner)!;
+    const opponent = log.setup.players.find((player) => player.playerId !== log.winner)!;
     const lastRound = log.rounds.at(-1)!;
     const expanded = this.expandedEntryIds.has(entry.id);
     return html`
@@ -149,18 +142,21 @@ export class GrandTransitionMatchHistory extends LitElement {
           @toggle=${(event: Event) => this.toggleTechnicalRecord(event, entry.id)}
         >
           <summary>${msg('Technical record')}</summary>
-          ${expanded
-            ? html`<pre tabindex="0">${normalizedJson(entry.speechDiagnostics
-              ? { matchLog: log, speechDiagnostics: entry.speechDiagnostics } : log)}</pre>`
-            : nothing}
+          ${
+            expanded
+              ? html`<pre tabindex="0">${normalizedJson(
+                  entry.speechDiagnostics
+                    ? { matchLog: log, speechDiagnostics: entry.speechDiagnostics }
+                    : log,
+                )}</pre>`
+              : nothing
+          }
         </details>
       </article>
     `;
   }
 
-  private renderPhraseHistory(
-    log: MatchHistoryEntry['matchLog'],
-  ): TemplateResult {
+  private renderPhraseHistory(log: MatchHistoryEntry['matchLog']): TemplateResult {
     return html`
       <section class="match-history-phrases" aria-label=${msg('Phrases used')}>
         <h4>${msg('Phrases used')}</h4>
@@ -172,29 +168,31 @@ export class GrandTransitionMatchHistory extends LitElement {
                 <p>
                   ${round.suddenDeath ? msg('Cliffhanger') : msg('Debate')}
                   <span aria-hidden="true"> · </span>
-                  ${log.setup.players.map((player, index) => html`
+                  ${log.setup.players.map(
+                    (player, index) => html`
                     ${index > 0 ? ' · ' : nothing}
                     <span>${interfaceCharacterName(player.characterId)}</span>
                     ${formatInterfaceNumber(round.prideAfter[player.playerId])} ${msg('Pride')}
-                  `)}
+                  `,
+                  )}
                 </p>
               </header>
               <div class="match-history-sentence-grid">
                 ${log.setup.players.map((player) => {
                   const sentence = log.sentences.find(
                     (candidate) =>
-                      candidate.round === round.round &&
-                      candidate.playerId === player.playerId,
+                      candidate.round === round.round && candidate.playerId === player.playerId,
                   )!;
                   return html`
                     <article data-history-player=${player.playerId}>
                       <h6>${interfaceCharacterName(player.characterId)}</h6>
                       <p class="match-history-sentence"
-                        lang=${sentence.text ? gameTextLanguage(log.setup.gameLocale) ?? nothing : nothing}>
+                        lang=${sentence.text ? (gameTextLanguage(log.setup.gameLocale) ?? nothing) : nothing}>
                         ${sentence.text || msg('No completed public sentence.')}
                       </p>
-                      ${sentence.phrases.length > 0
-                        ? html`
+                      ${
+                        sentence.phrases.length > 0
+                          ? html`
                             <ol class="match-history-phrase-list">
                               ${sentence.phrases.map(
                                 (phrase) => html`
@@ -204,17 +202,20 @@ export class GrandTransitionMatchHistory extends LitElement {
                                     data-phrase-source=${phrase.source}
                                   >
                                     <span lang=${gameTextLanguage(log.setup.gameLocale) ?? nothing}>${phrase.text}</span>
-                                    ${phrase.source === 'carried'
-                                      ? html`<small>${msg('carried')}</small>`
-                                      : nothing}
+                                    ${
+                                      phrase.source === 'carried'
+                                        ? html`<small>${msg('carried')}</small>`
+                                        : nothing
+                                    }
                                   </li>
                                 `,
                               )}
                             </ol>
                           `
-                        : html`<p class="match-history-phrase-empty">
+                          : html`<p class="match-history-phrase-empty">
                             ${msg('No phrases were used.')}
-                          </p>`}
+                          </p>`
+                      }
                     </article>
                   `;
                 })}
@@ -233,9 +234,9 @@ export class GrandTransitionMatchHistory extends LitElement {
       return;
     }
     if (event.key !== 'Tab') return;
-    const focusable = [...this.querySelectorAll<HTMLElement>(
-      'button, summary, [tabindex="0"]',
-    )].filter((element) => !element.hasAttribute('disabled'));
+    const focusable = [
+      ...this.querySelectorAll<HTMLElement>('button, summary, [tabindex="0"]'),
+    ].filter((element) => !element.hasAttribute('disabled'));
     const first = focusable[0];
     const last = focusable.at(-1);
     if (!first || !last) return;
@@ -253,7 +254,10 @@ export class GrandTransitionMatchHistory extends LitElement {
     const next = new Set(this.expandedEntryIds);
     if (expanded) next.add(entryId);
     else next.delete(entryId);
-    if (next.size === this.expandedEntryIds.size && expanded === this.expandedEntryIds.has(entryId)) {
+    if (
+      next.size === this.expandedEntryIds.size &&
+      expanded === this.expandedEntryIds.has(entryId)
+    ) {
       return;
     }
     this.expandedEntryIds = next;

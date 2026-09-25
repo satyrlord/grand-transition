@@ -1,6 +1,5 @@
 import { expect, test } from 'vitest';
-// @ts-expect-error The shared image policy is a native ECMAScript module.
-import * as pixels from '../../tools/asset-pixels.mjs';
+import * as pixels from '../../tools/asset-pixels.ts';
 
 const { isVisibleChromaGreen } = pixels as {
   isVisibleChromaGreen: (data: Uint8Array, offset: number) => boolean;

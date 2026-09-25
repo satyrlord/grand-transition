@@ -1,11 +1,11 @@
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { scoreComboFinisherConstruction } from '../../src/engine/combo-finisher-scoring';
-import type { DraftCommand, DraftState } from '../../src/engine/draft-actions';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
+import { scoreComboFinisherConstruction } from '../../src/engine/combo-finisher-scoring.ts';
+import type { DraftCommand, DraftState } from '../../src/engine/draft-actions.ts';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
   type GrammarStep,
-} from '../../src/engine/grammar/english-grammar-adapter';
+} from '../../src/engine/grammar/english-grammar-adapter.ts';
 import {
   createMatchReducer,
   createMatchSetupState,
@@ -15,15 +15,12 @@ import {
   type MatchEngineContext,
   type MatchLifecycleCommand,
   type MatchState,
-} from '../../src/engine/match-lifecycle';
-import { listSimulationOptions } from '../../src/simulation/simulation';
-import { loadGameContent } from '../../tools/load-game-content';
+} from '../../src/engine/match-lifecycle.ts';
+import { listSimulationOptions } from '../../src/simulation/simulation.ts';
+import { loadGameContent } from '../../tools/load-game-content.ts';
 import type { Page } from '@playwright/test';
-import {
-  defaultSettings,
-  encodeSettings,
-} from '../../src/persistence/codecs/settings-codec';
-import { settingsStorageKey } from '../../src/persistence/settings';
+import { defaultSettings, encodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
+import { settingsStorageKey } from '../../src/persistence/settings.ts';
 
 const { englishGameLocale, gameCatalog } = loadGameContent();
 
@@ -47,44 +44,38 @@ const context: MatchEngineContext = {
   balance: basicScoringBalance,
 };
 
-export async function useFixedBrowserMatchSeed(
-  page: Page,
-  seed = 20_260_823,
-): Promise<void> {
-  await page.addInitScript(({ fixedSeed, settingsKey, settings }) => {
-    // Deterministic non-speech flows must not wait for optional model loading.
-    if (localStorage.getItem(settingsKey) === null) {
-      localStorage.setItem(settingsKey, settings);
-    }
-    const originalGetRandomValues = globalThis.crypto.getRandomValues.bind(
-      globalThis.crypto,
-    );
-    let matchSeedPending = true;
-    globalThis.crypto.getRandomValues = ((array: ArrayBufferView) => {
-      if (
-        matchSeedPending &&
-        array instanceof Uint32Array &&
-        array.length === 1
-      ) {
-        matchSeedPending = false;
-        array[0] = fixedSeed;
-        return array;
+export async function useFixedBrowserMatchSeed(page: Page, seed = 20_260_823): Promise<void> {
+  await page.addInitScript(
+    ({ fixedSeed, settingsKey, settings }) => {
+      // Deterministic non-speech flows must not wait for optional model loading.
+      if (localStorage.getItem(settingsKey) === null) {
+        localStorage.setItem(settingsKey, settings);
       }
-      return originalGetRandomValues(array as ArrayBufferView<ArrayBuffer>);
-    }) as Crypto['getRandomValues'];
-  }, {
-    fixedSeed: seed,
-    settingsKey: settingsStorageKey,
-    // These flows drive the authored English catalog, so the harness selects
-    // both languages explicitly instead of following the product defaults.
-    settings: encodeSettings({
-      ...defaultSettings,
-      interfaceLocale: 'en',
-      gameLocale: 'en',
-      speechEnabled: false,
-      gpuVoices: false,
-    }),
-  });
+      const originalGetRandomValues = globalThis.crypto.getRandomValues.bind(globalThis.crypto);
+      let matchSeedPending = true;
+      globalThis.crypto.getRandomValues = ((array: ArrayBufferView) => {
+        if (matchSeedPending && array instanceof Uint32Array && array.length === 1) {
+          matchSeedPending = false;
+          array[0] = fixedSeed;
+          return array;
+        }
+        return originalGetRandomValues(array as ArrayBufferView<ArrayBuffer>);
+      }) as Crypto['getRandomValues'];
+    },
+    {
+      fixedSeed: seed,
+      settingsKey: settingsStorageKey,
+      // These flows drive the authored English catalog, so the harness selects
+      // both languages explicitly instead of following the product defaults.
+      settings: encodeSettings({
+        ...defaultSettings,
+        interfaceLocale: 'en',
+        gameLocale: 'en',
+        speechEnabled: false,
+        gpuVoices: false,
+      }),
+    },
+  );
 }
 
 /**
@@ -176,8 +167,7 @@ export function planMatchBrowserFlow(seed = matchBrowserFlowSeed): MatchFlowPlan
     if (carried.size < 2 && !carried.has(player.playerId)) {
       const continuation = options.find(
         (option) =>
-          option.command.type === 'select-phrase' &&
-          option.phrase?.role === 'continuation',
+          option.command.type === 'select-phrase' && option.phrase?.role === 'continuation',
       );
       if (continuation && 'actorId' in continuation.command) {
         draft({ ...continuation.command, source: 'user' } as DraftCommand);
@@ -195,10 +185,7 @@ export function planMatchBrowserFlow(seed = matchBrowserFlowSeed): MatchFlowPlan
     // the Milestone 013 score formula awards the match to player-one.
     if (state.suddenDeathActive) {
       if (player.playerId === 'player-two') {
-        if (
-          player.construction.steps.length === 0 ||
-          player.construction.analysis.complete
-        ) {
+        if (player.construction.steps.length === 0 || player.construction.analysis.complete) {
           draft(actorCommand('commit-sentence'));
           continue;
         }
@@ -224,18 +211,14 @@ export function planMatchBrowserFlow(seed = matchBrowserFlowSeed): MatchFlowPlan
       continue;
     }
 
-    const bothLow =
-      ownPride <= lethalHoldThreshold && opponentPride <= lethalHoldThreshold;
-    const waiting =
-      opponentPride <= lethalHoldThreshold && ownPride > lethalHoldThreshold;
+    const bothLow = ownPride <= lethalHoldThreshold && opponentPride <= lethalHoldThreshold;
+    const waiting = opponentPride <= lethalHoldThreshold && ownPride > lethalHoldThreshold;
 
     if (bothLow) {
       const comebackReady = (playerId: string): boolean =>
-        comebackUsed.has(playerId) ||
-        state.playerStates[playerId]!.comebackCharge >= 60;
+        comebackUsed.has(playerId) || state.playerStates[playerId]!.comebackCharge >= 60;
       const bothCharged =
-        comebackReady(state.playerOrder[0]) &&
-        comebackReady(state.playerOrder[1]);
+        comebackReady(state.playerOrder[0]) && comebackReady(state.playerOrder[1]);
       const bothCanComplete =
         canCompleteClause(state, state.playerOrder[0]) &&
         canCompleteClause(state, state.playerOrder[1]);
@@ -267,10 +250,7 @@ export function planMatchBrowserFlow(seed = matchBrowserFlowSeed): MatchFlowPlan
         continue;
       }
       // Holding: freeze the exchange until a lethal-ready round is dealt.
-      if (
-        player.construction.steps.length === 0 ||
-        player.construction.analysis.complete
-      ) {
+      if (player.construction.steps.length === 0 || player.construction.analysis.complete) {
         draft(actorCommand('commit-sentence'));
         continue;
       }
@@ -284,10 +264,7 @@ export function planMatchBrowserFlow(seed = matchBrowserFlowSeed): MatchFlowPlan
     }
 
     if (waiting) {
-      if (
-        player.construction.steps.length === 0 ||
-        player.construction.analysis.complete
-      ) {
+      if (player.construction.steps.length === 0 || player.construction.analysis.complete) {
         draft(actorCommand('commit-sentence'));
         continue;
       }
@@ -327,13 +304,8 @@ export function planMatchBrowserFlow(seed = matchBrowserFlowSeed): MatchFlowPlan
   return { seed, actions, finalState: state };
 }
 
-function configuredPlayer(
-  playerId: string,
-  characterId: string,
-): MatchConfiguredPlayer {
-  const character = gameCatalog.characters.find(
-    (candidate) => candidate.id === characterId,
-  )!;
+function configuredPlayer(playerId: string, characterId: string): MatchConfiguredPlayer {
+  const character = gameCatalog.characters.find((candidate) => candidate.id === characterId)!;
   return {
     playerId,
     characterId,
@@ -344,16 +316,10 @@ function configuredPlayer(
   };
 }
 
-function previewOutgoingDamage(
-  state: MatchState,
-  playerId: string,
-  addedPhraseId: string,
-): number {
+function previewOutgoingDamage(state: MatchState, playerId: string, addedPhraseId: string): number {
   const draft = state.draft!;
   const player = draft.playerStates[playerId]!;
-  const added = gameCatalog.phrases.find(
-    (phrase) => phrase.id === addedPhraseId,
-  );
+  const added = gameCatalog.phrases.find((phrase) => phrase.id === addedPhraseId);
   if (!added) return 0;
   const steps: GrammarStep[] = [
     ...player.construction.steps,
@@ -391,11 +357,7 @@ function chipCommand(
     if (option.command.type !== 'select-phrase') continue;
     if (!option.phrase || option.phrase.role === 'ending') continue;
     if (option.phrase.role === 'continuation') continue;
-    const damage = previewOutgoingDamage(
-      state,
-      player.playerId,
-      option.phrase.id,
-    );
+    const damage = previewOutgoingDamage(state, player.playerId, option.phrase.id);
     if (damage >= 1 && damage <= 11) {
       return { ...option.command, source: 'user' } as DraftCommand;
     }
@@ -407,11 +369,7 @@ function canCompleteClause(state: MatchState, playerId: string): boolean {
   const draft = state.draft!;
   const player = draft.playerStates[playerId]!;
   const cards = collectPlayableCards(state, playerId);
-  const search = (
-    steps: readonly GrammarStep[],
-    depth: number,
-    used: Set<string>,
-  ): boolean => {
+  const search = (steps: readonly GrammarStep[], depth: number, used: Set<string>): boolean => {
     const analysis = englishGrammarAdapter.analyze({
       steps,
       subjectNumber: player.subjectNumber,
@@ -442,11 +400,7 @@ function canCompleteClause(state: MatchState, playerId: string): boolean {
     }
     return false;
   };
-  return search(
-    player.construction.steps,
-    player.construction.steps.length,
-    new Set(),
-  );
+  return search(player.construction.steps, player.construction.steps.length, new Set());
 }
 
 function collectPlayableCards(
@@ -458,17 +412,13 @@ function collectPlayableCards(
   const cards: (typeof gameCatalog.phrases)[number][] = [];
   for (const slot of draft.board.slots) {
     if (!slot.available) continue;
-    const phrase = gameCatalog.phrases.find(
-      (candidate) => candidate.id === slot.phraseId,
-    );
+    const phrase = gameCatalog.phrases.find((candidate) => candidate.id === slot.phraseId);
     if (phrase && phrase.role !== 'continuation' && phrase.role !== 'ending') {
       cards.push(phrase);
     }
   }
   for (const card of player.hand) {
-    const phrase = gameCatalog.phrases.find(
-      (candidate) => candidate.id === card.phraseId,
-    );
+    const phrase = gameCatalog.phrases.find((candidate) => candidate.id === card.phraseId);
     if (phrase && phrase.role !== 'continuation' && phrase.role !== 'ending') {
       cards.push(phrase);
     }

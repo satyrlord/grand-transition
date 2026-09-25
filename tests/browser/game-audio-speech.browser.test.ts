@@ -1,1 +1,1 @@
-import '../unit/game-audio-speech.test';
+import '../unit/game-audio-speech.test.ts';

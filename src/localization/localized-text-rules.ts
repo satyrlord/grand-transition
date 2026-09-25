@@ -8,16 +8,11 @@ export type LocalizedTextFailure = Readonly<{
   message: string;
 }>;
 
-const unsafePatterns: readonly RegExp[] = [
-  /<[A-Za-z/!]/u,
-  /javascript:/iu,
-  /\bon[a-z]+\s*=/iu,
-];
+const unsafePatterns: readonly RegExp[] = [/<[A-Za-z/!]/u, /javascript:/iu, /\bon[a-z]+\s*=/iu];
 
 const legacyDiacritics = /[\u015e\u015f\u0162\u0163]/u;
 const latinLetter = /\p{Script=Latin}/gu;
-const romanianLetters =
-  /[A-Za-z\u0102\u0103\u00c2\u00e2\u00ce\u00ee\u0218\u0219\u021a\u021b]/u;
+const romanianLetters = /[A-Za-z\u0102\u0103\u00c2\u00e2\u00ce\u00ee\u0218\u0219\u021a\u021b]/u;
 
 // `locale` is the language the text is written in. Romanian text may use only
 // the standard `ă â î ș ț` diacritics; English text accepts every Latin letter.

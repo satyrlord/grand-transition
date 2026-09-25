@@ -69,6 +69,7 @@ Personality cannot change the lethal, lethal-block, dead-end, or self-knockout s
 The Party presentation delay is a seeded integer from 700 through 1500 milliseconds.
 The Palace delay is from 900 through 1800.
 The search node limits do not change.
+The two advanced difficulties use the Milestone 021 AI worker and its main-thread fallback.
 With reduced motion, the two advanced difficulties use 100 ms, and they use no delay draw.
 This does not change the selected command, the evaluated-node count, or the principal reply.
 

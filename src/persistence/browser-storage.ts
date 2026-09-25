@@ -1,8 +1,6 @@
-import type { StoragePort, StorageResult } from './storage-port';
+import type { StoragePort, StorageResult } from './storage-port.ts';
 
-export function createBrowserStorage(
-  suppliedStorage?: Storage,
-): StoragePort {
+export function createBrowserStorage(suppliedStorage?: Storage): StoragePort {
   let storage: Storage;
   try {
     storage = suppliedStorage ?? globalThis.localStorage;
@@ -45,12 +43,9 @@ function storageCall<Value>(operation: () => Value): StorageResult<Value> {
   }
 }
 
-function storageFailureCode(error: unknown): string {
+export function storageFailureCode(error: unknown): string {
   if (error instanceof DOMException) {
-    if (
-      error.name === 'QuotaExceededError' ||
-      error.name === 'NS_ERROR_DOM_QUOTA_REACHED'
-    ) {
+    if (error.name === 'QuotaExceededError' || error.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
       return 'storage-quota';
     }
     if (error.name === 'SecurityError') return 'storage-security';

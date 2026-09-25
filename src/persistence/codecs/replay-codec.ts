@@ -1,14 +1,14 @@
 import { z } from 'zod';
-import type { ContentCatalog } from '../../content/content-catalog';
-import type { GameLocaleBundle } from '../../localization/game-locale-schema';
-import { gameLocales } from '../../localization/game-locale';
-import { grammarFor } from '../../engine/grammar/grammar-locale';
+import type { ContentCatalog } from '../../content/content-catalog.ts';
+import type { GameLocaleBundle } from '../../localization/game-locale-schema.ts';
+import { gameLocales } from '../../localization/game-locale.ts';
+import { grammarFor } from '../../engine/grammar/grammar-locale.ts';
 import {
   basePointsMultiplierSchema,
   scoringBalanceForMultiplier,
   type BasicScoringBalance,
-} from '../../content/basic-scoring-balance';
-import { seededRandomSource } from '../../engine/random-source';
+} from '../../content/basic-scoring-balance.ts';
+import { seededRandomSource } from '../../engine/random-source.ts';
 import {
   createMatchReducer,
   createMatchSetupState,
@@ -16,10 +16,10 @@ import {
   type MatchEngineContext,
   type MatchSetupRequest,
   type MatchState,
-} from '../../engine/match-lifecycle';
-import type { DeepImmutable } from '../../engine/game-contracts';
-import type { StoragePort } from '../storage-port';
-import { isRecord } from '../../engine/plain-values';
+} from '../../engine/match-lifecycle.ts';
+import type { DeepImmutable } from '../../engine/game-contracts.ts';
+import type { StoragePort } from '../storage-port.ts';
+import { isRecord } from '../../engine/plain-values.ts';
 
 // One replay document format exists at a time. The version only ever changes
 // when that format changes; content revisions never bump it. Version 2 records
@@ -64,9 +64,7 @@ const selectPhraseCommand = z
   })
   .strict();
 
-const simpleActorCommand = (
-  type: 'commit-sentence' | 'expire-turn' | 'redraw-hand',
-) =>
+const simpleActorCommand = (type: 'commit-sentence' | 'expire-turn' | 'redraw-hand') =>
   z
     .object({
       type: z.literal(type),
@@ -235,9 +233,7 @@ const matchLogDocumentSchema = z
   })
   .strict()
   .superRefine((matchLog, context) => {
-    const playerIds = new Set(
-      matchLog.setup.players.map((player) => player.playerId),
-    );
+    const playerIds = new Set(matchLog.setup.players.map((player) => player.playerId));
     const requirePlayer = (playerId: string, path: PropertyKey[]) => {
       if (!playerIds.has(playerId)) {
         context.addIssue({
@@ -261,11 +257,7 @@ const matchLogDocumentSchema = z
       requirePlayer(sentence.playerId, ['sentences', index, 'playerId']),
     );
     matchLog.rounds.forEach((round, index) => {
-      requirePlayer(round.openingPlayerId, [
-        'rounds',
-        index,
-        'openingPlayerId',
-      ]);
+      requirePlayer(round.openingPlayerId, ['rounds', index, 'openingPlayerId']);
       const pridePlayerIds = Object.keys(round.prideAfter);
       if (
         pridePlayerIds.length !== playerIds.size ||
@@ -312,16 +304,11 @@ const matchLogDocumentSchema = z
   });
 
 export type ReplaySetup = DeepImmutable<z.infer<typeof replaySetupSchema>>;
-export type ReplayDocument = DeepImmutable<
-  z.infer<typeof replayDocumentSchema>
->;
-export type MatchLogDocument = DeepImmutable<
-  z.infer<typeof matchLogDocumentSchema>
->;
+export type ReplayDocument = DeepImmutable<z.infer<typeof replayDocumentSchema>>;
+export type MatchLogDocument = DeepImmutable<z.infer<typeof matchLogDocumentSchema>>;
 
 export type CodecResult<Value> =
-  | Readonly<{ ok: true; value: Value }>
-  | Readonly<{ ok: false; code: ReplayFailureCode }>;
+  Readonly<{ ok: true; value: Value }> | Readonly<{ ok: false; code: ReplayFailureCode }>;
 
 export type ReplayResult =
   | Readonly<{
@@ -369,16 +356,11 @@ export function encodeMatchLog(matchLog: MatchLogDocument): string {
   });
 }
 
-export function decodeMatchLog(
-  serialized: string,
-): CodecResult<MatchLogDocument> {
+export function decodeMatchLog(serialized: string): CodecResult<MatchLogDocument> {
   return decodeDocument(serialized, matchLogKind, matchLogDocumentSchema);
 }
 
-export function replayMatch(
-  serialized: string,
-  context: ReplayContext,
-): ReplayResult {
+export function replayMatch(serialized: string, context: ReplayContext): ReplayResult {
   const decoded = decodeReplay(serialized);
   if (!decoded.ok) return decoded;
   if (!recordingMatchesLocale(decoded.value, context)) {
@@ -392,9 +374,7 @@ export function replayMatch(
     phrases: context.catalog.phrases,
     characters: context.catalog.characters,
     locale: context.locale,
-    balance: scoringBalanceForMultiplier(
-      decoded.value.setup.basePointsMultiplier,
-    ),
+    balance: scoringBalanceForMultiplier(decoded.value.setup.basePointsMultiplier),
   };
   const reducer = createMatchReducer(engineContext);
   for (const command of decoded.value.commands) {
@@ -430,10 +410,7 @@ export function createReplayInitialState(
 // The document owns the captured game locale. Replaying it with a different
 // bundle would silently re-render the recorded sentences in another language,
 // so the mismatch fails instead.
-function recordingMatchesLocale(
-  replay: ReplayDocument,
-  context: ReplayContext,
-): boolean {
+function recordingMatchesLocale(replay: ReplayDocument, context: ReplayContext): boolean {
   return replay.setup.gameLocale === context.locale.locale;
 }
 
@@ -464,10 +441,7 @@ export function storeMatchLogImport(
   return stored.ok ? decoded : stored;
 }
 
-export function createMatchLog(
-  replay: ReplayDocument,
-  state: MatchState,
-): MatchLogDocument {
+export function createMatchLog(replay: ReplayDocument, state: MatchState): MatchLogDocument {
   if (state.phase !== 'results' || !state.winner) {
     throw new Error('A match log requires a completed match.');
   }
@@ -476,10 +450,7 @@ export function createMatchLog(
     openingPlayerId: resolution.openingPlayerId,
     suddenDeath: resolution.suddenDeath,
     prideAfter: Object.fromEntries(
-      state.playerOrder.map((playerId) => [
-        playerId,
-        resolution.players[playerId]!.prideAfter,
-      ]),
+      state.playerOrder.map((playerId) => [playerId, resolution.players[playerId]!.prideAfter]),
     ),
   }));
   const sentences = state.resolutionHistory.flatMap((resolution) =>
@@ -495,8 +466,7 @@ export function createMatchLog(
   );
   const selections = replay.commands
     .filter(
-      (command): command is Extract<typeof command, { actorId: string }> =>
-        'actorId' in command,
+      (command): command is Extract<typeof command, { actorId: string }> => 'actorId' in command,
     )
     .map((command) => ({
       type: command.type,
@@ -604,22 +574,16 @@ function decodeDocument<Schema extends z.ZodType>(
     return { ok: false, code: 'unsupported-version' };
   }
   const parsed = schema.safeParse(value);
-  return parsed.success
-    ? { ok: true, value: parsed.data }
-    : { ok: false, code: 'invalid-replay' };
+  return parsed.success ? { ok: true, value: parsed.data } : { ok: false, code: 'invalid-replay' };
 }
 
 function createSetupRequest(
   replay: ReplayDocument,
   catalog: ContentCatalog,
 ): MatchSetupRequest | null {
-  const scene = catalog.scenes.find(
-    (candidate) => candidate.id === replay.setup.sceneId,
-  );
+  const scene = catalog.scenes.find((candidate) => candidate.id === replay.setup.sceneId);
   const players = replay.setup.players.map((player) => {
-    const character = catalog.characters.find(
-      (candidate) => candidate.id === player.characterId,
-    );
+    const character = catalog.characters.find((candidate) => candidate.id === player.characterId);
     return character
       ? {
           playerId: player.playerId,
@@ -664,10 +628,7 @@ function applyInitialValues(state: MatchState, setup: ReplaySetup): MatchState {
   };
 }
 
-function matchLogMatchesContext(
-  matchLog: MatchLogDocument,
-  context: ReplayContext,
-): boolean {
+function matchLogMatchesContext(matchLog: MatchLogDocument, context: ReplayContext): boolean {
   // The recorded text was rendered in the recorded game locale, so validate it
   // against that locale's agreement forms rather than another language's.
   if (matchLog.setup.gameLocale !== context.locale.locale) return false;
@@ -679,8 +640,8 @@ function matchLogMatchesContext(
     ]),
   );
   return matchLog.sentences.every((sentence) =>
-    sentence.phrases.every((phrase) =>
-      allowedTextsByPhrase.get(phrase.phraseId)?.has(phrase.text) === true,
+    sentence.phrases.every(
+      (phrase) => allowedTextsByPhrase.get(phrase.phraseId)?.has(phrase.text) === true,
     ),
   );
 }

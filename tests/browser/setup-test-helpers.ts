@@ -6,9 +6,7 @@ export async function lockInSetup(): Promise<void> {
 }
 
 async function clickEnabledLock(side: 'one' | 'two'): Promise<void> {
-  const control = document.querySelector<HTMLButtonElement>(
-    `[data-testid="lock-player-${side}"]`,
-  );
+  const control = document.querySelector<HTMLButtonElement>(`[data-testid="lock-player-${side}"]`);
   if (!control || control.disabled || control.getAttribute('aria-pressed') === 'true') return;
   control.click();
   await settleLitUpdates();

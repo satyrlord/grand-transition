@@ -1,4 +1,8 @@
-import { selfKnockoutReviewState, reviewContext, reduceReviewState } from '../fixtures/ai-review-states';
+import {
+  selfKnockoutReviewState,
+  reviewContext,
+  reduceReviewState,
+} from '../fixtures/ai-review-states.ts';
 import { describe, expect, test } from 'vitest';
 import {
   decideLocalRadioCaller,
@@ -9,23 +13,23 @@ import {
   redrawExpectedUtility,
   scoreEasyAiFeatureSet,
   type EasyAiFeatures,
-} from '../../src/ai/easy-ai';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, gameCatalog } from '../../src/game-content';
+} from '../../src/ai/easy-ai.ts';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
+import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
 import {
   createMatchReducer,
   createMatchSetupState,
   type MatchCommand,
   type MatchEngineContext,
   type MatchState,
-} from '../../src/engine/match-lifecycle';
-import { seededRandomSource, type RandomSource } from '../../src/engine/random-source';
+} from '../../src/engine/match-lifecycle.ts';
+import { seededRandomSource, type RandomSource } from '../../src/engine/random-source.ts';
 import {
   createSimulationSetup,
   listLocalRadioCallerSimulationOptions,
   simulateMatch,
   simulateMatches,
-} from '../../src/simulation/simulation';
+} from '../../src/simulation/simulation.ts';
 
 const context: MatchEngineContext = {
   phrases: gameCatalog.phrases,
@@ -54,23 +58,19 @@ describe('Local Radio Caller', () => {
   test('enumerates each accepted card, redraw, and expiration command', () => {
     const state = preparedMatch();
     const player = state.draft!.playerStates[state.activePlayerId]!;
-    const availableShared = state.draft!.board.slots.filter(
-      ({ available }) => available,
-    ).length;
+    const availableShared = state.draft!.board.slots.filter(({ available }) => available).length;
 
     const ordinary = enumerateEasyAiCommands(state, context);
-    expect(
-      ordinary.filter(({ type }) => type === 'select-phrase'),
-    ).toHaveLength(availableShared + player.hand.length);
+    expect(ordinary.filter(({ type }) => type === 'select-phrase')).toHaveLength(
+      availableShared + player.hand.length,
+    );
     expect(ordinary.map(({ type }) => type)).toContain('redraw-hand');
     expect(ordinary.map(({ type }) => type)).not.toContain('expire-turn');
 
     const expired = enumerateEasyAiCommands(state, context, true);
     expect(expired.map(({ type }) => type)).toContain('expire-turn');
     for (const command of expired) {
-      expect(createMatchReducer(context)(state, command, seededRandomSource).ok).toBe(
-        true,
-      );
+      expect(createMatchReducer(context)(state, command, seededRandomSource).ok).toBe(true);
     }
   });
 
@@ -81,10 +81,7 @@ describe('Local Radio Caller', () => {
     >) {
       if (name === 'personality') continue;
       const features = { ...zeroFeatures, [name]: 1 };
-      const [scored] = scoreEasyAiFeatureSet(
-        [features, zeroFeatures],
-        neutralPersonality,
-      );
+      const [scored] = scoreEasyAiFeatureSet([features, zeroFeatures], neutralPersonality);
       expect(scored!.utility, name).toBe(localRadioCallerWeights[name]);
     }
 
@@ -112,9 +109,7 @@ describe('Local Radio Caller', () => {
       { aggression: 0, denial: 0, risk: 0 },
     );
     expect(scored.map(({ normalizedFeatures }) => normalizedFeatures.immediateDamage)).toEqual([
-      0.5,
-      1,
-      0,
+      0.5, 1, 0,
     ]);
   });
 
@@ -171,17 +166,12 @@ describe('Local Radio Caller', () => {
       randomSource: constantRandom,
     });
     expect(second).toEqual(first);
-    expect(decideLocalRadioCaller(state, context)).toEqual(
-      decideLocalRadioCaller(state, context),
-    );
+    expect(decideLocalRadioCaller(state, context)).toEqual(decideLocalRadioCaller(state, context));
   });
 
   test('consumes a selection draw before the delay for one best action', () => {
     const opening = preparedMatch();
-    const openingCandidates = evaluateLocalRadioCallerCandidates(
-      opening,
-      context,
-    );
+    const openingCandidates = evaluateLocalRadioCallerCandidates(opening, context);
     const safeSubject = openingCandidates.find(
       ({ command, rawFeatures }) =>
         command.type === 'select-phrase' && rawFeatures.grammarRisk === 0,
@@ -189,9 +179,7 @@ describe('Local Radio Caller', () => {
     expect(safeSubject).toBeTruthy();
     const afterSubject = reduce(opening, safeSubject!.command);
     const actorId = afterSubject.activePlayerId;
-    const opponentId = afterSubject.playerOrder.find(
-      (playerId) => playerId !== actorId,
-    )!;
+    const opponentId = afterSubject.playerOrder.find((playerId) => playerId !== actorId)!;
     const actor = afterSubject.draft!.playerStates[actorId]!;
     let state: MatchState = {
       ...afterSubject,
@@ -212,9 +200,7 @@ describe('Local Radio Caller', () => {
     };
     let candidates = evaluateLocalRadioCallerCandidates(state, context);
     let bestUtility = Math.max(...candidates.map(({ utility }) => utility));
-    const tiedBest = candidates.filter(
-      ({ utility }) => utility === bestUtility,
-    );
+    const tiedBest = candidates.filter(({ utility }) => utility === bestUtility);
     expect(tiedBest.length).toBeGreaterThan(1);
     for (const candidate of tiedBest.slice(1)) {
       const suppressed = candidate.command;
@@ -242,9 +228,7 @@ describe('Local Radio Caller', () => {
                 ...active,
                 hand:
                   suppressed.payload.card.source === 'private'
-                    ? active.hand.filter(
-                        ({ id }) => id !== suppressed.payload.card.cardId,
-                      )
+                    ? active.hand.filter(({ id }) => id !== suppressed.payload.card.cardId)
                     : active.hand,
               },
             },
@@ -254,9 +238,7 @@ describe('Local Radio Caller', () => {
     }
     candidates = evaluateLocalRadioCallerCandidates(state, context);
     bestUtility = Math.max(...candidates.map(({ utility }) => utility));
-    expect(
-      candidates.filter(({ utility }) => utility === bestUtility),
-    ).toHaveLength(1);
+    expect(candidates.filter(({ utility }) => utility === bestUtility)).toHaveLength(1);
 
     let draws = 0;
     const orderedRandom: RandomSource = {
@@ -304,17 +286,10 @@ describe('Local Radio Caller', () => {
       locale: englishGameLocale,
       balance: basicScoringBalance,
     };
-    const result = simulateMatch(
-      21,
-      setup,
-      replayContext,
-      listLocalRadioCallerSimulationOptions,
-    );
+    const result = simulateMatch(21, setup, replayContext, listLocalRadioCallerSimulationOptions);
     expect(result.finalState.phase).toBe('results');
     expect(result.finalState.winner).toBeTruthy();
-    expect(result.replay.commands.every(({ source }) => source === 'ai')).toBe(
-      true,
-    );
+    expect(result.replay.commands.every(({ source }) => source === 'ai')).toBe(true);
     expect(result.privacyLeaks).toBe(0);
     expect(result.timerOverruns).toBe(0);
     expect(result.maximumPresentationDelayMs).toBeGreaterThanOrEqual(500);
@@ -345,7 +320,10 @@ function preparedMatch(): MatchState {
     seed: 21,
     mode: 'ai',
     aiDifficulty: 'local-radio-caller',
-    players: [configuredPlayer('player-one', first!.id), configuredPlayer('player-two', second!.id)],
+    players: [
+      configuredPlayer('player-one', first!.id),
+      configuredPlayer('player-two', second!.id),
+    ],
     sceneId: scene.id,
     scenePhraseIds: scene.phrasePool,
     generalPhraseIds: gameCatalog.phrases.map(({ id }) => id),
@@ -373,18 +351,25 @@ function reduce(state: MatchState, command: MatchCommand): MatchState {
   return result.state;
 }
 
-
-test.each([false, true])('preserves terminal mistake risk and avoids self-knockout (reversed=%s)', (reversed) => {
-  const state = selfKnockoutReviewState(reversed);
-  const candidates = evaluateLocalRadioCallerCandidates(state, reviewContext);
-  const fatal = candidates.filter(({ selfKnockout }) => selfKnockout);
-  expect(fatal.length).toBeGreaterThan(0);
-  expect(fatal.every(({ rawFeatures }) => rawFeatures.grammarRisk === 1)).toBe(true);
-  const safe = reduceReviewState(state, {
-    type: 'commit-sentence', source: 'ai', actorId: state.activePlayerId, payload: {},
-  });
-  expect(safe.playerStates[state.activePlayerId]!.pride).toBe(3);
-  expect(safe.phase).toBe('resolution');
-  const decision = decideLocalRadioCaller(state, reviewContext)!;
-  expect(reduceReviewState(state, decision.command).playerStates[state.activePlayerId]!.pride).toBe(3);
-});
+test.each([false, true])(
+  'preserves terminal mistake risk and avoids self-knockout (reversed=%s)',
+  (reversed) => {
+    const state = selfKnockoutReviewState(reversed);
+    const candidates = evaluateLocalRadioCallerCandidates(state, reviewContext);
+    const fatal = candidates.filter(({ selfKnockout }) => selfKnockout);
+    expect(fatal.length).toBeGreaterThan(0);
+    expect(fatal.every(({ rawFeatures }) => rawFeatures.grammarRisk === 1)).toBe(true);
+    const safe = reduceReviewState(state, {
+      type: 'commit-sentence',
+      source: 'ai',
+      actorId: state.activePlayerId,
+      payload: {},
+    });
+    expect(safe.playerStates[state.activePlayerId]!.pride).toBe(3);
+    expect(safe.phase).toBe('resolution');
+    const decision = decideLocalRadioCaller(state, reviewContext)!;
+    expect(
+      reduceReviewState(state, decision.command).playerStates[state.activePlayerId]!.pride,
+    ).toBe(3);
+  },
+);

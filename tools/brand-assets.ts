@@ -10,14 +10,23 @@ const definitions = [
   { id: 'politburo-portrait-frame', width: 1086, height: 1448, runtimeWidth: 1086, runtimeHeight: 1448, stem: 'politburo-portrait-frame' },
 ];
 const formats = ['avif', 'webp'];
-const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 const sourceDescription = 'Original editorial-cartoon interface art created for Grand Transition.';
 const licenseIdentifier = 'LicenseRef-Grand-Transition-Original';
 const crop = { x: 0, y: 0, width: 1, height: 1 };
 const focalPoint = { x: 0.5, y: 0.5 };
-const requireFact = (condition, message) => { if (!condition) throw new Error(message); };
+function requireFact(condition: unknown, message: string): asserts condition {
+  if (!condition) throw new Error(message);
+}
 
-export function validateBrandManifest(manifest) {
+type BrandFile = { path: string; width: number; height: number; format: string; bytes: number; sha256: string };
+type BrandAsset = {
+  id: string; ownerType: string; ownerId: string; sourceDescription: string; licenseIdentifier: string;
+  source: BrandFile; focalPoint: unknown; crop: unknown; variants: BrandFile[];
+};
+type BrandManifest = { schemaVersion: number; assets: BrandAsset[] };
+
+export function validateBrandManifest(manifest: BrandManifest): BrandManifest {
   requireFact(manifest?.schemaVersion === 1 && Array.isArray(manifest.assets) && manifest.assets.length === definitions.length,
     'Brand manifest must contain its three assets.');
   const seen = new Set();
@@ -36,29 +45,29 @@ export function validateBrandManifest(manifest) {
     const files = [asset.source, ...asset.variants];
     for (let index = 0; index < expected.length; index++) {
       const file = files[index];
-      requireFact(file && Object.entries(expected[index]).every(([key, value]) => file[key] === value), `${asset.id}: invalid file path, dimensions, or format.`);
+      requireFact(file && Object.entries(expected[index]!).every(([key, value]) => (file as Record<string, unknown>)[key] === value), `${asset.id}: invalid file path, dimensions, or format.`);
       requireFact(/^[a-f0-9]{64}$/u.test(file.sha256) && Number.isSafeInteger(file.bytes) && file.bytes > 0, `${file.path}: invalid hash or bytes.`);
       if (index > 0) requireFact(file.bytes <= (file.format === 'avif' ? 350 : 500) * 1024, `${file.path}: exceeds byte budget.`);
     }
   }
   for (const format of formats) {
     const bytes = manifest.assets.filter(({ id }) => id !== 'politburo-portrait-frame')
-      .reduce((total, asset) => total + asset.variants.find((variant) => variant.format === format).bytes, 0);
+      .reduce((total, asset) => total + asset.variants.find((variant) => variant.format === format)!.bytes, 0);
     requireFact(bytes <= 300 * 1024, `Title ${format} package exceeds 300 KiB.`);
   }
   return manifest;
 }
 
 export async function buildBrandAssets(root = path.resolve('src/assets/brand')) {
-  const outputs = [];
-  const assets = [];
+  const outputs: { file: string; bytes: Buffer }[] = [];
+  const assets: BrandAsset[] = [];
   for (const definition of definitions) {
     const sourcePath = definition.id + '.png';
     const input = await readFile(path.join(root, sourcePath));
     const metadata = await sharp(input).metadata();
     requireFact(metadata.format === 'png' && metadata.width === definition.width && metadata.height === definition.height,
       `${sourcePath}: unexpected master dimensions or format.`);
-    const variants = [];
+    const variants: BrandFile[] = [];
     for (const format of formats) {
       const pipeline = sharp(input).resize(definition.runtimeWidth, definition.runtimeHeight, { kernel: sharp.kernel.lanczos3 });
       const bytes = await (format === 'avif' ? pipeline.avif({ quality: 65, effort: 6 })
@@ -95,7 +104,7 @@ export async function validateBrandAssets(root = path.resolve('src/assets/brand'
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const command = process.argv[2];
   const operation = command === 'build' ? buildBrandAssets : command === 'validate' ? validateBrandAssets : undefined;
-  if (!operation) throw new Error('Use brand-assets.mjs build or validate.');
+  if (!operation) throw new Error('Use brand-assets.ts build or validate.');
   operation().then(() => console.log(`Brand asset ${command} passed: three masters and six variants.`))
     .catch((error) => { console.error(error.message); process.exitCode = 1; });
 }

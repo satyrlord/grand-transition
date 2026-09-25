@@ -1,43 +1,40 @@
-import type { Character, Phrase } from '../content/schemas';
-import type { GameLocaleBundle } from '../localization/game-locale-schema';
+import type { Character, Phrase } from '../content/schemas.ts';
+import type { GameLocaleBundle } from '../localization/game-locale-schema.ts';
 import {
   generateBoard,
   type BoardGenerationFailure,
   type BoardGenerationRequest,
   type BoardSlot,
   type GeneratedBoard,
-} from './board-generation';
+} from './board-generation.ts';
 import {
   availableComebackTiers,
   selectComebackTier,
   type ComebackSelection,
   type ComebackTier,
   type ContinuationCarry,
-} from './continuation-comeback-resolution';
+} from './continuation-comeback-resolution.ts';
 import type {
   GameCommand,
   GameReducer,
   GameState,
   ReducerResult,
   RuleError,
-} from './game-contracts';
+} from './game-contracts.ts';
 import {
   type GrammarAnalysis,
   type GrammarRole,
   type GrammarStep,
   type GrammaticalNumber,
-} from './grammar/english-grammar-adapter';
-import {
-  grammarFor,
-  type GrammarLocaleBinding,
-} from './grammar/grammar-locale';
-import { phraseIndex } from './phrase-index';
+} from './grammar/english-grammar-adapter.ts';
+import { grammarFor, type GrammarLocaleBinding } from './grammar/grammar-locale.ts';
+import { phraseIndex } from './phrase-index.ts';
 import {
   generatePrivateHand,
   type PrivateHandGenerationFailure,
   type PrivateHandGenerationRequest,
-} from './private-hand-generation';
-import { seededRandomSource, type RandomSource } from './random-source';
+} from './private-hand-generation.ts';
+import { seededRandomSource, type RandomSource } from './random-source.ts';
 
 export const draftRuleErrorCodes = [
   'wrong-phase',
@@ -197,8 +194,7 @@ export type DraftRoundPreparationRequest = Readonly<{
   includeContinuation?: boolean;
 }>;
 
-export type DraftPreparationFailure =
-  BoardGenerationFailure | PrivateHandGenerationFailure;
+export type DraftPreparationFailure = BoardGenerationFailure | PrivateHandGenerationFailure;
 
 export type DraftPreparationResult =
   | Readonly<{ ok: true; state: DraftState }>
@@ -247,16 +243,10 @@ export function prepareDraftRound(
   request: DraftRoundPreparationRequest,
   randomSource: RandomSource = seededRandomSource,
 ): DraftPreparationResult {
-  const openingPlayerId = chooseOpeningPlayer(
-    request.players,
-    request.previousOpeningPlayerId,
-  );
+  const openingPlayerId = chooseOpeningPlayer(request.players, request.previousOpeningPlayerId);
   const grammar = grammarFor(request.locale);
   const constructions = new Map(
-    request.players.map((player) => [
-      player.playerId,
-      createConstruction(player, grammar),
-    ]),
+    request.players.map((player) => [player.playerId, createConstruction(player, grammar)]),
   );
 
   let seed = request.seed;
@@ -270,12 +260,7 @@ export function prepareDraftRound(
     let attemptSeed = seed;
     for (const player of request.players) {
       const handResult = generatePrivateHand(
-        privateHandRequest(
-          attemptSeed,
-          request,
-          player,
-          attemptReservedPhraseIds,
-        ),
+        privateHandRequest(attemptSeed, request, player, attemptReservedPhraseIds),
         randomSource,
       );
       if (!handResult.ok) return handResult;
@@ -311,9 +296,7 @@ export function prepareDraftRound(
     playerStates[player.playerId] = {
       ...player,
       comebackCharge: player.comebackCharge ?? 0,
-      availableComebackTiers: availableComebackTiers(
-        player.comebackCharge ?? 0,
-      ),
+      availableComebackTiers: availableComebackTiers(player.comebackCharge ?? 0),
       hand: phraseIds.map((phraseId, cardIndex) => ({
         id: handCardId('hand', request.round, player.playerId, cardIndex),
         phraseId,
@@ -344,10 +327,7 @@ export function prepareDraftRound(
     board: availableRoundBoard,
     playerStates,
     commandHistory: request.commandHistory ?? [],
-    playerOrder: request.players.map((player) => player.playerId) as [
-      string,
-      string,
-    ],
+    playerOrder: request.players.map((player) => player.playerId) as [string, string],
     generalPhraseIds: request.generalPhraseIds,
     scenePhraseIds: request.scenePhraseIds,
     reservedPhraseIds,
@@ -394,10 +374,7 @@ export function createDraftReducer(
     reduceDraftCommand(state, command, context, randomSource);
 }
 
-export function snapshotDraftStateForPlayer(
-  state: DraftState,
-  viewerId: string,
-): DraftSnapshot {
+export function snapshotDraftStateForPlayer(state: DraftState, viewerId: string): DraftSnapshot {
   const players = Object.fromEntries(
     state.playerOrder.map((playerId) => {
       const player = state.playerStates[playerId]!;
@@ -420,8 +397,7 @@ export function snapshotDraftStateForPlayer(
             requiredRoles: player.construction.requiredRoles,
             carryIntent: player.construction.carryIntent,
             selectedComebackTier: player.construction.selectedComebackTier,
-            comebackClosingLine:
-              player.construction.selectedComeback?.closingLine ?? null,
+            comebackClosingLine: player.construction.selectedComeback?.closingLine ?? null,
           },
           legalCards: isViewer ? player.legalCards : [],
         } satisfies DraftPlayerSnapshot,
@@ -490,14 +466,7 @@ function selectPhrase(
         { phraseId: resolved.phrase.id, source: resolved.reference.source },
       ],
     };
-    return acceptCardAction(
-      state,
-      player,
-      command,
-      resolved,
-      construction,
-      context,
-    );
+    return acceptCardAction(state, player, command, resolved, construction, context);
   }
 
   const grammar = grammarFor(context.locale);
@@ -516,14 +485,7 @@ function selectPhrase(
       grammarMistakes: player.construction.grammarMistakes + 1,
       lastGrammarMistakePhraseId: resolved.phrase.id,
     };
-    return acceptCardAction(
-      state,
-      player,
-      command,
-      resolved,
-      construction,
-      context,
-    );
+    return acceptCardAction(state, player, command, resolved, construction, context);
   }
 
   const construction = constructionWithAnalysis(
@@ -541,14 +503,7 @@ function selectPhrase(
           : 'building',
     },
   );
-  return acceptCardAction(
-    state,
-    player,
-    command,
-    resolved,
-    construction,
-    context,
-  );
+  return acceptCardAction(state, player, command, resolved, construction, context);
 }
 
 function redrawHand(
@@ -587,10 +542,7 @@ function redrawHand(
     {
       ...state,
       seed: handResult.hand.nextSeed,
-      reservedPhraseIds: [
-        ...state.reservedPhraseIds,
-        ...handResult.hand.phraseIds,
-      ],
+      reservedPhraseIds: [...state.reservedPhraseIds, ...handResult.hand.phraseIds],
       playerStates: { ...state.playerStates, [player.playerId]: nextPlayer },
     },
     command,
@@ -605,10 +557,7 @@ function commitSentence(
   command: Extract<DraftCommand, { readonly type: 'commit-sentence' }>,
   context: DraftEngineContext,
 ): ReducerResult<DraftState, DraftRuleError> {
-  const construction = endConstruction(
-    player,
-    grammarFor(context.locale),
-  );
+  const construction = endConstruction(player, grammarFor(context.locale));
   return acceptPlayerAction(state, player, command, construction, context);
 }
 
@@ -627,9 +576,7 @@ function selectComeback(
   }
   const tier = player.availableComebackTiers.at(-1);
   if (!tier) return reject(command, 'comeback-unaffordable');
-  const character = context.characters.find(
-    (candidate) => candidate.id === player.characterId,
-  );
+  const character = context.characters.find((candidate) => candidate.id === player.characterId);
   if (!character) throw new Error(`Unknown character "${player.characterId}".`);
   const selection = selectComebackTier({
     playerId: player.playerId,
@@ -645,10 +592,7 @@ function selectComeback(
     randomSource,
   });
   if (!selection.ok) return reject(command, selection.error.code);
-  const endedConstruction = endConstruction(
-    player,
-    grammarFor(context.locale),
-  );
+  const endedConstruction = endConstruction(player, grammarFor(context.locale));
   const construction = {
     ...endedConstruction,
     previewText: `${endedConstruction.previewText} ${selection.selection.closingLine}`,
@@ -675,9 +619,7 @@ function expireTurn(
   context: DraftEngineContext,
 ): ReducerResult<DraftState, DraftRuleError> {
   const opponent =
-    state.playerStates[
-      state.playerOrder.find((playerId) => playerId !== player.playerId)!
-    ]!;
+    state.playerStates[state.playerOrder.find((playerId) => playerId !== player.playerId)!]!;
   const shouldPenalize = opponent.construction.status === 'ended';
   const consecutiveTimeouts = shouldPenalize
     ? player.consecutiveTimeouts + 1
@@ -714,9 +656,7 @@ function acceptCardAction(
       ? {
           ...state.board,
           slots: state.board.slots.map((slot) =>
-            slot.id === resolved.reference.cardId
-              ? { ...slot, available: false }
-              : slot,
+            slot.id === resolved.reference.cardId ? { ...slot, available: false } : slot,
           ),
         }
       : state.board;
@@ -800,13 +740,9 @@ function passTurn(state: DraftState, actorId: string): DraftState {
   }
 
   const actorIndex = state.playerOrder.indexOf(actorId);
-  const candidates = [
-    state.playerOrder[(actorIndex + 1) % state.playerOrder.length]!,
-    actorId,
-  ];
+  const candidates = [state.playerOrder[(actorIndex + 1) % state.playerOrder.length]!, actorId];
   const activePlayerId = candidates.find(
-    (playerId) =>
-      state.playerStates[playerId]?.construction.status === 'building',
+    (playerId) => state.playerStates[playerId]?.construction.status === 'building',
   )!;
   return {
     ...state,
@@ -819,10 +755,7 @@ function passTurn(state: DraftState, actorId: string): DraftState {
   };
 }
 
-function recalculatePlayers(
-  state: DraftState,
-  context: DraftEngineContext,
-): DraftState {
+function recalculatePlayers(state: DraftState, context: DraftEngineContext): DraftState {
   const playerStates = Object.fromEntries(
     state.playerOrder.map((playerId) => {
       const player = state.playerStates[playerId]!;
@@ -907,9 +840,7 @@ function resolveCard(
     const ownedByOtherPlayer = state.playerOrder.some(
       (playerId) =>
         playerId !== player.playerId &&
-        state.playerStates[playerId]?.hand.some(
-          (card) => card.id === reference.cardId,
-        ),
+        state.playerStates[playerId]?.hand.some((card) => card.id === reference.cardId),
     );
     return { code: ownedByOtherPlayer ? 'card-not-owned' : 'card-unavailable' };
   }
@@ -921,10 +852,7 @@ function endConstruction(
   player: DraftPlayerState,
   grammar: GrammarLocaleBinding,
 ): DraftConstruction {
-  const steps: readonly GrammarStep[] = [
-    ...player.construction.steps,
-    { kind: 'end' },
-  ];
+  const steps: readonly GrammarStep[] = [...player.construction.steps, { kind: 'end' }];
   const result = grammar.adapter.analyze({
     steps,
     subjectNumber: player.subjectNumber,
@@ -965,23 +893,17 @@ function createConstruction(
     objectNumber: player.objectNumber,
   });
   if (!result.accepted) {
-    throw new Error(
-      'A restored continuation must contain legal grammar steps.',
-    );
+    throw new Error('A restored continuation must contain legal grammar steps.');
   }
   if (
     player.restoredCarry &&
-    (JSON.stringify(player.restoredCarry.analysis) !==
-      JSON.stringify(result.analysis) ||
+    (JSON.stringify(player.restoredCarry.analysis) !== JSON.stringify(result.analysis) ||
       player.restoredCarry.publicText !== result.analysis.publicText)
   ) {
-    throw new Error(
-      'A restored continuation must match its grammar steps and public text.',
-    );
+    throw new Error('A restored continuation must match its grammar steps and public text.');
   }
   const analysis = player.restoredCarry?.analysis ?? result.analysis;
-  const publicText =
-    player.restoredCarry?.publicText ?? result.analysis.publicText;
+  const publicText = player.restoredCarry?.publicText ?? result.analysis.publicText;
   return {
     status: 'building',
     steps,
@@ -1051,8 +973,7 @@ function chooseOpeningPlayer(
   previousOpeningPlayerId: string | undefined,
 ): string {
   if (!previousOpeningPlayerId) return players[0].playerId;
-  return players.find((player) => player.playerId !== previousOpeningPlayerId)!
-    .playerId;
+  return players.find((player) => player.playerId !== previousOpeningPlayerId)!.playerId;
 }
 
 function reject(

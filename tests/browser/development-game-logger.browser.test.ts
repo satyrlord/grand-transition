@@ -1,18 +1,15 @@
 import { beforeEach, expect, test, vi } from 'vitest';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { DevelopmentGameLogger } from '../../src/app/development-game-logger';
-import { englishGameLocale, gameCatalog } from '../../src/game-content';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
+import { DevelopmentGameLogger } from '../../src/app/development-game-logger.ts';
+import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
 import {
   createMatchReducer,
   defaultMatchRandomSource,
   type MatchCommand,
   type MatchState,
-} from '../../src/engine/match-lifecycle';
-import {
-  createSimulationSetup,
-  simulateMatch,
-} from '../../src/simulation/simulation';
-import { createReplayInitialState } from '../../src/persistence/codecs/replay-codec';
+} from '../../src/engine/match-lifecycle.ts';
+import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation.ts';
+import { createReplayInitialState } from '../../src/persistence/codecs/replay-codec.ts';
 
 const context = {
   catalog: gameCatalog,
@@ -58,11 +55,7 @@ test('writes every command and redacts a rejected private selection', async () =
       before,
       after: state,
     });
-    if (
-      !rejectedPrivateSelectionCaptured &&
-      command.type === 'prepare-round' &&
-      state.draft
-    ) {
+    if (!rejectedPrivateSelectionCaptured && command.type === 'prepare-round' && state.draft) {
       const actorId = state.activePlayerId;
       const player = state.draft.playerStates[actorId]!;
       const privateCard = player.hand[0]!;
@@ -110,10 +103,22 @@ test('writes every command and redacts a rejected private selection', async () =
   expect(writes).toHaveLength(0);
   logger.finishSpeech({ schemaVersion: 1, status: 'recording', droppedEvents: 0, events: [] });
   expect(writes).toHaveLength(0);
-  const diagnostics = { schemaVersion: 1 as const, status: 'finished' as const, droppedEvents: 0, events: [
-    { type: 'playback-end' as const, round: state.round, speakerId: state.playerOrder[1],
-      voice: 'kokoro:bm_george', rate: 1.2, pitch: 1, elapsedMs: 1200 },
-  ] };
+  const diagnostics = {
+    schemaVersion: 1 as const,
+    status: 'finished' as const,
+    droppedEvents: 0,
+    events: [
+      {
+        type: 'playback-end' as const,
+        round: state.round,
+        speakerId: state.playerOrder[1],
+        voice: 'kokoro:bm_george',
+        rate: 1.2,
+        pitch: 1,
+        elapsedMs: 1200,
+      },
+    ],
+  };
   logger.finishSpeech(diagnostics);
   logger.finishSpeech(diagnostics);
   await vi.waitFor(() => expect(writes).toHaveLength(1));
@@ -139,9 +144,7 @@ test('writes every command and redacts a rejected private selection', async () =
   const actions = records.filter((record) => record.type === 'action');
   expect(actions).toHaveLength(completed.replay.commands.length + 1);
   expect(
-    actions
-      .filter((record) => record.outcome === 'accepted')
-      .map((record) => record.command),
+    actions.filter((record) => record.outcome === 'accepted').map((record) => record.command),
   ).toEqual(completed.replay.commands);
   expect(actions).toEqual(
     expect.arrayContaining([

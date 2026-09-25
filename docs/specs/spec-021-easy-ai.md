@@ -126,6 +126,9 @@ It is a presentation delay, not a search time.
 The reduced delay uses 100 milliseconds.
 The pure AI policy does not read the time.
 The application shows the thinking state first and calculates the decision in the next task.
+The browser application calculates the decision in a dedicated module worker, so the search does not block the main thread.
+The worker receives the engine context one time for each match, and it receives the match state for each turn.
+When the worker cannot start, cannot clone a request, or fails, that search and each subsequent search on the page run on the main thread.
 The measured search time counts toward the presentation delay, so the visible thinking time is the larger of the two.
 The decision, its seed, and the delay value do not change.
 

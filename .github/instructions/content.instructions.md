@@ -1,5 +1,5 @@
 ---
-applyTo: 'src/game-content.ts,src/content/**,src/localization/**,src/assets/**,src/app/character-assets.ts,src/app/scene-assets.ts,tests/unit/*content*.test.ts,tests/unit/*assets*.test.ts,tests/unit/*color*.test.ts,tests/unit/*chroma*.test.ts,tests/unit/*prompt*.test.ts,tests/unit/*scene-layers*.test.ts,e2e/content-lifecycle.spec.ts,tools/load-game-content.ts,tools/*assets.mjs,tools/derive-scene-layers.mjs,tools/validate-*.mjs,tools/asset-color-policy.json,.github/skills/repair-scene-composition/scripts/**'
+applyTo: 'src/game-content.ts,src/content/**,src/localization/**,src/assets/**,src/app/character-assets.ts,src/app/scene-assets.ts,tests/unit/*content*.test.ts,tests/unit/*assets*.test.ts,tests/unit/*color*.test.ts,tests/unit/*chroma*.test.ts,tests/unit/*prompt*.test.ts,tests/unit/*scene-layers*.test.ts,e2e/content-lifecycle.spec.ts,tools/load-game-content.ts,tools/*assets.ts,tools/derive-scene-layers.ts,tools/validate-*.ts,tools/asset-color-policy.json,.github/skills/repair-scene-composition/scripts/**'
 ---
 
 # Content and asset instructions

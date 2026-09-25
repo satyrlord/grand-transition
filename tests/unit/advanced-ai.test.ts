@@ -1,4 +1,9 @@
-import { selfKnockoutReviewState, reviewContext, reduceReviewState, preparedReviewState } from '../fixtures/ai-review-states';
+import {
+  selfKnockoutReviewState,
+  reviewContext,
+  reduceReviewState,
+  preparedReviewState,
+} from '../fixtures/ai-review-states.ts';
 import { describe, expect, test } from 'vitest';
 import {
   advancedAiDelay,
@@ -16,24 +21,24 @@ import {
   scorePartyStrategistFeatureSet,
   wrongSelectionUtility,
   type AdvancedAiFeatures,
-} from '../../src/ai/advanced-ai';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, gameCatalog } from '../../src/game-content';
+} from '../../src/ai/advanced-ai.ts';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
+import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
 import {
   createMatchReducer,
   createMatchSetupState,
   type MatchCommand,
   type MatchEngineContext,
   type MatchState,
-} from '../../src/engine/match-lifecycle';
-import { seededRandomSource, type RandomSource } from '../../src/engine/random-source';
+} from '../../src/engine/match-lifecycle.ts';
+import { seededRandomSource, type RandomSource } from '../../src/engine/random-source.ts';
 import {
   createSimulationSetup,
   listLocalRadioCallerSimulationOptions,
   simulateMatch,
-} from '../../src/simulation/simulation';
-import { listConfiguredAiSimulationOptions } from '../../src/simulation/simulation-policy';
-import { evaluateLocalRadioCallerCandidates } from '../../src/ai/easy-ai';
+} from '../../src/simulation/simulation.ts';
+import { listConfiguredAiSimulationOptions } from '../../src/simulation/simulation-policy.ts';
+import { evaluateLocalRadioCallerCandidates } from '../../src/ai/easy-ai.ts';
 
 const context: MatchEngineContext = {
   phrases: gameCatalog.phrases,
@@ -78,7 +83,10 @@ describe('advanced AI ladder policies', () => {
         state.draft!.board.slots.some((slot) => slot.id === card.cardId && slot.role === 'noun'),
       )!;
       const next = reduce(state, {
-        type: 'select-phrase', source: 'ai', actorId: actor, payload: { card: first },
+        type: 'select-phrase',
+        source: 'ai',
+        actorId: actor,
+        payload: { card: first },
       });
       // These assertions follow the rules, not this seeded deal: the opening
       // phrase starts the construction without carrying intent, and the AI must
@@ -92,13 +100,17 @@ describe('advanced AI ladder policies', () => {
       expect(decision.command.type).not.toBe('expire-turn');
       if (decision.command.type === 'select-phrase') {
         const outcome = reduce(next, decision.command);
-        expect(outcome.draft!.playerStates[actor]!.construction.steps.length)
-          .toBeGreaterThanOrEqual(started.steps.length);
+        expect(
+          outcome.draft!.playerStates[actor]!.construction.steps.length,
+        ).toBeGreaterThanOrEqual(started.steps.length);
       }
     },
   );
 
-  test.each([['Party Strategist', decidePartyStrategist], ['Palace Operator', decidePalaceOperator]] as const)(
+  test.each([
+    ['Party Strategist', decidePartyStrategist],
+    ['Palace Operator', decidePalaceOperator],
+  ] as const)(
     '%s extends a fragment but preserves continuation when its words are blocked',
     (_name, decide) => {
       let state = preparedMatch();
@@ -107,14 +119,21 @@ describe('advanced AI ladder policies', () => {
         state.draft!.board.slots.some((slot) => slot.id === card.cardId && slot.role === 'noun'),
       )!;
       state = reduce(state, {
-        type: 'select-phrase', source: 'ai', actorId: actor, payload: { card: noun },
+        type: 'select-phrase',
+        source: 'ai',
+        actorId: actor,
+        payload: { card: noun },
       });
       state = reduce(state, {
-        type: 'commit-sentence', source: 'ai', actorId: state.activePlayerId, payload: {},
+        type: 'commit-sentence',
+        source: 'ai',
+        actorId: state.activePlayerId,
+        payload: {},
       });
       const continuation = state.draft!.board.slots.find((slot) => slot.role === 'continuation')!;
-      const carry = evaluatePartyStrategistCandidates(state, context)
-        .find(({ targetId }) => targetId === continuation.id)!;
+      const carry = evaluatePartyStrategistCandidates(state, context).find(
+        ({ targetId }) => targetId === continuation.id,
+      )!;
       expect(carry.rawFeatures.deadEnd).toBe(1);
       const progressCommand = decide(state, context)!.command;
       expect(progressCommand.type).toBe('select-phrase');
@@ -125,23 +144,31 @@ describe('advanced AI ladder policies', () => {
       // not asserted here.
       expect(progressed.draft!.playerStates[actor]!.construction.steps.length).toBeGreaterThan(1);
       expect(progressed.draft!.playerStates[actor]!.construction.carryIntent).toBe(false);
-      expect(evaluatePartyStrategistCandidates(progressed, context)
-        .find(({ command }) => command.type === 'commit-sentence')!.rawFeatures.deadEnd).toBe(0);
+      expect(
+        evaluatePartyStrategistCandidates(progressed, context).find(
+          ({ command }) => command.type === 'commit-sentence',
+        )!.rawFeatures.deadEnd,
+      ).toBe(0);
 
       const board = {
         ...state.draft!.board,
         slots: state.draft!.board.slots.map((slot) => ({
-          ...slot, available: slot.id === continuation.id,
+          ...slot,
+          available: slot.id === continuation.id,
         })),
       };
       state = {
-        ...state, board,
+        ...state,
+        board,
         draft: {
-          ...state.draft!, board,
+          ...state.draft!,
+          board,
           playerStates: {
             ...state.draft!.playerStates,
             [actor]: {
-              ...state.draft!.playerStates[actor]!, hand: [], redrawUsed: true,
+              ...state.draft!.playerStates[actor]!,
+              hand: [],
+              redrawUsed: true,
               legalCards: [{ source: 'shared', cardId: continuation.id }],
             },
           },
@@ -149,7 +176,8 @@ describe('advanced AI ladder policies', () => {
       };
       const decision = decide(state, context)!;
       expect(decision.command).toMatchObject({
-        type: 'select-phrase', payload: { card: { cardId: continuation.id } },
+        type: 'select-phrase',
+        payload: { card: { cardId: continuation.id } },
       });
       const carried = reduce(state, decision.command).draft!.playerStates[actor]!.construction;
       expect(carried.carryIntent).toBe(true);
@@ -168,8 +196,9 @@ describe('advanced AI ladder policies', () => {
       };
       const fallback = decide(state, context)!;
       expect(fallback.command.type).toBe('commit-sentence');
-      expect(reduce(state, fallback.command).draft!.playerStates[actor]!.construction.status)
-        .toBe('ended');
+      expect(reduce(state, fallback.command).draft!.playerStates[actor]!.construction.status).toBe(
+        'ended',
+      );
     },
   );
 
@@ -188,10 +217,7 @@ describe('advanced AI ladder policies', () => {
     } as const;
     for (const [name, expected] of Object.entries(partyTerms)) {
       expect(
-        scorePartyStrategistFeatureSet(
-          { ...zeroFeatures, [name]: 1 },
-          neutralPersonality,
-        ),
+        scorePartyStrategistFeatureSet({ ...zeroFeatures, [name]: 1 }, neutralPersonality),
         name,
       ).toBe(expected);
     }
@@ -249,10 +275,7 @@ describe('advanced AI ladder policies', () => {
         { ...zeroFeatures, grammarRisk: 1 },
         personality,
       );
-      const deadEnd = scorePartyStrategistFeatureSet(
-        { ...zeroFeatures, deadEnd: 1 },
-        personality,
-      );
+      const deadEnd = scorePartyStrategistFeatureSet({ ...zeroFeatures, deadEnd: 1 }, personality);
       expect(lethal).toBe(10_000);
       expect(lethalBlock).toBe(8_000);
       expect(lethal).toBeGreaterThan(lethalBlock);
@@ -267,30 +290,16 @@ describe('advanced AI ladder policies', () => {
     expect(personalityMultiplier(1)).toBe(1.2);
     const low = { aggression: 0, denial: 0, risk: 0 };
     const high = { aggression: 1, denial: 1, risk: 1 };
-    expect(
-      scorePartyStrategistFeatureSet(
-        { ...zeroFeatures, weaknessOpportunity: 1 },
-        low,
-      ),
-    ).toBe(1.2 * 0.8);
-    expect(
-      scorePartyStrategistFeatureSet(
-        { ...zeroFeatures, weaknessOpportunity: 1 },
-        high,
-      ),
-    ).toBe(1.2 * 1.2);
-    expect(
-      scorePartyStrategistFeatureSet(
-        { ...zeroFeatures, denial: 1 },
-        high,
-      ),
-    ).toBe(1.2);
-    expect(
-      scorePartyStrategistFeatureSet(
-        { ...zeroFeatures, continuation: 1 },
-        low,
-      ),
-    ).toBe(0.8 * 0.8);
+    expect(scorePartyStrategistFeatureSet({ ...zeroFeatures, weaknessOpportunity: 1 }, low)).toBe(
+      1.2 * 0.8,
+    );
+    expect(scorePartyStrategistFeatureSet({ ...zeroFeatures, weaknessOpportunity: 1 }, high)).toBe(
+      1.2 * 1.2,
+    );
+    expect(scorePartyStrategistFeatureSet({ ...zeroFeatures, denial: 1 }, high)).toBe(1.2);
+    expect(scorePartyStrategistFeatureSet({ ...zeroFeatures, continuation: 1 }, low)).toBe(
+      0.8 * 0.8,
+    );
   });
 
   test('reproduces one-ply Party choices for fixed state and history', () => {
@@ -314,14 +323,11 @@ describe('advanced AI ladder policies', () => {
     expect(first.candidates.length).toBeLessThanOrEqual(palaceBeamWidth);
     expect(first.evaluatedNodes).toBeLessThanOrEqual(palaceNodeLimit);
     expect(
-      first.candidates.every(
-        ({ evaluatedReplies }) => evaluatedReplies <= palaceReplyWidth,
-      ),
+      first.candidates.every(({ evaluatedReplies }) => evaluatedReplies <= palaceReplyWidth),
     ).toBe(true);
     expect(
-      first.candidates.every(
-        ({ principalReply, evaluatedReplies }) =>
-          evaluatedReplies === 0 ? principalReply === null : principalReply !== null,
+      first.candidates.every(({ principalReply, evaluatedReplies }) =>
+        evaluatedReplies === 0 ? principalReply === null : principalReply !== null,
       ),
     ).toBe(true);
 
@@ -343,13 +349,9 @@ describe('advanced AI ladder policies', () => {
       next: (seed) => ({ value: 900 / 901, nextSeed: (seed + 1) >>> 0 }),
     };
     expect(advancedAiDelay('party-strategist', 1, false, low).delayMs).toBe(700);
-    expect(
-      advancedAiDelay('party-strategist', 1, false, partyHigh).delayMs,
-    ).toBe(1_500);
+    expect(advancedAiDelay('party-strategist', 1, false, partyHigh).delayMs).toBe(1_500);
     expect(advancedAiDelay('palace-operator', 1, false, low).delayMs).toBe(900);
-    expect(
-      advancedAiDelay('palace-operator', 1, false, palaceHigh).delayMs,
-    ).toBe(1_800);
+    expect(advancedAiDelay('palace-operator', 1, false, palaceHigh).delayMs).toBe(1_800);
     expect(advancedAiDelay('palace-operator', 1, true, palaceHigh)).toEqual({
       delayMs: 100,
       nextSeed: 1,
@@ -386,8 +388,10 @@ describe('advanced AI ladder policies', () => {
               if (command.type === 'select-comeback') {
                 expect(player.construction.analysis.complete).toBe(true);
               }
-              committedByPlayer.set(player.playerId,
-                (committedByPlayer.get(player.playerId) ?? 0) + 1);
+              committedByPlayer.set(
+                player.playerId,
+                (committedByPlayer.get(player.playerId) ?? 0) + 1,
+              );
             }
             if (command.type === 'select-phrase') {
               const next = createMatchReducer(engineContext)(state, command, seededRandomSource);
@@ -410,12 +414,8 @@ describe('advanced AI ladder policies', () => {
         // workload instead of by this policy test.
         expect(committedByPlayer.get(playerId) ?? 0, playerId).toBeGreaterThan(0);
       }
-      expect(result.maximumPresentationDelayMs).toBeGreaterThanOrEqual(
-        minimumDelay,
-      );
-      expect(result.maximumPresentationDelayMs).toBeLessThanOrEqual(
-        maximumDelay,
-      );
+      expect(result.maximumPresentationDelayMs).toBeGreaterThanOrEqual(minimumDelay);
+      expect(result.maximumPresentationDelayMs).toBeLessThanOrEqual(maximumDelay);
       expect(result.privacyLeaks).toBe(0);
       expect(result.timerOverruns).toBe(0);
     },
@@ -474,33 +474,66 @@ function reduce(state: MatchState, command: MatchCommand): MatchState {
   return result.state;
 }
 
-
-test.each([decidePartyStrategist, decidePalaceOperator])('advanced policy avoids terminal self-knockout', (decide) => {
-  for (const reversed of [false, true]) {
-    const state = selfKnockoutReviewState(reversed);
-    const decision = decide(state, reviewContext)!;
-    expect(reduceReviewState(state, decision.command).playerStates[state.activePlayerId]!.pride).toBe(3);
-  }
-});
+test.each([decidePartyStrategist, decidePalaceOperator])(
+  'advanced policy avoids terminal self-knockout',
+  (decide) => {
+    for (const reversed of [false, true]) {
+      const state = selfKnockoutReviewState(reversed);
+      const decision = decide(state, reviewContext)!;
+      expect(
+        reduceReviewState(state, decision.command).playerStates[state.activePlayerId]!.pride,
+      ).toBe(3);
+    }
+  },
+);
 
 test('scores current carry instead of prior-round continuation', () => {
   let state = preparedReviewState(22);
   const actor = state.activePlayerId;
   const opponent = state.playerOrder.find((id) => id !== actor)!;
   const pick = (card: { source: 'shared' | 'private'; cardId: string }) => {
-    state = reduceReviewState(state, { type: 'select-phrase', source: 'ai', actorId: state.activePlayerId, payload: { card } });
+    state = reduceReviewState(state, {
+      type: 'select-phrase',
+      source: 'ai',
+      actorId: state.activePlayerId,
+      payload: { card },
+    });
   };
   pick(state.draft!.playerStates[actor]!.legalCards[0]!);
   const continuation = state.draft!.playerStates[opponent]!.legalCards.find((card) =>
-    state.draft!.board.slots.some((slot) => slot.id === card.cardId && slot.role === 'continuation'))!;
+    state.draft!.board.slots.some(
+      (slot) => slot.id === card.cardId && slot.role === 'continuation',
+    ),
+  )!;
   pick(continuation);
   const completing = state.draft!.playerStates[actor]!.legalCards.find((card) => {
-    const next = reduceReviewState(state, { type: 'select-phrase', source: 'ai', actorId: actor, payload: { card } });
+    const next = reduceReviewState(state, {
+      type: 'select-phrase',
+      source: 'ai',
+      actorId: actor,
+      payload: { card },
+    });
     return next.draft?.playerStates[actor]?.construction.analysis.complete;
   })!;
   pick(completing);
-  state = { ...state, playerStates: { ...state.playerStates, [actor]: { ...state.playerStates[actor]!, comebackCharge: 60 } },
-    draft: { ...state.draft!, playerStates: { ...state.draft!.playerStates, [actor]: { ...state.draft!.playerStates[actor]!, comebackCharge: 60, availableComebackTiers: ['weak', 'medium', 'strong'] } } } };
+  state = {
+    ...state,
+    playerStates: {
+      ...state.playerStates,
+      [actor]: { ...state.playerStates[actor]!, comebackCharge: 60 },
+    },
+    draft: {
+      ...state.draft!,
+      playerStates: {
+        ...state.draft!.playerStates,
+        [actor]: {
+          ...state.draft!.playerStates[actor]!,
+          comebackCharge: 60,
+          availableComebackTiers: ['weak', 'medium', 'strong'],
+        },
+      },
+    },
+  };
   const construction = state.draft!.playerStates[actor]!.construction;
   const subjectId = construction.analysis.renderedPhrases[0]!.phraseId;
   const relationId = construction.analysis.renderedPhrases.find(
@@ -516,34 +549,79 @@ test('scores current carry instead of prior-round continuation', () => {
   for (const damage of [15, 16]) {
     const boundaryContext = {
       ...reviewContext,
-      phrases: reviewContext.phrases.map((phrase) => phrase.id === relationId
-        ? { ...phrase, customScores: [{ leftNounId: subjectId, score: damage }] }
-        : phrase),
+      phrases: reviewContext.phrases.map((phrase) =>
+        phrase.id === relationId
+          ? { ...phrase, customScores: [{ leftNounId: subjectId, score: damage }] }
+          : phrase,
+      ),
     };
-    const commit = evaluatePartyStrategistCandidates(boundaryState, boundaryContext)
-      .find(({ command }) => command.type === 'commit-sentence')!;
+    const commit = evaluatePartyStrategistCandidates(boundaryState, boundaryContext).find(
+      ({ command }) => command.type === 'commit-sentence',
+    )!;
     expect(commit.rawFeatures.immediateDamage).toBe(damage);
     expect(commit.rawFeatures.continuationBreak).toBe(damage === 16 ? 1 : 0);
     const reducer = createMatchReducer(boundaryContext);
     const committed = reducer(boundaryState, commit.command, seededRandomSource);
     if (!committed.ok) throw new Error(committed.error.code);
-    const resolved = reducer(committed.state, {
-      type: 'resolve-round', source: 'ai', payload: {},
-    }, seededRandomSource);
+    const resolved = reducer(
+      committed.state,
+      {
+        type: 'resolve-round',
+        source: 'ai',
+        payload: {},
+      },
+      seededRandomSource,
+    );
     if (!resolved.ok) throw new Error(resolved.error.code);
-    expect(resolved.state.pendingResolution!.players[opponent]!.continuation.status === 'broken')
-      .toBe(damage === 16);
+    expect(
+      resolved.state.pendingResolution!.players[opponent]!.continuation.status === 'broken',
+    ).toBe(damage === 16);
   }
   expect(state.playerStates[opponent]!.continuation).toBeNull();
   expect(state.draft!.playerStates[opponent]!.construction.carryIntent).toBe(true);
-  const candidate = evaluatePartyStrategistCandidates(state, reviewContext).find(({ command }) => command.type === 'select-comeback')!;
+  const candidate = evaluatePartyStrategistCandidates(state, reviewContext).find(
+    ({ command }) => command.type === 'select-comeback',
+  )!;
   expect(candidate.rawFeatures.immediateDamage).toBeGreaterThanOrEqual(16);
   expect(candidate.rawFeatures.continuationBreak).toBe(1);
-  const resolution = reduceReviewState(reduceReviewState(state, candidate.command), { type: 'resolve-round', source: 'ai', payload: {} });
+  const resolution = reduceReviewState(reduceReviewState(state, candidate.command), {
+    type: 'resolve-round',
+    source: 'ai',
+    payload: {},
+  });
   expect(resolution.pendingResolution!.players[opponent]!.continuation.status).toBe('broken');
-  const withoutCarry = { ...state, playerStates: { ...state.playerStates, [opponent]: { ...state.playerStates[opponent]!, continuation: { steps: state.draft!.playerStates[opponent]!.construction.steps, analysis: state.draft!.playerStates[opponent]!.construction.analysis, publicText: state.draft!.playerStates[opponent]!.construction.previewText } } },
-    draft: { ...state.draft!, playerStates: { ...state.draft!.playerStates, [opponent]: { ...state.draft!.playerStates[opponent]!, construction: { ...state.draft!.playerStates[opponent]!.construction, carryIntent: false } } } } };
-  expect(evaluatePartyStrategistCandidates(withoutCarry, reviewContext).every(({ rawFeatures }) => rawFeatures.continuationBreak === 0)).toBe(true);
+  const withoutCarry = {
+    ...state,
+    playerStates: {
+      ...state.playerStates,
+      [opponent]: {
+        ...state.playerStates[opponent]!,
+        continuation: {
+          steps: state.draft!.playerStates[opponent]!.construction.steps,
+          analysis: state.draft!.playerStates[opponent]!.construction.analysis,
+          publicText: state.draft!.playerStates[opponent]!.construction.previewText,
+        },
+      },
+    },
+    draft: {
+      ...state.draft!,
+      playerStates: {
+        ...state.draft!.playerStates,
+        [opponent]: {
+          ...state.draft!.playerStates[opponent]!,
+          construction: {
+            ...state.draft!.playerStates[opponent]!.construction,
+            carryIntent: false,
+          },
+        },
+      },
+    },
+  };
+  expect(
+    evaluatePartyStrategistCandidates(withoutCarry, reviewContext).every(
+      ({ rawFeatures }) => rawFeatures.continuationBreak === 0,
+    ),
+  ).toBe(true);
 });
 
 test('advanced policies keep the expected utility of a hand refresh', () => {
@@ -551,13 +629,16 @@ test('advanced policies keep the expected utility of a hand refresh', () => {
   // threshold. Its draft features are all zero, so only the carried expected
   // utility gives it a value.
   const state = preparedReviewState(5);
-  const easyRefresh = evaluateLocalRadioCallerCandidates(state, reviewContext)
-    .find(({ command }) => command.type === 'redraw-hand')!;
+  const easyRefresh = evaluateLocalRadioCallerCandidates(state, reviewContext).find(
+    ({ command }) => command.type === 'redraw-hand',
+  )!;
   expect(easyRefresh.utility).toBeGreaterThan(0);
-  const partyRefresh = evaluatePartyStrategistCandidates(state, reviewContext)
-    .find(({ command }) => command.type === 'redraw-hand')!;
-  const personality = gameCatalog.characters.find(({ id }) =>
-    id === state.playerStates[state.activePlayerId]!.characterId)!.aiPersonality;
+  const partyRefresh = evaluatePartyStrategistCandidates(state, reviewContext).find(
+    ({ command }) => command.type === 'redraw-hand',
+  )!;
+  const personality = gameCatalog.characters.find(
+    ({ id }) => id === state.playerStates[state.activePlayerId]!.characterId,
+  )!.aiPersonality;
   expect(partyRefresh.utility).toBeCloseTo(
     scorePartyStrategistFeatureSet(partyRefresh.normalizedFeatures, personality) +
       easyRefresh.utility,

@@ -1,6 +1,6 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import { commands, page } from 'vitest/browser';
-import { GrandTransitionSceneAmbience } from '../../src/components/scene-ambience';
+import { GrandTransitionSceneAmbience } from '../../src/components/scene-ambience.ts';
 import styles from '../../src/styles/match-screen.css?raw';
 
 let style: HTMLStyleElement;
@@ -34,22 +34,25 @@ test.each([
   ['palace-press-hall', '.scene-motion--palace', 'palace-press-sweep'],
   ['influencer-campaign-livestream', '.scene-motion--influencer', 'livestream-reaction-rise'],
   ['civic-cypher-boxing-ring', '.scene-motion--cypher', 'civic-cypher-crowd-bounce'],
-] as const)('renders distinct pointer-inert motion for %s', async (sceneId, selector, animationName) => {
-  const ambience = await mount(sceneId);
-  const motion = ambience.querySelector(selector)!;
-  const shapes = [...motion.children];
-  expect(shapes.length).toBeGreaterThan(0);
-  for (const shape of shapes) {
-    expect(shape).toBeInstanceOf(SVGGraphicsElement);
-    expect(shape.namespaceURI).toBe('http://www.w3.org/2000/svg');
-    const bounds = shape.getBoundingClientRect();
-    expect(bounds.width).toBeGreaterThan(0);
-    expect(bounds.height).toBeGreaterThan(0);
-  }
-  expect(getComputedStyle(motion).animationName).toBe(animationName);
-  expect(ambience.querySelector('svg')?.getAttribute('data-scene-id')).toBe(sceneId);
-  expect(getComputedStyle(ambience).pointerEvents).toBe('none');
-});
+] as const)(
+  'renders distinct pointer-inert motion for %s',
+  async (sceneId, selector, animationName) => {
+    const ambience = await mount(sceneId);
+    const motion = ambience.querySelector(selector)!;
+    const shapes = [...motion.children];
+    expect(shapes.length).toBeGreaterThan(0);
+    for (const shape of shapes) {
+      expect(shape).toBeInstanceOf(SVGGraphicsElement);
+      expect(shape.namespaceURI).toBe('http://www.w3.org/2000/svg');
+      const bounds = shape.getBoundingClientRect();
+      expect(bounds.width).toBeGreaterThan(0);
+      expect(bounds.height).toBeGreaterThan(0);
+    }
+    expect(getComputedStyle(motion).animationName).toBe(animationName);
+    expect(ambience.querySelector('svg')?.getAttribute('data-scene-id')).toBe(sceneId);
+    expect(getComputedStyle(ambience).pointerEvents).toBe('none');
+  },
+);
 
 test.each([
   ['transition-era-television-studio', '.scene-ambience-light'],
@@ -79,7 +82,9 @@ test('uses bounded four-second lamp motion without intercepting controls', async
   const light = ambience.querySelector('.scene-ambience-light')!;
   expect(ambience.querySelectorAll('polygon')).toHaveLength(4);
   expect(getComputedStyle(light).animationDuration).toBe('4s');
-  expect(getComputedStyle(ambience.querySelector('.scene-ambience-light--right')!).animationDelay).toBe('-2s');
+  expect(
+    getComputedStyle(ambience.querySelector('.scene-ambience-light--right')!).animationDelay,
+  ).toBe('-2s');
   expect(getComputedStyle(ambience).pointerEvents).toBe('none');
   expect(ambience.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true');
   const button = document.createElement('button');

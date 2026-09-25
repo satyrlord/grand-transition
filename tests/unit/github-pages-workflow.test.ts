@@ -2,12 +2,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { describe, expect, test } from 'vitest';
 
-const workflowPath = path.resolve(
-  process.cwd(),
-  '.github',
-  'workflows',
-  'deploy-github-pages.yml',
-);
+const workflowPath = path.resolve(process.cwd(), '.github', 'workflows', 'deploy-github-pages.yml');
 
 describe('tester GitHub Pages workflow', () => {
   test('publishes only the current main build', async () => {
@@ -16,14 +11,10 @@ describe('tester GitHub Pages workflow', () => {
     expect(workflow).toMatch(/push:\s*\n\s+branches:\s*\n\s+- main/u);
     expect(workflow).toContain('  workflow_dispatch:');
     expect(workflow).not.toContain('  pull_request:');
-    expect(workflow.match(/if: github\.ref == 'refs\/heads\/main'/gu)).toHaveLength(
-      2,
-    );
+    expect(workflow.match(/if: github\.ref == 'refs\/heads\/main'/gu)).toHaveLength(2);
     expect(workflow).toContain('needs: build');
     expect(workflow).toContain('name: github-pages');
-    expect(workflow).toContain(
-      'url: ${{ steps.deployment.outputs.page_url }}',
-    );
+    expect(workflow).toContain('url: ${{ steps.deployment.outputs.page_url }}');
   });
 
   test('builds only dist and keeps the tester path separate from release mode', async () => {
@@ -38,9 +29,7 @@ describe('tester GitHub Pages workflow', () => {
 
   test('uses the minimum Pages permissions and full action pins', async () => {
     const workflow = await readFile(workflowPath, 'utf8');
-    const actionLines = workflow
-      .split('\n')
-      .filter((line) => /^\s+uses: actions\//u.test(line));
+    const actionLines = workflow.split('\n').filter((line) => /^\s+uses: actions\//u.test(line));
 
     expect(workflow).toMatch(
       /permissions:\s*\n\s+contents: read\s*\n\s+pages: write\s*\n\s+id-token: write/u,

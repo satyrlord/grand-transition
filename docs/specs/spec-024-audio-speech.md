@@ -83,7 +83,7 @@ lighting and other visual effects are not related to audio.
 Each asset has a WAV master and Ogg Vorbis and MP3 runtime variants at 48 kHz.
 The target for music is -16 LUFS integrated, plus or minus 1 LU.
 The true peak of effects is not more than -1 dBFS. No decoded
-sample is more than 0 dBFS. `tools/audio-assets.mjs` does checks of the
+sample is more than 0 dBFS. `tools/audio-assets.ts` does checks of the
 files through pinned FFmpeg, which is only for development.
 
 `audio:build` prepares them.
@@ -169,7 +169,7 @@ Milestone 029 controls Romanian
 voices and localization. Other languages keep silent presentation until their
 approved implementation is available.
 
-`tools/neural-speech-assets.mjs` prepares `public/tts/piper/` and does checks
+`tools/neural-speech-assets.ts` prepares `public/tts/piper/` and does checks
 of it. `speech:build` prepares the package. `speech:validate` runs in the
 build, in asset validation, and in CI. The package is approximately 91 MB. It
 contains the shared model, the configuration, the runtime WASM, and the
@@ -280,7 +280,7 @@ The local GPU package is approximately 353 MB. It uses the compact
 WebGPU entry point of ONNX Runtime Web 1.29.0 and the Asyncify runtime that
 agrees with it. Each model shard is less than 100 MiB.
 
-`tools/kokoro-gpu-assets.mjs` pins the source model, the change to the
+`tools/kokoro-gpu-assets.ts` pins the source model, the change to the
 duration output, the runtime, the voices, the license notices, the full
 inventory, and the hashes.
 `speech:validate`, the build, and CI do checks of the two speech packages.

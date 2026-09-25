@@ -11,7 +11,9 @@ const viewports = [
 
 for (const deviceScaleFactor of [1, 2]) {
   for (const viewport of viewports) {
-    test(`roster crop resolution at ${viewport.width}x${viewport.height}, DPR ${deviceScaleFactor}`, async ({ browser }, testInfo) => {
+    test(`roster crop resolution at ${viewport.width}x${viewport.height}, DPR ${deviceScaleFactor}`, async ({
+      browser,
+    }, testInfo) => {
       const context = await browser.newContext({
         baseURL: testInfo.project.use.baseURL,
         viewport,
@@ -25,21 +27,23 @@ for (const deviceScaleFactor of [1, 2]) {
           await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
         });
         const samples = await page.locator('.roster-headshot').evaluateAll(async (images) =>
-          Promise.all(images.map(async (element) => {
-            const image = element as HTMLImageElement;
-            // A separate image gives physical source pixels, without srcset density correction.
-            const source = new Image();
-            source.src = image.currentSrc;
-            await source.decode();
-            const style = getComputedStyle(image);
-            const activeScale = Number(style.getPropertyValue('--roster-portrait-active-scale'));
-            const drawnWidth = Math.max(image.clientWidth, image.clientHeight) * activeScale;
-            return {
-              source: image.currentSrc,
-              pixels: source.naturalWidth,
-              required: Math.min(960, Math.ceil(drawnWidth * devicePixelRatio)),
-            };
-          })),
+          Promise.all(
+            images.map(async (element) => {
+              const image = element as HTMLImageElement;
+              // A separate image gives physical source pixels, without srcset density correction.
+              const source = new Image();
+              source.src = image.currentSrc;
+              await source.decode();
+              const style = getComputedStyle(image);
+              const activeScale = Number(style.getPropertyValue('--roster-portrait-active-scale'));
+              const drawnWidth = Math.max(image.clientWidth, image.clientHeight) * activeScale;
+              return {
+                source: image.currentSrc,
+                pixels: source.naturalWidth,
+                required: Math.min(960, Math.ceil(drawnWidth * devicePixelRatio)),
+              };
+            }),
+          ),
         );
         await page.locator('.roster-zone').screenshot({ path: testInfo.outputPath('roster.png') });
         expect(samples).toHaveLength(30);

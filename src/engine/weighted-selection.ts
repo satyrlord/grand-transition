@@ -1,4 +1,4 @@
-import type { Phrase } from '../content/schemas';
+import type { Phrase } from '../content/schemas.ts';
 
 export type WeightedPhrase = Readonly<{
   phrase: Phrase;
@@ -17,14 +17,8 @@ export function rarityWeight(phrase: Phrase): number {
 }
 
 /** Selects one candidate for a random value in [0, 1). */
-export function pickWeighted(
-  candidates: readonly WeightedPhrase[],
-  value: number,
-): WeightedPhrase {
-  const totalWeight = candidates.reduce(
-    (total, candidate) => total + candidate.weight,
-    0,
-  );
+export function pickWeighted(candidates: readonly WeightedPhrase[], value: number): WeightedPhrase {
+  const totalWeight = candidates.reduce((total, candidate) => total + candidate.weight, 0);
   let threshold = value * totalWeight;
   for (const candidate of candidates) {
     threshold -= candidate.weight;
@@ -48,8 +42,7 @@ export function preferredConnectors(
   connectors: readonly WeightedPhrase[],
   roll: number,
 ): readonly WeightedPhrase[] {
-  const preferredKinds: readonly string[] =
-    roll < 0.25 ? ['but', 'yet'] : ['and'];
+  const preferredKinds: readonly string[] = roll < 0.25 ? ['but', 'yet'] : ['and'];
   const preferred = connectors.filter((candidate) =>
     preferredKinds.includes(candidate.phrase.connectorKind ?? ''),
   );

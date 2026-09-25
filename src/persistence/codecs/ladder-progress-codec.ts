@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import type { LadderProgress } from '../../engine/ladder';
-import { normalizedJson } from './replay-codec';
-import { deepFreeze, isRecord } from '../../engine/plain-values';
+import type { LadderProgress } from '../../engine/ladder.ts';
+import { normalizedJson } from './replay-codec.ts';
+import { deepFreeze, isRecord } from '../../engine/plain-values.ts';
 
 export const ladderProgressSchemaVersion = 2;
 const legacyNineRungSchemaVersion = 1;
@@ -15,11 +15,11 @@ export type LadderProgressCodecFailure = Readonly<{
 
 export type LadderProgressCodecResult =
   | Readonly<{
-    ok: true;
-    value: LadderProgress;
-    /** Present when the bytes used the nine-rung version 1 shape. */
-    migratedFrom?: typeof legacyNineRungSchemaVersion;
-  }>
+      ok: true;
+      value: LadderProgress;
+      /** Present when the bytes used the nine-rung version 1 shape. */
+      migratedFrom?: typeof legacyNineRungSchemaVersion;
+    }>
   | LadderProgressCodecFailure;
 
 const identifier = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u);
@@ -54,11 +54,7 @@ type ProgressShape = Readonly<{
   completed: boolean;
 }>;
 
-function refineProgress(
-  value: ProgressShape,
-  context: z.RefinementCtx,
-  rungCount: number,
-): void {
+function refineProgress(value: ProgressShape, context: z.RefinementCtx, rungCount: number): void {
   if (value.opponentIds.includes(value.selectedCharacterId)) {
     context.addIssue({
       code: 'custom',
@@ -115,8 +111,7 @@ const legacyNineRungSchema = z
     ...progressFields(uniqueIdentifiers.length(legacyRungCount), uniqueIdentifiers),
   })
   .strict()
-  .superRefine((value, context) =>
-    refineProgress(value, context, legacyRungCount));
+  .superRefine((value, context) => refineProgress(value, context, legacyRungCount));
 
 const fields = new Set([
   'schemaVersion',
@@ -139,9 +134,7 @@ export function encodeLadderProgress(progress: LadderProgress): string {
   return normalizedJson(parsed.value);
 }
 
-export function decodeLadderProgress(
-  serialized: string,
-): LadderProgressCodecResult {
+export function decodeLadderProgress(serialized: string): LadderProgressCodecResult {
   let value: unknown;
   try {
     value = JSON.parse(serialized);
@@ -186,9 +179,7 @@ function parse(value: unknown): LadderProgressCodecResult {
  * kept rung keeps its opponent and its scene. A player past the new last rung
  * has completed the ladder.
  */
-function migrateNineRungProgress(
-  value: Record<string, unknown>,
-): LadderProgressCodecResult {
+function migrateNineRungProgress(value: Record<string, unknown>): LadderProgressCodecResult {
   const unknown = Object.keys(value).find((field) => !fields.has(field));
   if (unknown) return invalid(unknown);
   const parsed = legacyNineRungSchema.safeParse(value);
@@ -207,9 +198,7 @@ function migrateNineRungProgress(
     completed,
     ...(unfinishedAttempts && !completed ? { unfinishedAttempts } : {}),
   });
-  return migrated.ok
-    ? { ...migrated, migratedFrom: legacyNineRungSchemaVersion }
-    : migrated;
+  return migrated.ok ? { ...migrated, migratedFrom: legacyNineRungSchemaVersion } : migrated;
 }
 
 function invalid(pathValue: string): LadderProgressCodecFailure {

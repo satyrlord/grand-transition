@@ -68,7 +68,7 @@ Translated text must not go into locale-neutral rules.
 - `RandomSource.next` receives one seed.
   It gives one value in the half-open range from 0 to a value less than 1, and the next unsigned 32-bit seed.
 - A versioned codec gives a typed success or a typed failure.
-  Only a browser `StoragePort` adapter can call Web Storage.
+  Only a browser storage adapter can call Web Storage or IndexedDB.
 - A speech request contains text, a BCP 47 language, and an optional rate, pitch, and volume.
   The port gives the availability, tells if it accepted the request, and lets the caller cancel the request.
 

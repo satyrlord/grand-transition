@@ -1,12 +1,8 @@
 import * as fc from 'fast-check';
 import { describe, expect, test } from 'vitest';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import {
-  englishGameLocale,
-  romanianGameLocale,
-  gameCatalog,
-} from '../../src/game-content';
-import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
+import { englishGameLocale, romanianGameLocale, gameCatalog } from '../../src/game-content.ts';
+import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation.ts';
 import {
   decodeMatchLog,
   decodeReplay,
@@ -20,15 +16,15 @@ import {
   storeMatchLogImport,
   storeReplayImport,
   type ReplayContext,
-} from '../../src/persistence/codecs/replay-codec';
+} from '../../src/persistence/codecs/replay-codec.ts';
 import {
   createMatchHistoryEntry,
   decodeMatchHistory,
   encodeMatchHistory,
   matchHistoryKind,
   matchHistorySchemaVersion,
-} from '../../src/persistence/match-history';
-import type { StoragePort } from '../../src/persistence/storage-port';
+} from '../../src/persistence/match-history.ts';
+import type { StoragePort } from '../../src/persistence/storage-port.ts';
 
 const seed = 20_260_917;
 
@@ -108,7 +104,11 @@ describe('Romanian replay, match-log, and history records', () => {
   });
 
   test('keeps the English catalog fixtures valid under the new version', () => {
-    const english = simulateMatch(seed, createSimulationSetup(gameCatalog, { gameLocale: 'en' }), englishContext);
+    const english = simulateMatch(
+      seed,
+      createSimulationSetup(gameCatalog, { gameLocale: 'en' }),
+      englishContext,
+    );
     expect(english.replay.setup.gameLocale).toBe('en');
     const replayed = replayMatch(english.replayBytes, englishContext);
     expect(replayed.ok).toBe(true);
@@ -120,7 +120,11 @@ describe('Romanian replay, match-log, and history records', () => {
       ok: false,
       code: 'invalid-replay',
     });
-    const english = simulateMatch(seed, createSimulationSetup(gameCatalog, { gameLocale: 'en' }), englishContext);
+    const english = simulateMatch(
+      seed,
+      createSimulationSetup(gameCatalog, { gameLocale: 'en' }),
+      englishContext,
+    );
     expect(replayMatch(english.replayBytes, romanianContext)).toEqual({
       ok: false,
       code: 'invalid-replay',
@@ -275,12 +279,7 @@ describe('Romanian replay, match-log, and history records', () => {
     };
     const storage = memoryStorage();
     expect(
-      storeMatchLogImport(
-        encodeMatchLog(changed),
-        romanianContext,
-        storage.port,
-        'match-log',
-      ),
+      storeMatchLogImport(encodeMatchLog(changed), romanianContext, storage.port, 'match-log'),
     ).toEqual({ ok: false, code: 'invalid-replay' });
     expect(storage.writes).toEqual([]);
   });
@@ -294,9 +293,7 @@ describe('Romanian replay, match-log, and history records', () => {
       'replay',
     );
     expect(result.ok).toBe(true);
-    expect(storage.writes).toEqual([
-      { key: 'replay', value: romanianCompleted.replayBytes },
-    ]);
+    expect(storage.writes).toEqual([{ key: 'replay', value: romanianCompleted.replayBytes }]);
   });
 
   test('rejects a version 1 document that carries no game locale', () => {
@@ -391,9 +388,7 @@ describe('Romanian replay, match-log, and history records', () => {
         );
         expect(match.finalState.phase).toBe('results');
         const replayed = replayMatch(match.replayBytes, romanianContext);
-        expect(replayed).toEqual(
-          expect.objectContaining({ ok: true, state: match.finalState }),
-        );
+        expect(replayed).toEqual(expect.objectContaining({ ok: true, state: match.finalState }));
         expect(match.replay.kind).toBe(replayKind);
         expect(match.matchLog.kind).toBe(matchLogKind);
       }),

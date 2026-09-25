@@ -1,147 +1,283 @@
-import { lockInSetup } from './helpers/setup';
+import { lockInSetup } from './helpers/setup.ts';
 import { expect, test, type Page } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
-import type { MatchState } from '../src/engine/match-lifecycle';
-import { englishGrammarAdapter, prepareEnglishGrammarPhrase } from '../src/engine/grammar/english-grammar-adapter';
-import { loadGameContent } from '../tools/load-game-content';
-import { defaultSettings } from '../src/persistence/codecs/settings-codec';
-import { useFixedBrowserMatchSeed } from './helpers/match-flow';
+import type { MatchState } from '../src/engine/match-lifecycle.ts';
+import {
+  englishGrammarAdapter,
+  prepareEnglishGrammarPhrase,
+} from '../src/engine/grammar/english-grammar-adapter.ts';
+import { loadGameContent } from '../tools/load-game-content.ts';
+import { defaultSettings } from '../src/persistence/codecs/settings-codec.ts';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 
 const { gameCatalog, englishGameLocale } = loadGameContent();
-type Choice = { character: string; skin: number; neural: string; microsoft?: 'David' | 'Mark' | 'Zira' };
-type Evidence = { native: Array<{ text: string; name: string; local: boolean;
-  submitted: number; started?: number; ended?: number; boundaries: Array<{ charIndex: number; at: number }> }>;
-  neural: Array<{ voiceId: string; segments: string[] }>; voices: Array<{ name: string; local: boolean }> };
+type Choice = {
+  character: string;
+  skin: number;
+  neural: string;
+  microsoft?: 'David' | 'Mark' | 'Zira';
+};
+type Evidence = {
+  native: Array<{
+    text: string;
+    name: string;
+    local: boolean;
+    submitted: number;
+    started?: number;
+    ended?: number;
+    boundaries: Array<{ charIndex: number; at: number }>;
+  }>;
+  neural: Array<{ voiceId: string; segments: string[] }>;
+  voices: Array<{ name: string; local: boolean }>;
+};
 
-async function configure(page: Page, choices: readonly Choice[], phraseIds: readonly string[] = ['common-noun-036', 'common-predicate-015-present']) {
+async function configure(
+  page: Page,
+  choices: readonly Choice[],
+  phraseIds: readonly string[] = ['common-noun-036', 'common-predicate-015-present'],
+) {
   await useFixedBrowserMatchSeed(page, 20260823);
-  await page.addInitScript((settings) => {
-    localStorage.setItem('grand-transition.settings.v1', JSON.stringify({ ...settings, turnTimerSeconds: null, musicVolume: 0, effectsVolume: 0 }));
-    const evidence: Evidence = { native: [], neural: [], voices: [] };
-    Object.assign(window, { skinSpeechEvidence: evidence });
-    if (typeof SpeechSynthesis === 'function') {
-      const speak = SpeechSynthesis.prototype.speak.bind(speechSynthesis);
-      SpeechSynthesis.prototype.speak = function (utterance) {
-        const delivery: Evidence['native'][number] = { text: utterance.text, name: utterance.voice?.name ?? '',
-          local: utterance.voice?.localService ?? false, submitted: performance.now(), boundaries: [] };
-        evidence.native.push(delivery);
-        utterance.addEventListener('start', () => { delivery.started = performance.now(); });
-        utterance.addEventListener('end', () => { delivery.ended = performance.now(); });
-        utterance.addEventListener('boundary', (event) => {
-          if (event.name === 'word') delivery.boundaries.push({ charIndex: event.charIndex, at: performance.now() });
-        });
-        speak(utterance);
-      };
-    }
-    const NativeWorker = Worker;
-    window.Worker = class extends NativeWorker {
-      override postMessage(message: unknown, options?: Transferable[] | StructuredSerializeOptions) {
-        const command = message as { type: string; voiceId: string; segments: string[] };
-        if (command.type === 'synthesize') evidence.neural.push({ voiceId: command.voiceId, segments: [...command.segments] });
-        if (Array.isArray(options)) super.postMessage(message, options); else super.postMessage(message, options);
+  await page.addInitScript(
+    (settings) => {
+      localStorage.setItem(
+        'grand-transition.settings.v1',
+        JSON.stringify({ ...settings, turnTimerSeconds: null, musicVolume: 0, effectsVolume: 0 }),
+      );
+      const evidence: Evidence = { native: [], neural: [], voices: [] };
+      Object.assign(window, { skinSpeechEvidence: evidence });
+      if (typeof SpeechSynthesis === 'function') {
+        const speak = SpeechSynthesis.prototype.speak.bind(speechSynthesis);
+        SpeechSynthesis.prototype.speak = function (utterance) {
+          const delivery: Evidence['native'][number] = {
+            text: utterance.text,
+            name: utterance.voice?.name ?? '',
+            local: utterance.voice?.localService ?? false,
+            submitted: performance.now(),
+            boundaries: [],
+          };
+          evidence.native.push(delivery);
+          utterance.addEventListener('start', () => {
+            delivery.started = performance.now();
+          });
+          utterance.addEventListener('end', () => {
+            delivery.ended = performance.now();
+          });
+          utterance.addEventListener('boundary', (event) => {
+            if (event.name === 'word')
+              delivery.boundaries.push({ charIndex: event.charIndex, at: performance.now() });
+          });
+          speak(utterance);
+        };
       }
-    };
-  }, { ...defaultSettings, interfaceLocale: 'en', gameLocale: 'en', gpuVoices: false });
+      const NativeWorker = Worker;
+      window.Worker = class extends NativeWorker {
+        override postMessage(
+          message: unknown,
+          options?: Transferable[] | StructuredSerializeOptions,
+        ) {
+          const command = message as { type: string; voiceId: string; segments: string[] };
+          if (command.type === 'synthesize')
+            evidence.neural.push({ voiceId: command.voiceId, segments: [...command.segments] });
+          if (Array.isArray(options)) super.postMessage(message, options);
+          else super.postMessage(message, options);
+        }
+      };
+    },
+    { ...defaultSettings, interfaceLocale: 'en', gameLocale: 'en', gpuVoices: false },
+  );
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await page.getByLabel('Speech enabled').check();
-  await expect.poll(() => page.evaluate(() => (document.querySelector('grand-transition-app') as unknown as {
-    speech: { status: string };
-  }).speech.status), { timeout: 60_000 }).toBe('ready');
+  await expect
+    .poll(
+      () =>
+        page.evaluate(
+          () =>
+            (
+              document.querySelector('grand-transition-app') as unknown as {
+                speech: { status: string };
+              }
+            ).speech.status,
+        ),
+      { timeout: 60_000 },
+    )
+    .toBe('ready');
   await page.getByRole('button', { name: 'Close', exact: true }).click();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   for (const [index, choice] of choices.entries()) {
     if (index === 1) await page.getByTestId('lock-player-one').click();
     const id = index === 0 ? '#playerOneCharacterId' : '#playerTwoCharacterId';
     await page.locator(id).click();
-    await page.locator(`.roster-choice[data-character-id="${choice.character}"][data-skin-id="default"]`).click();
-    for (let skin = 1; skin < choice.skin; skin++) await page.locator(id).click({ button: 'right' });
+    await page
+      .locator(`.roster-choice[data-character-id="${choice.character}"][data-skin-id="default"]`)
+      .click();
+    for (let skin = 1; skin < choice.skin; skin++)
+      await page.locator(id).click({ button: 'right' });
   }
   await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
-  const state = await page.evaluate(() => (document.querySelector('grand-transition-app') as unknown as { matchState: MatchState }).matchState);
+  const state = await page.evaluate(
+    () =>
+      (document.querySelector('grand-transition-app') as unknown as { matchState: MatchState })
+        .matchState,
+  );
   const players = { ...state.draft!.playerStates };
   for (const id of state.playerOrder) {
     const player = players[id]!;
-    const phrases = phraseIds.map((phraseId) => gameCatalog.phrases.find((phrase) => phrase.id === phraseId)!);
-    const steps = phrases.map((phrase) => ({ kind: 'phrase' as const, phrase: prepareEnglishGrammarPhrase(phrase, englishGameLocale) }));
-    const analyzed = englishGrammarAdapter.analyze({ steps, subjectNumber: player.subjectNumber, objectNumber: player.objectNumber });
+    const phrases = phraseIds.map((phraseId) =>
+      gameCatalog.phrases.find((phrase) => phrase.id === phraseId)!,
+    );
+    const steps = phrases.map((phrase) => ({
+      kind: 'phrase' as const,
+      phrase: prepareEnglishGrammarPhrase(phrase, englishGameLocale),
+    }));
+    const analyzed = englishGrammarAdapter.analyze({
+      steps,
+      subjectNumber: player.subjectNumber,
+      objectNumber: player.objectNumber,
+    });
     if (!analyzed.accepted) throw new Error('The public speech fixture is not grammatical.');
-    players[id] = { ...player, construction: { ...player.construction, steps, analysis: analyzed.analysis,
-      previewText: analyzed.analysis.publicText, requiredRoles: analyzed.analysis.nextRoles,
-      selectedCards: phrases.map((phrase) => ({ phraseId: phrase.id, source: 'restored' as const })),
-    } };
+    players[id] = {
+      ...player,
+      construction: {
+        ...player.construction,
+        steps,
+        analysis: analyzed.analysis,
+        previewText: analyzed.analysis.publicText,
+        requiredRoles: analyzed.analysis.nextRoles,
+        selectedCards: phrases.map((phrase) => ({
+          phraseId: phrase.id,
+          source: 'restored' as const,
+        })),
+      },
+    };
   }
-  await page.evaluate((serialized) => {
-    const app = document.querySelector('grand-transition-app') as unknown as { matchState: MatchState };
-    app.matchState = JSON.parse(serialized) as MatchState;
-    (window as unknown as { skinSpeechEvidence: Evidence }).skinSpeechEvidence.voices =
-      typeof speechSynthesis === 'object' ? speechSynthesis.getVoices().map((voice) => ({ name: voice.name, local: voice.localService })) : [];
-  }, JSON.stringify({ ...state, draft: { ...state.draft!, playerStates: players } }));
+  await page.evaluate(
+    (serialized) => {
+      const app = document.querySelector('grand-transition-app') as unknown as {
+        matchState: MatchState;
+      };
+      app.matchState = JSON.parse(serialized) as MatchState;
+      (window as unknown as { skinSpeechEvidence: Evidence }).skinSpeechEvidence.voices =
+        typeof speechSynthesis === 'object'
+          ? speechSynthesis
+              .getVoices()
+              .map((voice) => ({ name: voice.name, local: voice.localService }))
+          : [];
+    },
+    JSON.stringify({ ...state, draft: { ...state.draft!, playerStates: players } }),
+  );
 }
 
-test('Piper streams both public clauses with exact phrase markers and one completion per speaker', async ({ page }, info) => {
+test('Piper streams both public clauses with exact phrase markers and one completion per speaker', async ({
+  page,
+}, info) => {
   test.setTimeout(120_000);
-  await configure(page, [
-    { character:'red-folded-chairman', skin:2, neural:'vctk-p225' },
-    { character:'thunder-tribune', skin:1, neural:'vctk-p226' },
-  ], ['common-noun-036', 'common-predicate-015-present', 'common-conjunction-002', 'common-noun-001', 'common-predicate-010-present']);
-  await page.getByRole('button', { name:'End', exact:true }).click();
-  await page.getByRole('button', { name:'End', exact:true }).click();
-  await expect(page.getByRole('heading', { name:/Round 2/u })).toBeVisible({ timeout:90_000 });
+  await configure(
+    page,
+    [
+      { character: 'red-folded-chairman', skin: 2, neural: 'vctk-p225' },
+      { character: 'thunder-tribune', skin: 1, neural: 'vctk-p226' },
+    ],
+    [
+      'common-noun-036',
+      'common-predicate-015-present',
+      'common-conjunction-002',
+      'common-noun-001',
+      'common-predicate-010-present',
+    ],
+  );
+  await page.getByRole('button', { name: 'End', exact: true }).click();
+  await page.getByRole('button', { name: 'End', exact: true }).click();
+  await expect(page.getByRole('heading', { name: /Round 2/u })).toBeVisible({ timeout: 90_000 });
   const evidence = await page.evaluate(() => {
     const app = document.querySelector('grand-transition-app') as unknown as {
-      speechDiagnostics: { snapshot(): import('../src/audio/speech-diagnostics').SpeechDiagnosticsDocument };
+      speechDiagnostics: {
+        snapshot(): import('../src/audio/speech-diagnostics.ts').SpeechDiagnosticsDocument;
+      };
     };
-    return { speech:(window as unknown as {skinSpeechEvidence:Evidence}).skinSpeechEvidence,
-      diagnostics:app.speechDiagnostics.snapshot() };
+    return {
+      speech: (window as unknown as { skinSpeechEvidence: Evidence }).skinSpeechEvidence,
+      diagnostics: app.speechDiagnostics.snapshot(),
+    };
   });
   expect(evidence.speech.native).toHaveLength(0);
-  expect(evidence.speech.neural.map(call => call.voiceId)).toEqual(['vctk-p226','vctk-p226','vctk-p225','vctk-p225']);
+  expect(evidence.speech.neural.map((call) => call.voiceId)).toEqual([
+    'vctk-p226',
+    'vctk-p226',
+    'vctk-p225',
+    'vctk-p225',
+  ]);
   expect(evidence.speech.neural[1]!.segments[0]!.trim().toLowerCase()).toBe('but');
-  for (const speakerId of ['player-one','player-two']) {
-    const events = evidence.diagnostics.events.filter(event => event.speakerId === speakerId);
-    expect(events.filter(event => event.type === 'segment').map(event => event.segment)).toEqual([0,1,2,3,4]);
-    expect(events.filter(event => event.type === 'pcm-ready')).toHaveLength(2);
-    expect(events.filter(event => event.type === 'playback-start')).toHaveLength(1);
-    expect(events.filter(event => event.type === 'playback-end')).toHaveLength(1);
+  for (const speakerId of ['player-one', 'player-two']) {
+    const events = evidence.diagnostics.events.filter((event) => event.speakerId === speakerId);
+    expect(
+      events.filter((event) => event.type === 'segment').map((event) => event.segment),
+    ).toEqual([0, 1, 2, 3, 4]);
+    expect(events.filter((event) => event.type === 'pcm-ready')).toHaveLength(2);
+    expect(events.filter((event) => event.type === 'playback-start')).toHaveLength(1);
+    expect(events.filter((event) => event.type === 'playback-end')).toHaveLength(1);
     if (speakerId === 'player-two') {
-      expect(events.findIndex(event => event.type === 'playback-start'))
-        .toBeLessThan(events.findLastIndex(event => event.type === 'pcm-ready'));
+      expect(events.findIndex((event) => event.type === 'playback-start')).toBeLessThan(
+        events.findLastIndex((event) => event.type === 'pcm-ready'),
+      );
     }
-    expect(events.some(event => event.type === 'fallback' || event.type === 'error')).toBe(false);
+    expect(events.some((event) => event.type === 'fallback' || event.type === 'error')).toBe(false);
   }
-  await writeFile(info.outputPath('chunked-piper.json'), JSON.stringify(evidence,null,2));
+  await writeFile(info.outputPath('chunked-piper.json'), JSON.stringify(evidence, null, 2));
 });
 
 for (const scenario of [
-  { name: 'male and female human skins use British Piper voices', choices: [
-    { character: 'red-folded-chairman', skin: 2, neural: 'vctk-p225' },
-    { character: 'thunder-tribune', skin: 1, neural: 'vctk-p226' },
-  ] },
-  { name: 'Robot 1 and Robot 2 use local David and Mark when installed', choices: [
-    { character: 'government-ai', skin: 1, neural: 'vctk-p226', microsoft: 'David' },
-    { character: 'government-ai', skin: 2, neural: 'vctk-p226', microsoft: 'Mark' },
-  ] },
-  { name: 'the schoolteacher robot uses local Zira when installed', choices: [
-    { character: 'government-ai', skin: 3, neural: 'vctk-p225', microsoft: 'Zira' },
-    { character: 'thunder-tribune', skin: 1, neural: 'vctk-p226' },
-  ] },
+  {
+    name: 'male and female human skins use British Piper voices',
+    choices: [
+      { character: 'red-folded-chairman', skin: 2, neural: 'vctk-p225' },
+      { character: 'thunder-tribune', skin: 1, neural: 'vctk-p226' },
+    ],
+  },
+  {
+    name: 'Robot 1 and Robot 2 use local David and Mark when installed',
+    choices: [
+      { character: 'government-ai', skin: 1, neural: 'vctk-p226', microsoft: 'David' },
+      { character: 'government-ai', skin: 2, neural: 'vctk-p226', microsoft: 'Mark' },
+    ],
+  },
+  {
+    name: 'the schoolteacher robot uses local Zira when installed',
+    choices: [
+      { character: 'government-ai', skin: 3, neural: 'vctk-p225', microsoft: 'Zira' },
+      { character: 'thunder-tribune', skin: 1, neural: 'vctk-p226' },
+    ],
+  },
 ] satisfies Array<{ name: string; choices: Choice[] }>) {
   test(scenario.name, async ({ page }, info) => {
-    test.setTimeout(150_000); await page.setViewportSize({ width: 1280, height: 720 });
-    const errors: string[] = []; page.on('pageerror', (error) => errors.push(error.message));
+    test.setTimeout(150_000);
+    await page.setViewportSize({ width: 1280, height: 720 });
+    const errors: string[] = [];
+    page.on('pageerror', (error) => errors.push(error.message));
     await configure(page, scenario.choices);
-    const before = await page.evaluate(() => (window as unknown as { skinSpeechEvidence: Evidence }).skinSpeechEvidence);
-    expect(before.native).toHaveLength(0); expect(before.neural).toHaveLength(0);
+    const before = await page.evaluate(
+      () => (window as unknown as { skinSpeechEvidence: Evidence }).skinSpeechEvidence,
+    );
+    expect(before.native).toHaveLength(0);
+    expect(before.neural).toHaveLength(0);
     await page.getByRole('button', { name: 'End', exact: true }).click();
     await page.getByRole('button', { name: 'End', exact: true }).click();
     await expect(page.getByRole('heading', { name: /Round 2/u })).toBeVisible({ timeout: 110_000 });
-    const evidence = await page.evaluate(() => (window as unknown as { skinSpeechEvidence: Evidence }).skinSpeechEvidence);
-    const nativeExpected: string[] = []; const neuralExpected: string[] = [];
+    const evidence = await page.evaluate(
+      () => (window as unknown as { skinSpeechEvidence: Evidence }).skinSpeechEvidence,
+    );
+    const nativeExpected: string[] = [];
+    const neuralExpected: string[] = [];
     for (const choice of [...scenario.choices].reverse()) {
-      const native = choice.microsoft && before.voices.find((voice) => voice.local && new RegExp(`^Microsoft ${choice.microsoft}\\b`, 'u').test(voice.name));
-      if (native) nativeExpected.push(native.name); else neuralExpected.push(choice.neural);
+      const native =
+        choice.microsoft &&
+        before.voices.find(
+          (voice) =>
+            voice.local && new RegExp(`^Microsoft ${choice.microsoft}\\b`, 'u').test(voice.name),
+        );
+      if (native) nativeExpected.push(native.name);
+      else neuralExpected.push(choice.neural);
     }
     expect(evidence.native.map(({ name }) => name)).toEqual(nativeExpected);
     expect(evidence.native.every(({ local }) => local)).toBe(true);

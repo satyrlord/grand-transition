@@ -31,20 +31,44 @@ export default defineConfig(({ command }) => ({
     },
   },
   optimizeDeps: { exclude: ['phonemizer', 'onnxruntime-web'] },
-  worker: { format: 'es', plugins: () => [neuralPhonemizerPlugin(), omitFallbackSpeechWasmPlugin()] },
+  worker: {
+    format: 'es',
+    plugins: () => [neuralPhonemizerPlugin(), omitFallbackSpeechWasmPlugin()],
+  },
   build: {
     rolldownOptions: {
       output: {
         codeSplitting: {
           groups: [
-            { name: 'replay-codecs', test: /[/\\]src[/\\]persistence[/\\]codecs[/\\]replay-codec\.ts$/u },
-            { name: 'ladder-runtime', test: /[/\\]src[/\\](?:engine[/\\]ladder|persistence[/\\](?:ladder-progress|codecs[/\\]ladder-progress-codec))\.ts$/u },
-            { name: 'common-phrase-data', test: /[/\\]src[/\\]content[/\\]common-phrase-cards\.json$/u },
+            {
+              name: 'replay-codecs',
+              test: /[/\\]src[/\\]persistence[/\\]codecs[/\\]replay-codec\.ts$/u,
+            },
+            {
+              name: 'ladder-runtime',
+              test: /[/\\]src[/\\](?:engine[/\\]ladder|persistence[/\\](?:ladder-progress|codecs[/\\]ladder-progress-codec))\.ts$/u,
+            },
+            {
+              name: 'common-phrase-data',
+              test: /[/\\]src[/\\]content[/\\]common-phrase-cards\.json$/u,
+            },
             { name: 'character-phrase-data', test: /[/\\]src[/\\]content[/\\]characters[/\\]/u },
-            { name: 'content-data', test: /[/\\]src[/\\]content[/\\](?!common-phrase-cards\.json|characters[/\\]).*\.json$/u },
-            { name: 'character-state-data', test: /[/\\]src[/\\]assets[/\\]characters[/\\]states[/\\]state-manifest\.json$/u },
-            { name: 'character-state-urls', test: /[/\\]src[/\\]assets[/\\]characters[/\\]states[/\\]variants[/\\]/u },
-            { name: 'scene-data', test: /[/\\]src[/\\]assets[/\\]scenes[/\\]scene-manifest\.json$/u },
+            {
+              name: 'content-data',
+              test: /[/\\]src[/\\]content[/\\](?!common-phrase-cards\.json|characters[/\\]).*\.json$/u,
+            },
+            {
+              name: 'character-state-data',
+              test: /[/\\]src[/\\]assets[/\\]characters[/\\]states[/\\]state-manifest\.json$/u,
+            },
+            {
+              name: 'character-state-urls',
+              test: /[/\\]src[/\\]assets[/\\]characters[/\\]states[/\\]variants[/\\]/u,
+            },
+            {
+              name: 'scene-data',
+              test: /[/\\]src[/\\]assets[/\\]scenes[/\\]scene-manifest\.json$/u,
+            },
             { name: 'vendor', test: /[/\\]node_modules[/\\]/u, priority: 1 },
           ],
         },
@@ -62,13 +86,23 @@ export default defineConfig(({ command }) => ({
         const modulePath = 'node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.asyncify.mjs';
         server.middlewares.use((request, response, next) => {
           const url = new URL(request.url ?? '/', 'http://localhost');
-          if (![`${server.config.base}${modulePath}`, `/${modulePath}`].includes(url.pathname) ||
-            url.searchParams.has('url') || !['GET', 'HEAD'].includes(request.method ?? '')) { next(); return; }
-          void readFile(new URL(import.meta.resolve('onnxruntime-web/ort-wasm-simd-threaded.asyncify.mjs'))).then((bytes) => {
-            response.setHeader('Content-Type', 'text/javascript');
-            response.setHeader('Content-Length', bytes.length);
-            response.end(request.method === 'HEAD' ? undefined : bytes);
-          }).catch(next);
+          if (
+            ![`${server.config.base}${modulePath}`, `/${modulePath}`].includes(url.pathname) ||
+            url.searchParams.has('url') ||
+            !['GET', 'HEAD'].includes(request.method ?? '')
+          ) {
+            next();
+            return;
+          }
+          void readFile(
+            new URL(import.meta.resolve('onnxruntime-web/ort-wasm-simd-threaded.asyncify.mjs')),
+          )
+            .then((bytes) => {
+              response.setHeader('Content-Type', 'text/javascript');
+              response.setHeader('Content-Length', bytes.length);
+              response.end(request.method === 'HEAD' ? undefined : bytes);
+            })
+            .catch(next);
         });
       },
     },
@@ -76,12 +110,22 @@ export default defineConfig(({ command }) => ({
       name: 'brand-image-preloads',
       transformIndexHtml: {
         order: 'pre',
-        handler: () => brandManifest.assets.filter(({ id }) => id !== 'politburo-portrait-frame').map((asset) => ({
-          tag: 'link',
-          attrs: { rel: 'preload', as: 'image', type: 'image/avif', fetchpriority: 'high',
-            href: '/src/assets/brand/' + asset.variants.find(({ format }) => format === 'avif')!.path },
-          injectTo: 'head' as const,
-        })),
+        handler: () =>
+          brandManifest.assets
+            .filter(({ id }) => id !== 'politburo-portrait-frame')
+            .map((asset) => ({
+              tag: 'link',
+              attrs: {
+                rel: 'preload',
+                as: 'image',
+                type: 'image/avif',
+                fetchpriority: 'high',
+                href:
+                  '/src/assets/brand/' +
+                  asset.variants.find(({ format }) => format === 'avif')!.path,
+              },
+              injectTo: 'head' as const,
+            })),
       },
     },
     characterPortraitFallbackPlugin(),
@@ -129,10 +173,8 @@ export function omitFallbackSpeechWasmPlugin(): Plugin {
   };
 }
 
-const characterPortraitFallbackId =
-  'virtual:character-portrait-fallbacks';
-const resolvedCharacterPortraitFallbackId =
-  `\0${characterPortraitFallbackId}`;
+const characterPortraitFallbackId = 'virtual:character-portrait-fallbacks';
+const resolvedCharacterPortraitFallbackId = `\0${characterPortraitFallbackId}`;
 
 export function characterPortraitFallbackPlugin(): Plugin {
   let projectRoot = process.cwd();
@@ -142,35 +184,23 @@ export function characterPortraitFallbackPlugin(): Plugin {
       projectRoot = config.root;
     },
     resolveId(id) {
-      return id === characterPortraitFallbackId
-        ? resolvedCharacterPortraitFallbackId
-        : undefined;
+      return id === characterPortraitFallbackId ? resolvedCharacterPortraitFallbackId : undefined;
     },
     async load(id) {
       if (id !== resolvedCharacterPortraitFallbackId) return undefined;
-      const characterRoot = path.join(
-        projectRoot,
-        'src',
-        'assets',
-        'characters',
-      );
+      const characterRoot = path.join(projectRoot, 'src', 'assets', 'characters');
       const manifest = JSON.parse(
-        await readFile(
-          path.join(characterRoot, 'character-manifest.json'),
-          'utf8',
-        ),
+        await readFile(path.join(characterRoot, 'character-manifest.json'), 'utf8'),
       ) as { assets: Array<{ source: { path: string } }> };
-      const manifestedFiles = new Set(
-        manifest.assets.map((asset) => asset.source.path),
-      );
-      const fallbackFiles = (await readdir(characterRoot, {
-        withFileTypes: true,
-      }))
+      const manifestedFiles = new Set(manifest.assets.map((asset) => asset.source.path));
+      const fallbackFiles = (
+        await readdir(characterRoot, {
+          withFileTypes: true,
+        })
+      )
         .filter(
           (entry) =>
-            entry.isFile() &&
-            entry.name.endsWith('.png') &&
-            !manifestedFiles.has(entry.name),
+            entry.isFile() && entry.name.endsWith('.png') && !manifestedFiles.has(entry.name),
         )
         .map((entry) => entry.name)
         .toSorted((left, right) => left.localeCompare(right, 'en'));
@@ -179,8 +209,7 @@ export function characterPortraitFallbackPlugin(): Plugin {
         return `import portrait${index} from ${JSON.stringify(`${absolutePath}?url&no-inline`)};`;
       });
       const entries = fallbackFiles.map(
-        (fileName, index) =>
-          `${JSON.stringify(path.parse(fileName).name)}: portrait${index}`,
+        (fileName, index) => `${JSON.stringify(path.parse(fileName).name)}: portrait${index}`,
       );
       return `${imports.join('\n')}\nexport default Object.freeze({${entries.join(',')}});\n`;
     },
@@ -209,9 +238,7 @@ function developmentGameLogPlugin(): Plugin {
           response.end('Origin is not allowed.');
           return;
         }
-        if (
-          !request.headers['content-type']?.startsWith('application/x-ndjson')
-        ) {
+        if (!request.headers['content-type']?.startsWith('application/x-ndjson')) {
           response.statusCode = 415;
           response.end('Content type must be application/x-ndjson.');
           return;
@@ -229,11 +256,7 @@ function developmentGameLogPlugin(): Plugin {
         } catch (error) {
           response.statusCode = 400;
           response.setHeader('content-type', 'text/plain; charset=utf-8');
-          response.end(
-            error instanceof Error
-              ? error.message
-              : 'Could not write game log.',
-          );
+          response.end(error instanceof Error ? error.message : 'Could not write game log.');
         }
       });
     },

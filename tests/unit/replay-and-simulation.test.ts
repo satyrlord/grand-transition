@@ -1,18 +1,18 @@
 import * as fc from 'fast-check';
 import { describe, expect, test } from 'vitest';
-import { fullQualityGateRequested } from '../../tools/quality-gate-mode';
+import { fullQualityGateRequested } from '../../tools/quality-gate-mode.ts';
 import {
   basicScoringBalance,
   scoringBalanceForMultiplier,
-} from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, romanianGameLocale, gameCatalog } from '../../src/game-content';
-import type { DraftCommand } from '../../src/engine/draft-actions';
+} from '../../src/content/basic-scoring-balance.ts';
+import { englishGameLocale, romanianGameLocale, gameCatalog } from '../../src/game-content.ts';
+import type { DraftCommand } from '../../src/engine/draft-actions.ts';
 import {
   createMatchReducer,
   type MatchEngineContext,
   type MatchState,
-} from '../../src/engine/match-lifecycle';
-import { seededRandomSource } from '../../src/engine/random-source';
+} from '../../src/engine/match-lifecycle.ts';
+import { seededRandomSource } from '../../src/engine/random-source.ts';
 import {
   createSimulationSetup,
   encodeSimulationReport,
@@ -20,7 +20,7 @@ import {
   simulateMatch,
   simulateMatches,
   summarizeSimulation,
-} from '../../src/simulation/simulation';
+} from '../../src/simulation/simulation.ts';
 import {
   createMatchLog,
   createReplayInitialState,
@@ -38,8 +38,8 @@ import {
   type MatchLogDocument,
   type ReplayContext,
   type ReplayDocument,
-} from '../../src/persistence/codecs/replay-codec';
-import type { StoragePort } from '../../src/persistence/storage-port';
+} from '../../src/persistence/codecs/replay-codec.ts';
+import type { StoragePort } from '../../src/persistence/storage-port.ts';
 
 const context: ReplayContext = {
   catalog: gameCatalog,
@@ -60,26 +60,46 @@ describe('replay and local match-log codecs', () => {
     context,
   );
 
-  test.each([1, 2, 3, 4, 5] as const)('captures multiplier %s and replays independently of the current balance', (multiplier) => {
-    const match = simulateMatch(20_260_823,
-      { ...createSimulationSetup(gameCatalog, { gameLocale: 'en' }), basePointsMultiplier: multiplier }, context);
-    expect(match.replay.setup.basePointsMultiplier).toBe(multiplier);
-    expect(match.matchLog.setup.basePointsMultiplier).toBe(multiplier);
-    const replayed = replayMatch(match.replayBytes, { ...context, balance: scoringBalanceForMultiplier(5) });
-    expect(replayed.ok).toBe(true);
-    if (replayed.ok) expect(replayed.state).toEqual(match.finalState);
-  });
+  test.each([1, 2, 3, 4, 5] as const)(
+    'captures multiplier %s and replays independently of the current balance',
+    (multiplier) => {
+      const match = simulateMatch(
+        20_260_823,
+        {
+          ...createSimulationSetup(gameCatalog, { gameLocale: 'en' }),
+          basePointsMultiplier: multiplier,
+        },
+        context,
+      );
+      expect(match.replay.setup.basePointsMultiplier).toBe(multiplier);
+      expect(match.matchLog.setup.basePointsMultiplier).toBe(multiplier);
+      const replayed = replayMatch(match.replayBytes, {
+        ...context,
+        balance: scoringBalanceForMultiplier(5),
+      });
+      expect(replayed.ok).toBe(true);
+      if (replayed.ok) expect(replayed.state).toEqual(match.finalState);
+    },
+  );
 
-  test.each([undefined, 0, 6, 1.5, '3'])('rejects an invalid captured multiplier %s', (multiplier) => {
-    for (const [document, decode] of [
-      [completed.replay, decodeReplay], [completed.matchLog, decodeMatchLog],
-    ] as const) {
-      expect(decode(normalizedJson({
-        ...document,
-        setup: { ...document.setup, basePointsMultiplier: multiplier },
-      }))).toEqual({ ok: false, code: 'invalid-replay' });
-    }
-  });
+  test.each([undefined, 0, 6, 1.5, '3'])(
+    'rejects an invalid captured multiplier %s',
+    (multiplier) => {
+      for (const [document, decode] of [
+        [completed.replay, decodeReplay],
+        [completed.matchLog, decodeMatchLog],
+      ] as const) {
+        expect(
+          decode(
+            normalizedJson({
+              ...document,
+              setup: { ...document.setup, basePointsMultiplier: multiplier },
+            }),
+          ),
+        ).toEqual({ ok: false, code: 'invalid-replay' });
+      }
+    },
+  );
 
   test('normalizes, decodes, re-encodes, and reproduces an exact final state', () => {
     const decoded = decodeReplay(completed.replayBytes);
@@ -149,9 +169,7 @@ describe('replay and local match-log codecs', () => {
   });
 
   test('fails safely when a replay command references a missing catalog card', () => {
-    const selection = completed.replay.commands.find(
-      (command) => command.type === 'select-phrase',
-    );
+    const selection = completed.replay.commands.find((command) => command.type === 'select-phrase');
     expect(selection?.type).toBe('select-phrase');
     if (!selection || selection.type !== 'select-phrase') return;
     const staleReplay: ReplayDocument = {
@@ -211,39 +229,24 @@ describe('replay and local match-log codecs', () => {
 
   test.each([
     ['invalid-json', '{'],
-    [
-      'wrong-document',
-      normalizedJson({ ...completed.replay, kind: matchLogKind }),
-    ],
-    [
-      'invalid-replay',
-      normalizedJson({ ...completed.replay, commands: undefined }),
-    ],
+    ['wrong-document', normalizedJson({ ...completed.replay, kind: matchLogKind })],
+    ['invalid-replay', normalizedJson({ ...completed.replay, commands: undefined })],
     [
       'unsupported-version',
       normalizedJson({ ...completed.replay, schemaVersion: replaySchemaVersion + 1 }),
     ],
-  ] as const)(
-    'rejects replay fixture %s before a write or match result',
-    (code, bytes) => {
-      const storage = recordingStorage();
-      const result = storeReplayImport(bytes, context, storage.port, 'replay');
-      expect(result).toEqual({ ok: false, code });
-      expect(storage.writes).toEqual([]);
-      expect('state' in result).toBe(false);
-    },
-  );
+  ] as const)('rejects replay fixture %s before a write or match result', (code, bytes) => {
+    const storage = recordingStorage();
+    const result = storeReplayImport(bytes, context, storage.port, 'replay');
+    expect(result).toEqual({ ok: false, code });
+    expect(storage.writes).toEqual([]);
+    expect('state' in result).toBe(false);
+  });
 
   test.each([
     ['invalid-json', '{'],
-    [
-      'wrong-document',
-      normalizedJson({ ...completed.matchLog, kind: replayKind }),
-    ],
-    [
-      'invalid-replay',
-      normalizedJson({ ...completed.matchLog, rounds: undefined }),
-    ],
+    ['wrong-document', normalizedJson({ ...completed.matchLog, kind: replayKind })],
+    ['invalid-replay', normalizedJson({ ...completed.matchLog, rounds: undefined })],
     [
       'unsupported-version',
       normalizedJson({ ...completed.matchLog, schemaVersion: replaySchemaVersion + 1 }),
@@ -277,14 +280,10 @@ describe('replay and local match-log codecs', () => {
     };
     const storage = recordingStorage();
 
-    expect(
-      storeMatchLogImport(
-        normalizedJson(stale),
-        context,
-        storage.port,
-        'match-log',
-      ),
-    ).toEqual({ ok: false, code: 'invalid-replay' });
+    expect(storeMatchLogImport(normalizedJson(stale), context, storage.port, 'match-log')).toEqual({
+      ok: false,
+      code: 'invalid-replay',
+    });
     expect(storage.writes).toEqual([]);
   });
 
@@ -344,9 +343,7 @@ describe('replay and local match-log codecs', () => {
     ).toEqual({ ok: false, code: 'invalid-replay' });
 
     expect(
-      decodeMatchLog(
-        normalizedJson({ ...completed.matchLog, winner: 'unknown-player' }),
-      ),
+      decodeMatchLog(normalizedJson({ ...completed.matchLog, winner: 'unknown-player' })),
     ).toEqual({ ok: false, code: 'invalid-replay' });
   });
 
@@ -378,47 +375,23 @@ describe('replay and local match-log codecs', () => {
 
   test('writes only fully validated normalized documents and reports storage failure', () => {
     const storage = recordingStorage();
-    const replayed = storeReplayImport(
-      completed.replayBytes,
-      context,
-      storage.port,
-      'replay',
-    );
+    const replayed = storeReplayImport(completed.replayBytes, context, storage.port, 'replay');
     expect(replayed.ok).toBe(true);
-    expect(storage.writes).toEqual([
-      { key: 'replay', value: completed.replayBytes },
-    ]);
+    expect(storage.writes).toEqual([{ key: 'replay', value: completed.replayBytes }]);
 
     const logStorage = recordingStorage();
     expect(
-      storeMatchLogImport(
-        completed.matchLogBytes,
-        context,
-        logStorage.port,
-        'match-log',
-      )
-        .ok,
+      storeMatchLogImport(completed.matchLogBytes, context, logStorage.port, 'match-log').ok,
     ).toBe(true);
-    expect(logStorage.writes).toEqual([
-      { key: 'match-log', value: completed.matchLogBytes },
-    ]);
+    expect(logStorage.writes).toEqual([{ key: 'match-log', value: completed.matchLogBytes }]);
 
     const disabled = recordingStorage('storage-disabled');
+    expect(storeReplayImport(completed.replayBytes, context, disabled.port, 'replay')).toEqual({
+      ok: false,
+      code: 'storage-disabled',
+    });
     expect(
-      storeReplayImport(
-        completed.replayBytes,
-        context,
-        disabled.port,
-        'replay',
-      ),
-    ).toEqual({ ok: false, code: 'storage-disabled' });
-    expect(
-      storeMatchLogImport(
-        completed.matchLogBytes,
-        context,
-        disabled.port,
-        'match-log',
-      ),
+      storeMatchLogImport(completed.matchLogBytes, context, disabled.port, 'match-log'),
     ).toEqual({ ok: false, code: 'storage-disabled' });
   });
 
@@ -427,9 +400,7 @@ describe('replay and local match-log codecs', () => {
     const selectedIds = new Set(
       completed.replay.commands.flatMap((command) => {
         if (!('actorId' in command) || !('card' in command.payload)) return [];
-        return command.payload.card.source === 'private'
-          ? [command.payload.card.cardId]
-          : [];
+        return command.payload.card.source === 'private' ? [command.payload.card.cardId] : [];
       }),
     );
     const unselected = privateCards.filter((card) => !selectedIds.has(card.id));
@@ -438,16 +409,12 @@ describe('replay and local match-log codecs', () => {
         sentence.phrases.map((phrase) => phrase.phraseId),
       ),
     );
-    const privateOnly = unselected.filter(
-      (card) => !publicPhraseIds.has(card.phraseId),
-    );
+    const privateOnly = unselected.filter((card) => !publicPhraseIds.has(card.phraseId));
     const replayStrings = collectStrings(JSON.parse(completed.replayBytes));
     const logStrings = collectStrings(JSON.parse(completed.matchLogBytes));
     expect(privateOnly.length).toBeGreaterThan(0);
     for (const card of privateOnly) {
-      const phrase = gameCatalog.phrases.find(
-        (candidate) => candidate.id === card.phraseId,
-      )!;
+      const phrase = gameCatalog.phrases.find((candidate) => candidate.id === card.phraseId)!;
       const phraseText = englishGameLocale.messages[phrase.textKey]!;
       expect(completed.replayBytes).not.toContain(card.id);
       expect(completed.matchLogBytes).not.toContain(card.id);
@@ -456,41 +423,32 @@ describe('replay and local match-log codecs', () => {
       expect(replayStrings).not.toContain(phraseText);
       expect(logStrings).not.toContain(phraseText);
     }
-    expect(completed.matchLogBytes).not.toMatch(
-      /browser|machine|timestamp|userAgent/iu,
-    );
+    expect(completed.matchLogBytes).not.toMatch(/browser|machine|timestamp|userAgent/iu);
   });
 
   test('requires a completed match before creating a local log', () => {
     const initial = createReplayInitialState(completed.replay, context)!;
-    expect(() => createMatchLog(completed.replay, initial)).toThrow(
-      'completed match',
-    );
+    expect(() => createMatchLog(completed.replay, initial)).toThrow('completed match');
   });
 });
 
 describe('headless simulation and generated invariants', () => {
   const setup = createSimulationSetup(gameCatalog, { gameLocale: 'en' });
 
-  test.each([0, 0xffff_ffff])(
-    'accepts boundary seed %s and repeats every byte',
-    (seed) => {
-      const first = simulateMatch(seed, setup, context);
-      const second = simulateMatch(seed, setup, context);
-      expect(second.replayBytes).toBe(first.replayBytes);
-      expect(second.matchLogBytes).toBe(first.matchLogBytes);
-      expect(second.finalState).toEqual(first.finalState);
-    },
-  );
+  test.each([0, 0xffff_ffff])('accepts boundary seed %s and repeats every byte', (seed) => {
+    const first = simulateMatch(seed, setup, context);
+    const second = simulateMatch(seed, setup, context);
+    expect(second.replayBytes).toBe(first.replayBytes);
+    expect(second.matchLogBytes).toBe(first.matchLogBytes);
+    expect(second.finalState).toEqual(first.finalState);
+  });
 
   test('repeats aggregate summary and normalized output bytes', () => {
     const first = simulateMatches(0xffff_ffff, 2, setup, context);
     const second = simulateMatches(0xffff_ffff, 2, setup, context);
     expect(summarizeSimulation(second)).toBe(summarizeSimulation(first));
     expect(encodeSimulationReport(second)).toBe(encodeSimulationReport(first));
-    expect(second.results.map((result) => result.seed)).toEqual([
-      0xffff_ffff, 0,
-    ]);
+    expect(second.results.map((result) => result.seed)).toEqual([0xffff_ffff, 0]);
     expect(second.completedMatches).toBe(2);
   });
 
@@ -515,30 +473,18 @@ describe('headless simulation and generated invariants', () => {
   );
 
   test('rejects invalid setup values, counts, and seeds with named facts', () => {
-    expect(() =>
-      createSimulationSetup(gameCatalog, { sceneId: 'missing-scene' }),
-    ).toThrow('scene');
+    expect(() => createSimulationSetup(gameCatalog, { sceneId: 'missing-scene' })).toThrow('scene');
     expect(() =>
       createSimulationSetup(gameCatalog, {
         characterIds: ['missing-character', gameCatalog.characters[0]!.id],
       }),
     ).toThrow('character');
-    expect(() =>
-      createSimulationSetup(gameCatalog, { pride: [-1, 100] }),
-    ).toThrow('Pride');
-    expect(() =>
-      createSimulationSetup(gameCatalog, { charge: [0, 61] }),
-    ).toThrow('charge');
-    expect(() => simulateMatches(0, 0, setup, context)).toThrow(
-      'positive integer',
-    );
+    expect(() => createSimulationSetup(gameCatalog, { pride: [-1, 100] })).toThrow('Pride');
+    expect(() => createSimulationSetup(gameCatalog, { charge: [0, 61] })).toThrow('charge');
+    expect(() => simulateMatches(0, 0, setup, context)).toThrow('positive integer');
     expect(() => simulateMatch(-1, setup, context)).toThrow('unsigned 32-bit');
-    expect(() => simulateMatch(0x1_0000_0000, setup, context)).toThrow(
-      'unsigned 32-bit',
-    );
-    expect(() =>
-      simulateMatch(72, { ...setup, sceneId: 'missing-scene' }, context),
-    ).toThrow(
+    expect(() => simulateMatch(0x1_0000_0000, setup, context)).toThrow('unsigned 32-bit');
+    expect(() => simulateMatch(72, { ...setup, sceneId: 'missing-scene' }, context)).toThrow(
       'The setup is invalid. Seed: 72. Replay path: replays/simulation-72.json.',
     );
   });
@@ -568,9 +514,7 @@ describe('headless simulation and generated invariants', () => {
     expect(options[0]!.utility).toBeGreaterThan(0);
 
     const completed = simulateMatch(40, setup, context);
-    expect(listSimulationOptions(completed.finalState, engineContext)).toEqual(
-      [],
-    );
+    expect(listSimulationOptions(completed.finalState, engineContext)).toEqual([]);
   });
 
   test('rejects wrong ownership without changing state, Pride, charge, or history', () => {
@@ -584,11 +528,7 @@ describe('headless simulation and generated invariants', () => {
     let state = createReplayInitialState(replay, context)!;
     const reducer = createMatchReducer(engineContext);
     for (const type of ['start-match', 'prepare-round'] as const) {
-      const result = reducer(
-        state,
-        { type, source: 'ai', payload: {} },
-        seededRandomSource,
-      );
+      const result = reducer(state, { type, source: 'ai', payload: {} }, seededRandomSource);
       if (!result.ok) throw new Error(result.error.code);
       state = result.state;
     }
@@ -629,9 +569,7 @@ describe('headless simulation and generated invariants', () => {
           const result = simulateMatch(seed, setup, context);
           expect(result.finalState.phase).toBe('results');
           expect(result.finalState.winner).toBeTruthy();
-          expect(result.finalState.commandHistory).toEqual(
-            result.replay.commands,
-          );
+          expect(result.finalState.commandHistory).toEqual(result.replay.commands);
           for (const player of Object.values(result.finalState.playerStates)) {
             expect(player.pride).toBeGreaterThanOrEqual(0);
             expect(player.pride).toBeLessThanOrEqual(100);
@@ -665,9 +603,7 @@ function recordingStorage(failureCode?: string): Readonly<{
       read: () => ({ ok: true, value: null }),
       write: (key, value) => {
         writes.push({ key, value });
-        return failureCode
-          ? { ok: false, code: failureCode }
-          : { ok: true, value: undefined };
+        return failureCode ? { ok: false, code: failureCode } : { ok: true, value: undefined };
       },
       remove: () => ({ ok: true, value: undefined }),
     },
@@ -691,10 +627,7 @@ function collectPrivateCards(replay: ReplayDocument): readonly {
   return [...cards].map(([id, phraseId]) => ({ id, phraseId }));
 }
 
-function collectStateCards(
-  state: MatchState,
-  cards: Map<string, string>,
-): void {
+function collectStateCards(state: MatchState, cards: Map<string, string>): void {
   if (!state.draft) return;
   for (const player of Object.values(state.draft.playerStates)) {
     for (const card of player.hand) cards.set(card.id, card.phraseId);

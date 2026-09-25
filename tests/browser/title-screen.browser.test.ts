@@ -1,24 +1,20 @@
-import { englishGameLocale, gameCatalog } from '../../src/game-content';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation';
-import { createMatchHistoryEntry } from '../../src/persistence/match-history';
+import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
+import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation.ts';
+import { createMatchHistoryEntry } from '../../src/persistence/match-history.ts';
 import { page } from 'vitest/browser';
 import { expect, test, vi } from 'vitest';
-import { registerGrandTransitionTitle } from '../../src/app/screens/title-screen';
-import type { GrandTransitionMatchHistory } from '../../src/app/screens/match-history-modal';
-import type { GrandTransitionApp } from '../../src/app/app-shell';
-import { matchHistoryStorageKey } from '../../src/persistence/match-history';
-import '../../src/main';
+import { registerGrandTransitionTitle } from '../../src/app/screens/title-screen.ts';
+import type { GrandTransitionMatchHistory } from '../../src/app/screens/match-history-modal.ts';
+import type { GrandTransitionApp } from '../../src/app/app-shell.ts';
+import { resetStoredData } from './persistence-test-helpers.ts';
+import '../../src/main.ts';
 
 test('renders the title screen in a real browser', async () => {
   document.body.innerHTML = '<grand-transition-title></grand-transition-title>';
 
-  await expect
-    .element(page.getByRole('heading', { name: 'Grand Transition' }))
-    .toBeVisible();
-  await expect
-    .element(page.getByText('A Verbal Republic', { exact: true }))
-    .toBeVisible();
+  await expect.element(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
+  await expect.element(page.getByText('A Verbal Republic', { exact: true })).toBeVisible();
   await expect
     .element(page.getByText('Live now, on NTV Channel 3!', { exact: true }))
     .toBeVisible();
@@ -36,11 +32,15 @@ test('selects the manifest AVIF emblem and decodes WebP when AVIF is unsupported
   expect(image.getAttribute('height')).toBe('640');
   // The title also prepares the GPU voice model, so the emblem's first resource
   // selection can trail the render. Re-query and allow a real load budget.
-  const loaded = (source: string) => vi.waitFor(() => {
-    const current = document.querySelector<HTMLImageElement>('.title-emblem')!;
-    expect(current.currentSrc).toContain(source);
-    expect(current.complete && current.naturalWidth > 0).toBe(true);
-  }, { timeout: 10_000 });
+  const loaded = (source: string) =>
+    vi.waitFor(
+      () => {
+        const current = document.querySelector<HTMLImageElement>('.title-emblem')!;
+        expect(current.currentSrc).toContain(source);
+        expect(current.complete && current.naturalWidth > 0).toBe(true);
+      },
+      { timeout: 10_000 },
+    );
   await loaded('.avif');
   const picture = image.parentElement!;
   picture.querySelector<HTMLSourceElement>('[type="image/avif"]')!.type = 'image/unsupported-avif';
@@ -78,15 +78,11 @@ test('preserves an existing title-screen registration', async () => {
 
 test('opens an empty title-only history modal and traps keyboard focus', async () => {
   await page.viewport(1280, 720);
-  localStorage.removeItem(matchHistoryStorageKey);
+  await resetStoredData();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;
-  const historyButton = document.querySelector<HTMLButtonElement>(
-    '.title-history-action',
-  )!;
+  const historyButton = document.querySelector<HTMLButtonElement>('.title-history-action')!;
 
   historyButton.click();
   await app.updateComplete;
@@ -109,29 +105,35 @@ test('opens an empty title-only history modal and traps keyboard focus', async (
     }),
   );
   expect(document.activeElement).toBe(list);
-  list.dispatchEvent(
-    new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }),
-  );
+  list.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
   expect(document.activeElement).toBe(close);
 });
 
-
-test.each([['ai', 'Single player'], ['hotseat', 'Hotseat']] as const)('history labels %s without changing stored mode', async (mode, label) => {
+test.each([
+  ['ai', 'Single player'],
+  ['hotseat', 'Hotseat'],
+] as const)('history labels %s without changing stored mode', async (mode, label) => {
   const setup = {
     ...createSimulationSetup(gameCatalog, { gameLocale: 'en' }),
     mode,
     aiDifficulty: mode === 'ai' ? 'local-radio-caller' : null,
   };
   const completed = simulateMatch(20_260_829, setup, {
-    catalog: gameCatalog, locale: englishGameLocale, balance: basicScoringBalance,
+    catalog: gameCatalog,
+    locale: englishGameLocale,
+    balance: basicScoringBalance,
   });
   const entry = createMatchHistoryEntry(completed.finalState, {
-    id: `mode-${mode}`, initialSeed: 20_260_829, completedAt: '2026-09-05T12:00:00.000Z',
+    id: `mode-${mode}`,
+    initialSeed: 20_260_829,
+    completedAt: '2026-09-05T12:00:00.000Z',
     settings: { turnTimerSeconds: 30, autoComplete: true, phraseColorCoding: true },
     gameLocale: 'en',
   });
   document.body.innerHTML = '<grand-transition-match-history></grand-transition-match-history>';
-  const modal = document.querySelector('grand-transition-match-history') as GrandTransitionMatchHistory;
+  const modal = document.querySelector(
+    'grand-transition-match-history',
+  ) as GrandTransitionMatchHistory;
   modal.entries = [entry];
   await modal.updateComplete;
   await expect.element(page.getByText(label, { exact: true })).toBeVisible();

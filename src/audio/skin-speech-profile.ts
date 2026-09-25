@@ -1,10 +1,15 @@
-import type { Character } from '../content/schemas';
-import { defaultGameLocale, type GameLocale } from '../localization/game-locale';
+import type { Character } from '../content/schemas.ts';
+import { defaultGameLocale, type GameLocale } from '../localization/game-locale.ts';
 
 export type SkinSpeechProfile = Readonly<{
   provider: 'neural' | 'microsoft-local';
-  voiceUri: 'piper:vctk-p226' | 'piper:vctk-p225' | 'kokoro:bm_george' | 'kokoro:bf_emma' |
-    'piper:ro_RO-mihai-medium' | 'piper:ro_RO-liana-medium';
+  voiceUri:
+    | 'piper:vctk-p226'
+    | 'piper:vctk-p225'
+    | 'kokoro:bm_george'
+    | 'kokoro:bf_emma'
+    | 'piper:ro_RO-mihai-medium'
+    | 'piper:ro_RO-liana-medium';
   language: 'en-GB' | 'ro-RO';
   pitch: number;
   microsoftVoice?: 'David' | 'Mark' | 'Zira';
@@ -16,7 +21,9 @@ export function skinSpeechProfile(
   mode: 'piper' | 'gpu' = 'piper',
   gameLocale: GameLocale = defaultGameLocale,
 ): SkinSpeechProfile {
-  const voice = character.voiceProfile.skinVoices?.[skinId] ?? character.voiceProfile.skinVoices?.default ??
+  const voice =
+    character.voiceProfile.skinVoices?.[skinId] ??
+    character.voiceProfile.skinVoices?.default ??
     (character.species === 'robot' ? 'david' : 'george');
   const female = voice === 'emma' || voice === 'zira';
   // Romanian game speech uses the shipped Romanian neural voices: the George,
@@ -34,7 +41,14 @@ export function skinSpeechProfile(
   const microsoftVoice = voice === 'zira' ? 'Zira' : voice === 'mark' ? 'Mark' : 'David';
   return Object.freeze({
     provider: character.species === 'robot' ? 'microsoft-local' : 'neural',
-    voiceUri: mode === 'gpu' ? (female ? 'kokoro:bf_emma' : 'kokoro:bm_george') : (female ? 'piper:vctk-p225' : 'piper:vctk-p226'),
+    voiceUri:
+      mode === 'gpu'
+        ? female
+          ? 'kokoro:bf_emma'
+          : 'kokoro:bm_george'
+        : female
+          ? 'piper:vctk-p225'
+          : 'piper:vctk-p226',
     language: 'en-GB',
     pitch: character.voiceProfile.pitch,
     ...(character.species === 'robot' ? { microsoftVoice } : {}),

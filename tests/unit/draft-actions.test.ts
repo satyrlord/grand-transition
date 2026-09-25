@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { englishGameLocale, gameCatalog } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
 import {
   createDraftReducer,
   prepareDraftRound,
@@ -9,19 +9,16 @@ import {
   type DraftEngineContext,
   type DraftRoundPreparationRequest,
   type DraftState,
-} from '../../src/engine/draft-actions';
-import {
-  seededRandomSource,
-  type RandomSource,
-} from '../../src/engine/random-source';
+} from '../../src/engine/draft-actions.ts';
+import { seededRandomSource, type RandomSource } from '../../src/engine/random-source.ts';
 import {
   generatePrivateHand,
   privateHandAvailableCount,
   privateHandCandidateWeight,
   type PrivateHandGenerationResult,
   type PrivateHandGenerationRequest,
-} from '../../src/engine/private-hand-generation';
-import { prepareEnglishGrammarPhrase } from '../../src/engine/grammar/english-grammar-adapter';
+} from '../../src/engine/private-hand-generation.ts';
+import { prepareEnglishGrammarPhrase } from '../../src/engine/grammar/english-grammar-adapter.ts';
 
 const playerIds = ['first-player', 'second-player'] as const;
 const context: DraftEngineContext = {
@@ -69,22 +66,14 @@ function request(charge = 0): DraftRoundPreparationRequest {
 
 function prepared(charge = 0): DraftState {
   const result = prepareDraftRound(request(charge));
-  expect(result.ok, result.ok ? undefined : JSON.stringify(result.error)).toBe(
-    true,
-  );
+  expect(result.ok, result.ok ? undefined : JSON.stringify(result.error)).toBe(true);
   if (!result.ok) throw new Error(result.error.code);
   return result.state;
 }
 
 function run(state: DraftState, command: DraftCommand): DraftState {
-  const result = createDraftReducer(context)(
-    state,
-    command,
-    seededRandomSource,
-  );
-  expect(result.ok, result.ok ? undefined : JSON.stringify(result.error)).toBe(
-    true,
-  );
+  const result = createDraftReducer(context)(state, command, seededRandomSource);
+  expect(result.ok, result.ok ? undefined : JSON.stringify(result.error)).toBe(true);
   if (!result.ok) throw new Error(result.error.code);
   return result.state;
 }
@@ -111,11 +100,7 @@ function withPrivateCard(
   ];
 }
 
-function select(
-  state: DraftState,
-  actorId: string,
-  card: DraftCardReference,
-): DraftState {
+function select(state: DraftState, actorId: string, card: DraftCardReference): DraftState {
   return run(state, {
     type: 'select-phrase',
     source: 'user',
@@ -130,12 +115,7 @@ function selectPrivate(
   phraseId: string,
   suffix: string,
 ): DraftState {
-  const [withCard, reference] = withPrivateCard(
-    state,
-    actorId,
-    phraseId,
-    suffix,
-  );
+  const [withCard, reference] = withPrivateCard(state, actorId, phraseId, suffix);
   return select(withCard, actorId, reference);
 }
 
@@ -144,12 +124,8 @@ function passWithValidCard(state: DraftState, playerId: string): DraftState {
     const phraseId =
       card.source === 'shared'
         ? state.board.slots.find((slot) => slot.id === card.cardId)!.phraseId
-        : state.playerStates[playerId]!.hand.find(
-            (item) => item.id === card.cardId,
-          )!.phraseId;
-    const role = gameCatalog.phrases.find(
-      (phrase) => phrase.id === phraseId,
-    )!.role;
+        : state.playerStates[playerId]!.hand.find((item) => item.id === card.cardId)!.phraseId;
+    const role = gameCatalog.phrases.find((phrase) => phrase.id === phraseId)!.role;
     return role !== 'continuation' && role !== 'ending';
   });
   return select(state, playerId, reference!);
@@ -158,21 +134,14 @@ function passWithValidCard(state: DraftState, playerId: string): DraftState {
 function completeFirst(state = prepared()): DraftState {
   state = selectPrivate(state, playerIds[0], 'common-noun-001', 'subject');
   state = passWithValidCard(state, playerIds[1]);
-  state = selectPrivate(
-    state,
-    playerIds[0],
-    'common-predicate-010-present',
-    'predicate',
-  );
+  state = selectPrivate(state, playerIds[0], 'common-predicate-010-present', 'predicate');
   return state;
 }
 
 describe('Hollywood Roast draft actions', () => {
   test('uses phrase rarity as draw weight and reports an impossible hand', () => {
     expect(
-      privateHandCandidateWeight(
-        gameCatalog.phrases.find((phrase) => phrase.rarity === 'common')!,
-      ),
+      privateHandCandidateWeight(gameCatalog.phrases.find((phrase) => phrase.rarity === 'common')!),
     ).toBe(4);
     expect(
       privateHandCandidateWeight(
@@ -180,9 +149,7 @@ describe('Hollywood Roast draft actions', () => {
       ),
     ).toBe(2);
     expect(
-      privateHandCandidateWeight(
-        gameCatalog.phrases.find((phrase) => phrase.rarity === 'rare')!,
-      ),
+      privateHandCandidateWeight(gameCatalog.phrases.find((phrase) => phrase.rarity === 'rare')!),
     ).toBe(1);
 
     const base = request();
@@ -253,25 +220,14 @@ describe('Hollywood Roast draft actions', () => {
         },
       };
     };
-    const butHand = generatePrivateHand(
-      handRequest,
-      scripted([0.1, 0.1, 0, 0]),
-    );
-    const andHand = generatePrivateHand(
-      handRequest,
-      scripted([0.1, 0.9, 0, 0]),
-    );
-    const boundaryHand = generatePrivateHand(
-      handRequest,
-      scripted([0.1, 0.25, 0, 0]),
-    );
+    const butHand = generatePrivateHand(handRequest, scripted([0.1, 0.1, 0, 0]));
+    const andHand = generatePrivateHand(handRequest, scripted([0.1, 0.9, 0, 0]));
+    const boundaryHand = generatePrivateHand(handRequest, scripted([0.1, 0.25, 0, 0]));
     const connectorKindIn = (result: PrivateHandGenerationResult) => {
       expect(result.ok).toBe(true);
       if (!result.ok) return undefined;
       return result.hand.phraseIds
-        .map((phraseId) =>
-          gameCatalog.phrases.find((phrase) => phrase.id === phraseId),
-        )
+        .map((phraseId) => gameCatalog.phrases.find((phrase) => phrase.id === phraseId))
         .find((phrase) => phrase?.role === 'conjunction')?.connectorKind;
     };
     expect(['but', 'yet']).toContain(connectorKindIn(butHand));
@@ -279,9 +235,7 @@ describe('Hollywood Roast draft actions', () => {
     expect(connectorKindIn(boundaryHand)).toBe('and');
 
     const restrictedPhrase = {
-      ...gameCatalog.phrases.find(
-        (phrase) => phrase.id === 'red-folded-chairman-noun-001',
-      )!,
+      ...gameCatalog.phrases.find((phrase) => phrase.id === 'red-folded-chairman-noun-001')!,
       characterIds: ['red-folded-chairman'],
     };
     const restrictedRequest = {
@@ -304,15 +258,11 @@ describe('Hollywood Roast draft actions', () => {
     expect(state.board.slots).toHaveLength(9);
     expect(state.playerStates[playerIds[0]]!.hand).toHaveLength(2);
     expect(state.playerStates[playerIds[1]]!.hand).toHaveLength(2);
-    expect(
-      new Set(state.board.slots.map((slot) => slot.phraseId)),
-    ).toHaveLength(9);
+    expect(new Set(state.board.slots.map((slot) => slot.phraseId))).toHaveLength(9);
     for (const playerId of playerIds) {
-      expect(
-        new Set(
-          state.playerStates[playerId]!.hand.map((card) => card.phraseId),
-        ),
-      ).toHaveLength(2);
+      expect(new Set(state.playerStates[playerId]!.hand.map((card) => card.phraseId))).toHaveLength(
+        2,
+      );
     }
     const roundPhraseIds = [
       ...playerIds.flatMap((playerId) =>
@@ -361,26 +311,11 @@ describe('Hollywood Roast draft actions', () => {
 
   test('accepts noun and noun as an early conjunction-denial sequence', () => {
     let state = prepared();
-    state = selectPrivate(
-      state,
-      playerIds[0],
-      'common-noun-002',
-      'noun-one',
-    );
+    state = selectPrivate(state, playerIds[0], 'common-noun-002', 'noun-one');
     state = passWithValidCard(state, playerIds[1]);
-    state = selectPrivate(
-      state,
-      playerIds[0],
-      'common-conjunction-001',
-      'common-conjunction-001',
-    );
+    state = selectPrivate(state, playerIds[0], 'common-conjunction-001', 'common-conjunction-001');
     state = passWithValidCard(state, playerIds[1]);
-    state = selectPrivate(
-      state,
-      playerIds[0],
-      'red-folded-chairman-noun-001',
-      'noun-two',
-    );
+    state = selectPrivate(state, playerIds[0], 'red-folded-chairman-noun-001', 'noun-two');
 
     expect(state.playerStates[playerIds[0]]!.construction).toMatchObject({
       grammarMistakes: 0,
@@ -394,35 +329,18 @@ describe('Hollywood Roast draft actions', () => {
 
   test('consumes a wrong card, records one grammar mistake, preserves the sentence, and passes the pick', () => {
     const initial = prepared();
-    const selected = selectPrivate(
-      initial,
-      playerIds[0],
-      'common-modifier-001',
-      'wrong-predicate',
-    );
+    const selected = selectPrivate(initial, playerIds[0], 'common-modifier-001', 'wrong-predicate');
     const construction = selected.playerStates[playerIds[0]]!.construction;
     expect(construction.steps).toEqual([]);
     expect(construction.grammarMistakes).toBe(1);
-    expect(construction.lastGrammarMistakePhraseId).toBe(
-      'common-modifier-001',
-    );
+    expect(construction.lastGrammarMistakePhraseId).toBe('common-modifier-001');
     expect(selected.activePlayerId).toBe(playerIds[1]);
   });
 
   test('accepts a modifier after a complete clause without ending construction', () => {
     let state = completeFirst();
-    state = selectPrivate(
-      state,
-      playerIds[1],
-      'common-noun-002',
-      'other-subject',
-    );
-    state = selectPrivate(
-      state,
-      playerIds[0],
-      'common-modifier-001',
-      'modifier',
-    );
+    state = selectPrivate(state, playerIds[1], 'common-noun-002', 'other-subject');
+    state = selectPrivate(state, playerIds[0], 'common-modifier-001', 'modifier');
 
     expect(state.playerStates[playerIds[0]]!.construction).toMatchObject({
       status: 'building',
@@ -467,12 +385,7 @@ describe('Hollywood Roast draft actions', () => {
   test('a finisher ends a complete sentence as soon as it is selected', () => {
     let state = completeFirst();
     state = passWithValidCard(state, playerIds[1]);
-    state = selectPrivate(
-      state,
-      playerIds[0],
-      'common-ending-001',
-      'finisher',
-    );
+    state = selectPrivate(state, playerIds[0], 'common-ending-001', 'finisher');
     expect(state.playerStates[playerIds[0]]!.construction.status).toBe('ended');
   });
 
@@ -492,9 +405,9 @@ describe('Hollywood Roast draft actions', () => {
     expect(state.playerStates[playerIds[0]]!.construction.previewText).toMatch(
       /\. Your argument is lost in the synergy\.$/u,
     );
-    expect(
-      state.playerStates[playerIds[0]]!.construction.analysis.publicText,
-    ).not.toContain('Your argument got lost in the synergy');
+    expect(state.playerStates[playerIds[0]]!.construction.analysis.publicText).not.toContain(
+      'Your argument got lost in the synergy',
+    );
     expect(state.playerStates[playerIds[0]]!.comebackCharge).toBe(0);
   });
 
@@ -516,12 +429,8 @@ describe('Hollywood Roast draft actions', () => {
         (card) => !reservedPhraseIds.has(card.phraseId),
       ),
     ).toBe(true);
-    expect(redrawn.reservedPhraseIds).toHaveLength(
-      initial.reservedPhraseIds.length + 2,
-    );
-    expect(
-      createDraftReducer(context)(redrawn, redrawCommand, seededRandomSource),
-    ).toMatchObject({
+    expect(redrawn.reservedPhraseIds).toHaveLength(initial.reservedPhraseIds.length + 2);
+    expect(createDraftReducer(context)(redrawn, redrawCommand, seededRandomSource)).toMatchObject({
       ok: false,
       error: { code: 'redraw-already-used' },
     });
@@ -536,9 +445,7 @@ describe('Hollywood Roast draft actions', () => {
     });
     expect(state.activePlayerId).toBe(playerIds[1]);
     expect(state.playerStates[playerIds[0]]!.timeoutDamage).toBe(0);
-    expect(state.playerStates[playerIds[0]]!.construction.status).toBe(
-      'building',
-    );
+    expect(state.playerStates[playerIds[0]]!.construction.status).toBe('building');
   });
 
   test('timeouts after the opponent ends deal 3, 6, 12, and 24', () => {
@@ -557,12 +464,7 @@ describe('Hollywood Roast draft actions', () => {
   });
 
   test('opponent snapshots hide the hand but expose its accepted public text', () => {
-    const state = selectPrivate(
-      prepared(),
-      playerIds[0],
-      'common-noun-001',
-      'public-subject',
-    );
+    const state = selectPrivate(prepared(), playerIds[0], 'common-noun-001', 'public-subject');
     const snapshot = snapshotDraftStateForPlayer(state, playerIds[1]);
     expect(snapshot.players[playerIds[0]]!.hand).toEqual({ count: 2 });
     expect(snapshot.players[playerIds[0]]!.legalCards).toEqual([]);
@@ -586,9 +488,7 @@ describe('Hollywood Roast draft actions', () => {
     });
     expect(restored.ok).toBe(true);
     if (restored.ok) {
-      expect(
-        restored.state.playerStates[playerIds[0]]!.construction.steps,
-      ).toEqual(carry.steps);
+      expect(restored.state.playerStates[playerIds[0]]!.construction.steps).toEqual(carry.steps);
     }
 
     expect(() =>
@@ -692,10 +592,7 @@ describe('Hollywood Roast draft actions', () => {
       expect(state).toEqual(before);
     }
 
-    const completed = passWithValidCard(
-      completeFirst(prepared()),
-      playerIds[1],
-    );
+    const completed = passWithValidCard(completeFirst(prepared()), playerIds[1]);
     const unaffordable = reduce(
       completed,
       {

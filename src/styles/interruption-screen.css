@@ -20,8 +20,7 @@
     padding: clamp(2rem, 5vw, 5rem);
     overflow: hidden;
     background:
-      linear-gradient(180deg, rgb(5 8 11 / 22%), rgb(5 8 11 / 78%)),
-      var(--interruption-ink);
+      linear-gradient(180deg, rgb(5 8 11 / 22%), rgb(5 8 11 / 78%)), var(--interruption-ink);
     color: var(--interruption-paper);
     font-family: var(--font-interruption-interface);
   }
@@ -293,5 +292,4 @@
       outline-offset: 3px;
     }
   }
-
 }

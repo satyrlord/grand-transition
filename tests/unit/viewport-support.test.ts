@@ -5,7 +5,7 @@ import {
   minimumPortraitViewport,
   minimumSupportedViewport,
   recommendedViewport,
-} from '../../src/app/viewport-support';
+} from '../../src/app/viewport-support.ts';
 
 describe('viewport support', () => {
   test.each([

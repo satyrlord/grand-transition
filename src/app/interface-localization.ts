@@ -3,7 +3,7 @@ import {
   defaultInterfaceLocale,
   documentLanguageFor,
   type InterfaceLocale,
-} from '../localization/interface-locale';
+} from '../localization/interface-locale.ts';
 
 // Lit localization runtime configuration. The interface locale selects the Lit
 // message templates; the game locale stays separate.
@@ -28,9 +28,7 @@ export function interfaceLocale(): InterfaceLocale {
   return locale === 'ro-RO' ? 'ro-RO' : defaultInterfaceLocale;
 }
 
-export async function setInterfaceLocale(
-  locale: InterfaceLocale,
-): Promise<void> {
+export async function setInterfaceLocale(locale: InterfaceLocale): Promise<void> {
   await localization.setLocale(locale);
 }
 

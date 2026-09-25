@@ -1,12 +1,12 @@
-import type { Phrase } from '../../content/schemas';
-import type { GameLocaleBundle } from '../../localization/game-locale-schema';
+import type { Phrase } from '../../content/schemas.ts';
+import type { GameLocaleBundle } from '../../localization/game-locale-schema.ts';
 import {
   romanianNestedObjectAnchorByFamily,
   romanianObjectGovernmentByFamily,
   romanianPersonalObjectByNounId,
   romanianSpecialObjectCaseByFamily,
-} from '../../content/ro/grammar-metadata';
-import type { GrammarAdapter } from './grammar-adapter';
+} from '../../content/ro/grammar-metadata.ts';
+import type { GrammarAdapter } from './grammar-adapter.ts';
 import {
   cachedPreparation,
   grammarAdapter,
@@ -18,7 +18,7 @@ import {
   type GrammarInput,
   type GrammarPhrase,
   type GrammarPhrasePreparation,
-} from './english-grammar-adapter';
+} from './english-grammar-adapter.ts';
 
 // Romanian plays through the shared, locale-agnostic analyzer: the same state
 // machine and the same typed failures as English, with Romanian rendering and
@@ -26,10 +26,7 @@ import {
 export const prepareRomanianGrammarPhrase: GrammarPhrasePreparation =
   cachedPreparation(prepareRomanianText);
 
-function prepareRomanianText(
-  phrase: Phrase,
-  locale: GameLocaleBundle,
-): GrammarPhrase {
+function prepareRomanianText(phrase: Phrase, locale: GameLocaleBundle): GrammarPhrase {
   if (locale.locale !== 'ro-RO') {
     throw new Error('Use the Romanian game-locale bundle with this adapter.');
   }
@@ -70,12 +67,9 @@ export function romanianRenderedForms(
   phrase: Phrase,
   locale: GameLocaleBundle,
 ): ReadonlySet<string> {
-  const texts = new Set(
-    preparedGrammarPhraseForms(prepareRomanianGrammarPhrase(phrase, locale)),
-  );
-  const government = phrase.role === 'verb'
-    ? romanianObjectGovernmentByFamily[phrase.tenseFamily ?? '']
-    : undefined;
+  const texts = new Set(preparedGrammarPhraseForms(prepareRomanianGrammarPhrase(phrase, locale)));
+  const government =
+    phrase.role === 'verb' ? romanianObjectGovernmentByFamily[phrase.tenseFamily ?? ''] : undefined;
   if (government === 'direct' || government === 'nested-direct') {
     for (const text of Array.from(texts)) {
       for (const clitic of Object.keys(cliticForms) as DirectObjectClitic[]) {
@@ -93,8 +87,7 @@ export function romanianRenderedForms(
   }
   if (
     phrase.role === 'verb' &&
-    romanianSpecialObjectCaseByFamily[phrase.tenseFamily ?? ''] ===
-      'contract-indefinite'
+    romanianSpecialObjectCaseByFamily[phrase.tenseFamily ?? ''] === 'contract-indefinite'
   ) {
     for (const text of Array.from(texts)) {
       const preposition = /( în| din)$/u.exec(text)?.[1];
@@ -115,11 +108,7 @@ export function romanianRenderedForms(
   return texts;
 }
 
-export const romanianGrammarAdapter: GrammarAdapter<
-  GrammarInput,
-  GrammarAnalysis,
-  GrammarFault
-> = {
+export const romanianGrammarAdapter: GrammarAdapter<GrammarInput, GrammarAnalysis, GrammarFault> = {
   analyze(input) {
     const result = grammarAdapter.analyze(input);
     if (!result.accepted) return result;
@@ -146,8 +135,9 @@ export const romanianGrammarAdapter: GrammarAdapter<
       const objects = objectIndices.map((objectIndex) => steps[objectIndex]!.phrase);
       if (
         government === 'copular' &&
-        objects.some((candidate) =>
-          candidate.id === 'common-noun-028' || candidate.grammaticalNumber === 'plural',
+        objects.some(
+          (candidate) =>
+            candidate.id === 'common-noun-028' || candidate.grammaticalNumber === 'plural',
         )
       ) {
         // An identifying predicate can control agreement: "Problema sunteți
@@ -161,8 +151,7 @@ export const romanianGrammarAdapter: GrammarAdapter<
       }
       if (
         government === 'preposition' &&
-        romanianSpecialObjectCaseByFamily[relation.tenseFamily ?? ''] ===
-          'contract-indefinite'
+        romanianSpecialObjectCaseByFamily[relation.tenseFamily ?? ''] === 'contract-indefinite'
       ) {
         const nounText = renderedPhrases[index + 1]!.text;
         const article = /^(un|o)\s+/u.exec(nounText)?.[1];
@@ -185,26 +174,25 @@ export const romanianGrammarAdapter: GrammarAdapter<
       const markedClitics = objects
         .map((candidate) => romanianPersonalObjectByNounId[candidate.id]?.clitic)
         .filter((candidate) => candidate != null);
-      const clitic = markedClitics.length > 1
-        ? markedClitics.includes('polite-second')
-          ? 'polite-second'
-          : markedClitics.every((candidate) => candidate === 'feminine-singular')
-            ? 'feminine-plural'
-            : 'masculine-plural'
-        : markedClitics[0];
+      const clitic =
+        markedClitics.length > 1
+          ? markedClitics.includes('polite-second')
+            ? 'polite-second'
+            : markedClitics.every((candidate) => candidate === 'feminine-singular')
+              ? 'feminine-plural'
+              : 'masculine-plural'
+          : markedClitics[0];
       if (clitic) {
         renderedPhrases[index] = {
           ...renderedPhrases[index]!,
-          text: government === 'nested-direct'
-            ? withNestedDirectObjectClitic(
-                renderedPhrases[index]!.text,
-                clitic,
-                romanianNestedObjectAnchorByFamily[relation.tenseFamily ?? '']!,
-              )
-            : withDirectObjectClitic(
-                renderedPhrases[index]!.text,
-                clitic,
-              ),
+          text:
+            government === 'nested-direct'
+              ? withNestedDirectObjectClitic(
+                  renderedPhrases[index]!.text,
+                  clitic,
+                  romanianNestedObjectAnchorByFamily[relation.tenseFamily ?? '']!,
+                )
+              : withDirectObjectClitic(renderedPhrases[index]!.text, clitic),
         };
       }
       for (const objectIndex of objectIndices) {
@@ -221,19 +209,14 @@ export const romanianGrammarAdapter: GrammarAdapter<
       analysis: {
         ...result.analysis,
         renderedPhrases,
-        publicText: renderPublicText(
-          renderedPhrases,
-          result.analysis.punctuation === '.',
-          'ro-RO',
-        ),
+        publicText: renderPublicText(renderedPhrases, result.analysis.punctuation === '.', 'ro-RO'),
       },
     };
   },
 };
 
-type DirectObjectClitic = 'feminine-plural' | NonNullable<
-  (typeof romanianPersonalObjectByNounId)[string]['clitic']
->;
+type DirectObjectClitic =
+  'feminine-plural' | NonNullable<(typeof romanianPersonalObjectByNounId)[string]['clitic']>;
 
 const cliticForms = {
   'polite-second': { long: 'vă', short: 'v' },
@@ -243,10 +226,7 @@ const cliticForms = {
   'feminine-plural': { long: 'le', short: 'le' },
 } as const;
 
-export function withDirectObjectClitic(
-  verbText: string,
-  clitic: DirectObjectClitic,
-): string {
+export function withDirectObjectClitic(verbText: string, clitic: DirectObjectClitic): string {
   const form = cliticForms[clitic];
   const pastAuxiliary = /^(nu\s+)?(ați|au|a)\s+/u.exec(verbText);
   if (pastAuxiliary) {

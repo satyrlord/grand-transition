@@ -5,7 +5,7 @@ import {
   NATIVE_ALPHA_MAX_CONTOUR_DISTANCE,
   NATIVE_ALPHA_MIN_CONTOUR_RATIO,
   NATIVE_ALPHA_MIN_OPACITY,
-} from './asset-pixels.mjs';
+} from './asset-pixels.ts';
 import { createHash } from 'node:crypto';
 import { lstat, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -29,9 +29,20 @@ export const SCENE_MASTER_NAMES = Object.freeze([
   'transition-era-television-studio.png',
   'transition-era-television-studio-desks.png',
 ]);
-import { sceneMasterSize, sceneVariantSizes, SCENE_BYTE_BUDGETS } from './scene-resolution.mjs';
-export { SCENE_VARIANT_SIZES, SCENE_BYTE_BUDGETS } from './scene-resolution.mjs';
-export const SCENE_VARIANT_FORMATS = Object.freeze(['avif', 'webp']);
+import { sceneMasterSize, sceneVariantSizes, SCENE_BYTE_BUDGETS } from './scene-resolution.ts';
+export { SCENE_VARIANT_SIZES, SCENE_BYTE_BUDGETS } from './scene-resolution.ts';
+type SceneFormat = 'avif' | 'webp';
+type NormalizedRect = Readonly<{ x: number; y: number; width: number; height: number }>;
+type AlphaOptions = Readonly<{
+  nativeAlpha?: boolean;
+  transparentRectangles?: readonly Readonly<{ name: string; rectangle: NormalizedRect }>[];
+  occlusionRectangles?: readonly (NormalizedRect & Readonly<{ name: string }>)[];
+}>;
+type AssetRecord = ReturnType<typeof validateAssetShape> & {
+  manifestAsset: { source: { width: number; height: number; bytes: number; sha256: string } };
+};
+export const SCENE_VARIANT_FORMATS: readonly SceneFormat[] = Object.freeze(['avif', 'webp']);
+const isSceneFormat = (value: unknown): value is SceneFormat => value === 'avif' || value === 'webp';
 export const REQUIRED_CROP_STRATEGY =
   'symmetric-horizontal-bleed-to-four-by-three-core';
 
@@ -48,7 +59,7 @@ const REQUIRED_SAFE_RECTANGLES = Object.freeze({
   lowerRightAction: Object.freeze({ x: 0.76, y: 0.66, width: 0.115, height: 0.28 }),
 });
 const REQUIRED_FOREGROUND_CLEAR_RECTANGLES = Object.freeze(
-  ['centralInteraction'].map((name) =>
+  (['centralInteraction'] as const).map((name) =>
     Object.freeze({ name, rectangle: REQUIRED_SAFE_RECTANGLES[name] })),
 );
 const REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES = Object.freeze([
@@ -90,39 +101,39 @@ const expectedFocalRectangleNames = [
 ];
 const hashPattern = /^[a-f0-9]{64}$/u;
 
-function isRecord(value) {
+function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
-function requiredString(value, context) {
+function requiredString(value: unknown, context: string): string {
   if (typeof value !== 'string' || value.trim().length === 0) {
     throw new Error(`${context} must be a non-empty string.`);
   }
   return value;
 }
 
-function requiredNumber(value, context) {
+function requiredNumber(value: unknown, context: string): number {
   if (typeof value !== 'number' || !Number.isFinite(value)) {
     throw new Error(`${context} must be a finite number.`);
   }
   return value;
 }
 
-function requiredInteger(value, context) {
-  if (!Number.isInteger(value) || value < 0) {
+function requiredInteger(value: unknown, context: string): number {
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 0) {
     throw new Error(`${context} must be a non-negative integer.`);
   }
   return value;
 }
 
-function requiredHash(value, context) {
+function requiredHash(value: unknown, context: string): string {
   if (typeof value !== 'string' || !hashPattern.test(value)) {
     throw new Error(`${context} must be a lowercase SHA-256 hash.`);
   }
   return value;
 }
 
-function validateRatio(value, context) {
+function validateRatio(value: unknown, context: string): number {
   const ratio = requiredNumber(value, context);
   if (ratio < 0 || ratio > 1) {
     throw new Error(`${context} must be between 0 and 1.`);
@@ -130,7 +141,7 @@ function validateRatio(value, context) {
   return ratio;
 }
 
-function validateRectangle(value, context) {
+function validateRectangle(value: unknown, context: string): NormalizedRect {
   if (!isRecord(value)) throw new Error(`${context} must be an object.`);
   const x = validateRatio(value.x, `${context}.x`);
   const y = validateRatio(value.y, `${context}.y`);
@@ -145,7 +156,7 @@ function validateRectangle(value, context) {
   return { x, y, width, height };
 }
 
-function validatePoint(value, context) {
+function validatePoint(value: unknown, context: string) {
   if (!isRecord(value)) throw new Error(`${context} must be an object.`);
   return {
     x: validateRatio(value.x, `${context}.x`),
@@ -153,7 +164,7 @@ function validatePoint(value, context) {
   };
 }
 
-function expectedLayer(id) {
+function expectedLayer(id: string) {
   const suffix = ['-desks', '-foreground'].find((candidate) => id.endsWith(candidate));
   const isForeground = suffix !== undefined;
   return {
@@ -163,7 +174,7 @@ function expectedLayer(id) {
   };
 }
 
-function expectedGeometry(id, identity) {
+function expectedGeometry(identity: ReturnType<typeof expectedLayer>) {
   const modern = identity.ownerId === 'modern-debate-studio';
   const hasModerator = modern || identity.ownerId === 'transition-era-television-studio';
   return {
@@ -192,7 +203,7 @@ function expectedGeometry(id, identity) {
   };
 }
 
-function assertExactGeometry(actual, expected, context) {
+function assertExactGeometry(actual: unknown, expected: unknown, context: string): void {
   if (!isDeepStrictEqual(actual, expected)) {
     throw new Error(
       `${context} must match the approved scene geometry: ${JSON.stringify(expected)}.`,
@@ -200,12 +211,12 @@ function assertExactGeometry(actual, expected, context) {
   }
 }
 
-function sha256(input) {
+function sha256(input: Uint8Array): string {
   return createHash('sha256').update(input).digest('hex');
 }
 
-async function readJson(filePath) {
-  let input;
+async function readJson(filePath: string): Promise<unknown> {
+  let input: string;
   try {
     input = await readFile(filePath, 'utf8');
   } catch (error) {
@@ -220,7 +231,7 @@ async function readJson(filePath) {
   }
 }
 
-async function assertFile(filePath, context) {
+async function assertFile(filePath: string, context: string): Promise<void> {
   let fileStats;
   try {
     fileStats = await lstat(filePath);
@@ -232,7 +243,7 @@ async function assertFile(filePath, context) {
   }
 }
 
-async function inspectRaster(filePath, format, width, height, context) {
+async function inspectRaster(filePath: string, format: string, width: number, height: number, context: string) {
   const input = await readFile(filePath);
   let metadata;
   try {
@@ -262,11 +273,11 @@ async function inspectRaster(filePath, format, width, height, context) {
 }
 
 export async function inspectAlpha(
-  input,
-  isForeground,
-  context,
-  { nativeAlpha = false, transparentRectangles = [], occlusionRectangles = [] } = {},
-) {
+  input: Buffer,
+  isForeground: boolean,
+  context: string,
+  { nativeAlpha = false, transparentRectangles = [], occlusionRectangles = [] }: AlphaOptions = {},
+): Promise<void> {
   let decoded;
   try {
     decoded = await sharp(input)
@@ -367,10 +378,10 @@ export async function inspectAlpha(
   }
 }
 
-async function listVariantFiles(variantsRoot) {
+async function listVariantFiles(variantsRoot: string): Promise<string[]> {
   await assertFileOrDirectory(variantsRoot);
-  const files = [];
-  async function walk(directory, relativeDirectory) {
+  const files: string[] = [];
+  async function walk(directory: string, relativeDirectory: string): Promise<void> {
     const entries = await readdir(directory, { withFileTypes: true });
     for (const entry of entries) {
       const entryPath = path.join(directory, entry.name);
@@ -390,7 +401,7 @@ async function listVariantFiles(variantsRoot) {
   return files.sort((left, right) => left.localeCompare(right, 'en'));
 }
 
-async function assertFileOrDirectory(entryPath) {
+async function assertFileOrDirectory(entryPath: string): Promise<void> {
   let entryStats;
   try {
     entryStats = await lstat(entryPath);
@@ -404,7 +415,7 @@ async function assertFileOrDirectory(entryPath) {
   }
 }
 
-async function assertMasterSet(sceneRoot) {
+async function assertMasterSet(sceneRoot: string): Promise<void> {
   const entries = await readdir(sceneRoot, { withFileTypes: true });
   const actual = entries
     .filter((entry) => entry.isFile() && path.extname(entry.name).toLowerCase() === '.png')
@@ -421,14 +432,19 @@ async function assertMasterSet(sceneRoot) {
   }
 }
 
-function assertDeclaredPathIsUnique(declaredPaths, relativePath, context) {
+function assertDeclaredPathIsUnique(declaredPaths: Set<string>, relativePath: string, context: string): void {
   if (declaredPaths.has(relativePath)) {
     throw new Error(`${context} uses duplicate asset path "${relativePath}".`);
   }
   declaredPaths.add(relativePath);
 }
 
-function validateRectangles(value, names, context, nullable) {
+function validateRectangles(
+  value: unknown,
+  names: readonly string[],
+  context: string,
+  nullable: boolean,
+): asserts value is Record<string, unknown> {
   if (!isRecord(value)) throw new Error(`${context} must be an object.`);
   const nullableNames = new Set([
     'moderatorFace',
@@ -449,7 +465,7 @@ function validateRectangles(value, names, context, nullable) {
   }
 }
 
-function validateAssetShape(asset, index, declaredPaths) {
+function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<string>) {
   const context = `Scene manifest asset ${index}`;
   if (!isRecord(asset)) throw new Error(`${context} must be an object.`);
   const id = requiredString(asset.id, `${context} is missing an ID`);
@@ -473,11 +489,12 @@ function validateAssetShape(asset, index, declaredPaths) {
   requiredString(asset.sourceDescription, `Scene asset "${id}" sourceDescription`);
   requiredString(asset.licenseIdentifier, `Scene asset "${id}" licenseIdentifier`);
 
-  if (!isRecord(asset.source)) {
+  const source = asset.source;
+  if (!isRecord(source)) {
     throw new Error(`Scene asset "${id}" is missing its source.`);
   }
   const sourcePath = requiredString(
-    asset.source.path,
+    source.path,
     `Scene asset "${id}" source.path`,
   );
   const expectedSourcePath = `${id}.png`;
@@ -487,19 +504,19 @@ function validateAssetShape(asset, index, declaredPaths) {
     );
   }
   assertDeclaredPathIsUnique(declaredPaths, sourcePath, `Scene asset "${id}" source`);
-  if (asset.source.format !== 'png') {
+  if (source.format !== 'png') {
     throw new Error(`Scene asset "${id}" source must use PNG format.`);
   }
   const masterSize = sceneMasterSize(id);
   const variantSizes = sceneVariantSizes(id);
   const expectedVariantKeys = new Set(variantSizes.flatMap(({ width, height }) =>
     SCENE_VARIANT_FORMATS.map((format) => `${width}x${height}:${format}`)));
-  if (asset.source.width !== masterSize.width || asset.source.height !== masterSize.height) {
+  if (source.width !== masterSize.width || source.height !== masterSize.height) {
     throw new Error(`Scene asset "${id}" source must be exactly ${masterSize.width}x${masterSize.height}.`);
   }
-  requiredInteger(asset.source.bytes, `Scene asset "${id}" source.bytes`);
-  requiredHash(asset.source.sha256, `Scene asset "${id}" source.sha256`);
-  if (replacementBaseline.assets.some((entry) => entry.file === sourcePath && entry.sha256 === asset.source.sha256)) {
+  requiredInteger(source.bytes, `Scene asset "${id}" source.bytes`);
+  const sourceSha256 = requiredHash(source.sha256, `Scene asset "${id}" source.sha256`);
+  if (replacementBaseline.assets.some((entry) => entry.file === sourcePath && entry.sha256 === sourceSha256)) {
     throw new Error(`Scene asset "${id}" retains its replaced baseline source hash.`);
   }
 
@@ -543,7 +560,7 @@ function validateAssetShape(asset, index, declaredPaths) {
     );
   }
 
-  const geometry = expectedGeometry(id, identity);
+  const geometry = expectedGeometry(identity);
   assertExactGeometry(
     asset.focalPoint,
     geometry.focalPoint,
@@ -568,8 +585,11 @@ function validateAssetShape(asset, index, declaredPaths) {
   if (!Array.isArray(asset.variants)) {
     throw new Error(`Scene asset "${id}" is missing its variants.`);
   }
-  const seenVariantKeys = new Set();
-  const variants = [];
+  const seenVariantKeys = new Set<string>();
+  const variants: {
+    context: string; format: SceneFormat; height: number; id: string;
+    path: string; rawVariant: Record<string, unknown>; width: number;
+  }[] = [];
   for (const [variantIndex, rawVariant] of asset.variants.entries()) {
     const context = `Scene asset "${id}" variant ${variantIndex}`;
     if (!isRecord(rawVariant)) throw new Error(`${context} must be an object.`);
@@ -578,7 +598,7 @@ function validateAssetShape(asset, index, declaredPaths) {
       throw new Error(`${context} uses duplicate asset path "${variantPath}".`);
     }
     const format = rawVariant.format;
-    if (!SCENE_VARIANT_FORMATS.includes(format)) {
+    if (!isSceneFormat(format)) {
       throw new Error(`${context} has unsupported format "${String(format)}".`);
     }
     const width = requiredInteger(rawVariant.width, `${context}.width`);
@@ -644,7 +664,7 @@ function validateAssetShape(asset, index, declaredPaths) {
   return { id, identity, sourcePath, variants };
 }
 
-async function validateAssetFiles(sceneRoot, assetRecords) {
+async function validateAssetFiles(sceneRoot: string, assetRecords: readonly AssetRecord[]): Promise<void> {
   const declaredVariantPaths = new Set(
     assetRecords.flatMap((asset) => asset.variants.map((variant) => variant.path)),
   );
@@ -683,7 +703,7 @@ async function validateAssetFiles(sceneRoot, assetRecords) {
         `Scene asset "${asset.id}" source SHA-256 does not match the file.`,
       );
     }
-    const alphaOptions = {
+    const alphaOptions: AlphaOptions = {
       nativeAlpha: hasNativeAlphaProvenance(source.input),
       transparentRectangles: asset.id.endsWith('-foreground')
         ? REQUIRED_FOREGROUND_CLEAR_RECTANGLES
@@ -722,7 +742,7 @@ async function validateAssetFiles(sceneRoot, assetRecords) {
 
 export async function validateSceneAssets({
   sceneRoot = path.resolve('src', 'assets', 'scenes'),
-} = {}) {
+}: { sceneRoot?: string } = {}) {
   const resolvedRoot = path.resolve(sceneRoot);
   await assertMasterSet(resolvedRoot);
   const manifest = await readJson(path.join(resolvedRoot, 'scene-manifest.json'));
@@ -738,9 +758,9 @@ export async function validateSceneAssets({
     );
   }
 
-  const ids = new Set();
-  const declaredPaths = new Set();
-  const assetRecords = [];
+  const ids = new Set<string>();
+  const declaredPaths = new Set<string>();
+  const assetRecords: AssetRecord[] = [];
   for (const [index, asset] of manifest.assets.entries()) {
     const id = isRecord(asset) ? asset.id : undefined;
     if (typeof id === 'string' && ids.has(id)) {
@@ -759,7 +779,7 @@ export async function validateSceneAssets({
   }
 
   await validateAssetFiles(resolvedRoot, assetRecords);
-  return manifest;
+  return manifest as { assets: { variants: unknown[] }[] };
 }
 
 const invokedScript = process.argv[1]

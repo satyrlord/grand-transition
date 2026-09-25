@@ -1,5 +1,5 @@
-import { loadGameContent } from './load-game-content';
-import { finalContentVolumeIssues } from './final-content-volumes';
+import { loadGameContent } from './load-game-content.ts';
+import { finalContentVolumeIssues } from './final-content-volumes.ts';
 
 const issues = finalContentVolumeIssues(loadGameContent().gameCatalog);
 if (issues.length > 0) {

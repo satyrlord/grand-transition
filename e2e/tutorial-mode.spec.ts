@@ -1,8 +1,9 @@
-import { lockInSetup } from './helpers/setup';
+import { lockInSetup } from './helpers/setup.ts';
 import { expect, test, type Page } from '@playwright/test';
-import type { MatchScreenSnapshot } from '../src/app/match-screen-snapshot';
-import { useFixedBrowserMatchSeed } from './helpers/match-flow';
-import { pauseMockedClock } from './helpers/presentation';
+import type { MatchScreenSnapshot } from '../src/app/match-screen-snapshot.ts';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
+import { settingsStorageKey, storedJson } from './helpers/stored-data.ts';
+import { pauseMockedClock } from './helpers/presentation.ts';
 
 const highlightedCards = 'button.phrase-card[data-tutorial="true"]';
 const supportedViewports = [
@@ -31,13 +32,20 @@ test('tutorial starts unchecked and the default match has no tutorial glow', asy
   await expect(page.locator(highlightedCards)).toHaveCount(0);
 });
 
-test('tutorial persists and all valid next choices follow each hotseat draft and pause', async ({ page }) => {
+test('tutorial persists and all valid next choices follow each hotseat draft and pause', async ({
+  page,
+}) => {
   test.setTimeout(tutorialFlowTimeoutMs);
   await prepareMenu(page);
   await enableTutorial(page);
-  await expect.poll(() => page.evaluate(() =>
-    JSON.parse(localStorage.getItem('grand-transition.settings.v1')!),
-  )).toMatchObject({ schemaVersion: 3, interfaceLocale: 'en', gameLocale: 'en', tutorialMode: true });
+  await expect
+    .poll(() => storedJson(page, settingsStorageKey))
+    .toMatchObject({
+      schemaVersion: 3,
+      interfaceLocale: 'en',
+      gameLocale: 'en',
+      tutorialMode: true,
+    });
   await page.reload();
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await expect(page.getByRole('checkbox', { name: 'Tutorial', exact: true })).toBeChecked();
@@ -45,7 +53,9 @@ test('tutorial persists and all valid next choices follow each hotseat draft and
   for (const viewport of supportedViewports) {
     await page.setViewportSize(viewport);
     await assertVisibleGeometry(page, '.settings-dialog', 'button, input, select');
-    await page.screenshot({ path: `tmp/tutorial-mode/settings-${viewport.width}x${viewport.height}.png` });
+    await page.screenshot({
+      path: `tmp/tutorial-mode/settings-${viewport.width}x${viewport.height}.png`,
+    });
   }
   await page.getByRole('button', { name: 'Close', exact: true }).click();
   await startMatch(page);
@@ -57,7 +67,9 @@ test('tutorial persists and all valid next choices follow each hotseat draft and
     await page.setViewportSize(viewport);
     await assertVisibleGeometry(page, '.match-screen', highlightedCards);
     await assertAllValidChoices(page);
-    await page.screenshot({ path: `tmp/tutorial-mode/match-${viewport.width}x${viewport.height}.png` });
+    await page.screenshot({
+      path: `tmp/tutorial-mode/match-${viewport.width}x${viewport.height}.png`,
+    });
   }
   for (let step = 0; step < 3; step += 1) {
     const before = await assertAllValidChoices(page);
@@ -71,7 +83,9 @@ test('tutorial persists and all valid next choices follow each hotseat draft and
   await assertAllValidChoices(page);
 });
 
-test('tutorial glow pulses slowly and remains steady with reduced motion and distinct in forced colors', async ({ page }) => {
+test('tutorial glow pulses slowly and remains steady with reduced motion and distinct in forced colors', async ({
+  page,
+}) => {
   test.setTimeout(tutorialFlowTimeoutMs);
   await prepareMenu(page);
   await enableTutorial(page);
@@ -81,7 +95,11 @@ test('tutorial glow pulses slowly and remains steady with reduced motion and dis
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   const animated = await choice.evaluate((button) => {
     const style = getComputedStyle(button, '::after');
-    return { name: style.animationName, duration: style.animationDuration, shadow: style.boxShadow };
+    return {
+      name: style.animationName,
+      duration: style.animationDuration,
+      shadow: style.boxShadow,
+    };
   });
   expect(animated.name).toBe('tutorial-glow');
   expect(animated.duration).toBe('2.4s');
@@ -98,7 +116,12 @@ test('tutorial glow pulses slowly and remains steady with reduced motion and dis
   await page.emulateMedia({ forcedColors: 'active' });
   const forced = await choice.evaluate((button) => {
     const style = getComputedStyle(button, '::after');
-    return { name: style.animationName, outline: style.outlineStyle, width: parseFloat(style.outlineWidth), offset: parseFloat(style.outlineOffset) };
+    return {
+      name: style.animationName,
+      outline: style.outlineStyle,
+      width: parseFloat(style.outlineWidth),
+      offset: parseFloat(style.outlineOffset),
+    };
   });
   expect(forced.name).toBe('none');
   expect(forced.outline).toBe('dotted');
@@ -118,19 +141,29 @@ test('tutorial does not reveal recommendations during the computer turn', async 
     host.tutorialAiCounts = [];
     new MutationObserver(() => {
       if (document.querySelector('.ai-thinking-record')) {
-        host.tutorialAiCounts.push(document.querySelectorAll('button.phrase-card[data-tutorial="true"]').length);
+        host.tutorialAiCounts.push(
+          document.querySelectorAll('button.phrase-card[data-tutorial="true"]').length,
+        );
       }
     }).observe(document.documentElement, { childList: true, subtree: true, attributes: true });
   });
   await startMatch(page, 'Single Player');
   await assertAllValidChoices(page);
   await page.locator(highlightedCards).first().click();
-  await expect.poll(() => page.evaluate(() =>
-    (window as typeof window & { tutorialAiCounts: number[] }).tutorialAiCounts.length,
-  )).toBeGreaterThan(0);
-  expect(await page.evaluate(() =>
-    (window as typeof window & { tutorialAiCounts: number[] }).tutorialAiCounts.every((count) => count === 0),
-  )).toBe(true);
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () => (window as typeof window & { tutorialAiCounts: number[] }).tutorialAiCounts.length,
+      ),
+    )
+    .toBeGreaterThan(0);
+  expect(
+    await page.evaluate(() =>
+      (window as typeof window & { tutorialAiCounts: number[] }).tutorialAiCounts.every(
+        (count) => count === 0,
+      ),
+    ),
+  ).toBe(true);
   await expect(page.locator('.ai-thinking-record')).toHaveCount(0);
   await assertAllValidChoices(page);
 });
@@ -141,7 +174,8 @@ test('tutorial recommendations disappear during round delivery', async ({ page }
   await enableTutorial(page);
   await page.clock.install();
   await startMatch(page);
-  const pick = (role: string) => page.locator(`.shared-board [data-role="${role}"] button`).first().click();
+  const pick = (role: string) =>
+    page.locator(`.shared-board [data-role="${role}"] button`).first().click();
   await pick('noun');
   await pick('noun');
   await pick('predicate');
@@ -158,8 +192,9 @@ async function prepareMenu(page: Page): Promise<void> {
   await page.setViewportSize(supportedViewports[0]);
   await useFixedBrowserMatchSeed(page, 20260823);
   await page.goto('/grand-transition/');
-  await expect(page.getByRole('button', { name: 'Settings', exact: true }))
-    .toBeVisible({ timeout: menuReadyTimeoutMs });
+  await expect(page.getByRole('button', { name: 'Settings', exact: true })).toBeVisible({
+    timeout: menuReadyTimeoutMs,
+  });
 }
 
 async function enableTutorial(page: Page): Promise<void> {
@@ -181,24 +216,39 @@ async function assertAllValidChoices(page: Page): Promise<string[]> {
     const snapshot = (element as HTMLElement & { snapshot: MatchScreenSnapshot }).snapshot;
     const expected = [...snapshot.sharedCards, ...snapshot.privateCards]
       .filter((card) => card.reference && card.action === 'select' && card.grammarAccepted)
-      .map((card) => `${card.reference!.source}:${card.reference!.cardId}`).sort();
-    const actual = [...element.querySelectorAll<HTMLButtonElement>('button.phrase-card[data-tutorial="true"]')]
-      .map((button) => `${button.dataset.cardSource}:${button.dataset.cardId}`).sort();
+      .map((card) => `${card.reference!.source}:${card.reference!.cardId}`)
+      .sort();
+    const actual = [
+      ...element.querySelectorAll<HTMLButtonElement>('button.phrase-card[data-tutorial="true"]'),
+    ]
+      .map((button) => `${button.dataset.cardSource}:${button.dataset.cardId}`)
+      .sort();
     return { expected, actual };
   });
   expect(facts.actual).toEqual(facts.expected);
   return facts.actual;
 }
 
-async function assertVisibleGeometry(page: Page, container: string, selector: string): Promise<void> {
+async function assertVisibleGeometry(
+  page: Page,
+  container: string,
+  selector: string,
+): Promise<void> {
   const facts = await page.locator(container).evaluate((element, controls) => {
     const box = element.getBoundingClientRect();
     return {
       inside: box.left >= 0 && box.top >= 0 && box.right <= innerWidth && box.bottom <= innerHeight,
-      pageScrolls: document.documentElement.scrollHeight > innerHeight || document.documentElement.scrollWidth > innerWidth,
+      pageScrolls:
+        document.documentElement.scrollHeight > innerHeight ||
+        document.documentElement.scrollWidth > innerWidth,
       controlsInside: [...element.querySelectorAll<HTMLElement>(controls)].every((control) => {
         const rect = control.getBoundingClientRect();
-        return rect.left >= box.left && rect.top >= box.top && rect.right <= box.right && rect.bottom <= box.bottom;
+        return (
+          rect.left >= box.left &&
+          rect.top >= box.top &&
+          rect.right <= box.right &&
+          rect.bottom <= box.bottom
+        );
       }),
     };
   }, selector);

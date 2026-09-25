@@ -1,16 +1,16 @@
 import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { basicScoringBalance } from '../src/content/basic-scoring-balance';
+import { basicScoringBalance } from '../src/content/basic-scoring-balance.ts';
 import {
   createSimulationSetup,
   encodeSimulationReport,
   listLocalRadioCallerSimulationOptions,
   simulateMatches,
   summarizeSimulation,
-} from '../src/simulation/simulation';
-import { listConfiguredAiSimulationOptions } from '../src/simulation/simulation-policy';
-import { loadGameContent } from './load-game-content';
+} from '../src/simulation/simulation.ts';
+import { listConfiguredAiSimulationOptions } from '../src/simulation/simulation-policy.ts';
+import { loadGameContent } from './load-game-content.ts';
 
 export type SimulationArguments = Readonly<{
   seed: number;

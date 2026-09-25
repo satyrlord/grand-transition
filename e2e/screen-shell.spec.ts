@@ -1,13 +1,17 @@
-import { lockInSetup } from './helpers/setup';
+import { lockInSetup } from './helpers/setup.ts';
 import { expect, test } from '@playwright/test';
 import { stat } from 'node:fs/promises';
 import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
 import chairman from '../src/content/characters/red-folded-chairman-phrase-cards.json' with { type: 'json' };
 import captain from '../src/content/characters/black-sea-captain-phrase-cards.json' with { type: 'json' };
-import { displayWeaknessName } from '../src/localization/romanian-display-names';
+import { displayWeaknessName } from '../src/localization/romanian-display-names.ts';
 
-const chairmanWeaknesses = chairman.weaknessTags.map((tag) => displayWeaknessName(tag, 'en')).join(' · ');
-const captainWeaknesses = captain.weaknessTags.map((tag) => displayWeaknessName(tag, 'en')).join(' · ');
+const chairmanWeaknesses = chairman.weaknessTags
+  .map((tag) => displayWeaknessName(tag, 'en'))
+  .join(' · ');
+const captainWeaknesses = captain.weaknessTags
+  .map((tag) => displayWeaknessName(tag, 'en'))
+  .join(' · ');
 
 const supportedViewports = [
   { name: 'minimum-landscape', width: 1024, height: 720 },
@@ -20,29 +24,19 @@ const supportedViewports = [
 ] as const;
 
 for (const viewport of supportedViewports) {
-  test(`${viewport.name} pointer flow stays inside the viewport`, async ({
-    page,
-  }, testInfo) => {
+  test(`${viewport.name} pointer flow stays inside the viewport`, async ({ page }, testInfo) => {
     await page.setViewportSize(viewport);
     await page.goto('');
+    await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: 'Grand Transition' }),
-    ).toBeVisible();
-    await expect(
-      page.getByText(
-        'All characters and events are fictional composites created for satire.',
-      ),
+      page.getByText('All characters and events are fictional composites created for satire.'),
     ).toBeVisible();
     const titleStatus = page.getByText('Live now, on NTV Channel 3!', {
       exact: true,
     });
     await expect(titleStatus).toBeVisible();
-    await page.locator('.title-emblem').evaluate((image: HTMLImageElement) =>
-      image.decode(),
-    );
-    await expect(page.locator('.title-emblem-frame')).toHaveClass(
-      /title-emblem-frame--loaded/u,
-    );
+    await page.locator('.title-emblem').evaluate((image: HTMLImageElement) => image.decode());
+    await expect(page.locator('.title-emblem-frame')).toHaveClass(/title-emblem-frame--loaded/u);
     await expect(page.locator('.title-emblem')).toHaveCSS('opacity', '1');
     const titleGeometry = await titleStatus.evaluate((element) => {
       const box = element.getBoundingClientRect();
@@ -56,10 +50,8 @@ for (const viewport of supportedViewports) {
           element.scrollWidth <= element.clientWidth + 1 &&
           element.scrollHeight <= element.clientHeight + 1,
         pageFits:
-          document.documentElement.scrollWidth <=
-            document.documentElement.clientWidth &&
-          document.documentElement.scrollHeight <=
-            document.documentElement.clientHeight,
+          document.documentElement.scrollWidth <= document.documentElement.clientWidth &&
+          document.documentElement.scrollHeight <= document.documentElement.clientHeight,
       };
     });
     expect(titleGeometry).toEqual({
@@ -75,9 +67,7 @@ for (const viewport of supportedViewports) {
 
     const url = page.url();
     await page.getByRole('button', { name: 'Multiplayer' }).click();
-    await expect(
-      page.getByRole('heading', { name: 'Select your debaters' }),
-    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Select your debaters' })).toBeVisible();
     await expect(page.locator('#setup-title')).toBeFocused();
     expect(page.url()).toBe(url);
     await page.getByTestId('lock-player-one').click();
@@ -92,24 +82,18 @@ for (const viewport of supportedViewports) {
     ]);
     const rosterSources = await page
       .locator('.roster-headshot')
-      .evaluateAll((portraits) =>
-        portraits.map((portrait) => (portrait as HTMLImageElement).src),
-      );
-    await page
-      .getByRole('button', { name: 'Next skin for Player two' })
-      .click();
+      .evaluateAll((portraits) => portraits.map((portrait) => (portrait as HTMLImageElement).src));
+    await page.getByRole('button', { name: 'Next skin for Player two' }).click();
     await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
       'data-skin-id',
       'alternate',
     );
-    await expect(
-      page.locator('.contestant-stage--two .contestant-portrait'),
-    ).toHaveAttribute('src', /red-folded-chairman--alternate/u);
-    await page.locator('#playerTwoCharacterId').click({ button: 'right' });
-    await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
-      'data-skin-id',
-      'default',
+    await expect(page.locator('.contestant-stage--two .contestant-portrait')).toHaveAttribute(
+      'src',
+      /red-folded-chairman--alternate/u,
     );
+    await page.locator('#playerTwoCharacterId').click({ button: 'right' });
+    await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute('data-skin-id', 'default');
     await page.locator('#playerTwoCharacterId').focus();
     await page.keyboard.press('ArrowLeft');
     await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
@@ -124,9 +108,7 @@ for (const viewport of supportedViewports) {
         ),
     ).toEqual(rosterSources);
     await page.locator('img').evaluateAll(async (portraits) => {
-      await Promise.all(
-        portraits.map((portrait) => (portrait as HTMLImageElement).decode()),
-      );
+      await Promise.all(portraits.map((portrait) => (portrait as HTMLImageElement).decode()));
     });
 
     await page
@@ -160,15 +142,11 @@ for (const viewport of supportedViewports) {
       const rosterGrid = document.querySelector<HTMLElement>('.roster-grid')!;
       const rosterZoneBox = rosterZone.getBoundingClientRect();
       const rosterGridBox = rosterGrid.getBoundingClientRect();
-      const rosterChoiceBoxes = [
-        ...rosterGrid.querySelectorAll<HTMLElement>('.roster-choice'),
-      ].map((choice) => choice.getBoundingClientRect());
-      const robotWindow = robotChoice.querySelector<HTMLElement>(
-        '.roster-portrait-window',
-      )!;
-      const robotPortrait = robotChoice.querySelector<HTMLImageElement>(
-        '.roster-headshot',
-      )!;
+      const rosterChoiceBoxes = [...rosterGrid.querySelectorAll<HTMLElement>('.roster-choice')].map(
+        (choice) => choice.getBoundingClientRect(),
+      );
+      const robotWindow = robotChoice.querySelector<HTMLElement>('.roster-portrait-window')!;
+      const robotPortrait = robotChoice.querySelector<HTMLImageElement>('.roster-headshot')!;
       const robotWindowBox = robotWindow.getBoundingClientRect();
       const robotPortraitBox = robotPortrait.getBoundingClientRect();
       const robotCanvas = document.createElement('canvas');
@@ -195,11 +173,7 @@ for (const viewport of supportedViewports) {
           const blue = robotPixels[pixelIndex + 2]!;
           const alpha = robotPixels[pixelIndex + 3]!;
           const cyanDisplayPixel =
-            red < 80 &&
-            green > 100 &&
-            blue > 100 &&
-            green > red * 1.7 &&
-            blue > red * 1.7;
+            red < 80 && green > 100 && blue > 100 && green > red * 1.7 && blue > red * 1.7;
           const amberDisplayPixel =
             red > 180 &&
             green > 120 &&
@@ -220,9 +194,7 @@ for (const viewport of supportedViewports) {
       }
       const robotStyle = getComputedStyle(robotPortrait);
       const robotFaceCenterRatio =
-        (robotFacePixelMinimumX + robotFacePixelMaximumX) /
-        2 /
-        robotCanvas.width;
+        (robotFacePixelMinimumX + robotFacePixelMaximumX) / 2 / robotCanvas.width;
       const renderedRobotFaceCenter =
         robotPortraitBox.left + robotPortraitBox.width * robotFaceCenterRatio;
       const robotWindowCenter = robotWindowBox.left + robotWindowBox.width / 2;
@@ -231,14 +203,11 @@ for (const viewport of supportedViewports) {
         documentHeight: document.documentElement.scrollHeight,
         viewportWidth: document.documentElement.clientWidth,
         viewportHeight: document.documentElement.clientHeight,
-        interfaceFont: getComputedStyle(
-          document.querySelector<HTMLElement>('.setup-screen')!,
-        ).fontFamily,
-        headingFont: getComputedStyle(
-          document.querySelector<HTMLElement>('#setup-title')!,
-        ).fontFamily,
-        sceneLabelFits:
-          context.measureText(selectedScene).width <= availableSceneWidth,
+        interfaceFont: getComputedStyle(document.querySelector<HTMLElement>('.setup-screen')!)
+          .fontFamily,
+        headingFont: getComputedStyle(document.querySelector<HTMLElement>('#setup-title')!)
+          .fontFamily,
+        sceneLabelFits: context.measureText(selectedScene).width <= availableSceneWidth,
         controlsInside: [...document.querySelectorAll('select, button')]
           .filter((control) => !control.matches('.roster-choice'))
           .every((control) => {
@@ -253,14 +222,12 @@ for (const viewport of supportedViewports) {
         imagesDecoded: [...document.images].every(
           (image) => image.complete && image.naturalWidth > 0,
         ),
-        weaknessRecordsInside: [
-          ...document.querySelectorAll('.contestant-weaknesses'),
-        ].every((record) => {
-          const box = record.getBoundingClientRect();
-          return (
-            box.top >= 0 && box.bottom <= document.documentElement.clientHeight
-          );
-        }),
+        weaknessRecordsInside: [...document.querySelectorAll('.contestant-weaknesses')].every(
+          (record) => {
+            const box = record.getBoundingClientRect();
+            return box.top >= 0 && box.bottom <= document.documentElement.clientHeight;
+          },
+        ),
         robotRosterPortrait: {
           species: robotChoice.dataset.characterSpecies,
           objectFit: robotStyle.objectFit,
@@ -269,21 +236,15 @@ for (const viewport of supportedViewports) {
           paintContainment: getComputedStyle(robotWindow).contain,
           windowOverflow: getComputedStyle(robotWindow).overflow,
           transformOriginXRatio:
-            Number.parseFloat(robotStyle.transformOrigin) /
-            robotPortrait.clientWidth,
+            Number.parseFloat(robotStyle.transformOrigin) / robotPortrait.clientWidth,
           facePixelCount: robotFacePixelCount,
-          facePixelRatio:
-            robotFacePixelCount /
-            (robotCanvas.width * robotCanvas.height),
+          facePixelRatio: robotFacePixelCount / (robotCanvas.width * robotCanvas.height),
           // Measured against the portrait window, which is what a reader sees.
           faceCenterOffsetRatio:
-            Math.abs(renderedRobotFaceCenter - robotWindowCenter) /
-            robotWindowBox.width,
+            Math.abs(renderedRobotFaceCenter - robotWindowCenter) / robotWindowBox.width,
         },
         rosterLayout: {
-          rowCount: new Set(
-            rosterChoiceBoxes.map((box) => Math.round(box.top * 10) / 10),
-          ).size,
+          rowCount: new Set(rosterChoiceBoxes.map((box) => Math.round(box.top * 10) / 10)).size,
           gridInsideZone:
             rosterGridBox.left >= rosterZoneBox.left - 0.5 &&
             rosterGridBox.top >= rosterZoneBox.top - 0.5 &&
@@ -292,18 +253,18 @@ for (const viewport of supportedViewports) {
           overflowX: getComputedStyle(rosterGrid).overflowX,
           overflowY: getComputedStyle(rosterGrid).overflowY,
           cardsHorizontallyInsideGrid: rosterChoiceBoxes.every(
-            (box) =>
-              box.left >= rosterGridBox.left - 0.5 &&
-              box.right <= rosterGridBox.right + 0.5,
+            (box) => box.left >= rosterGridBox.left - 0.5 && box.right <= rosterGridBox.right + 0.5,
           ),
           cardsDoNotOverlap: rosterChoiceBoxes.every((box, index, boxes) =>
-            boxes.slice(index + 1).every(
-              (other) =>
-                box.right <= other.left + 0.5 ||
-                other.right <= box.left + 0.5 ||
-                box.bottom <= other.top + 0.5 ||
-                other.bottom <= box.top + 0.5,
-            ),
+            boxes
+              .slice(index + 1)
+              .every(
+                (other) =>
+                  box.right <= other.left + 0.5 ||
+                  other.right <= box.left + 0.5 ||
+                  box.bottom <= other.top + 0.5 ||
+                  other.bottom <= box.top + 0.5,
+              ),
           ),
           scrollHeight: rosterGrid.scrollHeight,
           clientHeight: rosterGrid.clientHeight,
@@ -313,15 +274,11 @@ for (const viewport of supportedViewports) {
     expect(geometry.documentWidth).toBeLessThanOrEqual(geometry.viewportWidth);
     expect(geometry.interfaceFont).toContain('Rubik Variable');
     expect(geometry.headingFont).toContain('Poiret One');
-    expect(geometry.interfaceFont + geometry.headingFont).not.toMatch(
-      /Barlow|Georgia/u,
-    );
+    expect(geometry.interfaceFont + geometry.headingFont).not.toMatch(/Barlow|Georgia/u);
     expect(geometry.controlsInside).toBe(true);
     expect(geometry.imagesDecoded).toBe(true);
     expect(geometry.sceneLabelFits).toBe(true);
-    expect(geometry.documentHeight).toBeLessThanOrEqual(
-      geometry.viewportHeight,
-    );
+    expect(geometry.documentHeight).toBeLessThanOrEqual(geometry.viewportHeight);
     expect(geometry.weaknessRecordsInside).toBe(true);
     expect(geometry.robotRosterPortrait).toEqual({
       species: 'robot',
@@ -337,12 +294,8 @@ for (const viewport of supportedViewports) {
     });
     expect(geometry.robotRosterPortrait.scale).toBeGreaterThanOrEqual(3);
     expect(geometry.robotRosterPortrait.scale).toBeLessThanOrEqual(3.12);
-    expect(
-      geometry.robotRosterPortrait.transformOriginXRatio,
-    ).toBeGreaterThanOrEqual(0.49);
-    expect(
-      geometry.robotRosterPortrait.transformOriginXRatio,
-    ).toBeLessThanOrEqual(0.51);
+    expect(geometry.robotRosterPortrait.transformOriginXRatio).toBeGreaterThanOrEqual(0.49);
+    expect(geometry.robotRosterPortrait.transformOriginXRatio).toBeLessThanOrEqual(0.51);
     // The 128px source keeps the amber face legible after quantization, while
     // the 3x crop amplifies a one- or two-pixel source-center offset. The offset
     // is measured against the portrait window because that is what a reader
@@ -353,11 +306,9 @@ for (const viewport of supportedViewports) {
     // fraction of a pixel with sub-pixel layout, which the exact 0.065 could
     // not absorb: unchanged code passed and failed it in consecutive runs.
     expect(geometry.robotRosterPortrait.facePixelRatio).toBeGreaterThan(0.0009);
-    expect(
-      geometry.robotRosterPortrait.faceCenterOffsetRatio,
-    ).toBeLessThanOrEqual(0.066);
+    expect(geometry.robotRosterPortrait.faceCenterOffsetRatio).toBeLessThanOrEqual(0.066);
     expect(geometry.rosterLayout).toEqual({
-    rowCount: 5,
+      rowCount: 5,
       gridInsideZone: true,
       overflowX: 'hidden',
       overflowY: 'auto',
@@ -381,14 +332,13 @@ for (const viewport of supportedViewports) {
       'data-character-id',
       'government-ai',
     );
-    await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute(
-      'data-skin-id',
-      'default',
-    );
+    await expect(page.locator('#playerTwoCharacterId')).toHaveAttribute('data-skin-id', 'default');
   });
 }
 
-test('production setup requires ordered locks and reopens only the unlocked player', async ({ page }) => {
+test('production setup requires ordered locks and reopens only the unlocked player', async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
@@ -447,7 +397,9 @@ test('right-click skin cycling respects the current player and both locks', asyn
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  const robot = page.locator('.roster-choice[data-character-id="government-ai"][data-skin-id="default"]');
+  const robot = page.locator(
+    '.roster-choice[data-character-id="government-ai"][data-skin-id="default"]',
+  );
   await robot.click();
   await page.getByTestId('lock-player-one').click();
   await robot.click();
@@ -482,24 +434,19 @@ test('right-click skin cycling respects the current player and both locks', asyn
   await expect(page.getByRole('button', { name: 'Start match' })).toBeEnabled();
 });
 
-test('selected skins reach the match without changing character identity', async (
-  { page },
-  testInfo,
-) => {
+test('selected skins reach the match without changing character identity', async ({
+  page,
+}, testInfo) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  await page
-    .getByRole('button', { name: 'Next skin for Player one' })
-    .click();
+  await page.getByRole('button', { name: 'Next skin for Player one' }).click();
   await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
 
   const redPlayer = page.locator('.match-player[data-side="red"]');
   const bluePlayer = page.locator('.match-player[data-side="blue"]');
-  await expect(redPlayer.getByRole('heading')).toHaveText(
-    'Red-Folded Chairman',
-  );
+  await expect(redPlayer.getByRole('heading')).toHaveText('Red-Folded Chairman');
   await expect(redPlayer.locator('.character-portrait')).toHaveAttribute(
     'src',
     /red-folded-chairman--alternate/u,
@@ -518,10 +465,9 @@ test('selected skins reach the match without changing character identity', async
   });
 });
 
-test('every alternate portrait decodes while the roster exposes all portrait skins', async (
-  { page },
-  testInfo,
-) => {
+test('every alternate portrait decodes while the roster exposes all portrait skins', async ({
+  page,
+}, testInfo) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
@@ -543,22 +489,18 @@ test('every alternate portrait decodes while the roster exposes all portrait ski
       .locator(`.roster-choice[data-character-id="${characterId}"][data-skin-id="default"]`)
       .click();
     const stage = page.locator('#playerOneCharacterId');
-    for (let index = 0;
-      index <= alternateSkins.length && await stage.getAttribute('data-skin-id') !== 'default';
-      index += 1) {
-      await page
-        .getByRole('button', { name: 'Next skin for Player one' })
-        .click();
+    for (
+      let index = 0;
+      index <= alternateSkins.length && (await stage.getAttribute('data-skin-id')) !== 'default';
+      index += 1
+    ) {
+      await page.getByRole('button', { name: 'Next skin for Player one' }).click();
     }
     await expect(stage).toHaveAttribute('data-skin-id', 'default');
     for (const skin of alternateSkins) {
-      await page
-        .getByRole('button', { name: 'Next skin for Player one' })
-        .click();
+      await page.getByRole('button', { name: 'Next skin for Player one' }).click();
       await expect(stage).toHaveAttribute('data-skin-id', skin.skinId);
-      const portrait = page.locator(
-        '.contestant-stage--one .contestant-portrait',
-      );
+      const portrait = page.locator('.contestant-stage--one .contestant-portrait');
       await expect(portrait).toHaveAttribute('src', new RegExp(skin.id, 'u'));
       expect(
         await portrait.evaluate(async (image) => {
@@ -569,9 +511,9 @@ test('every alternate portrait decodes while the roster exposes all portrait ski
     }
   }
 
-  const rosterSources = await page.locator('.roster-headshot').evaluateAll(
-    (portraits) => portraits.map((portrait) => (portrait as HTMLImageElement).src),
-  );
+  const rosterSources = await page
+    .locator('.roster-headshot')
+    .evaluateAll((portraits) => portraits.map((portrait) => (portrait as HTMLImageElement).src));
   expect(rosterSources).toHaveLength(30);
   expect(rosterSources.some((source) => source.includes('--'))).toBe(true);
   await page.screenshot({
@@ -580,7 +522,9 @@ test('every alternate portrait decodes while the roster exposes all portrait ski
   });
 
   await page.locator('#playerOneCharacterId').click();
-  await page.locator('.roster-choice[data-character-id="county-baron"][data-skin-id="default"]').click();
+  await page
+    .locator('.roster-choice[data-character-id="county-baron"][data-skin-id="default"]')
+    .click();
   await page.getByRole('button', { name: 'Next skin for Player one' }).click();
   await expect(page.locator('#playerOneCharacterId')).toHaveAttribute(
     'data-skin-id',
@@ -605,33 +549,20 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
   const title = page.locator('.title-screen');
   await expect(title).toBeVisible();
   await expect(page.locator('.title-emblem')).toBeVisible();
-  await page.locator('.title-emblem').evaluate((image: HTMLImageElement) =>
-    image.decode(),
-  );
-  await expect(
-    page.getByRole('heading', { name: 'Grand Transition' }),
-  ).toBeVisible();
-  await expect(
-    page.getByText('A Verbal Republic', { exact: true }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole('button', { name: 'Multiplayer' }),
-  ).toBeVisible();
+  await page.locator('.title-emblem').evaluate((image: HTMLImageElement) => image.decode());
+  await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
+  await expect(page.getByText('A Verbal Republic', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Multiplayer' })).toBeVisible();
 
   const facts = await page.evaluate(() => {
     const heading = document.querySelector<HTMLElement>('#game-title')!;
     const main = document.querySelector<HTMLElement>('.title-screen')!;
     const emblem = document.querySelector<HTMLImageElement>('.title-emblem')!;
-    const action = document.querySelector<HTMLElement>(
-      '.title-transmission button',
-    )!;
+    const action = document.querySelector<HTMLElement>('.title-transmission button')!;
     const subtitle = document.querySelector<HTMLElement>('.subtitle')!;
     const status = document.querySelector<HTMLElement>('.status')!;
-    const transmission = document.querySelector<HTMLElement>(
-      '.title-transmission',
-    )!;
-    const disclaimer =
-      document.querySelector<HTMLElement>('.title-disclaimer')!;
+    const transmission = document.querySelector<HTMLElement>('.title-transmission')!;
+    const disclaimer = document.querySelector<HTMLElement>('.title-disclaimer')!;
     const subtitleBox = subtitle.getBoundingClientRect();
     const statusBox = status.getBoundingClientRect();
     const railStyle = getComputedStyle(transmission, '::after');
@@ -670,9 +601,7 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
       documentHeight: document.documentElement.scrollHeight,
       viewportWidth: document.documentElement.clientWidth,
       viewportHeight: document.documentElement.clientHeight,
-      emblemWidthRatio:
-        emblem.getBoundingClientRect().width /
-        document.documentElement.clientWidth,
+      emblemWidthRatio: emblem.getBoundingClientRect().width / document.documentElement.clientWidth,
       subtitleStatusGap: statusBox.top - subtitleBox.bottom,
       railHeight: Number.parseFloat(railStyle.height),
       railWidth: Number.parseFloat(railStyle.width),
@@ -685,14 +614,7 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
       emblemFilter: getComputedStyle(emblem).filter,
       preloadHrefs: preloads.map((preload) => preload.href),
       imageResources,
-      requiredInside: [
-        heading,
-        emblem,
-        subtitle,
-        status,
-        action,
-        disclaimer,
-      ].every((element) => {
+      requiredInside: [heading, emblem, subtitle, status, action, disclaimer].every((element) => {
         const box = element.getBoundingClientRect();
         return (
           box.left >= 0 &&
@@ -706,9 +628,9 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
   expect(facts.headingFont).toContain('Poiret One');
   expect(facts.actionFont).toContain('Poiret One');
   expect(facts.interfaceFont).toContain('Rubik Variable');
-  expect(
-    [facts.headingFont, facts.actionFont, facts.interfaceFont].join(' '),
-  ).not.toMatch(/Barlow|Georgia/u);
+  expect([facts.headingFont, facts.actionFont, facts.interfaceFont].join(' ')).not.toMatch(
+    /Barlow|Georgia/u,
+  );
   expect(facts.documentWidth).toBeLessThanOrEqual(facts.viewportWidth);
   expect(facts.documentHeight).toBeLessThanOrEqual(facts.viewportHeight);
   expect(facts.requiredInside).toBe(true);
@@ -718,26 +640,16 @@ test('approved Curtain Call title fits its comp viewport and uses the match font
   expect(facts.railWidth).toBe(1);
   expect(facts.railContent).not.toBe('none');
   expect(facts.titleBackground).toMatch(/title-proscenium-background.*\.avif/u);
-  expect(facts.emblemCurrentSource).toMatch(
-    /grand-transition-emblem-640.*\.avif/u,
-  );
+  expect(facts.emblemCurrentSource).toMatch(/grand-transition-emblem-640.*\.avif/u);
   expect(facts.emblemNaturalSize).toEqual([640, 640]);
   expect(facts.emblemCornerAlpha).toEqual([0, 0, 0, 0]);
   expect(facts.emblemFetchPriority).toBe('high');
   expect(facts.emblemFilter).toBe('none');
   expect(facts.preloadHrefs).toHaveLength(2);
-  expect(facts.preloadHrefs.join('\n')).toMatch(
-    /grand-transition-emblem-640.*\.avif/u,
-  );
-  expect(facts.preloadHrefs.join('\n')).toMatch(
-    /title-proscenium-background.*\.avif/u,
-  );
-  expect(facts.imageResources.join('\n')).toMatch(
-    /grand-transition-emblem-640.*\.avif/u,
-  );
-  expect(facts.imageResources.join('\n')).toMatch(
-    /title-proscenium-background.*\.avif/u,
-  );
+  expect(facts.preloadHrefs.join('\n')).toMatch(/grand-transition-emblem-640.*\.avif/u);
+  expect(facts.preloadHrefs.join('\n')).toMatch(/title-proscenium-background.*\.avif/u);
+  expect(facts.imageResources.join('\n')).toMatch(/grand-transition-emblem-640.*\.avif/u);
+  expect(facts.imageResources.join('\n')).toMatch(/title-proscenium-background.*\.avif/u);
 
   await page.screenshot({
     path: testInfo.outputPath('title-curtain-call-1672x941.png'),
@@ -783,9 +695,7 @@ test('a delayed title emblem keeps an intentional reserved loading state', async
   expect(await frame.boundingBox()).toEqual(reservedBox);
 });
 
-test('character dossier supports hover, right-click pinning, and dismissal', async ({
-  page,
-}) => {
+test('character dossier supports hover, right-click pinning, and dismissal', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
@@ -822,9 +732,7 @@ test('character dossier supports hover, right-click pinning, and dismissal', asy
   await expect(dossier).toHaveCount(0);
 });
 
-test('roster uses close headshots while selected stages reveal full bodies', async ({
-  page,
-}) => {
+test('roster uses close headshots while selected stages reveal full bodies', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
@@ -834,8 +742,7 @@ test('roster uses close headshots while selected stages reveal full bodies', asy
   await expect
     .poll(() =>
       frameOverlay.evaluate(
-        (image: HTMLImageElement) =>
-          image.complete && image.naturalWidth === 1086,
+        (image: HTMLImageElement) => image.complete && image.naturalWidth === 1086,
       ),
     )
     .toBe(true);
@@ -859,49 +766,42 @@ test('roster uses close headshots while selected stages reveal full bodies', asy
     const frameOverlay = document.querySelector<HTMLImageElement>(
       '.roster-choice[data-character-id="red-folded-chairman"][data-skin-id="default"] .roster-frame-overlay',
     )!;
-    const headClearances = [
-      ...document.querySelectorAll<HTMLImageElement>('.roster-headshot'),
-    ].map((image) => {
-      const canvas = document.createElement('canvas');
-      canvas.width = image.naturalWidth;
-      canvas.height = image.naturalHeight;
-      const context = canvas.getContext('2d', { willReadFrequently: true })!;
-      context.drawImage(image, 0, 0);
-      const pixels = context.getImageData(
-        Math.floor(canvas.width * 0.2),
-        0,
-        Math.ceil(canvas.width * 0.6),
-        canvas.height,
-      );
-      let firstOpaqueRow = canvas.height;
-      for (let y = 0; y < pixels.height; y += 1) {
-        for (let x = 0; x < pixels.width; x += 1) {
-          if (pixels.data[(y * pixels.width + x) * 4 + 3]! > 32) {
-            firstOpaqueRow = y;
-            break;
+    const headClearances = [...document.querySelectorAll<HTMLImageElement>('.roster-headshot')].map(
+      (image) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        const context = canvas.getContext('2d', { willReadFrequently: true })!;
+        context.drawImage(image, 0, 0);
+        const pixels = context.getImageData(
+          Math.floor(canvas.width * 0.2),
+          0,
+          Math.ceil(canvas.width * 0.6),
+          canvas.height,
+        );
+        let firstOpaqueRow = canvas.height;
+        for (let y = 0; y < pixels.height; y += 1) {
+          for (let x = 0; x < pixels.width; x += 1) {
+            if (pixels.data[(y * pixels.width + x) * 4 + 3]! > 32) {
+              firstOpaqueRow = y;
+              break;
+            }
           }
+          if (firstOpaqueRow !== canvas.height) break;
         }
-        if (firstOpaqueRow !== canvas.height) break;
-      }
-      const scale = new DOMMatrix(getComputedStyle(image).transform).d;
-      return (
-        (firstOpaqueRow / image.naturalHeight) * image.clientHeight * scale
-      );
-    });
-    const rosterTransform = new DOMMatrix(
-      getComputedStyle(rosterPortrait).transform,
+        const scale = new DOMMatrix(getComputedStyle(image).transform).d;
+        return (firstOpaqueRow / image.naturalHeight) * image.clientHeight * scale;
+      },
     );
-    const selectedTransform = new DOMMatrix(
-      getComputedStyle(selectedPortrait).transform,
-    );
+    const rosterTransform = new DOMMatrix(getComputedStyle(rosterPortrait).transform);
+    const selectedTransform = new DOMMatrix(getComputedStyle(selectedPortrait).transform);
     return {
       rosterScale: rosterTransform.a,
       selectedScale: selectedTransform.a,
       rosterClientHeight: rosterPortrait.clientHeight,
       selectedClientHeight: selectedPortrait.clientHeight,
       rosterFrameRatio:
-        rosterFrame.getBoundingClientRect().width /
-        rosterFrame.getBoundingClientRect().height,
+        rosterFrame.getBoundingClientRect().width / rosterFrame.getBoundingClientRect().height,
       selectedObjectFit: getComputedStyle(selectedPortrait).objectFit,
       selectedInside:
         selectedBox.top >= selectedFrameBox.top &&
@@ -926,38 +826,27 @@ test('roster uses close headshots while selected stages reveal full bodies', asy
   expect(crop.headClearances.every((clearance) => clearance > 0)).toBe(true);
 });
 
-test('future roster growth stays inside a vertical scroll region', async ({
-  page,
-}) => {
+test('future roster growth stays inside a vertical scroll region', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   const geometry = await page.locator('.setup-screen').evaluate((setup) => {
     const roster = setup.querySelector<HTMLElement>('.roster-grid')!;
-    const sourceChoices = [
-      ...roster.querySelectorAll<HTMLElement>('.roster-choice'),
-    ];
+    const sourceChoices = [...roster.querySelectorAll<HTMLElement>('.roster-choice')];
     for (let index = 0; index < 30; index += 1) {
-      const clone = sourceChoices[index % sourceChoices.length]!.cloneNode(
-        true,
-      ) as HTMLElement;
+      const clone = sourceChoices[index % sourceChoices.length]!.cloneNode(true) as HTMLElement;
       clone.dataset.characterId = `future-${index}`;
       roster.append(clone);
     }
     const rosterBox = roster.getBoundingClientRect();
-    const zoneBox = setup
-      .querySelector<HTMLElement>('.roster-zone')!
-      .getBoundingClientRect();
-    const noteBox = setup
-      .querySelector<HTMLElement>('.setup-note')!
-      .getBoundingClientRect();
+    const zoneBox = setup.querySelector<HTMLElement>('.roster-zone')!.getBoundingClientRect();
+    const noteBox = setup.querySelector<HTMLElement>('.setup-note')!.getBoundingClientRect();
     return {
       tabIndex: roster.tabIndex,
       overflowY: getComputedStyle(roster).overflowY,
       scrollHeight: roster.scrollHeight,
       clientHeight: roster.clientHeight,
-      rosterInsideZone:
-        rosterBox.top >= zoneBox.top && rosterBox.bottom <= noteBox.top + 1,
+      rosterInsideZone: rosterBox.top >= zoneBox.top && rosterBox.bottom <= noteBox.top + 1,
       pageFits: setup.scrollHeight <= setup.clientHeight + 1,
     };
   });
@@ -968,9 +857,7 @@ test('future roster growth stays inside a vertical scroll region', async ({
   expect(geometry.pageFits).toBe(true);
 });
 
-test('duplicate setup submit dispatches one immutable command', async ({
-  page,
-}) => {
+test('duplicate setup submit dispatches one immutable command', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto('');
   await page.getByRole('button', { name: 'Multiplayer' }).click();
@@ -986,12 +873,8 @@ test('duplicate setup submit dispatches one immutable command', async ({
       facts.composed = command.composed;
     });
     const form = document.querySelector('form')!;
-    form.dispatchEvent(
-      new SubmitEvent('submit', { bubbles: true, cancelable: true }),
-    );
-    form.dispatchEvent(
-      new SubmitEvent('submit', { bubbles: true, cancelable: true }),
-    );
+    form.dispatchEvent(new SubmitEvent('submit', { bubbles: true, cancelable: true }));
+    form.dispatchEvent(new SubmitEvent('submit', { bubbles: true, cancelable: true }));
     return facts;
   });
 
@@ -1009,13 +892,11 @@ for (const viewport of [
     await page.setViewportSize(viewport);
     await page.goto('');
 
-    await expect(
-      page.locator('[data-interruption="unsupported-viewport"]'),
-    ).toBeVisible();
+    await expect(page.locator('[data-interruption="unsupported-viewport"]')).toBeVisible();
     await expect(page.locator('grand-transition-title')).toHaveCount(0);
-    await expect(page.getByText('640 × 320 landscape · 360 × 640 portrait', { exact: true })).toBeVisible();
     await expect(
-      page.getByText('1920 × 1080 on PC', { exact: true }),
+      page.getByText('640 × 320 landscape · 360 × 640 portrait', { exact: true }),
     ).toBeVisible();
+    await expect(page.getByText('1920 × 1080 on PC', { exact: true })).toBeVisible();
   });
 }

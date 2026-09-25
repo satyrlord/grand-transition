@@ -196,8 +196,8 @@ so that the visible base touches the viewport floor. The approved raster does
 not change.
 `tests/unit/sidekick-assets.test.ts` does checks of the full filename inventory
 and the pixel bounds against each source PNG. After you change a source PNG,
-run `node tools/sidekick-assets.mjs build`. Run
-`node tools/sidekick-assets.mjs validate` to validate the generated metadata.
+run `node tools/sidekick-assets.ts build`. Run
+`node tools/sidekick-assets.ts validate` to validate the generated metadata.
 
 ## Regeneration baseline and decision recovery
 
@@ -968,8 +968,8 @@ The fixed replacement baseline is a subset of 27 entries.
 `tools/character-replacement-baseline.json` records the replaced
 source hashes only for inventory verification. It is not a generation input.
 
-`tools/build-character-assets.mjs` makes square AVIF and WebP variants of 128,
-256, 320, 640, and 960. `tools/validate-character-assets.mjs` does checks of these items:
+`tools/build-character-assets.ts` makes square AVIF and WebP variants of 128,
+256, 320, 640, and 960. `tools/validate-character-assets.ts` does checks of these items:
 
 - The fixed inventory and the new source hashes.
 - The transparent masters that agree with provenance.
@@ -980,7 +980,7 @@ subsequent portrait that the filename convention adds does not go into this
 fixed baseline automatically. It can use its source PNG until Milestone 028
 promotes it through the release asset pipeline.
 
-`tools/build-character-package.mjs` controls a targeted rebuild of one skin in
+`tools/build-character-package.ts` controls a targeted rebuild of one skin in
 a staged character tree. It builds again only the ten variants of the selected
 portrait and the thirty state variants of that skin. It uses all other variant
 bytes again only after validation of the source, manifest, hash, format,
@@ -989,7 +989,7 @@ full character validators, and does not operate directly on the shipping
 character root.
 
 Milestone 023 promotes the Milestone 015 title emblem, proscenium, and setup
-portrait frame through `tools/brand-assets.mjs`. Their
+portrait frame through `tools/brand-assets.ts`. Their
 `src/assets/brand/brand-manifest.json` is a different manifest. It records the
 source hashes, ownership, license, dimensions, centered focal points,
 full-canvas crops, and AVIF/WebP variants.

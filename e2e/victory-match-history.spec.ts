@@ -1,6 +1,13 @@
-import { lockInSetup } from './helpers/setup';
+import { lockInSetup } from './helpers/setup.ts';
 import { expect, test, type Locator, type Page } from '@playwright/test';
-import { useFixedBrowserMatchSeed } from './helpers/match-flow';
+import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
+import {
+  clearStoredHistory,
+  matchHistoryStorageKey,
+  replaceStoredHistory,
+  storedDocument,
+  storedHistory,
+} from './helpers/stored-data.ts';
 
 const viewports = [
   { width: 1024, height: 720 },
@@ -9,29 +16,20 @@ const viewports = [
   { width: 1920, height: 1080 },
 ] as const;
 
-test('victory and populated history fit every supported landscape viewport', async ({
-  page,
-}) => {
+test('victory and populated history fit every supported landscape viewport', async ({ page }) => {
   const runtimeEvidence = observeProductionRuntime(page);
   await useFixedBrowserMatchSeed(page);
   await page.goto('/grand-transition/');
-  await page.evaluate(() =>
-    localStorage.removeItem('grand-transition.match-history.v1'),
-  );
+  await clearStoredHistory(page);
   await page.reload();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
   await prepareLethalGrammarMistake(page);
-  await page
-    .locator('[data-role="predicate"] button[data-card-state="legal"]')
-    .first()
-    .click();
+  await page.locator('[data-role="predicate"] button[data-card-state="legal"]').first().click();
   await expect(page.getByRole('heading', { name: 'Victory' })).toBeVisible();
   await expect(page.locator('.timer-fact')).toHaveCount(0);
-  await assertMinimumTarget(
-    page.getByRole('button', { name: 'Return to main menu' }),
-  );
+  await assertMinimumTarget(page.getByRole('button', { name: 'Return to main menu' }));
 
   for (const viewport of viewports) {
     await page.setViewportSize(viewport);
@@ -46,9 +44,7 @@ test('victory and populated history fit every supported landscape viewport', asy
   await page.getByText('Technical record', { exact: true }).click();
   await expect(page.locator('.match-history-entry pre')).toBeVisible();
   await assertMinimumTarget(page.getByRole('button', { name: 'Close' }));
-  await assertMinimumTarget(
-    page.getByText('Technical record', { exact: true }),
-  );
+  await assertMinimumTarget(page.getByText('Technical record', { exact: true }));
   for (const viewport of viewports) {
     await page.setViewportSize(viewport);
     await assertDialogGeometry(page, '.match-history-dialog');
@@ -61,9 +57,8 @@ test('victory and populated history fit every supported landscape viewport', asy
   const completedMatchId = await page
     .locator('.match-history-entry')
     .getAttribute('data-history-id');
-  const storedCompletedMatch = await page.evaluate(() =>
-    localStorage.getItem('grand-transition.match-history.v1'),
-  );
+  await expect.poll(async () => (await storedHistory(page)).length).toBe(1);
+  const storedCompletedMatch = await storedHistory(page);
   await page.getByRole('button', { name: 'Close' }).click();
   await page.reload();
   await page.getByRole('button', { name: /Match history.*1/iu }).click();
@@ -71,41 +66,26 @@ test('victory and populated history fit every supported landscape viewport', asy
     'data-history-id',
     completedMatchId!,
   );
-  expect(
-    await page.evaluate(() =>
-      localStorage.getItem('grand-transition.match-history.v1'),
-    ),
-  ).toBe(storedCompletedMatch);
+  expect(await storedHistory(page)).toEqual(storedCompletedMatch);
   await page.getByRole('button', { name: 'Close' }).click();
-  await page.evaluate(() => {
-    const key = 'grand-transition.match-history.v1';
-    const document = JSON.parse(localStorage.getItem(key)!) as {
-      entries: Array<{
-        id: string;
-        completedAt: string;
-        replay: { schemaVersion: number };
-        matchLog: { schemaVersion: number };
-      }>;
-    };
-    const current = document.entries[0]!;
-    document.entries = [
-      {
-        ...current,
-        id: 'stale-document-match',
-        completedAt: new Date(Date.parse(current.completedAt) - 60_000).toISOString(),
-        // The previous replay and match-log document version, which the current
-        // codec no longer reproduces, so this entry must be ignored.
-        replay: { ...current.replay, schemaVersion: 1 },
-        matchLog: { ...current.matchLog, schemaVersion: 1 },
-      },
-      current,
-    ];
-    localStorage.setItem(key, JSON.stringify(document));
-  });
-  const storedStaleDocument = await page.evaluate(() =>
-    localStorage.getItem('grand-transition.match-history.v1'),
-  );
-  expect(storedStaleDocument).not.toBe(storedCompletedMatch);
+  const current = JSON.parse(storedCompletedMatch[0]!) as {
+    id: string;
+    completedAt: string;
+    replay: { schemaVersion: number };
+    matchLog: { schemaVersion: number };
+  };
+  await replaceStoredHistory(page, [
+    JSON.stringify({
+      ...current,
+      id: 'stale-document-match',
+      completedAt: new Date(Date.parse(current.completedAt) - 60_000).toISOString(),
+      // The previous replay and match-log document version, which the current
+      // codec no longer reproduces, so this entry must be ignored.
+      replay: { ...current.replay, schemaVersion: 1 },
+      matchLog: { ...current.matchLog, schemaVersion: 1 },
+    }),
+    storedCompletedMatch[0]!,
+  ]);
   await page.reload();
   await page.getByRole('button', { name: /Match history.*1/iu }).click();
   await expect(page.locator('.match-history-entry')).toHaveCount(1);
@@ -114,30 +94,19 @@ test('victory and populated history fit every supported landscape viewport', asy
     completedMatchId!,
   );
   await page.getByRole('button', { name: 'Close' }).click();
-  expect(
-    await page.evaluate(() =>
-      localStorage.getItem('grand-transition.match-history.v1'),
+  // The ignored record is removed when the history loads.
+  await expect.poll(() => storedHistory(page)).toEqual(storedCompletedMatch);
+  const completedAt = Date.parse(current.completedAt);
+  await replaceStoredHistory(
+    page,
+    Array.from({ length: 12 }, (_, index) =>
+      JSON.stringify({
+        ...current,
+        id: `overflow-match-${index}`,
+        completedAt: new Date(completedAt + index * 60_000).toISOString(),
+      }),
     ),
-  ).toBe(storedStaleDocument);
-  await page.evaluate(
-    (stored) =>
-      localStorage.setItem('grand-transition.match-history.v1', stored),
-    storedCompletedMatch!,
   );
-  await page.evaluate(() => {
-    const key = 'grand-transition.match-history.v1';
-    const document = JSON.parse(localStorage.getItem(key)!) as {
-      entries: Array<Record<string, unknown> & { completedAt: string }>;
-    };
-    const entry = document.entries[0]!;
-    const completedAt = Date.parse(entry.completedAt);
-    document.entries = Array.from({ length: 12 }, (_, index) => ({
-      ...entry,
-      id: `overflow-match-${index}`,
-      completedAt: new Date(completedAt + index * 60_000).toISOString(),
-    }));
-    localStorage.setItem(key, JSON.stringify(document));
-  });
   await page.setViewportSize({ width: 1024, height: 720 });
   await page.reload();
   await page.getByRole('button', { name: /Match history.*12/iu }).click();
@@ -148,8 +117,7 @@ test('victory and populated history fit every supported landscape viewport', asy
   );
   const overflow = await page.locator('.match-history-list').evaluate((list) => ({
     listScrolls: list.scrollHeight > list.clientHeight,
-    pageScrolls:
-      document.documentElement.scrollHeight > document.documentElement.clientHeight,
+    pageScrolls: document.documentElement.scrollHeight > document.documentElement.clientHeight,
   }));
   expect(overflow).toEqual({ listScrolls: true, pageScrolls: false });
   expect(runtimeEvidence.failedRequests).toEqual([]);
@@ -162,9 +130,7 @@ test('victory and populated history fit every supported landscape viewport', asy
 test('empty history is available only from the title', async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 720 });
   await page.goto('/grand-transition/');
-  await page.evaluate(() =>
-    localStorage.removeItem('grand-transition.match-history.v1'),
-  );
+  await clearStoredHistory(page);
   await page.reload();
 
   await page.screenshot({
@@ -180,39 +146,25 @@ test('empty history is available only from the title', async ({ page }) => {
   });
   await page.getByRole('button', { name: 'Close' }).click();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  await expect(
-    page.getByRole('button', { name: /Match history/iu }),
-  ).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /Match history/iu })).toHaveCount(0);
 });
 
-test('malformed stored history stays unchanged and shows recovery guidance', async ({
-  page,
-}) => {
+test('malformed stored history stays unchanged and shows recovery guidance', async ({ page }) => {
   const invalidBytes = '{"schemaVersion":1,"entries":';
   await page.setViewportSize({ width: 1024, height: 720 });
   await page.goto('/grand-transition/');
-  await page.evaluate(
-    ({ key, value }) => localStorage.setItem(key, value),
-    {
-      key: 'grand-transition.match-history.v1',
-      value: invalidBytes,
-    },
-  );
+  // Bytes from an earlier release move from Web Storage into the database.
+  await page.evaluate(({ key, value }) => localStorage.setItem(key, value), {
+    key: matchHistoryStorageKey,
+    value: invalidBytes,
+  });
   await page.reload();
 
-  await expect(page.locator('.title-history-notice')).toContainText(
-    'will not persist',
-  );
+  await expect(page.locator('.title-history-notice')).toContainText('will not persist');
   await page.getByRole('button', { name: /Match history.*0/iu }).click();
-  await expect(page.locator('.match-history-notice')).toContainText(
-    'clear this site',
-  );
+  await expect(page.locator('.match-history-notice')).toContainText('clear this site');
   await expect(page.getByText('No completed matches yet.')).toBeVisible();
-  expect(
-    await page.evaluate(() =>
-      localStorage.getItem('grand-transition.match-history.v1'),
-    ),
-  ).toBe(invalidBytes);
+  expect(await storedDocument(page, matchHistoryStorageKey)).toBe(invalidBytes);
   await assertDialogGeometry(page, '.match-history-dialog');
   await page.screenshot({
     path: '.impeccable/review/history-storage-failure-1024x720.png',
@@ -277,9 +229,7 @@ async function assertDialogGeometry(page: Page, selector: string): Promise<void>
   expect(facts.documentHeight).toBeLessThanOrEqual(facts.viewportHeight);
 }
 
-async function assertMinimumTarget(
-  locator: Locator,
-): Promise<void> {
+async function assertMinimumTarget(locator: Locator): Promise<void> {
   const box = await locator.boundingBox();
   expect(box).not.toBeNull();
   expect(box!.width).toBeGreaterThanOrEqual(44);
@@ -305,9 +255,16 @@ function observeProductionRuntime(page: Page): Readonly<{
     if (url.protocol === 'http:' || url.protocol === 'https:') {
       if (url.origin !== applicationOrigin) remoteRequests.push(request.url());
     }
-    const localAudio = request.method() === 'GET' && request.resourceType() === 'fetch' &&
-      /^http:\/\/127\.0\.0\.1:4173\/grand-transition\/assets\/[^/]+\.(?:ogg|mp3)$/u.test(request.url());
-    if (!localAudio && ['fetch', 'xhr', 'websocket', 'eventsource'].includes(request.resourceType())) {
+    const localAudio =
+      request.method() === 'GET' &&
+      request.resourceType() === 'fetch' &&
+      /^http:\/\/127\.0\.0\.1:4173\/grand-transition\/assets\/[^/]+\.(?:ogg|mp3)$/u.test(
+        request.url(),
+      );
+    if (
+      !localAudio &&
+      ['fetch', 'xhr', 'websocket', 'eventsource'].includes(request.resourceType())
+    ) {
       runtimeRequests.push(`${request.method()} ${request.url()}`);
     }
   });

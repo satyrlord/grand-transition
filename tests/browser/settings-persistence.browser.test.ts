@@ -1,27 +1,28 @@
-import { lockInSetup } from './setup-test-helpers';
+import { lockInSetup } from './setup-test-helpers.ts';
 import { page } from 'vitest/browser';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
-import { GrandTransitionApp } from '../../src/app/app-shell';
-import type { GrandTransitionSettings } from '../../src/app/screens/settings-modal';
-import type { GrandTransitionMatch } from '../../src/app/screens/match-screen';
-import type { MatchState } from '../../src/engine/match-lifecycle';
+import { GrandTransitionApp } from '../../src/app/app-shell.ts';
+import type { GrandTransitionSettings } from '../../src/app/screens/settings-modal.ts';
+import type { GrandTransitionMatch } from '../../src/app/screens/match-screen.ts';
+import type { MatchState } from '../../src/engine/match-lifecycle.ts';
 import {
   decodeSettings,
   defaultSettings,
   encodeSettings,
   settingsSchemaVersion,
   type SettingsDocument,
-} from '../../src/persistence/codecs/settings-codec';
+} from '../../src/persistence/codecs/settings-codec.ts';
+import { settingsPersistenceNotice, settingsStorageKey } from '../../src/persistence/settings.ts';
 import {
-  settingsPersistenceNotice,
-  settingsStorageKey,
-} from '../../src/persistence/settings';
-import { matchHistoryStorageKey } from '../../src/persistence/match-history';
+  reloadStoredData,
+  resetStoredData,
+  storedDocument,
+  storedDocumentKeys,
+} from './persistence-test-helpers.ts';
 
 beforeEach(async () => {
   await page.viewport(1280, 720);
-  localStorage.removeItem(settingsStorageKey);
-  localStorage.removeItem(matchHistoryStorageKey);
+  await resetStoredData();
 });
 
 afterEach(() => {
@@ -58,9 +59,7 @@ test('restores every stored setting and applies title changes immediately', asyn
   expect(checkbox(settings, 'speechEnabled').checked).toBe(true);
   expect(settings.querySelector('[name="speechVoiceUri"]')).toBeNull();
   expect(range(settings, 'speechRate').value).toBe('1.4');
-  expect(timer(settings, '15 seconds').getAttribute('aria-pressed')).toBe(
-    'true',
-  );
+  expect(timer(settings, '15 seconds').getAttribute('aria-pressed')).toBe('true');
   expect(checkbox(settings, 'autoComplete').checked).toBe(false);
   expect(checkbox(settings, 'tutorialMode').checked).toBe(true);
 
@@ -73,7 +72,7 @@ test('restores every stored setting and applies title changes immediately', asyn
   timer(settings, 'Unlimited').click();
   await app.updateComplete;
 
-  const serialized = localStorage.getItem(settingsStorageKey);
+  const serialized = await storedDocument(settingsStorageKey);
   expect(serialized).not.toBeNull();
   expect(decodeSettings(serialized!)).toEqual({
     ok: true,
@@ -84,9 +83,7 @@ test('restores every stored setting and applies title changes immediately', asyn
   app = await mountApp();
   settings = await openSettings(app);
   expect(range(settings, 'masterVolume').value).toBe('0.6');
-  expect(timer(settings, 'Unlimited').getAttribute('aria-pressed')).toBe(
-    'true',
-  );
+  expect(timer(settings, 'Unlimited').getAttribute('aria-pressed')).toBe('true');
   expect(checkbox(settings, 'autoComplete').checked).toBe(true);
   expect(checkbox(settings, 'tutorialMode').checked).toBe(true);
 });
@@ -95,14 +92,19 @@ test('Tutorial starts unchecked and persists both checkbox choices across reload
   let app = await mountApp();
   let settings = await openSettings(app);
   expect(checkbox(settings, 'tutorialMode').checked).toBe(false);
-  expect(checkbox(settings, 'tutorialMode').getAttribute('aria-describedby')).toBe('settings-tutorial-note');
-  expect(settings.querySelector('#settings-tutorial-note')?.textContent).toContain('All grammatically valid next choices glow green.');
+  expect(checkbox(settings, 'tutorialMode').getAttribute('aria-describedby')).toBe(
+    'settings-tutorial-note',
+  );
+  expect(settings.querySelector('#settings-tutorial-note')?.textContent).toContain(
+    'All grammatically valid next choices glow green.',
+  );
 
   for (const enabled of [true, false]) {
     await page.getByRole('checkbox', { name: 'Tutorial', exact: true }).click();
     await app.updateComplete;
-    expect(decodeSettings(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
-      ok: true, value: { tutorialMode: enabled },
+    expect(decodeSettings((await storedDocument(settingsStorageKey))!)).toMatchObject({
+      ok: true,
+      value: { tutorialMode: enabled },
     });
     document.body.innerHTML = '';
     app = await mountApp();
@@ -120,7 +122,12 @@ test('GPU voices preserve the preference independently without a Settings loadin
   expect(checkbox(modal, 'gpuVoices').disabled).toBe(false);
   const changed = vi.fn();
   modal.addEventListener('settings-change', changed);
-  modal.settings = { ...defaultSettings, gpuVoices: false, speechEnabled: true, speechVoiceUri: 'retired:voice' };
+  modal.settings = {
+    ...defaultSettings,
+    gpuVoices: false,
+    speechEnabled: true,
+    speechVoiceUri: 'retired:voice',
+  };
   await modal.updateComplete;
   checkbox(modal, 'gpuVoices').click();
   expect(changed.mock.calls[0]?.[0].detail).toEqual({ ...modal.settings, gpuVoices: true });
@@ -142,23 +149,30 @@ test('all five scoring choices persist and start a match with the selected multi
   const app = await mountApp();
   const settings = await openSettings(app);
   const group = page.getByRole('group', { name: 'Scoring multiplier', exact: true });
-  await expect.element(group.getByRole('button', { name: '×3', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect
+    .element(group.getByRole('button', { name: '×3', exact: true }))
+    .toHaveAttribute('aria-pressed', 'true');
   for (const multiplier of [1, 2, 3, 4, 5] as const) {
     await group.getByRole('button', { name: `×${multiplier}`, exact: true }).click();
     await app.updateComplete;
     await settings.updateComplete;
     expect(settings.settings.basePointsMultiplier).toBe(multiplier);
-    expect(decodeSettings(localStorage.getItem(settingsStorageKey)!)).toEqual({
-      ok: true, value: { ...settings.settings, basePointsMultiplier: multiplier },
+    expect(decodeSettings((await storedDocument(settingsStorageKey))!)).toEqual({
+      ok: true,
+      value: { ...settings.settings, basePointsMultiplier: multiplier },
     });
-    expect(settings.querySelectorAll('.settings-options--multiplier [aria-pressed="true"]')).toHaveLength(1);
+    expect(
+      settings.querySelectorAll('.settings-options--multiplier [aria-pressed="true"]'),
+    ).toHaveLength(1);
   }
   await page.getByRole('checkbox', { name: 'Speech enabled', exact: true }).click();
   await page.getByRole('button', { name: 'Close', exact: true }).click();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await lockInSetup();
   await page.getByRole('button', { name: 'Start match' }).click();
-  expect((app as unknown as { matchState: MatchState }).matchState.setup.basePointsMultiplier).toBe(5);
+  expect((app as unknown as { matchState: MatchState }).matchState.setup.basePointsMultiplier).toBe(
+    5,
+  );
 });
 
 test.each([
@@ -173,23 +187,21 @@ test.each([
     localStorage.setItem(settingsStorageKey, badBytes);
     const app = await mountApp();
 
-    expect(
-      document.querySelector('.title-settings-notice')?.textContent,
-    ).toContain(settingsPersistenceNotice);
-    expect(localStorage.getItem(settingsStorageKey)).toBe(badBytes);
+    expect(document.querySelector('.title-settings-notice')?.textContent).toContain(
+      settingsPersistenceNotice,
+    );
+    expect(await storedDocument(settingsStorageKey)).toBe(badBytes);
 
     let settings = await openSettings(app);
     expect(range(settings, 'masterVolume').value).toBe('1');
     expect(range(settings, 'musicVolume').value).toBe('0.1');
-    expect(timer(settings, '30 seconds').getAttribute('aria-pressed')).toBe(
-      'true',
-    );
+    expect(timer(settings, '30 seconds').getAttribute('aria-pressed')).toBe('true');
     changeRange(settings, 'musicVolume', '0.65');
     await app.updateComplete;
     settings = currentSettings();
     await settings.updateComplete;
 
-    expect(localStorage.getItem(settingsStorageKey)).toBe(
+    expect(await storedDocument(settingsStorageKey)).toBe(
       encodeSettings({ ...defaultSettings, musicVolume: 0.65 }),
     );
     expect(settings.querySelector('.settings-persistence-notice')).toBeNull();
@@ -205,18 +217,18 @@ test.each([
 );
 
 test.each([
-  ['quota', 'setItem', new DOMException('Full.', 'QuotaExceededError')],
-  ['security', 'getItem', new DOMException('Blocked.', 'SecurityError')],
-  ['unavailable', 'getItem', new Error('Storage unavailable.')],
+  ['quota', 'write', new DOMException('Full.', 'QuotaExceededError')],
+  ['security', 'open', new DOMException('Blocked.', 'SecurityError')],
+  ['unavailable', 'open', new Error('Storage unavailable.')],
 ] as const)(
   '%s failure uses session fallback, dismisses only the notice, and permits a complete match',
   async (_failure, operation, error) => {
     let app: GrandTransitionApp;
     let settings: GrandTransitionSettings;
-    if (operation === 'setItem') {
+    if (operation === 'write') {
       app = await mountApp();
       settings = await openSettings(app);
-      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementation(() => {
         throw error;
       });
       changeRange(settings, 'effectsVolume', '0.75');
@@ -224,7 +236,7 @@ test.each([
       settings = currentSettings();
       await settings.updateComplete;
     } else {
-      vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      vi.spyOn(IDBFactory.prototype, 'open').mockImplementation(() => {
         throw error;
       });
       app = await mountApp();
@@ -253,25 +265,17 @@ test.each([
     await completeMatch(app);
     await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
 
-    expect(document.querySelector('#round-review-title')?.textContent?.trim()).toBe(
-      'Victory',
-    );
-    const match = document.querySelector(
-      'grand-transition-match',
-    ) as GrandTransitionMatch;
+    expect(document.querySelector('#round-review-title')?.textContent?.trim()).toBe('Victory');
+    const match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
     match.querySelector<HTMLButtonElement>('.round-review-primary')!.click();
     await app.updateComplete;
-    expect(
-      document.querySelector('.title-settings-notice'),
-    ).toBeNull();
+    expect(document.querySelector('.title-settings-notice')).toBeNull();
   },
 );
 
 test('the Settings modal traps focus, closes with Escape, and restores focus', async () => {
   const app = await mountApp();
-  const settingsButton = document.querySelector<HTMLButtonElement>(
-    '.title-settings-action',
-  )!;
+  const settingsButton = document.querySelector<HTMLButtonElement>('.title-settings-action')!;
   const settings = await openSettings(app);
   const close = settings.querySelector<HTMLButtonElement>('.settings-close')!;
   const controls = [
@@ -305,20 +309,16 @@ test('applies the interface language immediately and keeps every other stored va
   );
   const app = await mountApp();
   const settings = await openSettings(app);
-  const select = settings.querySelector<HTMLSelectElement>(
-    'select[name="interfaceLocale"]',
-  )!;
-  const storedKeys = () => Object.keys(localStorage).sort();
+  const select = settings.querySelector<HTMLSelectElement>('select[name="interfaceLocale"]')!;
 
   expect(select.value).toBe('en');
   expect(select.options.length).toBe(2);
-  expect(
-    [...select.options].map((option) => option.textContent?.trim()),
-  ).toEqual(['English', 'Română']);
+  expect([...select.options].map((option) => option.textContent?.trim())).toEqual([
+    'English',
+    'Română',
+  ]);
   expect(document.documentElement.lang).toBe('en');
-  expect(settings.querySelector('output[for="speechRate"]')?.textContent?.trim()).toBe(
-    '1.00×',
-  );
+  expect(settings.querySelector('output[for="speechRate"]')?.textContent?.trim()).toBe('1.00×');
 
   select.focus();
   select.value = 'ro-RO';
@@ -326,20 +326,16 @@ test('applies the interface language immediately and keeps every other stored va
   await app.updateComplete;
   await vi.waitFor(async () => {
     await settings.updateComplete;
-    expect(settings.querySelector('#settings-title')?.textContent?.trim()).toBe(
-      'Setări',
-    );
+    expect(settings.querySelector('#settings-title')?.textContent?.trim()).toBe('Setări');
   });
 
   expect(document.documentElement.lang).toBe('ro-RO');
   expect(document.activeElement).toBe(select);
-  expect(
-    settings.querySelector('output[for="speechRate"]')?.textContent?.trim(),
-  ).toBe('1,00×');
-  expect(
-    document.querySelector('.status')?.textContent?.trim(),
-  ).toBe('În direct, pe Canalul 3 NTV!');
-  expect(JSON.parse(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
+  expect(settings.querySelector('output[for="speechRate"]')?.textContent?.trim()).toBe('1,00×');
+  expect(document.querySelector('.status')?.textContent?.trim()).toBe(
+    'În direct, pe Canalul 3 NTV!',
+  );
+  expect(JSON.parse((await storedDocument(settingsStorageKey))!)).toMatchObject({
     schemaVersion: settingsSchemaVersion,
     interfaceLocale: 'ro-RO',
     basePointsMultiplier: 4,
@@ -351,21 +347,20 @@ test('applies the interface language immediately and keeps every other stored va
   await app.updateComplete;
   await vi.waitFor(async () => {
     await settings.updateComplete;
-    expect(settings.querySelector('#settings-title')?.textContent?.trim()).toBe(
-      'Settings',
-    );
+    expect(settings.querySelector('#settings-title')?.textContent?.trim()).toBe('Settings');
   });
 
   expect(document.documentElement.lang).toBe('en');
   expect(document.querySelector('.status')?.textContent?.trim()).toBe(
     'Live now, on NTV Channel 3!',
   );
-  expect(JSON.parse(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
+  expect(JSON.parse((await storedDocument(settingsStorageKey))!)).toMatchObject({
     interfaceLocale: 'en',
     basePointsMultiplier: 4,
     tutorialMode: true,
   });
-  expect(storedKeys()).toEqual([settingsStorageKey]);
+  expect(await storedDocumentKeys()).toEqual([settingsStorageKey]);
+  expect(Object.keys(localStorage)).toEqual([]);
 });
 
 test('keeps the interface and game languages independent and persists both after reload', async () => {
@@ -374,16 +369,16 @@ test('keeps the interface and game languages independent and persists both after
   let settings = await openSettings(app);
   const interfaceSelect = () =>
     settings.querySelector<HTMLSelectElement>('select[name="interfaceLocale"]')!;
-  const gameSelect = () =>
-    settings.querySelector<HTMLSelectElement>('select[name="gameLocale"]')!;
+  const gameSelect = () => settings.querySelector<HTMLSelectElement>('select[name="gameLocale"]')!;
 
   expect(interfaceSelect().value).toBe('en');
   expect(gameSelect().value).toBe('ro-RO');
   for (const select of [interfaceSelect(), gameSelect()]) {
     expect(select.options.length).toBe(2);
-    expect(
-      [...select.options].map((option) => option.textContent?.trim()),
-    ).toEqual(['English', 'Română']);
+    expect([...select.options].map((option) => option.textContent?.trim())).toEqual([
+      'English',
+      'Română',
+    ]);
   }
 
   const game = gameSelect();
@@ -391,8 +386,8 @@ test('keeps the interface and game languages independent and persists both after
   game.value = 'en';
   game.dispatchEvent(new Event('change', { bubbles: true }));
   await app.updateComplete;
-  await vi.waitFor(() => {
-    expect(JSON.parse(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
+  await vi.waitFor(async () => {
+    expect(JSON.parse((await storedDocument(settingsStorageKey))!)).toMatchObject({
       interfaceLocale: 'en',
       gameLocale: 'en',
     });
@@ -415,12 +410,10 @@ test('keeps the interface and game languages independent and persists both after
   await app.updateComplete;
   await vi.waitFor(async () => {
     await settings.updateComplete;
-    expect(settings.querySelector('#settings-title')?.textContent?.trim()).toBe(
-      'Setări',
-    );
+    expect(settings.querySelector('#settings-title')?.textContent?.trim()).toBe('Setări');
   });
 
-  expect(JSON.parse(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
+  expect(JSON.parse((await storedDocument(settingsStorageKey))!)).toMatchObject({
     interfaceLocale: 'ro-RO',
     gameLocale: 'en',
   });
@@ -436,12 +429,10 @@ test('shows the storage fallback notice in the selected interface language', asy
   let settings = await openSettings(app);
   await vi.waitFor(async () => {
     await settings.updateComplete;
-    expect(settings.querySelector('#settings-title')?.textContent?.trim()).toBe(
-      'Setări',
-    );
+    expect(settings.querySelector('#settings-title')?.textContent?.trim()).toBe('Setări');
   });
 
-  vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+  vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementation(() => {
     throw new Error('Storage unavailable.');
   });
   changeRange(settings, 'effectsVolume', '0.75');
@@ -463,17 +454,14 @@ test('shows the storage fallback notice in the selected interface language', asy
 });
 
 async function mountApp(): Promise<GrandTransitionApp> {
+  await reloadStoredData();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;
   return app;
 }
 
-async function openSettings(
-  app: GrandTransitionApp,
-): Promise<GrandTransitionSettings> {
+async function openSettings(app: GrandTransitionApp): Promise<GrandTransitionSettings> {
   document.querySelector<HTMLButtonElement>('.title-settings-action')!.click();
   await app.updateComplete;
   const settings = currentSettings();
@@ -482,39 +470,31 @@ async function openSettings(
 }
 
 function currentSettings(): GrandTransitionSettings {
-  return document.querySelector(
-    'grand-transition-settings',
-  ) as GrandTransitionSettings;
+  return document.querySelector('grand-transition-settings') as GrandTransitionSettings;
 }
 
-function range(
-  settings: GrandTransitionSettings,
-  name: string,
-): HTMLInputElement {
+function range(settings: GrandTransitionSettings, name: string): HTMLInputElement {
   return settings.querySelector<HTMLInputElement>(`input[name="${name}"]`)!;
 }
 
-function checkbox(
-  settings: GrandTransitionSettings,
-  name: string,
-): HTMLInputElement {
+function checkbox(settings: GrandTransitionSettings, name: string): HTMLInputElement {
   return settings.querySelector<HTMLInputElement>(`input[name="${name}"]`)!;
 }
 
-function timer(
-  settings: GrandTransitionSettings,
-  label: string,
-): HTMLButtonElement {
+// A stored Romanian interface can finish loading before or after a lookup.
+const romanianTimerLabels: Readonly<Record<string, string>> = {
+  '15 seconds': '15 secunde',
+  '30 seconds': '30 de secunde',
+  Unlimited: 'Nelimitat',
+};
+
+function timer(settings: GrandTransitionSettings, label: string): HTMLButtonElement {
   return [...settings.querySelectorAll<HTMLButtonElement>('.settings-options button')].find(
-    (button) => button.textContent?.trim() === label,
+    (button) => [label, romanianTimerLabels[label]].includes(button.textContent?.trim()),
   )!;
 }
 
-function changeRange(
-  settings: GrandTransitionSettings,
-  name: string,
-  value: string,
-): void {
+function changeRange(settings: GrandTransitionSettings, name: string, value: string): void {
   const control = range(settings, name);
   control.value = value;
   control.dispatchEvent(new Event('change', { bubbles: true }));
@@ -532,14 +512,10 @@ async function completeMatch(app: GrandTransitionApp): Promise<void> {
     },
   };
   await app.updateComplete;
-  const match = document.querySelector(
-    'grand-transition-match',
-  ) as GrandTransitionMatch;
+  const match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
   await match.updateComplete;
   match
-    .querySelector<HTMLButtonElement>(
-      '[data-role="predicate"] [data-card-state="legal"]',
-    )!
+    .querySelector<HTMLButtonElement>('[data-role="predicate"] [data-card-state="legal"]')!
     .click();
   await app.updateComplete;
 }

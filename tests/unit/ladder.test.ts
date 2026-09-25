@@ -10,19 +10,16 @@ import {
   recordLadderAttempt,
   recordLadderResult,
   type LadderProgress,
-} from '../../src/engine/ladder';
+} from '../../src/engine/ladder.ts';
 import {
   decodeLadderProgress,
   encodeLadderProgress,
-} from '../../src/persistence/codecs/ladder-progress-codec';
+} from '../../src/persistence/codecs/ladder-progress-codec.ts';
 import {
   LadderProgressRepository,
   ladderProgressStorageKey,
-} from '../../src/persistence/ladder-progress';
-import {
-  createMemoryStorage,
-  type StoragePort,
-} from '../../src/persistence/storage-port';
+} from '../../src/persistence/ladder-progress.ts';
+import { createMemoryStorage, type StoragePort } from '../../src/persistence/storage-port.ts';
 
 const characterIds = [
   'red-folded-chairman',
@@ -94,12 +91,7 @@ const nineRungProgress = Object.freeze({
 
 describe('ladder engine', () => {
   test('gives one unique opponent to each scene of a seeded scene permutation', () => {
-    const progress = createLadderProgress(
-      'red-folded-chairman',
-      22_026,
-      characterIds,
-      sceneIds,
-    );
+    const progress = createLadderProgress('red-folded-chairman', 22_026, characterIds, sceneIds);
     expect(progress).toEqual(golden);
     expect(
       createLadderProgress(
@@ -115,71 +107,102 @@ describe('ladder engine', () => {
     expect(new Set(progress.sceneOrder)).toEqual(new Set(sceneIds));
   });
 
-  test.each([
-    [['only-scene']],
-    [Array.from({ length: 12 }, (_, index) => `scene-${index + 1}`)],
-  ])('sets the rung count from a dynamic catalog of %s scenes', (dynamicSceneIds) => {
-    const progress = createLadderProgress(
-      'red-folded-chairman',
-      22_026,
-      characterIds,
-      dynamicSceneIds,
+  test.each([[['only-scene']], [Array.from({ length: 12 }, (_, index) => `scene-${index + 1}`)]])(
+    'sets the rung count from a dynamic catalog of %s scenes',
+    (dynamicSceneIds) => {
+      const progress = createLadderProgress(
+        'red-folded-chairman',
+        22_026,
+        characterIds,
+        dynamicSceneIds,
+      );
+      expect(ladderRungCount(progress)).toBe(dynamicSceneIds.length);
+      expect(new Set(progress.opponentIds)).toHaveLength(dynamicSceneIds.length);
+      expect(progress.sceneOrder).toHaveLength(dynamicSceneIds.length);
+      expect(new Set(progress.sceneOrder)).toEqual(new Set(dynamicSceneIds));
+      expect(
+        createLadderProgress(
+          'red-folded-chairman',
+          22_026,
+          characterIds,
+          [...dynamicSceneIds].reverse(),
+        ),
+      ).toEqual(progress);
+    },
+  );
+
+  test('rejects empty or duplicate scene catalogs and too few opponents', () => {
+    expect(() => createLadderProgress('red-folded-chairman', 22_026, characterIds, [])).toThrow(
+      'at least one scene identifier',
     );
-    expect(ladderRungCount(progress)).toBe(dynamicSceneIds.length);
-    expect(new Set(progress.opponentIds)).toHaveLength(dynamicSceneIds.length);
-    expect(progress.sceneOrder).toHaveLength(dynamicSceneIds.length);
-    expect(new Set(progress.sceneOrder)).toEqual(new Set(dynamicSceneIds));
-    expect(
+    expect(() =>
+      createLadderProgress('red-folded-chairman', 22_026, characterIds, ['scene-1', 'scene-1']),
+    ).toThrow('unique scene identifiers');
+    expect(() =>
       createLadderProgress(
         'red-folded-chairman',
         22_026,
         characterIds,
-        [...dynamicSceneIds].reverse(),
+        Array.from({ length: 18 }, (_, index) => `scene-${index + 1}`),
       ),
-    ).toEqual(progress);
-  });
-
-  test('rejects empty or duplicate scene catalogs and too few opponents', () => {
-    expect(() => createLadderProgress(
-      'red-folded-chairman', 22_026, characterIds, [],
-    )).toThrow('at least one scene identifier');
-    expect(() => createLadderProgress(
-      'red-folded-chairman', 22_026, characterIds, ['scene-1', 'scene-1'],
-    )).toThrow('unique scene identifiers');
-    expect(() => createLadderProgress(
-      'red-folded-chairman',
-      22_026,
-      characterIds,
-      Array.from({ length: 18 }, (_, index) => `scene-${index + 1}`),
-    )).toThrow('A ladder of 18 rungs needs at least 18 non-player characters.');
+    ).toThrow('A ladder of 18 rungs needs at least 18 non-player characters.');
   });
 
   test.each([
     [1, ['palace-operator']],
     [2, ['party-strategist', 'palace-operator']],
     [3, ['local-radio-caller', 'party-strategist', 'palace-operator']],
-    [7, [
-      'local-radio-caller', 'local-radio-caller',
-      'party-strategist', 'party-strategist',
-      'palace-operator', 'palace-operator', 'palace-operator',
-    ]],
-    [8, [
-      'local-radio-caller', 'local-radio-caller',
-      'party-strategist', 'party-strategist', 'party-strategist',
-      'palace-operator', 'palace-operator', 'palace-operator',
-    ]],
-    [9, [
-      'local-radio-caller', 'local-radio-caller', 'local-radio-caller',
-      'party-strategist', 'party-strategist', 'party-strategist',
-      'palace-operator', 'palace-operator', 'palace-operator',
-    ]],
-  ] as const)('splits %s rungs into thirds with extra rungs on the harder tiers', (rungCount, expected) => {
-    expect(
-      Array.from({ length: rungCount }, (_, index) => ladderDifficulty(index, rungCount)),
-    ).toEqual(expected);
-    expect(() => ladderDifficulty(rungCount, rungCount)).toThrow(`Unknown ladder rung ${rungCount}.`);
-    expect(() => ladderDifficulty(-1, rungCount)).toThrow('Unknown ladder rung -1.');
-  });
+    [
+      7,
+      [
+        'local-radio-caller',
+        'local-radio-caller',
+        'party-strategist',
+        'party-strategist',
+        'palace-operator',
+        'palace-operator',
+        'palace-operator',
+      ],
+    ],
+    [
+      8,
+      [
+        'local-radio-caller',
+        'local-radio-caller',
+        'party-strategist',
+        'party-strategist',
+        'party-strategist',
+        'palace-operator',
+        'palace-operator',
+        'palace-operator',
+      ],
+    ],
+    [
+      9,
+      [
+        'local-radio-caller',
+        'local-radio-caller',
+        'local-radio-caller',
+        'party-strategist',
+        'party-strategist',
+        'party-strategist',
+        'palace-operator',
+        'palace-operator',
+        'palace-operator',
+      ],
+    ],
+  ] as const)(
+    'splits %s rungs into thirds with extra rungs on the harder tiers',
+    (rungCount, expected) => {
+      expect(
+        Array.from({ length: rungCount }, (_, index) => ladderDifficulty(index, rungCount)),
+      ).toEqual(expected);
+      expect(() => ladderDifficulty(rungCount, rungCount)).toThrow(
+        `Unknown ladder rung ${rungCount}.`,
+      );
+      expect(() => ladderDifficulty(-1, rungCount)).toThrow('Unknown ladder rung -1.');
+    },
+  );
 
   test('plays each rung on its own scene', () => {
     expect(currentLadderRung(golden)).toEqual({
@@ -214,43 +237,28 @@ describe('ladder engine', () => {
     expect(reconciled).toEqual({
       ...started,
       sceneOrder: started.sceneOrder.map((sceneId) =>
-        sceneId === 'modern-debate-studio'
-          ? reconciled.sceneOrder[4]
-          : sceneId),
+        sceneId === 'modern-debate-studio' ? reconciled.sceneOrder[4] : sceneId,
+      ),
     });
-    expect(['future-scene-one', 'future-scene-two']).toContain(
-      reconciled.sceneOrder[4],
-    );
+    expect(['future-scene-one', 'future-scene-two']).toContain(reconciled.sceneOrder[4]);
     expect(ladderRungCount(reconciled)).toBe(sceneIds.length);
     expect(new Set(reconciled.sceneOrder)).toHaveLength(sceneIds.length);
-    expect(reconcileLadderScenes(started, [...changedSceneIds].reverse()))
-      .toEqual(reconciled);
+    expect(reconcileLadderScenes(started, [...changedSceneIds].reverse())).toEqual(reconciled);
     expect(reconcileLadderScenes(reconciled, changedSceneIds)).toBe(reconciled);
-    expect(ladderProgressMatchesCatalog(
-      reconciled,
-      characterIds,
-      changedSceneIds,
-    )).toBe(true);
+    expect(ladderProgressMatchesCatalog(reconciled, characterIds, changedSceneIds)).toBe(true);
   });
 
   test('ignores added scenes and reuses a playable scene when none is unused', () => {
-    expect(reconcileLadderScenes(golden, [...sceneIds, 'future-scene']))
-      .toBe(golden);
-    const remainingSceneIds = sceneIds.filter(
-      (sceneId) => sceneId !== 'palace-press-hall',
-    );
+    expect(reconcileLadderScenes(golden, [...sceneIds, 'future-scene'])).toBe(golden);
+    const remainingSceneIds = sceneIds.filter((sceneId) => sceneId !== 'palace-press-hall');
     const reconciled = reconcileLadderScenes(golden, remainingSceneIds);
     expect(reconciled.sceneOrder).toHaveLength(sceneIds.length);
     expect(remainingSceneIds).toContain(reconciled.sceneOrder[1]);
-    expect(reconciled.sceneOrder.filter((_, index) => index !== 1))
-      .toEqual(golden.sceneOrder.filter((_, index) => index !== 1));
-    expect(reconcileLadderScenes(golden, [...remainingSceneIds].reverse()))
-      .toEqual(reconciled);
-    expect(ladderProgressMatchesCatalog(
-      reconciled,
-      characterIds,
-      remainingSceneIds,
-    )).toBe(true);
+    expect(reconciled.sceneOrder.filter((_, index) => index !== 1)).toEqual(
+      golden.sceneOrder.filter((_, index) => index !== 1),
+    );
+    expect(reconcileLadderScenes(golden, [...remainingSceneIds].reverse())).toEqual(reconciled);
+    expect(ladderProgressMatchesCatalog(reconciled, characterIds, remainingSceneIds)).toBe(true);
   });
 
   test('keeps the rung on loss and abandon, and completes after the last win', () => {
@@ -280,7 +288,8 @@ describe('ladder engine', () => {
     const previousSeed = (progress: LadderProgress) =>
       ((progress.seed >>> 0) ^
         Math.imul(progress.rungIndex + 1, 0x9e37_79b1) ^
-        Math.imul(progress.losses + 1, 0x85eb_ca6b)) >>> 0;
+        Math.imul(progress.losses + 1, 0x85eb_ca6b)) >>>
+      0;
     expect(ladderMatchSeed(golden)).toBe(previousSeed(golden));
 
     const started = recordLadderAttempt(golden);
@@ -298,9 +307,7 @@ describe('ladder engine', () => {
   });
 
   test('rejects progress that no longer matches the playable catalog', () => {
-    expect(ladderProgressMatchesCatalog(golden, characterIds, sceneIds)).toBe(
-      true,
-    );
+    expect(ladderProgressMatchesCatalog(golden, characterIds, sceneIds)).toBe(true);
     expect(
       ladderProgressMatchesCatalog(
         golden,
@@ -378,18 +385,12 @@ describe('ladder progress codec and repository', () => {
   });
 
   test('rejects unsupported versions, unknown fields, duplicate opponents, and invalid encoding', () => {
-    expect(
-      decodeLadderProgress(
-        JSON.stringify({ ...golden, schemaVersion: 3 }),
-      ),
-    ).toEqual({
+    expect(decodeLadderProgress(JSON.stringify({ ...golden, schemaVersion: 3 }))).toEqual({
       ok: false,
       code: 'unsupported-version',
       path: 'schemaVersion',
     });
-    expect(
-      decodeLadderProgress(JSON.stringify({ ...golden, tutorialStep: 1 })),
-    ).toEqual({
+    expect(decodeLadderProgress(JSON.stringify({ ...golden, tutorialStep: 1 }))).toEqual({
       ok: false,
       code: 'invalid-data',
       path: 'tutorialStep',
@@ -402,13 +403,16 @@ describe('ladder progress codec and repository', () => {
         }),
       ),
     ).toMatchObject({ ok: false, code: 'invalid-data', path: 'opponentIds' });
-    expect(() =>
-      encodeLadderProgress({ ...golden, wins: 1 }),
-    ).toThrow('Ladder progress is invalid at wins.');
+    expect(() => encodeLadderProgress({ ...golden, wins: 1 })).toThrow(
+      'Ladder progress is invalid at wins.',
+    );
   });
 
   test.each([
-    ['opponentIds', { opponentIds: [...golden.opponentIds.slice(0, 6), golden.selectedCharacterId] }],
+    [
+      'opponentIds',
+      { opponentIds: [...golden.opponentIds.slice(0, 6), golden.selectedCharacterId] },
+    ],
     ['sceneOrder', { sceneOrder: [] }],
     ['sceneOrder', { sceneOrder: golden.sceneOrder.slice(1) }],
     ['rungIndex', { rungIndex: 8, wins: 8 }],
@@ -432,7 +436,13 @@ describe('ladder progress codec and repository', () => {
   });
 
   test('migrates nine-rung progress to one rung per stored scene', () => {
-    const atRungThree = { ...nineRungProgress, rungIndex: 2, wins: 2, losses: 4, unfinishedAttempts: 1 };
+    const atRungThree = {
+      ...nineRungProgress,
+      rungIndex: 2,
+      wins: 2,
+      losses: 4,
+      unfinishedAttempts: 1,
+    };
     const migrated = decodeLadderProgress(JSON.stringify(atRungThree));
     expect(migrated).toEqual({
       ok: true,
@@ -466,15 +476,23 @@ describe('ladder progress codec and repository', () => {
   });
 
   test('rejects corrupt nine-rung progress instead of migrating it', () => {
-    expect(decodeLadderProgress(JSON.stringify({
-      ...nineRungProgress,
-      opponentIds: nineRungProgress.opponentIds.slice(0, 8),
-    }))).toMatchObject({ ok: false, code: 'invalid-data', path: 'opponentIds' });
-    expect(decodeLadderProgress(JSON.stringify({
-      ...nineRungProgress,
-      rungIndex: 9,
-      wins: 9,
-    }))).toMatchObject({ ok: false, code: 'invalid-data', path: 'completed' });
+    expect(
+      decodeLadderProgress(
+        JSON.stringify({
+          ...nineRungProgress,
+          opponentIds: nineRungProgress.opponentIds.slice(0, 8),
+        }),
+      ),
+    ).toMatchObject({ ok: false, code: 'invalid-data', path: 'opponentIds' });
+    expect(
+      decodeLadderProgress(
+        JSON.stringify({
+          ...nineRungProgress,
+          rungIndex: 9,
+          wins: 9,
+        }),
+      ),
+    ).toMatchObject({ ok: false, code: 'invalid-data', path: 'completed' });
   });
 
   test('keeps nine-rung bytes until the migrated progress replaces them', () => {

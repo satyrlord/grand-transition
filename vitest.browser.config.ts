@@ -8,10 +8,7 @@ import { characterPortraitFallbackPlugin } from './vite.config.ts';
 const pureFileThresholds = Object.fromEntries(
   ['src/engine', 'src/ai', 'src/simulation', 'src/persistence/codecs']
     .flatMap((root) => listTypeScriptFiles(root))
-    .map((file) => [
-      file,
-      { statements: 90, branches: 85, functions: 90, lines: 90 },
-    ]),
+    .map((file) => [file, { statements: 90, branches: 85, functions: 90, lines: 90 }]),
 );
 const browserApiPort = await findAvailableLoopbackPort();
 

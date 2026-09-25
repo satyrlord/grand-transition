@@ -1,15 +1,10 @@
 import { availableParallelism } from 'node:os';
-import {
-  isMainThread,
-  parentPort,
-  Worker,
-  workerData,
-} from 'node:worker_threads';
-import { loadGameContent } from './load-game-content';
-import { basicScoringBalance } from '../src/content/basic-scoring-balance';
-import type { Phrase } from '../src/content/schemas';
-import { scoreClause, type ScoreClause } from '../src/engine/basic-scoring';
-import { fullQualityGateRequested } from './quality-gate-mode';
+import { isMainThread, parentPort, Worker, workerData } from 'node:worker_threads';
+import { loadGameContent } from './load-game-content.ts';
+import { basicScoringBalance } from '../src/content/basic-scoring-balance.ts';
+import type { Phrase } from '../src/content/schemas.ts';
+import { scoreClause, type ScoreClause } from '../src/engine/basic-scoring.ts';
+import { fullQualityGateRequested } from './quality-gate-mode.ts';
 
 const baseSeed = 2_026_091_600;
 const matchesPerCell = 500;
@@ -76,11 +71,7 @@ function createRandom(seed: number): RandomSource {
   };
 }
 
-function addAggregate(
-  map: Map<string, Aggregates>,
-  id: string,
-  values: Partial<Aggregates>,
-): void {
+function addAggregate(map: Map<string, Aggregates>, id: string, values: Partial<Aggregates>): void {
   const current = map.get(id) ?? { games: 0, wins: 0, damage: 0, rounds: 0 };
   current.games += values.games ?? 0;
   current.wins += values.wins ?? 0;
@@ -115,8 +106,9 @@ function scoreNormalizedConstruction(
 ): number | null {
   const selected = ids.map((id) => phraseById.get(id));
   if (selected.some((phrase) => phrase === undefined)) return null;
-  const relation = selected.find((phrase) =>
-    phrase!.role === 'verb' || phrase!.role === 'predicate');
+  const relation = selected.find(
+    (phrase) => phrase!.role === 'verb' || phrase!.role === 'predicate',
+  );
   if (!relation) return null;
   const nounPhraseIds = selected
     .filter((phrase) => phrase!.role === 'noun')
@@ -126,16 +118,9 @@ function scoreNormalizedConstruction(
     nounPhraseIds,
     relationPhraseId: relation.id,
   };
-  const scored = scoreClause(
-    clause,
-    phraseById,
-    defenderWeaknessTags,
-    basicScoringBalance,
-  );
+  const scored = scoreClause(clause, phraseById, defenderWeaknessTags, basicScoringBalance);
   const ending = selected.find((phrase) => phrase!.role === 'ending');
-  const finisherWeakness = ending && defenderWeaknessTags.some((tag) =>
-    ending.tags.includes(tag),
-  );
+  const finisherWeakness = ending && defenderWeaknessTags.some((tag) => ending.tags.includes(tag));
   const finisherDamage = ending
     ? Math.ceil(ending.finisherBonus ?? 0) *
       (finisherWeakness ? basicScoringBalance.weaknessMultiplier : 1)
@@ -152,7 +137,10 @@ function structuralPotential(
     for (const scene of catalog.scenes) {
       const eligibleIds = new Set([
         ...catalog.phrases
-          .filter((phrase) => !phrase.characterIds && (!phrase.sceneIds || phrase.sceneIds.includes(scene.id)))
+          .filter(
+            (phrase) =>
+              !phrase.characterIds && (!phrase.sceneIds || phrase.sceneIds.includes(scene.id)),
+          )
           .map((phrase) => phrase.id),
         ...character.characterPhraseIds,
       ]);
@@ -160,7 +148,9 @@ function structuralPotential(
         .map((id) => byId.get(id)!)
         .filter((phrase) => phrase.role !== 'continuation' && phrase.role !== 'conjunction');
       const nouns = eligible.filter((phrase) => phrase.role === 'noun');
-      const relations = eligible.filter((phrase) => phrase.role === 'verb' || phrase.role === 'predicate');
+      const relations = eligible.filter(
+        (phrase) => phrase.role === 'verb' || phrase.role === 'predicate',
+      );
       const modifiers = eligible.filter((phrase) => phrase.role === 'modifier');
       const endings = eligible.filter((phrase) => phrase.role === 'ending');
       let directDamage = 0;
@@ -182,11 +172,7 @@ function structuralPotential(
           if (endings.length > 0 && random() < 0.75) {
             ids.push(weightedPick(endings, random).id);
           }
-          const score = scoreNormalizedConstruction(
-            ids,
-            byId,
-            defender.weaknessTags,
-          );
+          const score = scoreNormalizedConstruction(ids, byId, defender.weaknessTags);
           if (score === null) continue;
           directDamage += score;
           samples += 1;
@@ -290,27 +276,15 @@ function simulateDirectCells(
     const leftPhrases = directEligiblePhrases(catalog, left.id, cell.sceneId);
     const rightPhrases = directEligiblePhrases(catalog, right.id, cell.sceneId);
     for (let match = 0; match < matchesPerCell; match += 1) {
-      const random = createRandom(
-        (baseSeed + cell.cellIndex * matchesPerCell + match) >>> 0,
-      );
+      const random = createRandom((baseSeed + cell.cellIndex * matchesPerCell + match) >>> 0);
       let leftPride = 100;
       let rightPride = 100;
       let rounds = 0;
       let leftDamageTotal = 0;
       let rightDamageTotal = 0;
       while (leftPride > 0 && rightPride > 0 && rounds < 100) {
-        const leftDamage = sampleDirectDamage(
-          leftPhrases,
-          phraseById,
-          right.weaknessTags,
-          random,
-        );
-        const rightDamage = sampleDirectDamage(
-          rightPhrases,
-          phraseById,
-          left.weaknessTags,
-          random,
-        );
+        const leftDamage = sampleDirectDamage(leftPhrases, phraseById, right.weaknessTags, random);
+        const rightDamage = sampleDirectDamage(rightPhrases, phraseById, left.weaknessTags, random);
         leftPride = Math.max(0, leftPride - rightDamage);
         rightPride = Math.max(0, rightPride - leftDamage);
         leftDamageTotal += leftDamage;
@@ -370,17 +344,11 @@ function runBalanceWorker(): void {
   const data = workerData as BalanceWorkerData;
   const { gameCatalog } = loadGameContent();
   const cells = createBalanceCells(gameCatalog);
-  const chunk = simulateDirectCells(
-    gameCatalog,
-    cells.slice(data.start, data.end),
-  );
+  const chunk = simulateDirectCells(gameCatalog, cells.slice(data.start, data.end));
   parentPort!.postMessage(chunk);
 }
 
-function runWorkerSlice(
-  start: number,
-  end: number,
-): Promise<SimulationChunk> {
+function runWorkerSlice(start: number, end: number): Promise<SimulationChunk> {
   return new Promise((resolve, reject) => {
     const worker = new Worker(new URL(import.meta.url), {
       execArgv: process.execArgv,
@@ -407,13 +375,13 @@ function runWorkerSlice(
   });
 }
 
-async function simulateBalance(
-  catalog: ReturnType<typeof loadGameContent>['gameCatalog'],
-): Promise<Readonly<{
-  characters: readonly BalanceRow[];
-  scenes: readonly BalanceRow[];
-  globalDamagePerRound: number;
-}>> {
+async function simulateBalance(catalog: ReturnType<typeof loadGameContent>['gameCatalog']): Promise<
+  Readonly<{
+    characters: readonly BalanceRow[];
+    scenes: readonly BalanceRow[];
+    globalDamagePerRound: number;
+  }>
+> {
   const cells = createBalanceCells(catalog);
   const workerCount = Math.max(
     1,
@@ -445,23 +413,27 @@ async function simulateBalance(
 async function main(): Promise<void> {
   const { gameCatalog } = loadGameContent();
   const structural = structuralPotential(gameCatalog);
-  const structuralMean = structural.reduce((sum, row) => sum + row.averageDirectDamage, 0) / structural.length;
-  const structuralFailures = structural.filter((row) =>
-    row.averageDirectDamage < structuralMean * (1 - damageRatioTolerance) ||
-    row.averageDirectDamage > structuralMean * (1 + damageRatioTolerance),
+  const structuralMean =
+    structural.reduce((sum, row) => sum + row.averageDirectDamage, 0) / structural.length;
+  const structuralFailures = structural.filter(
+    (row) =>
+      row.averageDirectDamage < structuralMean * (1 - damageRatioTolerance) ||
+      row.averageDirectDamage > structuralMean * (1 + damageRatioTolerance),
   );
   const simulation = await simulateBalance(gameCatalog);
-  const characterFailures = simulation.characters.filter((row) =>
-    row.winRate < 0.5 - winRateTolerance ||
-    row.winRate > 0.5 + winRateTolerance ||
-    row.damagePerRound < simulation.globalDamagePerRound * (1 - damageRatioTolerance) ||
-    row.damagePerRound > simulation.globalDamagePerRound * (1 + damageRatioTolerance),
+  const characterFailures = simulation.characters.filter(
+    (row) =>
+      row.winRate < 0.5 - winRateTolerance ||
+      row.winRate > 0.5 + winRateTolerance ||
+      row.damagePerRound < simulation.globalDamagePerRound * (1 - damageRatioTolerance) ||
+      row.damagePerRound > simulation.globalDamagePerRound * (1 + damageRatioTolerance),
   );
-  const sceneFailures = simulation.scenes.filter((row) =>
-    row.winRate < 0.5 - winRateTolerance ||
-    row.winRate > 0.5 + winRateTolerance ||
-    row.damagePerRound < simulation.globalDamagePerRound * (1 - damageRatioTolerance) ||
-    row.damagePerRound > simulation.globalDamagePerRound * (1 + damageRatioTolerance),
+  const sceneFailures = simulation.scenes.filter(
+    (row) =>
+      row.winRate < 0.5 - winRateTolerance ||
+      row.winRate > 0.5 + winRateTolerance ||
+      row.damagePerRound < simulation.globalDamagePerRound * (1 - damageRatioTolerance) ||
+      row.damagePerRound > simulation.globalDamagePerRound * (1 + damageRatioTolerance),
   );
   const report = {
     contract: {
@@ -484,9 +456,7 @@ async function main(): Promise<void> {
 }
 
 if (!fullQualityGateRequested()) {
-  console.error(
-    'Content balance validation is only available through npm run quality:full.',
-  );
+  console.error('Content balance validation is only available through npm run quality:full.');
   process.exitCode = 1;
 } else if (isMainThread) {
   void main();

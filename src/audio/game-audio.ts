@@ -1,11 +1,15 @@
-import type { MatchTransition } from '../app/match-coordinator';
-import type { MatchCommand } from '../engine/match-lifecycle';
-import type { AudioPort, EffectId } from './audio-port';
+import type { MatchTransition } from '../app/match-coordinator.ts';
+import type { MatchCommand } from '../engine/match-lifecycle.ts';
+import type { AudioPort, EffectId } from './audio-port.ts';
 
 /** Projects accepted public events once; it never inspects private cards. */
 export class GameAudio {
   private readonly handled = new WeakSet<MatchTransition['state']>();
-  constructor(private readonly audio: AudioPort) {}
+  private readonly audio: AudioPort;
+
+  constructor(audio: AudioPort) {
+    this.audio = audio;
+  }
 
   accepted(command: MatchCommand, transition: MatchTransition): void {
     if (this.handled.has(transition.state)) return;
@@ -14,7 +18,8 @@ export class GameAudio {
     if (transition.reaction?.kind === 'grammar-mistake') cues.add('grammar-mistake');
     else if (command.type === 'select-phrase') {
       const publicState = transition.review?.state ?? transition.state;
-      const ended = command.actorId &&
+      const ended =
+        command.actorId &&
         publicState.draft?.playerStates[command.actorId]?.construction.status === 'ended';
       cues.add(ended ? 'commit' : 'role-select');
     }

@@ -1,4 +1,4 @@
-import type { InterfaceLocale } from './interface-locale';
+import type { InterfaceLocale } from './interface-locale.ts';
 
 // Interface display names for the fictional characters, scenes, and weakness
 // labels. They are interface text: the interface locale owns them, and the game
@@ -95,7 +95,7 @@ export function displayCharacterName(
   interfaceLocale: InterfaceLocale,
 ): string {
   return interfaceLocale === 'ro-RO'
-    ? romanianCharacterNames[characterId] ?? englishName
+    ? (romanianCharacterNames[characterId] ?? englishName)
     : englishName;
 }
 
@@ -104,18 +104,13 @@ export function displaySceneName(
   englishName: string,
   interfaceLocale: InterfaceLocale,
 ): string {
-  return interfaceLocale === 'ro-RO'
-    ? romanianSceneNames[sceneId] ?? englishName
-    : englishName;
+  return interfaceLocale === 'ro-RO' ? (romanianSceneNames[sceneId] ?? englishName) : englishName;
 }
 
 // Resolution falls back to the tag in title case, so an unknown tag renders
 // something readable in either language. A unit test requires a Romanian name
 // for every shipped tag, so an accepted build never shows the fallback.
-export function displayWeaknessName(
-  weaknessTag: string,
-  interfaceLocale: InterfaceLocale,
-): string {
+export function displayWeaknessName(weaknessTag: string, interfaceLocale: InterfaceLocale): string {
   if (interfaceLocale === 'ro-RO') {
     return romanianWeaknessNames[weaknessTag] ?? titleCase(weaknessTag);
   }

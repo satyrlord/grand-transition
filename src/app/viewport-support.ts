@@ -18,8 +18,10 @@ export interface ViewportSize {
 export function isSupportedViewport(viewport: ViewportSize): boolean {
   if (!Number.isFinite(viewport.width) || !Number.isFinite(viewport.height)) return false;
   if (isPortraitViewport(viewport)) {
-    return viewport.width >= minimumPortraitViewport.width &&
-      viewport.height >= minimumPortraitViewport.height;
+    return (
+      viewport.width >= minimumPortraitViewport.width &&
+      viewport.height >= minimumPortraitViewport.height
+    );
   }
   return (
     viewport.width >= minimumSupportedViewport.width &&

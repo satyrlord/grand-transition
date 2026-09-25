@@ -1,11 +1,18 @@
 import { expect, test, vi } from 'vitest';
+// The type suppression applies to one line, so this import stays on one line.
+// prettier-ignore
 // @ts-expect-error The workflow transport is a native ECMAScript module.
 import { buildFlareRequest, sendFlareRequest, validateFlareSize } from '../../.github/skills/generate-scene-openai/scripts/openai-api.mjs';
 
-const options = { promptText: 'Private synthetic prompt', size: '2048x2048', background: 'transparent' };
+const options = {
+  promptText: 'Private synthetic prompt',
+  size: '2048x2048',
+  background: 'transparent',
+};
 
 test('Flare accepts supported custom dimensions and rejects invalid API sizes', () => {
-  for (const size of ['1024x1024', '2048x2048', '3840x2160', '2160x3840']) expect(validateFlareSize(size).pixels).toBeGreaterThanOrEqual(655_360);
+  for (const size of ['1024x1024', '2048x2048', '3840x2160', '2160x3840'])
+    expect(validateFlareSize(size).pixels).toBeGreaterThanOrEqual(655_360);
   for (const size of ['auto', '256x256', '2049x2048', '4096x2048', '3840x3840', '3840x512']) {
     expect(() => validateFlareSize(size)).toThrow('supported Flare dimensions');
   }
@@ -14,13 +21,26 @@ test('Flare accepts supported custom dimensions and rejects invalid API sizes', 
 test('text requests preserve model, prompt, exact size and native transparency', () => {
   const request = buildFlareRequest(options);
   expect(request.endpoint).toBe('https://api.openai.com/v1/images/generations');
-  expect(JSON.parse(request.body)).toEqual({ model: 'gpt-image-2.5-flare', prompt: options.promptText,
-    size: options.size, background: 'transparent', quality: 'high', output_format: 'png', n: 1 });
+  expect(JSON.parse(request.body)).toEqual({
+    model: 'gpt-image-2.5-flare',
+    prompt: options.promptText,
+    size: options.size,
+    background: 'transparent',
+    quality: 'high',
+    output_format: 'png',
+    n: 1,
+  });
 });
 
 test('reference requests use multipart image arrays with exact input bytes', async () => {
   const bytes = Buffer.from('synthetic image bytes');
-  const request = buildFlareRequest({ ...options, referenceImages: [{ bytes, format: 'png' }, { bytes, format: 'webp' }] });
+  const request = buildFlareRequest({
+    ...options,
+    referenceImages: [
+      { bytes, format: 'png' },
+      { bytes, format: 'webp' },
+    ],
+  });
   expect(request.endpoint).toBe('https://api.openai.com/v1/images/edits');
   expect(request.contentType).toBeUndefined();
   expect(request.body.get('model')).toBe('gpt-image-2.5-flare');
@@ -35,36 +55,67 @@ test('reference requests use multipart image arrays with exact input bytes', asy
 
 test('transport uses one fixed-origin request and returns image bytes without changing them', async () => {
   const bytes = Buffer.from('synthetic result');
-  const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify({ data: [{ b64_json: bytes.toString('base64') }] })));
-  expect(await sendFlareRequest(buildFlareRequest(options), 'synthetic-key', fetcher)).toEqual(bytes);
+  const fetcher = vi
+    .fn()
+    .mockResolvedValue(
+      new Response(JSON.stringify({ data: [{ b64_json: bytes.toString('base64') }] })),
+    );
+  expect(await sendFlareRequest(buildFlareRequest(options), 'synthetic-key', fetcher)).toEqual(
+    bytes,
+  );
   expect(fetcher).toHaveBeenCalledTimes(1);
   expect(fetcher.mock.calls[0]![0]).toBe('https://api.openai.com/v1/images/generations');
-  expect(fetcher.mock.calls[0]![1]).toMatchObject({ method: 'POST', redirect: 'error', headers: { Authorization: 'Bearer synthetic-key' } });
+  expect(fetcher.mock.calls[0]![1]).toMatchObject({
+    method: 'POST',
+    redirect: 'error',
+    headers: { Authorization: 'Bearer synthetic-key' },
+  });
 });
 
-test.each([400, 401, 403, 429, 500])('HTTP %s errors do not expose provider bodies or repeat requests', async (status) => {
-  const fetcher = vi.fn().mockResolvedValue(new Response('private prompt and synthetic-key', { status }));
-  let caught: unknown;
-  try { await sendFlareRequest(buildFlareRequest(options), 'synthetic-key', fetcher); }
-  catch (error) { caught = error; }
-  expect(String(caught)).toContain(`HTTP ${status}`);
-  expect(String(caught)).not.toContain('synthetic-key');
-  expect(String(caught)).not.toContain('private prompt');
-  expect(fetcher).toHaveBeenCalledTimes(1);
-});
+test.each([400, 401, 403, 429, 500])(
+  'HTTP %s errors do not expose provider bodies or repeat requests',
+  async (status) => {
+    const fetcher = vi
+      .fn()
+      .mockResolvedValue(new Response('private prompt and synthetic-key', { status }));
+    let caught: unknown;
+    try {
+      await sendFlareRequest(buildFlareRequest(options), 'synthetic-key', fetcher);
+    } catch (error) {
+      caught = error;
+    }
+    expect(String(caught)).toContain(`HTTP ${status}`);
+    expect(String(caught)).not.toContain('synthetic-key');
+    expect(String(caught)).not.toContain('private prompt');
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  },
+);
 
 test('uncertain network failure and invalid image responses are not retried', async () => {
   const fetcher = vi.fn().mockRejectedValue(new Error('synthetic-key included in upstream error'));
-  await expect(sendFlareRequest(buildFlareRequest(options), 'synthetic-key', fetcher))
-    .rejects.toThrow('The billing result is unknown');
+  await expect(
+    sendFlareRequest(buildFlareRequest(options), 'synthetic-key', fetcher),
+  ).rejects.toThrow('The billing result is unknown');
   expect(fetcher).toHaveBeenCalledTimes(1);
-  const invalid = vi.fn().mockResolvedValue(new Response(JSON.stringify({ data: [{ url: 'https://invalid.example/image' }] })));
-  await expect(sendFlareRequest(buildFlareRequest(options), 'synthetic-key', invalid)).rejects.toThrow('no usable image payload');
+  const invalid = vi
+    .fn()
+    .mockResolvedValue(
+      new Response(JSON.stringify({ data: [{ url: 'https://invalid.example/image' }] })),
+    );
+  await expect(
+    sendFlareRequest(buildFlareRequest(options), 'synthetic-key', invalid),
+  ).rejects.toThrow('no usable image payload');
   expect(invalid).toHaveBeenCalledTimes(1);
 });
 
 test('credentials cannot be redirected through a substituted endpoint', async () => {
   const fetcher = vi.fn();
-  await expect(sendFlareRequest({ ...buildFlareRequest(options), endpoint: 'https://invalid.example' }, 'synthetic-key', fetcher)).rejects.toThrow('fixed OpenAI');
+  await expect(
+    sendFlareRequest(
+      { ...buildFlareRequest(options), endpoint: 'https://invalid.example' },
+      'synthetic-key',
+      fetcher,
+    ),
+  ).rejects.toThrow('fixed OpenAI');
   expect(fetcher).not.toHaveBeenCalled();
 });

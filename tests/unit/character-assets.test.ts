@@ -5,7 +5,7 @@ import {
   characterAssetManifest,
   characterImageSizes,
   resolveCharacterAsset,
-} from '../../src/app/character-assets';
+} from '../../src/app/character-assets.ts';
 
 describe('character asset resolver', () => {
   test('keeps every character variant outside the JavaScript bundle', async () => {
@@ -19,12 +19,8 @@ describe('character asset resolver', () => {
       path.resolve(process.cwd(), 'src', 'game-content.ts'),
       'utf8',
     );
-    expect(gameContentSource).not.toMatch(
-      /import\.meta\.glob\([^)]*assets\/characters\/\*\.png/su,
-    );
-    expect(gameContentSource).toContain(
-      "from 'virtual:character-portrait-fallbacks'",
-    );
+    expect(gameContentSource).not.toMatch(/import\.meta\.glob\([^)]*assets\/characters\/\*\.png/su);
+    expect(gameContentSource).toContain("from 'virtual:character-portrait-fallbacks'");
   });
 
   test('maps the fixed inventory to responsive AVIF and WebP sources', () => {
@@ -57,9 +53,7 @@ describe('character asset resolver', () => {
       skinId: 'default',
       stateId: 'selection',
     });
-    expect(
-      resolveCharacterAsset('red-folded-chairman--alternate'),
-    ).toMatchObject({
+    expect(resolveCharacterAsset('red-folded-chairman--alternate')).toMatchObject({
       ownerId: 'red-folded-chairman',
       skinId: 'alternate',
     });

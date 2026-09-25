@@ -1,25 +1,24 @@
 import { z } from 'zod';
-import { basePointsMultiplierSchema, type BasePointsMultiplier } from '../../content/basic-scoring-balance';
+import {
+  basePointsMultiplierSchema,
+  type BasePointsMultiplier,
+} from '../../content/basic-scoring-balance.ts';
 import {
   defaultInterfaceLocale,
   interfaceLocales,
   type InterfaceLocale,
-} from '../../localization/interface-locale';
-import {
-  defaultGameLocale,
-  gameLocales,
-  type GameLocale,
-} from '../../localization/game-locale';
-import { normalizedJson } from './replay-codec';
-import type { VersionedCodec } from '../storage-port';
-import { deepFreeze, isRecord } from '../../engine/plain-values';
+} from '../../localization/interface-locale.ts';
+import { defaultGameLocale, gameLocales, type GameLocale } from '../../localization/game-locale.ts';
+import { normalizedJson } from './replay-codec.ts';
+import type { VersionedCodec } from '../storage-port.ts';
+import { deepFreeze, isRecord } from '../../engine/plain-values.ts';
 
 // One settings document format exists at a time. A field addition changes that
 // format and requires a new version, but no earlier document is migrated.
 export const settingsSchemaVersion = 3;
 
 export type TurnTimerSeconds = 15 | 30 | null;
-export type { BasePointsMultiplier } from '../../content/basic-scoring-balance';
+export type { BasePointsMultiplier } from '../../content/basic-scoring-balance.ts';
 
 export type SettingsDocument = Readonly<{
   schemaVersion: 3;
@@ -46,12 +45,14 @@ export type SettingsCodecFailure = Readonly<{
 }>;
 
 export type SettingsCodecResult =
-  | Readonly<{ ok: true; value: SettingsDocument }>
-  | SettingsCodecFailure;
+  Readonly<{ ok: true; value: SettingsDocument }> | SettingsCodecFailure;
 
 export class SettingsValidationError extends Error {
-  constructor(readonly path: string) {
+  readonly path: string;
+
+  constructor(path: string) {
     super(`Settings data is invalid at ${path}.`);
+    this.path = path;
     this.name = 'SettingsValidationError';
   }
 }
@@ -179,9 +180,7 @@ export function decodeSettings(serialized: string): SettingsCodecResult {
 
 function parseSettings(value: unknown): SettingsCodecResult {
   if (!isRecord(value)) return invalid('$');
-  const unknownField = Object.keys(value).find(
-    (field) => !settingsFieldSet.has(field),
-  );
+  const unknownField = Object.keys(value).find((field) => !settingsFieldSet.has(field));
   if (unknownField) return invalid(unknownField);
   const parsed = settingsSchema.safeParse(value);
   if (!parsed.success) {
@@ -194,8 +193,7 @@ function alignedToStep(value: number, step: 0.05 | 0.1): boolean {
   const scale = step === 0.05 ? 100 : 10;
   const scaled = value * scale;
   return (
-    Math.abs(scaled - Math.round(scaled)) < 1e-9 &&
-    (step === 0.1 || Math.round(scaled) % 5 === 0)
+    Math.abs(scaled - Math.round(scaled)) < 1e-9 && (step === 0.1 || Math.round(scaled) % 5 === 0)
   );
 }
 

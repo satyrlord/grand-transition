@@ -1,25 +1,21 @@
 import { describe, expect, test } from 'vitest';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import {
-  englishGameLocale,
-  romanianGameLocale,
-  gameCatalog,
-} from '../../src/game-content';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
+import { englishGameLocale, romanianGameLocale, gameCatalog } from '../../src/game-content.ts';
 import {
   createSimulationSetup,
   simulateMatch,
   simulateMatches,
   summarizeSimulation,
-} from '../../src/simulation/simulation';
+} from '../../src/simulation/simulation.ts';
 import {
   createMatchReducer,
   type MatchCommand,
   type MatchEngineContext,
   type MatchResolution,
   type MatchState,
-} from '../../src/engine/match-lifecycle';
-import { seededRandomSource } from '../../src/engine/random-source';
-import { ladderDifficulty } from '../../src/engine/ladder';
+} from '../../src/engine/match-lifecycle.ts';
+import { seededRandomSource } from '../../src/engine/random-source.ts';
+import { ladderDifficulty } from '../../src/engine/ladder.ts';
 import {
   createReplayInitialState,
   encodeReplay,
@@ -27,7 +23,7 @@ import {
   replaySchemaVersion,
   type ReplayContext,
   type ReplayDocument,
-} from '../../src/persistence/codecs/replay-codec';
+} from '../../src/persistence/codecs/replay-codec.ts';
 
 const seed = 20_260_917;
 
@@ -95,7 +91,9 @@ describe('Romanian deterministic play', () => {
       expect(report.completedMatches).toBe(report.matches);
       expect(report.privacyLeaks).toBe(0);
       expect(report.timerOverruns).toBe(0);
-      expect(Object.values(report.winners).reduce((total, wins) => total + wins, 0)).toBe(report.matches);
+      expect(Object.values(report.winners).reduce((total, wins) => total + wins, 0)).toBe(
+        report.matches,
+      );
       expect(summarizeSimulation(report)).toContain(`privacy-leaks=0`);
     },
     60_000,

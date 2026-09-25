@@ -20,7 +20,7 @@ If the temporary folder contains a Hypertext Markup Language (HTML) prototype, e
 
 ```text
 npm run dev | preview | prod | build
-npm run lint | typecheck | boundaries:check | markdown:lint
+npm run lint | typecheck | boundaries:check | markdown:lint | format | format:check
 npm run assets:build | assets:validate | assets:convert-green | validate
 npm run audio:build | audio:validate | speech:build | speech:validate
 npm run content:validate | simulate
@@ -30,7 +30,8 @@ npm run test:full | test:coverage:full | test:browser:full | test:e2e:full
 npm run quality:quick | quality:full | ci
 ```
 
-`validate` includes markdownlint-cli2, assets, content, localization, pure-boundary checks, lint, and types.
+`validate` includes markdownlint-cli2, the Prettier format check, assets, content, localization, pure-boundary checks, lint, and types.
+Run `npm run format` after you change TypeScript, JavaScript, or CSS.
 Interface translation uses Lit localization.
 After you change interface messages, run `localization:extract`.
 To generate `src/localization/generated/` again from the `xliff/` catalogs, run `localization:build`.

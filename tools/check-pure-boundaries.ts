@@ -3,7 +3,18 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createScanner, SyntaxKind } from 'typescript/unstable/ast';
 
-const pureRootPolicies = [
+type DependencyRule = Readonly<{ kind: 'directory' | 'module'; path: string }>;
+type PurePolicy = Readonly<{ root: string; allowedDependencies: readonly DependencyRule[] }>;
+type MaskFrame =
+  | { type: 'code' }
+  | { type: 'code'; templateDepth: number }
+  | { type: 'line-comment' }
+  | { type: 'block-comment' }
+  | { type: 'string'; quote: string }
+  | { type: 'template' };
+type ScannedToken = Readonly<{ kind: SyntaxKind; text: string; value: string }>;
+
+const pureRootPolicies: readonly PurePolicy[] = [
   {
     root: path.join('src', 'localization'),
     allowedDependencies: [
@@ -59,10 +70,10 @@ const pureRootPolicies = [
   },
 ];
 
-function directoryDependency(...segments) {
+function directoryDependency(...segments: string[]): DependencyRule {
   return { kind: 'directory', path: path.join(...segments) };
 }
-function moduleDependency(...segments) {
+function moduleDependency(...segments: string[]): DependencyRule {
   return { kind: 'module', path: path.join(...segments) };
 }
 
@@ -92,6 +103,7 @@ const domNames = new Set([
   'customElements',
   'document',
   'fetch',
+  'indexedDB',
   'localStorage',
   'navigator',
   'requestAnimationFrame',
@@ -100,7 +112,7 @@ const domNames = new Set([
   'window',
 ]);
 
-async function pathIsDirectory(directory) {
+async function pathIsDirectory(directory: string): Promise<boolean> {
   try {
     return (await stat(directory)).isDirectory();
   } catch (error) {
@@ -111,7 +123,7 @@ async function pathIsDirectory(directory) {
   }
 }
 
-async function* walkSourceFiles(directory) {
+async function* walkSourceFiles(directory: string): AsyncGenerator<string> {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const entryPath = path.join(directory, entry.name);
     if (entry.isDirectory()) {
@@ -122,7 +134,7 @@ async function* walkSourceFiles(directory) {
   }
 }
 
-function isLitSpecifier(specifier) {
+function isLitSpecifier(specifier: string): boolean {
   return (
     specifier === 'lit' ||
     specifier.startsWith('lit/') ||
@@ -130,13 +142,13 @@ function isLitSpecifier(specifier) {
   );
 }
 
-function maskCommentsAndStrings(sourceText) {
+function maskCommentsAndStrings(sourceText: string): string {
   let result = '';
-  const stack = [{ type: 'code' }];
+  const stack: MaskFrame[] = [{ type: 'code' }];
   for (let index = 0; index < sourceText.length; index += 1) {
     const character = sourceText[index];
     const nextCharacter = sourceText[index + 1];
-    const frame = stack[stack.length - 1];
+    const frame = stack[stack.length - 1]!;
     const state = frame.type;
 
     if (state === 'code') {
@@ -187,7 +199,7 @@ function maskCommentsAndStrings(sourceText) {
       if (character === '\\') {
         result += '  ';
         index += 1;
-      } else if (character === frame.quote) {
+      } else if (character === (frame as { quote: string }).quote) {
         stack.pop();
         result += ' ';
       } else if (character === '\n') {
@@ -217,10 +229,10 @@ function maskCommentsAndStrings(sourceText) {
   return result;
 }
 
-function staticModuleSpecifiers(sourceText) {
+function staticModuleSpecifiers(sourceText: string) {
   const scanner = createScanner(true, undefined, sourceText);
-  const tokens = [];
-  const templateBraceDepths = [];
+  const tokens: ScannedToken[] = [];
+  const templateBraceDepths: number[] = [];
   const expressionStarts = new Set(['(', '[', '{', '=', ':', ',', ';', '=>',
     'return', 'throw', 'case', '!', '?', '&&', '||', '??']);
   for (
@@ -229,7 +241,7 @@ function staticModuleSpecifiers(sourceText) {
     kind = scanner.scan()
   ) {
     if (kind === SyntaxKind.SlashToken &&
-        (tokens.length === 0 || expressionStarts.has(tokens.at(-1).text))) {
+        (tokens.length === 0 || expressionStarts.has(tokens.at(-1)!.text))) {
       kind = scanner.reScanSlashToken();
     }
     if (scanner.getTokenEnd() <= scanner.getTokenStart()) {
@@ -256,9 +268,9 @@ function staticModuleSpecifiers(sourceText) {
       value: scanner.getTokenValue(),
     });
   }
-  const specifiers = [];
-  const violations = [];
-  const addStringToken = (token) => {
+  const specifiers: string[] = [];
+  const violations: string[] = [];
+  const addStringToken = (token: ScannedToken | undefined) => {
     if (
       token?.kind === SyntaxKind.StringLiteral ||
       token?.kind === SyntaxKind.NoSubstitutionTemplateLiteral
@@ -270,7 +282,7 @@ function staticModuleSpecifiers(sourceText) {
   };
 
   for (let index = 0; index < tokens.length; index += 1) {
-    const token = tokens[index];
+    const token = tokens[index]!;
     const next = tokens[index + 1];
     const propertyOffset = next?.text === '?.' ? 2 : 1;
     const previousText = tokens[index - 1]?.text;
@@ -299,7 +311,7 @@ function staticModuleSpecifiers(sourceText) {
         continue;
       }
       for (let cursor = index + 1; cursor < tokens.length; cursor += 1) {
-        const candidate = tokens[cursor];
+        const candidate = tokens[cursor]!;
         if (
           candidate.kind === SyntaxKind.EqualsToken ||
           candidate.kind === SyntaxKind.SemicolonToken
@@ -313,7 +325,7 @@ function staticModuleSpecifiers(sourceText) {
       }
     } else if (token.kind === SyntaxKind.ExportKeyword) {
       for (let cursor = index + 1; cursor < tokens.length; cursor += 1) {
-        const candidate = tokens[cursor];
+        const candidate = tokens[cursor]!;
         if (
           candidate.kind === SyntaxKind.EqualsToken ||
           candidate.kind === SyntaxKind.SemicolonToken
@@ -339,13 +351,13 @@ function staticModuleSpecifiers(sourceText) {
 }
 
 function inspectSource(
-  sourceText,
-  relativePath,
-  filePath,
-  rootDirectory,
-  policy,
-) {
-  const failures = [];
+  sourceText: string,
+  relativePath: string,
+  filePath: string,
+  rootDirectory: string,
+  policy: PurePolicy,
+): string[] {
+  const failures: string[] = [];
   if (/^\s*\/\/\/\s*<reference\s+lib=["']dom["']/mu.test(sourceText)) {
     failures.push(`${relativePath}: DOM library reference`);
   }
@@ -390,8 +402,14 @@ function inspectSource(
   return failures;
 }
 
-function dependencyIsAllowed(specifier, filePath, rootDirectory, policy) {
-  const dependencyPath = path.resolve(path.dirname(filePath), specifier);
+function dependencyIsAllowed(
+  specifier: string,
+  filePath: string,
+  rootDirectory: string,
+  policy: PurePolicy,
+): boolean {
+  // A module rule names the module without its source-file extension.
+  const dependencyPath = path.resolve(path.dirname(filePath), specifier).replace(/\.[cm]?[jt]sx?$/u, '');
   return policy.allowedDependencies.some((allowed) => {
     const allowedPath = path.resolve(rootDirectory, allowed.path);
     if (allowed.kind === 'module') return dependencyPath === allowedPath;
@@ -399,7 +417,7 @@ function dependencyIsAllowed(specifier, filePath, rootDirectory, policy) {
   });
 }
 
-function pathIsInside(candidatePath, directoryPath) {
+function pathIsInside(candidatePath: string, directoryPath: string): boolean {
   const relativePath = path.relative(directoryPath, candidatePath);
   return (
     relativePath === '' ||
@@ -414,14 +432,14 @@ const generatedLocalizationDirectories = [
   path.join('src', 'localization', 'generated'),
 ];
 
-function isGeneratedLocalizationFile(filePath, rootDirectory) {
+function isGeneratedLocalizationFile(filePath: string, rootDirectory: string): boolean {
   return generatedLocalizationDirectories.some((directory) =>
     pathIsInside(filePath, path.resolve(rootDirectory, directory)),
   );
 }
 
 export async function checkPureBoundaries(rootDirectory = process.cwd()) {
-  const failures = [];
+  const failures: string[] = [];
   let checkedFiles = 0;
 
   for (const policy of pureRootPolicies) {
@@ -464,7 +482,7 @@ if (invokedScript === path.resolve(fileURLToPath(import.meta.url))) {
     rootIndex === -1 ? process.cwd() : process.argv[rootIndex + 1];
   if (!rootDirectory) {
     throw new Error(
-      'Usage: node tools/check-pure-boundaries.mjs [--root <path>]',
+      'Usage: node tools/check-pure-boundaries.ts [--root <path>]',
     );
   }
   checkPureBoundaries(rootDirectory)

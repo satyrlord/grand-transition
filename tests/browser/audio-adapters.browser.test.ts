@@ -1,1 +1,1 @@
-import '../unit/audio-adapters.test';
+import '../unit/audio-adapters.test.ts';

@@ -74,9 +74,7 @@ async function readPixels(filePath: string): Promise<number[]> {
         const context = canvas.getContext('2d', { willReadFrequently: true });
         if (!context) throw new Error('Canvas 2D context is unavailable.');
         context.drawImage(image, 0, 0);
-        return Array.from(
-          context.getImageData(0, 0, canvas.width, canvas.height).data,
-        );
+        return Array.from(context.getImageData(0, 0, canvas.width, canvas.height).data);
       },
       `data:image/png;base64,${input.toString('base64')}`,
     );
@@ -103,25 +101,15 @@ function setPixel(
   pixels.splice((y * width + x) * 4, 4, ...color);
 }
 
-function getPixel(
-  pixels: number[],
-  width: number,
-  x: number,
-  y: number,
-): number[] {
+function getPixel(pixels: number[], width: number, x: number, y: number): number[] {
   const offset = (y * width + x) * 4;
   return pixels.slice(offset, offset + 4);
 }
 
-function expectPixelNear(
-  actual: number[],
-  expected: [number, number, number, number],
-): void {
+function expectPixelNear(actual: number[], expected: [number, number, number, number]): void {
   const colorTolerance = Math.ceil(255 / Math.max(1, expected[3]));
   for (let channel = 0; channel < 3; channel += 1) {
-    expect(Math.abs(actual[channel] - expected[channel])).toBeLessThanOrEqual(
-      colorTolerance,
-    );
+    expect(Math.abs(actual[channel] - expected[channel])).toBeLessThanOrEqual(colorTolerance);
   }
   expect(Math.abs(actual[3] - expected[3])).toBeLessThanOrEqual(1);
 }
@@ -135,8 +123,7 @@ function removeInternationalText(png: Buffer, keyword: string): Buffer {
     const data = png.subarray(offset + 8, offset + 8 + length);
     const end = offset + 12 + length;
     const keywordEnd = type === 'iTXt' ? data.indexOf(0) : -1;
-    const chunkKeyword =
-      keywordEnd >= 0 ? data.toString('latin1', 0, keywordEnd) : '';
+    const chunkKeyword = keywordEnd >= 0 ? data.toString('latin1', 0, keywordEnd) : '';
     if (chunkKeyword !== keyword) chunks.push(png.subarray(offset, end));
     offset = end;
   }
@@ -145,9 +132,7 @@ function removeInternationalText(png: Buffer, keyword: string): Buffer {
 
 describe('soft green chroma-key conversion', () => {
   test('recovers partial alpha and foreground color from a known green matte', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-green-key-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-green-key-'));
     try {
       const inputPath = path.join(fixtureRoot, 'green-source.png');
       const outputDirectory = path.join(fixtureRoot, 'output');
@@ -182,89 +167,53 @@ describe('soft green chroma-key conversion', () => {
 
       const png = await readFile(outputPath);
       expect(png.includes(Buffer.from('soft-green-key-v1'))).toBe(true);
-      expect(
-        png.includes(Buffer.from('green-dominance-neighbor-matte-v1')),
-      ).toBe(true);
+      expect(png.includes(Buffer.from('green-dominance-neighbor-matte-v1'))).toBe(true);
       expect(png.includes(Buffer.from('known-green-unmix-v1'))).toBe(true);
 
       await expect(
-        execFileAsync(process.execPath, [
-          converterPath,
-          'validate',
-          outputDirectory,
-        ]),
+        execFileAsync(process.execPath, [converterPath, 'validate', outputDirectory]),
       ).resolves.toBeDefined();
 
       const invalidPath = path.join(outputDirectory, 'missing-matte.png');
       await writeFile(invalidPath, removeInternationalText(png, 'Alpha Matte'));
       let failure: { stderr?: string } | undefined;
       try {
-        await execFileAsync(process.execPath, [
-          converterPath,
-          'validate',
-          outputDirectory,
-        ]);
+        await execFileAsync(process.execPath, [converterPath, 'validate', outputDirectory]);
       } catch (error) {
         failure = error as { stderr?: string };
       }
-      expect(failure?.stderr).toContain(
-        'missing Alpha Matte=green-dominance-neighbor-matte-v1',
-      );
+      expect(failure?.stderr).toContain('missing Alpha Matte=green-dominance-neighbor-matte-v1');
 
       await rm(invalidPath);
-      const missingSourcePath = path.join(
-        outputDirectory,
-        'missing-alpha-source.png',
-      );
-      await writeFile(
-        missingSourcePath,
-        removeInternationalText(png, 'Alpha Source'),
-      );
+      const missingSourcePath = path.join(outputDirectory, 'missing-alpha-source.png');
+      await writeFile(missingSourcePath, removeInternationalText(png, 'Alpha Source'));
       failure = undefined;
       try {
-        await execFileAsync(process.execPath, [
-          converterPath,
-          'validate',
-          outputDirectory,
-        ]);
+        await execFileAsync(process.execPath, [converterPath, 'validate', outputDirectory]);
       } catch (error) {
         failure = error as { stderr?: string };
       }
-      expect(failure?.stderr).toContain(
-        'missing or unsupported Alpha Source=undefined',
-      );
+      expect(failure?.stderr).toContain('missing or unsupported Alpha Source=undefined');
     } finally {
       await rm(fixtureRoot, { force: true, recursive: true });
     }
   }, 30_000);
 
   test('requires embedded generation provenance for every raster', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-provenance-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-provenance-'));
     try {
       const imagePath = path.join(fixtureRoot, 'opaque-source.png');
       const promptPath = path.join(fixtureRoot, 'opaque-source.prompt.txt');
       await writePng(imagePath, 2, 2, rgbaCanvas(2, 2, [120, 80, 40, 255]));
-      await writeFile(
-        promptPath,
-        `${validColorPrompt}\nPrivate source prompt fixture.\n`,
-        'utf8',
-      );
+      await writeFile(promptPath, `${validColorPrompt}\nPrivate source prompt fixture.\n`, 'utf8');
 
       let failure: { stderr?: string } | undefined;
       try {
-        await execFileAsync(process.execPath, [
-          converterPath,
-          'validate',
-          fixtureRoot,
-        ]);
+        await execFileAsync(process.execPath, [converterPath, 'validate', fixtureRoot]);
       } catch (error) {
         failure = error as { stderr?: string };
       }
-      expect(failure?.stderr).toContain(
-        'missing embedded Generation Source metadata',
-      );
+      expect(failure?.stderr).toContain('missing embedded Generation Source metadata');
 
       await execFileAsync(process.execPath, [
         converterPath,
@@ -274,14 +223,10 @@ describe('soft green chroma-key conversion', () => {
         promptPath,
       ]);
       const privatePromptResult = await readFile(imagePath);
-      expect(
-        privatePromptResult.includes(
-          Buffer.from('Private source prompt fixture.'),
-        ),
-      ).toBe(false);
-      expect(
-        privatePromptResult.includes(Buffer.from('Private prompt record')),
-      ).toBe(true);
+      expect(privatePromptResult.includes(Buffer.from('Private source prompt fixture.'))).toBe(
+        false,
+      );
+      expect(privatePromptResult.includes(Buffer.from('Private prompt record'))).toBe(true);
 
       await execFileAsync(process.execPath, [
         converterPath,
@@ -291,18 +236,10 @@ describe('soft green chroma-key conversion', () => {
         'Synthetic opaque provenance fixture.',
       ]);
       const sanitized = await readFile(imagePath);
-      expect(
-        sanitized.includes(Buffer.from('Private source prompt fixture.')),
-      ).toBe(false);
-      expect(
-        sanitized.includes(Buffer.from('Synthetic opaque provenance fixture.')),
-      ).toBe(true);
+      expect(sanitized.includes(Buffer.from('Private source prompt fixture.'))).toBe(false);
+      expect(sanitized.includes(Buffer.from('Synthetic opaque provenance fixture.'))).toBe(true);
       await expect(
-        execFileAsync(process.execPath, [
-          converterPath,
-          'validate',
-          fixtureRoot,
-        ]),
+        execFileAsync(process.execPath, [converterPath, 'validate', fixtureRoot]),
       ).resolves.toBeDefined();
     } finally {
       await rm(fixtureRoot, { force: true, recursive: true });
@@ -310,20 +247,14 @@ describe('soft green chroma-key conversion', () => {
   }, 30_000);
 
   test('adds a partial-alpha edge when the green source contour is binary', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-green-key-binary-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-green-key-binary-'));
     try {
       const sourceRoot = path.join(fixtureRoot, 'green-masters');
       const promptRoot = path.join(fixtureRoot, 'private-prompts');
       const outputRoot = path.join(fixtureRoot, 'converted');
       const inputDirectory = path.join(sourceRoot, 'characters');
       const inputPath = path.join(inputDirectory, 'binary-source.png');
-      const outputPath = path.join(
-        outputRoot,
-        'characters',
-        'binary-source.png',
-      );
+      const outputPath = path.join(outputRoot, 'characters', 'binary-source.png');
       await mkdir(inputDirectory, { recursive: true });
       await mkdir(path.join(promptRoot, 'characters'), { recursive: true });
       const pixels = rgbaCanvas(7, 7, [24, 232, 32, 255]);
@@ -357,22 +288,16 @@ describe('soft green chroma-key conversion', () => {
       expect(getPixel(output, 7, 0, 0)).toEqual([0, 0, 0, 0]);
       const outputPng = await readFile(outputPath);
       expect(
-        outputPng.includes(
-          Buffer.from('Synthetic binary green-matte regression fixture.'),
-        ),
+        outputPng.includes(Buffer.from('Synthetic binary green-matte regression fixture.')),
       ).toBe(false);
-      expect(outputPng.includes(Buffer.from('Private prompt record'))).toBe(
-        true,
-      );
+      expect(outputPng.includes(Buffer.from('Private prompt record'))).toBe(true);
     } finally {
       await rm(fixtureRoot, { force: true, recursive: true });
     }
   }, 30_000);
 
   test('rejects a conversion prompt without neutral color controls', async () => {
-    const fixtureRoot = await mkdtemp(
-      path.join(os.tmpdir(), 'grand-transition-green-key-prompt-'),
-    );
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-green-key-prompt-'));
     try {
       const inputPath = path.join(fixtureRoot, 'green-source.png');
       const outputPath = path.join(fixtureRoot, 'converted.png');
@@ -398,24 +323,36 @@ describe('soft green chroma-key conversion', () => {
   }, 30_000);
 });
 
-
-test.each(['', 'Warm studio key lighting.'])('preflights every prompt before changing output: %s', async (invalidPrompt) => {
-  const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'gt-prompt-preflight-'));
-  try {
-    const sourceRoot = path.join(fixtureRoot, 'source');
-    const outputRoot = path.join(fixtureRoot, 'output');
-    await mkdir(sourceRoot);
-    await mkdir(outputRoot);
-    for (const name of ['a', 'b']) {
-      await writePng(path.join(sourceRoot, `${name}.png`), 2, 2, rgbaCanvas(2, 2, [0, 255, 0, 255]));
-      await writeFile(path.join(sourceRoot, `${name}.prompt.txt`), name === 'a' ? validColorPrompt : invalidPrompt);
+test.each(['', 'Warm studio key lighting.'])(
+  'preflights every prompt before changing output: %s',
+  async (invalidPrompt) => {
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'gt-prompt-preflight-'));
+    try {
+      const sourceRoot = path.join(fixtureRoot, 'source');
+      const outputRoot = path.join(fixtureRoot, 'output');
+      await mkdir(sourceRoot);
+      await mkdir(outputRoot);
+      for (const name of ['a', 'b']) {
+        await writePng(
+          path.join(sourceRoot, `${name}.png`),
+          2,
+          2,
+          rgbaCanvas(2, 2, [0, 255, 0, 255]),
+        );
+        await writeFile(
+          path.join(sourceRoot, `${name}.prompt.txt`),
+          name === 'a' ? validColorPrompt : invalidPrompt,
+        );
+      }
+      const existing = path.join(outputRoot, 'a.png');
+      await writeFile(existing, 'preserve existing output');
+      await expect(
+        execFileAsync(process.execPath, [converterPath, 'convert-tree', sourceRoot, outputRoot]),
+      ).rejects.toThrow();
+      expect(await readFile(existing, 'utf8')).toBe('preserve existing output');
+      await expect(readFile(path.join(outputRoot, 'b.png'))).rejects.toThrow();
+    } finally {
+      await rm(fixtureRoot, { force: true, recursive: true });
     }
-    const existing = path.join(outputRoot, 'a.png');
-    await writeFile(existing, 'preserve existing output');
-    await expect(execFileAsync(process.execPath, [converterPath, 'convert-tree', sourceRoot, outputRoot])).rejects.toThrow();
-    expect(await readFile(existing, 'utf8')).toBe('preserve existing output');
-    await expect(readFile(path.join(outputRoot, 'b.png'))).rejects.toThrow();
-  } finally {
-    await rm(fixtureRoot, { force: true, recursive: true });
-  }
-});
+  },
+);

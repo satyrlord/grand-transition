@@ -1,5 +1,5 @@
-import type { ContentCatalog } from '../src/content/content-catalog';
-import type { Phrase } from '../src/content/schemas';
+import type { ContentCatalog } from '../src/content/content-catalog.ts';
+import type { Phrase } from '../src/content/schemas.ts';
 
 type Role = Phrase['role'];
 type Volume = readonly [role: Role, required: number];
@@ -70,21 +70,21 @@ export function finalContentVolumeIssues(
 
   check('Characters', catalog.characters.length, 19);
   check('Scenes', catalog.scenes.length, 7);
-  const general = catalog.phrases.filter((phrase) =>
-    !phrase.characterIds && !phrase.sceneIds);
+  const general = catalog.phrases.filter((phrase) => !phrase.characterIds && !phrase.sceneIds);
   checkRoles('General', general, generalVolumes);
   checkTenses('General', general, 'verb', 50);
   checkTenses('General', general, 'predicate', 33);
   const generalConjunctions = general.filter((phrase) => phrase.role === 'conjunction');
-  if (generalConjunctions.some((phrase) =>
-    !generalConnectorKinds.has(phrase.connectorKind ?? '') || phrase.tags.length > 0,
-  )) {
+  if (
+    generalConjunctions.some(
+      (phrase) => !generalConnectorKinds.has(phrase.connectorKind ?? '') || phrase.tags.length > 0,
+    )
+  ) {
     issues.push('General conjunctions: use only the five neutral connector cards.');
   }
 
   for (const character of catalog.characters) {
-    const owned = catalog.phrases.filter((phrase) =>
-      phrase.characterIds?.includes(character.id));
+    const owned = catalog.phrases.filter((phrase) => phrase.characterIds?.includes(character.id));
     check(`${character.id} phrases`, owned.length, 40);
     checkRoles(character.id, owned, characterVolumes);
     checkTenses(character.id, owned, 'verb', 3);
@@ -92,7 +92,9 @@ export function finalContentVolumeIssues(
   }
   for (const scene of catalog.scenes) {
     const owned = catalog.phrases.filter((phrase) => phrase.sceneIds?.includes(scene.id));
-    const continuationCount = catalog.phrases.filter((phrase) => phrase.role === 'continuation').length;
+    const continuationCount = catalog.phrases.filter(
+      (phrase) => phrase.role === 'continuation',
+    ).length;
     check(`${scene.id} scene-owned phrases`, owned.length, 34);
     check(`${scene.id} eligible phrase pool`, owned.length + continuationCount, 35);
     checkRoles(scene.id, owned, sceneVolumes);

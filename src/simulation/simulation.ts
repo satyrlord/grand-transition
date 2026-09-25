@@ -1,21 +1,21 @@
-import type { ContentCatalog } from '../content/content-catalog';
-import type { Phrase } from '../content/schemas';
+import type { ContentCatalog } from '../content/content-catalog.ts';
+import type { Phrase } from '../content/schemas.ts';
 import {
   basicScoringBalance,
   type BasePointsMultiplier,
-} from '../content/basic-scoring-balance';
-import { decideLocalRadioCaller } from '../ai/easy-ai';
-import { defaultGameLocale, type GameLocale } from '../localization/game-locale';
-import type { DraftCardReference, DraftCommand } from '../engine/draft-actions';
+} from '../content/basic-scoring-balance.ts';
+import { decideLocalRadioCaller } from '../ai/easy-ai.ts';
+import { defaultGameLocale, type GameLocale } from '../localization/game-locale.ts';
+import type { DraftCardReference, DraftCommand } from '../engine/draft-actions.ts';
 import {
   createMatchReducer,
   type MatchCommand,
   type MatchEngineContext,
   type MatchLifecycleCommand,
   type MatchState,
-} from '../engine/match-lifecycle';
-import { phraseIndex } from '../engine/phrase-index';
-import { seededRandomSource } from '../engine/random-source';
+} from '../engine/match-lifecycle.ts';
+import { phraseIndex } from '../engine/phrase-index.ts';
+import { seededRandomSource } from '../engine/random-source.ts';
 import {
   createMatchLog,
   createReplayInitialState,
@@ -29,7 +29,7 @@ import {
   type ReplayContext,
   type ReplayDocument,
   type ReplaySetup,
-} from '../persistence/codecs/replay-codec';
+} from '../persistence/codecs/replay-codec.ts';
 
 export const simulationKind = 'grand-transition-simulation' as const;
 
@@ -111,18 +111,10 @@ export function createSimulationSetup(
     }
     const playerPride = pride[index]!;
     const playerCharge = charge[index]!;
-    if (
-      !Number.isInteger(playerPride) ||
-      playerPride < 0 ||
-      playerPride > 100
-    ) {
+    if (!Number.isInteger(playerPride) || playerPride < 0 || playerPride > 100) {
       throw new Error(`Invalid simulation Pride: ${String(playerPride)}`);
     }
-    if (
-      !Number.isInteger(playerCharge) ||
-      playerCharge < 0 ||
-      playerCharge > 60
-    ) {
+    if (!Number.isInteger(playerCharge) || playerCharge < 0 || playerCharge > 60) {
       throw new Error(`Invalid simulation charge: ${String(playerCharge)}`);
     }
     return {
@@ -142,8 +134,7 @@ export function createSimulationSetup(
     timerSeconds: 30,
     speechEnabled: false,
     privacyEnabled: true,
-    basePointsMultiplier:
-      options.basePointsMultiplier ?? basicScoringBalance.basePointsMultiplier,
+    basePointsMultiplier: options.basePointsMultiplier ?? basicScoringBalance.basePointsMultiplier,
     gameLocale: options.gameLocale ?? defaultGameLocale,
   };
 }
@@ -293,13 +284,8 @@ export function simulateMatch(
       selectedPrivateCardIds.add(option.command.payload.card.cardId);
     }
     if (option.presentationDelayMs !== undefined) {
-      maximumPresentationDelayMs = Math.max(
-        maximumPresentationDelayMs,
-        option.presentationDelayMs,
-      );
-      const [minimumDelay, maximumDelay] = presentationDelayBounds(
-        setup.aiDifficulty,
-      );
+      maximumPresentationDelayMs = Math.max(maximumPresentationDelayMs, option.presentationDelayMs);
+      const [minimumDelay, maximumDelay] = presentationDelayBounds(setup.aiDifficulty);
       if (
         option.presentationDelayMs < minimumDelay ||
         option.presentationDelayMs > maximumDelay ||
@@ -329,14 +315,8 @@ export function simulateMatch(
   const completedReplay: ReplayDocument = { ...replay, commands };
   const replayBytes = encodeReplay(completedReplay);
   const replayed = replayMatch(replayBytes, context);
-  if (
-    !replayed.ok ||
-    normalizedJson(replayed.state) !== normalizedJson(state)
-  ) {
-    throw simulationFailure(
-      normalizedSeed,
-      'The replay did not reproduce the exact final state.',
-    );
+  if (!replayed.ok || normalizedJson(replayed.state) !== normalizedJson(state)) {
+    throw simulationFailure(normalizedSeed, 'The replay did not reproduce the exact final state.');
   }
   const matchLog = createMatchLog(completedReplay, state);
   const matchLogBytes = encodeMatchLog(matchLog);
@@ -394,12 +374,7 @@ export function simulateMatches(
   let privacyLeaks = 0;
   let timerOverruns = 0;
   for (let index = 0; index < matches; index += 1) {
-    const match = simulateMatch(
-      (normalizedSeed + index) >>> 0,
-      setup,
-      context,
-      optionProvider,
-    );
+    const match = simulateMatch((normalizedSeed + index) >>> 0, setup, context, optionProvider);
     const winner = match.finalState.winner!;
     winners[winner] = (winners[winner] ?? 0) + 1;
     totalRounds += match.finalState.resolutionHistory.length;
@@ -428,9 +403,7 @@ export function simulateMatches(
     privacyLeaks,
     timerOverruns,
     winners: Object.fromEntries(
-      Object.entries(winners).toSorted(([left], [right]) =>
-        left.localeCompare(right),
-      ),
+      Object.entries(winners).toSorted(([left], [right]) => left.localeCompare(right)),
     ),
     results,
   };
@@ -447,9 +420,7 @@ export function summarizeSimulation(report: SimulationReport): string {
   return `Simulated ${report.matches} match(es) from seed ${report.seed}; rounds=${report.totalRounds}; winners: ${winners}; privacy-leaks=${report.privacyLeaks}; timer-overruns=${report.timerOverruns}; maximum-delay=${report.maximumPresentationDelayMs} ms.`;
 }
 
-function lifecycleCommandForState(
-  state: MatchState,
-): MatchLifecycleCommand['type'] | null {
+function lifecycleCommandForState(state: MatchState): MatchLifecycleCommand['type'] | null {
   if (state.phase === 'setup') return 'start-match';
   if (
     state.phase === 'round-preparation' ||
@@ -461,16 +432,11 @@ function lifecycleCommandForState(
   return null;
 }
 
-function lifecycleCommand(
-  type: MatchLifecycleCommand['type'],
-): MatchLifecycleCommand {
+function lifecycleCommand(type: MatchLifecycleCommand['type']): MatchLifecycleCommand {
   return { type, source: 'ai', payload: {} } as MatchLifecycleCommand;
 }
 
-function actorCommand(
-  type: 'commit-sentence',
-  actorId: string,
-): DraftCommand {
+function actorCommand(type: 'commit-sentence', actorId: string): DraftCommand {
   return { type, source: 'ai', actorId, payload: {} } as DraftCommand;
 }
 
@@ -488,23 +454,14 @@ function phraseForCard(
   return phraseId ? (phraseIndex(context.phrases).get(phraseId) ?? null) : null;
 }
 
-function phraseUtility(
-  phrase: Phrase,
-  state: MatchState,
-  playerId: string,
-): number {
+function phraseUtility(phrase: Phrase, state: MatchState, playerId: string): number {
   const opponentId = state.playerOrder.find((id) => id !== playerId)!;
   const weaknessTags = state.playerStates[opponentId]!.weaknessTags;
-  const weaknessMatches = phrase.tags.filter((tag) =>
-    weaknessTags.includes(tag),
-  ).length;
+  const weaknessMatches = phrase.tags.filter((tag) => weaknessTags.includes(tag)).length;
   return weaknessMatches * 12 + (phrase.finisherBonus ?? 0) + phrase.tags.length;
 }
 
-function collectPrivateCards(
-  state: MatchState,
-  cards: Map<string, string>,
-): void {
+function collectPrivateCards(state: MatchState, cards: Map<string, string>): void {
   if (!state.draft) return;
   for (const player of Object.values(state.draft.playerStates)) {
     for (const card of player.hand) cards.set(card.id, card.phraseId);
@@ -587,9 +544,7 @@ function replayPath(seed: number): string {
 }
 
 function simulationFailure(seed: number, message: string): Error {
-  return new Error(
-    `${message} Seed: ${seed}. Replay path: ${replayPath(seed)}.`,
-  );
+  return new Error(`${message} Seed: ${seed}. Replay path: ${replayPath(seed)}.`);
 }
 
 function commandKey(command: MatchCommand): string {

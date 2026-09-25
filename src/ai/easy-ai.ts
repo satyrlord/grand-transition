@@ -1,14 +1,14 @@
-import type { Character } from '../content/schemas';
-import { scoreComboFinisherConstruction } from '../engine/combo-finisher-scoring';
-import type { DraftCardReference, DraftCommand } from '../engine/draft-actions';
+import type { Character } from '../content/schemas.ts';
+import { scoreComboFinisherConstruction } from '../engine/combo-finisher-scoring.ts';
+import type { DraftCardReference, DraftCommand } from '../engine/draft-actions.ts';
 import {
   createMatchReducer,
   type MatchCommand,
   type MatchEngineContext,
   type MatchState,
-} from '../engine/match-lifecycle';
-import { seededRandomSource, type RandomSource } from '../engine/random-source';
-import { stableHash } from '../engine/stable-hash';
+} from '../engine/match-lifecycle.ts';
+import { seededRandomSource, type RandomSource } from '../engine/random-source.ts';
+import { stableHash } from '../engine/stable-hash.ts';
 
 export const localRadioCallerWeights = Object.freeze({
   immediateDamage: 1,
@@ -98,10 +98,7 @@ export function enumerateEasyAiCommands(
   }
   commands.push(actorCommand('commit-sentence', player.playerId));
   if (player.construction.analysis.complete) {
-    if (
-      !player.construction.selectedComeback &&
-      player.availableComebackTiers.length > 0
-    ) {
+    if (!player.construction.selectedComeback && player.availableComebackTiers.length > 0) {
       commands.push(actorCommand('select-comeback', player.playerId));
     }
   }
@@ -154,15 +151,8 @@ export function evaluateLocalRadioCallerCandidates(
   options: Pick<EasyAiDecisionOptions, 'randomSource' | 'turnExpired'> = {},
 ): readonly EasyAiCandidate[] {
   const randomSource = options.randomSource ?? seededRandomSource;
-  const commands = enumerateEasyAiCommands(
-    state,
-    context,
-    options.turnExpired,
-    randomSource,
-  );
-  const ordinaryCommands = commands.filter(
-    (command) => command.type !== 'redraw-hand',
-  );
+  const commands = enumerateEasyAiCommands(state, context, options.turnExpired, randomSource);
+  const ordinaryCommands = commands.filter((command) => command.type !== 'redraw-hand');
   const rawCandidates = ordinaryCommands.map((command) =>
     evaluateCommand(state, context, command, randomSource),
   );
@@ -174,9 +164,7 @@ export function evaluateLocalRadioCallerCandidates(
   const redrawCandidate = redraw
     ? evaluateRedraw(state, context, redraw, personality, randomSource)
     : null;
-  return [...scored, ...(redrawCandidate ? [redrawCandidate] : [])].toSorted(
-    compareCandidates,
-  );
+  return [...scored, ...(redrawCandidate ? [redrawCandidate] : [])].toSorted(compareCandidates);
 }
 
 export function decideLocalRadioCaller(
@@ -200,13 +188,7 @@ export function decideLocalRadioCaller(
   let seed = options.seed ?? decisionSeed(state);
   const selectionStep = randomSource.next(seed);
   seed = selectionStep.nextSeed;
-  const selected =
-    tied[
-      Math.min(
-        tied.length - 1,
-        Math.floor(selectionStep.value * tied.length),
-      )
-    ]!;
+  const selected = tied[Math.min(tied.length - 1, Math.floor(selectionStep.value * tied.length))]!;
   const delay = localRadioCallerDelay(seed, options.reducedDelay, randomSource);
   return Object.freeze({
     command: selected.command,
@@ -235,9 +217,7 @@ export function redrawExpectedUtility(
 ): number | null {
   if (replacementUtilities.length !== 2) return null;
   const currentMean = mean(currentUtilities);
-  if (
-    replacementUtilities.some((utility) => utility < currentMean + 0.15)
-  ) {
+  if (replacementUtilities.some((utility) => utility < currentMean + 0.15)) {
     return null;
   }
   return Math.min(...replacementUtilities);
@@ -257,12 +237,7 @@ function evaluateRedraw(
   const currentPlayer = state.draft!.playerStates[actorId]!;
   const replacementPlayer = result.state.draft.playerStates[actorId]!;
   const current = currentPlayer.hand.map((card) =>
-    evaluateCommand(
-      state,
-      context,
-      selectPhraseCommand(actorId, 'private', card.id),
-      randomSource,
-    ),
+    evaluateCommand(state, context, selectPhraseCommand(actorId, 'private', card.id), randomSource),
   );
   const replacements = replacementPlayer.hand.map((card) =>
     evaluateCommand(
@@ -276,10 +251,7 @@ function evaluateRedraw(
   const union = scoreRawCandidates([...current, ...replacements], personality);
   const currentUtilities = union.slice(0, current.length).map(({ utility }) => utility);
   const replacementUtilities = union.slice(current.length).map(({ utility }) => utility);
-  const expectedUtility = redrawExpectedUtility(
-    currentUtilities,
-    replacementUtilities,
-  );
+  const expectedUtility = redrawExpectedUtility(currentUtilities, replacementUtilities);
   if (expectedUtility === null) return null;
   const rawFeatures = withPersonality(zeroBaseFeatures, personality);
   return Object.freeze({
@@ -308,7 +280,8 @@ function evaluateCommand(
   }
   if (!result.state.draft) {
     const resolved = result.state.pendingResolution?.players[actorId];
-    const selfKnockout = state.playerStates[actorId]!.pride > 0 &&
+    const selfKnockout =
+      state.playerStates[actorId]!.pride > 0 &&
       result.state.playerStates[actorId]!.pride === 0 &&
       result.state.phase === 'results';
     return {
@@ -318,8 +291,8 @@ function evaluateCommand(
       features: {
         ...zeroBaseFeatures,
         immediateDamage: resolved?.outgoingDamage ?? 0,
-        grammarRisk: (resolved?.grammarMistakes ?? 0) >
-          beforePlayer.construction.grammarMistakes ? 1 : 0,
+        grammarRisk:
+          (resolved?.grammarMistakes ?? 0) > beforePlayer.construction.grammarMistakes ? 1 : 0,
         immediateLethal: result.state.winner === actorId ? 1 : 0,
       },
     };
@@ -330,62 +303,51 @@ function evaluateCommand(
     construction.carryIntent ||
     !construction.analysis.complete ||
     construction.analysis.sentenceStatus !== 'complete'
-    ? null
-    : scoreComboFinisherConstruction({
-        attackerPlayerId: actorId,
-        attackerCharacterId: afterPlayer.characterId,
-        comboState: state.comboState,
-        analysis: construction.analysis,
-        phrases: context.phrases,
-        defenderWeaknessTags: opponent.weaknessTags,
-        balance: context.balance,
-      }).score;
+      ? null
+      : scoreComboFinisherConstruction({
+          attackerPlayerId: actorId,
+          attackerCharacterId: afterPlayer.characterId,
+          comboState: state.comboState,
+          analysis: construction.analysis,
+          phrases: context.phrases,
+          defenderWeaknessTags: opponent.weaknessTags,
+          balance: context.balance,
+        }).score;
   const comebackValue = construction.selectedComeback?.damageBonus ?? 0;
   const immediateDamage = (scored?.finalDamage ?? 0) + comebackValue;
   const denial =
     command.type === 'select-phrase' &&
     command.payload.card.source === 'shared' &&
     state.draft!.playerStates[opponentId]!.legalCards.some(
-      (card) =>
-        card.source === 'shared' &&
-        card.cardId === command.payload.card.cardId,
+      (card) => card.source === 'shared' && card.cardId === command.payload.card.cardId,
     )
       ? 1
       : 0;
   const features: BaseFeatures = Object.freeze({
     immediateDamage,
-    weaknessOpportunity:
-      scored?.breakdown.some((item) => item.kind === 'weakness-multiplier')
-        ? 1
-        : 0,
+    weaknessOpportunity: scored?.breakdown.some((item) => item.kind === 'weakness-multiplier')
+      ? 1
+      : 0,
     comboOpportunity: (scored?.combo?.chain ?? 0) > 1 ? 1 : 0,
-    finisher: scored?.breakdown.reduce(
-      (total, item) => total + (item.kind === 'finisher-bonus' ? item.amount : 0),
-      0,
-    ) ?? 0,
+    finisher:
+      scored?.breakdown.reduce(
+        (total, item) => total + (item.kind === 'finisher-bonus' ? item.amount : 0),
+        0,
+      ) ?? 0,
     grammarFlexibility:
-      construction.status === 'building'
-        ? new Set(construction.requiredRoles).size
-        : 0,
+      construction.status === 'building' ? new Set(construction.requiredRoles).size : 0,
     denial,
     continuation: construction.carryIntent ? 1 : 0,
     comebackValue,
-    opponentComebackRisk: Math.min(
-      immediateDamage,
-      60 - opponent.comebackCharge,
-    ),
-    grammarRisk:
-      construction.grammarMistakes > beforePlayer.construction.grammarMistakes
-        ? 1
-        : 0,
+    opponentComebackRisk: Math.min(immediateDamage, 60 - opponent.comebackCharge),
+    grammarRisk: construction.grammarMistakes > beforePlayer.construction.grammarMistakes ? 1 : 0,
     deadEnd:
       construction.status === 'building' &&
       !construction.analysis.complete &&
       afterPlayer.legalCards.length === 0
         ? 1
         : 0,
-    immediateLethal:
-      immediateDamage > 0 && immediateDamage >= opponent.pride ? 1 : 0,
+    immediateLethal: immediateDamage > 0 && immediateDamage >= opponent.pride ? 1 : 0,
   });
   return { command, targetId: commandTargetId(command), features };
 }
@@ -394,9 +356,7 @@ function scoreRawCandidates(
   candidates: readonly RawCandidate[],
   personality: Character['aiPersonality'],
 ): readonly EasyAiCandidate[] {
-  const fullFeatures = candidates.map(({ features }) =>
-    withPersonality(features, personality),
-  );
+  const fullFeatures = candidates.map(({ features }) => withPersonality(features, personality));
   const scored = scoreEasyAiFeatureSet(fullFeatures, personality);
   return candidates.map((candidate, index) =>
     Object.freeze({
@@ -425,15 +385,14 @@ function personalityFeature(
   personality: Character['aiPersonality'],
 ): number {
   return (
-    personality.aggression * features.immediateDamage +
-    personality.denial * features.denial +
-    personality.risk * ((features.finisher + features.continuation) / 2)
-  ) / 3;
+    (personality.aggression * features.immediateDamage +
+      personality.denial * features.denial +
+      personality.risk * ((features.finisher + features.continuation) / 2)) /
+    3
+  );
 }
 
-function featureMaxima(
-  featureSets: readonly EasyAiFeatures[],
-): Record<EasyAiFeatureName, number> {
+function featureMaxima(featureSets: readonly EasyAiFeatures[]): Record<EasyAiFeatureName, number> {
   return Object.fromEntries(
     (Object.keys(localRadioCallerWeights) as EasyAiFeatureName[]).map((name) => [
       name,
@@ -442,11 +401,7 @@ function featureMaxima(
   ) as Record<EasyAiFeatureName, number>;
 }
 
-function normalizeFeature(
-  name: BaseFeatureName,
-  value: number,
-  maximum: number,
-): number {
+function normalizeFeature(name: BaseFeatureName, value: number, maximum: number): number {
   if (
     name === 'weaknessOpportunity' ||
     name === 'comboOpportunity' ||
@@ -467,10 +422,7 @@ function utilityFor(features: EasyAiFeatures): number {
 }
 
 function activeDraftPlayer(state: MatchState) {
-  if (
-    !state.draft ||
-    (state.phase !== 'drafting' && state.phase !== 'sudden-death')
-  ) {
+  if (!state.draft || (state.phase !== 'drafting' && state.phase !== 'sudden-death')) {
     return null;
   }
   const player = state.draft.playerStates[state.activePlayerId];

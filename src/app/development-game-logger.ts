@@ -1,7 +1,7 @@
-import { gameLocaleBundle, gameCatalog } from '../game-content';
-import { defaultGameLocale } from '../localization/game-locale';
-import type { MatchCommand, MatchState } from '../engine/match-lifecycle';
-import type { SpeechDiagnosticsDocument } from '../audio/speech-diagnostics';
+import { gameLocaleBundle, gameCatalog } from '../game-content.ts';
+import { defaultGameLocale } from '../localization/game-locale.ts';
+import type { MatchCommand, MatchState } from '../engine/match-lifecycle.ts';
+import type { SpeechDiagnosticsDocument } from '../audio/speech-diagnostics.ts';
 
 export type DevelopmentGameLogTransition = Readonly<{
   initialSeed: number;
@@ -28,7 +28,11 @@ export class DevelopmentGameLogger {
   private sequence = 0;
   private completion: ReturnType<typeof completionRecord> | null = null;
 
-  constructor(private readonly sink: LogSink = writeLogToRepository) {}
+  private readonly sink: LogSink;
+
+  constructor(sink: LogSink = writeLogToRepository) {
+    this.sink = sink;
+  }
 
   capture(transition: DevelopmentGameLogTransition): void {
     if (transition.action === 'start-match') {
@@ -76,10 +80,7 @@ function headerRecord(transition: DevelopmentGameLogTransition) {
   };
 }
 
-function actionRecord(
-  sequence: number,
-  transition: DevelopmentGameLogTransition,
-) {
+function actionRecord(sequence: number, transition: DevelopmentGameLogTransition) {
   return {
     type: 'action',
     sequence,
@@ -188,16 +189,14 @@ function selectedPhraseId(
   if (!draft) return null;
   if (command.payload.card.source === 'shared') {
     return (
-      draft.board.slots.find((slot) => slot.id === command.payload.card.cardId)
-        ?.phraseId ?? null
+      draft.board.slots.find((slot) => slot.id === command.payload.card.cardId)?.phraseId ?? null
     );
   }
   const actorId = command.actorId;
   if (!actorId) return null;
   return (
-    draft.playerStates[actorId]?.hand.find(
-      (card) => card.id === command.payload.card.cardId,
-    )?.phraseId ?? null
+    draft.playerStates[actorId]?.hand.find((card) => card.id === command.payload.card.cardId)
+      ?.phraseId ?? null
   );
 }
 
@@ -216,9 +215,7 @@ function resolutionRecord(state: MatchState) {
           {
             constructionText: player.constructionText,
             constructionStatus: player.constructionStatus,
-            phraseIds: player.constructionPhrases.map(
-              (phrase) => phrase.phraseId,
-            ),
+            phraseIds: player.constructionPhrases.map((phrase) => phrase.phraseId),
             grammarMistakes: player.grammarMistakes,
             selfDamage: player.selfDamage,
             outgoingDamage: player.outgoingDamage,
@@ -231,8 +228,7 @@ function resolutionRecord(state: MatchState) {
 }
 
 function publicBubbleText(state: MatchState, playerId: string): string {
-  const current =
-    state.draft?.playerStates[playerId]?.construction.previewText.trim() ?? '';
+  const current = state.draft?.playerStates[playerId]?.construction.previewText.trim() ?? '';
   if (current) return current;
   for (const resolution of state.resolutionHistory.toReversed()) {
     const prior = resolution.players[playerId]?.constructionText.trim();
@@ -289,15 +285,12 @@ async function writeLogToRepository(text: string): Promise<void> {
 }
 
 const logger = new DevelopmentGameLogger();
-window.grandTransitionDevelopmentGameLog = (transition) =>
-  logger.capture(transition);
+window.grandTransitionDevelopmentGameLog = (transition) => logger.capture(transition);
 window.grandTransitionDevelopmentSpeechLog = (diagnostics) => logger.finishSpeech(diagnostics);
 
 declare global {
   interface Window {
     grandTransitionDevelopmentSpeechLog?: (diagnostics: SpeechDiagnosticsDocument) => void;
-    grandTransitionDevelopmentGameLog?: (
-      transition: DevelopmentGameLogTransition,
-    ) => void;
+    grandTransitionDevelopmentGameLog?: (transition: DevelopmentGameLogTransition) => void;
   }
 }

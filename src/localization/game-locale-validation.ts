@@ -1,9 +1,6 @@
-import type { GameLocale } from './game-locale';
-import type { GameLocaleBundle } from './game-locale-schema';
-import {
-  validateLocalizedText,
-  type LocalizedTextFailure,
-} from './localized-text-rules';
+import type { GameLocale } from './game-locale.ts';
+import type { GameLocaleBundle } from './game-locale-schema.ts';
+import { validateLocalizedText, type LocalizedTextFailure } from './localized-text-rules.ts';
 
 // Validation for the shipped game-content bundles. The content catalog already
 // proves key references and locale parity; this check proves that every locale
@@ -15,12 +12,7 @@ export type GameLocaleFailure = LocalizedTextFailure;
 // Keys that must read differently from every other key in the same group,
 // mirroring the owners that already enforce this for English in
 // `phrase-card-catalog.ts` and `content-catalog.ts`.
-const duplicateTextGroups = [
-  'phrase-text',
-  'character-name',
-  'scene-name',
-  'comeback',
-] as const;
+const duplicateTextGroups = ['phrase-text', 'character-name', 'scene-name', 'comeback'] as const;
 type DuplicateTextGroup = (typeof duplicateTextGroups)[number];
 
 export function validateGameLocaleBundles(
@@ -38,9 +30,7 @@ export function validateGameLocaleBundles(
     ]);
   }
   return Object.freeze([
-    ...bundles.flatMap((bundle) =>
-      validateGameLocaleBundleText(bundle, bundle.locale),
-    ),
+    ...bundles.flatMap((bundle) => validateGameLocaleBundleText(bundle, bundle.locale)),
     ...referenceLocaleTextParity(bundles, reference),
   ]);
 }

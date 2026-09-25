@@ -1,6 +1,6 @@
-import { lockInSetup } from './helpers/setup';
+import { lockInSetup } from './helpers/setup.ts';
 import { expect, test, type Page } from '@playwright/test';
-import { fullQualityGateRequested } from '../tools/quality-gate-mode';
+import { fullQualityGateRequested } from '../tools/quality-gate-mode.ts';
 import {
   copyFileSync,
   cpSync,
@@ -19,31 +19,22 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'vite';
 
-const repositoryRoot = path.resolve(
-  fileURLToPath(new URL('..', import.meta.url)),
-);
+const repositoryRoot = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const temporaryCharacterId = 'temporary-content-lifecycle-delegate';
 const temporaryCharacterName = 'Temporary Content Lifecycle Delegate';
 const basePath = '/grand-transition/';
 
 test.describe('production character content lifecycle', () => {
-  test('adds and removes a convention-based character without registry edits', async ({
-    page,
-  }) => {
+  test('adds and removes a convention-based character without registry edits', async ({ page }) => {
     // This test copies the source tree, adds a character, and runs two complete
     // production builds before it drives the page. It belongs to the slowest
     // full-gate set with the ladder flow and the calibration matrix.
-    test.skip(
-      !fullQualityGateRequested(),
-      'Requires the full quality gate.',
-    );
+    test.skip(!fullQualityGateRequested(), 'Requires the full quality gate.');
     test.setTimeout(420_000);
 
     const temporaryRoot = path.join(repositoryRoot, 'tmp');
     mkdirSync(temporaryRoot, { recursive: true });
-    const fixtureRoot = mkdtempSync(
-      path.join(temporaryRoot, 'content-lifecycle-'),
-    );
+    const fixtureRoot = mkdtempSync(path.join(temporaryRoot, 'content-lifecycle-'));
     let activeServer: StaticBuildServer | undefined;
 
     try {
@@ -59,8 +50,8 @@ test.describe('production character content lifecycle', () => {
       );
       expect(
         findBuiltFiles(fixtureRoot, 'red-folded-chairman').filter(
-          (filePath) => path.extname(filePath) === '.png' &&
-            readFileSync(filePath).equals(portraitMaster),
+          (filePath) =>
+            path.extname(filePath) === '.png' && readFileSync(filePath).equals(portraitMaster),
         ),
       ).toEqual([]);
       activeServer = await serveBuild(fixtureRoot);
@@ -120,29 +111,16 @@ type StaticBuildServer = Readonly<{
 }>;
 
 function createIsolatedApplication(fixtureRoot: string): void {
-  copyFileSync(
-    path.join(repositoryRoot, 'index.html'),
-    path.join(fixtureRoot, 'index.html'),
-  );
+  copyFileSync(path.join(repositoryRoot, 'index.html'), path.join(fixtureRoot, 'index.html'));
   cpSync(path.join(repositoryRoot, 'src'), path.join(fixtureRoot, 'src'), {
     recursive: true,
   });
 }
 
 function addTemporaryCharacter(fixtureRoot: string): void {
-  const characterDirectory = path.join(
-    fixtureRoot,
-    'src',
-    'content',
-    'characters',
-  );
-  const sourcePath = path.join(
-    characterDirectory,
-    'red-folded-chairman-phrase-cards.json',
-  );
-  const source = JSON.parse(
-    readFileSync(sourcePath, 'utf8'),
-  ) as CharacterSource;
+  const characterDirectory = path.join(fixtureRoot, 'src', 'content', 'characters');
+  const sourcePath = path.join(characterDirectory, 'red-folded-chairman-phrase-cards.json');
+  const source = JSON.parse(readFileSync(sourcePath, 'utf8')) as CharacterSource;
   // Content-neutral IDs and tense families start with their owner, so the
   // cloned cards swap the source owner prefix for the temporary character.
   const ownedIdentifier = (identifier: string): string =>
@@ -170,8 +148,7 @@ function addTemporaryCharacter(fixtureRoot: string): void {
   fixture.id = temporaryCharacterId;
   fixture.rosterOrder = Math.max(...rosterOrders) + 1;
   fixture.name = temporaryCharacterName;
-  fixture.description =
-    'An original fictional delegate used only by the isolated lifecycle test.';
+  fixture.description = 'An original fictional delegate used only by the isolated lifecycle test.';
   fixture.comebacks = {
     weak: 'The temporary delegate files a temporary objection.',
     medium: 'This test chamber reserves its own reply.',
@@ -186,10 +163,7 @@ function addTemporaryCharacter(fixtureRoot: string): void {
   };
   makeTemporaryPhraseTextUnique(fixture);
 
-  writeFileSync(
-    characterJsonPath(fixtureRoot),
-    JSON.stringify(fixture, null, 2),
-  );
+  writeFileSync(characterJsonPath(fixtureRoot), JSON.stringify(fixture, null, 2));
   // The shipped catalog requires exact English/Romanian locale-key parity, so
   // the temporary character must ship its own Romanian message record. Each
   // value mirrors the English fixture text with standard Romanian diacritics
@@ -201,11 +175,7 @@ function addTemporaryCharacter(fixtureRoot: string): void {
   );
 
   for (const [sourceName, destinationPath, marker] of [
-    [
-      'red-folded-chairman.png',
-      characterPortraitPath(fixtureRoot),
-      'default',
-    ],
+    ['red-folded-chairman.png', characterPortraitPath(fixtureRoot), 'default'],
     [
       'red-folded-chairman--alternate.png',
       characterAlternatePortraitPath(fixtureRoot),
@@ -217,10 +187,7 @@ function addTemporaryCharacter(fixtureRoot: string): void {
     );
     writeFileSync(
       destinationPath,
-      Buffer.concat([
-        portrait,
-        Buffer.from(`\ncontent-lifecycle-${marker}-fixture\n`),
-      ]),
+      Buffer.concat([portrait, Buffer.from(`\ncontent-lifecycle-${marker}-fixture\n`)]),
     );
   }
 }
@@ -238,9 +205,7 @@ function makeTemporaryPhraseTextUnique(fixture: CharacterSource): void {
       const value = phrase[field];
       if (typeof value !== 'string') continue;
       const marker = `-fixture-${String(index + 1)}`;
-      phrase[field] = value.endsWith('.')
-        ? `${value.slice(0, -1)}${marker}.`
-        : `${value}${marker}`;
+      phrase[field] = value.endsWith('.') ? `${value.slice(0, -1)}${marker}.` : `${value}${marker}`;
     }
   });
 }
@@ -263,9 +228,7 @@ function temporaryRomanianPath(fixtureRoot: string): string {
   );
 }
 
-function temporaryRomanianMessages(
-  fixture: CharacterSource,
-): Record<string, string> {
+function temporaryRomanianMessages(fixture: CharacterSource): Record<string, string> {
   const messages: Record<string, string> = {
     [`character.${temporaryCharacterId}.name`]: temporaryCharacterName,
     [`character.${temporaryCharacterId}.description`]: fixture.description,
@@ -301,8 +264,7 @@ function temporaryRomanianMessages(
       messages[`phrase.${phrase.id}.plural`] = phrase.text;
     }
     if (typeof phrase.secondPersonText !== 'string') {
-      messages[`phrase.${phrase.id}.second-person`] =
-        phrase.pluralText ?? phrase.text;
+      messages[`phrase.${phrase.id}.second-person`] = phrase.pluralText ?? phrase.text;
     }
   }
   return messages;
@@ -319,13 +281,7 @@ function characterJsonPath(fixtureRoot: string): string {
 }
 
 function characterPortraitPath(fixtureRoot: string): string {
-  return path.join(
-    fixtureRoot,
-    'src',
-    'assets',
-    'characters',
-    `${temporaryCharacterId}.png`,
-  );
+  return path.join(fixtureRoot, 'src', 'assets', 'characters', `${temporaryCharacterId}.png`);
 }
 
 function characterAlternatePortraitPath(fixtureRoot: string): string {
@@ -338,20 +294,14 @@ function characterAlternatePortraitPath(fixtureRoot: string): string {
   );
 }
 
-function replaceExactStrings(
-  value: unknown,
-  replacements: ReadonlyMap<string, string>,
-): unknown {
+function replaceExactStrings(value: unknown, replacements: ReadonlyMap<string, string>): unknown {
   if (typeof value === 'string') return replacements.get(value) ?? value;
   if (Array.isArray(value)) {
     return value.map((item) => replaceExactStrings(item, replacements));
   }
   if (value && typeof value === 'object') {
     return Object.fromEntries(
-      Object.entries(value).map(([key, item]) => [
-        key,
-        replaceExactStrings(item, replacements),
-      ]),
+      Object.entries(value).map(([key, item]) => [key, replaceExactStrings(item, replacements)]),
     );
   }
   return value;
@@ -369,10 +319,7 @@ async function buildIsolatedApplication(fixtureRoot: string): Promise<void> {
   });
 }
 
-async function assertTemporaryCharacterIsPlayable(
-  page: Page,
-  origin: string,
-): Promise<void> {
+async function assertTemporaryCharacterIsPlayable(page: Page, origin: string): Promise<void> {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto(`${origin}${basePath}`);
   await page.getByRole('button', { name: 'Multiplayer' }).click();
@@ -401,32 +348,23 @@ async function assertTemporaryCharacterIsPlayable(
     new RegExp(`^${temporaryCharacterName} — Original\\. Weaknesses:`, 'u'),
   );
   await temporaryOption.click();
-  await page
-    .getByRole('button', { name: 'Next skin for Player two' })
-    .click();
+  await page.getByRole('button', { name: 'Next skin for Player two' }).click();
   await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
 
-  await expect(
-    page.getByRole('heading', { name: temporaryCharacterName }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: temporaryCharacterName })).toBeVisible();
   const portrait = page.locator(
     `img.character-portrait[src*="${temporaryCharacterId}--alternate"]`,
   );
   await expect(portrait).toBeVisible();
   await expect
     .poll(() =>
-      portrait.evaluate(
-        (image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
-      ),
+      portrait.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0),
     )
     .toBe(true);
 }
 
-async function assertTemporaryCharacterIsAbsent(
-  page: Page,
-  origin: string,
-): Promise<void> {
+async function assertTemporaryCharacterIsAbsent(page: Page, origin: string): Promise<void> {
   await page.goto(`${origin}${basePath}`);
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await expect(page.locator('.roster-choice')).toHaveCount(30);
@@ -440,15 +378,12 @@ async function assertTemporaryCharacterIsAbsent(
 
   await lockInSetup(page);
 
-
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(page.locator('.character-portrait')).toHaveCount(2);
-  await expect(
-    page.locator(`img.character-portrait[src*="${temporaryCharacterId}"]`),
-  ).toHaveCount(0);
-  await expect(
-    page.getByText(temporaryCharacterName, { exact: true }),
-  ).toHaveCount(0);
+  await expect(page.locator(`img.character-portrait[src*="${temporaryCharacterId}"]`)).toHaveCount(
+    0,
+  );
+  await expect(page.getByText(temporaryCharacterName, { exact: true })).toHaveCount(0);
 }
 
 async function assertSyntheticRosterLayout(page: Page): Promise<void> {
@@ -460,8 +395,9 @@ async function assertSyntheticRosterLayout(page: Page): Promise<void> {
   const geometry = await roster.evaluate((element) => {
     const grid = element as HTMLElement;
     const gridBox = grid.getBoundingClientRect();
-    const choices = [...grid.querySelectorAll('.roster-choice')]
-      .map((choice) => choice.getBoundingClientRect());
+    const choices = [...grid.querySelectorAll('.roster-choice')].map((choice) =>
+      choice.getBoundingClientRect(),
+    );
     const heading = document.querySelector('.roster-heading')!.getBoundingClientRect();
     const note = document.querySelector('.setup-note')!.getBoundingClientRect();
     const rowCounts = new Map<number, number>();
@@ -472,12 +408,12 @@ async function assertSyntheticRosterLayout(page: Page): Promise<void> {
     return {
       rowCounts: [...rowCounts.values()],
       finalRowCenterOffset: Math.abs(
-        (choices[30]!.left + choices[31]!.right) / 2 -
-        (choices[0]!.left + choices[5]!.right) / 2,
+        (choices[30]!.left + choices[31]!.right) / 2 - (choices[0]!.left + choices[5]!.right) / 2,
       ),
       clearOfText: gridBox.top >= heading.bottom - 1 && gridBox.bottom <= note.top + 1,
       horizontallyContained: grid.scrollWidth <= grid.clientWidth + 1,
-      pageFits: document.documentElement.scrollWidth <= innerWidth &&
+      pageFits:
+        document.documentElement.scrollWidth <= innerWidth &&
         document.documentElement.scrollHeight <= innerHeight,
       overflowY: getComputedStyle(grid).overflowY,
       overscroll: getComputedStyle(grid).overscrollBehaviorY,
@@ -519,9 +455,7 @@ function findBuiltFiles(fixtureRoot: string, name: string): string[] {
 
 function findBuiltText(fixtureRoot: string): string {
   return walkFiles(path.join(fixtureRoot, 'dist'))
-    .filter((filePath) =>
-      ['.css', '.html', '.js'].includes(path.extname(filePath)),
-    )
+    .filter((filePath) => ['.css', '.html', '.js'].includes(path.extname(filePath)))
     .map((filePath) => readFileSync(filePath, 'utf8'))
     .join('\n');
 }

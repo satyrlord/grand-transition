@@ -4,14 +4,14 @@ import { fileURLToPath } from 'node:url';
 import {
   buildPhraseCardCatalog,
   type PhraseCardCatalog,
-} from '../src/content/phrase-card-catalog';
-import { createGameCatalog } from '../src/content/game-catalog';
-import { createEnglishGameLocale } from '../src/localization/en-game-locale';
+} from '../src/content/phrase-card-catalog.ts';
+import { createGameCatalog } from '../src/content/game-catalog.ts';
+import { createEnglishGameLocale } from '../src/localization/en-game-locale.ts';
 import {
   createRomanianGameLocale,
   mergeRomanianMessageFiles,
-} from '../src/localization/ro-game-locale';
-import { indexGameLocaleBundles } from '../src/localization/game-locale-bundles';
+} from '../src/localization/ro-game-locale.ts';
+import { indexGameLocaleBundles } from '../src/localization/game-locale-bundles.ts';
 
 const repositoryRoot = path.resolve(
   fileURLToPath(new URL('..', import.meta.url)),

@@ -6,7 +6,7 @@ import { promisify } from 'node:util';
 import { expect, test } from 'vitest';
 
 const execFileAsync = promisify(execFile);
-const validatorPath = path.resolve('tools', 'validate-generation-prompt.mjs');
+const validatorPath = path.resolve('tools', 'validate-generation-prompt.ts');
 const validPrompt = `
 Neutral sRGB white balance, ungraded colors, clean charcoal and navy shadows,
 clear blue and oxblood separation, and neutral light anchors. Warm color is local
@@ -14,26 +14,28 @@ to named brass, wood, cream, skin, oxide-red, or lamp shapes. No whole-image
 color tint.
 `;
 
-test.each(['ungraded colors', 'ungraded foreground colors'])('accepts the shared controls with %s', async (control) => {
-  const fixtureRoot = await mkdtemp(
-    path.join(os.tmpdir(), 'grand-transition-prompt-pass-'),
-  );
-  try {
-    const promptPath = path.join(fixtureRoot, 'valid.prompt.txt');
-    await writeFile(promptPath, validPrompt.replace('ungraded colors', control), 'utf8');
+test.each(['ungraded colors', 'ungraded foreground colors'])(
+  'accepts the shared controls with %s',
+  async (control) => {
+    const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-prompt-pass-'));
+    try {
+      const promptPath = path.join(fixtureRoot, 'valid.prompt.txt');
+      await writeFile(promptPath, validPrompt.replace('ungraded colors', control), 'utf8');
 
-    await expect(execFileAsync(process.execPath, [validatorPath, promptPath])).resolves.toMatchObject({
-      stdout: expect.stringContaining('Generation prompt color validation passed'),
-    });
-  } finally {
-    await rm(fixtureRoot, { force: true, recursive: true });
-  }
-}, 30_000);
+      await expect(
+        execFileAsync(process.execPath, [validatorPath, promptPath]),
+      ).resolves.toMatchObject({
+        stdout: expect.stringContaining('Generation prompt color validation passed'),
+      });
+    } finally {
+      await rm(fixtureRoot, { force: true, recursive: true });
+    }
+  },
+  30_000,
+);
 
 test('accepts positive controls followed by a negative-control section', async () => {
-  const fixtureRoot = await mkdtemp(
-    path.join(os.tmpdir(), 'grand-transition-prompt-sections-'),
-  );
+  const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-prompt-sections-'));
   try {
     const promptPath = path.join(fixtureRoot, 'sections.prompt.txt');
     await writeFile(
@@ -42,34 +44,30 @@ test('accepts positive controls followed by a negative-control section', async (
       'utf8',
     );
 
-    await expect(execFileAsync(process.execPath, [validatorPath, promptPath])).resolves.toBeDefined();
+    await expect(
+      execFileAsync(process.execPath, [validatorPath, promptPath]),
+    ).resolves.toBeDefined();
   } finally {
     await rm(fixtureRoot, { force: true, recursive: true });
   }
 }, 30_000);
 
 test('allows warm-studio wording when it is explicitly a negative control', async () => {
-  const fixtureRoot = await mkdtemp(
-    path.join(os.tmpdir(), 'grand-transition-prompt-negative-'),
-  );
+  const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-prompt-negative-'));
   try {
     const promptPath = path.join(fixtureRoot, 'negative.prompt.txt');
-    await writeFile(
-      promptPath,
-      `${validPrompt}\nNegative: avoid warm studio lighting.\n`,
-      'utf8',
-    );
+    await writeFile(promptPath, `${validPrompt}\nNegative: avoid warm studio lighting.\n`, 'utf8');
 
-    await expect(execFileAsync(process.execPath, [validatorPath, promptPath])).resolves.toBeDefined();
+    await expect(
+      execFileAsync(process.execPath, [validatorPath, promptPath]),
+    ).resolves.toBeDefined();
   } finally {
     await rm(fixtureRoot, { force: true, recursive: true });
   }
 }, 30_000);
 
 test('rejects a global warm grade even when the required controls are present', async () => {
-  const fixtureRoot = await mkdtemp(
-    path.join(os.tmpdir(), 'grand-transition-prompt-global-wash-'),
-  );
+  const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-prompt-global-wash-'));
   try {
     const promptPath = path.join(fixtureRoot, 'global-wash.prompt.txt');
     await writeFile(
@@ -78,7 +76,9 @@ test('rejects a global warm grade even when the required controls are present', 
       'utf8',
     );
 
-    await expect(execFileAsync(process.execPath, [validatorPath, promptPath])).rejects.toMatchObject({
+    await expect(
+      execFileAsync(process.execPath, [validatorPath, promptPath]),
+    ).rejects.toMatchObject({
       stderr: expect.stringContaining('contains a global warm color grade'),
     });
   } finally {
@@ -98,7 +98,9 @@ test('does not treat negative space as a negative lighting control', async () =>
       'utf8',
     );
 
-    await expect(execFileAsync(process.execPath, [validatorPath, promptPath])).rejects.toMatchObject({
+    await expect(
+      execFileAsync(process.execPath, [validatorPath, promptPath]),
+    ).rejects.toMatchObject({
       stderr: expect.stringContaining('contains unqualified warm studio lighting'),
     });
   } finally {
@@ -106,25 +108,35 @@ test('does not treat negative space as a negative lighting control', async () =>
   }
 }, 30_000);
 
-test.each(['ungraded colors', 'ungraded foreground colors'])('does not accept %s inside a negative section', async (control) => {
-  const fixtureRoot = await mkdtemp(
-    path.join(os.tmpdir(), 'grand-transition-prompt-negated-controls-'),
-  );
-  try {
-    const promptPath = path.join(fixtureRoot, 'negated-controls.prompt.txt');
-    await writeFile(
-      promptPath,
-      'Negative controls: avoid neutral sRGB white balance, ' + control + ', and warm color is local to named materials. No whole-image color tint.\n',
-      'utf8',
+test.each(['ungraded colors', 'ungraded foreground colors'])(
+  'does not accept %s inside a negative section',
+  async (control) => {
+    const fixtureRoot = await mkdtemp(
+      path.join(os.tmpdir(), 'grand-transition-prompt-negated-controls-'),
     );
+    try {
+      const promptPath = path.join(fixtureRoot, 'negated-controls.prompt.txt');
+      await writeFile(
+        promptPath,
+        'Negative controls: avoid neutral sRGB white balance, ' +
+          control +
+          ', and warm color is local to named materials. No whole-image color tint.\n',
+        'utf8',
+      );
 
-    await expect(execFileAsync(process.execPath, [validatorPath, promptPath])).rejects.toMatchObject({
-      stderr: expect.stringContaining('missing neutral sRGB white balance, ungraded colors, local warm color scope'),
-    });
-  } finally {
-    await rm(fixtureRoot, { force: true, recursive: true });
-  }
-}, 30_000);
+      await expect(
+        execFileAsync(process.execPath, [validatorPath, promptPath]),
+      ).rejects.toMatchObject({
+        stderr: expect.stringContaining(
+          'missing neutral sRGB white balance, ungraded colors, local warm color scope',
+        ),
+      });
+    } finally {
+      await rm(fixtureRoot, { force: true, recursive: true });
+    }
+  },
+  30_000,
+);
 
 test('does not let a positive-section heading override a local negation', async () => {
   const fixtureRoot = await mkdtemp(
@@ -138,7 +150,9 @@ test('does not let a positive-section heading override a local negation', async 
       'utf8',
     );
 
-    await expect(execFileAsync(process.execPath, [validatorPath, promptPath])).rejects.toMatchObject({
+    await expect(
+      execFileAsync(process.execPath, [validatorPath, promptPath]),
+    ).rejects.toMatchObject({
       stderr: expect.stringContaining('missing neutral sRGB white balance'),
     });
   } finally {
@@ -147,14 +161,14 @@ test('does not let a positive-section heading override a local negation', async 
 }, 30_000);
 
 test('rejects unqualified warm studio lighting and missing controls', async () => {
-  const fixtureRoot = await mkdtemp(
-    path.join(os.tmpdir(), 'grand-transition-prompt-fail-'),
-  );
+  const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-prompt-fail-'));
   try {
     const promptPath = path.join(fixtureRoot, 'invalid.prompt.txt');
     await writeFile(promptPath, 'Warm studio key lighting with a rich amber grade.', 'utf8');
 
-    await expect(execFileAsync(process.execPath, [validatorPath, promptPath])).rejects.toMatchObject({
+    await expect(
+      execFileAsync(process.execPath, [validatorPath, promptPath]),
+    ).rejects.toMatchObject({
       stderr: expect.stringContaining('generation prompt color guard failed'),
     });
   } finally {

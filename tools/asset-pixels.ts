@@ -3,14 +3,14 @@ export const NATIVE_ALPHA_MIN_OPACITY = 250;
 export const NATIVE_ALPHA_MAX_CONTOUR_DISTANCE = 4;
 export const NATIVE_ALPHA_MIN_CONTOUR_RATIO = 0.9;
 
-export function isVisibleChromaGreen(data, offset) {
+export function isVisibleChromaGreen(data: ArrayLike<number>, offset: number): boolean {
   return data[offset + 3] > 16 && data[offset + 1] >= 180 &&
     data[offset] <= 80 && data[offset + 2] <= 80;
 }
 
-export function hasNativeAlphaProvenance(png) {
+export function hasNativeAlphaProvenance(png: Buffer): boolean {
   if (!png.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) return false;
-  const entries = new Map();
+  const entries = new Map<string, string>();
   for (let offset = 8; offset + 12 <= png.length;) {
     const length = png.readUInt32BE(offset);
     if (offset + length + 12 > png.length) return false;
@@ -25,7 +25,7 @@ export function hasNativeAlphaProvenance(png) {
     entries.get('Alpha Source') === 'generated-alpha-v1';
 }
 
-export function measureNativeAlphaTopology(data, width, height) {
+export function measureNativeAlphaTopology(data: ArrayLike<number>, width: number, height: number) {
   const pixelCount = width * height;
   if (!Number.isInteger(width) || !Number.isInteger(height) ||
       width <= 0 || height <= 0 || data.length !== pixelCount * 4) {

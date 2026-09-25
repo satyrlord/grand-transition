@@ -1,10 +1,10 @@
 import { expect, test } from 'vitest';
-import { resolveCharacterAsset } from '../../src/app/character-assets';
+import { resolveCharacterAsset } from '../../src/app/character-assets.ts';
 import {
   createCharacterStatePackages,
   resolveCharacterFramesFromInventory,
-} from '../../src/app/character-state-assets';
-import { characterMotion } from '../../src/app/character-motion';
+} from '../../src/app/character-state-assets.ts';
+import { characterMotion } from '../../src/app/character-motion.ts';
 import contract from '../../src/assets/characters/state-contract.json';
 
 function fixture() {
@@ -12,28 +12,53 @@ function fixture() {
   const assets = contract.stateMasterIds.map((stateId) => {
     const id = selection.id + '--' + stateId;
     return {
-      id, ownerId: selection.ownerId, skinId: selection.skinId, stateId,
-      variants: [320, 640, 960].flatMap((width) => ['avif', 'webp'].map((format) => ({
-        path: 'states/variants/' + id + '-' + width + 'x' + width + '.' + format,
-        width, height: width, format,
-      }))),
+      id,
+      ownerId: selection.ownerId,
+      skinId: selection.skinId,
+      stateId,
+      variants: [320, 640, 960].flatMap((width) =>
+        ['avif', 'webp'].map((format) => ({
+          path: 'states/variants/' + id + '-' + width + 'x' + width + '.' + format,
+          width,
+          height: width,
+          format,
+        })),
+      ),
     };
   });
-  const urls = Object.fromEntries(assets.flatMap((asset) => asset.variants.map((variant) =>
-    ['../assets/characters/' + variant.path, '/grand-transition/assets/' + variant.path])));
+  const urls = Object.fromEntries(
+    assets.flatMap((asset) =>
+      asset.variants.map((variant) => [
+        '../assets/characters/' + variant.path,
+        '/grand-transition/assets/' + variant.path,
+      ]),
+    ),
+  );
   return {
-    selection, urls,
+    selection,
+    urls,
     manifest: {
-      schemaVersion: 1, assets,
-      packages: [{
-        ownerId: selection.ownerId, skinId: selection.skinId,
-        states: Object.entries(characterMotion).map(([stateId, motion]) => ({
-          stateId, ...motion,
-          assetId: stateId === 'selection' || contract.stateAssetReuse[stateId as keyof typeof contract.stateAssetReuse] === 'selection'
-            ? selection.id
-            : selection.id + '--' + (contract.stateAssetReuse[stateId as keyof typeof contract.stateAssetReuse] ?? stateId),
-        })),
-      }],
+      schemaVersion: 1,
+      assets,
+      packages: [
+        {
+          ownerId: selection.ownerId,
+          skinId: selection.skinId,
+          states: Object.entries(characterMotion).map(([stateId, motion]) => ({
+            stateId,
+            ...motion,
+            assetId:
+              stateId === 'selection' ||
+              contract.stateAssetReuse[stateId as keyof typeof contract.stateAssetReuse] ===
+                'selection'
+                ? selection.id
+                : selection.id +
+                  '--' +
+                  (contract.stateAssetReuse[stateId as keyof typeof contract.stateAssetReuse] ??
+                    stateId),
+          })),
+        },
+      ],
     },
   };
 }
@@ -69,28 +94,42 @@ test('resolves the required reused state mappings', () => {
   const { manifest, selection, urls } = fixture();
   const frames = createCharacterStatePackages(manifest, [selection], urls)[0]!.frames;
   expect(frames.find(({ stateId }) => stateId === 'idle')!.id).toBe(selection.id);
-  expect(frames.find(({ stateId }) => stateId === 'comeback')!.id).toBe(`${selection.id}--delivery`);
-  expect(frames.find(({ stateId }) => stateId === 'grammar-mistake')!.id).toBe(`${selection.id}--weakness`);
+  expect(frames.find(({ stateId }) => stateId === 'comeback')!.id).toBe(
+    `${selection.id}--delivery`,
+  );
+  expect(frames.find(({ stateId }) => stateId === 'grammar-mistake')!.id).toBe(
+    `${selection.id}--weakness`,
+  );
 });
 
 test('rejects missing state mappings, sources, and selection instead of producing blank frames', () => {
   const first = fixture();
   first.manifest.packages[0]!.states.pop();
-  expect(() => createCharacterStatePackages(first.manifest, [first.selection], first.urls)).toThrow(/nine states/u);
+  expect(() => createCharacterStatePackages(first.manifest, [first.selection], first.urls)).toThrow(
+    /nine states/u,
+  );
   const second = fixture();
   delete second.urls[Object.keys(second.urls)[0]!];
-  expect(() => createCharacterStatePackages(second.manifest, [second.selection], second.urls)).toThrow(/missing state variant URL/u);
+  expect(() =>
+    createCharacterStatePackages(second.manifest, [second.selection], second.urls),
+  ).toThrow(/missing state variant URL/u);
   const third = fixture();
-  expect(() => createCharacterStatePackages(third.manifest, [], third.urls)).toThrow(/selection portrait is missing/u);
+  expect(() => createCharacterStatePackages(third.manifest, [], third.urls)).toThrow(
+    /selection portrait is missing/u,
+  );
 });
 
 test('rejects duplicate packages and a state pointing at another owner', () => {
   const first = fixture();
   first.manifest.packages.push(first.manifest.packages[0]!);
-  expect(() => createCharacterStatePackages(first.manifest, [first.selection], first.urls)).toThrow(/Duplicate character state package/u);
+  expect(() => createCharacterStatePackages(first.manifest, [first.selection], first.urls)).toThrow(
+    /Duplicate character state package/u,
+  );
   const second = fixture();
   second.manifest.assets[0]!.ownerId = 'wrong-character';
-  expect(() => createCharacterStatePackages(second.manifest, [second.selection], second.urls)).toThrow(/incorrect asset/u);
+  expect(() =>
+    createCharacterStatePackages(second.manifest, [second.selection], second.urls),
+  ).toThrow(/incorrect asset/u);
 });
 
 test('uses selection art only for the two declared fallback skins', () => {
@@ -99,28 +138,28 @@ test('uses selection art only for the two declared fallback skins', () => {
     resolveCharacterAsset('reluctant-theorem'),
   ];
   for (const fallback of fallbacks) {
-    expect(resolveCharacterFramesFromInventory(
-      fallback.ownerId,
-      fallback.skinId,
-      new Map(),
-      [fallback],
-    )).toBeNull();
+    expect(
+      resolveCharacterFramesFromInventory(fallback.ownerId, fallback.skinId, new Map(), [fallback]),
+    ).toBeNull();
   }
 
   const required = resolveCharacterAsset('algorithmic-prophet');
-  expect(() => resolveCharacterFramesFromInventory(
-    required.ownerId,
-    required.skinId,
-    new Map(),
-    [required],
-  )).toThrow(/Required character state package is missing/u);
+  expect(() =>
+    resolveCharacterFramesFromInventory(required.ownerId, required.skinId, new Map(), [required]),
+  ).toThrow(/Required character state package is missing/u);
 
   const frames = fixture();
-  expect(() => resolveCharacterFramesFromInventory(
-    fallbacks[0]!.ownerId,
-    fallbacks[0]!.skinId,
-    new Map([[fallbacks[0]!.ownerId + ':' + fallbacks[0]!.skinId,
-      createCharacterStatePackages(frames.manifest, [frames.selection], frames.urls)[0]!.frames]]),
-    [fallbacks[0]!],
-  )).toThrow(/Selection-art fallback must not declare/u);
+  expect(() =>
+    resolveCharacterFramesFromInventory(
+      fallbacks[0]!.ownerId,
+      fallbacks[0]!.skinId,
+      new Map([
+        [
+          fallbacks[0]!.ownerId + ':' + fallbacks[0]!.skinId,
+          createCharacterStatePackages(frames.manifest, [frames.selection], frames.urls)[0]!.frames,
+        ],
+      ]),
+      [fallbacks[0]!],
+    ),
+  ).toThrow(/Selection-art fallback must not declare/u);
 });

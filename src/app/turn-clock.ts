@@ -13,8 +13,7 @@ type TurnClockDependencies = Readonly<{
 
 const browserTurnClockDependencies: TurnClockDependencies = {
   now: () => performance.now(),
-  schedule: (callback, delayMilliseconds) =>
-    window.setTimeout(callback, delayMilliseconds),
+  schedule: (callback, delayMilliseconds) => window.setTimeout(callback, delayMilliseconds),
   cancel: (timerId) => window.clearTimeout(timerId),
 };
 
@@ -33,11 +32,16 @@ export class ApplicationTurnClock {
   private running = false;
   private expired = false;
 
+  private readonly callbacks: TurnClockCallbacks;
+  private readonly dependencies: TurnClockDependencies;
+
   constructor(
-    private readonly callbacks: TurnClockCallbacks,
-    private readonly dependencies: TurnClockDependencies =
-      browserTurnClockDependencies,
-  ) {}
+    callbacks: TurnClockCallbacks,
+    dependencies: TurnClockDependencies = browserTurnClockDependencies,
+  ) {
+    this.callbacks = callbacks;
+    this.dependencies = dependencies;
+  }
 
   get remainingSeconds(): TurnClockSeconds {
     return this.visibleSeconds;
@@ -47,8 +51,7 @@ export class ApplicationTurnClock {
     this.cancelScheduledTick();
     this.running = false;
     this.expired = false;
-    this.remainingMilliseconds =
-      durationSeconds === null ? null : durationSeconds * 1_000;
+    this.remainingMilliseconds = durationSeconds === null ? null : durationSeconds * 1_000;
     this.visibleSeconds = durationSeconds;
     this.deadlineMilliseconds = null;
     if (running) this.resume();
@@ -62,16 +65,11 @@ export class ApplicationTurnClock {
   }
 
   resume(): void {
-    if (
-      this.running ||
-      this.expired ||
-      this.remainingMilliseconds === null
-    ) {
+    if (this.running || this.expired || this.remainingMilliseconds === null) {
       return;
     }
     this.running = true;
-    this.deadlineMilliseconds =
-      this.dependencies.now() + this.remainingMilliseconds;
+    this.deadlineMilliseconds = this.dependencies.now() + this.remainingMilliseconds;
     this.scheduleNextTick();
   }
 
@@ -85,10 +83,7 @@ export class ApplicationTurnClock {
     this.timerId = undefined;
     if (!this.running || this.deadlineMilliseconds === null) return;
 
-    const remainingMilliseconds = Math.max(
-      0,
-      this.deadlineMilliseconds - this.dependencies.now(),
-    );
+    const remainingMilliseconds = Math.max(0, this.deadlineMilliseconds - this.dependencies.now());
     this.remainingMilliseconds = remainingMilliseconds;
     if (remainingMilliseconds === 0) {
       this.running = false;
@@ -110,10 +105,7 @@ export class ApplicationTurnClock {
 
   private captureRemainingTime(): void {
     if (this.deadlineMilliseconds === null) return;
-    this.remainingMilliseconds = Math.max(
-      0,
-      this.deadlineMilliseconds - this.dependencies.now(),
-    );
+    this.remainingMilliseconds = Math.max(0, this.deadlineMilliseconds - this.dependencies.now());
     this.visibleSeconds = Math.ceil(this.remainingMilliseconds / 1_000);
     this.deadlineMilliseconds = null;
   }
@@ -126,19 +118,13 @@ export class ApplicationTurnClock {
     ) {
       return;
     }
-    const remainingMilliseconds = Math.max(
-      0,
-      this.deadlineMilliseconds - this.dependencies.now(),
-    );
+    const remainingMilliseconds = Math.max(0, this.deadlineMilliseconds - this.dependencies.now());
     const visibleSeconds = Math.ceil(remainingMilliseconds / 1_000);
     const delayMilliseconds = Math.max(
       0,
       remainingMilliseconds - Math.max(0, visibleSeconds - 1) * 1_000,
     );
-    this.timerId = this.dependencies.schedule(
-      this.advance,
-      delayMilliseconds,
-    );
+    this.timerId = this.dependencies.schedule(this.advance, delayMilliseconds);
   }
 
   private cancelScheduledTick(): void {

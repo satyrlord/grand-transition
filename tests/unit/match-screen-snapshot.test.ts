@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { createMatchScreenSnapshot } from '../../src/app/match-screen-snapshot';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, gameCatalog } from '../../src/game-content';
+import { createMatchScreenSnapshot } from '../../src/app/match-screen-snapshot.ts';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
+import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
 import {
   createMatchReducer,
   createMatchSetupState,
@@ -10,7 +10,7 @@ import {
   type MatchConfiguredPlayer,
   type MatchResolution,
   type MatchState,
-} from '../../src/engine/match-lifecycle';
+} from '../../src/engine/match-lifecycle.ts';
 
 const reducer = createMatchReducer({
   phrases: gameCatalog.phrases,
@@ -23,13 +23,19 @@ describe('match-screen snapshot', () => {
   test('marks exactly the next grammar-accepted phrases without changing state or selection rules', () => {
     const scene = gameCatalog.scenes[0]!;
     let state = createMatchSetupState({
-      schemaVersion: 1, seed: 20_260_823,
+      schemaVersion: 1,
+      seed: 20_260_823,
       players: [configuredPlayer(0), configuredPlayer(1)],
-      sceneId: scene.id, scenePhraseIds: scene.phrasePool,
+      sceneId: scene.id,
+      scenePhraseIds: scene.phrasePool,
       generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
-      mode: 'hotseat', openingPlayerIndex: scene.openingPlayerIndex,
+      mode: 'hotseat',
+      openingPlayerIndex: scene.openingPlayerIndex,
     });
-    state = accept(accept(state, lifecycleCommand('start-match')), lifecycleCommand('prepare-round'));
+    state = accept(
+      accept(state, lifecycleCommand('start-match')),
+      lifecycleCommand('prepare-round'),
+    );
     let checked = 0;
     let rejected = 0;
     for (let pick = 0; pick < 8 && state.phase === 'drafting'; pick += 1) {
@@ -42,11 +48,15 @@ describe('match-screen snapshot', () => {
           continue;
         }
         const result = accept(state, {
-          type: 'select-phrase', source: 'user', actorId: state.activePlayerId,
+          type: 'select-phrase',
+          source: 'user',
+          actorId: state.activePlayerId,
           payload: { card: card.reference },
         });
-        const mistakes = state.draft!.playerStates[state.activePlayerId]!.construction.grammarMistakes;
-        const nextMistakes = result.draft!.playerStates[state.activePlayerId]!.construction.grammarMistakes;
+        const mistakes =
+          state.draft!.playerStates[state.activePlayerId]!.construction.grammarMistakes;
+        const nextMistakes =
+          result.draft!.playerStates[state.activePlayerId]!.construction.grammarMistakes;
         expect(card.grammarAccepted).toBe(nextMistakes === mistakes);
         expect(card.action).toBe('select');
         checked += 1;
@@ -56,7 +66,9 @@ describe('match-screen snapshot', () => {
       const next = cards.find((card) => card.grammarAccepted);
       if (!next?.reference) break;
       state = accept(state, {
-        type: 'select-phrase', source: 'user', actorId: state.activePlayerId,
+        type: 'select-phrase',
+        source: 'user',
+        actorId: state.activePlayerId,
         payload: { card: next.reference },
       });
     }
@@ -94,9 +106,7 @@ describe('match-screen snapshot', () => {
       'transition-era-television-studio',
       'transition-era-television-studio-desks',
     ]);
-    expect(
-      snapshot.sceneLayers.every(({ url }) => /\.webp(?:$|\?)/u.test(url)),
-    ).toBe(true);
+    expect(snapshot.sceneLayers.every(({ url }) => /\.webp(?:$|\?)/u.test(url))).toBe(true);
     expect(snapshot.sceneLayers[0]).toMatchObject({
       width: 3840,
       height: 2160,
@@ -118,17 +128,11 @@ describe('match-screen snapshot', () => {
     expect(firstLayer.kind).toBe('manifest');
     if (firstLayer.kind === 'manifest') {
       expect(firstLayer.focalRectangles).toHaveProperty('moderatorFace');
-      expect(firstLayer.sharedSafeRectangles).toHaveProperty(
-        'centralInteraction',
-      );
+      expect(firstLayer.sharedSafeRectangles).toHaveProperty('centralInteraction');
     }
-    expect(snapshot.players.filter((player) => player.isActive)).toHaveLength(
-      1,
-    );
+    expect(snapshot.players.filter((player) => player.isActive)).toHaveLength(1);
     expect(snapshot.players[0].skinId).toBe('alternate');
-    expect(snapshot.players[0].portraitUrl).toContain(
-      'red-folded-chairman--alternate',
-    );
+    expect(snapshot.players[0].portraitUrl).toContain('red-folded-chairman--alternate');
     expect(snapshot.players[1].skinId).toBe('default');
     expect(snapshot.timer.durationSeconds).toBe(30);
     expect(snapshot.players.map(({ comeback }) => comeback)).toEqual([
@@ -186,9 +190,10 @@ describe('match-screen snapshot', () => {
       { charge: 40, cap: 60, segments: 3 },
       { charge: 60, cap: 60, segments: 3 },
     ]);
-    expect(snapshot.players.map(({ comebackSidekickUrl }) => comebackSidekickUrl))
-      .toEqual([expect.stringMatching(/red-folded-chairman.*\.png/u),
-        expect.stringMatching(/thunder-tribune.*\.png/u)]);
+    expect(snapshot.players.map(({ comebackSidekickUrl }) => comebackSidekickUrl)).toEqual([
+      expect.stringMatching(/red-folded-chairman.*\.png/u),
+      expect.stringMatching(/thunder-tribune.*\.png/u),
+    ]);
     expect(snapshot.actions).toMatchObject(
       state.activePlayerId === first
         ? { comebackTier: 'medium', comebackDamageBonus: 10 }
@@ -222,18 +227,14 @@ describe('match-screen snapshot', () => {
       {},
       'player-1',
     );
-    expect(snapshot.privateCards.every(({ state }) => state === 'empty')).toBe(
-      true,
-    );
+    expect(snapshot.privateCards.every(({ state }) => state === 'empty')).toBe(true);
     expect(snapshot.actions.canCommit).toBe(false);
     expect(snapshot.actions.canRedraw).toBe(false);
     expect(snapshot.actions.comebackTiers).toEqual([]);
   });
 
   test('projects the modern debate studio asset layers', () => {
-    const scene = gameCatalog.scenes.find(
-      (candidate) => candidate.id === 'modern-debate-studio',
-    )!;
+    const scene = gameCatalog.scenes.find((candidate) => candidate.id === 'modern-debate-studio')!;
     const players = [configuredPlayer(0), configuredPlayer(1)] as const;
     let state = createMatchSetupState({
       schemaVersion: 1,
@@ -261,9 +262,7 @@ describe('match-screen snapshot', () => {
         depth: 1,
       }),
     ]);
-    expect(
-      snapshot.sceneLayers.every(({ url }) => /\.webp(?:$|\?)/u.test(url)),
-    ).toBe(true);
+    expect(snapshot.sceneLayers.every(({ url }) => /\.webp(?:$|\?)/u.test(url))).toBe(true);
   });
 
   test('projects the foundation scene through its own manifest and crop contract', () => {
@@ -315,9 +314,7 @@ describe('match-screen snapshot', () => {
     state = accept(state, lifecycleCommand('prepare-round'));
     const firstSpeakerId = state.activePlayerId;
     const nounSlot = state.draft!.board.slots.find((slot) => {
-      const phrase = gameCatalog.phrases.find(
-        (candidate) => candidate.id === slot.phraseId,
-      );
+      const phrase = gameCatalog.phrases.find((candidate) => candidate.id === slot.phraseId);
       return slot.available && phrase?.role === 'noun';
     })!;
     state = accept(state, {
@@ -373,21 +370,9 @@ describe('match-screen snapshot', () => {
     state = withPrivateCard(state, secondSpeakerId, 'common-noun-001');
     state = selectPrivateCard(state, secondSpeakerId, 'common-noun-001');
     state = withPrivateCard(state, firstSpeakerId, 'common-predicate-009-present');
-    state = selectPrivateCard(
-      state,
-      firstSpeakerId,
-      'common-predicate-009-present',
-    );
-    state = withPrivateCard(
-      state,
-      secondSpeakerId,
-      'common-predicate-009-present',
-    );
-    state = selectPrivateCard(
-      state,
-      secondSpeakerId,
-      'common-predicate-009-present',
-    );
+    state = selectPrivateCard(state, firstSpeakerId, 'common-predicate-009-present');
+    state = withPrivateCard(state, secondSpeakerId, 'common-predicate-009-present');
+    state = selectPrivateCard(state, secondSpeakerId, 'common-predicate-009-present');
     state = accept(state, {
       type: 'commit-sentence',
       source: 'user',
@@ -416,8 +401,7 @@ describe('match-screen snapshot', () => {
       actorId: firstSpeakerId,
       payload: {},
     });
-    const currentSentence =
-      state.draft!.playerStates[secondSpeakerId]!.construction.previewText;
+    const currentSentence = state.draft!.playerStates[secondSpeakerId]!.construction.previewText;
     const snapshot = createMatchScreenSnapshot(state, englishGameLocale);
 
     expect(snapshot.sentenceText).toBe(currentSentence);
@@ -453,8 +437,7 @@ describe('match-screen snapshot', () => {
       payload: {},
     });
 
-    const publicSentence =
-      state.draft!.playerStates[firstSpeakerId]!.construction.previewText;
+    const publicSentence = state.draft!.playerStates[firstSpeakerId]!.construction.previewText;
     const snapshot = createMatchScreenSnapshot(state, englishGameLocale);
     const waitingPlayer = snapshot.players.find((player) => !player.isActive)!;
     expect(waitingPlayer.playerId).toBe(firstSpeakerId);
@@ -545,10 +528,7 @@ describe('match-screen snapshot', () => {
               {
                 kind: 'clause-base',
                 operation: 'note',
-                phraseIds: [
-                  'common-noun-001',
-                  'common-predicate-010-present',
-                ],
+                phraseIds: ['common-noun-001', 'common-predicate-010-present'],
                 amount: 15,
               },
               {
@@ -572,10 +552,7 @@ describe('match-screen snapshot', () => {
               {
                 kind: 'clause-score',
                 operation: 'add',
-                phraseIds: [
-                  'common-noun-001',
-                  'common-predicate-010-present',
-                ],
+                phraseIds: ['common-noun-001', 'common-predicate-010-present'],
                 amount: 60,
               },
               {
@@ -657,11 +634,7 @@ describe('match-screen snapshot', () => {
   });
 });
 
-function withPrivateCard(
-  state: MatchState,
-  playerId: string,
-  phraseId: string,
-): MatchState {
+function withPrivateCard(state: MatchState, playerId: string, phraseId: string): MatchState {
   const draft = state.draft!;
   const player = draft.playerStates[playerId]!;
   const card = { id: `regression-${playerId}-${phraseId}`, phraseId };
@@ -674,25 +647,17 @@ function withPrivateCard(
         [playerId]: {
           ...player,
           hand: [...player.hand, card],
-          legalCards: [
-            ...player.legalCards,
-            { source: 'private', cardId: card.id },
-          ],
+          legalCards: [...player.legalCards, { source: 'private', cardId: card.id }],
         },
       },
     },
   };
 }
 
-function selectPrivateCard(
-  state: MatchState,
-  actorId: string,
-  phraseId: string,
-): MatchState {
+function selectPrivateCard(state: MatchState, actorId: string, phraseId: string): MatchState {
   const card = state.draft!.playerStates[actorId]!.legalCards.find(
     (reference) =>
-      reference.source === 'private' &&
-      reference.cardId === `regression-${actorId}-${phraseId}`,
+      reference.source === 'private' && reference.cardId === `regression-${actorId}-${phraseId}`,
   )!;
   return accept(state, {
     type: 'select-phrase',
@@ -714,9 +679,7 @@ function configuredPlayer(index: 0 | 1): MatchConfiguredPlayer {
   };
 }
 
-function lifecycleCommand(
-  type: 'prepare-round' | 'resolve-round' | 'start-match',
-): MatchCommand {
+function lifecycleCommand(type: 'prepare-round' | 'resolve-round' | 'start-match'): MatchCommand {
   return { type, source: 'user', payload: {} } as MatchCommand;
 }
 

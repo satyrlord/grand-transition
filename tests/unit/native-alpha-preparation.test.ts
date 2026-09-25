@@ -50,7 +50,10 @@ function fixture() {
   return pixels;
 }
 
-const encode = (pixels: Buffer) => sharp(pixels, { raw: { width, height, channels: 4 } }).png().toBuffer();
+const encode = (pixels: Buffer) =>
+  sharp(pixels, { raw: { width, height, channels: 4 } })
+    .png()
+    .toBuffer();
 const decode = (bytes: Buffer) => sharp(bytes).ensureAlpha().raw().toBuffer();
 
 test('clears only alpha 1 beyond the Chebyshev contour and preserves all RGB and other alpha bytes', async () => {
@@ -70,9 +73,16 @@ test('clears only alpha 1 beyond the Chebyshev contour and preserves all RGB and
   expect(await decode(output)).toEqual(expected);
   expect(await decode(source)).toEqual(beforeBytes);
   expect(record).toMatchObject({
-    method: 'clear-detached-alpha-one-v1', width, height,
-    sourceSha256: hash(source), outputSha256: hash(output), clearedAlphaOnePixels: 2,
-    before: { valid: false, topology: { detachedAlphaOnePixels: 2, nontransparentBorderPixels: 1 } },
+    method: 'clear-detached-alpha-one-v1',
+    width,
+    height,
+    sourceSha256: hash(source),
+    outputSha256: hash(output),
+    clearedAlphaOnePixels: 2,
+    before: {
+      valid: false,
+      topology: { detachedAlphaOnePixels: 2, nontransparentBorderPixels: 1 },
+    },
     after: { valid: true, topology: { detachedAlphaOnePixels: 0, nontransparentBorderPixels: 0 } },
   });
 });
@@ -86,19 +96,24 @@ test('returns the exact original buffer and hashes when no cleanup is needed', a
   expect(result.record.before).toEqual(result.record.after);
 });
 
-test.each(['border', 'haze'] as const)('rejects alpha-2 %s without modifying the source', async (kind) => {
-  const pixels = fixture();
-  if (kind === 'border') pixels[alphaOffset(0, 0)] = 2;
-  else for (let x = 1; x <= 8; x += 1) pixels[alphaOffset(x, 3)] = 2;
-  pixels[alphaOffset(2, 2)] = 1;
-  const source = await encode(pixels);
-  const original = Buffer.from(source);
-  const report = await inspectNativeAlpha(source);
-  expect(report.valid).toBe(false);
-  expect(report.topology.detachedStrongerAlphaPixels).toBe(kind === 'border' ? 1 : 8);
-  await expect(prepareNativeAlpha(source)).rejects.toThrow(kind === 'border' ? 'outer border' : '90%');
-  expect(source).toEqual(original);
-});
+test.each(['border', 'haze'] as const)(
+  'rejects alpha-2 %s without modifying the source',
+  async (kind) => {
+    const pixels = fixture();
+    if (kind === 'border') pixels[alphaOffset(0, 0)] = 2;
+    else for (let x = 1; x <= 8; x += 1) pixels[alphaOffset(x, 3)] = 2;
+    pixels[alphaOffset(2, 2)] = 1;
+    const source = await encode(pixels);
+    const original = Buffer.from(source);
+    const report = await inspectNativeAlpha(source);
+    expect(report.valid).toBe(false);
+    expect(report.topology.detachedStrongerAlphaPixels).toBe(kind === 'border' ? 1 : 8);
+    await expect(prepareNativeAlpha(source)).rejects.toThrow(
+      kind === 'border' ? 'outer border' : '90%',
+    );
+    expect(source).toEqual(original);
+  },
+);
 
 test('preserves detached stronger alpha that remains inside the existing aggregate tolerance', async () => {
   const pixels = fixture();
@@ -118,8 +133,16 @@ test('rejects a nontransparent border even when it is within the valid contour d
 });
 
 test('reports and rejects an image with no original alpha channel', async () => {
-  const source = await sharp(await encode(fixture())).removeAlpha().png().toBuffer();
-  expect(await inspectNativeAlpha(source)).toMatchObject({ width, height, hasAlpha: false, valid: false });
+  const source = await sharp(await encode(fixture()))
+    .removeAlpha()
+    .png()
+    .toBuffer();
+  expect(await inspectNativeAlpha(source)).toMatchObject({
+    width,
+    height,
+    hasAlpha: false,
+    valid: false,
+  });
   await expect(prepareNativeAlpha(source)).rejects.toThrow('alpha channel');
 });
 
@@ -138,7 +161,8 @@ test('rejects a partial-alpha majority even when every edge pixel is close to an
 });
 
 test.each(['transparent', 'opaque', 'hard-edge', 'translucent'] as const)(
-  'rejects missing native topology in a %s candidate', async (kind) => {
+  'rejects missing native topology in a %s candidate',
+  async (kind) => {
     const pixels = fixture();
     for (let pixel = 0; pixel < width * height; pixel += 1) {
       const offset = pixel * 4 + 3;

@@ -1,12 +1,12 @@
-import type { Phrase } from '../content/schemas';
-import { seededRandomSource, type RandomSource } from './random-source';
+import type { Phrase } from '../content/schemas.ts';
+import { seededRandomSource, type RandomSource } from './random-source.ts';
 import {
   isClauseConnector,
   pickWeighted,
   preferredConnectors,
   rarityWeight,
   type WeightedPhrase,
-} from './weighted-selection';
+} from './weighted-selection.ts';
 
 export const boardSlotCount = 9;
 
@@ -90,37 +90,12 @@ export function generateBoard(
   }
 
   const pending: Omit<BoardSlot, 'id'>[] = [];
-  addRandomDistinct(
-    pending,
-    byRole.get('noun')!,
-    3,
-    'standard',
-    cursor,
-    randomSource,
-  );
-  addRandomDistinct(
-    pending,
-    byRole.get('verb')!,
-    3,
-    'standard',
-    cursor,
-    randomSource,
-  );
-  addRandomDistinct(
-    pending,
-    byRole.get('predicate')!,
-    1,
-    'standard',
-    cursor,
-    randomSource,
-  );
+  addRandomDistinct(pending, byRole.get('noun')!, 3, 'standard', cursor, randomSource);
+  addRandomDistinct(pending, byRole.get('verb')!, 3, 'standard', cursor, randomSource);
+  addRandomDistinct(pending, byRole.get('predicate')!, 1, 'standard', cursor, randomSource);
 
   if (includeContinuation) {
-    const continuation = takeWeighted(
-      byRole.get('continuation')!,
-      cursor,
-      randomSource,
-    ).phrase;
+    const continuation = takeWeighted(byRole.get('continuation')!, cursor, randomSource).phrase;
     pending.push({
       phraseId: continuation.id,
       role: continuation.role,
@@ -129,9 +104,7 @@ export function generateBoard(
   }
 
   const connectorRoll = nextRandom(cursor, randomSource);
-  const forcedConnectors = byRole
-    .get('conjunction')!
-    .filter(isClauseConnector);
+  const forcedConnectors = byRole.get('conjunction')!.filter(isClauseConnector);
   // The fixed slots hold no conjunction, so every clause connector is still
   // available for the one forced connector slot.
   if (forcedConnectors.length > 0 && connectorRoll >= 0.1) {
@@ -149,8 +122,7 @@ export function generateBoard(
     const selectedPhraseIds = new Set(pending.map((slot) => slot.phraseId));
     const unused = candidates.filter(
       (candidate) =>
-        candidate.phrase.role !== 'continuation' &&
-        !selectedPhraseIds.has(candidate.phrase.id),
+        candidate.phrase.role !== 'continuation' && !selectedPhraseIds.has(candidate.phrase.id),
     );
     if (unused.length === 0) return impossiblePool(request, byRole);
     const phrase = takeWeighted(unused, cursor, randomSource).phrase;
@@ -171,9 +143,7 @@ export function generateBoard(
   };
 }
 
-function collectCandidates(
-  request: BoardGenerationRequest,
-): readonly WeightedPhrase[] {
+function collectCandidates(request: BoardGenerationRequest): readonly WeightedPhrase[] {
   const scenePhraseIds = new Set(request.scenePhraseIds);
   const excludedPhraseIds = new Set(request.excludedPhraseIds ?? []);
   return request.phrases.flatMap((phrase) => {
@@ -201,9 +171,7 @@ function addRandomDistinct(
   for (let index = 0; index < count; index += 1) {
     const selected = takeWeighted(remaining, cursor, randomSource);
     const phrase = selected.phrase;
-    remaining = remaining.filter(
-      (candidate) => candidate.phrase.id !== phrase.id,
-    );
+    remaining = remaining.filter((candidate) => candidate.phrase.id !== phrase.id);
     target.push({ phraseId: phrase.id, role: phrase.role, source });
   }
 }
@@ -216,20 +184,11 @@ function takeWeighted(
   return pickWeighted(candidates, nextRandom(cursor, randomSource));
 }
 
-function shuffle<T>(
-  values: readonly T[],
-  cursor: RandomCursor,
-  randomSource: RandomSource,
-): T[] {
+function shuffle<T>(values: readonly T[], cursor: RandomCursor, randomSource: RandomSource): T[] {
   const shuffled = [...values];
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
-    const targetIndex = Math.floor(
-      nextRandom(cursor, randomSource) * (index + 1),
-    );
-    [shuffled[index], shuffled[targetIndex]] = [
-      shuffled[targetIndex]!,
-      shuffled[index]!,
-    ];
+    const targetIndex = Math.floor(nextRandom(cursor, randomSource) * (index + 1));
+    [shuffled[index], shuffled[targetIndex]] = [shuffled[targetIndex]!, shuffled[index]!];
   }
   return shuffled;
 }

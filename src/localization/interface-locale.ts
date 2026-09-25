@@ -8,11 +8,10 @@ export const interfaceLocales = ['en', 'ro-RO'] as const;
 export const defaultInterfaceLocale: InterfaceLocale = 'en';
 
 // Autonyms name each language in that language and are never translated.
-export const interfaceLocaleAutonyms: Readonly<Record<InterfaceLocale, string>> =
-  Object.freeze({
-    en: 'English',
-    'ro-RO': 'Română',
-  });
+export const interfaceLocaleAutonyms: Readonly<Record<InterfaceLocale, string>> = Object.freeze({
+  en: 'English',
+  'ro-RO': 'Română',
+});
 
 export function isInterfaceLocale(value: unknown): value is InterfaceLocale {
   return value === 'en' || value === 'ro-RO';

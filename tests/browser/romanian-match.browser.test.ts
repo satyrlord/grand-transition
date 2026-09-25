@@ -1,12 +1,9 @@
 import { expect, test } from 'vitest';
-import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import {
-  romanianGameLocale,
-  gameCatalog,
-} from '../../src/game-content';
-import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation';
-import { encodeReplay, type ReplayContext } from '../../src/persistence/codecs/replay-codec';
-import { setInterfaceLocale } from '../../src/app/interface-localization';
+import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
+import { romanianGameLocale, gameCatalog } from '../../src/game-content.ts';
+import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation.ts';
+import { encodeReplay, type ReplayContext } from '../../src/persistence/codecs/replay-codec.ts';
+import { setInterfaceLocale } from '../../src/app/interface-localization.ts';
 
 const seed = 20_260_917;
 

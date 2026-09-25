@@ -8,16 +8,16 @@
 // each case's wall clock.
 
 import { expect } from 'vitest';
-import { basicScoringBalance } from '../../../src/content/basic-scoring-balance';
-import { englishGameLocale, gameCatalog } from '../../../src/game-content';
-import { snapshotDraftStateForPlayer } from '../../../src/engine/draft-actions';
+import { basicScoringBalance } from '../../../src/content/basic-scoring-balance.ts';
+import { englishGameLocale, gameCatalog } from '../../../src/game-content.ts';
+import { snapshotDraftStateForPlayer } from '../../../src/engine/draft-actions.ts';
 import {
   createSimulationSetup,
   listLocalRadioCallerSimulationOptions,
   simulateMatch,
   type SimulationOptionProvider,
-} from '../../../src/simulation/simulation';
-import type { ReplayContext } from '../../../src/persistence/codecs/replay-codec';
+} from '../../../src/simulation/simulation.ts';
+import type { ReplayContext } from '../../../src/persistence/codecs/replay-codec.ts';
 
 export type CatalogFoundationCharacter = Readonly<{
   characterId: string;
@@ -62,12 +62,11 @@ export const catalogFoundationCounts = Object.freeze({
   setups: gameCatalog.characters.length * setupsPerCharacter,
 });
 
-export const catalogFoundationCharacters: readonly CatalogFoundationCharacter[] =
-  Object.freeze(
-    gameCatalog.characters.map((character, index) =>
-      Object.freeze({ characterId: character.id, index }),
-    ),
-  );
+export const catalogFoundationCharacters: readonly CatalogFoundationCharacter[] = Object.freeze(
+  gameCatalog.characters.map((character, index) =>
+    Object.freeze({ characterId: character.id, index }),
+  ),
+);
 
 // The shard count keeps every sibling file short enough that no single file
 // bounds the whole unit phase. Shards keep the global character index, so the
@@ -95,8 +94,11 @@ export function runCatalogFoundationCharacter({
 }: CatalogFoundationCharacter): void {
   for (const [opponentIndex, opponent] of gameCatalog.characters.entries()) {
     for (const [sceneIndex, scene] of gameCatalog.scenes.entries()) {
-      const seed = workloadSeed + index * setupsPerCharacter
-        + opponentIndex * gameCatalog.scenes.length + sceneIndex;
+      const seed =
+        workloadSeed +
+        index * setupsPerCharacter +
+        opponentIndex * gameCatalog.scenes.length +
+        sceneIndex;
       const setup = createSimulationSetup(gameCatalog, {
         characterIds: [characterId, opponent.id],
         sceneId: scene.id,
@@ -113,7 +115,9 @@ export function runCatalogFoundationCharacter({
         expect(match.finalState.phase).toBe('results');
         expect(match.finalState.playerOrder).toContain(match.finalState.winner);
         expect(match.finalState.resolutionHistory.length).toBeGreaterThan(0);
-        expect(match.replay.commands.some((command) => command.type === 'prepare-round')).toBe(true);
+        expect(match.replay.commands.some((command) => command.type === 'prepare-round')).toBe(
+          true,
+        );
         expect(match.privacyLeaks).toBe(0);
         expect(match.timerOverruns).toBe(0);
         expect(match.maximumPresentationDelayMs).toBeGreaterThanOrEqual(500);

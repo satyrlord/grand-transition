@@ -32,15 +32,15 @@ const globalWarmGradePattern =
 const sectionHeadingPattern =
   /(?:^|\n)\s*(positive|negative)(?:\s+controls?)?\s*:/giu;
 
-function globalPattern(pattern) {
+function globalPattern(pattern: RegExp): RegExp {
   return new RegExp(
     pattern.source,
     pattern.flags.includes('g') ? pattern.flags : pattern.flags + 'g',
   );
 }
 
-function isNegativeContext(prompt, matchIndex) {
-  let section = undefined;
+function isNegativeContext(prompt: string, matchIndex: number): boolean {
+  let section: string | undefined;
   for (const heading of prompt.slice(0, matchIndex).matchAll(sectionHeadingPattern)) {
     section = heading[1]?.toLowerCase();
   }
@@ -60,14 +60,14 @@ function isNegativeContext(prompt, matchIndex) {
   return section === 'negative';
 }
 
-function hasPositiveMatch(prompt, pattern) {
+function hasPositiveMatch(prompt: string, pattern: RegExp): boolean {
   for (const match of prompt.matchAll(globalPattern(pattern))) {
     if (!isNegativeContext(prompt, match.index ?? 0)) return true;
   }
   return false;
 }
 
-export function assertColorControlledPrompt(filePath, prompt) {
+export function assertColorControlledPrompt(filePath: string, prompt: string): void {
   const missing = requiredColorControls
     .filter(({ pattern, polarity }) =>
       polarity === 'negative'
@@ -75,7 +75,7 @@ export function assertColorControlledPrompt(filePath, prompt) {
         : !hasPositiveMatch(prompt, pattern),
     )
     .map(({ label }) => label);
-  const issues = [];
+  const issues: string[] = [];
   if (missing.length > 0) {
     issues.push(`is missing ${missing.join(', ')}`);
   }
@@ -96,7 +96,7 @@ export function assertColorControlledPrompt(filePath, prompt) {
   }
 }
 
-async function validatePrompt(promptPath) {
+async function validatePrompt(promptPath: string): Promise<void> {
   const prompt = await readFile(promptPath, 'utf8');
   if (!prompt.trim()) {
     throw new Error(`${promptPath}: generation prompt is empty.`);
@@ -117,7 +117,7 @@ if (invokedScript === path.resolve(fileURLToPath(import.meta.url))) {
     });
   } else {
     process.stderr.write(
-      'Usage: validate-generation-prompt.mjs <prompt-file>\n',
+      'Usage: validate-generation-prompt.ts <prompt-file>\n',
     );
     process.exitCode = 2;
   }

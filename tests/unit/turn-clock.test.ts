@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { ApplicationTurnClock } from '../../src/app/turn-clock';
+import { ApplicationTurnClock } from '../../src/app/turn-clock.ts';
 
 function fakeClock() {
   let now = 0;

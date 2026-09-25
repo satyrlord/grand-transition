@@ -1,4 +1,4 @@
-import { lockInSetup } from './setup-test-helpers';
+import { lockInSetup } from './setup-test-helpers.ts';
 import { page, userEvent } from 'vitest/browser';
 import { afterEach, expect, test, vi } from 'vitest';
 import matchScreenStyles from '../../src/styles/match-screen.css?raw';
@@ -6,10 +6,10 @@ import mobileLayoutStyles from '../../src/styles/mobile-layout.css?raw';
 import screenShellStyles from '../../src/styles/screen-shell.css?raw';
 import titleScreenStyles from '../../src/styles/title-screen.css?raw';
 import '../../src/styles/fonts.css';
-import { GrandTransitionApp } from '../../src/app/app-shell';
-import type { RoundPresentationFrame } from '../../src/app/round-presentation';
-import type { MatchPlayerView } from '../../src/app/match-screen-snapshot';
-import type { GrandTransitionCharacter } from '../../src/components/character-presenter';
+import { GrandTransitionApp } from '../../src/app/app-shell.ts';
+import type { RoundPresentationFrame } from '../../src/app/round-presentation.ts';
+import type { MatchPlayerView } from '../../src/app/match-screen-snapshot.ts';
+import type { GrandTransitionCharacter } from '../../src/components/character-presenter.ts';
 import {
   automaticAiBubbleRevealMs,
   grammarStrikeDurationMs,
@@ -18,11 +18,10 @@ import {
   timerTickEventName,
   timerTickSeconds,
   type MatchCommandEvent,
-} from '../../src/app/screens/match-screen';
-import {
-  decodeSettings,
-} from '../../src/persistence/codecs/settings-codec';
-import { settingsStorageKey } from '../../src/persistence/settings';
+} from '../../src/app/screens/match-screen.ts';
+import { decodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
+import { settingsStorageKey } from '../../src/persistence/settings.ts';
+import { resetStoredData, storedDocument } from './persistence-test-helpers.ts';
 
 afterEach(() => {
   vi.useRealTimers();
@@ -33,9 +32,10 @@ test('explains secret-police weakness in accessible phrase labels', async () => 
   const match = await startMatch();
   const snapshot = match.snapshot!;
   const first = snapshot.sharedCards[0]!;
-  match.snapshot = { ...snapshot, sharedCards: [
-    { ...first, knownWeaknesses: ['securitate'] }, ...snapshot.sharedCards.slice(1),
-  ] };
+  match.snapshot = {
+    ...snapshot,
+    sharedCards: [{ ...first, knownWeaknesses: ['securitate'] }, ...snapshot.sharedCards.slice(1)],
+  };
   await match.updateComplete;
   const card = match.querySelector(`[data-card-id="${first.reference!.cardId}"]`);
   expect(labelledText(card)).toContain('Former secret police');
@@ -93,91 +93,106 @@ test('keeps both players score labels bound to their own English phrases', async
 });
 
 test.each([
-  { width: 1024, height: 720 }, { width: 1024, height: 768 },
-  { width: 1280, height: 720 }, { width: 1920, height: 1080 },
-])('keeps long sentence text reachable inside the fixed speech record at $width by $height', async ({ width, height }) => {
-  // The speech record has a fixed size, so the longest reachable sentence text
-  // must stay readable and scrollable. The fixture is generated here rather
-  // than composed from named cards, so authoring content never changes this
-  // layout guarantee. The length keeps the historical 409-character worst case.
-  const text = `${Array.from(
-    { length: 8 },
-    () => 'and the transition will be televised after the next consultation',
-  ).join(' ')}.`;
-  expect(text.length).toBeGreaterThanOrEqual(409);
-  const match = await startMatch();
-  const commands: string[] = [];
-  match.addEventListener(matchCommandEventName, (event) => commands.push(event.detail.type));
-  const style = document.createElement('style');
-  style.textContent = titleScreenStyles + screenShellStyles + matchScreenStyles;
-  document.head.append(style);
-  try {
-    await page.viewport(width, height);
-    await document.fonts.ready;
-    const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
-    // Park the pointer off the hand. After the resize, a card can move under
-    // the previous pointer position, and a hover preview replaces the sentence.
-    await userEvent.hover(ledger);
-    const originalBounds = ledger.getBoundingClientRect();
-    const samples = [text, `${text} ${text.slice(0, Math.ceil(text.length * 0.4))}`.trim(), Array(4).fill(text).join(' ')];
-    for (const sentenceText of samples) {
-      match.snapshot = { ...match.snapshot!, sentenceText };
-      await match.updateComplete;
+  { width: 1024, height: 720 },
+  { width: 1024, height: 768 },
+  { width: 1280, height: 720 },
+  { width: 1920, height: 1080 },
+])(
+  'keeps long sentence text reachable inside the fixed speech record at $width by $height',
+  async ({ width, height }) => {
+    // The speech record has a fixed size, so the longest reachable sentence text
+    // must stay readable and scrollable. The fixture is generated here rather
+    // than composed from named cards, so authoring content never changes this
+    // layout guarantee. The length keeps the historical 409-character worst case.
+    const text = `${Array.from(
+      { length: 8 },
+      () => 'and the transition will be televised after the next consultation',
+    ).join(' ')}.`;
+    expect(text.length).toBeGreaterThanOrEqual(409);
+    const match = await startMatch();
+    const commands: string[] = [];
+    match.addEventListener(matchCommandEventName, (event) => commands.push(event.detail.type));
+    const style = document.createElement('style');
+    style.textContent = titleScreenStyles + screenShellStyles + matchScreenStyles;
+    document.head.append(style);
+    try {
+      await page.viewport(width, height);
+      await document.fonts.ready;
+      const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
+      // Park the pointer off the hand. After the resize, a card can move under
+      // the previous pointer position, and a hover preview replaces the sentence.
+      await userEvent.hover(ledger);
+      const originalBounds = ledger.getBoundingClientRect();
+      const samples = [
+        text,
+        `${text} ${text.slice(0, Math.ceil(text.length * 0.4))}`.trim(),
+        Array(4).fill(text).join(' '),
+      ];
+      for (const sentenceText of samples) {
+        match.snapshot = { ...match.snapshot!, sentenceText };
+        await match.updateComplete;
+        const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
+        const textNode = [...preview.childNodes].find(
+          (node) => node.nodeType === Node.TEXT_NODE && node.textContent === sentenceText,
+        )!;
+        const bounds = ledger.getBoundingClientRect();
+        const previewBounds = preview.getBoundingClientRect();
+        const range = document.createRange();
+        range.setStart(textNode, 0);
+        range.setEnd(textNode, 1);
+        const first = range.getBoundingClientRect();
+        expect(preview.textContent?.trim()).toBe(sentenceText);
+        expect(preview.scrollTop).toBe(0);
+        expect(first.top).toBeGreaterThanOrEqual(bounds.top);
+        expect(first.bottom).toBeLessThanOrEqual(bounds.bottom);
+        expect(previewBounds.left).toBeGreaterThanOrEqual(bounds.left);
+        expect(previewBounds.right).toBeLessThanOrEqual(bounds.right);
+        expect(previewBounds.top).toBeGreaterThanOrEqual(bounds.top);
+        expect(previewBounds.bottom).toBeLessThanOrEqual(bounds.bottom);
+        expect(bounds.toJSON()).toEqual(originalBounds.toJSON());
+        expect(preview.scrollWidth).toBeLessThanOrEqual(preview.clientWidth);
+        expect(getComputedStyle(preview).textOverflow).not.toBe('ellipsis');
+        expect(Number.parseFloat(getComputedStyle(preview).fontSize)).toBeGreaterThanOrEqual(11.52);
+        expect(preview.tabIndex).toBe(0);
+        expect(preview.getAttribute('role')).toBe('region');
+        expect(preview.getAttribute('aria-labelledby')).toBe('sentence-title');
+        preview.focus();
+        await userEvent.keyboard('{End}');
+        await vi.waitFor(() =>
+          expect(preview.scrollTop + preview.clientHeight).toBeGreaterThanOrEqual(
+            preview.scrollHeight - 1,
+          ),
+        );
+        range.setStart(textNode, sentenceText.length - 1);
+        range.setEnd(textNode, sentenceText.length);
+        const last = range.getBoundingClientRect();
+        expect(last.top).toBeGreaterThanOrEqual(bounds.top);
+        expect(last.bottom).toBeLessThanOrEqual(bounds.bottom);
+        const scrollTop = preview.scrollTop;
+        match.requestUpdate();
+        await match.updateComplete;
+        expect(preview.scrollTop).toBe(scrollTop);
+        expect(document.documentElement.scrollWidth).toBeLessThanOrEqual(width);
+        expect(document.documentElement.scrollHeight).toBeLessThanOrEqual(height);
+      }
       const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
-      const textNode = [...preview.childNodes].find((node) => node.nodeType === Node.TEXT_NODE && node.textContent === sentenceText)!;
-      const bounds = ledger.getBoundingClientRect();
-      const previewBounds = preview.getBoundingClientRect();
-      const range = document.createRange();
-      range.setStart(textNode, 0);
-      range.setEnd(textNode, 1);
-      const first = range.getBoundingClientRect();
-      expect(preview.textContent?.trim()).toBe(sentenceText);
-      expect(preview.scrollTop).toBe(0);
-      expect(first.top).toBeGreaterThanOrEqual(bounds.top);
-      expect(first.bottom).toBeLessThanOrEqual(bounds.bottom);
-      expect(previewBounds.left).toBeGreaterThanOrEqual(bounds.left);
-      expect(previewBounds.right).toBeLessThanOrEqual(bounds.right);
-      expect(previewBounds.top).toBeGreaterThanOrEqual(bounds.top);
-      expect(previewBounds.bottom).toBeLessThanOrEqual(bounds.bottom);
-      expect(bounds.toJSON()).toEqual(originalBounds.toJSON());
-      expect(preview.scrollWidth).toBeLessThanOrEqual(preview.clientWidth);
-      expect(getComputedStyle(preview).textOverflow).not.toBe('ellipsis');
-      expect(Number.parseFloat(getComputedStyle(preview).fontSize)).toBeGreaterThanOrEqual(11.52);
-      expect(preview.tabIndex).toBe(0);
-      expect(preview.getAttribute('role')).toBe('region');
-      expect(preview.getAttribute('aria-labelledby')).toBe('sentence-title');
-      preview.focus();
-      await userEvent.keyboard('{End}');
-      await vi.waitFor(() => expect(preview.scrollTop + preview.clientHeight).toBeGreaterThanOrEqual(preview.scrollHeight - 1));
-      range.setStart(textNode, sentenceText.length - 1);
-      range.setEnd(textNode, sentenceText.length);
-      const last = range.getBoundingClientRect();
-      expect(last.top).toBeGreaterThanOrEqual(bounds.top);
-      expect(last.bottom).toBeLessThanOrEqual(bounds.bottom);
-      const scrollTop = preview.scrollTop;
-      match.requestUpdate();
+      match.snapshot = { ...match.snapshot!, activePlayerId: match.snapshot!.players[1].playerId };
       await match.updateComplete;
-      expect(preview.scrollTop).toBe(scrollTop);
-      expect(document.documentElement.scrollWidth).toBeLessThanOrEqual(width);
-      expect(document.documentElement.scrollHeight).toBeLessThanOrEqual(height);
+      expect(preview.scrollTop).toBe(0);
+      preview.scrollTop = preview.scrollHeight;
+      match.snapshot = { ...match.snapshot!, round: match.snapshot!.round + 1 };
+      await match.updateComplete;
+      expect(preview.scrollTop).toBe(0);
+      match.snapshot = { ...match.snapshot!, sentenceText: 'Select a noun to begin.' };
+      await match.updateComplete;
+      expect(preview.scrollHeight).toBe(preview.clientHeight);
+      expect(ledger.getBoundingClientRect().toJSON()).toEqual(originalBounds.toJSON());
+      expect(commands).toEqual([]);
+    } finally {
+      style.remove();
     }
-    const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
-    match.snapshot = { ...match.snapshot!, activePlayerId: match.snapshot!.players[1].playerId };
-    await match.updateComplete;
-    expect(preview.scrollTop).toBe(0);
-    preview.scrollTop = preview.scrollHeight;
-    match.snapshot = { ...match.snapshot!, round: match.snapshot!.round + 1 };
-    await match.updateComplete;
-    expect(preview.scrollTop).toBe(0);
-    match.snapshot = { ...match.snapshot!, sentenceText: 'Select a noun to begin.' };
-    await match.updateComplete;
-    expect(preview.scrollHeight).toBe(preview.clientHeight);
-    expect(ledger.getBoundingClientRect().toJSON()).toEqual(originalBounds.toJSON());
-    expect(commands).toEqual([]);
-  } finally {
-    style.remove();
-  }
-});
+  },
+);
 
 test('tutorial highlights grammar-accepted choices only while human drafting is available', async () => {
   const match = await startMatch();
@@ -185,18 +200,27 @@ test('tutorial highlights grammar-accepted choices only while human drafting is 
   const snapshot = match.snapshot!;
   const expected = [...snapshot.sharedCards, ...snapshot.privateCards]
     .filter((card) => card.grammarAccepted && card.action !== null)
-    .map((card) => card.reference!.cardId).sort();
+    .map((card) => card.reference!.cardId)
+    .sort();
   expect(expected.length).toBeGreaterThan(0);
-  const highlighted = () => [...match.querySelectorAll<HTMLElement>('[data-tutorial]')]
-    .map((card) => card.dataset.cardId!).sort();
+  const highlighted = () =>
+    [...match.querySelectorAll<HTMLElement>('[data-tutorial]')]
+      .map((card) => card.dataset.cardId!)
+      .sort();
   match.tutorialMode = true;
   match.autoComplete = false;
   match.phraseColorCoding = false;
   await match.updateComplete;
   expect(highlighted()).toEqual(expected);
-  expect(labelledText(match.querySelector('[data-tutorial]')))
-    .toContain('Grammatically valid next choice');
-  for (const pauseMode of ['manual', 'viewport', 'hotseat-portrait', 'landscape-recommended'] as const) {
+  expect(labelledText(match.querySelector('[data-tutorial]'))).toContain(
+    'Grammatically valid next choice',
+  );
+  for (const pauseMode of [
+    'manual',
+    'viewport',
+    'hotseat-portrait',
+    'landscape-recommended',
+  ] as const) {
     match.pauseMode = pauseMode;
     await match.updateComplete;
     expect(highlighted()).toEqual([]);
@@ -218,89 +242,130 @@ test('tutorial highlights grammar-accepted choices only while human drafting is 
   expect(match.snapshot).toBe(snapshot);
 });
 
-test.each(['manual', 'viewport', 'hotseat-portrait', 'landscape-recommended'] as const)('discards an old portrait reaction after %s interruption', async (pauseMode) => {
-  const match = await startMatch();
-  const snapshot = match.snapshot!;
-  match.snapshot = {
-    ...snapshot,
-    players: [
-      { ...snapshot.players[0], portraitCue: { stateId: 'heavy-hit', sequence: snapshot.revision } },
-      { ...snapshot.players[1], portraitCue: { stateId: 'heavy-hit', sequence: snapshot.revision } },
-    ],
-  };
-  await match.updateComplete;
-  expect(match.querySelectorAll('grand-transition-character')).toHaveLength(2);
-  const presenter = () => match.querySelector<GrandTransitionCharacter>('grand-transition-character')!;
-  expect(presenter().cue?.stateId).toBe('heavy-hit');
-  match.pauseMode = pauseMode;
-  await match.updateComplete;
-  expect(match.querySelector('grand-transition-character')).toBeNull();
-  match.pauseMode = 'running';
-  await match.updateComplete;
-  expect(presenter().cue?.stateId).toBe('idle');
-  match.snapshot = {
-    ...snapshot, revision: snapshot.revision + 1,
-    players: [
-      { ...snapshot.players[0], portraitCue: { stateId: 'delivery', sequence: snapshot.revision + 1 } },
-      { ...snapshot.players[1], portraitCue: { stateId: 'delivery', sequence: snapshot.revision + 1 } },
-    ],
-  };
-  await match.updateComplete;
-  expect(presenter().cue?.stateId).toBe('delivery');
-  expect(presenter().frames).toHaveLength(9);
-  expect(presenter().frames.every((frame) => frame.id.startsWith(snapshot.players[0].characterId))).toBe(true);
-});
-
-test.each([
-  ['red', 'left'], ['red', 'right'], ['blue', 'left'], ['blue', 'right'],
-] as const)('a %s fallback portrait facing %s recoils away from the opponent', async (side, facing) => {
-  const match = await startMatch();
-  const snapshot = match.snapshot!;
-  const playerIndex = side === 'red' ? 0 : 1;
-  const player = snapshot.players[playerIndex];
-  match.snapshot = {
-    ...snapshot,
-    players: [
-      { ...snapshot.players[0], portraitFrames: null, portraitFacing: facing },
-      { ...snapshot.players[1], portraitFrames: null, portraitFacing: facing },
-    ],
-    arenaReaction: {
-      kind: 'grammar-mistake', sequence: snapshot.revision + 1,
-      playerId: player.playerId, playerName: player.characterName, damage: 3,
-    },
-  };
-  const style = document.createElement('style');
-  style.textContent = matchScreenStyles;
-  document.head.append(style);
-  try {
-    await match.updateComplete;
-    const portrait = match.querySelector(`.match-player[data-side="${side}"] .character-portrait`)!;
-    const animation = portrait.getAnimations().find((animation) =>
-      animation instanceof CSSAnimation && animation.animationName === `grammar-hit-${side}`)!;
-    animation.pause();
-    animation.currentTime = 520 * 0.24;
-    const drawingDirection = new DOMMatrix(getComputedStyle(portrait.parentElement!).transform).a;
-    const screenTranslation = new DOMMatrix(getComputedStyle(portrait).transform).m41 * drawingDirection;
-    expect(screenTranslation).toBeCloseTo(side === 'red' ? -17.6 : 17.6, 2);
-
+test.each(['manual', 'viewport', 'hotseat-portrait', 'landscape-recommended'] as const)(
+  'discards an old portrait reaction after %s interruption',
+  async (pauseMode) => {
+    const match = await startMatch();
+    const snapshot = match.snapshot!;
     match.snapshot = {
-      ...match.snapshot!, arenaReaction: null,
+      ...snapshot,
       players: [
-        { ...match.snapshot!.players[0], isActive: side === 'red' },
-        { ...match.snapshot!.players[1], isActive: side === 'blue' },
+        {
+          ...snapshot.players[0],
+          portraitCue: { stateId: 'heavy-hit', sequence: snapshot.revision },
+        },
+        {
+          ...snapshot.players[1],
+          portraitCue: { stateId: 'heavy-hit', sequence: snapshot.revision },
+        },
       ],
     };
     await match.updateComplete;
-    const entry = portrait.getAnimations().find((animation) =>
-      animation instanceof CSSAnimation && animation.animationName === `claim-floor-${side}`)!;
-    entry.pause();
-    entry.currentTime = 0;
-    expect(new DOMMatrix(getComputedStyle(portrait).transform).m41 * drawingDirection)
-      .toBeCloseTo(side === 'red' ? -10.4 : 10.4, 2);
-  } finally {
-    style.remove();
-  }
-});
+    expect(match.querySelectorAll('grand-transition-character')).toHaveLength(2);
+    const presenter = () =>
+      match.querySelector<GrandTransitionCharacter>('grand-transition-character')!;
+    expect(presenter().cue?.stateId).toBe('heavy-hit');
+    match.pauseMode = pauseMode;
+    await match.updateComplete;
+    expect(match.querySelector('grand-transition-character')).toBeNull();
+    match.pauseMode = 'running';
+    await match.updateComplete;
+    expect(presenter().cue?.stateId).toBe('idle');
+    match.snapshot = {
+      ...snapshot,
+      revision: snapshot.revision + 1,
+      players: [
+        {
+          ...snapshot.players[0],
+          portraitCue: { stateId: 'delivery', sequence: snapshot.revision + 1 },
+        },
+        {
+          ...snapshot.players[1],
+          portraitCue: { stateId: 'delivery', sequence: snapshot.revision + 1 },
+        },
+      ],
+    };
+    await match.updateComplete;
+    expect(presenter().cue?.stateId).toBe('delivery');
+    expect(presenter().frames).toHaveLength(9);
+    expect(
+      presenter().frames.every((frame) => frame.id.startsWith(snapshot.players[0].characterId)),
+    ).toBe(true);
+  },
+);
+
+test.each([
+  ['red', 'left'],
+  ['red', 'right'],
+  ['blue', 'left'],
+  ['blue', 'right'],
+] as const)(
+  'a %s fallback portrait facing %s recoils away from the opponent',
+  async (side, facing) => {
+    const match = await startMatch();
+    const snapshot = match.snapshot!;
+    const playerIndex = side === 'red' ? 0 : 1;
+    const player = snapshot.players[playerIndex];
+    match.snapshot = {
+      ...snapshot,
+      players: [
+        { ...snapshot.players[0], portraitFrames: null, portraitFacing: facing },
+        { ...snapshot.players[1], portraitFrames: null, portraitFacing: facing },
+      ],
+      arenaReaction: {
+        kind: 'grammar-mistake',
+        sequence: snapshot.revision + 1,
+        playerId: player.playerId,
+        playerName: player.characterName,
+        damage: 3,
+      },
+    };
+    const style = document.createElement('style');
+    style.textContent = matchScreenStyles;
+    document.head.append(style);
+    try {
+      await match.updateComplete;
+      const portrait = match.querySelector(
+        `.match-player[data-side="${side}"] .character-portrait`,
+      )!;
+      const animation = portrait
+        .getAnimations()
+        .find(
+          (animation) =>
+            animation instanceof CSSAnimation && animation.animationName === `grammar-hit-${side}`,
+        )!;
+      animation.pause();
+      animation.currentTime = 520 * 0.24;
+      const drawingDirection = new DOMMatrix(getComputedStyle(portrait.parentElement!).transform).a;
+      const screenTranslation =
+        new DOMMatrix(getComputedStyle(portrait).transform).m41 * drawingDirection;
+      expect(screenTranslation).toBeCloseTo(side === 'red' ? -17.6 : 17.6, 2);
+
+      match.snapshot = {
+        ...match.snapshot!,
+        arenaReaction: null,
+        players: [
+          { ...match.snapshot!.players[0], isActive: side === 'red' },
+          { ...match.snapshot!.players[1], isActive: side === 'blue' },
+        ],
+      };
+      await match.updateComplete;
+      const entry = portrait
+        .getAnimations()
+        .find(
+          (animation) =>
+            animation instanceof CSSAnimation && animation.animationName === `claim-floor-${side}`,
+        )!;
+      entry.pause();
+      entry.currentTime = 0;
+      expect(
+        new DOMMatrix(getComputedStyle(portrait).transform).m41 * drawingDirection,
+      ).toBeCloseTo(side === 'red' ? -10.4 : 10.4, 2);
+    } finally {
+      style.remove();
+    }
+  },
+);
 
 test('renders an immutable complete match snapshot and previews without changing it', async () => {
   const match = await startMatch();
@@ -312,9 +377,7 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(snapshot.privateCards).toHaveLength(2);
   expect(match.querySelectorAll('.shared-board > li')).toHaveLength(9);
   expect(match.querySelectorAll('.private-hand ol > li')).toHaveLength(2);
-  const portraits = [
-    ...match.querySelectorAll<HTMLImageElement>('.character-portrait'),
-  ];
+  const portraits = [...match.querySelectorAll<HTMLImageElement>('.character-portrait')];
   expect(portraits).toHaveLength(2);
   expect(portraits.map((portrait) => portrait.src)).toEqual(
     expect.arrayContaining([
@@ -323,15 +386,21 @@ test('renders an immutable complete match snapshot and previews without changing
     ]),
   );
   const characterPictures = [
-    ...match.querySelectorAll<HTMLPictureElement>('.character-frame [data-state-id="selection"] picture'),
+    ...match.querySelectorAll<HTMLPictureElement>(
+      '.character-frame [data-state-id="selection"] picture',
+    ),
   ];
   expect(characterPictures).toHaveLength(2);
   const style = document.createElement('style');
   style.textContent = matchScreenStyles;
   document.head.append(style);
   try {
-    const bluePicture = match.querySelector('.match-player[data-side="blue"] .character-state-drawing')!;
-    const redPicture = match.querySelector('.match-player[data-side="red"] .character-state-drawing')!;
+    const bluePicture = match.querySelector(
+      '.match-player[data-side="blue"] .character-state-drawing',
+    )!;
+    const redPicture = match.querySelector(
+      '.match-player[data-side="red"] .character-state-drawing',
+    )!;
     expect(getComputedStyle(bluePicture).transform).toBe('matrix(-1, 0, 0, 1, 0, 0)');
     expect(getComputedStyle(redPicture).transform).toBe('none');
     expect(getComputedStyle(bluePicture).pointerEvents).toBe('none');
@@ -361,12 +430,8 @@ test('renders an immutable complete match snapshot and previews without changing
     '.broadcast-stage-foreground[data-scene-depth="1"]',
   );
   expect(backgroundLayer?.src).toContain('transition-era-television-studio');
-  expect(foregroundLayer?.src).toContain(
-    'transition-era-television-studio-desks',
-  );
-  const scenePictures = [
-    ...match.querySelectorAll<HTMLPictureElement>('.broadcast-scene-picture'),
-  ];
+  expect(foregroundLayer?.src).toContain('transition-era-television-studio-desks');
+  const scenePictures = [...match.querySelectorAll<HTMLPictureElement>('.broadcast-scene-picture')];
   expect(scenePictures).toHaveLength(2);
   expect(match.querySelector('.broadcast-stage-props')).toBeNull();
   document.head.append(style);
@@ -374,7 +439,9 @@ test('renders an immutable complete match snapshot and previews without changing
     expect(getComputedStyle(foregroundLayer!).clipPath).toBe('none');
     expect(getComputedStyle(foregroundLayer!).pointerEvents).toBe('none');
     const characterPlane = match.querySelector<HTMLElement>('.character-frame')!;
-    expect(Number(getComputedStyle(characterPlane).zIndex)).toBeLessThan(Number(getComputedStyle(foregroundLayer!).zIndex));
+    expect(Number(getComputedStyle(characterPlane).zIndex)).toBeLessThan(
+      Number(getComputedStyle(foregroundLayer!).zIndex),
+    );
   } finally {
     style.remove();
   }
@@ -387,31 +454,19 @@ test('renders an immutable complete match snapshot and previews without changing
   ).toBe(false);
   for (const picture of scenePictures) {
     expect(
-      [...picture.querySelectorAll<HTMLSourceElement>('source')].map(
-        (source) => source.type,
-      ),
+      [...picture.querySelectorAll<HTMLSourceElement>('source')].map((source) => source.type),
     ).toEqual(['image/avif', 'image/webp']);
     const image = picture.querySelector<HTMLImageElement>('img')!;
     expect(image.getAttribute('width')).toBe('3840');
     expect(image.getAttribute('height')).toBe('2160');
-    expect(image.getAttribute('sizes')).toBe(
-      '(max-aspect-ratio: 4/3) 134vw, 100vw',
-    );
+    expect(image.getAttribute('sizes')).toBe('(max-aspect-ratio: 4/3) 134vw, 100vw');
     expect(image.getAttribute('src')).toContain('.webp');
     expect(image.getAttribute('src')).not.toContain('.png');
     expect(image.getAttribute('srcset')).toMatch(/640w.*1280w.*1920w.*2560w.*3840w/u);
-    expect(picture.getAttribute('data-scene-focal-point')).toMatch(
-      /^0\.[0-9]+,0\.[0-9]+$/u,
-    );
-    expect(picture.getAttribute('data-scene-crop-core')).toContain(
-      '"width":0.75',
-    );
-    expect(picture.getAttribute('data-scene-safe-rectangles')).toContain(
-      'centralInteraction',
-    );
-    expect(
-      getComputedStyle(image).getPropertyValue('--scene-crop-core-width'),
-    ).toBe('0.75');
+    expect(picture.getAttribute('data-scene-focal-point')).toMatch(/^0\.[0-9]+,0\.[0-9]+$/u);
+    expect(picture.getAttribute('data-scene-crop-core')).toContain('"width":0.75');
+    expect(picture.getAttribute('data-scene-safe-rectangles')).toContain('centralInteraction');
+    expect(getComputedStyle(image).getPropertyValue('--scene-crop-core-width')).toBe('0.75');
     expect(
       [...picture.querySelectorAll('source')].every(
         (source) =>
@@ -431,26 +486,17 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(match.querySelectorAll('[data-turn-state="waiting"]')).toHaveLength(1);
   const playerHuds = [...match.querySelectorAll<HTMLElement>('.player-hud')];
   expect(playerHuds).toHaveLength(2);
+  expect(playerHuds.every((hud) => getComputedStyle(hud).clipPath === 'none')).toBe(true);
   expect(
-    playerHuds.every((hud) => getComputedStyle(hud).clipPath === 'none'),
-  ).toBe(true);
-  expect(
-    match.querySelector('[data-turn-state="active"] .player-turn-status')
-      ?.textContent,
+    match.querySelector('[data-turn-state="active"] .player-turn-status')?.textContent,
   ).toContain('Your turn');
-  expect(
-    match.querySelectorAll('.player-turn-status:not([hidden])'),
-  ).toHaveLength(1);
+  expect(match.querySelectorAll('.player-turn-status:not([hidden])')).toHaveLength(1);
   const headerControls = match.querySelector('.match-header-controls');
   expect(headerControls).not.toBeNull();
   expect(headerControls?.querySelector('.match-pause')).not.toBeNull();
   expect(headerControls?.querySelector('.timer-fact')).not.toBeNull();
-  expect(match.querySelector('.match-turn-heading')?.textContent).toContain(
-    'Round 1',
-  );
-  expect(match.querySelector('.private-hand')?.getAttribute('data-side')).toBe(
-    'red',
-  );
+  expect(match.querySelector('.match-turn-heading')?.textContent).toContain('Round 1');
+  expect(match.querySelector('.private-hand')?.getAttribute('data-side')).toBe('red');
   const actionIcons = match.querySelectorAll('svg.action-icon');
   expect(actionIcons).toHaveLength(1);
   for (const icon of actionIcons) {
@@ -465,11 +511,7 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(match.querySelector('.card-role')).toBeNull();
   expect(match.querySelector('.card-bottomline')).toBeNull();
   expect(match.querySelector('.card-weakness')).toBeNull();
-  expect(
-    match
-      .querySelector('.match-screen')
-      ?.getAttribute('data-phrase-color-coding'),
-  ).toBe('on');
+  expect(match.querySelector('.match-screen')?.getAttribute('data-phrase-color-coding')).toBe('on');
   const visiblePhrases = [
     ...match.querySelectorAll<HTMLButtonElement>('.shared-board .phrase-card'),
   ];
@@ -477,20 +519,20 @@ test('renders an immutable complete match snapshot and previews without changing
   expect(
     visiblePhrases.every(
       (button) =>
-        button.textContent?.trim() ===
-        button.querySelector('.card-phrase')?.textContent?.trim(),
+        button.textContent?.trim() === button.querySelector('.card-phrase')?.textContent?.trim(),
     ),
   ).toBe(true);
   expect(
     visiblePhrases.some((button) => {
       const descriptionId = button.getAttribute('aria-labelledby')?.split(' ')[1];
-      return descriptionId && document.getElementById(descriptionId)?.textContent?.includes('Shared');
+      return (
+        descriptionId && document.getElementById(descriptionId)?.textContent?.includes('Shared')
+      );
     }),
   ).toBe(true);
   expect(
-    match.querySelectorAll(
-      '.phrase-slot[data-rarity][data-role]:not([data-rarity="empty"])',
-    ).length,
+    match.querySelectorAll('.phrase-slot[data-rarity][data-role]:not([data-rarity="empty"])')
+      .length,
   ).toBeGreaterThan(0);
 
   const previewCard = snapshot.sharedCards.find(
@@ -502,23 +544,21 @@ test('renders an immutable complete match snapshot and previews without changing
   const sentenceBefore = snapshot.sentenceText;
   actionable.dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
   await match.updateComplete;
-  expect(
-    match.querySelector('.sentence-preview')?.textContent?.trim(),
-  ).not.toBe(sentenceBefore);
+  expect(match.querySelector('.sentence-preview')?.textContent?.trim()).not.toBe(sentenceBefore);
   expect(match.snapshot).toBe(snapshot);
   expect(snapshot.sentenceText).toBe(sentenceBefore);
 });
 
 test.each([
-  'county-council-ballroom', 'midnight-call-in-studio',
-  'palace-press-hall', 'influencer-campaign-livestream',
+  'county-council-ballroom',
+  'midnight-call-in-studio',
+  'palace-press-hall',
+  'influencer-campaign-livestream',
 ])('renders %s furniture intact above portraits with protected crop metadata', async (scene) => {
   const match = await startMatch(scene);
   const pictures = [...match.querySelectorAll<HTMLPictureElement>('.broadcast-scene-picture')];
   expect(pictures).toHaveLength(2);
-  expect(pictures.map(({ dataset }) => dataset.sceneAsset)).toEqual([
-    scene, `${scene}-foreground`,
-  ]);
+  expect(pictures.map(({ dataset }) => dataset.sceneAsset)).toEqual([scene, `${scene}-foreground`]);
   expect(match.querySelector('.broadcast-stage-props')).toBeNull();
   const style = document.createElement('style');
   style.textContent = matchScreenStyles;
@@ -528,21 +568,30 @@ test.each([
     const portrait = match.querySelector<HTMLElement>('.character-frame')!;
     expect(getComputedStyle(foreground).clipPath).toBe('none');
     expect(getComputedStyle(foreground).pointerEvents).toBe('none');
-    expect(Number(getComputedStyle(foreground).zIndex)).toBeGreaterThan(Number(getComputedStyle(portrait).zIndex));
+    expect(Number(getComputedStyle(foreground).zIndex)).toBeGreaterThan(
+      Number(getComputedStyle(portrait).zIndex),
+    );
   } finally {
     style.remove();
   }
   for (const picture of pictures) {
     expect(picture.dataset.sceneKind).toBe('manifest');
-    expect([...picture.querySelectorAll('source')].map(source => source.type)).toEqual(['image/avif', 'image/webp']);
+    expect([...picture.querySelectorAll('source')].map((source) => source.type)).toEqual([
+      'image/avif',
+      'image/webp',
+    ]);
     for (const source of picture.querySelectorAll('source')) {
       expect(source.srcset).toMatch(/640w.*1280w.*1920w/u);
       expect(source.srcset).toContain(picture.dataset.sceneAsset!);
     }
-    expect(picture.dataset.sceneCropCore).toBe(JSON.stringify({ x: 0.125, y: 0, width: 0.75, height: 1 }));
+    expect(picture.dataset.sceneCropCore).toBe(
+      JSON.stringify({ x: 0.125, y: 0, width: 0.75, height: 1 }),
+    );
     const image = picture.querySelector<HTMLImageElement>('img')!;
     expect(image.width).toBeGreaterThan(0);
-    expect(Number(image.getAttribute('width')) / Number(image.getAttribute('height'))).toBeCloseTo(16 / 9);
+    expect(Number(image.getAttribute('width')) / Number(image.getAttribute('height'))).toBeCloseTo(
+      16 / 9,
+    );
     await image.decode();
     expect(image.currentSrc).toContain(picture.dataset.sceneAsset!);
     expect(image.complete).toBe(true);
@@ -567,12 +616,8 @@ test('shows complete long private phrases at the minimum viewport', async () => 
   };
   await match.updateComplete;
 
-  const privatePhrases = [
-    ...match.querySelectorAll<HTMLElement>('.private-hand .card-phrase'),
-  ];
-  expect(privatePhrases.map(({ textContent }) => textContent?.trim())).toEqual(
-    longPhrases,
-  );
+  const privatePhrases = [...match.querySelectorAll<HTMLElement>('.private-hand .card-phrase')];
+  expect(privatePhrases.map(({ textContent }) => textContent?.trim())).toEqual(longPhrases);
   expect(
     privatePhrases.every((phrase) => {
       const phraseBox = phrase.getBoundingClientRect();
@@ -594,12 +639,8 @@ test('decodes WebP from the application picture when AVIF is unsupported', async
   const picture = match.querySelector<HTMLPictureElement>(
     '.broadcast-scene-picture[data-scene-kind="manifest"]',
   )!;
-  const avif = picture.querySelector<HTMLSourceElement>(
-    'source[data-scene-format="avif"]',
-  )!;
-  const webp = picture.querySelector<HTMLSourceElement>(
-    'source[data-scene-format="webp"]',
-  );
+  const avif = picture.querySelector<HTMLSourceElement>('source[data-scene-format="avif"]')!;
+  const webp = picture.querySelector<HTMLSourceElement>('source[data-scene-format="webp"]');
   const image = picture.querySelector<HTMLImageElement>('img')!;
   expect(webp).not.toBeNull();
   const webpSrcset = webp?.getAttribute('srcset') ?? '';
@@ -629,7 +670,10 @@ test('decodes WebP from the application picture when AVIF is unsupported', async
 });
 
 // The state contract reuses the selection portrait and its five widths for idle.
-test.each([['selection', 5], ['idle', 5]] as const)('decodes the %s character WebP when AVIF is unsupported', async (state, widths) => {
+test.each([
+  ['selection', 5],
+  ['idle', 5],
+] as const)('decodes the %s character WebP when AVIF is unsupported', async (state, widths) => {
   const match = await startMatch();
   const picture = match.querySelector<HTMLPictureElement>(
     `.character-frame [data-state-id="${state}"] picture`,
@@ -662,9 +706,7 @@ test('shows one inert thinking state without private controls', async () => {
   match.thinking = true;
   await match.updateComplete;
 
-  expect(match.querySelector('.match-screen')?.getAttribute('data-ai-thinking')).toBe(
-    'true',
-  );
+  expect(match.querySelector('.match-screen')?.getAttribute('data-ai-thinking')).toBe('true');
   expect(match.querySelector('.ai-thinking-status')?.textContent).toContain(
     'Local Radio Caller is thinking',
   );
@@ -681,9 +723,7 @@ test('shows one inert thinking state without private controls', async () => {
   expect(match.querySelector('.match-actions')).toBeNull();
   expect(match.querySelector('.match-stage')?.hasAttribute('inert')).toBe(true);
 
-  const sharedButtons = [
-    ...match.querySelectorAll<HTMLButtonElement>('.shared-board button'),
-  ];
+  const sharedButtons = [...match.querySelectorAll<HTMLButtonElement>('.shared-board button')];
   expect(sharedButtons.length).toBeGreaterThan(0);
   expect(sharedButtons.every(({ disabled }) => disabled)).toBe(true);
   sharedButtons[0]!.click();
@@ -692,15 +732,9 @@ test('shows one inert thinking state without private controls', async () => {
 
 test('declares the requested phrase role colors and rarity opacity', async () => {
   const match = await startMatch();
-  expect(matchScreenStyles).toMatch(
-    /data-rarity='common'[\s\S]*--phrase-rarity-opacity: 40%/u,
-  );
-  expect(matchScreenStyles).toMatch(
-    /data-rarity='uncommon'[\s\S]*--phrase-rarity-opacity: 50%/u,
-  );
-  expect(matchScreenStyles).toMatch(
-    /data-rarity='rare'[\s\S]*--phrase-rarity-opacity: 60%/u,
-  );
+  expect(matchScreenStyles).toMatch(/data-rarity='common'[\s\S]*--phrase-rarity-opacity: 40%/u);
+  expect(matchScreenStyles).toMatch(/data-rarity='uncommon'[\s\S]*--phrase-rarity-opacity: 50%/u);
+  expect(matchScreenStyles).toMatch(/data-rarity='rare'[\s\S]*--phrase-rarity-opacity: 60%/u);
   expect(matchScreenStyles).toMatch(
     /data-role='noun'[\s\S]*?--phrase-role-color: rgb\(72 172 104\)/u,
   );
@@ -722,16 +756,11 @@ test('declares the requested phrase role colors and rarity opacity', async () =>
   expect(matchScreenStyles).toMatch(
     /data-role='conjunction'[\s\S]*?--phrase-role-color: rgb\(139 90 177\)/u,
   );
-  expect(
-    match.querySelector<HTMLElement>('.match-screen')?.dataset
-      .phraseColorCoding,
-  ).toBe('on');
+  expect(match.querySelector<HTMLElement>('.match-screen')?.dataset.phraseColorCoding).toBe('on');
   expect(matchScreenStyles).toMatch(/\.card-phrase \{[\s\S]*color: white/u);
   expect(matchScreenStyles).toMatch(/color-mix\([\s\S]*in srgb/u);
   expect(matchScreenStyles).not.toContain('.card-phrase::after');
-  expect(
-    match.querySelector('.card-phrase')?.hasAttribute('data-phrase-text'),
-  ).toBe(false);
+  expect(match.querySelector('.card-phrase')?.hasAttribute('data-phrase-text')).toBe(false);
 });
 
 test('gives an empty waiting bubble revealable honest content', async () => {
@@ -739,9 +768,9 @@ test('gives an empty waiting bubble revealable honest content', async () => {
   const bubble = match.querySelector<HTMLElement>('.player-sentence--waiting')!;
   expect(bubble.tagName).toBe('BUTTON');
   expect(bubble.dataset.hasContent).toBe('true');
-  expect(
-    bubble.querySelector('.waiting-sentence-content')?.textContent?.trim(),
-  ).toBe('No sentence yet.');
+  expect(bubble.querySelector('.waiting-sentence-content')?.textContent?.trim()).toBe(
+    'No sentence yet.',
+  );
 });
 
 test('automatically reveals the AI waiting bubble for exactly four seconds', async () => {
@@ -784,9 +813,7 @@ test('automatically reveals the AI waiting bubble for exactly four seconds', asy
   };
   await match.updateComplete;
 
-  const bubble = match.querySelector<HTMLElement>(
-    '.player-sentence--waiting',
-  )!;
+  const bubble = match.querySelector<HTMLElement>('.player-sentence--waiting')!;
   expect(bubble.dataset.revealed).toBe('true');
   expect(bubble.textContent).toContain(aiSentence);
   expect(match.querySelector('.match-stage')?.hasAttribute('inert')).toBe(false);
@@ -820,10 +847,9 @@ test('automatically reveals the AI waiting bubble for exactly four seconds', asy
     players: humanTurnPlayers,
   };
   await match.updateComplete;
-  expect(
-    match.querySelector<HTMLElement>('.player-sentence--waiting')?.dataset
-      .revealed,
-  ).toBe('false');
+  expect(match.querySelector<HTMLElement>('.player-sentence--waiting')?.dataset.revealed).toBe(
+    'false',
+  );
 });
 
 test('clears a pointer preview when an authoritative snapshot arrives', async () => {
@@ -912,8 +938,10 @@ test('unifies active charge and the three cells in the Comeback button', async (
   expect(button.getAttribute('aria-label')).toMatch(/Comeback.*Weak.*4.*35.*60/su);
   // The fill is transform-driven, never a layout property.
   const fillElement = button.querySelector<HTMLElement>('.comeback-action__fill')!;
-  expect(Number(fillElement.style.transform.match(/scaleX\(([^)]+)\)/u)?.[1]))
-    .toBeCloseTo(35 / 60, 5);
+  expect(Number(fillElement.style.transform.match(/scaleX\(([^)]+)\)/u)?.[1])).toBeCloseTo(
+    35 / 60,
+    5,
+  );
   expect(getComputedStyle(fillElement).transform).not.toBe('none');
   expect(matchScreenStyles).toMatch(
     /\.match-actions \.comeback-action \{[\s\S]*background: var\(--broadcast-ink\)/u,
@@ -949,8 +977,9 @@ test('shows an approved sidekick only while its comeback speech is active', asyn
     total: null,
     damage: null,
     pride: Object.fromEntries(players.map((player) => [player.playerId, player.pride])),
-    cues: Object.fromEntries(players.map((player, sequence) => [player.playerId,
-      { stateId: 'idle', sequence }])),
+    cues: Object.fromEntries(
+      players.map((player, sequence) => [player.playerId, { stateId: 'idle', sequence }]),
+    ),
   } as RoundPresentationFrame;
   match.snapshot = { ...snapshot, roundReview: true, players };
   match.presentation = base;
@@ -986,33 +1015,68 @@ test('keeps both sidekick entrances outside the viewport and bounds their size a
     ...snapshot,
     roundReview: true,
     players: snapshot.players.map((player) => ({
-      ...player, comebackLine: 'A closing line.',
+      ...player,
+      comebackLine: 'A closing line.',
     })) as [MatchPlayerView, MatchPlayerView],
   };
   document.body.append(match);
   const style = document.createElement('style');
-  style.textContent = titleScreenStyles + screenShellStyles + matchScreenStyles + mobileLayoutStyles;
+  style.textContent =
+    titleScreenStyles + screenShellStyles + matchScreenStyles + mobileLayoutStyles;
   document.head.append(style);
   try {
     for (const [width, height] of [
-      [1024, 720], [1024, 768], [1280, 720], [1400, 1050], [1920, 1080],
-      [360, 640], [360, 780], [384, 832], [412, 915], [384, 700],
-      [640, 320], [780, 360], [832, 384], [915, 412], [700, 384], [740, 360],
+      [1024, 720],
+      [1024, 768],
+      [1280, 720],
+      [1400, 1050],
+      [1920, 1080],
+      [360, 640],
+      [360, 780],
+      [384, 832],
+      [412, 915],
+      [384, 700],
+      [640, 320],
+      [780, 360],
+      [832, 384],
+      [915, 412],
+      [700, 384],
+      [740, 360],
     ] as const) {
       await page.viewport(width, height);
       for (const [index, speaker] of snapshot.players.entries()) {
         const frame: RoundPresentationFrame = {
-          phase: 'reciting', comebackActive: false, speakerId: speaker.playerId,
-          text: 'A complete statement. A closing line.', segment: 0,
+          phase: 'reciting',
+          comebackActive: false,
+          speakerId: speaker.playerId,
+          text: 'A complete statement. A closing line.',
+          segment: 0,
           components: Array.from({ length: 12 }, (_, row) => ({
-            narrationIndex: row, kind: 'clause', phraseText: `Public scored phrase ${row + 1}: the complete record remains available for inspection.`,
-            base: 5, restrictionFactor: 1, weaknessFactor: 2, comboFactor: 2,
-            amount: 20, weaknessTags: ['evidence', 'procedure'],
+            narrationIndex: row,
+            kind: 'clause',
+            phraseText: `Public scored phrase ${row + 1}: the complete record remains available for inspection.`,
+            base: 5,
+            restrictionFactor: 1,
+            weaknessFactor: 2,
+            comboFactor: 2,
+            amount: 20,
+            weaknessTags: ['evidence', 'procedure'],
           })),
-          emphasis: [{ kind: 'weakness', playerId: snapshot.players[index === 0 ? 1 : 0].playerId,
-            text: 'evidence · procedure', value: 2 }],
-          outcome: null, impact: null, total: null, damage: null,
-          pride: Object.fromEntries(snapshot.players.map((player) => [player.playerId, player.pride])),
+          emphasis: [
+            {
+              kind: 'weakness',
+              playerId: snapshot.players[index === 0 ? 1 : 0].playerId,
+              text: 'evidence · procedure',
+              value: 2,
+            },
+          ],
+          outcome: null,
+          impact: null,
+          total: null,
+          damage: null,
+          pride: Object.fromEntries(
+            snapshot.players.map((player) => [player.playerId, player.pride]),
+          ),
           cues: {},
         };
         match.presentation = frame;
@@ -1027,8 +1091,9 @@ test('keeps both sidekick entrances outside the viewport and bounds their size a
         await match.updateComplete;
         await Promise.all(sidekick.getAnimations().map((animation) => animation.finished));
         const visible = sidekick.getBoundingClientRect();
-        const portrait = match.querySelectorAll<HTMLElement>('.character-frame')[index]!
-          .getBoundingClientRect();
+        const portrait = match
+          .querySelectorAll<HTMLElement>('.character-frame')
+          [index]!.getBoundingClientRect();
         expect(visible.height, label).toBeLessThanOrEqual(portrait.height / 3 + 0.1);
         expect(visible.left, label).toBeGreaterThanOrEqual(0);
         expect(visible.right, label).toBeLessThanOrEqual(width);
@@ -1036,19 +1101,28 @@ test('keeps both sidekick entrances outside the viewport and bounds their size a
         const visibleBottom = image.top + image.height * (1 - speaker.comebackSidekickBottomInset);
         expect(Math.abs(visibleBottom - height), label).toBeLessThan(1);
         if (width > height && (width < 1024 || height < 720)) {
-          for (const record of match.querySelectorAll('.sentence-ledger, .delivery-receipt, .delivery-emphasis')) {
+          for (const record of match.querySelectorAll(
+            '.sentence-ledger, .delivery-receipt, .delivery-emphasis',
+          )) {
             if (!record.textContent?.trim()) continue;
             const bounds = record.getBoundingClientRect();
-            expect(visible.left < bounds.right && visible.right > bounds.left &&
-              visible.top < bounds.bottom && visible.bottom > bounds.top, `${label}: ${record.className}`)
-              .toBe(false);
+            expect(
+              visible.left < bounds.right &&
+                visible.right > bounds.left &&
+                visible.top < bounds.bottom &&
+                visible.bottom > bounds.top,
+              `${label}: ${record.className}`,
+            ).toBe(false);
           }
           const scores = match.querySelector<HTMLElement>('.delivery-components')!;
           expect(scores.scrollHeight, label).toBeGreaterThan(scores.clientHeight);
           scores.scrollTop = 0;
           expect(scores.scrollTop, label).toBe(0);
           scores.scrollTop = scores.scrollHeight;
-          expect(scores.scrollHeight - scores.scrollTop - scores.clientHeight, label).toBeLessThanOrEqual(1);
+          expect(
+            scores.scrollHeight - scores.scrollTop - scores.clientHeight,
+            label,
+          ).toBeLessThanOrEqual(1);
         }
         if (width < 1024 || height < 720) {
           const scrollContent = document.createElement('div');
@@ -1085,8 +1159,9 @@ test('renders public continuation and target-side impact records without early d
     total: null,
     damage: null,
     pride: Object.fromEntries(snapshot.players.map((player) => [player.playerId, player.pride])),
-    cues: Object.fromEntries(snapshot.players.map((player, sequence) => [player.playerId,
-      { stateId: 'idle', sequence }])),
+    cues: Object.fromEntries(
+      snapshot.players.map((player, sequence) => [player.playerId, { stateId: 'idle', sequence }]),
+    ),
   } as RoundPresentationFrame;
   match.snapshot = { ...snapshot, roundReview: true };
   match.presentation = base;
@@ -1128,7 +1203,11 @@ test('renders public continuation and target-side impact records without early d
   );
 
   match.presentation = null;
-  match.snapshot = { ...match.snapshot!, roundReview: false, revision: match.snapshot!.revision + 2 };
+  match.snapshot = {
+    ...match.snapshot!,
+    roundReview: false,
+    revision: match.snapshot!.revision + 2,
+  };
   await match.updateComplete;
   expect(liveLog()).toContain('Continuation broken');
   match.snapshot = { ...match.snapshot, revision: match.snapshot.revision + 1 };
@@ -1189,12 +1268,8 @@ test('always exposes the complete waiting sentence for every interaction', async
   expect(bubble.tabIndex).toBe(0);
   expect(bubble.getAttribute('aria-expanded')).toBe('false');
   expect(labelledText(bubble)).toContain(sentence);
-  expect(
-    bubble.querySelector('.waiting-sentence-ellipsis')?.textContent?.trim(),
-  ).toBe('…');
-  expect(
-    bubble.querySelector('.waiting-sentence-content')?.textContent?.trim(),
-  ).toBe(sentence);
+  expect(bubble.querySelector('.waiting-sentence-ellipsis')?.textContent?.trim()).toBe('…');
+  expect(bubble.querySelector('.waiting-sentence-content')?.textContent?.trim()).toBe(sentence);
 
   bubble.dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
   await match.updateComplete;
@@ -1234,29 +1309,22 @@ test('keeps the current sentence visible for an empty legal preview', async () =
   const match = await startMatch();
   const snapshot = match.snapshot!;
   const card = [...snapshot.privateCards, ...snapshot.sharedCards].find(
-    (candidate) =>
-      candidate.action === 'select' && candidate.previewText.trim() === '',
+    (candidate) => candidate.action === 'select' && candidate.previewText.trim() === '',
   );
   expect(card?.reference).toBeDefined();
 
   match
-    .querySelector<HTMLButtonElement>(
-      `[data-card-id="${card!.reference!.cardId}"]`,
-    )!
+    .querySelector<HTMLButtonElement>(`[data-card-id="${card!.reference!.cardId}"]`)!
     .dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
   await match.updateComplete;
 
-  expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(
-    snapshot.sentenceText,
-  );
+  expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(snapshot.sentenceText);
 });
 
 test('does not refresh an empty private hand without a player command', async () => {
   const match = await startMatch();
   const commands: MatchCommandEvent[] = [];
-  match.addEventListener(matchCommandEventName, (event) =>
-    commands.push(event),
-  );
+  match.addEventListener(matchCommandEventName, (event) => commands.push(event));
   match.snapshot = {
     ...match.snapshot!,
     revision: match.snapshot!.revision + 1,
@@ -1278,38 +1346,26 @@ test('does not refresh an empty private hand without a player command', async ()
 
   expect(commands).toEqual([]);
   const emptyStateLabels = [
-    ...match.querySelectorAll(
-      '.private-hand .phrase-card--empty .visually-hidden',
-    ),
+    ...match.querySelectorAll('.private-hand .phrase-card--empty .visually-hidden'),
   ];
   expect(emptyStateLabels).toHaveLength(2);
-  expect(
-    emptyStateLabels.every((label) => label.textContent?.includes('Empty')),
-  ).toBe(true);
-  expect(
-    match.querySelector<HTMLButtonElement>('.action-reshuffle')?.disabled,
-  ).toBe(false);
+  expect(emptyStateLabels.every((label) => label.textContent?.includes('Empty'))).toBe(true);
+  expect(match.querySelector<HTMLButtonElement>('.action-reshuffle')?.disabled).toBe(false);
 });
 
 test('maps rapid pointer actions once', async () => {
   const match = await startMatch();
   const commands: MatchCommandEvent[] = [];
-  match.addEventListener(matchCommandEventName, (event) =>
-    commands.push(event),
-  );
+  match.addEventListener(matchCommandEventName, (event) => commands.push(event));
 
   const redraw = match.querySelector<HTMLButtonElement>('.action-reshuffle')!;
   redraw.click();
   redraw.click();
   await vi.waitFor(() => expect(match.snapshot?.actions.redrawUsed).toBe(true));
-  expect(
-    commands.filter((event) => event.detail.type === 'redraw-hand'),
-  ).toHaveLength(1);
+  expect(commands.filter((event) => event.detail.type === 'redraw-hand')).toHaveLength(1);
 
   const current = match.snapshot!;
-  const pointerCard = current.sharedCards.find(
-    (card) => card.action === 'select',
-  );
+  const pointerCard = current.sharedCards.find((card) => card.action === 'select');
   expect(pointerCard).toBeDefined();
   const button = match.querySelector<HTMLButtonElement>(
     `[data-card-id="${pointerCard!.reference!.cardId}"]`,
@@ -1318,16 +1374,12 @@ test('maps rapid pointer actions once', async () => {
   button.click();
   await match.updateComplete;
 
-  const selections = commands.filter(
-    (event) => event.detail.type === 'select-phrase',
-  );
+  const selections = commands.filter((event) => event.detail.type === 'select-phrase');
   expect(selections).toHaveLength(1);
   expect(selections[0]!.detail.payload).toEqual({
     card: pointerCard!.reference,
   });
-  await vi.waitFor(() =>
-    expect(match.snapshot?.revision).toBeGreaterThan(current.revision),
-  );
+  await vi.waitFor(() => expect(match.snapshot?.revision).toBeGreaterThan(current.revision));
 });
 
 test('a rejected command unlocks the controls for the next command', async () => {
@@ -1335,13 +1387,17 @@ test('a rejected command unlocks the controls for the next command', async () =>
   const commands: string[] = [];
   let rejectNext = true;
   // At the target, capturing listeners run before the shell's listener.
-  match.addEventListener(matchCommandEventName, (event) => {
-    commands.push(event.detail.type);
-    if (!rejectNext) return;
-    rejectNext = false;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  }, { capture: true });
+  match.addEventListener(
+    matchCommandEventName,
+    (event) => {
+      commands.push(event.detail.type);
+      if (!rejectNext) return;
+      rejectNext = false;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    },
+    { capture: true },
+  );
 
   const redraw = match.querySelector<HTMLButtonElement>('.action-reshuffle')!;
   redraw.click();
@@ -1355,9 +1411,7 @@ test('a rejected command unlocks the controls for the next command', async () =>
 test('a wrong card is chosen immediately as a grammar mistake', async () => {
   const match = await startMatch();
   const commands: MatchCommandEvent[] = [];
-  match.addEventListener(matchCommandEventName, (event) =>
-    commands.push(event),
-  );
+  match.addEventListener(matchCommandEventName, (event) => commands.push(event));
   const wrong = match.querySelector<HTMLButtonElement>(
     '[data-role="predicate"] [data-card-state="legal"]',
   )!;
@@ -1367,9 +1421,7 @@ test('a wrong card is chosen immediately as a grammar mistake', async () => {
   const activePanelBefore = match.querySelector('[data-turn-state="active"]');
   wrong.click();
   wrong.click();
-  await vi.waitFor(() =>
-    expect(match.snapshot?.activePlayerId).not.toBe(activeBefore),
-  );
+  await vi.waitFor(() => expect(match.snapshot?.activePlayerId).not.toBe(activeBefore));
   expect(match.snapshot?.arenaReaction).toMatchObject({
     kind: 'grammar-mistake',
     playerId: activeBefore,
@@ -1378,16 +1430,10 @@ test('a wrong card is chosen immediately as a grammar mistake', async () => {
   expect(match.querySelector('.grammar-strike')?.textContent).toMatch(
     /Off script.*Grammar mistake.*Red-Folded Chairman.*−3 Pride/su,
   );
-  const struckPlayer = match.querySelector<HTMLElement>(
-    '[data-reaction-state="grammar-mistake"]',
-  )!;
+  const struckPlayer = match.querySelector<HTMLElement>('[data-reaction-state="grammar-mistake"]')!;
   expect(struckPlayer.getAttribute('data-turn-state')).toBe('waiting');
-  expect(match.querySelector('[data-turn-state="active"]')).not.toBe(
-    activePanelBefore,
-  );
-  expect(
-    commands.filter((event) => event.detail.type === 'select-phrase'),
-  ).toHaveLength(1);
+  expect(match.querySelector('[data-turn-state="active"]')).not.toBe(activePanelBefore);
+  expect(commands.filter((event) => event.detail.type === 'select-phrase')).toHaveLength(1);
   expect(match.querySelector('.action-fault')).toBeNull();
 
   match
@@ -1422,11 +1468,17 @@ test('expires grammar feedback without another action or a snapshot timer restar
   expect(match.querySelector('.broadcast-stage')!.hasAttribute('data-arena-reaction')).toBe(false);
   expect(match.snapshot.arenaReaction).toEqual(reaction);
 
-  match.snapshot = { ...match.snapshot, arenaReaction: { ...reaction, sequence: reaction.sequence + 1 } };
+  match.snapshot = {
+    ...match.snapshot,
+    arenaReaction: { ...reaction, sequence: reaction.sequence + 1 },
+  };
   await match.updateComplete;
   expect(match.querySelector('.grammar-strike')).not.toBeNull();
   await vi.advanceTimersByTimeAsync(2_000);
-  match.snapshot = { ...match.snapshot, arenaReaction: { ...reaction, sequence: reaction.sequence + 2 } };
+  match.snapshot = {
+    ...match.snapshot,
+    arenaReaction: { ...reaction, sequence: reaction.sequence + 2 },
+  };
   await match.updateComplete;
   await vi.advanceTimersByTimeAsync(1_000);
   await match.updateComplete;
@@ -1436,24 +1488,30 @@ test('expires grammar feedback without another action or a snapshot timer restar
   expect(match.querySelector('.grammar-strike')).toBeNull();
 });
 
-test.each(['manual', 'viewport', 'hotseat-portrait', 'landscape-recommended'] as const)('does not replay grammar feedback after %s pause', async (pauseMode) => {
-  vi.useFakeTimers();
-  const match = await startMatch();
-  match.snapshot = {
-    ...match.snapshot!,
-    arenaReaction: {
-      kind: 'grammar-mistake', sequence: match.snapshot!.revision + 1,
-      playerId: match.snapshot!.activePlayerId, playerName: match.snapshot!.activePlayerName, damage: 3,
-    },
-  };
-  await match.updateComplete;
-  expect(match.querySelector('.grammar-strike')).not.toBeNull();
-  match.pauseMode = pauseMode;
-  await match.updateComplete;
-  match.pauseMode = 'running';
-  await match.updateComplete;
-  expect(match.querySelector('.grammar-strike')).toBeNull();
-});
+test.each(['manual', 'viewport', 'hotseat-portrait', 'landscape-recommended'] as const)(
+  'does not replay grammar feedback after %s pause',
+  async (pauseMode) => {
+    vi.useFakeTimers();
+    const match = await startMatch();
+    match.snapshot = {
+      ...match.snapshot!,
+      arenaReaction: {
+        kind: 'grammar-mistake',
+        sequence: match.snapshot!.revision + 1,
+        playerId: match.snapshot!.activePlayerId,
+        playerName: match.snapshot!.activePlayerName,
+        damage: 3,
+      },
+    };
+    await match.updateComplete;
+    expect(match.querySelector('.grammar-strike')).not.toBeNull();
+    match.pauseMode = pauseMode;
+    await match.updateComplete;
+    match.pauseMode = 'running';
+    await match.updateComplete;
+    expect(match.querySelector('.grammar-strike')).toBeNull();
+  },
+);
 
 test('disconnection discards grammar feedback before the same element reconnects', async () => {
   vi.useFakeTimers();
@@ -1461,8 +1519,11 @@ test('disconnection discards grammar feedback before the same element reconnects
   match.snapshot = {
     ...match.snapshot!,
     arenaReaction: {
-      kind: 'grammar-mistake', sequence: match.snapshot!.revision + 1,
-      playerId: match.snapshot!.activePlayerId, playerName: match.snapshot!.activePlayerName, damage: 3,
+      kind: 'grammar-mistake',
+      sequence: match.snapshot!.revision + 1,
+      playerId: match.snapshot!.activePlayerId,
+      playerName: match.snapshot!.activePlayerName,
+      damage: 3,
     },
   };
   await match.updateComplete;
@@ -1479,9 +1540,7 @@ test('updates and expires one 30-second turn', async () => {
   vi.useFakeTimers();
   const match = await startMatch();
   const commands: MatchCommandEvent[] = [];
-  match.addEventListener(matchCommandEventName, (event) =>
-    commands.push(event),
-  );
+  match.addEventListener(matchCommandEventName, (event) => commands.push(event));
 
   await vi.advanceTimersByTimeAsync(5_000);
   await match.updateComplete;
@@ -1493,26 +1552,22 @@ test('updates and expires one 30-second turn', async () => {
 
   await vi.advanceTimersByTimeAsync(20_000);
   await match.updateComplete;
-  expect(
-    commands.filter((event) => event.detail.type === 'expire-turn'),
-  ).toHaveLength(1);
+  expect(commands.filter((event) => event.detail.type === 'expire-turn')).toHaveLength(1);
 });
 
 test('ticks the final five seconds of a timed turn once each', async () => {
   vi.useFakeTimers();
-  localStorage.removeItem(settingsStorageKey);
+  await resetStoredData();
   const match = await startMatch();
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
-  const audio = (app as unknown as {
-    audio: { play: (cue: string) => boolean };
-  }).audio;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
+  const audio = (
+    app as unknown as {
+      audio: { play: (cue: string) => boolean };
+    }
+  ).audio;
   const play = vi.spyOn(audio, 'play').mockReturnValue(true);
   const commands: MatchCommandEvent[] = [];
-  match.addEventListener(matchCommandEventName, (event) =>
-    commands.push(event),
-  );
+  match.addEventListener(matchCommandEventName, (event) => commands.push(event));
   let ticks = 0;
   match.addEventListener(timerTickEventName, () => {
     ticks += 1;
@@ -1538,19 +1593,19 @@ test('ticks the final five seconds of a timed turn once each', async () => {
   await match.updateComplete;
   expect(ticks).toBe(timerTickSeconds);
   expect(play).toHaveBeenCalledTimes(timerTickSeconds);
-  expect(
-    commands.filter((event) => event.detail.type === 'expire-turn'),
-  ).toHaveLength(1);
+  expect(commands.filter((event) => event.detail.type === 'expire-turn')).toHaveLength(1);
 });
 
 test('keeps timer audio silent while the document is hidden', async () => {
   vi.useFakeTimers();
-  localStorage.removeItem(settingsStorageKey);
+  await resetStoredData();
   const match = await startMatch();
   const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
-  const audio = (app as unknown as {
-    audio: { play: (cue: string) => boolean };
-  }).audio;
+  const audio = (
+    app as unknown as {
+      audio: { play: (cue: string) => boolean };
+    }
+  ).audio;
   const play = vi.spyOn(audio, 'play').mockReturnValue(true);
   const hidden = vi.spyOn(document, 'hidden', 'get').mockReturnValue(false);
   try {
@@ -1579,11 +1634,9 @@ test('keeps timer audio silent while the document is hidden', async () => {
 
 test('requests no timer tick under Unlimited or while paused', async () => {
   vi.useFakeTimers();
-  localStorage.removeItem(settingsStorageKey);
+  await resetStoredData();
   const match = await startMatch();
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   let ticks = 0;
   match.addEventListener(timerTickEventName, () => {
     ticks += 1;
@@ -1620,9 +1673,7 @@ test('requests no timer tick under Unlimited or while paused', async () => {
 test('conceals a paused match and resumes from the exact timer value', async () => {
   vi.useFakeTimers();
   const match = await startMatch();
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   const revision = match.snapshot!.revision;
 
   await vi.advanceTimersByTimeAsync(5_900);
@@ -1638,9 +1689,7 @@ test('conceals a paused match and resumes from the exact timer value', async () 
   expect(match.querySelector('.phrase-card')).toBeNull();
   expect(match.querySelector('[data-timer]')).toBeNull();
   expect(match.textContent).not.toContain(match.snapshot!.activePlayerName);
-  await vi.waitFor(() =>
-    expect(document.activeElement?.textContent?.trim()).toBe('Resume'),
-  );
+  await vi.waitFor(() => expect(document.activeElement?.textContent?.trim()).toBe('Resume'));
 
   await vi.advanceTimersByTimeAsync(5_900);
   match.querySelector<HTMLButtonElement>('.interruption-primary')!.click();
@@ -1675,7 +1724,8 @@ test('conceals a paused match and resumes from the exact timer value', async () 
 });
 
 test.each(['viewport', 'hotseat-portrait', 'landscape-recommended'] as const)(
-  'conceals the match and preserves the exact timer through %s', async (pauseMode) => {
+  'conceals the match and preserves the exact timer through %s',
+  async (pauseMode) => {
     vi.useFakeTimers();
     const match = await startMatch();
     await vi.advanceTimersByTimeAsync(5_900);
@@ -1707,9 +1757,7 @@ test('resets fractional elapsed time for a new turn and expires it once', async 
   vi.useFakeTimers();
   const match = await startMatch();
   const commands: MatchCommandEvent[] = [];
-  match.addEventListener(matchCommandEventName, (event) =>
-    commands.push(event),
-  );
+  match.addEventListener(matchCommandEventName, (event) => commands.push(event));
 
   await vi.advanceTimersByTimeAsync(5_900);
   await match.updateComplete;
@@ -1726,29 +1774,21 @@ test('resets fractional elapsed time for a new turn and expires it once', async 
   await vi.advanceTimersByTimeAsync(29_999);
   await match.updateComplete;
   expect(match.querySelector('[data-timer="1"]')).not.toBeNull();
-  expect(
-    commands.filter((event) => event.detail.type === 'expire-turn'),
-  ).toHaveLength(0);
+  expect(commands.filter((event) => event.detail.type === 'expire-turn')).toHaveLength(0);
 
   await vi.advanceTimersByTimeAsync(1);
   await match.updateComplete;
   await vi.advanceTimersByTimeAsync(10_000);
-  expect(
-    commands.filter((event) => event.detail.type === 'expire-turn'),
-  ).toHaveLength(1);
+  expect(commands.filter((event) => event.detail.type === 'expire-turn')).toHaveLength(1);
 });
 
 test('applies Pause settings when the match resumes', async () => {
   vi.useFakeTimers();
-  localStorage.removeItem(settingsStorageKey);
+  await resetStoredData();
   const match = await startMatch();
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   const commands: MatchCommandEvent[] = [];
-  match.addEventListener(matchCommandEventName, (event) =>
-    commands.push(event),
-  );
+  match.addEventListener(matchCommandEventName, (event) => commands.push(event));
 
   match.querySelector<HTMLButtonElement>('.match-pause')!.click();
   await app.updateComplete;
@@ -1758,16 +1798,13 @@ test('applies Pause settings when the match resumes', async () => {
     [...match.querySelectorAll<HTMLButtonElement>('button')].find(
       (button) => button.textContent?.trim() === label,
     )!;
-  const settingOption = (
-    setting: string,
-    value: 'On' | 'Off',
-  ): HTMLButtonElement =>
+  const settingOption = (setting: string, value: 'On' | 'Off'): HTMLButtonElement =>
     match.querySelector<HTMLButtonElement>(
       `button[data-setting="${setting}"][aria-label="${value}"]`,
     ) ??
-    [...match.querySelectorAll<HTMLButtonElement>(
-      `button[data-setting="${setting}"]`,
-    )].find((button) => button.textContent?.trim() === value)!;
+    [...match.querySelectorAll<HTMLButtonElement>(`button[data-setting="${setting}"]`)].find(
+      (button) => button.textContent?.trim() === value,
+    )!;
   expect(pauseButton('30 seconds').getAttribute('aria-pressed')).toBe('true');
   const colorCodingOption = (value: 'On' | 'Off'): HTMLButtonElement =>
     settingOption('phrase-color-coding', value);
@@ -1792,7 +1829,7 @@ test('applies Pause settings when the match resumes', async () => {
   expect(settingOption('music', 'On').getAttribute('aria-pressed')).toBe('true');
   expect(settingOption('voices', 'Off').getAttribute('aria-pressed')).toBe('true');
   expect(colorCodingOption('On').getAttribute('aria-pressed')).toBe('true');
-  expect(decodeSettings(localStorage.getItem(settingsStorageKey)!)).toMatchObject({
+  expect(decodeSettings((await storedDocument(settingsStorageKey))!)).toMatchObject({
     ok: true,
     value: { musicVolume: 0.1 },
   });
@@ -1811,7 +1848,7 @@ test('applies Pause settings when the match resumes', async () => {
   expect(settingOption('voices', 'Off').getAttribute('aria-pressed')).toBe('true');
   expect(colorCodingOption('Off').getAttribute('aria-pressed')).toBe('true');
 
-  const stored = decodeSettings(localStorage.getItem(settingsStorageKey)!);
+  const stored = decodeSettings((await storedDocument(settingsStorageKey))!);
   expect(stored).toMatchObject({
     ok: true,
     value: { musicVolume: 0, speechEnabled: false },
@@ -1821,27 +1858,19 @@ test('applies Pause settings when the match resumes', async () => {
   await app.updateComplete;
   await match.updateComplete;
   expect(match.querySelector('[data-timer="15"]')).not.toBeNull();
-  expect(
-    match
-      .querySelector('.match-screen')
-      ?.getAttribute('data-phrase-color-coding'),
-  ).toBe('off');
+  expect(match.querySelector('.match-screen')?.getAttribute('data-phrase-color-coding')).toBe(
+    'off',
+  );
 
-  const sentenceBefore = match
-    .querySelector('.sentence-preview')
-    ?.textContent?.trim();
+  const sentenceBefore = match.querySelector('.sentence-preview')?.textContent?.trim();
   const previewCard = match.snapshot!.sharedCards.find(
     (card) => card.action === 'select' && card.previewText.trim() !== '',
   )!;
   match
-    .querySelector<HTMLButtonElement>(
-      `[data-card-id="${previewCard.reference!.cardId}"]`,
-    )!
+    .querySelector<HTMLButtonElement>(`[data-card-id="${previewCard.reference!.cardId}"]`)!
     .dispatchEvent(new PointerEvent('pointerenter', { bubbles: true }));
   await match.updateComplete;
-  expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(
-    sentenceBefore,
-  );
+  expect(match.querySelector('.sentence-preview')?.textContent?.trim()).toBe(sentenceBefore);
 
   match.querySelector<HTMLButtonElement>('.match-pause')!.click();
   await app.updateComplete;
@@ -1856,21 +1885,15 @@ test('applies Pause settings when the match resumes', async () => {
   await match.updateComplete;
 
   expect(match.querySelector('[data-timer="unlimited"]')).not.toBeNull();
-  expect(match.querySelector('.timer-fact dd')?.textContent?.trim()).toBe(
-    'Unlimited',
-  );
+  expect(match.querySelector('.timer-fact dd')?.textContent?.trim()).toBe('Unlimited');
   await vi.advanceTimersByTimeAsync(60_000);
   await match.updateComplete;
-  expect(
-    commands.filter((event) => event.detail.type === 'expire-turn'),
-  ).toHaveLength(0);
+  expect(commands.filter((event) => event.detail.type === 'expire-turn')).toHaveLength(0);
 });
 
 test('confirms a paused exit before it discards the match', async () => {
   const match = await startMatch();
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   const activePlayerName = match.snapshot!.activePlayerName;
 
   match.querySelector<HTMLButtonElement>('.match-pause')!.click();
@@ -1887,9 +1910,7 @@ test('confirms a paused exit before it discards the match', async () => {
   expect(match.querySelector('.match-screen')).toBeNull();
   expect(match.querySelector('[data-timer]')).toBeNull();
   expect(match.textContent).not.toContain(activePlayerName);
-  await vi.waitFor(() =>
-    expect(document.activeElement?.textContent?.trim()).toBe('Stay paused'),
-  );
+  await vi.waitFor(() => expect(document.activeElement?.textContent?.trim()).toBe('Stay paused'));
 
   document.activeElement?.dispatchEvent(
     new KeyboardEvent('keydown', { bubbles: true, key: 'Escape' }),
@@ -1913,9 +1934,9 @@ test('confirms a paused exit before it discards the match', async () => {
 
   expect(document.querySelector('grand-transition-match')).toBeNull();
   expect(document.querySelector('grand-transition-title')).not.toBeNull();
-  expect(
-    document.querySelector('grand-transition-title h1')?.textContent,
-  ).toMatch(/Grand\s+Transition/u);
+  expect(document.querySelector('grand-transition-title h1')?.textContent).toMatch(
+    /Grand\s+Transition/u,
+  );
 });
 
 function labelledText(element: Element | null): string {
@@ -1928,9 +1949,7 @@ async function startMatch(
 ): Promise<GrandTransitionMatch> {
   await page.viewport(1280, 720);
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
-  const app = document.querySelector(
-    'grand-transition-app',
-  ) as GrandTransitionApp;
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;
 
   await page.getByRole('button', { name: 'Multiplayer' }).click();
@@ -1943,9 +1962,7 @@ async function startMatch(
   await page.getByRole('button', { name: 'Start match' }).click();
   await app.updateComplete;
 
-  const match = document.querySelector(
-    'grand-transition-match',
-  ) as GrandTransitionMatch;
+  const match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
   await match.updateComplete;
   expect(match.snapshot?.round).toBe(1);
   return match;
