@@ -48,14 +48,14 @@ The only permitted change is the approved bounded alpha-1 preparation.
 Before adoption, use [native alpha preparation](../../generate-scene-openai/references/native-alpha.md).
 Examine the result against light and dark backgrounds.
 Stamp a provenance record that gives only facts.
-Then use `adopt-native` in [`scripts/green-chroma-key.mjs`](../scripts/green-chroma-key.mjs).
+Then use `adopt-native` in [`scripts/green-chroma-key.ts`](../scripts/green-chroma-key.ts).
 This path records native-alpha metadata.
 It does not do color keying, and it does not change pixels.
 
 Use flat `#00FF00` chroma green only for a model that cannot give transparency or for an approved matte repair.
 Do not put the key color in subjects that you generate through that fallback.
 
-Change the matte to alpha with [`scripts/green-chroma-key.mjs`](../scripts/green-chroma-key.mjs).
+Change the matte to alpha with [`scripts/green-chroma-key.ts`](../scripts/green-chroma-key.ts).
 Use `adopt` to put an alpha asset that you have into the same workflow.
 Run `validate` on the full asset root.
 The converter must keep partial-alpha edge coverage.

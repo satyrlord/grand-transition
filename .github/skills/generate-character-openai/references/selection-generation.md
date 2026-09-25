@@ -101,7 +101,7 @@ Do these steps:
 For example:
 
 ```powershell
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs generate `
+node .github/skills/generate-scene-openai/scripts/scene-image.ts generate `
   --prompt <cycle-directory>/identity-design-prompt.txt `
   --reference <approved-style-reference> --reference <cycle-directory>/identity-crop.png `
   --out <cycle-directory>/identity-design-1 --size 1024x1024 --background opaque --exact-size --dry-run

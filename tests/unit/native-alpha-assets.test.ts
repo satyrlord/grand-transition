@@ -13,7 +13,7 @@ import { validateStateAsset } from '../../tools/validate-character-states.ts';
 import { encodeVariant, encodeVariantWithMetadata } from '../../tools/build-character-assets.ts';
 
 const execFileAsync = promisify(execFile);
-const script = path.resolve('.github/skills/repair-scene-composition/scripts/green-chroma-key.mjs');
+const script = path.resolve('.github/skills/repair-scene-composition/scripts/green-chroma-key.ts');
 
 test('shipped native Local Baron portrait satisfies production border and contour checks', async () => {
   const input = await readFile(

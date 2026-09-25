@@ -16,7 +16,7 @@ Use this branch for transparent output, masters with accurate dimensions, or out
 Also use it for a small opaque draft when your session does not have a local image generation tool.
 Also use it for a private character identity design when your session does not have a local image generation tool.
 Use `gpt-image-2.5-flare`, high quality, PNG output, and dimensions that you give in the request.
-The repository helper uses the Node 24 `fetch` function through `scripts/openai-api.mjs`.
+The repository helper uses the Node 24 `fetch` function through `scripts/openai-api.ts`.
 It makes requests directly for the image generation and image edit endpoints of OpenAI.
 Do not change an installed image CLI.
 Do not use its size tables, its SDK, Python, or `uv`.
@@ -55,10 +55,10 @@ Before integration, examine the dimensions and the alpha that the API gives.
 Run the commands from the repository root with Node 24 and the installed dependencies.
 
 ```text
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs plan --size 1024x1024 --background opaque
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs plan --size 1024x1024 --background transparent
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs plan --size 1024x1024 --background opaque --exact-size
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs plan --size 3840x2160 --background opaque
+node .github/skills/generate-scene-openai/scripts/scene-image.ts plan --size 1024x1024 --background opaque
+node .github/skills/generate-scene-openai/scripts/scene-image.ts plan --size 1024x1024 --background transparent
+node .github/skills/generate-scene-openai/scripts/scene-image.ts plan --size 1024x1024 --background opaque --exact-size
+node .github/skills/generate-scene-openai/scripts/scene-image.ts plan --size 3840x2160 --background opaque
 ```
 
 Only the first example selects the internal route.
@@ -74,7 +74,7 @@ Plans and dry runs do not give approval for generation, and they do not use API 
 Before generation, validate an approved portrait edit on the local computer:
 
 ```powershell
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs generate `
+node .github/skills/generate-scene-openai/scripts/scene-image.ts generate `
   --prompt tmp/character-generation/run/prompt.txt `
   --reference src/assets/characters/algorithmic-prophet.png `
   --out tmp/character-generation/run --size 2048x2048 --background transparent --dry-run
@@ -84,7 +84,7 @@ Use the target file as a reference only when the edit instruction and the asset 
 For a text-only 4K scene, do not use references:
 
 ```text
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs generate --prompt tmp/scene-generation/run/prompt.txt --out tmp/scene-generation/run --size 3840x2160 --background opaque --dry-run
+node .github/skills/generate-scene-openai/scripts/scene-image.ts generate --prompt tmp/scene-generation/run/prompt.txt --out tmp/scene-generation/run --size 3840x2160 --background opaque --dry-run
 ```
 
 For a smaller opaque source with supported native dimensions, add `--exact-size`.
@@ -92,7 +92,7 @@ An example of such dimensions is 1024 by 1024.
 Use the same option for an API draft in a session without a local image generation tool:
 
 ```powershell
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs generate `
+node .github/skills/generate-scene-openai/scripts/scene-image.ts generate `
   --prompt tmp/scene-generation/draft/prompt.txt --out tmp/scene-generation/draft/run `
   --size 1280x720 --background opaque --exact-size --dry-run
 ```

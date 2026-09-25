@@ -12,7 +12,7 @@ Read `tools/scene-resolution.ts`, `tools/build-scene-assets.ts`, and the manifes
 Use the helper to prepare the shipping dimensions:
 
 ```powershell
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs prepare `
+node .github/skills/generate-scene-openai/scripts/scene-image.ts prepare `
   --input tmp/scene-generation/run/candidate.png `
   --review tmp/scene-generation/run/review.json `
   --scene modern-debate-studio --out tmp/scene-generation/run/prepared.png
@@ -43,8 +43,8 @@ Stamp generic provenance.
 Then register the native source without matte conversion:
 
 ```text
-node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs provenance tmp/scene-generation/run/prepared.png --source "Verified model, route, dimensions, and operations."
-node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs adopt-native tmp/scene-generation/run/prepared.png
+node .github/skills/repair-scene-composition/scripts/green-chroma-key.ts provenance tmp/scene-generation/run/prepared.png --source "Verified model, route, dimensions, and operations."
+node .github/skills/repair-scene-composition/scripts/green-chroma-key.ts adopt-native tmp/scene-generation/run/prepared.png
 ```
 
 Replace the example source text with facts that you examined.
@@ -56,7 +56,7 @@ After these operations, record the last stamped hash next to the raw hash and th
 For a green-matte fallback, use the converter in the repository:
 
 ```text
-node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert tmp/scene-generation/run/prepared.png tmp/scene-generation/run/foreground.png --prompt-file tmp/scene-generation/run/prompt.txt
+node .github/skills/repair-scene-composition/scripts/green-chroma-key.ts convert tmp/scene-generation/run/prepared.png tmp/scene-generation/run/foreground.png --prompt-file tmp/scene-generation/run/prompt.txt
 ```
 
 Examine alpha edges against dark and light backgrounds.
@@ -81,7 +81,7 @@ Run the scene builder on that full staged tree:
 ```text
 node tools/build-scene-assets.ts tmp/scene-generation/run/scenes
 node tools/validate-scene-assets.ts tmp/scene-generation/run/scenes
-node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate tmp/scene-generation/run/scenes
+node .github/skills/repair-scene-composition/scripts/green-chroma-key.ts validate tmp/scene-generation/run/scenes
 node tools/validate-asset-color.ts validate tmp/scene-generation/run/scenes
 ```
 

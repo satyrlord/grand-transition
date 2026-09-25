@@ -1,8 +1,7 @@
 import { createHash } from 'node:crypto';
 import sharp from 'sharp';
 import { expect, test } from 'vitest';
-// @ts-expect-error The image preparation policy is a native ECMAScript module.
-import * as nativeAlpha from '../../.github/skills/generate-scene-openai/scripts/native-alpha.mjs';
+import * as nativeAlpha from '../../.github/skills/generate-scene-openai/scripts/native-alpha.ts';
 
 interface Inspection {
   width: number;

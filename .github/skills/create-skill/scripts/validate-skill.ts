@@ -18,7 +18,7 @@ const pythonArguments = [
   'python',
 ];
 
-function findExecutable(name) {
+function findExecutable(name: string) {
   const extensions = process.platform === 'win32' ? ['.exe', ''] : [''];
   for (const folder of (process.env.PATH ?? '').split(path.delimiter)) {
     if (!folder) continue;
@@ -41,7 +41,7 @@ function findValidator() {
   return candidates.find((candidate) => existsSync(candidate));
 }
 
-function findInterpreter() {
+function findInterpreter(): { command: string; args: string[] } | undefined {
   const uv = findExecutable('uv');
   if (
     uv &&
@@ -60,7 +60,7 @@ function findInterpreter() {
   return undefined;
 }
 
-function skillFolders(args) {
+function skillFolders(args: string[]) {
   if (args.length > 0) {
     return args.map((argument) =>
       existsSync(argument) ? path.resolve(argument) : path.join(skillsRoot, argument),
@@ -74,7 +74,7 @@ function skillFolders(args) {
     .sort();
 }
 
-function reportBlocked(reason) {
+function reportBlocked(reason: string): never {
   process.stderr.write(`BLOCKED: ${reason}\n`);
   process.exit(2);
 }
@@ -92,7 +92,7 @@ if (!interpreter) {
   );
 }
 
-const failures = [];
+const failures: string[] = [];
 const folders = skillFolders(process.argv.slice(2));
 for (const folder of folders) {
   const name = path.relative(skillsRoot, folder) || folder;

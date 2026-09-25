@@ -15,7 +15,7 @@ The description that the generator gives of its output also does not show that t
 To examine an image on the disk without generation, use its necessary target dimensions:
 
 ```text
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs inspect --input tmp/scene-generation/run/candidate.png --size 3840x2160
+node .github/skills/generate-scene-openai/scripts/scene-image.ts inspect --input tmp/scene-generation/run/candidate.png --size 3840x2160
 node tools/validate-asset-color.ts validate tmp/scene-generation/run
 ```
 

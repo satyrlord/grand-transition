@@ -8,8 +8,38 @@ import sharp from 'sharp';
 import { SCENE_MASTER_NAMES } from '../../../../tools/build-scene-assets.ts';
 import { sceneMasterSize } from '../../../../tools/scene-resolution.ts';
 import { assertColorControlledPrompt } from '../../../../tools/validate-generation-prompt.ts';
-import { MODEL, buildFlareRequest, sendFlareRequest, validateFlareSize } from './openai-api.mjs';
-import { inspectNativeAlpha, prepareNativeAlpha } from './native-alpha.mjs';
+import {
+  MODEL,
+  buildFlareRequest,
+  sendFlareRequest,
+  validateFlareSize,
+  type ReferenceImage,
+} from './openai-api.ts';
+import { inspectNativeAlpha, prepareNativeAlpha } from './native-alpha.ts';
+
+type NativeAlphaReport = Awaited<ReturnType<typeof inspectNativeAlpha>>;
+interface ImageSize {
+  width: number;
+  height: number;
+}
+interface RouteOptions {
+  background?: string;
+  exactSize?: boolean;
+}
+interface ImageFacts {
+  sha256: string;
+  width: number;
+  height: number;
+  bytes: number;
+  format: string;
+  alpha?: NativeAlphaReport;
+}
+interface ReviewRecord {
+  sha256?: unknown;
+  reviewer?: unknown;
+  issues?: unknown;
+  checks?: Record<string, { pass?: unknown; evidence?: unknown } | undefined>;
+}
 
 export { MODEL };
 export const NATIVE_SIZE = Object.freeze({ width: 3840, height: 2160 });
@@ -24,16 +54,17 @@ export const REVIEW_CHECKS = Object.freeze([
   'color',
 ]);
 const REPO = fileURLToPath(new URL('../../../../', import.meta.url));
-const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const nonempty = (value) => typeof value === 'string' && value.trim().length > 0;
-const writeJson = (file, data) =>
+const sha256 = (bytes: Buffer | string) => createHash('sha256').update(bytes).digest('hex');
+const nonempty = (value: unknown): value is string =>
+  typeof value === 'string' && value.trim().length > 0;
+const writeJson = (file: string, data: unknown) =>
   writeFile(file, `${JSON.stringify(data, null, 2)}\n`, { flag: 'wx' });
 
-async function requireUnusedPath(file) {
+async function requireUnusedPath(file: string) {
   try {
     await lstat(file);
   } catch (error) {
-    if (error.code === 'ENOENT') return;
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return;
     throw error;
   }
   throw new Error(
@@ -41,7 +72,7 @@ async function requireUnusedPath(file) {
   );
 }
 
-function imageDimensions(size) {
+function imageDimensions(size: string) {
   const match = /^(\d+)x(\d+)$/u.exec(size);
   if (!match) throw new Error('Use WIDTHxHEIGHT for the requested size.');
   const width = Number(match[1]),
@@ -51,20 +82,23 @@ function imageDimensions(size) {
   return { width, height, pixels: width * height };
 }
 
-export function selectRoute(size = '3840x2160', { background, exactSize = false } = {}) {
+export function selectRoute(
+  size = '3840x2160',
+  { background, exactSize = false }: RouteOptions = {},
+) {
   assertBackground(background);
   const { width, height, pixels } = imageDimensions(size);
   const needsApi =
     background === 'transparent' || exactSize || width * height > INTERNAL_PIXEL_LIMIT;
   if (needsApi) validateFlareSize(size);
-  return { width, height, pixels, route: needsApi ? 'api' : 'internal' };
+  return { width, height, pixels, route: needsApi ? ('api' as const) : ('internal' as const) };
 }
 
-export function candidateReviewState(alpha) {
+export function candidateReviewState(alpha?: { valid?: boolean }) {
   return alpha?.valid === false ? 'alpha-review-required' : 'visual-review-required';
 }
 
-function assertApiSize(size, options) {
+function assertApiSize(size: string, options: RouteOptions) {
   const plan = selectRoute(size, options);
   if (plan.route === 'internal')
     throw new Error(
@@ -73,7 +107,7 @@ function assertApiSize(size, options) {
   return plan;
 }
 
-function git(args, cwd) {
+function git(args: string[], cwd: string) {
   return execFileSync('git', args, {
     cwd,
     encoding: 'utf8',
@@ -89,18 +123,19 @@ export async function readApiKey(repo = REPO) {
   } catch {
     throw new Error('The environment file must be ignored.');
   }
-  let env;
+  let env: NodeJS.Dict<string>;
   try {
     env = parseEnv(await readFile(path.join(repo, '.env.local'), 'utf8'));
   } catch {
     throw new Error('Cannot read the local environment file.');
   }
-  if (!nonempty(env.OPENAI_API_KEY)) throw new Error('The local OPENAI_API_KEY is missing.');
-  return env.OPENAI_API_KEY.trim();
+  const key = env.OPENAI_API_KEY;
+  if (!nonempty(key)) throw new Error('The local OPENAI_API_KEY is missing.');
+  return key.trim();
 }
 
 // Resolve existing ancestors to prevent writes through a junction outside tmp.
-async function temporaryPath(value) {
+async function temporaryPath(value: string) {
   const target = path.resolve(value);
   const root = path.join(await realpath(REPO), 'tmp');
   let ancestor = path.dirname(target);
@@ -110,7 +145,7 @@ async function temporaryPath(value) {
       ancestor = await realpath(ancestor);
       break;
     } catch (error) {
-      if (error.code !== 'ENOENT') throw error;
+      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
       suffix.unshift(path.basename(ancestor));
       const parent = path.dirname(ancestor);
       if (parent === ancestor) throw error;
@@ -130,13 +165,13 @@ async function temporaryPath(value) {
   return resolved;
 }
 
-export async function inspectInputs(promptFile, references = []) {
+export async function inspectInputs(promptFile: string, references: string[] = []) {
   const prompt = await readFile(promptFile, 'utf8');
   if (!nonempty(prompt)) throw new Error('The generation prompt is empty.');
   assertColorControlledPrompt('Private prompt', prompt);
   if (references.length > 16) throw new Error('Use no more than 16 reference images.');
-  const inputs = [];
-  const referenceImages = [];
+  const inputs: { sha256: string; width?: number; height?: number; format: string }[] = [];
+  const referenceImages: ReferenceImage[] = [];
   for (const file of references) {
     const bytes = await readFile(file);
     if (bytes.length >= 50_000_000) throw new Error('Each reference must be smaller than 50 MB.');
@@ -156,13 +191,16 @@ export async function inspectInputs(promptFile, references = []) {
   return { promptSha256: sha256(prompt), references: inputs, promptText: prompt, referenceImages };
 }
 
-function assertBackground(background) {
+function assertBackground(background?: string) {
   if (background !== undefined && !['transparent', 'opaque', 'auto'].includes(background)) {
     throw new Error('Use transparent, opaque, or auto for the background.');
   }
 }
 
-export async function inspectImage(bytes, expectedSize = NATIVE_SIZE) {
+export async function inspectImage(
+  bytes: Buffer,
+  expectedSize: ImageSize = NATIVE_SIZE,
+): Promise<ImageFacts> {
   const metadata = await sharp(bytes, { failOn: 'warning' }).metadata();
   if (
     metadata.format !== 'png' ||
@@ -184,7 +222,7 @@ export async function inspectImage(bytes, expectedSize = NATIVE_SIZE) {
   };
 }
 
-export function assertReview(review, facts) {
+export function assertReview(review: ReviewRecord, facts: { sha256: string }) {
   if (
     review.sha256 !== facts.sha256 ||
     !nonempty(review.reviewer) ||
@@ -194,13 +232,19 @@ export function assertReview(review, facts) {
     throw new Error('Get an image review for the image at this time, with no open issues.');
   }
   for (const name of REVIEW_CHECKS) {
-    if (review.checks?.[name]?.pass !== true || !nonempty(review.checks[name].evidence)) {
+    const check = review.checks?.[name];
+    if (check?.pass !== true || !nonempty(check.evidence)) {
       throw new Error(`The visual review must pass ${name} with observed evidence.`);
     }
   }
 }
 
-export async function prepareImage(bytes, review, scene, expectedSize = NATIVE_SIZE) {
+export async function prepareImage(
+  bytes: Buffer,
+  review: ReviewRecord,
+  scene: string,
+  expectedSize: ImageSize = NATIVE_SIZE,
+) {
   if (!SCENE_MASTER_NAMES.includes(`${scene}.png`))
     throw new Error('The scene builder does not declare this scene master ID.');
   const source = await inspectImage(bytes, expectedSize);
@@ -272,7 +316,7 @@ async function main() {
   }
   if (command === 'generate' && values.prompt && values.out) {
     assertBackground(values.background);
-    if (plan.route === 'internal') {
+    if ('route' in plan && plan.route === 'internal') {
       if (values['dry-run']) {
         console.log(JSON.stringify({ ...plan, networkRequest: false }));
         return;
@@ -322,17 +366,19 @@ async function main() {
       createdAt: new Date().toISOString(),
     });
     const statusPath = path.join(out, 'status.json');
-    const status = (data) => writeFile(statusPath, `${JSON.stringify(data, null, 2)}\n`);
+    const status = (data: Record<string, unknown>) =>
+      writeFile(statusPath, `${JSON.stringify(data, null, 2)}\n`);
     await status({ state: 'request-started', automaticRetries: 0 });
     const output = path.join(out, 'candidate.png');
-    let bytes;
+    let bytes: Buffer;
     try {
       bytes = await sendFlareRequest(request, key);
     } catch (error) {
+      const failure = error as { code?: string; status?: number };
       await status({
         state: 'request-failed',
-        code: error.code ?? 'local-error',
-        ...(error.status ? { httpStatus: error.status } : {}),
+        code: failure.code ?? 'local-error',
+        ...(failure.status ? { httpStatus: failure.status } : {}),
         automaticRetries: 0,
       });
       throw error;
@@ -340,7 +386,7 @@ async function main() {
     await writeFile(output, bytes, { flag: 'wx' });
     await writeJson(path.join(out, 'generation.json'), { ...record, sourceSha256: sha256(bytes) });
     await status({ state: 'response-saved', sourceSha256: sha256(bytes), automaticRetries: 0 });
-    let facts;
+    let facts: ImageFacts;
     try {
       facts = await inspectImage(bytes, plan);
       if (values.background === 'transparent') facts.alpha = await inspectNativeAlpha(bytes);

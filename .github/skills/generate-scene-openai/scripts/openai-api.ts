@@ -3,7 +3,19 @@
 export const MODEL = 'gpt-image-2.5-flare';
 const API_ROOT = 'https://api.openai.com/v1/images/';
 
-export function validateFlareSize(size) {
+export type FlareBackground = 'transparent' | 'opaque' | 'auto';
+export interface ReferenceImage {
+  bytes: Buffer;
+  format: string;
+}
+export interface FlareRequest {
+  endpoint: string;
+  body: string | FormData;
+  contentType?: string;
+}
+type Fetcher = (input: string, init: RequestInit) => Promise<Response>;
+
+export function validateFlareSize(size: string) {
   const match = /^(\d+)x(\d+)$/u.exec(size);
   const width = Number(match?.[1]),
     height = Number(match?.[2]);
@@ -24,7 +36,17 @@ export function validateFlareSize(size) {
   return { width, height, pixels };
 }
 
-export function buildFlareRequest({ promptText, size, background = 'auto', referenceImages = [] }) {
+export function buildFlareRequest({
+  promptText,
+  size,
+  background = 'auto',
+  referenceImages = [],
+}: {
+  promptText: string;
+  size: string;
+  background?: string;
+  referenceImages?: ReferenceImage[];
+}): FlareRequest {
   validateFlareSize(size);
   if (!['transparent', 'opaque', 'auto'].includes(background))
     throw new Error('Use transparent, opaque, or auto for the background.');
@@ -60,7 +82,7 @@ export function buildFlareRequest({ promptText, size, background = 'auto', refer
     }
     body.append(
       'image[]',
-      new Blob([image.bytes], { type: `image/${image.format}` }),
+      new Blob([new Uint8Array(image.bytes)], { type: `image/${image.format}` }),
       `reference-${index + 1}.${image.format}`,
     );
   }
@@ -68,7 +90,10 @@ export function buildFlareRequest({ promptText, size, background = 'auto', refer
 }
 
 export class FlareRequestError extends Error {
-  constructor(code, message, status) {
+  code: string;
+  status?: number;
+
+  constructor(code: string, message: string, status?: number) {
     super(message);
     this.name = 'FlareRequestError';
     this.code = code;
@@ -76,13 +101,17 @@ export class FlareRequestError extends Error {
   }
 }
 
-export async function sendFlareRequest(request, key, fetcher = globalThis.fetch) {
+export async function sendFlareRequest(
+  request: FlareRequest,
+  key: string,
+  fetcher: Fetcher = globalThis.fetch,
+): Promise<Buffer> {
   if (![`${API_ROOT}generations`, `${API_ROOT}edits`].includes(request.endpoint)) {
     throw new Error('Use the fixed OpenAI image endpoint.');
   }
   if (typeof key !== 'string' || !key.trim())
     throw new Error('The local OPENAI_API_KEY is missing.');
-  let response;
+  let response: Response;
   try {
     response = await fetcher(request.endpoint, {
       method: 'POST',
@@ -119,7 +148,7 @@ export async function sendFlareRequest(request, key, fetcher = globalThis.fetch)
     );
   }
   try {
-    const result = await response.json();
+    const result = (await response.json()) as { data?: { b64_json?: unknown }[] };
     const image = result?.data?.[0]?.b64_json;
     if (
       !Array.isArray(result?.data) ||

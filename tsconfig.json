@@ -15,5 +15,5 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["src", "tests", "e2e", "tools", "*.config.ts"]
+  "include": ["src", "tests", "e2e", "tools", ".github/skills/*/scripts", "*.config.ts"]
 }

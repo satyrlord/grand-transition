@@ -4,13 +4,18 @@ import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
 import { afterEach, describe, expect, test } from 'vitest';
-// The type suppression applies to one line, so this import stays on one line.
-// prettier-ignore
-// @ts-expect-error The scene helper is a native ECMAScript module.
-import { assertReview, candidateReviewState, inspectImage, inspectInputs, prepareImage, readApiKey, selectRoute } from '../../.github/skills/generate-scene-openai/scripts/scene-image.mjs';
+import {
+  assertReview,
+  candidateReviewState,
+  inspectImage,
+  inspectInputs,
+  prepareImage,
+  readApiKey,
+  selectRoute,
+} from '../../.github/skills/generate-scene-openai/scripts/scene-image.ts';
 
 const roots: string[] = [];
-const helper = path.resolve('.github/skills/generate-scene-openai/scripts/scene-image.mjs');
+const helper = path.resolve('.github/skills/generate-scene-openai/scripts/scene-image.ts');
 const prompt =
   'Positive controls:\nNeutral sRGB white balance. Ungraded colors. Warm color is local to authored lights.\nNegative controls:\nNo whole-image color tint.';
 const checkNames = [

@@ -51,7 +51,7 @@ Run these commands in this sequence:
 ```text
 node tools/build-character-assets.ts tmp/character-generation/run/characters
 node tools/validate-character-assets.ts tmp/character-generation/run/characters
-node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate tmp/character-generation/run/characters
+node .github/skills/repair-scene-composition/scripts/green-chroma-key.ts validate tmp/character-generation/run/characters
 node tools/validate-asset-color.ts validate tmp/character-generation/run/characters
 ```
 
