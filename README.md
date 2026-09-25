@@ -270,6 +270,9 @@ It also uses plain CSS, a pure deterministic game engine, and validated data fil
 The result is a static GitHub Pages build.
 The accurate contracts and the active milestones are in `docs/specs/`.
 
+The repository keeps images, audio, and speech models in Git Large File Storage (LFS).
+Install Git LFS and run `git lfs install` before you clone the repository.
+
 ## Add phrase cards
 
 Add shared cards to `src/content/common-phrase-cards.json`.

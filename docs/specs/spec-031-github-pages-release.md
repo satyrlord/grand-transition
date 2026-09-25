@@ -38,6 +38,7 @@ The deploy job has a `needs` dependency on the build job.
 It cannot run after a build that failed, a canceled build, a build from a pull request, or a build that is not from `main`.
 
 The build job checks out the commit of the change and installs Node.js 24.
+It restores the Git LFS objects from a cache with a key from the LFS object list, and it runs `git lfs pull`.
 It installs the npm version in `packageManager` and runs `npm ci`.
 It installs the three Playwright browsers with their dependencies and runs `npm run ci`.
 It uploads one artifact that contains only files from `dist/`.

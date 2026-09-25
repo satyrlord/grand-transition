@@ -47,9 +47,9 @@ describe('tester GitHub Pages workflow', () => {
     );
     expect(workflow).toContain('group: pages');
     expect(workflow).toContain('cancel-in-progress: false');
-    expect(actionLines).toHaveLength(5);
+    expect(actionLines).toHaveLength(6);
     for (const line of actionLines) {
-      expect(line).toMatch(/@[0-9a-f]{40}\s+# v[0-9]+$/u);
+      expect(line).toMatch(/@[0-9a-f]{40}\s+# v[0-9]+(?:\.[0-9]+)*$/u);
     }
   });
 });
