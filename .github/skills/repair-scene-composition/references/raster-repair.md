@@ -14,7 +14,8 @@ For raster generation and edits of playable characters, use
 For raster generation and edits of scenes, use
 [generate-scene-openai](../../generate-scene-openai/SKILL.md).
 That skill selects the Flare API for transparency, masters with accurate dimensions, and output larger than 1080p.
-It uses the internal image tool for small opaque drafts.
+It uses the internal image tool for small opaque drafts when a local image generation tool is available.
+Without that tool, it uses the Flare API draft route with `--exact-size`.
 Its repository helper controls the API request.
 Do not change an installed image CLI.
 
