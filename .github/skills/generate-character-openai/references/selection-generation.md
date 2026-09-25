@@ -46,19 +46,72 @@ For an approved identity that has a real person as its source, use the two-stage
 
 For the two-stage method, do these steps:
 
-1. Examine the supplied identity image privately.
-2. Crop the image to the identity features only.
-3. Remove text, logos, flags, and details of the location.
-4. Generate one private style-transfer design from the shoulders up.
-5. Give the approved style reference the style role.
-6. Give the crop the identity role.
-7. Use a result that is fully illustrated.
-8. Do not accept photographic texture or photographic light.
-9. Save the accepted design in the cycle directory.
+1. Make sure that the identity image is a file on the disk.
+2. Examine the supplied identity image privately.
+3. Crop the image to the identity features only.
+4. Remove text, logos, flags, and details of the location.
+5. Generate one private style-transfer design from the shoulders up.
+6. Give the approved style reference the style role.
+7. Give the crop the identity role.
+8. Use a result that is fully illustrated.
+9. Do not accept photographic texture or photographic light.
+10. Save the accepted design in the cycle directory.
 
 Do not upload the identity photograph to the last request.
 A photograph in the request can keep realistic skin.
 This can cause a face and a body with different styles.
+
+### Put the identity image on the disk
+
+A local image generation tool can accept an image from the conversation.
+The repository helper reads only files on the disk.
+When your session does not have a local image generation tool, the identity image must be a file.
+If the user gave the image only in the conversation, stop before the crop.
+Tell the user to save the image in `tmp/character-study/references/<owner-id>/`.
+Continue after the file is on the disk.
+Record its source, rights, hash, and purpose in the cycle record.
+
+Make the crop with a deterministic operation, for example a Sharp crop in a Node command.
+Save the crop in the cycle directory, and record its hash.
+If a rectangular crop cannot remove text, logos, flags, or details of the location, stop.
+Tell the user to give a different identity image.
+Do not paint over the image.
+
+### Generate the private design
+
+When your session has a local image generation tool, use it for step 5.
+Give it the style reference and the crop in the roles of steps 6 and 7.
+
+When your session does not have a local image generation tool, use the Flare API for step 5.
+Read [API generation](../../generate-scene-openai/references/api-generation.md) before the request.
+Do these steps:
+
+1. Write the private design prompt in the cycle directory.
+2. In the prompt, identify the first reference image as the style reference.
+3. In the prompt, identify the second reference image as the identity reference.
+4. Request an illustrated design from the shoulders up on a flat neutral background.
+5. Include the positive color controls and the negative color controls.
+6. Use a new output directory, for example `<cycle-directory>/identity-design-1/`.
+7. Give the style reference first and the crop second.
+8. Use `--size 1024x1024 --background opaque --exact-size`.
+9. Do a dry run, and do a check of the reference sequence and the hashes.
+10. After the dry run passes, send one request.
+11. Record the route, the request, and the result in the cycle record.
+
+For example:
+
+```powershell
+node .github/skills/generate-scene-openai/scripts/scene-image.ts generate `
+  --prompt <cycle-directory>/identity-design-prompt.txt `
+  --reference <approved-style-reference> --reference <cycle-directory>/identity-crop.png `
+  --out <cycle-directory>/identity-design-1 --size 1024x1024 --background opaque --exact-size --dry-run
+```
+
+Examine the private design with a tool that shows images.
+Apply the acceptance conditions of steps 8 and 9.
+If the private design fails, do not send one more request unless the user gave approval for corrections.
+The private design stays private evidence.
+Do not put it in `src/assets/`.
 
 ## Make the last request
 

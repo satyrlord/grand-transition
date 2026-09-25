@@ -1,12 +1,5 @@
 import { validateDevelopmentLog } from './development-log-schema.ts';
-import {
-  mkdir,
-  readdir,
-  realpath,
-  stat,
-  unlink,
-  writeFile,
-} from 'node:fs/promises';
+import { mkdir, readdir, realpath, stat, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 export const maximumGameLogBytes = 2 * 1024 * 1024;
@@ -20,13 +13,9 @@ export type GameLogWriteRequest = Readonly<{
   now?: Date;
 }>;
 
-export async function writeGameLog(
-  request: GameLogWriteRequest,
-): Promise<string> {
+export async function writeGameLog(request: GameLogWriteRequest): Promise<string> {
   const repositoryRoot = path.resolve(request.repositoryRoot ?? process.cwd());
-  const logDirectory = path.resolve(
-    request.logDirectory ?? path.join(repositoryRoot, 'logs'),
-  );
+  const logDirectory = path.resolve(request.logDirectory ?? path.join(repositoryRoot, 'logs'));
   requireInsideRepository(repositoryRoot, logDirectory);
   const bytes = Buffer.byteLength(request.text, 'utf8');
   if (bytes === 0) throw new Error('The game log is empty.');
@@ -55,10 +44,7 @@ export async function writeGameLog(
   throw new Error('The game log filename collision limit was reached.');
 }
 
-async function pruneOldGameLogs(
-  logDirectory: string,
-  currentFile: string,
-): Promise<void> {
+async function pruneOldGameLogs(logDirectory: string, currentFile: string): Promise<void> {
   const candidates = (
     await Promise.all(
       (await readdir(logDirectory, { withFileTypes: true }))
@@ -75,16 +61,10 @@ async function pruneOldGameLogs(
     )
   ).sort(
     (first, second) =>
-      first.modified - second.modified ||
-      first.filePath.localeCompare(second.filePath),
+      first.modified - second.modified || first.filePath.localeCompare(second.filePath),
   );
-  const removeCount = Math.max(
-    0,
-    candidates.length + 1 - maximumStoredGameLogs,
-  );
-  await Promise.all(
-    candidates.slice(0, removeCount).map(({ filePath }) => unlink(filePath)),
-  );
+  const removeCount = Math.max(0, candidates.length + 1 - maximumStoredGameLogs);
+  await Promise.all(candidates.slice(0, removeCount).map(({ filePath }) => unlink(filePath)));
 }
 
 function fileDate(date: Date): string {
@@ -113,8 +93,7 @@ async function requireExistingAncestorInsideRepository(
     try {
       resolvedAncestor = await realpath(ancestor);
     } catch (error) {
-      if (!(error instanceof Error) || !('code' in error) ||
-          error.code !== 'ENOENT') throw error;
+      if (!(error instanceof Error) || !('code' in error) || error.code !== 'ENOENT') throw error;
       const parent = path.dirname(ancestor);
       if (parent === ancestor) throw error;
       ancestor = parent;
@@ -130,19 +109,13 @@ async function requireExistingAncestorInsideRepository(
 
 function requireInsideRepository(repositoryRoot: string, target: string): void {
   const relative = path.relative(repositoryRoot, target);
-  if (
-    relative === '' ||
-    relative.startsWith('..') ||
-    path.isAbsolute(relative)
-  ) {
+  if (relative === '' || relative.startsWith('..') || path.isAbsolute(relative)) {
     throw new Error('The game log directory must be inside the repository.');
   }
 }
 
 function isFileExistsError(error: unknown): boolean {
   return (
-    error instanceof Error &&
-    'code' in error &&
-    (error as NodeJS.ErrnoException).code === 'EEXIST'
+    error instanceof Error && 'code' in error && (error as NodeJS.ErrnoException).code === 'EEXIST'
   );
 }

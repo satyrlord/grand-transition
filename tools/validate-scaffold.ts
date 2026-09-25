@@ -82,11 +82,9 @@ function parseArguments(argumentsList: readonly string[]) {
   const domainIndex = argumentsList.indexOf('--domain');
   const modeIndex = argumentsList.indexOf('--mode');
   const rootIndex = argumentsList.indexOf('--root');
-  const domain =
-    domainIndex === -1 ? undefined : argumentsList[domainIndex + 1];
+  const domain = domainIndex === -1 ? undefined : argumentsList[domainIndex + 1];
   const mode = modeIndex === -1 ? 'validate' : argumentsList[modeIndex + 1];
-  const rootDirectory =
-    rootIndex === -1 ? process.cwd() : argumentsList[rootIndex + 1];
+  const rootDirectory = rootIndex === -1 ? process.cwd() : argumentsList[rootIndex + 1];
 
   if (!domain || !['validate', 'build'].includes(mode) || !rootDirectory) {
     throw new Error(
@@ -105,19 +103,13 @@ async function main() {
   const result = await validateDomain(domain, rootDirectory);
   const relativeDirectory = path.relative(rootDirectory, result.directory);
   if (result.files.length === 0) {
-    console.log(
-      `${domain} ${mode} passed: ${relativeDirectory} is empty.`,
-    );
+    console.log(`${domain} ${mode} passed: ${relativeDirectory} is empty.`);
     return;
   }
-  console.log(
-    `${domain} ${mode} passed: checked ${result.files.length} file(s).`,
-  );
+  console.log(`${domain} ${mode} passed: checked ${result.files.length} file(s).`);
 }
 
-const invokedScript = process.argv[1]
-  ? path.resolve(process.argv[1])
-  : undefined;
+const invokedScript = process.argv[1] ? path.resolve(process.argv[1]) : undefined;
 if (invokedScript === path.resolve(fileURLToPath(import.meta.url))) {
   main().catch((error) => {
     console.error(error instanceof Error ? error.message : error);

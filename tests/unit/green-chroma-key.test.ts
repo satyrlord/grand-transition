@@ -12,7 +12,7 @@ const converterPath = path.resolve(
   'skills',
   'repair-scene-composition',
   'scripts',
-  'green-chroma-key.mjs',
+  'green-chroma-key.ts',
 );
 const validColorPrompt =
   'Neutral sRGB white balance, ungraded colors. Warm color is local to named materials. No whole-image color tint.';

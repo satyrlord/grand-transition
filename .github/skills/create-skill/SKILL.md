@@ -100,7 +100,7 @@ Remove workflow rules that do not agree with the specification that controls the
 Validate each changed skill package with the repository runner:
 
 ```text
-node .github/skills/create-skill/scripts/validate-skill.mjs <skill-folder>...
+node .github/skills/create-skill/scripts/validate-skill.ts <skill-folder>...
 ```
 
 The runner finds `quick_validate.py` in the installed `skill-creator` package.

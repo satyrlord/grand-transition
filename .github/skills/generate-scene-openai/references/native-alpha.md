@@ -15,7 +15,7 @@ Examine the full image, the contours at source scale, and the composites against
 Run the raw alpha check:
 
 ```text
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs inspect --input tmp/character-generation/run/candidate.png --size 2048x2048 --background transparent
+node .github/skills/generate-scene-openai/scripts/scene-image.ts inspect --input tmp/character-generation/run/candidate.png --size 2048x2048 --background transparent
 ```
 
 For a scene candidate, use the dimensions that the scene request gave.
@@ -37,7 +37,7 @@ Do not accept detached shadows or haze around the subject.
 After the visual inspection, use the standard preparation for detached alpha-1 residue in the background:
 
 ```text
-node .github/skills/generate-scene-openai/scripts/scene-image.mjs prepare-native --input tmp/character-generation/run/candidate.png --out tmp/character-generation/run/prepared-native.png
+node .github/skills/generate-scene-openai/scripts/scene-image.ts prepare-native --input tmp/character-generation/run/candidate.png --out tmp/character-generation/run/prepared-native.png
 ```
 
 The helper clears only the alpha-1 pixels that are more than four pixels from content with alpha 250 through 255.
@@ -69,8 +69,8 @@ For characters, keep the master of 2048 by 2048 pixels, and do not resize it.
 Stamp a provenance record that gives only facts, and register native alpha on the staged master:
 
 ```text
-node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs provenance tmp/character-generation/run/prepared-native.png --source "Verified model, route, dimensions, and preparation operations."
-node .github/skills/repair-scene-composition/scripts/green-chroma-key.mjs adopt-native tmp/character-generation/run/prepared-native.png
+node .github/skills/repair-scene-composition/scripts/green-chroma-key.ts provenance tmp/character-generation/run/prepared-native.png --source "Verified model, route, dimensions, and preparation operations."
+node .github/skills/repair-scene-composition/scripts/green-chroma-key.ts adopt-native tmp/character-generation/run/prepared-native.png
 ```
 
 Replace the example source text with facts that you examined.

@@ -1,8 +1,9 @@
 import { expect, test, vi } from 'vitest';
-// The type suppression applies to one line, so this import stays on one line.
-// prettier-ignore
-// @ts-expect-error The workflow transport is a native ECMAScript module.
-import { buildFlareRequest, sendFlareRequest, validateFlareSize } from '../../.github/skills/generate-scene-openai/scripts/openai-api.mjs';
+import {
+  buildFlareRequest,
+  sendFlareRequest,
+  validateFlareSize,
+} from '../../.github/skills/generate-scene-openai/scripts/openai-api.ts';
 
 const options = {
   promptText: 'Private synthetic prompt',
@@ -21,7 +22,7 @@ test('Flare accepts supported custom dimensions and rejects invalid API sizes', 
 test('text requests preserve model, prompt, exact size and native transparency', () => {
   const request = buildFlareRequest(options);
   expect(request.endpoint).toBe('https://api.openai.com/v1/images/generations');
-  expect(JSON.parse(request.body)).toEqual({
+  expect(JSON.parse(request.body as string)).toEqual({
     model: 'gpt-image-2.5-flare',
     prompt: options.promptText,
     size: options.size,
@@ -43,10 +44,11 @@ test('reference requests use multipart image arrays with exact input bytes', asy
   });
   expect(request.endpoint).toBe('https://api.openai.com/v1/images/edits');
   expect(request.contentType).toBeUndefined();
-  expect(request.body.get('model')).toBe('gpt-image-2.5-flare');
-  expect(request.body.get('size')).toBe('2048x2048');
-  expect(request.body.get('background')).toBe('transparent');
-  const images: File[] = request.body.getAll('image[]');
+  const body = request.body as FormData;
+  expect(body.get('model')).toBe('gpt-image-2.5-flare');
+  expect(body.get('size')).toBe('2048x2048');
+  expect(body.get('background')).toBe('transparent');
+  const images = body.getAll('image[]') as File[];
   expect(images).toHaveLength(2);
   expect(Buffer.from(await images[0]!.arrayBuffer())).toEqual(bytes);
   expect(images[0]!.name).toBe('reference-1.png');

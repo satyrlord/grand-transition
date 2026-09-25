@@ -135,11 +135,7 @@ async function* walkSourceFiles(directory: string): AsyncGenerator<string> {
 }
 
 function isLitSpecifier(specifier: string): boolean {
-  return (
-    specifier === 'lit' ||
-    specifier.startsWith('lit/') ||
-    specifier.startsWith('@lit/')
-  );
+  return specifier === 'lit' || specifier.startsWith('lit/') || specifier.startsWith('@lit/');
 }
 
 function maskCommentsAndStrings(sourceText: string): string {
@@ -233,15 +229,29 @@ function staticModuleSpecifiers(sourceText: string) {
   const scanner = createScanner(true, undefined, sourceText);
   const tokens: ScannedToken[] = [];
   const templateBraceDepths: number[] = [];
-  const expressionStarts = new Set(['(', '[', '{', '=', ':', ',', ';', '=>',
-    'return', 'throw', 'case', '!', '?', '&&', '||', '??']);
-  for (
-    let kind = scanner.scan();
-    kind !== SyntaxKind.EndOfFile;
-    kind = scanner.scan()
-  ) {
-    if (kind === SyntaxKind.SlashToken &&
-        (tokens.length === 0 || expressionStarts.has(tokens.at(-1)!.text))) {
+  const expressionStarts = new Set([
+    '(',
+    '[',
+    '{',
+    '=',
+    ':',
+    ',',
+    ';',
+    '=>',
+    'return',
+    'throw',
+    'case',
+    '!',
+    '?',
+    '&&',
+    '||',
+    '??',
+  ]);
+  for (let kind = scanner.scan(); kind !== SyntaxKind.EndOfFile; kind = scanner.scan()) {
+    if (
+      kind === SyntaxKind.SlashToken &&
+      (tokens.length === 0 || expressionStarts.has(tokens.at(-1)!.text))
+    ) {
       kind = scanner.reScanSlashToken();
     }
     if (scanner.getTokenEnd() <= scanner.getTokenStart()) {
@@ -293,9 +303,11 @@ function staticModuleSpecifiers(sourceText: string) {
       tokens[index + propertyOffset]?.text === '['
     ) {
       const property = tokens[index + propertyOffset + 1];
-      if ((property?.kind !== SyntaxKind.StringLiteral &&
-           property?.kind !== SyntaxKind.NoSubstitutionTemplateLiteral) ||
-          tokens[index + propertyOffset + 2]?.text !== ']') {
+      if (
+        (property?.kind !== SyntaxKind.StringLiteral &&
+          property?.kind !== SyntaxKind.NoSubstitutionTemplateLiteral) ||
+        tokens[index + propertyOffset + 2]?.text !== ']'
+      ) {
         violations.push('nonliteral globalThis property');
       } else if (domNames.has(property.value)) {
         violations.push(`computed forbidden DOM name "${property.value}"`);
@@ -304,8 +316,10 @@ function staticModuleSpecifiers(sourceText: string) {
     if (token.kind === SyntaxKind.ImportKeyword) {
       if (addStringToken(next)) continue;
       if (next?.kind === SyntaxKind.OpenParenToken) {
-        if (!addStringToken(tokens[index + 2]) ||
-            ![SyntaxKind.CloseParenToken, SyntaxKind.CommaToken].includes(tokens[index + 3]?.kind)) {
+        if (
+          !addStringToken(tokens[index + 2]) ||
+          ![SyntaxKind.CloseParenToken, SyntaxKind.CommaToken].includes(tokens[index + 3]?.kind)
+        ) {
           violations.push('nonliteral dynamic import');
         }
         continue;
@@ -337,12 +351,11 @@ function staticModuleSpecifiers(sourceText: string) {
           break;
         }
       }
-    } else if (
-      token.text === 'require' &&
-      next?.kind === SyntaxKind.OpenParenToken
-    ) {
-      if (!addStringToken(tokens[index + 2]) ||
-          tokens[index + 3]?.kind !== SyntaxKind.CloseParenToken) {
+    } else if (token.text === 'require' && next?.kind === SyntaxKind.OpenParenToken) {
+      if (
+        !addStringToken(tokens[index + 2]) ||
+        tokens[index + 3]?.kind !== SyntaxKind.CloseParenToken
+      ) {
         violations.push('nonliteral require call');
       }
     }
@@ -370,10 +383,7 @@ function inspectSource(
     }
     if (
       specifier.startsWith('.') &&
-      isGeneratedLocalizationFile(
-        path.resolve(path.dirname(filePath), specifier),
-        rootDirectory,
-      )
+      isGeneratedLocalizationFile(path.resolve(path.dirname(filePath), specifier), rootDirectory)
     ) {
       failures.push(
         `${relativePath}: forbidden generated interface localization dependency "${specifier}"`,
@@ -384,9 +394,7 @@ function inspectSource(
       specifier.startsWith('.') &&
       !dependencyIsAllowed(specifier, filePath, rootDirectory, policy)
     ) {
-      failures.push(
-        `${relativePath}: forbidden dependency "${specifier}" from "${policy.root}"`,
-      );
+      failures.push(`${relativePath}: forbidden dependency "${specifier}" from "${policy.root}"`);
     }
   }
 
@@ -409,7 +417,9 @@ function dependencyIsAllowed(
   policy: PurePolicy,
 ): boolean {
   // A module rule names the module without its source-file extension.
-  const dependencyPath = path.resolve(path.dirname(filePath), specifier).replace(/\.[cm]?[jt]sx?$/u, '');
+  const dependencyPath = path
+    .resolve(path.dirname(filePath), specifier)
+    .replace(/\.[cm]?[jt]sx?$/u, '');
   return policy.allowedDependencies.some((allowed) => {
     const allowedPath = path.resolve(rootDirectory, allowed.path);
     if (allowed.kind === 'module') return dependencyPath === allowedPath;
@@ -419,18 +429,13 @@ function dependencyIsAllowed(
 
 function pathIsInside(candidatePath: string, directoryPath: string): boolean {
   const relativePath = path.relative(directoryPath, candidatePath);
-  return (
-    relativePath === '' ||
-    (!relativePath.startsWith('..') && !path.isAbsolute(relativePath))
-  );
+  return relativePath === '' || (!relativePath.startsWith('..') && !path.isAbsolute(relativePath));
 }
 
 // This directory holds lit-localize output for the interface catalog. Generated
 // files are validated by `npm run localization:validate` and are not scanned as
 // pure-module sources. Checked pure sources still cannot depend on them.
-const generatedLocalizationDirectories = [
-  path.join('src', 'localization', 'generated'),
-];
+const generatedLocalizationDirectories = [path.join('src', 'localization', 'generated')];
 
 function isGeneratedLocalizationFile(filePath: string, rootDirectory: string): boolean {
   return generatedLocalizationDirectories.some((directory) =>
@@ -452,44 +457,27 @@ export async function checkPureBoundaries(rootDirectory = process.cwd()) {
       checkedFiles += 1;
       const sourceText = await readFile(filePath, 'utf8');
       const relativePath = path.relative(rootDirectory, filePath);
-      failures.push(
-        ...inspectSource(
-          sourceText,
-          relativePath,
-          filePath,
-          rootDirectory,
-          policy,
-        ),
-      );
+      failures.push(...inspectSource(sourceText, relativePath, filePath, rootDirectory, policy));
     }
   }
 
   if (failures.length > 0) {
-    throw new Error(
-      `Pure-module boundary check failed:\n${failures.join('\n')}`,
-    );
+    throw new Error(`Pure-module boundary check failed:\n${failures.join('\n')}`);
   }
 
   return { checkedFiles };
 }
 
-const invokedScript = process.argv[1]
-  ? path.resolve(process.argv[1])
-  : undefined;
+const invokedScript = process.argv[1] ? path.resolve(process.argv[1]) : undefined;
 if (invokedScript === path.resolve(fileURLToPath(import.meta.url))) {
   const rootIndex = process.argv.indexOf('--root');
-  const rootDirectory =
-    rootIndex === -1 ? process.cwd() : process.argv[rootIndex + 1];
+  const rootDirectory = rootIndex === -1 ? process.cwd() : process.argv[rootIndex + 1];
   if (!rootDirectory) {
-    throw new Error(
-      'Usage: node tools/check-pure-boundaries.ts [--root <path>]',
-    );
+    throw new Error('Usage: node tools/check-pure-boundaries.ts [--root <path>]');
   }
   checkPureBoundaries(rootDirectory)
     .then(({ checkedFiles }) => {
-      console.log(
-        `Pure-module boundary check passed: checked ${checkedFiles} file(s).`,
-      );
+      console.log(`Pure-module boundary check passed: checked ${checkedFiles} file(s).`);
     })
     .catch((error) => {
       console.error(error instanceof Error ? error.message : error);

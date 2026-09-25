@@ -7,9 +7,16 @@ import {
   NATIVE_ALPHA_MIN_OPACITY,
 } from '../../../../tools/asset-pixels.ts';
 
-const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const sha256 = (bytes: Buffer) => createHash('sha256').update(bytes).digest('hex');
 
-async function decode(bytes) {
+interface Raster {
+  data: Buffer;
+  width: number;
+  height: number;
+  hasAlpha: boolean;
+}
+
+async function decode(bytes: Buffer): Promise<Raster> {
   const metadata = await sharp(bytes, { failOn: 'warning' }).metadata();
   if (metadata.format !== 'png' || (metadata.pages ?? 1) !== 1 || metadata.depth !== 'uchar') {
     throw new Error('Use a static 8-bit PNG for native-alpha preparation.');
@@ -23,7 +30,7 @@ async function decode(bytes) {
   return { data, width: info.width, height: info.height, hasAlpha: metadata.hasAlpha === true };
 }
 
-function nearInterior(data, width, height, x, y) {
+function nearInterior(data: Buffer, width: number, height: number, x: number, y: number) {
   const radius = NATIVE_ALPHA_MAX_CONTOUR_DISTANCE;
   for (let row = Math.max(0, y - radius); row <= Math.min(height - 1, y + radius); row += 1) {
     for (
@@ -37,7 +44,7 @@ function nearInterior(data, width, height, x, y) {
   return false;
 }
 
-function inspectRaster({ data, width, height, hasAlpha }) {
+function inspectRaster({ data, width, height, hasAlpha }: Raster) {
   const topology = measureNativeAlphaTopology(data, width, height);
   let transparentPixels = 0;
   let nearOpaquePixels = 0;
@@ -58,7 +65,7 @@ function inspectRaster({ data, width, height, hasAlpha }) {
       : topology.contourPartialAlphaPixels / topology.partialAlphaPixels;
   const visiblePixels = width * height - transparentPixels;
   const nearOpaqueRatio = visiblePixels === 0 ? 0 : nearOpaquePixels / visiblePixels;
-  const issues = [];
+  const issues: string[] = [];
   if (!hasAlpha) issues.push('The source PNG must contain an alpha channel.');
   if (transparentPixels === 0) issues.push('The source must contain fully transparent pixels.');
   if (nearOpaquePixels === 0) issues.push('The source must contain near-opaque pixels.');
@@ -92,13 +99,13 @@ function inspectRaster({ data, width, height, hasAlpha }) {
 }
 
 // Inspection reports invalid candidate topology. It does not change the input.
-export async function inspectNativeAlpha(bytes) {
+export async function inspectNativeAlpha(bytes: Buffer) {
   return inspectRaster(await decode(bytes));
 }
 
 // This operation changes only detached alpha-1 values. It performs no matte
 // extraction, color correction, edge erosion, resizing, or file writes.
-export async function prepareNativeAlpha(bytes) {
+export async function prepareNativeAlpha(bytes: Buffer) {
   const raster = await decode(bytes);
   const before = inspectRaster(raster);
   if (!raster.hasAlpha) throw new Error(before.issues.join(' '));

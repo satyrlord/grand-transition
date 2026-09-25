@@ -79,19 +79,42 @@ Do not request alpha normalization or a flat version of the native colors.
 For a green-matte fallback, request flat green, and tell the model not to use green on the subject.
 Keep the camera and the canvas of the fallback aligned with the back scene.
 
-## Generate with the internal tool
+## Put each reference on the disk
 
-For the internal route, use the built-in tool mode of the installed `imagegen` skill.
-Use this route for small opaque drafts, or when the user tells you directly to use the internal tool.
-In the prompt, request the necessary dimensions.
+The repository helper reads references only from files on the disk.
+An image that is only in the conversation is not available to the API route.
+If the user gave a necessary reference only in the conversation, stop before the request.
+Tell the user to save the image in the applicable ignored folder.
+For a character identity image, use `tmp/character-study/references/<owner-id>/`.
+Continue after the file is on the disk.
+Then record its source, rights, hash, and purpose.
 
-Generate the image first.
-Then copy the initial output into the workspace.
-The internal tool can give different dimensions.
-Do a check of the saved file.
-Do not make a smaller result larger, and do not identify it as a master with accurate dimensions.
+## Generate a small opaque draft
 
-If its output is not sufficient, give the dimension difference or the alpha difference in the report.
+Use this procedure for small opaque drafts.
+Also use it when the user tells you directly to use the local image generation tool.
+Select the draft route from the image capability of the session.
+
+When your session has a local image generation tool, do these steps:
+
+1. Use the built-in tool mode of the installed `imagegen` skill, or the equivalent tool of your session.
+2. In the prompt, request the necessary dimensions.
+3. Generate the image.
+4. Copy the initial output into the task directory.
+5. Do a check of the saved file, because the tool can give different dimensions.
+
+When your session does not have a local image generation tool, do these steps:
+
+1. Read [API generation](api-generation.md).
+2. Select Flare dimensions for the draft that have 655,360 pixels or more.
+3. Run the helper with `--background opaque --exact-size` and `--dry-run`.
+4. After the dry run passes, send one request without `--dry-run`.
+5. Examine the saved candidate as the API module tells you.
+
+Do not make a smaller result larger.
+Do not identify a draft as a master with accurate dimensions.
+If the output is not sufficient, give the dimension difference or the alpha difference in the report.
 For an approved task that must have a master with accurate dimensions and has no route limit, use the Flare route from the start.
-When the user tells you to use only the internal tool, obey that instruction.
+When the user tells you to use only the local image generation tool, obey that instruction.
 Give the limits of the master that come from that instruction in the report.
+If your session does not have that tool, stop, and tell the user.

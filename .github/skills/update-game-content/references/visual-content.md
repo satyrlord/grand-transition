@@ -6,7 +6,8 @@ For raster generation or edits of playable characters, use
 For raster generation or edits of scenes, use
 [generate-scene-openai](../../generate-scene-openai/SKILL.md).
 The shared Flare application programming interface (API) gives transparent output, masters with accurate dimensions, and output larger than 1080p.
-The internal image tool gives small opaque drafts.
+A local image generation tool gives small opaque drafts.
+Without that tool, the Flare API gives them at supported Flare dimensions.
 An approved artwork edit includes the permitted target references and the standard bounded native-alpha preparation.
 Before you replace shipping assets, use the character integration module or the scene integration module.
 

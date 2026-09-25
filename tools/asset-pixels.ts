@@ -4,8 +4,9 @@ export const NATIVE_ALPHA_MAX_CONTOUR_DISTANCE = 4;
 export const NATIVE_ALPHA_MIN_CONTOUR_RATIO = 0.9;
 
 export function isVisibleChromaGreen(data: ArrayLike<number>, offset: number): boolean {
-  return data[offset + 3] > 16 && data[offset + 1] >= 180 &&
-    data[offset] <= 80 && data[offset + 2] <= 80;
+  return (
+    data[offset + 3] > 16 && data[offset + 1] >= 180 && data[offset] <= 80 && data[offset + 2] <= 80
+  );
 }
 
 export function hasNativeAlphaProvenance(png: Buffer): boolean {
@@ -21,14 +22,21 @@ export function hasNativeAlphaProvenance(png: Buffer): boolean {
     }
     offset += length + 12;
   }
-  return entries.get('Alpha Workflow') === 'native-alpha-v1' &&
-    entries.get('Alpha Source') === 'generated-alpha-v1';
+  return (
+    entries.get('Alpha Workflow') === 'native-alpha-v1' &&
+    entries.get('Alpha Source') === 'generated-alpha-v1'
+  );
 }
 
 export function measureNativeAlphaTopology(data: ArrayLike<number>, width: number, height: number) {
   const pixelCount = width * height;
-  if (!Number.isInteger(width) || !Number.isInteger(height) ||
-      width <= 0 || height <= 0 || data.length !== pixelCount * 4) {
+  if (
+    !Number.isInteger(width) ||
+    !Number.isInteger(height) ||
+    width <= 0 ||
+    height <= 0 ||
+    data.length !== pixelCount * 4
+  ) {
     throw new Error('Native-alpha topology requires a complete RGBA raster.');
   }
 
@@ -82,8 +90,11 @@ export function measureNativeAlphaTopology(data: ArrayLike<number>, width: numbe
   let contourPartialAlphaPixels = 0;
   for (let pixelIndex = 0; pixelIndex < pixelCount; pixelIndex += 1) {
     const alpha = data[pixelIndex * 4 + 3];
-    if (alpha > 0 && alpha < NATIVE_ALPHA_MIN_OPACITY &&
-        distances[pixelIndex] <= NATIVE_ALPHA_MAX_CONTOUR_DISTANCE) {
+    if (
+      alpha > 0 &&
+      alpha < NATIVE_ALPHA_MIN_OPACITY &&
+      distances[pixelIndex] <= NATIVE_ALPHA_MAX_CONTOUR_DISTANCE
+    ) {
       contourPartialAlphaPixels += 1;
     }
   }

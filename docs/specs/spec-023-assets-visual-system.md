@@ -1012,7 +1012,9 @@ manifests. The asset-build script makes all four packages again with Sharp.
 
 Use `gpt-image-2.5-flare` for transparent assets, masters that must have
 accurate dimensions, and requests above 2,073,600 pixels. Use the internal tool
-for small opaque drafts that do not have a contract for accurate dimensions.
+for small opaque drafts that do not have a contract for accurate dimensions
+when a local image generation tool is available. Otherwise use the repository
+helper with `--exact-size`.
 Resolve character masters to 2048 by 2048 before you select their route.
 Resolve scene dimensions from the scene pipeline. A route that the user selects
 explicitly has priority, but a result that is too small does not satisfy a

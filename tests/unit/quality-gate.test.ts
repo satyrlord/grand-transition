@@ -225,13 +225,13 @@ describe('quality-gate scaffold', () => {
     };
 
     expect(packageJson.scripts['assets:validate']).toContain(
-      '.github/skills/repair-scene-composition/scripts/green-chroma-key.mjs validate src/assets',
+      '.github/skills/repair-scene-composition/scripts/green-chroma-key.ts validate src/assets',
     );
     expect(packageJson.scripts['assets:validate']).toContain(
       'node tools/validate-asset-color.ts validate src/assets',
     );
     expect(packageJson.scripts['assets:convert-green']).toContain(
-      '.github/skills/repair-scene-composition/scripts/green-chroma-key.mjs convert-tree',
+      '.github/skills/repair-scene-composition/scripts/green-chroma-key.ts convert-tree',
     );
   });
 

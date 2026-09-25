@@ -1,6 +1,6 @@
 ---
 name: generate-character-openai
-description: Generate, examine, accept, and integrate one given Grand Transition character work unit. Use for office clip-art selection masters, five-pose packages, identity control, or 2048-square Flare output. Also use it for a safe continuation of a regeneration.
+description: Generate, examine, accept, and integrate one given Grand Transition character work unit. Use for office clip-art selection masters, five-pose packages, identity control, or 2048-square Flare output. Also use it for a safe continuation of a regeneration. Use it with or without a local image generation tool.
 ---
 
 # Generate character art with OpenAI
@@ -92,9 +92,29 @@ Use high quality and Portable Network Graphics (PNG) output of 2048 by 2048 pixe
 Use the repository helper for each Flare request.
 Do not make an undersized result larger.
 
-Use the built-in image generator only for a private identity design.
+A **local image generation tool** is a tool in your session that generates an image directly.
+An example is the built-in `image_gen` tool of the installed `imagegen` skill.
+Before the work starts, find if your session has a local image generation tool.
+Record the result in the cycle record.
+
+All the shipping masters use Flare.
+Only the private identity design can use a local image generation tool.
+Select the route of the private identity design with these rules:
+
+- When your session has a local image generation tool, use it.
+- When your session does not have a local image generation tool, use the Flare API through the repository helper.
+
+The selection procedure gives the two private design routes.
+An instruction to make the work unit gives approval for the applicable route.
+Each Flare request for a private design counts against the request limits of the cycle record.
+If the request limits do not permit that request, stop, and give the necessary limit in the report.
 Do not identify the private design as a shipping master.
 Do not integrate the private design.
+
+A session without a local image generation tool must have a tool that shows image files.
+Use that tool for each visual check.
+If your session cannot show images, do not accept a candidate.
+Give the candidate path to the product owner for review.
 
 Generate one candidate for each request.
 Use a new output directory for each request.

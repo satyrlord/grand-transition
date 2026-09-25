@@ -3,13 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium, type Page } from '@playwright/test';
 
-const supportedRasterExtensions = new Set([
-  '.avif',
-  '.jpeg',
-  '.jpg',
-  '.png',
-  '.webp',
-]);
+const supportedRasterExtensions = new Set(['.avif', '.jpeg', '.jpg', '.png', '.webp']);
 const mimeTypes: Readonly<Record<string, string>> = {
   '.avif': 'image/avif',
   '.jpeg': 'image/jpeg',
@@ -48,10 +42,7 @@ async function listRasterFiles(rootPath: string): Promise<string[]> {
       files.push(...(await listRasterFiles(entryPath)));
       continue;
     }
-    if (
-      entry.isFile() &&
-      supportedRasterExtensions.has(path.extname(entry.name).toLowerCase())
-    ) {
+    if (entry.isFile() && supportedRasterExtensions.has(path.extname(entry.name).toLowerCase())) {
       files.push(entryPath);
     }
   }
@@ -79,17 +70,9 @@ async function inspectImage(page: Page, filePath: string, policy: ColorPolicy) {
       if (!context) throw new Error('Canvas 2D context is unavailable.');
       context.drawImage(image, 0, 0);
 
-      const pixels = context.getImageData(
-        0,
-        0,
-        canvas.width,
-        canvas.height,
-      ).data;
+      const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
       const pixelCount = canvas.width * canvas.height;
-      const step = Math.max(
-        1,
-        Math.ceil(Math.sqrt(pixelCount / imagePolicy.sampleLimit)),
-      );
+      const step = Math.max(1, Math.ceil(Math.sqrt(pixelCount / imagePolicy.sampleLimit)));
       const neutralBiases: number[] = [];
       const nearNeutralBiases: number[] = [];
       const coolDominances: number[] = [];
@@ -99,33 +82,21 @@ async function inspectImage(page: Page, filePath: string, policy: ColorPolicy) {
         if (values.length === 0) return null;
         const sorted = [...values].sort((left, right) => left - right);
         const middle = Math.floor(sorted.length / 2);
-        return sorted.length % 2 === 0
-          ? (sorted[middle - 1] + sorted[middle]) / 2
-          : sorted[middle];
+        return sorted.length % 2 === 0 ? (sorted[middle - 1] + sorted[middle]) / 2 : sorted[middle];
       };
       const srgbToLinear = (channel: number) => {
         const normalized = channel / 255;
-        return normalized <= 0.04045
-          ? normalized / 12.92
-          : ((normalized + 0.055) / 1.055) ** 2.4;
+        return normalized <= 0.04045 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
       };
       const labB = (red: number, green: number, blue: number) => {
         const linearRed = srgbToLinear(red);
         const linearGreen = srgbToLinear(green);
         const linearBlue = srgbToLinear(blue);
-        const y =
-          linearRed * 0.2126729 +
-          linearGreen * 0.7151522 +
-          linearBlue * 0.072175;
+        const y = linearRed * 0.2126729 + linearGreen * 0.7151522 + linearBlue * 0.072175;
         const z =
-          (linearRed * 0.0193339 +
-            linearGreen * 0.119192 +
-            linearBlue * 0.9503041) /
-          1.08883;
+          (linearRed * 0.0193339 + linearGreen * 0.119192 + linearBlue * 0.9503041) / 1.08883;
         const labPivot = (value: number) =>
-          value > 0.008856
-            ? Math.cbrt(value)
-            : 7.787037 * value + 16 / 116;
+          value > 0.008856 ? Math.cbrt(value) : 7.787037 * value + 16 / 116;
         const fy = labPivot(y);
         const fz = labPivot(z);
         return 200 * (fy - fz);
@@ -189,13 +160,9 @@ async function inspectImage(page: Page, filePath: string, policy: ColorPolicy) {
         opaqueSamples,
         sampledPixels,
         warmNearNeutralFraction:
-          nearNeutralBiases.length === 0
-            ? null
-            : warmNearNeutralCount / nearNeutralBiases.length,
+          nearNeutralBiases.length === 0 ? null : warmNearNeutralCount / nearNeutralBiases.length,
         warmNeutralFraction:
-          neutralBiases.length === 0
-            ? null
-            : warmNeutralCount / neutralBiases.length,
+          neutralBiases.length === 0 ? null : warmNeutralCount / neutralBiases.length,
         width: canvas.width,
       };
     },
@@ -227,23 +194,21 @@ function validateMetrics(filePath: string, metrics: ColorMetrics, policy: ColorP
   const nearNeutralFraction = metrics.warmNearNeutralFraction;
   const neutralMetricsIndicateWarmCast =
     metrics.neutralSamples >= policy.minimumNeutralSamples &&
-    medianBias !== null && medianBias > policy.maximumMedianYellowBias;
+    medianBias !== null &&
+    medianBias > policy.maximumMedianYellowBias;
   const neutralFractionIndicatesWarmCast =
-    neutralFraction !== null &&
-    neutralFraction > policy.maximumNeutralYellowFraction;
+    neutralFraction !== null && neutralFraction > policy.maximumNeutralYellowFraction;
   const nearNeutralMetricsIndicateWarmCast =
     metrics.neutralSamples < policy.minimumNeutralSamples &&
     metrics.nearNeutralSamples >= policy.minimumNeutralSamples &&
     nearNeutralMedianBias !== null &&
     nearNeutralMedianBias > policy.maximumMedianYellowBias;
   const nearNeutralFractionIndicatesWarmCast =
-    nearNeutralFraction !== null &&
-    nearNeutralFraction > policy.maximumNeutralYellowFraction;
+    nearNeutralFraction !== null && nearNeutralFraction > policy.maximumNeutralYellowFraction;
 
   if (
     (neutralMetricsIndicateWarmCast && neutralFractionIndicatesWarmCast) ||
-    (nearNeutralMetricsIndicateWarmCast &&
-      nearNeutralFractionIndicatesWarmCast)
+    (nearNeutralMetricsIndicateWarmCast && nearNeutralFractionIndicatesWarmCast)
   ) {
     throw new Error(
       `${filePath}: rejected global yellow color cast; ` +
@@ -273,10 +238,9 @@ async function validate(rootPath: string): Promise<void> {
         metrics = await inspectImage(page, filePath, policy);
       } catch (error) {
         const reason = error instanceof Error ? ` ${error.message}` : '';
-        throw new Error(
-          `${filePath}: could not decode the raster for color validation.${reason}`,
-          { cause: error },
-        );
+        throw new Error(`${filePath}: could not decode the raster for color validation.${reason}`, {
+          cause: error,
+        });
       }
       validateMetrics(filePath, metrics, policy);
       process.stdout.write(
@@ -291,9 +255,7 @@ async function validate(rootPath: string): Promise<void> {
   } finally {
     await browser.close();
   }
-  process.stdout.write(
-    `Asset color validation passed: ${files.length} raster(s).\n`,
-  );
+  process.stdout.write(`Asset color validation passed: ${files.length} raster(s).\n`);
 }
 
 const [command, rootArgument] = process.argv.slice(2);
@@ -303,8 +265,6 @@ if (command === 'validate' && (!rootArgument || process.argv.length === 4)) {
     process.exitCode = 1;
   });
 } else {
-  process.stderr.write(
-    'Usage: validate-asset-color.ts validate [asset-root]\n',
-  );
+  process.stderr.write('Usage: validate-asset-color.ts validate [asset-root]\n');
   process.exitCode = 2;
 }

@@ -34,7 +34,7 @@ for (let index = 0; index < 256; index += 1) {
   crcTable[index] = value >>> 0;
 }
 
-function crc32(buffer) {
+function crc32(buffer: Buffer) {
   let crc = 0xffffffff;
   for (const byte of buffer) {
     crc = crcTable[(crc ^ byte) & 0xff] ^ (crc >>> 8);
@@ -42,7 +42,7 @@ function crc32(buffer) {
   return (crc ^ 0xffffffff) >>> 0;
 }
 
-function makeChunk(type, data) {
+function makeChunk(type: string, data: Buffer) {
   const typeBuffer = Buffer.from(type, 'ascii');
   const length = Buffer.alloc(4);
   length.writeUInt32BE(data.length);
@@ -51,7 +51,7 @@ function makeChunk(type, data) {
   return Buffer.concat([length, typeBuffer, data, crc]);
 }
 
-function makeInternationalText(keyword, text) {
+function makeInternationalText(keyword: string, text: string) {
   return makeChunk(
     'iTXt',
     Buffer.concat([
@@ -62,8 +62,8 @@ function makeInternationalText(keyword, text) {
   );
 }
 
-function internationalTextEntries(png) {
-  const entries = new Map();
+function internationalTextEntries(png: Buffer) {
+  const entries = new Map<string, string>();
   let offset = 8;
   while (offset < png.length) {
     const length = png.readUInt32BE(offset);
@@ -80,15 +80,15 @@ function internationalTextEntries(png) {
 }
 
 async function stampMetadata(
-  filePath,
-  extraEntries = new Map(),
+  filePath: string,
+  extraEntries = new Map<string, string>(),
   includeAlphaWorkflow = true,
-  removedKeys = new Set(),
+  removedKeys = new Set<string>(),
 ) {
   const input = await readFile(filePath);
-  const entries = new Map([
+  const entries = new Map<string, string>([
     ...(includeAlphaWorkflow
-      ? [
+      ? ([
           ['Alpha Workflow', workflowId],
           ['Chroma Key', chromaKey],
           [
@@ -96,7 +96,7 @@ async function stampMetadata(
             'Transparent pixels passed through a lossless green-matte staging check. The shipping raster contains genuine alpha and no key-green residue.',
           ],
           ['Alpha Source', 'adopted-alpha-v1'],
-        ]
+        ] as [string, string][])
       : []),
     ...extraEntries,
   ]);
@@ -133,17 +133,17 @@ async function stampMetadata(
   await writeFile(filePath, Buffer.concat(chunks));
 }
 
-function generationProvenanceEntries(png) {
+function generationProvenanceEntries(png: Buffer) {
   const metadata = internationalTextEntries(png);
   return new Map(
-    ['Generation Prompt', 'Generation Source'].flatMap((key) => {
+    ['Generation Prompt', 'Generation Source'].flatMap((key): [string, string][] => {
       const value = metadata.get(key)?.trim();
       return value ? [[key, value]] : [];
     }),
   );
 }
 
-function assertGenerationProvenance(filePath, metadata) {
+function assertGenerationProvenance(filePath: string, metadata: Map<string, string>) {
   if (!metadata.get('Generation Prompt')?.trim() && !metadata.get('Generation Source')?.trim()) {
     throw new Error(
       `${filePath}: missing embedded Generation Prompt or Generation Source metadata.`,
@@ -151,13 +151,13 @@ function assertGenerationProvenance(filePath, metadata) {
   }
 }
 
-function assertGenerationSource(filePath, metadata) {
+function assertGenerationSource(filePath: string, metadata: Map<string, string>) {
   if (!metadata.get('Generation Source')?.trim()) {
     throw new Error(`${filePath}: missing embedded Generation Source metadata.`);
   }
 }
 
-async function readAndValidatePrompt(promptFile) {
+async function readAndValidatePrompt(promptFile: string) {
   const prompt = await readFile(promptFile, 'utf8');
   if (!prompt.trim()) {
     throw new Error(`${promptFile}: generation prompt is empty.`);
@@ -166,7 +166,7 @@ async function readAndValidatePrompt(promptFile) {
   return prompt;
 }
 
-async function inspectImages(filePaths, forceNativeAlpha = false) {
+async function inspectImages(filePaths: string[], forceNativeAlpha = false) {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
   const results = [];
@@ -191,7 +191,7 @@ async function inspectImages(filePaths, forceNativeAlpha = false) {
           const canvas = document.createElement('canvas');
           canvas.width = image.naturalWidth;
           canvas.height = image.naturalHeight;
-          const context = canvas.getContext('2d', { willReadFrequently: true });
+          const context = canvas.getContext('2d', { willReadFrequently: true })!;
           context.drawImage(image, 0, 0);
           const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
           let chromaGreenPixels = 0;
@@ -313,8 +313,8 @@ async function inspectImages(filePaths, forceNativeAlpha = false) {
   return results;
 }
 
-async function listPngFiles(rootPath) {
-  const files = [];
+async function listPngFiles(rootPath: string): Promise<string[]> {
+  const files: string[] = [];
   for (const entry of await readdir(rootPath, { withFileTypes: true })) {
     const entryPath = path.join(rootPath, entry.name);
     if (entry.isDirectory()) files.push(...(await listPngFiles(entryPath)));
@@ -325,7 +325,9 @@ async function listPngFiles(rootPath) {
   return files.sort((left, right) => left.localeCompare(right, 'en'));
 }
 
-function assertTransparentAsset(facts, nativeAlpha = false) {
+type ImageFacts = Awaited<ReturnType<typeof inspectImages>>[number];
+
+function assertTransparentAsset(facts: ImageFacts, nativeAlpha = false) {
   const interior = nativeAlpha ? facts.nearOpaquePixels : facts.opaquePixels;
   if (facts.transparentPixels === 0 || interior === 0) {
     throw new Error(`${facts.filePath}: expected transparent and opaque pixels.`);
@@ -359,7 +361,7 @@ function assertTransparentAsset(facts, nativeAlpha = false) {
   }
 }
 
-async function adopt(filePath, promptFile, nativeAlpha = false) {
+async function adopt(filePath: string, promptFile: string | undefined, nativeAlpha = false) {
   const [facts] = await inspectImages([filePath], nativeAlpha);
   assertTransparentAsset(facts, nativeAlpha);
   const extraEntries = generationProvenanceEntries(await readFile(filePath));
@@ -387,7 +389,7 @@ async function adopt(filePath, promptFile, nativeAlpha = false) {
   );
 }
 
-async function stampProvenance(filePath, promptFile, sourceText) {
+async function stampProvenance(filePath: string, promptFile?: string, sourceText?: string) {
   const input = await readFile(filePath);
   const entries = generationProvenanceEntries(input);
   if (promptFile) {
@@ -405,7 +407,7 @@ async function stampProvenance(filePath, promptFile, sourceText) {
   process.stdout.write(`Recorded generation provenance for ${filePath}.\n`);
 }
 
-function assertSoftKeyAsset(facts) {
+function assertSoftKeyAsset(facts: ImageFacts) {
   if (facts.partialAlphaPixels === 0) {
     throw new Error(
       `${facts.filePath}: soft green-key conversion produced no partial-alpha edge pixels.`,
@@ -413,7 +415,7 @@ function assertSoftKeyAsset(facts) {
   }
 }
 
-async function convert(inputPath, outputPath, promptFile) {
+async function convert(inputPath: string, outputPath: string, promptFile?: string) {
   const input = await readFile(inputPath);
   const provenanceEntries = generationProvenanceEntries(input);
   if (promptFile) {
@@ -441,7 +443,7 @@ async function convert(inputPath, outputPath, promptFile) {
       const canvas = document.createElement('canvas');
       canvas.width = image.naturalWidth;
       canvas.height = image.naturalHeight;
-      const context = canvas.getContext('2d', { willReadFrequently: true });
+      const context = canvas.getContext('2d', { willReadFrequently: true })!;
       context.drawImage(image, 0, 0);
       const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
       const pixels = imageData.data;
@@ -452,9 +454,9 @@ async function convert(inputPath, outputPath, promptFile) {
       const connectedBackground = new Uint8Array(pixelCount);
       const backgroundQueue = new Int32Array(pixelCount);
 
-      const clampUnit = (value) => Math.max(0, Math.min(1, value));
-      const pixelOffset = (x, y) => (y * canvas.width + x) * 4;
-      const isBorderBackground = (pixelIndex) => {
+      const clampUnit = (value: number) => Math.max(0, Math.min(1, value));
+      const pixelOffset = (x: number, y: number) => (y * canvas.width + x) * 4;
+      const isBorderBackground = (pixelIndex: number) => {
         const offset = pixelIndex * 4;
         return (
           source[offset + 3] > 0 &&
@@ -464,7 +466,7 @@ async function convert(inputPath, outputPath, promptFile) {
       };
       let queueStart = 0;
       let queueEnd = 0;
-      const enqueueBackground = (pixelIndex) => {
+      const enqueueBackground = (pixelIndex: number) => {
         if (connectedBackground[pixelIndex] !== 0 || !isBorderBackground(pixelIndex)) {
           return;
         }
@@ -541,7 +543,7 @@ async function convert(inputPath, outputPath, promptFile) {
           ) * sourceAlpha;
       }
 
-      const nearestForeground = (x, y) => {
+      const nearestForeground = (x: number, y: number): number[] | null => {
         for (let radius = 1; radius <= searchRadius; radius += 1) {
           let red = 0;
           let green = 0;
@@ -654,8 +656,8 @@ async function convert(inputPath, outputPath, promptFile) {
             continue;
           }
 
-          let foreground;
-          let reconstructed;
+          let foreground: number[] | null | undefined;
+          let reconstructed: number[];
           if (classifications[pixelIndex] === 0) {
             foreground = nearestForeground(x, y);
             reconstructed = foreground ?? [0, 0, 0];
@@ -704,7 +706,7 @@ async function convert(inputPath, outputPath, promptFile) {
   process.stdout.write(`Converted ${inputPath} to ${outputPath} with soft alpha.\n`);
 }
 
-async function convertTree(inputRoot, outputRoot, promptRoot) {
+async function convertTree(inputRoot: string, outputRoot: string, promptRoot?: string) {
   if (path.resolve(inputRoot) === path.resolve(outputRoot)) {
     throw new Error('Green source and output roots must be different.');
   }
@@ -731,7 +733,7 @@ async function convertTree(inputRoot, outputRoot, promptRoot) {
   process.stdout.write(`Converted green source tree: ${inputFiles.length} asset(s).\n`);
 }
 
-async function validate(rootPath) {
+async function validate(rootPath: string) {
   const pngFiles = await listPngFiles(rootPath);
   const facts = await inspectImages(pngFiles);
   let transparentAssetCount = 0;
@@ -798,20 +800,20 @@ async function validate(rootPath) {
 
 const [command, ...arguments_] = process.argv.slice(2);
 const promptFileIndex = arguments_.indexOf('--prompt-file');
-let promptFile;
+let promptFile: string | undefined;
 if (promptFileIndex >= 0) {
   promptFile = path.resolve(arguments_[promptFileIndex + 1]);
   arguments_.splice(promptFileIndex, 2);
   await stat(promptFile);
 }
 const sourceIndex = arguments_.indexOf('--source');
-let sourceText;
+let sourceText: string | undefined;
 if (sourceIndex >= 0) {
   sourceText = arguments_[sourceIndex + 1];
   arguments_.splice(sourceIndex, 2);
 }
 const promptRootIndex = arguments_.indexOf('--prompt-root');
-let promptRoot;
+let promptRoot: string | undefined;
 if (promptRootIndex >= 0) {
   promptRoot = path.resolve(arguments_[promptRootIndex + 1]);
   arguments_.splice(promptRootIndex, 2);
@@ -830,7 +832,7 @@ if (command === 'provenance' && arguments_.length === 1 && (promptFile || source
   await validate(path.resolve(arguments_[0] ?? 'src/assets'));
 } else {
   process.stderr.write(
-    'Usage: green-chroma-key.mjs provenance <png> (--prompt-file <txt> | --source <text>) | adopt <png> [--prompt-file <txt>] | adopt-native <png> [--prompt-file <txt>] | convert <green-png> <output-png> [--prompt-file <txt>] | convert-tree <green-root> <output-root> [--prompt-root <prompt-root>] | validate [asset-root]\n',
+    'Usage: green-chroma-key.ts provenance <png> (--prompt-file <txt> | --source <text>) | adopt <png> [--prompt-file <txt>] | adopt-native <png> [--prompt-file <txt>] | convert <green-png> <output-png> [--prompt-file <txt>] | convert-tree <green-root> <output-root> [--prompt-root <prompt-root>] | validate [asset-root]\n',
   );
   process.exitCode = 2;
 }
