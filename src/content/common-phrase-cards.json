@@ -5092,7 +5092,8 @@
     "text": "a tender written on the winning envelope",
     "tags": [
       "procurement",
-      "transparency"
+      "transparency",
+      "corruption"
     ],
     "scoreGroups": {
       "substance": [
@@ -5272,7 +5273,8 @@
     "text": "a commercial break with a foreign policy",
     "tags": [
       "ratings",
-      "credibility"
+      "credibility",
+      "commercialism"
     ],
     "scoreGroups": {
       "substance": [
@@ -6103,7 +6105,8 @@
     "text": "your charitable donation with a naming-rights clause",
     "tags": [
       "influence",
-      "wealth"
+      "wealth",
+      "commercialism"
     ],
     "scoreGroups": {
       "substance": [
@@ -6157,7 +6160,8 @@
     "text": "your independent adviser on a sponsor's payroll",
     "tags": [
       "influence",
-      "wealth"
+      "wealth",
+      "commercialism"
     ],
     "scoreGroups": {
       "substance": [
@@ -9002,7 +9006,8 @@
     "role": "ending",
     "text": "and the headline is suing the story.",
     "tags": [
-      "credibility"
+      "credibility",
+      "context"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9258,7 +9263,8 @@
     "role": "ending",
     "text": "and the nuance died in the forward.",
     "tags": [
-      "nuance"
+      "nuance",
+      "context"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -12313,7 +12319,8 @@
     "text": "a podcast transcript filed as laboratory evidence",
     "tags": [
       "evidence",
-      "authenticity"
+      "authenticity",
+      "firsthand-knowledge"
     ],
     "scoreGroups": {
       "substance": [
@@ -12375,7 +12382,8 @@
     "text": "the viral clip with the question removed",
     "tags": [
       "evidence",
-      "authenticity"
+      "authenticity",
+      "context"
     ],
     "scoreGroups": {
       "substance": [
@@ -12577,7 +12585,8 @@
     "tenseFamily": "common-verb-052",
     "tags": [
       "evidence",
-      "authenticity"
+      "authenticity",
+      "firsthand-knowledge"
     ],
     "scorePreferences": {
       "substance": [
@@ -12616,7 +12625,8 @@
     "tenseFamily": "common-verb-052",
     "tags": [
       "evidence",
-      "authenticity"
+      "authenticity",
+      "firsthand-knowledge"
     ],
     "scorePreferences": {
       "substance": [
@@ -12655,7 +12665,8 @@
     "tenseFamily": "common-verb-052",
     "tags": [
       "evidence",
-      "authenticity"
+      "authenticity",
+      "firsthand-knowledge"
     ],
     "scorePreferences": {
       "substance": [
@@ -12795,7 +12806,8 @@
     "text": "after cutting the question from the clip",
     "tags": [
       "evidence",
-      "authenticity"
+      "authenticity",
+      "context"
     ],
     "rarity": "uncommon",
     "sceneIds": [
@@ -13256,7 +13268,8 @@
     "role": "noun",
     "text": "a campaign manifesto between two detergent ads",
     "tags": [
-      "media"
+      "media",
+      "commercialism"
     ],
     "scoreGroups": {
       "substance": [
@@ -13698,7 +13711,8 @@
     "role": "noun",
     "text": "a tender tailored for the house firm",
     "tags": [
-      "procurement"
+      "procurement",
+      "corruption"
     ],
     "scoreGroups": {
       "substance": [
@@ -13783,7 +13797,8 @@
     "role": "noun",
     "text": "a public purchase delivered to the director's villa",
     "tags": [
-      "procurement"
+      "procurement",
+      "luxury"
     ],
     "scoreGroups": {
       "substance": [
@@ -14633,7 +14648,8 @@
     "role": "noun",
     "text": "a context in a forwarded message",
     "tags": [
-      "evidence"
+      "evidence",
+      "context"
     ],
     "scoreGroups": {
       "substance": [
@@ -14973,7 +14989,8 @@
     "role": "noun",
     "text": "a marble with a travel allowance",
     "tags": [
-      "credibility"
+      "credibility",
+      "luxury"
     ],
     "scoreGroups": {
       "substance": [
@@ -15058,7 +15075,8 @@
     "role": "noun",
     "text": "a velvet-rope public service",
     "tags": [
-      "credibility"
+      "credibility",
+      "elitism"
     ],
     "scoreGroups": {
       "substance": [
@@ -15075,7 +15093,8 @@
     "role": "noun",
     "text": "a luxury minister with a receipt",
     "tags": [
-      "credibility"
+      "credibility",
+      "luxury"
     ],
     "scoreGroups": {
       "substance": [
@@ -15347,7 +15366,8 @@
     "role": "noun",
     "text": "a headline suing the story",
     "tags": [
-      "credibility"
+      "credibility",
+      "context"
     ],
     "scoreGroups": {
       "substance": [
@@ -16581,7 +16601,7 @@
     "pluralText": "were an economy that boomed on paper",
     "tags": [
       "delivery",
-      "consistency"
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -16606,7 +16626,7 @@
     "pluralText": "are an economy that boomed on paper",
     "tags": [
       "delivery",
-      "consistency"
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -16631,7 +16651,7 @@
     "pluralText": "will be an economy that boomed on paper",
     "tags": [
       "delivery",
-      "consistency"
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -17643,7 +17663,8 @@
     "text": "advertised the hidden tape for",
     "tags": [
       "ratings",
-      "evidence"
+      "evidence",
+      "commercialism"
     ],
     "scorePreferences": {
       "substance": [
@@ -17673,7 +17694,8 @@
     "secondPersonText": "advertise the hidden tape for",
     "tags": [
       "ratings",
-      "evidence"
+      "evidence",
+      "commercialism"
     ],
     "scorePreferences": {
       "substance": [
@@ -17699,7 +17721,8 @@
     "text": "will advertise the hidden tape for",
     "tags": [
       "ratings",
-      "evidence"
+      "evidence",
+      "commercialism"
     ],
     "scorePreferences": {
       "substance": [

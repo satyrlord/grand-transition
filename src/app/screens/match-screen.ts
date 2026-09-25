@@ -12,7 +12,7 @@ import {
 } from 'lit';
 import type { MatchCommand } from '../../engine/match-lifecycle';
 import type { RoundPresentationFrame } from '../round-presentation';
-import { deepFreeze } from '../deep-freeze';
+import { deepFreeze } from '../../engine/plain-values';
 import { interfaceWeaknessName } from '../interface-names';
 import type {
   MatchCardView,
@@ -1315,13 +1315,17 @@ export class GrandTransitionMatch extends LitElement {
       actorId: this.snapshot.activePlayerId,
       payload,
     }) as MatchCommand;
-    this.dispatchEvent(
+    const accepted = this.dispatchEvent(
       new CustomEvent(matchCommandEventName, {
         bubbles: true,
+        cancelable: true,
         composed: true,
         detail: command,
       }),
     );
+    // A rejected command brings no new snapshot, so unlock the controls and
+    // the timer expiry here.
+    if (!accepted) this.commandPending = false;
   }
 
   private syncTimer(): void {

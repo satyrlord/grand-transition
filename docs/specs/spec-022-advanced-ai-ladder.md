@@ -58,6 +58,10 @@ It uses the Party weights, and it adds continuation-break 1.2 and charge preserv
 It also adds a wrong-selection utility that is the value of the removed phrase minus its self-damage.
 It cannot select an incorrect phrase that causes its own knockout when a correct action without a knockout is available.
 
+A hand refresh has no draft features of its own.
+The two advanced policies add the Local Radio expected utility of the replacement hand to the utility of the refresh.
+A refresh that is not eligible under the Milestone 021 threshold stays unavailable.
+
 The aggression, denial, and risk traits of the character change only their related nonlethal weights by `1 + (trait - 0.5) * 0.4`.
 This gives a multiplier from 0.8 through 1.2.
 Personality cannot change the lethal, lethal-block, dead-end, or self-knockout sequence.
@@ -91,11 +95,15 @@ One or more playable scenes must stay.
 A win advances one rung.
 A loss keeps the same rung and the same opponent.
 When the player uses Abandon on a match, the game keeps the rung and records no result.
+Each ladder match start adds one unfinished attempt to the progress, and a win or a loss clears the count.
+The match seed uses the ladder seed, the rung, the loss count, and the unfinished attempts when there are any.
+Thus an abandoned or reloaded match does not repeat its deal and its AI choices, and the first attempt at a rung keeps its seed.
 The ladder is completed after the ninth win.
 
 Progress version 1 stores the selected character ID, the seed, and nine opponent IDs.
 It also stores the scene sequence, which is not empty and has a variable length.
 It also stores the rung index from 0 through 9, the win count, the loss count, and the `completed` value.
+The optional `unfinishedAttempts` field is a positive integer, and progress without it has zero unfinished attempts.
 Reset removes that progress after a confirmation.
 Corrupt progress uses the Milestone 020 fallback, and it does not make up an advancement.
 

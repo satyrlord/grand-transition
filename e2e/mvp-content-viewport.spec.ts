@@ -4,7 +4,7 @@ import characterManifest from '../src/assets/characters/character-manifest.json'
 import { loadGameContent } from '../tools/load-game-content';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
-const { sampleContent: catalog } = loadGameContent();
+const { gameCatalog: catalog } = loadGameContent();
 
 const supportedViewports = [
   { width: 1024, height: 720 },

@@ -13,10 +13,10 @@ import { fullQualityGateRequested } from '../tools/quality-gate-mode';
 // The budget covers that fixed workload when a parallel worker shares the CPU.
 test.setTimeout(600_000);
 
-const { englishGameLocale, sampleContent } = loadGameContent();
+const { englishGameLocale, gameCatalog } = loadGameContent();
 const matchContext: MatchEngineContext = {
-  phrases: sampleContent.phrases,
-  characters: sampleContent.characters,
+  phrases: gameCatalog.phrases,
+  characters: gameCatalog.characters,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
@@ -280,7 +280,8 @@ async function activateDecision(
     return;
   }
   if (command.type === 'select-comeback') {
-    await page.getByRole('button', { name: 'Comeback', exact: true }).click();
+    // The accessible name carries the tier and charge after the prefix.
+    await page.getByRole('button', { name: /^Comeback:/u }).click();
     return;
   }
   await page.getByRole('button', { name: 'End', exact: true }).click();

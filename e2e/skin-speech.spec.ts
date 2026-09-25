@@ -7,7 +7,7 @@ import { loadGameContent } from '../tools/load-game-content';
 import { defaultSettings } from '../src/persistence/codecs/settings-codec';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow';
 
-const { sampleContent, englishGameLocale } = loadGameContent();
+const { gameCatalog, englishGameLocale } = loadGameContent();
 type Choice = { character: string; skin: number; neural: string; microsoft?: 'David' | 'Mark' | 'Zira' };
 type Evidence = { native: Array<{ text: string; name: string; local: boolean;
   submitted: number; started?: number; ended?: number; boundaries: Array<{ charIndex: number; at: number }> }>;
@@ -63,7 +63,7 @@ async function configure(page: Page, choices: readonly Choice[], phraseIds: read
   const players = { ...state.draft!.playerStates };
   for (const id of state.playerOrder) {
     const player = players[id]!;
-    const phrases = phraseIds.map((phraseId) => sampleContent.phrases.find((phrase) => phrase.id === phraseId)!);
+    const phrases = phraseIds.map((phraseId) => gameCatalog.phrases.find((phrase) => phrase.id === phraseId)!);
     const steps = phrases.map((phrase) => ({ kind: 'phrase' as const, phrase: prepareEnglishGrammarPhrase(phrase, englishGameLocale) }));
     const analyzed = englishGrammarAdapter.analyze({ steps, subjectNumber: player.subjectNumber, objectNumber: player.objectNumber });
     if (!analyzed.accepted) throw new Error('The public speech fixture is not grammatical.');

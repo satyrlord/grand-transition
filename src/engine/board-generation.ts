@@ -1,5 +1,12 @@
 import type { Phrase } from '../content/schemas';
 import { seededRandomSource, type RandomSource } from './random-source';
+import {
+  isClauseConnector,
+  pickWeighted,
+  preferredConnectors,
+  rarityWeight,
+  type WeightedPhrase,
+} from './weighted-selection';
 
 export const boardSlotCount = 9;
 
@@ -56,11 +63,6 @@ interface RandomCursor {
   seed: number;
 }
 
-interface WeightedPhrase {
-  readonly phrase: Phrase;
-  readonly weight: number;
-}
-
 export function generateBoard(
   request: BoardGenerationRequest,
   randomSource: RandomSource = seededRandomSource,
@@ -76,11 +78,13 @@ export function generateBoard(
     ]),
   );
 
+  // Every role has an entry, so the checks below guarantee each fixed slot.
+  const roleCount = (role: Phrase['role']) => byRole.get(role)!.length;
   if (
-    (byRole.get('noun')?.length ?? 0) < 3 ||
-    (byRole.get('verb')?.length ?? 0) < 3 ||
-    (byRole.get('predicate')?.length ?? 0) < 1 ||
-    (includeContinuation && (byRole.get('continuation')?.length ?? 0) !== 1)
+    roleCount('noun') < 3 ||
+    roleCount('verb') < 3 ||
+    roleCount('predicate') < 1 ||
+    (includeContinuation && roleCount('continuation') !== 1)
   ) {
     return impossiblePool(request, byRole);
   }
@@ -127,24 +131,12 @@ export function generateBoard(
   const connectorRoll = nextRandom(cursor, randomSource);
   const forcedConnectors = byRole
     .get('conjunction')!
-    .filter((candidate) =>
-      ['and', 'but', 'yet'].includes(candidate.phrase.connectorKind ?? ''),
-    );
-  const connectorCount =
-    forcedConnectors.length === 0 ? 0 : connectorRoll < 0.1 ? 0 : 1;
-  for (let index = 0; index < connectorCount; index += 1) {
-    const connectorRoll = nextRandom(cursor, randomSource);
-    const preferredKinds =
-      connectorRoll < 0.25 ? new Set(['but', 'yet']) : new Set(['and']);
-    const selectedPhraseIds = new Set(pending.map((slot) => slot.phraseId));
-    const availableConnectors = forcedConnectors.filter(
-      (candidate) => !selectedPhraseIds.has(candidate.phrase.id),
-    );
-    const preferred = availableConnectors.filter((candidate) =>
-      preferredKinds.has(candidate.phrase.connectorKind ?? ''),
-    );
-    const pool = preferred.length > 0 ? preferred : availableConnectors;
-    if (pool.length === 0) return impossiblePool(request, byRole);
+    .filter(isClauseConnector);
+  // The fixed slots hold no conjunction, so every clause connector is still
+  // available for the one forced connector slot.
+  if (forcedConnectors.length > 0 && connectorRoll >= 0.1) {
+    const kindRoll = nextRandom(cursor, randomSource);
+    const pool = preferredConnectors(forcedConnectors, kindRoll);
     const connector = takeWeighted(pool, cursor, randomSource).phrase;
     pending.push({
       phraseId: connector.id,
@@ -193,12 +185,8 @@ function collectCandidates(
     ) {
       return [];
     }
-    return [{ phrase, weight: drawCount(phrase) }];
+    return [{ phrase, weight: rarityWeight(phrase) }];
   });
-}
-
-function drawCount(phrase: Phrase): number {
-  return phrase.rarity === 'common' ? 4 : phrase.rarity === 'uncommon' ? 2 : 1;
 }
 
 function addRandomDistinct(
@@ -211,7 +199,6 @@ function addRandomDistinct(
 ): void {
   let remaining = [...candidates];
   for (let index = 0; index < count; index += 1) {
-    if (remaining.length === 0) return;
     const selected = takeWeighted(remaining, cursor, randomSource);
     const phrase = selected.phrase;
     remaining = remaining.filter(
@@ -226,16 +213,7 @@ function takeWeighted(
   cursor: RandomCursor,
   randomSource: RandomSource,
 ): WeightedPhrase {
-  const totalWeight = candidates.reduce(
-    (total, candidate) => total + candidate.weight,
-    0,
-  );
-  let threshold = nextRandom(cursor, randomSource) * totalWeight;
-  for (const candidate of candidates) {
-    threshold -= candidate.weight;
-    if (threshold < 0) return candidate;
-  }
-  return candidates.at(-1)!;
+  return pickWeighted(candidates, nextRandom(cursor, randomSource));
 }
 
 function shuffle<T>(
@@ -276,7 +254,7 @@ function impossiblePool(
         requiredSlots: boardSlotCount,
         availableByRole: phraseRoles.map((role) => ({
           role,
-          count: candidatesByRole.get(role)?.length ?? 0,
+          count: candidatesByRole.get(role)!.length,
         })),
       },
     },

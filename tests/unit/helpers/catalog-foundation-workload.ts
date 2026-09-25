@@ -9,14 +9,14 @@
 
 import { expect } from 'vitest';
 import { basicScoringBalance } from '../../../src/content/basic-scoring-balance';
-import { englishGameLocale, sampleContent } from '../../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../../src/game-content';
 import { snapshotDraftStateForPlayer } from '../../../src/engine/draft-actions';
 import {
   createSimulationSetup,
   listLocalRadioCallerSimulationOptions,
   simulateMatch,
   type SimulationOptionProvider,
-} from '../../../src/engine/simulation';
+} from '../../../src/simulation/simulation';
 import type { ReplayContext } from '../../../src/persistence/codecs/replay-codec';
 
 export type CatalogFoundationCharacter = Readonly<{
@@ -25,12 +25,12 @@ export type CatalogFoundationCharacter = Readonly<{
 }>;
 
 const context: ReplayContext = {
-  catalog: sampleContent,
+  catalog: gameCatalog,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
 const workloadSeed = 26_000;
-const setupsPerCharacter = sampleContent.characters.length * sampleContent.scenes.length;
+const setupsPerCharacter = gameCatalog.characters.length * gameCatalog.scenes.length;
 
 // Inspect both player projections before every command. The simulation also
 // checks accepted actions, round uniqueness, bounded completion, exact replay,
@@ -57,14 +57,14 @@ const verifiedOptions: SimulationOptionProvider = (state, engineContext) => {
 };
 
 export const catalogFoundationCounts = Object.freeze({
-  characters: sampleContent.characters.length,
-  scenes: sampleContent.scenes.length,
-  setups: sampleContent.characters.length * setupsPerCharacter,
+  characters: gameCatalog.characters.length,
+  scenes: gameCatalog.scenes.length,
+  setups: gameCatalog.characters.length * setupsPerCharacter,
 });
 
 export const catalogFoundationCharacters: readonly CatalogFoundationCharacter[] =
   Object.freeze(
-    sampleContent.characters.map((character, index) =>
+    gameCatalog.characters.map((character, index) =>
       Object.freeze({ characterId: character.id, index }),
     ),
   );
@@ -93,11 +93,11 @@ export function runCatalogFoundationCharacter({
   characterId,
   index,
 }: CatalogFoundationCharacter): void {
-  for (const [opponentIndex, opponent] of sampleContent.characters.entries()) {
-    for (const [sceneIndex, scene] of sampleContent.scenes.entries()) {
+  for (const [opponentIndex, opponent] of gameCatalog.characters.entries()) {
+    for (const [sceneIndex, scene] of gameCatalog.scenes.entries()) {
       const seed = workloadSeed + index * setupsPerCharacter
-        + opponentIndex * sampleContent.scenes.length + sceneIndex;
-      const setup = createSimulationSetup(sampleContent, {
+        + opponentIndex * gameCatalog.scenes.length + sceneIndex;
+      const setup = createSimulationSetup(gameCatalog, {
         characterIds: [characterId, opponent.id],
         sceneId: scene.id,
         aiDifficulty: 'local-radio-caller',

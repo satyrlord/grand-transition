@@ -2115,6 +2115,10 @@ async function setWaitingSentence(
   );
 }
 
+// Same value as NATIVE_ALPHA_MIN_OPACITY in tools/asset-pixels.mjs: native-alpha
+// art is near-opaque at alpha 250 or more.
+const nativeAlphaMinOpacity = 250;
+
 async function portraitAlphaFacts(portraits: Locator): Promise<
   readonly Readonly<{
     bottomRowOpaqueRatio: number;
@@ -2134,7 +2138,7 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
     transparentRatio: number;
   }>[]
 > {
-  return portraits.evaluateAll((images: HTMLImageElement[]) =>
+  return portraits.evaluateAll((images: HTMLImageElement[], minimumOpacity) =>
     images.map((image) => {
       const canvas = document.createElement('canvas');
       canvas.width = image.naturalWidth;
@@ -2185,7 +2189,7 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
           minimumY = Math.min(minimumY, row);
           maximumY = Math.max(maximumY, row);
         }
-        if (alpha === 255) opaquePixels += 1;
+        if (alpha >= minimumOpacity) opaquePixels += 1;
         if (alpha > 0 && row === canvas.height - 1) {
           bottomRowOpaquePixels += 1;
         }
@@ -2227,7 +2231,7 @@ async function portraitAlphaFacts(portraits: Locator): Promise<
         transparentRatio: transparentPixels / pixelCount,
       };
     }),
-  );
+  nativeAlphaMinOpacity);
 }
 
 async function expectModeratorFaceClearance(

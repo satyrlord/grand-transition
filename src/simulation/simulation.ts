@@ -6,15 +6,16 @@ import {
 } from '../content/basic-scoring-balance';
 import { decideLocalRadioCaller } from '../ai/easy-ai';
 import { defaultGameLocale, type GameLocale } from '../localization/game-locale';
-import type { DraftCardReference, DraftCommand } from './draft-actions';
+import type { DraftCardReference, DraftCommand } from '../engine/draft-actions';
 import {
   createMatchReducer,
   type MatchCommand,
   type MatchEngineContext,
   type MatchLifecycleCommand,
   type MatchState,
-} from './match-lifecycle';
-import { seededRandomSource } from './random-source';
+} from '../engine/match-lifecycle';
+import { phraseIndex } from '../engine/phrase-index';
+import { seededRandomSource } from '../engine/random-source';
 import {
   createMatchLog,
   createReplayInitialState,
@@ -201,14 +202,6 @@ export function listSimulationOptions(
       : 'End an incomplete sentence for zero damage.',
     phrase: null,
   });
-  if (options.length === 0) {
-    options.push({
-      command: actorCommand('expire-turn', player.playerId),
-      utility: -500,
-      reason: 'End a turn that has no legal phrase.',
-      phrase: null,
-    });
-  }
   return options.toSorted(
     (left, right) =>
       right.utility - left.utility ||
@@ -246,7 +239,7 @@ export function listLocalRadioCallerSimulationOptions(
       reason: 'Local Radio Caller normalized utility.',
       phrase:
         decision.command.type === 'select-phrase'
-          ? phraseForCommand(state, decision.command, context)
+          ? phraseForCard(state, decision.command.payload.card, context)
           : null,
     },
   ];
@@ -475,7 +468,7 @@ function lifecycleCommand(
 }
 
 function actorCommand(
-  type: 'commit-sentence' | 'expire-turn',
+  type: 'commit-sentence',
   actorId: string,
 ): DraftCommand {
   return { type, source: 'ai', actorId, payload: {} } as DraftCommand;
@@ -492,7 +485,7 @@ function phraseForCard(
       : state.draft?.playerStates[state.activePlayerId]?.hand.find(
           (item) => item.id === card.cardId,
         )?.phraseId;
-  return context.phrases.find((phrase) => phrase.id === phraseId) ?? null;
+  return phraseId ? (phraseIndex(context.phrases).get(phraseId) ?? null) : null;
 }
 
 function phraseUtility(
@@ -543,21 +536,6 @@ function collectStrings(value: unknown): readonly string[] {
     return Object.values(value).flatMap(collectStrings);
   }
   return [];
-}
-
-function phraseForCommand(
-  state: MatchState,
-  command: Extract<MatchCommand, { readonly type: 'select-phrase' }>,
-  context: MatchEngineContext,
-): Phrase | null {
-  const card = command.payload.card;
-  const phraseId =
-    card.source === 'shared'
-      ? state.board?.slots.find((slot) => slot.id === card.cardId)?.phraseId
-      : state.draft?.playerStates[state.activePlayerId]?.hand.find(
-          (item) => item.id === card.cardId,
-        )?.phraseId;
-  return context.phrases.find((phrase) => phrase.id === phraseId) ?? null;
 }
 
 function assertStateInvariants(

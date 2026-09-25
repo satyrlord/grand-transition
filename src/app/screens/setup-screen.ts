@@ -14,7 +14,7 @@ import {
 } from 'lit';
 import {
   characterSkins,
-  sampleContent,
+  gameCatalog,
   type CharacterSkin,
 } from '../../game-content';
 import { resolveBrandAsset } from '../brand-assets';
@@ -334,7 +334,7 @@ export class GrandTransitionSetup extends LitElement {
                       label: msg('Scene'),
                       value: this.snapshot.sceneId,
                       error: errors.sceneId,
-                      options: sampleContent.scenes.map((scene) => ({
+                      options: gameCatalog.scenes.map((scene) => ({
                         value: scene.id,
                         label: interfaceSceneName(scene.id),
                       })),
@@ -1082,9 +1082,9 @@ const setupFieldOrder: readonly SetupField[] = [
 
 export function validateSetup(snapshot: SetupSnapshot): SetupErrors {
   const characterIds = new Set(
-    sampleContent.characters.map((character) => character.id),
+    gameCatalog.characters.map((character) => character.id),
   );
-  const sceneIds = new Set(sampleContent.scenes.map((scene) => scene.id));
+  const sceneIds = new Set(gameCatalog.scenes.map((scene) => scene.id));
   const errors: SetupErrors = {};
 
   if (!snapshot.mode) {
@@ -1178,7 +1178,7 @@ function immutableStartMatchPayload(
 }
 
 function characterViews(): readonly CharacterView[] {
-  return sampleContent.characters.map((character) => {
+  return gameCatalog.characters.map((character) => {
     const portrait = characterSkins[character.id]?.[0];
     if (!portrait) {
       throw new Error(

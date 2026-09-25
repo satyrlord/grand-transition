@@ -4,7 +4,7 @@ import type { AudioPort, EffectId } from '../audio/audio-port';
 import { GameSpeech, publicNarrationSegments } from '../audio/game-speech';
 import type { CharacterCue } from './character-motion';
 import type { MatchScoreComponentView } from './match-screen-snapshot';
-import { deepFreeze } from './deep-freeze';
+import { deepFreeze } from '../engine/plain-values';
 import type { SkinSpeechProfile } from '../audio/skin-speech-profile';
 import type { SpeechCancellationReason, SpeechDiagnostic } from '../audio/speech-diagnostics';
 

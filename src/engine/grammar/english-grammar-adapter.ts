@@ -2,7 +2,7 @@ import type { Phrase } from '../../content/schemas';
 import type { GameLocaleBundle } from '../../localization/game-locale-schema';
 import type { GrammarAdapter, GrammarResult } from './grammar-adapter';
 
-export const englishGrammarStates = [
+export const grammarStates = [
   'EXPECT_SUBJECT',
   'SUBJECT_READY',
   'EXPECT_OBJECT',
@@ -11,16 +11,16 @@ export const englishGrammarStates = [
   'ENDED',
 ] as const;
 
-export type EnglishGrammarState = (typeof englishGrammarStates)[number];
+export type GrammarState = (typeof grammarStates)[number];
 export type GrammaticalNumber = 'singular' | 'plural';
 export type GrammaticalPerson = 'second' | 'third';
 export type ReferentKind = 'personal' | 'nonpersonal';
-export type EnglishGrammarRole = Extract<
+export type GrammarRole = Extract<
   Phrase['role'],
   'noun' | 'verb' | 'predicate' | 'modifier' | 'conjunction' | 'ending'
 >;
 
-export type EnglishGrammarPhrase = Readonly<{
+export type GrammarPhrase = Readonly<{
   id: string;
   tenseFamily?: string;
   // The game locale that supplied this phrase's text. The analyzer is
@@ -41,17 +41,17 @@ export type EnglishGrammarPhrase = Readonly<{
   secondPersonText: string;
 }>;
 
-export type EnglishGrammarStep =
-  | Readonly<{ kind: 'phrase'; phrase: EnglishGrammarPhrase }>
+export type GrammarStep =
+  | Readonly<{ kind: 'phrase'; phrase: GrammarPhrase }>
   | Readonly<{ kind: 'end' }>;
 
-export type EnglishGrammarInput = Readonly<{
-  steps: readonly EnglishGrammarStep[];
+export type GrammarInput = Readonly<{
+  steps: readonly GrammarStep[];
   subjectNumber: GrammaticalNumber;
   objectNumber: GrammaticalNumber;
 }>;
 
-export type EnglishRenderedPhrase = Readonly<{
+export type RenderedPhrase = Readonly<{
   phraseId: string;
   role: Phrase['role'];
   connectorKind:
@@ -60,41 +60,40 @@ export type EnglishRenderedPhrase = Readonly<{
   text: string;
 }>;
 
-export type EnglishGrammarAnalysis = Readonly<{
+export type GrammarAnalysis = Readonly<{
   legal: true;
   complete: boolean;
   sentenceStatus: 'incomplete' | 'complete';
-  state: EnglishGrammarState;
-  nextRoles: readonly EnglishGrammarRole[];
+  state: GrammarState;
+  nextRoles: readonly GrammarRole[];
   agreement: Readonly<{
     subject: GrammaticalNumber;
     object: GrammaticalNumber;
   }>;
   capitalization: 'sentence-case';
   punctuation: '' | '.';
-  renderedPhrases: readonly EnglishRenderedPhrase[];
+  renderedPhrases: readonly RenderedPhrase[];
   publicText: string;
   resolution: Readonly<{
     outgoingDamageIntent: number | null;
-    selfDamageIntent: number;
     removedPhraseId: null;
     constructionEnded: boolean;
     feedback: null;
   }>;
 }>;
 
-export type EnglishGrammarFault = Readonly<{
+export type GrammarFault = Readonly<{
   kind: 'illegal-transition';
   code: 'unexpected-role';
-  state: EnglishGrammarState;
+  state: GrammarState;
   attempted: Phrase['role'];
   phraseId: string;
   stepIndex: number;
-  expectedRoles: readonly EnglishGrammarRole[];
+  expectedRoles: readonly GrammarRole[];
 }>;
 
 type ParseContext = {
-  state: Exclude<EnglishGrammarState, 'ENDED'>;
+  state: Exclude<GrammarState, 'ENDED'>;
   subjectNumber: GrammaticalNumber;
   subjectPerson: GrammaticalPerson;
   subjectReferentKind: ReferentKind;
@@ -113,7 +112,7 @@ type ParseContext = {
 };
 
 const nextRolesByState: Readonly<
-  Record<EnglishGrammarState, readonly EnglishGrammarRole[]>
+  Record<GrammarState, readonly GrammarRole[]>
 > = {
   EXPECT_SUBJECT: ['noun', 'conjunction'],
   SUBJECT_READY: ['verb', 'predicate', 'conjunction'],
@@ -138,7 +137,7 @@ function graphemeSegmenterFor(localeTag: string): Intl.Segmenter {
 export function prepareGrammarPhrase(
   phrase: Phrase,
   locale: GameLocaleBundle,
-): EnglishGrammarPhrase {
+): GrammarPhrase {
   const defaultText = requireMessage(locale, phrase.textKey);
   const singularText = phrase.numberForms
     ? requireMessage(locale, phrase.numberForms.singularKey)
@@ -152,7 +151,7 @@ export function prepareGrammarPhrase(
     role: phrase.role,
     connectorKind:
       phrase.role === 'conjunction'
-        ? (phrase.connectorKind ?? inferConnectorKind(defaultText))
+        ? (phrase.connectorKind ?? null)
         : null,
     ...(phrase.allowsCoordinatedNounComplement
       ? { allowsCoordinatedNounComplement: true as const }
@@ -175,15 +174,44 @@ export function prepareGrammarPhrase(
   };
 }
 
-export function prepareEnglishGrammarPhrase(
+export type GrammarPhrasePreparation = (
   phrase: Phrase,
   locale: GameLocaleBundle,
-): EnglishGrammarPhrase {
-  if (locale.locale !== 'en') {
-    throw new Error('Use the English game-locale bundle with this adapter.');
-  }
-  return prepareGrammarPhrase(phrase, locale);
+) => GrammarPhrase;
+
+/**
+ * Keeps one prepared phrase for each immutable phrase and locale bundle.
+ * Legal-card checks, previews, and AI search prepare the same phrases many
+ * times a turn.
+ */
+export function cachedPreparation(
+  prepare: GrammarPhrasePreparation,
+): GrammarPhrasePreparation {
+  const preparedByLocale = new WeakMap<
+    GameLocaleBundle,
+    WeakMap<Phrase, GrammarPhrase>
+  >();
+  return (phrase, locale) => {
+    let preparedByPhrase = preparedByLocale.get(locale);
+    if (!preparedByPhrase) {
+      preparedByPhrase = new WeakMap();
+      preparedByLocale.set(locale, preparedByPhrase);
+    }
+    const existing = preparedByPhrase.get(phrase);
+    if (existing) return existing;
+    const prepared = prepare(phrase, locale);
+    preparedByPhrase.set(phrase, prepared);
+    return prepared;
+  };
 }
+
+export const prepareEnglishGrammarPhrase: GrammarPhrasePreparation =
+  cachedPreparation((phrase, locale) => {
+    if (locale.locale !== 'en') {
+      throw new Error('Use the English game-locale bundle with this adapter.');
+    }
+    return prepareGrammarPhrase(phrase, locale);
+  });
 
 export function englishRenderedForms(
   phrase: Phrase,
@@ -195,7 +223,7 @@ export function englishRenderedForms(
 }
 
 export function preparedGrammarPhraseForms(
-  phrase: EnglishGrammarPhrase,
+  phrase: GrammarPhrase,
 ): ReadonlySet<string> {
   return new Set([
     phrase.defaultText,
@@ -210,9 +238,9 @@ export function preparedGrammarPhraseForms(
 // phrase text, so it plays every shipped locale. Each locale binds this same
 // analyzer object; the English name is kept for the existing English callers.
 export const grammarAdapter: GrammarAdapter<
-  EnglishGrammarInput,
-  EnglishGrammarAnalysis,
-  EnglishGrammarFault
+  GrammarInput,
+  GrammarAnalysis,
+  GrammarFault
 > = {
   analyze(input) {
     let context: ParseContext = {
@@ -234,7 +262,7 @@ export const grammarAdapter: GrammarAdapter<
       copularNounComplementComplete: false,
     };
     let ended = false;
-    const renderedPhrases: EnglishRenderedPhrase[] = [];
+    const renderedPhrases: RenderedPhrase[] = [];
 
     for (const [stepIndex, step] of input.steps.entries()) {
       if (step.kind === 'end') {
@@ -255,7 +283,7 @@ export const grammarAdapter: GrammarAdapter<
     }
 
     const complete = context.hasCompleteClause && isFinishable(context.state);
-    const state: EnglishGrammarState = ended ? 'ENDED' : context.state;
+    const state: GrammarState = ended ? 'ENDED' : context.state;
     const publicText = renderPublicText(
       renderedPhrases,
       ended && complete,
@@ -279,7 +307,6 @@ export const grammarAdapter: GrammarAdapter<
         publicText,
         resolution: {
           outgoingDamageIntent: complete ? null : 0,
-          selfDamageIntent: 0,
           removedPhraseId: null,
           constructionEnded: ended,
           feedback: null,
@@ -293,7 +320,7 @@ export const englishGrammarAdapter = grammarAdapter;
 
 function transition(
   context: ParseContext,
-  phrase: EnglishGrammarPhrase,
+  phrase: GrammarPhrase,
 ): ParseContext | null {
   const role = phrase.role;
 
@@ -648,7 +675,7 @@ function transition(
   return null;
 }
 
-function nextRolesFor(context: ParseContext): readonly EnglishGrammarRole[] {
+function nextRolesFor(context: ParseContext): readonly GrammarRole[] {
   if (
     context.state === 'EXPECT_AFTER_CONJUNCTION' &&
     context.withComplementPending
@@ -677,9 +704,9 @@ function isFinishable(state: ParseContext['state']): boolean {
 }
 
 function renderPhrase(
-  phrase: EnglishGrammarPhrase,
+  phrase: GrammarPhrase,
   context: ParseContext,
-): EnglishRenderedPhrase {
+): RenderedPhrase {
   // Nouns render their declared number form; the input object number feeds
   // the analysis agreement only.
   const grammaticalNumber =
@@ -712,7 +739,7 @@ function renderPhrase(
   };
 }
 
-function sentenceLocaleTag(steps: readonly EnglishGrammarStep[]): string {
+function sentenceLocaleTag(steps: readonly GrammarStep[]): string {
   for (const step of steps) {
     if (step.kind === 'phrase' && step.phrase.localeTag) {
       return step.phrase.localeTag;
@@ -723,7 +750,7 @@ function sentenceLocaleTag(steps: readonly EnglishGrammarStep[]): string {
 }
 
 export function renderPublicText(
-  phrases: readonly EnglishRenderedPhrase[],
+  phrases: readonly RenderedPhrase[],
   punctuate: boolean,
   localeTag: string,
 ): string {
@@ -739,10 +766,10 @@ export function renderPublicText(
 }
 
 function reject(
-  stateOrContext: EnglishGrammarState | ParseContext,
-  phrase: EnglishGrammarPhrase,
+  stateOrContext: GrammarState | ParseContext,
+  phrase: GrammarPhrase,
   stepIndex: number,
-): GrammarResult<EnglishGrammarAnalysis, EnglishGrammarFault> {
+): GrammarResult<GrammarAnalysis, GrammarFault> {
   const state =
     typeof stateOrContext === 'string' ? stateOrContext : stateOrContext.state;
   const expectedRoles =
@@ -773,18 +800,4 @@ function requireMessage(locale: GameLocaleBundle, key: string): string {
     );
   }
   return value;
-}
-
-function inferConnectorKind(
-  text: string,
-): 'and' | 'because' | 'but' | 'so' | 'yet' | 'with' {
-  const connectors = {
-    because: 'because',
-    but: 'but',
-    so: 'so',
-    yet: 'yet',
-    with: 'with',
-  } as const;
-  const normalized = text.trim().toLocaleLowerCase('en');
-  return connectors[normalized as keyof typeof connectors] ?? 'and';
 }

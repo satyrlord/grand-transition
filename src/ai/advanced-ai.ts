@@ -7,6 +7,7 @@ import {
   type MatchState,
 } from '../engine/match-lifecycle';
 import { seededRandomSource, type RandomSource } from '../engine/random-source';
+import { stableHash } from '../engine/stable-hash';
 import {
   evaluateLocalRadioCallerCandidates,
   type EasyAiCandidate,
@@ -325,12 +326,7 @@ function scoreAdvancedCandidates(
     ({ id }) => id === state.playerStates[actorId]?.characterId,
   );
   if (!actor) throw new Error(`Unknown AI character for player "${actorId}".`);
-  const lethalThreatIds = opponentLethalThreatIds(
-    state,
-    context,
-    randomSource,
-  );
-  const opponentValues = opponentSharedPhraseValues(
+  const { lethalThreatIds, values: opponentValues } = opponentSharedCardFacts(
     state,
     context,
     randomSource,
@@ -412,12 +408,17 @@ function scoreAdvancedCandidates(
           ]),
         ) as Record<keyof AdvancedAiFeatures, number>,
       );
+      // A refresh has no draft features of its own. Its value is the expected
+      // utility of the replacement hand that the Local Radio evaluation found.
+      const redrawValue =
+        candidate.command.type === 'redraw-hand' ? candidate.utility : 0;
       return Object.freeze({
         command: candidate.command,
         targetId: candidate.targetId,
         rawFeatures,
         normalizedFeatures,
-        utility: partyUtility(normalizedFeatures, actor.aiPersonality),
+        utility:
+          partyUtility(normalizedFeatures, actor.aiPersonality) + redrawValue,
         selfKnockout,
       });
     })
@@ -492,41 +493,34 @@ function keepNonKnockoutWrongSelections(
     : candidates;
 }
 
-function opponentLethalThreatIds(
+/** Shared-card lethal threats and values for the opponent, from one evaluation. */
+function opponentSharedCardFacts(
   state: MatchState,
   context: MatchEngineContext,
   randomSource: RandomSource,
-): ReadonlySet<string> {
+): Readonly<{
+  lethalThreatIds: ReadonlySet<string>;
+  values: ReadonlyMap<string, number>;
+}> {
   const opponentState = forceOpponentTurn(state);
-  if (!opponentState) return new Set();
-  return new Set(
-    evaluateLocalRadioCallerCandidates(opponentState, context, { randomSource })
-      .filter(
-        ({ command, rawFeatures }) =>
-          command.type === 'select-phrase' &&
-          command.payload.card.source === 'shared' &&
-          rawFeatures.immediateLethal > 0,
-      )
-      .map(({ targetId }) => targetId),
+  if (!opponentState) return { lethalThreatIds: new Set(), values: new Map() };
+  const shared = evaluateLocalRadioCallerCandidates(opponentState, context, {
+    randomSource,
+  }).filter(
+    ({ command }) =>
+      command.type === 'select-phrase' &&
+      command.payload.card.source === 'shared',
   );
-}
-
-function opponentSharedPhraseValues(
-  state: MatchState,
-  context: MatchEngineContext,
-  randomSource: RandomSource,
-): ReadonlyMap<string, number> {
-  const opponentState = forceOpponentTurn(state);
-  if (!opponentState) return new Map();
-  return new Map(
-    evaluateLocalRadioCallerCandidates(opponentState, context, { randomSource })
-      .filter(
-        ({ command }) =>
-          command.type === 'select-phrase' &&
-          command.payload.card.source === 'shared',
-      )
-      .map(({ targetId, utility }) => [targetId, Math.max(0, utility)]),
-  );
+  return {
+    lethalThreatIds: new Set(
+      shared
+        .filter(({ rawFeatures }) => rawFeatures.immediateLethal > 0)
+        .map(({ targetId }) => targetId),
+    ),
+    values: new Map(
+      shared.map(({ targetId, utility }) => [targetId, Math.max(0, utility)]),
+    ),
+  };
 }
 
 function forceOpponentTurn(state: MatchState): MatchState | null {
@@ -632,11 +626,8 @@ function decisionSeed(
   state: MatchState,
   difficulty: AdvancedAiDifficulty,
 ): number {
-  let hash = state.seed >>> 0;
-  const text = `${difficulty}:${JSON.stringify(state.commandHistory)}`;
-  for (let index = 0; index < text.length; index += 1) {
-    hash ^= text.charCodeAt(index);
-    hash = Math.imul(hash, 16_777_619) >>> 0;
-  }
-  return hash;
+  return stableHash(
+    `${difficulty}:${JSON.stringify(state.commandHistory)}`,
+    state.seed,
+  );
 }

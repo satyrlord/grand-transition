@@ -115,6 +115,9 @@ test.each([
     await page.viewport(width, height);
     await document.fonts.ready;
     const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
+    // Park the pointer off the hand. After the resize, a card can move under
+    // the previous pointer position, and a hover preview replaces the sentence.
+    await userEvent.hover(ledger);
     const originalBounds = ledger.getBoundingClientRect();
     const samples = [text, `${text} ${text.slice(0, Math.ceil(text.length * 0.4))}`.trim(), Array(4).fill(text).join(' ')];
     for (const sentenceText of samples) {
@@ -625,7 +628,8 @@ test('decodes WebP from the application picture when AVIF is unsupported', async
   expect(image.currentSrc).toContain('.webp');
 });
 
-test.each([['selection', 5], ['idle', 3]] as const)('decodes the %s character WebP when AVIF is unsupported', async (state, widths) => {
+// The state contract reuses the selection portrait and its five widths for idle.
+test.each([['selection', 5], ['idle', 5]] as const)('decodes the %s character WebP when AVIF is unsupported', async (state, widths) => {
   const match = await startMatch();
   const picture = match.querySelector<HTMLPictureElement>(
     `.character-frame [data-state-id="${state}"] picture`,
@@ -1324,6 +1328,28 @@ test('maps rapid pointer actions once', async () => {
   await vi.waitFor(() =>
     expect(match.snapshot?.revision).toBeGreaterThan(current.revision),
   );
+});
+
+test('a rejected command unlocks the controls for the next command', async () => {
+  const match = await startMatch();
+  const commands: string[] = [];
+  let rejectNext = true;
+  // At the target, capturing listeners run before the shell's listener.
+  match.addEventListener(matchCommandEventName, (event) => {
+    commands.push(event.detail.type);
+    if (!rejectNext) return;
+    rejectNext = false;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }, { capture: true });
+
+  const redraw = match.querySelector<HTMLButtonElement>('.action-reshuffle')!;
+  redraw.click();
+  await match.updateComplete;
+  expect(match.snapshot?.actions.redrawUsed).toBe(false);
+  redraw.click();
+  await vi.waitFor(() => expect(match.snapshot?.actions.redrawUsed).toBe(true));
+  expect(commands).toEqual(['redraw-hand', 'redraw-hand']);
 });
 
 test('a wrong card is chosen immediately as a grammar mistake', async () => {

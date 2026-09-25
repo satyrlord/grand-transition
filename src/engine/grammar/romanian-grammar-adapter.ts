@@ -8,23 +8,28 @@ import {
 } from '../../content/ro/grammar-metadata';
 import type { GrammarAdapter } from './grammar-adapter';
 import {
+  cachedPreparation,
   grammarAdapter,
   preparedGrammarPhraseForms,
   prepareGrammarPhrase,
   renderPublicText,
-  type EnglishGrammarAnalysis,
-  type EnglishGrammarFault,
-  type EnglishGrammarInput,
-  type EnglishGrammarPhrase,
+  type GrammarAnalysis,
+  type GrammarFault,
+  type GrammarInput,
+  type GrammarPhrase,
+  type GrammarPhrasePreparation,
 } from './english-grammar-adapter';
 
 // Romanian plays through the shared, locale-agnostic analyzer: the same state
 // machine and the same typed failures as English, with Romanian rendering and
 // agreement forms supplied by the `ro-RO` game-locale bundle.
-export function prepareRomanianGrammarPhrase(
+export const prepareRomanianGrammarPhrase: GrammarPhrasePreparation =
+  cachedPreparation(prepareRomanianText);
+
+function prepareRomanianText(
   phrase: Phrase,
   locale: GameLocaleBundle,
-): EnglishGrammarPhrase {
+): GrammarPhrase {
   if (locale.locale !== 'ro-RO') {
     throw new Error('Use the Romanian game-locale bundle with this adapter.');
   }
@@ -111,9 +116,9 @@ export function romanianRenderedForms(
 }
 
 export const romanianGrammarAdapter: GrammarAdapter<
-  EnglishGrammarInput,
-  EnglishGrammarAnalysis,
-  EnglishGrammarFault
+  GrammarInput,
+  GrammarAnalysis,
+  GrammarFault
 > = {
   analyze(input) {
     const result = grammarAdapter.analyze(input);

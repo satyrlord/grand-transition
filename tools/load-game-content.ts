@@ -5,7 +5,7 @@ import {
   buildPhraseCardCatalog,
   type PhraseCardCatalog,
 } from '../src/content/phrase-card-catalog';
-import { createSampleContent } from '../src/content/sample-content';
+import { createGameCatalog } from '../src/content/game-catalog';
 import { createEnglishGameLocale } from '../src/localization/en-game-locale';
 import {
   createRomanianGameLocale,
@@ -21,7 +21,7 @@ export function loadGameContent(rootDirectory = repositoryRoot): {
   phraseCardCatalog: PhraseCardCatalog;
   englishGameLocale: ReturnType<typeof createEnglishGameLocale>;
   gameLocaleBundles: ReturnType<typeof indexGameLocaleBundles>;
-  sampleContent: ReturnType<typeof createSampleContent>;
+  gameCatalog: ReturnType<typeof createGameCatalog>;
 } {
   const contentDirectory = path.join(rootDirectory, 'src', 'content');
   const characterDirectory = path.join(contentDirectory, 'characters');
@@ -47,15 +47,15 @@ export function loadGameContent(rootDirectory = repositoryRoot): {
   const romanianGameLocale = createRomanianGameLocale(
     readRomanianMessages(rootDirectory),
   );
-  const sampleContent = createSampleContent(phraseCardCatalog, [
+  const gameCatalog = createGameCatalog(phraseCardCatalog, [
     englishGameLocale,
     romanianGameLocale,
   ]);
   return {
     phraseCardCatalog,
     englishGameLocale,
-    gameLocaleBundles: indexGameLocaleBundles(sampleContent.locales),
-    sampleContent,
+    gameLocaleBundles: indexGameLocaleBundles(gameCatalog.locales),
+    gameCatalog,
   };
 }
 

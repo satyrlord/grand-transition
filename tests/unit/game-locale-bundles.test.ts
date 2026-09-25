@@ -3,7 +3,7 @@ import type { GameLocaleBundle } from '../../src/localization/game-locale-schema
 import {
   gameLocaleBundle,
   gameLocaleBundles,
-  sampleContent,
+  gameCatalog,
 } from '../../src/game-content';
 import {
   indexGameLocaleBundles,
@@ -65,7 +65,7 @@ describe('game-locale bundles', () => {
   test('ships one bundle per locale and never borrows another language', () => {
     expect(shippedGameLocales(gameLocaleBundles)).toEqual(['en', 'ro-RO']);
     expect(Object.keys(gameLocaleBundles)).toEqual(
-      sampleContent.locales.map((bundle) => bundle.locale),
+      gameCatalog.locales.map((bundle) => bundle.locale),
     );
     expect(gameLocaleBundle('en').locale).toBe('en');
     expect(gameLocaleBundle('ro-RO').locale).toBe('ro-RO');

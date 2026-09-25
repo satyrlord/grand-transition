@@ -22,15 +22,16 @@ import type {
   RuleError,
 } from './game-contracts';
 import {
-  type EnglishGrammarAnalysis,
-  type EnglishGrammarRole,
-  type EnglishGrammarStep,
+  type GrammarAnalysis,
+  type GrammarRole,
+  type GrammarStep,
   type GrammaticalNumber,
 } from './grammar/english-grammar-adapter';
 import {
   grammarFor,
   type GrammarLocaleBinding,
 } from './grammar/grammar-locale';
+import { phraseIndex } from './phrase-index';
 import {
   generatePrivateHand,
   type PrivateHandGenerationFailure,
@@ -87,10 +88,10 @@ export type DraftBoard = Readonly<{
 
 export type DraftConstruction = Readonly<{
   status: 'building' | 'ended';
-  steps: readonly EnglishGrammarStep[];
-  analysis: EnglishGrammarAnalysis;
+  steps: readonly GrammarStep[];
+  analysis: GrammarAnalysis;
   previewText: string;
-  requiredRoles: readonly EnglishGrammarRole[];
+  requiredRoles: readonly GrammarRole[];
   selectedCards: readonly Readonly<{
     phraseId: string;
     source: DraftCardSource | 'restored';
@@ -100,7 +101,6 @@ export type DraftConstruction = Readonly<{
   selectedComeback: ComebackSelection | null;
   grammarMistakes: number;
   lastGrammarMistakePhraseId: string | null;
-  expired: boolean;
 }>;
 
 export type DraftPlayerState = Readonly<{
@@ -218,11 +218,10 @@ export type DraftPlayerSnapshot = Readonly<{
     status: 'building' | 'ended';
     previewText: string | null;
     complete: boolean;
-    requiredRoles: readonly EnglishGrammarRole[];
+    requiredRoles: readonly GrammarRole[];
     carryIntent: boolean;
     selectedComebackTier: ComebackTier | null;
     comebackClosingLine: string | null;
-    expired: boolean;
   }>;
   legalCards: readonly DraftCardReference[];
 }>;
@@ -316,7 +315,7 @@ export function prepareDraftRound(
         player.comebackCharge ?? 0,
       ),
       hand: phraseIds.map((phraseId, cardIndex) => ({
-        id: `hand-${request.round}-${player.playerId}-${cardIndex + 1}`,
+        id: handCardId('hand', request.round, player.playerId, cardIndex),
         phraseId,
       })),
       redrawUsed: false,
@@ -371,6 +370,23 @@ export function prepareDraftRound(
   };
 }
 
+/**
+ * The private slot (0 or 1) that a hand card was dealt into. A card keeps its
+ * slot after the other card is used.
+ */
+export function handCardSlotIndex(card: DraftHandCard): number {
+  return card.id.endsWith('-2') ? 1 : 0;
+}
+
+function handCardId(
+  deal: 'hand' | 'redraw',
+  round: number,
+  playerId: string,
+  slotIndex: number,
+): string {
+  return `${deal}-${round}-${playerId}-${slotIndex + 1}`;
+}
+
 export function createDraftReducer(
   context: DraftEngineContext,
 ): GameReducer<DraftState, DraftCommand, DraftRuleError> {
@@ -406,7 +422,6 @@ export function snapshotDraftStateForPlayer(
             selectedComebackTier: player.construction.selectedComebackTier,
             comebackClosingLine:
               player.construction.selectedComeback?.closingLine ?? null,
-            expired: player.construction.expired,
           },
           legalCards: isViewer ? player.legalCards : [],
         } satisfies DraftPlayerSnapshot,
@@ -486,7 +501,7 @@ function selectPhrase(
   }
 
   const grammar = grammarFor(context.locale);
-  const step: EnglishGrammarStep = {
+  const step: GrammarStep = {
     kind: 'phrase',
     phrase: grammar.prepare(resolved.phrase, context.locale),
   };
@@ -563,7 +578,7 @@ function redrawHand(
   const nextPlayer: DraftPlayerState = {
     ...player,
     hand: handResult.hand.phraseIds.map((phraseId, index) => ({
-      id: `redraw-${state.round}-${player.playerId}-${index + 1}`,
+      id: handCardId('redraw', state.round, player.playerId, index),
       phraseId,
     })),
     redrawUsed: true,
@@ -590,7 +605,7 @@ function commitSentence(
   command: Extract<DraftCommand, { readonly type: 'commit-sentence' }>,
   context: DraftEngineContext,
 ): ReducerResult<DraftState, DraftRuleError> {
-  const construction = endCompleteConstruction(
+  const construction = endConstruction(
     player,
     grammarFor(context.locale),
   );
@@ -630,7 +645,7 @@ function selectComeback(
     randomSource,
   });
   if (!selection.ok) return reject(command, selection.error.code);
-  const endedConstruction = endCompleteConstruction(
+  const endedConstruction = endConstruction(
     player,
     grammarFor(context.locale),
   );
@@ -832,7 +847,7 @@ function collectLegalCards(
   context: DraftEngineContext,
 ): readonly DraftCardReference[] {
   const cards: ResolvedCard[] = [];
-  const phrases = new Map(context.phrases.map((phrase) => [phrase.id, phrase]));
+  const phrases = phraseIndex(context.phrases);
 
   for (const slot of state.board.slots) {
     const phrase = phrases.get(slot.phraseId);
@@ -879,9 +894,7 @@ function resolveCard(
   reference: DraftCardReference,
   context: DraftEngineContext,
 ): ResolvedCard | { readonly code: 'card-not-owned' | 'card-unavailable' } {
-  const phraseById = new Map(
-    context.phrases.map((phrase) => [phrase.id, phrase]),
-  );
+  const phraseById = phraseIndex(context.phrases);
   if (reference.source === 'shared') {
     const slot = state.board.slots.find((item) => item.id === reference.cardId);
     if (!slot?.available) return { code: 'card-unavailable' };
@@ -904,11 +917,11 @@ function resolveCard(
   return phrase ? { reference, phrase } : { code: 'card-unavailable' };
 }
 
-function endCompleteConstruction(
+function endConstruction(
   player: DraftPlayerState,
   grammar: GrammarLocaleBinding,
 ): DraftConstruction {
-  const steps: readonly EnglishGrammarStep[] = [
+  const steps: readonly GrammarStep[] = [
     ...player.construction.steps,
     { kind: 'end' },
   ];
@@ -918,7 +931,7 @@ function endCompleteConstruction(
     objectNumber: player.objectNumber,
   });
   if (!result.accepted) {
-    throw new Error('A complete construction must accept an end step.');
+    throw new Error('A construction must accept an end step.');
   }
   return constructionWithAnalysis(player.construction, steps, result.analysis, {
     status: 'ended',
@@ -927,8 +940,8 @@ function endCompleteConstruction(
 
 function constructionWithAnalysis(
   construction: DraftConstruction,
-  steps: readonly EnglishGrammarStep[],
-  analysis: EnglishGrammarAnalysis,
+  steps: readonly GrammarStep[],
+  analysis: GrammarAnalysis,
   overrides: Partial<DraftConstruction>,
 ): DraftConstruction {
   return {
@@ -986,7 +999,6 @@ function createConstruction(
     selectedComeback: null,
     grammarMistakes: 0,
     lastGrammarMistakePhraseId: null,
-    expired: false,
   };
 }
 

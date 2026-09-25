@@ -1,4 +1,4 @@
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
 import {
   createMatchReducer, createMatchSetupState,
@@ -7,7 +7,7 @@ import {
 import { seededRandomSource } from '../../src/engine/random-source';
 
 export const reviewContext = {
-  phrases: sampleContent.phrases, characters: sampleContent.characters,
+  phrases: gameCatalog.phrases, characters: gameCatalog.characters,
   locale: englishGameLocale, balance: basicScoringBalance,
 };
 
@@ -18,8 +18,8 @@ export function reduceReviewState(state: MatchState, command: MatchCommand): Mat
 }
 
 export function preparedReviewState(seed: number, reversedPlayers = false): MatchState {
-  const scene = sampleContent.scenes[0]!;
-  const players = sampleContent.characters.slice(0, 2).map((character, index) => ({
+  const scene = gameCatalog.scenes[0]!;
+  const players = gameCatalog.characters.slice(0, 2).map((character, index) => ({
     playerId: (index === 0) !== reversedPlayers ? 'player-one' : 'player-two',
     characterId: character.id, characterPhraseIds: character.characterPhraseIds,
     weaknessTags: character.weaknessTags,
@@ -29,7 +29,7 @@ export function preparedReviewState(seed: number, reversedPlayers = false): Matc
     schemaVersion: 1, seed, mode: 'ai', aiDifficulty: 'local-radio-caller',
     players: [players[0]!, players[1]!], sceneId: scene.id,
     scenePhraseIds: scene.phrasePool,
-    generalPhraseIds: sampleContent.phrases.map(({ id }) => id),
+    generalPhraseIds: gameCatalog.phrases.map(({ id }) => id),
     openingPlayerIndex: scene.openingPlayerIndex,
   });
   for (const type of ['start-match', 'prepare-round'] as const) {

@@ -1,6 +1,7 @@
 import characterManifest from '../assets/characters/character-manifest.json' with {
   type: 'json',
 };
+import { isRecord } from '../engine/plain-values';
 
 const characterVariantUrls = {
   ...import.meta.glob('../assets/characters/variants/*.avif', {
@@ -245,8 +246,4 @@ function requireSelection(value: unknown, id: string, field: string): 'selection
 function requireString(value: unknown, message: string): string {
   if (typeof value !== 'string' || !value.trim()) throw new Error(message);
   return value;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }

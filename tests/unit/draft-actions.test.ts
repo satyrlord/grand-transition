@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import {
   createDraftReducer,
   prepareDraftRound,
@@ -25,13 +25,13 @@ import { prepareEnglishGrammarPhrase } from '../../src/engine/grammar/english-gr
 
 const playerIds = ['first-player', 'second-player'] as const;
 const context: DraftEngineContext = {
-  phrases: sampleContent.phrases,
-  characters: sampleContent.characters,
+  phrases: gameCatalog.phrases,
+  characters: gameCatalog.characters,
   locale: englishGameLocale,
 };
 
 function request(charge = 0): DraftRoundPreparationRequest {
-  const scene = sampleContent.scenes[0]!;
+  const scene = gameCatalog.scenes[0]!;
   return {
     schemaVersion: 1,
     mode: 'test',
@@ -39,25 +39,25 @@ function request(charge = 0): DraftRoundPreparationRequest {
     seed: 2_026_082_3,
     sceneId: scene.id,
     scenePhraseIds: scene.phrasePool,
-    generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
-    phrases: sampleContent.phrases,
-    characters: sampleContent.characters,
+    generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
+    phrases: gameCatalog.phrases,
+    characters: gameCatalog.characters,
     locale: englishGameLocale,
     players: [
       {
         playerId: playerIds[0],
-        characterId: sampleContent.characters[0]!.id,
-        characterPhraseIds: sampleContent.characters[0]!.characterPhraseIds,
-        weaknessTags: sampleContent.characters[0]!.weaknessTags,
+        characterId: gameCatalog.characters[0]!.id,
+        characterPhraseIds: gameCatalog.characters[0]!.characterPhraseIds,
+        weaknessTags: gameCatalog.characters[0]!.weaknessTags,
         subjectNumber: 'singular',
         objectNumber: 'singular',
         comebackCharge: charge,
       },
       {
         playerId: playerIds[1],
-        characterId: sampleContent.characters[1]!.id,
-        characterPhraseIds: sampleContent.characters[1]!.characterPhraseIds,
-        weaknessTags: sampleContent.characters[1]!.weaknessTags,
+        characterId: gameCatalog.characters[1]!.id,
+        characterPhraseIds: gameCatalog.characters[1]!.characterPhraseIds,
+        weaknessTags: gameCatalog.characters[1]!.weaknessTags,
         subjectNumber: 'singular',
         objectNumber: 'singular',
         comebackCharge: 0,
@@ -147,7 +147,7 @@ function passWithValidCard(state: DraftState, playerId: string): DraftState {
         : state.playerStates[playerId]!.hand.find(
             (item) => item.id === card.cardId,
           )!.phraseId;
-    const role = sampleContent.phrases.find(
+    const role = gameCatalog.phrases.find(
       (phrase) => phrase.id === phraseId,
     )!.role;
     return role !== 'continuation' && role !== 'ending';
@@ -171,17 +171,17 @@ describe('Hollywood Roast draft actions', () => {
   test('uses phrase rarity as draw weight and reports an impossible hand', () => {
     expect(
       privateHandCandidateWeight(
-        sampleContent.phrases.find((phrase) => phrase.rarity === 'common')!,
+        gameCatalog.phrases.find((phrase) => phrase.rarity === 'common')!,
       ),
     ).toBe(4);
     expect(
       privateHandCandidateWeight(
-        sampleContent.phrases.find((phrase) => phrase.rarity === 'uncommon')!,
+        gameCatalog.phrases.find((phrase) => phrase.rarity === 'uncommon')!,
       ),
     ).toBe(2);
     expect(
       privateHandCandidateWeight(
-        sampleContent.phrases.find((phrase) => phrase.rarity === 'rare')!,
+        gameCatalog.phrases.find((phrase) => phrase.rarity === 'rare')!,
       ),
     ).toBe(1);
 
@@ -191,14 +191,14 @@ describe('Hollywood Roast draft actions', () => {
       playerId: playerIds[0],
       characterId: base.players[0].characterId,
       sceneId: base.sceneId,
-      phrases: [sampleContent.phrases[0]!],
+      phrases: [gameCatalog.phrases[0]!],
       characterPhraseIds: [],
-      scenePhraseIds: [sampleContent.phrases[0]!.id],
-      generalPhraseIds: [sampleContent.phrases[0]!.id],
+      scenePhraseIds: [gameCatalog.phrases[0]!.id],
+      generalPhraseIds: [gameCatalog.phrases[0]!.id],
       excludedPhraseIds: [
-        sampleContent.phrases[0]!.id,
-        sampleContent.phrases[0]!.id,
-        sampleContent.phrases[0]!.id,
+        gameCatalog.phrases[0]!.id,
+        gameCatalog.phrases[0]!.id,
+        gameCatalog.phrases[0]!.id,
       ],
     };
     expect(generatePrivateHand(handRequest)).toMatchObject({
@@ -214,7 +214,7 @@ describe('Hollywood Roast draft actions', () => {
       playerId: playerIds[0],
       characterId: base.players[0].characterId,
       sceneId: base.sceneId,
-      phrases: sampleContent.phrases,
+      phrases: gameCatalog.phrases,
       characterPhraseIds: base.players[0].characterPhraseIds,
       scenePhraseIds: base.scenePhraseIds,
       generalPhraseIds: base.generalPhraseIds,
@@ -238,7 +238,7 @@ describe('Hollywood Roast draft actions', () => {
       playerId: playerIds[0],
       characterId: base.players[0].characterId,
       sceneId: base.sceneId,
-      phrases: sampleContent.phrases,
+      phrases: gameCatalog.phrases,
       characterPhraseIds: [],
       scenePhraseIds: base.scenePhraseIds,
       generalPhraseIds: base.generalPhraseIds,
@@ -270,7 +270,7 @@ describe('Hollywood Roast draft actions', () => {
       if (!result.ok) return undefined;
       return result.hand.phraseIds
         .map((phraseId) =>
-          sampleContent.phrases.find((phrase) => phrase.id === phraseId),
+          gameCatalog.phrases.find((phrase) => phrase.id === phraseId),
         )
         .find((phrase) => phrase?.role === 'conjunction')?.connectorKind;
     };
@@ -279,14 +279,14 @@ describe('Hollywood Roast draft actions', () => {
     expect(connectorKindIn(boundaryHand)).toBe('and');
 
     const restrictedPhrase = {
-      ...sampleContent.phrases.find(
+      ...gameCatalog.phrases.find(
         (phrase) => phrase.id === 'red-folded-chairman-noun-001',
       )!,
       characterIds: ['red-folded-chairman'],
     };
     const restrictedRequest = {
       ...handRequest,
-      phrases: sampleContent.phrases.map((phrase) =>
+      phrases: gameCatalog.phrases.map((phrase) =>
         phrase.id === restrictedPhrase.id ? restrictedPhrase : phrase,
       ),
     };
@@ -607,7 +607,7 @@ describe('Hollywood Roast draft actions', () => {
     const illegalStep = {
       kind: 'phrase' as const,
       phrase: prepareEnglishGrammarPhrase(
-        sampleContent.phrases.find((phrase) => phrase.id === 'common-verb-010-present')!,
+        gameCatalog.phrases.find((phrase) => phrase.id === 'common-verb-010-present')!,
         englishGameLocale,
       ),
     };

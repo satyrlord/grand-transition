@@ -19,7 +19,7 @@ import {
 import {
   englishGameLocale,
   romanianGameLocale,
-  sampleContent,
+  gameCatalog,
 } from '../../src/game-content';
 import {
   defaultGameLocale,
@@ -69,12 +69,12 @@ describe('game locale defaults', () => {
 describe('Romanian display names', () => {
   test('covers every discovered character and scene without changing English names', () => {
     expect(Object.keys(romanianCharacterNames).sort()).toEqual(
-      sampleContent.characters.map(({ id }) => id).sort(),
+      gameCatalog.characters.map(({ id }) => id).sort(),
     );
     expect(Object.keys(romanianSceneNames).sort()).toEqual(
-      sampleContent.scenes.map(({ id }) => id).sort(),
+      gameCatalog.scenes.map(({ id }) => id).sort(),
     );
-    for (const character of sampleContent.characters) {
+    for (const character of gameCatalog.characters) {
       const english = englishGameLocale.messages[character.nameKey]!;
       expect(displayCharacterName(character.id, english, 'en')).toBe(english);
       const romanian = displayCharacterName(character.id, english, 'ro-RO');
@@ -82,7 +82,7 @@ describe('Romanian display names', () => {
       expect(romanian).not.toBe(english);
       expect(romanian).toBe(romanian.normalize('NFC'));
     }
-    for (const scene of sampleContent.scenes) {
+    for (const scene of gameCatalog.scenes) {
       const english = englishGameLocale.messages[scene.nameKey]!;
       expect(displaySceneName(scene.id, english, 'en')).toBe(english);
       const romanian = displaySceneName(scene.id, english, 'ro-RO');
@@ -306,7 +306,7 @@ describe('Romanian game content', () => {
 
   test('carries every English key plus only required Romanian agreement forms', () => {
     const englishKeys = new Set(Object.keys(englishGameLocale.messages));
-    const expectedRomanianForms = sampleContent.phrases
+    const expectedRomanianForms = gameCatalog.phrases
       .filter((phrase) => phrase.role === 'verb' || phrase.role === 'predicate')
       .flatMap((phrase) => [
         ...(!phrase.numberForms ? [`${phrase.textKey}.plural`] : []),

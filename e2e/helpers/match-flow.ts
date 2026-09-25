@@ -4,7 +4,7 @@ import type { DraftCommand, DraftState } from '../../src/engine/draft-actions';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
-  type EnglishGrammarStep,
+  type GrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter';
 import {
   createMatchReducer,
@@ -16,7 +16,7 @@ import {
   type MatchLifecycleCommand,
   type MatchState,
 } from '../../src/engine/match-lifecycle';
-import { listSimulationOptions } from '../../src/engine/simulation';
+import { listSimulationOptions } from '../../src/simulation/simulation';
 import { loadGameContent } from '../../tools/load-game-content';
 import type { Page } from '@playwright/test';
 import {
@@ -25,7 +25,7 @@ import {
 } from '../../src/persistence/codecs/settings-codec';
 import { settingsStorageKey } from '../../src/persistence/settings';
 
-const { englishGameLocale, sampleContent } = loadGameContent();
+const { englishGameLocale, gameCatalog } = loadGameContent();
 
 export type MatchBrowserAction = Readonly<{
   kind: 'draft';
@@ -41,8 +41,8 @@ export type MatchFlowPlan = Readonly<{
 export const matchBrowserFlowSeed = 20_260_007;
 
 const context: MatchEngineContext = {
-  phrases: sampleContent.phrases,
-  characters: sampleContent.characters,
+  phrases: gameCatalog.phrases,
+  characters: gameCatalog.characters,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
@@ -106,9 +106,9 @@ export function planMatchBrowserFlow(seed = matchBrowserFlowSeed): MatchFlowPlan
       configuredPlayer('player-one', 'red-folded-chairman'),
       configuredPlayer('player-two', 'thunder-tribune'),
     ],
-    sceneId: sampleContent.scenes[0]!.id,
-    scenePhraseIds: sampleContent.scenes[0]!.phrasePool,
-    generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+    sceneId: gameCatalog.scenes[0]!.id,
+    scenePhraseIds: gameCatalog.scenes[0]!.phrasePool,
+    generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
     mode: 'hotseat',
   });
 
@@ -331,7 +331,7 @@ function configuredPlayer(
   playerId: string,
   characterId: string,
 ): MatchConfiguredPlayer {
-  const character = sampleContent.characters.find(
+  const character = gameCatalog.characters.find(
     (candidate) => candidate.id === characterId,
   )!;
   return {
@@ -351,11 +351,11 @@ function previewOutgoingDamage(
 ): number {
   const draft = state.draft!;
   const player = draft.playerStates[playerId]!;
-  const added = sampleContent.phrases.find(
+  const added = gameCatalog.phrases.find(
     (phrase) => phrase.id === addedPhraseId,
   );
   if (!added) return 0;
-  const steps: EnglishGrammarStep[] = [
+  const steps: GrammarStep[] = [
     ...player.construction.steps,
     {
       kind: 'phrase',
@@ -372,7 +372,7 @@ function previewOutgoingDamage(
   const opponent = draft.playerStates[opponentId]!;
   const scored = scoreComboFinisherConstruction({
     analysis: analysisResult.analysis,
-    phrases: sampleContent.phrases,
+    phrases: gameCatalog.phrases,
     attackerCharacterId: player.characterId,
     attackerPlayerId: playerId,
     defenderWeaknessTags: opponent.weaknessTags,
@@ -408,7 +408,7 @@ function canCompleteClause(state: MatchState, playerId: string): boolean {
   const player = draft.playerStates[playerId]!;
   const cards = collectPlayableCards(state, playerId);
   const search = (
-    steps: readonly EnglishGrammarStep[],
+    steps: readonly GrammarStep[],
     depth: number,
     used: Set<string>,
   ): boolean => {
@@ -452,13 +452,13 @@ function canCompleteClause(state: MatchState, playerId: string): boolean {
 function collectPlayableCards(
   state: MatchState,
   playerId: string,
-): readonly (typeof sampleContent.phrases)[number][] {
+): readonly (typeof gameCatalog.phrases)[number][] {
   const draft = state.draft!;
   const player = draft.playerStates[playerId]!;
-  const cards: (typeof sampleContent.phrases)[number][] = [];
+  const cards: (typeof gameCatalog.phrases)[number][] = [];
   for (const slot of draft.board.slots) {
     if (!slot.available) continue;
-    const phrase = sampleContent.phrases.find(
+    const phrase = gameCatalog.phrases.find(
       (candidate) => candidate.id === slot.phraseId,
     );
     if (phrase && phrase.role !== 'continuation' && phrase.role !== 'ending') {
@@ -466,7 +466,7 @@ function collectPlayableCards(
     }
   }
   for (const card of player.hand) {
-    const phrase = sampleContent.phrases.find(
+    const phrase = gameCatalog.phrases.find(
       (candidate) => candidate.id === card.phraseId,
     );
     if (phrase && phrase.role !== 'continuation' && phrase.role !== 'ending') {

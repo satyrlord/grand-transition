@@ -52,9 +52,15 @@ test.describe('production character content lifecycle', () => {
 
       await buildIsolatedApplication(fixtureRoot);
       expect(findBuiltFiles(fixtureRoot, temporaryCharacterId)).not.toEqual([]);
+      // The 2048 portrait master never ships. The approved sidekick PNG has the
+      // same base name, so compare bytes instead of names.
+      const portraitMaster = readFileSync(
+        path.join(fixtureRoot, 'src', 'assets', 'characters', 'red-folded-chairman.png'),
+      );
       expect(
         findBuiltFiles(fixtureRoot, 'red-folded-chairman').filter(
-          (filePath) => path.extname(filePath) === '.png',
+          (filePath) => path.extname(filePath) === '.png' &&
+            readFileSync(filePath).equals(portraitMaster),
         ),
       ).toEqual([]);
       activeServer = await serveBuild(fixtureRoot);
@@ -137,19 +143,20 @@ function addTemporaryCharacter(fixtureRoot: string): void {
   const source = JSON.parse(
     readFileSync(sourcePath, 'utf8'),
   ) as CharacterSource;
+  // Content-neutral IDs and tense families start with their owner, so the
+  // cloned cards swap the source owner prefix for the temporary character.
+  const ownedIdentifier = (identifier: string): string =>
+    `${temporaryCharacterId}-${identifier.slice(source.id.length + 1)}`;
   const phraseIdReplacements = new Map(
-    source.phrases.map(({ id }) => [id, `${temporaryCharacterId}-${id}`]),
+    source.phrases.flatMap(({ id, tenseFamily }) => [
+      [id, ownedIdentifier(id)] as const,
+      ...(tenseFamily ? [[tenseFamily, ownedIdentifier(tenseFamily)] as const] : []),
+    ]),
   );
   const fixture = replaceExactStrings(
     structuredClone(source),
     phraseIdReplacements,
   ) as CharacterSource;
-  // The cloned cards keep the same grammatical relation as their source.
-  // Their new stable IDs are discovered by convention, while the existing
-  // Romanian family metadata still describes how each relation takes a noun.
-  fixture.phrases.forEach((phrase, index) => {
-    phrase.tenseFamily = source.phrases[index]?.tenseFamily;
-  });
   const rosterOrders = readdirSync(characterDirectory)
     .filter((fileName) => fileName.endsWith('-phrase-cards.json'))
     .map(

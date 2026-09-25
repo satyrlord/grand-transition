@@ -1,6 +1,6 @@
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { createSimulationSetup, simulateMatch } from '../../src/engine/simulation';
+import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation';
 import { createMatchHistoryEntry } from '../../src/persistence/match-history';
 import { page } from 'vitest/browser';
 import { expect, test, vi } from 'vitest';
@@ -118,12 +118,12 @@ test('opens an empty title-only history modal and traps keyboard focus', async (
 
 test.each([['ai', 'Single player'], ['hotseat', 'Hotseat']] as const)('history labels %s without changing stored mode', async (mode, label) => {
   const setup = {
-    ...createSimulationSetup(sampleContent, { gameLocale: 'en' }),
+    ...createSimulationSetup(gameCatalog, { gameLocale: 'en' }),
     mode,
     aiDifficulty: mode === 'ai' ? 'local-radio-caller' : null,
   };
   const completed = simulateMatch(20_260_829, setup, {
-    catalog: sampleContent, locale: englishGameLocale, balance: basicScoringBalance,
+    catalog: gameCatalog, locale: englishGameLocale, balance: basicScoringBalance,
   });
   const entry = createMatchHistoryEntry(completed.finalState, {
     id: `mode-${mode}`, initialSeed: 20_260_829, completedAt: '2026-09-05T12:00:00.000Z',

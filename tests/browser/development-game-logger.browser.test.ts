@@ -1,7 +1,7 @@
 import { beforeEach, expect, test, vi } from 'vitest';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
 import { DevelopmentGameLogger } from '../../src/app/development-game-logger';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import {
   createMatchReducer,
   defaultMatchRandomSource,
@@ -11,17 +11,17 @@ import {
 import {
   createSimulationSetup,
   simulateMatch,
-} from '../../src/engine/simulation';
+} from '../../src/simulation/simulation';
 import { createReplayInitialState } from '../../src/persistence/codecs/replay-codec';
 
 const context = {
-  catalog: sampleContent,
+  catalog: gameCatalog,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
 const engineContext = {
-  phrases: sampleContent.phrases,
-  characters: sampleContent.characters,
+  phrases: gameCatalog.phrases,
+  characters: gameCatalog.characters,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
@@ -33,7 +33,7 @@ beforeEach(() => {
 test('writes every command and redacts a rejected private selection', async () => {
   const completed = simulateMatch(
     73,
-    createSimulationSetup(sampleContent, { gameLocale: 'en' }),
+    createSimulationSetup(gameCatalog, { gameLocale: 'en' }),
     context,
   );
   const writes: string[] = [];

@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import sharp from 'sharp';
 import { loadGameContent } from '../tools/load-game-content';
 
-const { sampleContent: catalog, englishGameLocale: locale } = loadGameContent();
+const { gameCatalog: catalog, englishGameLocale: locale } = loadGameContent();
 const viewports = [
   { width: 1024, height: 720 },
   { width: 1024, height: 768 },

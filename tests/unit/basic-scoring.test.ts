@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { basicScoringBalance, scoringBalanceForMultiplier } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import {
   ceilDamage,
   replayBasicScoreBreakdown,
@@ -10,13 +10,13 @@ import {
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
-  type EnglishGrammarStep,
+  type GrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter';
 
-const add = (id: string): EnglishGrammarStep => ({
+const add = (id: string): GrammarStep => ({
   kind: 'phrase',
   phrase: prepareEnglishGrammarPhrase(
-    sampleContent.phrases.find((phrase) => phrase.id === id)!,
+    gameCatalog.phrases.find((phrase) => phrase.id === id)!,
     englishGameLocale,
   ),
 });
@@ -32,7 +32,7 @@ const analysis = (ids: readonly string[], end = true) => {
 const score = (ids: readonly string[], weaknesses: readonly string[] = []) =>
   scoreBasicConstruction({
     analysis: analysis(ids),
-    phrases: sampleContent.phrases,
+    phrases: gameCatalog.phrases,
     defenderWeaknessTags: weaknesses,
     balance: basicScoringBalance,
   });
@@ -71,7 +71,7 @@ describe('Hollywood Roast clause scoring', () => {
     'neutral $label clauses do not activate any defender weakness',
     ({ connector }) => {
       const ids = ['common-noun-028', 'common-verb-023-present', 'common-noun-053', connector, 'common-noun-028', 'common-verb-023-present', 'common-noun-053'];
-      const weaknesses = [...new Set(sampleContent.characters.flatMap((character) => character.weaknessTags))];
+      const weaknesses = [...new Set(gameCatalog.characters.flatMap((character) => character.weaknessTags))];
       const result = score(ids, weaknesses);
       expect(result.finalDamage).toBeGreaterThan(0);
       expect(result.finalDamage).toBe(score(ids).finalDamage);
@@ -94,7 +94,7 @@ describe('Hollywood Roast clause scoring', () => {
   });
 
   test('narration anchors distinguish repeated relation occurrences and shared compound completion', () => {
-    const phrases = new Map(sampleContent.phrases.map((phrase) => [phrase.id, phrase]));
+    const phrases = new Map(gameCatalog.phrases.map((phrase) => [phrase.id, phrase]));
     expect(extractScoreClauseAnchors(analysis(['common-noun-001', 'common-predicate-010-present']), phrases)).toEqual([1]);
     expect(extractScoreClauseAnchors(analysis(['common-noun-001', 'common-conjunction-001', 'common-noun-002', 'common-predicate-010-present']), phrases)).toEqual([3, 3]);
     expect(extractScoreClauseAnchors(analysis(['common-noun-001', 'common-predicate-010-present', 'common-conjunction-001', 'common-noun-002', 'common-predicate-010-present']), phrases)).toEqual([1, 4]);
@@ -115,7 +115,7 @@ describe('Hollywood Roast clause scoring', () => {
       'common-noun-001',
       'common-predicate-010-present',
     ]);
-    const flavourPhrases = sampleContent.phrases.map((phrase) =>
+    const flavourPhrases = gameCatalog.phrases.map((phrase) =>
       phrase.id === 'common-predicate-010-present'
         ? {
             ...phrase,
@@ -192,7 +192,7 @@ describe('Hollywood Roast clause scoring', () => {
     const tier = (substance: boolean, flavour: boolean): number =>
       scoreBasicConstruction({
         analysis: baseAnalysis,
-        phrases: sampleContent.phrases.map((phrase) => {
+        phrases: gameCatalog.phrases.map((phrase) => {
           if (phrase.id === 'common-noun-001') {
             return {
               ...phrase,
@@ -227,7 +227,7 @@ describe('Hollywood Roast clause scoring', () => {
   test.each([1, 2, 3, 4, 5] as const)('keeps custom bases, modifier points, and weakness separate at multiplier %s', (multiplier) => {
     const result = scoreBasicConstruction({
       analysis: analysis(['common-noun-001', 'common-predicate-010-present', 'common-modifier-001']),
-      phrases: sampleContent.phrases.map((phrase) => phrase.id === 'common-predicate-010-present'
+      phrases: gameCatalog.phrases.map((phrase) => phrase.id === 'common-predicate-010-present'
         ? { ...phrase, customScores: [{ leftNounId: 'common-noun-001', score: 9 }] }
         : phrase),
       defenderWeaknessTags: ['consistency'],
@@ -244,7 +244,7 @@ describe('Hollywood Roast clause scoring', () => {
       'common-predicate-010-present',
       'common-modifier-001',
     ] as const;
-    const phrases = sampleContent.phrases.map((phrase) =>
+    const phrases = gameCatalog.phrases.map((phrase) =>
       phrase.id === 'common-modifier-001'
         ? {
             ...phrase,
@@ -289,7 +289,7 @@ describe('Hollywood Roast clause scoring', () => {
     )).toEqual([5, 7, 9, 11]);
     const ids = [...core, ...modifiers];
     expect(scoreBasicConstruction({
-      analysis: analysis(ids), phrases: sampleContent.phrases,
+      analysis: analysis(ids), phrases: gameCatalog.phrases,
       defenderWeaknessTags: [], balance: { ...basicScoringBalance, modifierPoints: 0 },
     }).finalDamage).toBe(5);
   });
@@ -300,7 +300,7 @@ describe('Hollywood Roast clause scoring', () => {
       'algorithmic-prophet-conjunction-001', 'common-noun-001',
       'common-predicate-010-present'];
     const modifiers = new Set(ids.slice(3, 6));
-    const phrases = sampleContent.phrases.map((phrase) => ({
+    const phrases = gameCatalog.phrases.map((phrase) => ({
       ...phrase, tags: modifiers.has(phrase.id) ? ['modifier-only'] : [],
     }));
     const result = scoreBasicConstruction({
@@ -315,7 +315,7 @@ describe('Hollywood Roast clause scoring', () => {
   test('modifier points apply to custom scores and repeated occurrences', () => {
     const ids = ['common-noun-001', 'common-predicate-010-present',
       'common-modifier-001', 'common-modifier-001'];
-    const phrases = sampleContent.phrases.map((phrase) =>
+    const phrases = gameCatalog.phrases.map((phrase) =>
       phrase.id === 'common-predicate-010-present'
         ? { ...phrase, customScores: [{ leftNounId: 'common-noun-001', score: 9 }] }
         : phrase);
@@ -455,7 +455,7 @@ describe('Hollywood Roast clause scoring', () => {
   test('an incomplete sentence deals zero damage and has no clause score', () => {
     const result = scoreBasicConstruction({
       analysis: analysis(['common-noun-001']),
-      phrases: sampleContent.phrases,
+      phrases: gameCatalog.phrases,
       defenderWeaknessTags: ['restraint'],
       balance: basicScoringBalance,
     });

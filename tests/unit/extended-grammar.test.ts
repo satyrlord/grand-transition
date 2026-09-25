@@ -1,19 +1,19 @@
 import { describe, expect, test } from 'vitest';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
-  type EnglishGrammarStep,
+  type GrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter';
 
-const add = (id: string): EnglishGrammarStep => ({
+const add = (id: string): GrammarStep => ({
   kind: 'phrase',
   phrase: prepareEnglishGrammarPhrase(
-    sampleContent.phrases.find((candidate) => candidate.id === id)!,
+    gameCatalog.phrases.find((candidate) => candidate.id === id)!,
     englishGameLocale,
   ),
 });
-const analyze = (steps: readonly EnglishGrammarStep[]) =>
+const analyze = (steps: readonly GrammarStep[]) =>
   englishGrammarAdapter.analyze({
     steps,
     subjectNumber: 'singular',

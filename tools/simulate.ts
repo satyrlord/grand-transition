@@ -8,8 +8,8 @@ import {
   listLocalRadioCallerSimulationOptions,
   simulateMatches,
   summarizeSimulation,
-} from '../src/engine/simulation';
-import { listConfiguredAiSimulationOptions } from '../src/ai/simulation-policy';
+} from '../src/simulation/simulation';
+import { listConfiguredAiSimulationOptions } from '../src/simulation/simulation-policy';
 import { loadGameContent } from './load-game-content';
 
 export type SimulationArguments = Readonly<{
@@ -99,16 +99,16 @@ export async function runSimulationCommand(
     output(`Invalid ${parsed.option}: ${parsed.message}`);
     return 1;
   }
-  const { sampleContent, englishGameLocale } = loadGameContent();
+  const { gameCatalog, englishGameLocale } = loadGameContent();
   const context = {
-    catalog: sampleContent,
+    catalog: gameCatalog,
     locale: englishGameLocale,
     balance: basicScoringBalance,
   };
   const report = simulateMatches(
     parsed.value.seed,
     parsed.value.matches,
-    createSimulationSetup(sampleContent, {
+    createSimulationSetup(gameCatalog, {
       aiDifficulty: parsed.value.difficulty ?? 'local-radio-caller',
       // The command-line context is English, so the recorded setup must state
       // its language instead of following the Romanian product default.

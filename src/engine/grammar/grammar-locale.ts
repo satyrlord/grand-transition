@@ -5,10 +5,10 @@ import {
   englishGrammarAdapter,
   englishRenderedForms,
   prepareEnglishGrammarPhrase,
-  type EnglishGrammarAnalysis,
-  type EnglishGrammarFault,
-  type EnglishGrammarInput,
-  type EnglishGrammarPhrase,
+  type GrammarAnalysis,
+  type GrammarFault,
+  type GrammarInput,
+  type GrammarPhrase,
 } from './english-grammar-adapter';
 import {
   prepareRomanianGrammarPhrase,
@@ -21,15 +21,15 @@ import {
 // object in every binding; only the text and agreement forms differ, and each
 // prepare function still rejects a bundle from the other locale.
 export type GrammarLocaleBinding = Readonly<{
-  prepare: (phrase: Phrase, locale: GameLocaleBundle) => EnglishGrammarPhrase;
+  prepare: (phrase: Phrase, locale: GameLocaleBundle) => GrammarPhrase;
   renderedForms: (
     phrase: Phrase,
     locale: GameLocaleBundle,
   ) => ReadonlySet<string>;
   adapter: GrammarAdapter<
-    EnglishGrammarInput,
-    EnglishGrammarAnalysis,
-    EnglishGrammarFault
+    GrammarInput,
+    GrammarAnalysis,
+    GrammarFault
   >;
 }>;
 

@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
-import { createSimulationSetup, simulateMatch } from '../../src/engine/simulation';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
+import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation';
 import { createBrowserStorage } from '../../src/persistence/browser-storage';
 import {
   createMatchHistoryEntry,
@@ -18,9 +18,9 @@ import { replaySchemaVersion } from '../../src/persistence/codecs/replay-codec';
 
 const completed = simulateMatch(
   20_260_829,
-  createSimulationSetup(sampleContent, { gameLocale: 'en' }),
+  createSimulationSetup(gameCatalog, { gameLocale: 'en' }),
   {
-    catalog: sampleContent,
+    catalog: gameCatalog,
     locale: englishGameLocale,
     balance: basicScoringBalance,
   },
@@ -71,6 +71,21 @@ describe('persistent match history', () => {
       ok: false,
       code: 'storage-unavailable',
     });
+  });
+
+  test('stores history without indentation and still reads indented history', () => {
+    const document = {
+      schemaVersion: matchHistorySchemaVersion,
+      kind: matchHistoryKind,
+      entries: [historyEntry('match-one', '2026-08-29T12:00:00.000Z')],
+    } as const;
+    const encoded = encodeMatchHistory(document);
+    // Entries are never removed, so indentation would halve the number of
+    // matches that fit in the browser storage quota.
+    expect(encoded).toBe(`${JSON.stringify(JSON.parse(encoded))}\n`);
+    const indented = `${JSON.stringify(JSON.parse(encoded), null, 2)}\n`;
+    expect(encoded.length).toBeLessThan(indented.length * 0.75);
+    expect(decodeMatchHistory(indented)).toEqual(decodeMatchHistory(encoded));
   });
 
   test('round-trips normalized public replay and match-log data', () => {

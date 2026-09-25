@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { sampleContent } from '../../src/game-content';
+import { gameCatalog } from '../../src/game-content';
 import {
   boardSlotCount,
   generateBoard,
@@ -7,10 +7,10 @@ import {
 } from '../../src/engine/board-generation';
 import type { RandomSource } from '../../src/engine/random-source';
 
-const scene = sampleContent.scenes[0]!;
+const scene = gameCatalog.scenes[0]!;
 const request = (seed = 20260822): BoardGenerationRequest => ({
   seed,
-  phrases: sampleContent.phrases,
+  phrases: gameCatalog.phrases,
   sceneId: scene.id,
   scenePhraseIds: scene.phrasePool,
 });
@@ -142,7 +142,7 @@ describe('Hollywood Roast shared board generation', () => {
         (slot) => slot.role === 'conjunction',
       )!;
       expect(expectedKinds).toContain(
-        sampleContent.phrases.find((phrase) => phrase.id === connector.phraseId)
+        gameCatalog.phrases.find((phrase) => phrase.id === connector.phraseId)
           ?.connectorKind,
       );
     },
@@ -150,7 +150,7 @@ describe('Hollywood Roast shared board generation', () => {
 
   test('deals without a forced connector when only clause connectors remain', () => {
     const scenePhraseIds = scene.phrasePool.filter((phraseId) => {
-      const phrase = sampleContent.phrases.find(
+      const phrase = gameCatalog.phrases.find(
         (candidate) => candidate.id === phraseId,
       );
       return (
@@ -166,7 +166,7 @@ describe('Hollywood Roast shared board generation', () => {
       (candidate) => candidate.role === 'conjunction',
     )) {
       expect(['common-conjunction-003', 'common-conjunction-004']).toContain(
-        sampleContent.phrases.find((phrase) => phrase.id === slot.phraseId)
+        gameCatalog.phrases.find((phrase) => phrase.id === slot.phraseId)
           ?.connectorKind,
       );
     }
@@ -174,12 +174,12 @@ describe('Hollywood Roast shared board generation', () => {
 
   test('never puts a character-restricted phrase on the common board', () => {
     const restricted = {
-      ...sampleContent.phrases.find(
+      ...gameCatalog.phrases.find(
         (phrase) => phrase.id === 'red-folded-chairman-noun-001',
       )!,
       characterIds: ['red-folded-chairman'],
     };
-    const phrases = sampleContent.phrases.map((phrase) =>
+    const phrases = gameCatalog.phrases.map((phrase) =>
       phrase.id === restricted.id ? restricted : phrase,
     );
     const result = generateBoard({ ...request(), phrases });
@@ -191,6 +191,40 @@ describe('Hollywood Roast shared board generation', () => {
         ),
       ).toBe(false);
     }
+  });
+
+  test('rejects a pool that fills the fixed slots but not the variable slots', () => {
+    const open = gameCatalog.phrases.filter(
+      (phrase) => !phrase.characterIds && !phrase.sceneIds,
+    );
+    const take = (role: string, count: number) =>
+      open.filter((phrase) => phrase.role === role).slice(0, count).map(({ id }) => id);
+    const scenePhraseIds = [
+      ...take('noun', 3),
+      ...take('verb', 3),
+      ...take('predicate', 1),
+      ...take('continuation', 1),
+    ];
+    expect(scenePhraseIds).toHaveLength(8);
+    expect(generateBoard({ ...request(1), scenePhraseIds })).toMatchObject({
+      ok: false,
+      error: { code: 'impossible-content-pool' },
+    });
+  });
+
+  test('skips the forced connector below the 10 percent connector roll', () => {
+    let calls = 0;
+    const random: RandomSource = {
+      next(seed) {
+        calls += 1;
+        return { value: calls === 9 ? 0.05 : 0.01, nextSeed: seed + 1 };
+      },
+    };
+    const result = generateBoard(request(1), random);
+    expect(result.ok).toBe(true);
+    // Eight fixed draws, the connector roll, one variable draw, and eight
+    // shuffle draws. A forced connector would add its kind and phrase draws.
+    expect(calls).toBe(18);
   });
 
   test('reports the available role counts for an impossible scene pool', () => {

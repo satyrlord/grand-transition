@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import {
   createMatchReducer,
   createMatchSetupState,
@@ -14,15 +14,15 @@ import { seededRandomSource } from '../../src/engine/random-source';
 
 const playerIds = ['first-player', 'second-player'] as const;
 const context: MatchEngineContext = {
-  phrases: sampleContent.phrases,
-  characters: sampleContent.characters,
+  phrases: gameCatalog.phrases,
+  characters: gameCatalog.characters,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
 const reducer = createMatchReducer(context);
 
 function configuredPlayer(index: 0 | 1): MatchConfiguredPlayer {
-  const character = sampleContent.characters[index]!;
+  const character = gameCatalog.characters[index]!;
   return {
     playerId: playerIds[index],
     characterId: character.id,
@@ -34,14 +34,14 @@ function configuredPlayer(index: 0 | 1): MatchConfiguredPlayer {
 }
 
 function setup(): MatchState {
-  const scene = sampleContent.scenes[0]!;
+  const scene = gameCatalog.scenes[0]!;
   return createMatchSetupState({
     schemaVersion: 1,
     seed: 2_026_082_4,
     players: [configuredPlayer(0), configuredPlayer(1)],
     sceneId: scene.id,
     scenePhraseIds: scene.phrasePool,
-    generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+    generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
   });
 }
 
@@ -230,7 +230,7 @@ describe('Hollywood Roast match lifecycle', () => {
     expect(
       dealtPhraseIds.every(
         (phraseId) =>
-          sampleContent.phrases.find((phrase) => phrase.id === phraseId)
+          gameCatalog.phrases.find((phrase) => phrase.id === phraseId)
             ?.role !== 'continuation',
       ),
     ).toBe(true);
@@ -366,5 +366,48 @@ describe('Hollywood Roast match lifecycle', () => {
     );
     expect(result).toMatchObject({ ok: false, error: { code: 'wrong-phase' } });
     expect(state).toEqual(before);
+  });
+
+  test('a cliffhanger hand refresh never deals a continuation card', () => {
+    const continuationIds = new Set(
+      gameCatalog.phrases
+        .filter((phrase) => phrase.role === 'continuation')
+        .map((phrase) => phrase.id),
+    );
+    // Seed 1 through 400 over every scene included one refresh that dealt a
+    // continuation card before the refresh used the cliffhanger phrase pool.
+    for (let seed = 1; seed <= 400; seed += 1) {
+      const scene = gameCatalog.scenes[seed % gameCatalog.scenes.length]!;
+      const cliffhanger: MatchState = {
+        ...createMatchSetupState({
+          schemaVersion: 1,
+          seed,
+          players: [configuredPlayer(0), configuredPlayer(1)],
+          sceneId: scene.id,
+          scenePhraseIds: scene.phrasePool,
+          generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
+        }),
+        phase: 'sudden-death',
+        suddenDeathActive: true,
+      };
+      const prepared = lifecycle(cliffhanger, 'prepare-round');
+      const actorId = prepared.activePlayerId;
+      const refreshed = run(prepared, {
+        type: 'redraw-hand',
+        source: 'user',
+        actorId,
+        payload: {},
+      });
+      const dealt = [
+        ...prepared.draft!.board.slots.map((slot) => slot.phraseId),
+        ...refreshed.draft!.playerStates[actorId]!.hand.map(
+          (card) => card.phraseId,
+        ),
+      ];
+      expect(
+        dealt.filter((phraseId) => continuationIds.has(phraseId)),
+        `seed ${seed}`,
+      ).toEqual([]);
+    }
   });
 });

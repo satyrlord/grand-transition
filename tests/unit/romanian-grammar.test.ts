@@ -2,12 +2,12 @@ import { describe, expect, test } from 'vitest';
 import {
   englishGameLocale,
   romanianGameLocale,
-  sampleContent,
+  gameCatalog,
 } from '../../src/game-content';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
-  type EnglishGrammarStep,
+  type GrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter';
 import {
   grammarFor,
@@ -26,7 +26,7 @@ import {
 import type { GameLocaleBundle } from '../../src/localization/game-locale-schema';
 
 const phraseById = new Map(
-  sampleContent.phrases.map((phrase) => [phrase.id, phrase]),
+  gameCatalog.phrases.map((phrase) => [phrase.id, phrase]),
 );
 const phrase = (id: string) => phraseById.get(id)!;
 const message = (locale: GameLocaleBundle, key: string) => {
@@ -43,7 +43,7 @@ const analyzeWith = (
 ): ReturnType<GrammarLocaleBinding['adapter']['analyze']> =>
   binding.adapter.analyze({
     steps: [
-      ...ids.map((id): EnglishGrammarStep => ({
+      ...ids.map((id): GrammarStep => ({
         kind: 'phrase',
         phrase: binding.prepare(phrase(id), locale),
       })),
@@ -572,8 +572,8 @@ describe('Romanian grammar binding', () => {
   });
 
   test('governs every shipped verb family and personal noun pairing', () => {
-    const verbs = sampleContent.phrases.filter((card) => card.role === 'verb');
-    const personalNouns = sampleContent.phrases.filter(
+    const verbs = gameCatalog.phrases.filter((card) => card.role === 'verb');
+    const personalNouns = gameCatalog.phrases.filter(
       (card) => card.role === 'noun' && card.referentKind === 'personal',
     );
     expect(new Set(verbs.map((card) => card.tenseFamily))).toEqual(
@@ -625,7 +625,7 @@ describe('Romanian grammar binding', () => {
   }, 30_000);
 
   test('prepares every Romanian relation card with a second-person form', () => {
-    for (const card of sampleContent.phrases) {
+    for (const card of gameCatalog.phrases) {
       if (card.role === 'verb' || card.role === 'predicate') {
         expect(() => romanianGrammar.prepare(card, romanianGameLocale)).not.toThrow();
       }

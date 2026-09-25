@@ -102,6 +102,22 @@ describe('neural engine selection', () => {
     expect(h.engines[0]!.speak.mock.calls[0]![0].voiceUri).toBe('piper:vctk-p225');
     h.ready(1); expect(h.router.activeMode).toBe('piper'); h.router.dispose();
   });
+  test('reading the active mode has no side effect and a failed GPU match can release its engine', async () => {
+    const h = harness();
+    h.router.configure({ speechEnabled: true, gpuVoices: true });
+    await h.router.initialize();
+    h.ready(1);
+    h.router.beginMatch();
+    expect(h.router.activeMode).toBe('gpu');
+    h.engines[1]!.status = 'unavailable';
+    expect(h.router.activeMode).toBe('piper');
+    expect(h.router.activeMode).toBe('piper');
+    expect(h.engines[1]!.dispose).not.toHaveBeenCalled();
+    h.router.configure({ speechEnabled: true, gpuVoices: false });
+    expect(h.engines[1]!.dispose).toHaveBeenCalledOnce();
+    expect(h.router.activeMode).toBe('piper');
+    h.router.dispose();
+  });
   test('preserves a match selection through mute and releases GPU when leaving with speech disabled', async () => {
     const h = harness(); h.router.configure({speechEnabled:true,gpuVoices:true}); await h.router.initialize(); h.ready(1); h.router.beginMatch();
     h.router.configure({speechEnabled:false,gpuVoices:true}); expect(h.router.activeMode).toBe('gpu');

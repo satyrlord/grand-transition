@@ -2,9 +2,9 @@ import { describe, expect, test, vi } from 'vitest';
 import { MatchCoordinator, cliffhangerReaction, type MatchCommandLog } from '../../src/app/match-coordinator';
 import { resolution } from '../fixtures/narration';
 import { basicScoringBalance, type BasePointsMultiplier } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import { createMatchSetupState, type MatchState } from '../../src/engine/match-lifecycle';
-import { listSimulationOptions } from '../../src/engine/simulation';
+import { listSimulationOptions } from '../../src/simulation/simulation';
 import { createLadderProgress } from '../../src/engine/ladder';
 import { MatchHistoryRepository } from '../../src/persistence/match-history';
 import { LadderProgressRepository } from '../../src/persistence/ladder-progress';
@@ -12,7 +12,7 @@ import { replayMatch } from '../../src/persistence/codecs/replay-codec';
 import { createMemoryStorage } from '../../src/persistence/storage-port';
 
 const context = {
-  phrases: sampleContent.phrases, characters: sampleContent.characters,
+  phrases: gameCatalog.phrases, characters: gameCatalog.characters,
   locale: englishGameLocale, balance: basicScoringBalance,
 };
 const identity = {
@@ -22,19 +22,19 @@ const identity = {
 
 function setup(ai = false, basePointsMultiplier?: BasePointsMultiplier): MatchState {
   const player = (index: number) => {
-      const character = sampleContent.characters[index]!;
+      const character = gameCatalog.characters[index]!;
       return {
       playerId: index === 0 ? 'player-one' : 'player-two', characterId: character.id,
       characterPhraseIds: character.characterPhraseIds, weaknessTags: character.weaknessTags,
       subjectNumber: 'singular' as const, objectNumber: 'singular' as const,
       };
   };
-  const scene = sampleContent.scenes[0]!;
+  const scene = gameCatalog.scenes[0]!;
   return createMatchSetupState({
     schemaVersion: 1, seed: identity.initialSeed, basePointsMultiplier,
     players: [player(0), player(1)],
     sceneId: scene.id, scenePhraseIds: scene.phrasePool,
-    generalPhraseIds: sampleContent.phrases.map(({ id }) => id),
+    generalPhraseIds: gameCatalog.phrases.map(({ id }) => id),
     mode: ai ? 'ai' : 'hotseat', aiDifficulty: ai ? 'local-radio-caller' : null,
     openingPlayerIndex: ai ? 1 : 0,
   });
@@ -84,8 +84,8 @@ describe('match coordination', () => {
 
   test.each([false, true])('records a deterministic complete match and ladder=%s', (isLadder) => {
     const { coordinator, history, ladder, logs } = harness();
-    if (isLadder) ladder.replace(createLadderProgress(sampleContent.characters[0]!.id, 42,
-      sampleContent.characters.map(({ id }) => id), sampleContent.scenes.map(({ id }) => id)));
+    if (isLadder) ladder.replace(createLadderProgress(gameCatalog.characters[0]!.id, 42,
+      gameCatalog.characters.map(({ id }) => id), gameCatalog.scenes.map(({ id }) => id)));
     const initial = setup();
     const original = JSON.stringify(initial);
     let state = coordinator.start(initial, englishGameLocale);
@@ -94,7 +94,7 @@ describe('match coordination', () => {
     for (let step = 0; state.phase !== 'results' && step < 2000; step += 1) {
       const before = JSON.stringify(state);
       const command = listSimulationOptions(state, context)[0]!.command;
-      const transition = coordinator.apply(state, command, { ...identity, ladder: isLadder });
+      const transition = coordinator.apply(state, command, { ...identity, ladder: isLadder })!;
       expect(JSON.stringify(state)).toBe(before);
       state = transition.state;
       if (transition.review) {
@@ -124,14 +124,14 @@ describe('match coordination', () => {
       let state = coordinator.start(setup(false, multiplier), englishGameLocale);
       for (let step = 0; state.phase !== 'results' && step < 2000; step += 1) {
         const command = listSimulationOptions(state, context)[0]!.command;
-        state = coordinator.apply(state, command, { ...identity, id: `multiplier-${multiplier}` }).state;
+        state = coordinator.apply(state, command, { ...identity, id: `multiplier-${multiplier}` })!.state;
         if (state.phase === 'round-preparation') state = coordinator.continueRound(state, identity.initialSeed);
       }
       expect(state.phase).toBe('results');
       const entry = history.snapshot().entries.find(({ id }) => id === `multiplier-${multiplier}`)!;
       expect(entry.replay.setup.basePointsMultiplier).toBe(multiplier);
       const replayed = replayMatch(JSON.stringify(entry.replay), {
-        catalog: sampleContent, locale: englishGameLocale, balance: basicScoringBalance,
+        catalog: gameCatalog, locale: englishGameLocale, balance: basicScoringBalance,
       });
       expect(replayed.ok).toBe(true);
       if (replayed.ok) expect(replayed.state.resolutionHistory).toEqual(state.resolutionHistory);
@@ -142,7 +142,7 @@ describe('match coordination', () => {
     const { coordinator, history, logs } = harness();
     const state = coordinator.start(setup(), englishGameLocale);
     const before = JSON.stringify(state);
-    expect(() => coordinator.apply(state, { type: 'start-match', source: 'user', payload: {} }, identity)).toThrow(/failed/u);
+    expect(coordinator.apply(state, { type: 'start-match', source: 'user', payload: {} }, identity)).toBeNull();
     expect(JSON.stringify(state)).toBe(before);
     expect(logs.at(-1)).toMatchObject({ outcome: 'rejected', before: state, after: state });
     expect(history.snapshot().entries).toHaveLength(0);
@@ -155,11 +155,11 @@ describe('match coordination', () => {
     const state = { ...initial, playerStates: { ...initial.playerStates,
       [playerId]: { ...initial.playerStates[playerId]!, pride } } };
     const slot = state.draft!.board.slots.find(({ phraseId }) =>
-      sampleContent.phrases.find(({ id }) => id === phraseId)?.role === 'predicate')!;
+      gameCatalog.phrases.find(({ id }) => id === phraseId)?.role === 'predicate')!;
     const transition = coordinator.apply(state, {
       type: 'select-phrase', source: 'user', actorId: playerId,
       payload: { card: { source: 'shared', cardId: slot.id } },
-    }, identity);
+    }, identity)!;
     if (pride === 3) {
       expect(transition.state.phase).toBe('results');
       expect(transition.reaction).toMatchObject({ kind: 'grammar-mistake', playerId, damage: 3 });
@@ -173,7 +173,7 @@ describe('match coordination', () => {
     }
   });
 
-  test.each(['local-radio-caller', 'party-strategist', 'palace-operator'])('applies %s only after both timer tasks', (difficulty) => {
+  test.each(['local-radio-caller', 'party-strategist', 'palace-operator'])('applies %s only after the search, delay, and yield tasks', (difficulty) => {
     const { coordinator, tasks, runTask } = harness();
     const initial = coordinator.start(setup(true), englishGameLocale);
     const state = { ...initial, setup: { ...initial.setup, aiDifficulty: difficulty } };
@@ -182,11 +182,44 @@ describe('match coordination', () => {
     coordinator.scheduleAiTurn({ currentState: () => state, reducedDelay: true, thinking, apply });
     expect(thinking).toHaveBeenLastCalledWith(true);
     runTask();
+    runTask();
     expect(apply).not.toHaveBeenCalled();
     runTask();
     expect(apply).toHaveBeenCalledOnce();
     expect(thinking).toHaveBeenLastCalledWith(false);
     expect(tasks.size).toBe(0);
+  });
+
+  test.each([
+    [0, 100],
+    [40, 60],
+    [250, 0],
+  ])('shows thinking before a %i ms search and counts it toward the delay', (searchMs, remainingDelay) => {
+    const tasks: { callback: () => void; delay: number }[] = [];
+    let now = 1_000;
+    const coordinator = new MatchCoordinator({
+      context,
+      history: new MatchHistoryRepository(createMemoryStorage()),
+      ladder: new LadderProgressRepository(createMemoryStorage()),
+      log: () => {},
+      now: () => '2026-09-05T00:00:00.000Z',
+      setTimeout: (callback, delay) => tasks.push({ callback, delay }),
+      clearTimeout: () => {},
+      // The search reads the clock once before and once after it runs.
+      elapsedNow: () => (now += searchMs),
+    });
+    const state = coordinator.start(setup(true), englishGameLocale);
+    const thinking = vi.fn();
+    const apply = vi.fn();
+    coordinator.scheduleAiTurn({ currentState: () => state, reducedDelay: true, thinking, apply });
+    expect(thinking).toHaveBeenCalledWith(true);
+    expect(tasks.map(({ delay }) => delay)).toEqual([0]);
+    tasks.shift()!.callback();
+    // Reduced motion uses a 100 ms presentation delay.
+    expect(tasks.map(({ delay }) => delay)).toEqual([remainingDelay]);
+    tasks.shift()!.callback();
+    tasks.shift()!.callback();
+    expect(apply).toHaveBeenCalledOnce();
   });
 
   test.each(['cancel', 'ineligible', 'replacement'])('rejects stale AI work after %s', (change) => {

@@ -2,11 +2,13 @@ import type { BasicScoringBalance } from '../content/basic-scoring-balance';
 import type { Phrase } from '../content/schemas';
 import {
   ceilDamage,
+  clauseNoteItems,
   extractScoreClauses,
   scoreClause,
   type BasicScoreBreakdownItem,
 } from './basic-scoring';
-import type { EnglishGrammarAnalysis } from './grammar/english-grammar-adapter';
+import type { GrammarAnalysis } from './grammar/english-grammar-adapter';
+import { phraseIndex } from './phrase-index';
 
 export type PlayerComboChains = Readonly<{
   previousNounIds: readonly string[];
@@ -54,7 +56,7 @@ export type ComboFinisherScoringRequest = Readonly<{
   attackerPlayerId: string;
   attackerCharacterId: string;
   comboState: ComboChainState;
-  analysis: EnglishGrammarAnalysis;
+  analysis: GrammarAnalysis;
   phrases: readonly Phrase[];
   defenderWeaknessTags: readonly string[];
   balance: BasicScoringBalance;
@@ -69,9 +71,7 @@ export type ComboFinisherScoringResult = Readonly<{
 export function scoreComboFinisherConstruction(
   request: ComboFinisherScoringRequest,
 ): ComboFinisherScoringResult {
-  const phraseById = new Map(
-    request.phrases.map((phrase) => [phrase.id, phrase]),
-  );
+  const phraseById = phraseIndex(request.phrases);
   const scoreable =
     request.analysis.complete && request.analysis.sentenceStatus === 'complete';
   const nounOccurrences = scoreable
@@ -112,34 +112,7 @@ export function scoreComboFinisherConstruction(
         request.defenderWeaknessTags,
         request.balance,
       );
-      breakdown.push({
-        kind: 'clause-base',
-        operation: 'note',
-        phraseIds: clause.phraseIds,
-        amount: scored.base,
-      });
-      if (scored.restrictionFactor !== 1) {
-        breakdown.push({
-          kind: 'restriction-multiplier',
-          operation: 'note',
-          phraseIds: clause.phraseIds,
-          factor: scored.restrictionFactor,
-        });
-      }
-      breakdown.push(
-        ...scored.weaknessMatches.map((match) => ({
-          kind: 'weakness-match' as const,
-          operation: 'note' as const,
-          ...match,
-        })),
-      );
-      if (scored.weaknessFactor !== 1) {
-        breakdown.push({
-          kind: 'weakness-multiplier',
-          operation: 'note',
-          factor: scored.weaknessFactor,
-        });
-      }
+      breakdown.push(...clauseNoteItems(clause, scored));
       const comboFactor = clause.nounPhraseIds.reduce(
         (factor, nounId) =>
           factor * (nextPlayerChains.chainByNounId[nounId] ?? 1),

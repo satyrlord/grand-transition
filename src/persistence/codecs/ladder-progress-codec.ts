@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import type { LadderProgress } from '../../engine/ladder';
 import { normalizedJson } from './replay-codec';
+import { deepFreeze, isRecord } from '../../engine/plain-values';
 
 export const ladderProgressSchemaVersion = 1;
 
@@ -36,6 +37,7 @@ const schema = z
     wins: z.number().int().min(0),
     losses: z.number().int().min(0),
     completed: z.boolean(),
+    unfinishedAttempts: z.number().int().min(1).optional(),
   })
   .strict()
   .superRefine((value, context) => {
@@ -72,6 +74,7 @@ const fields = new Set([
   'wins',
   'losses',
   'completed',
+  'unfinishedAttempts',
 ]);
 
 export function encodeLadderProgress(progress: LadderProgress): string {
@@ -135,18 +138,4 @@ function invalid(pathValue: string): LadderProgressCodecFailure {
 
 function path(value: readonly PropertyKey[] | undefined): string {
   return value && value.length > 0 ? value.map(String).join('.') : '$';
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
-
-function deepFreeze<Value>(value: Value): Value {
-  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
-    for (const nested of Object.values(value as Record<string, unknown>)) {
-      deepFreeze(nested);
-    }
-    Object.freeze(value);
-  }
-  return value;
 }

@@ -31,7 +31,7 @@ export default defineConfig(({ command }) => ({
     },
   },
   optimizeDeps: { exclude: ['phonemizer', 'onnxruntime-web'] },
-  worker: { format: 'es', plugins: () => [neuralPhonemizerPlugin()] },
+  worker: { format: 'es', plugins: () => [neuralPhonemizerPlugin(), omitFallbackSpeechWasmPlugin()] },
   build: {
     rolldownOptions: {
       output: {
@@ -53,6 +53,7 @@ export default defineConfig(({ command }) => ({
   },
   plugins: [
     neuralPhonemizerPlugin(),
+    omitFallbackSpeechWasmPlugin(),
     {
       name: 'neural-runtime-static-development-module',
       apply: 'serve',
@@ -106,6 +107,27 @@ export default defineConfig(({ command }) => ({
       : [developmentGameLogPlugin()]),
   ],
 }));
+
+// The speech workers load hash-checked runtime and phonemizer WASM from
+// `public/tts/` and pass those bytes or paths to their libraries. The copies that
+// the libraries' default URLs make Rolldown emit into `assets/` are never
+// requested, so they are left out of the deployment.
+const fallbackSpeechWasm =
+  /^assets\/(?:ort-wasm-simd-threaded(?:\.asyncify)?|espeak-ng)-[\w-]+\.wasm$/u;
+
+export function omitFallbackSpeechWasmPlugin(): Plugin {
+  return {
+    name: 'omit-fallback-speech-wasm',
+    apply: 'build',
+    generateBundle(_options, bundle) {
+      for (const [fileName, output] of Object.entries(bundle)) {
+        if (output.type === 'asset' && fallbackSpeechWasm.test(fileName)) {
+          delete bundle[fileName];
+        }
+      }
+    },
+  };
+}
 
 const characterPortraitFallbackId =
   'virtual:character-portrait-fallbacks';

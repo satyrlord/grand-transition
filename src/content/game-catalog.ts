@@ -1,6 +1,6 @@
 import type { GameLocaleBundle } from '../localization/game-locale-schema';
 import { validateContentCatalog, type ContentCatalog } from './content-catalog';
-import type { PhraseCardCatalog } from './phrase-card-catalog';
+import type { CatalogBuildOptions, PhraseCardCatalog } from './phrase-card-catalog';
 
 const media = (assetId: string) => ({
   assetId,
@@ -34,16 +34,17 @@ const foundationScenePresentation = {
   },
 } as const;
 
-export function createSampleContent(
+export function createGameCatalog(
   phraseCardCatalog: PhraseCardCatalog,
   gameLocaleBundles: readonly GameLocaleBundle[],
+  options: CatalogBuildOptions = {},
 ): ContentCatalog {
   const scenePhraseIds = (sceneId: string): readonly string[] =>
     phraseCardCatalog.phrases
       .filter((phrase) => !phrase.sceneIds || phrase.sceneIds.includes(sceneId))
       .map((phrase) => phrase.id);
 
-  return validateContentCatalog({
+  const catalog: Parameters<typeof validateContentCatalog>[0] = {
     phrases: [...phraseCardCatalog.phrases],
     characters: [...phraseCardCatalog.characters],
     scenes: [
@@ -110,7 +111,10 @@ export function createSampleContent(
       },
     ],
     locales: [...gameLocaleBundles],
-  });
+  };
+  return options.validate === false
+    ? (catalog as ContentCatalog)
+    : validateContentCatalog(catalog);
 }
 
 function foundationScene(

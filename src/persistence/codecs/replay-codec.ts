@@ -19,6 +19,7 @@ import {
 } from '../../engine/match-lifecycle';
 import type { DeepImmutable } from '../../engine/game-contracts';
 import type { StoragePort } from '../storage-port';
+import { isRecord } from '../../engine/plain-values';
 
 // One replay document format exists at a time. The version only ever changes
 // when that format changes; content revisions never bump it. Version 2 records
@@ -682,8 +683,4 @@ function matchLogMatchesContext(
       allowedTextsByPhrase.get(phrase.phraseId)?.has(phrase.text) === true,
     ),
   );
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }

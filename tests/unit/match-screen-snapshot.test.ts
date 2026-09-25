@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { createMatchScreenSnapshot } from '../../src/app/match-screen-snapshot';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import {
   createMatchReducer,
   createMatchSetupState,
@@ -13,20 +13,20 @@ import {
 } from '../../src/engine/match-lifecycle';
 
 const reducer = createMatchReducer({
-  phrases: sampleContent.phrases,
-  characters: sampleContent.characters,
+  phrases: gameCatalog.phrases,
+  characters: gameCatalog.characters,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 });
 
 describe('match-screen snapshot', () => {
   test('marks exactly the next grammar-accepted phrases without changing state or selection rules', () => {
-    const scene = sampleContent.scenes[0]!;
+    const scene = gameCatalog.scenes[0]!;
     let state = createMatchSetupState({
       schemaVersion: 1, seed: 20_260_823,
       players: [configuredPlayer(0), configuredPlayer(1)],
       sceneId: scene.id, scenePhraseIds: scene.phrasePool,
-      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
       mode: 'hotseat', openingPlayerIndex: scene.openingPlayerIndex,
     });
     state = accept(accept(state, lifecycleCommand('start-match')), lifecycleCommand('prepare-round'));
@@ -65,7 +65,7 @@ describe('match-screen snapshot', () => {
   });
 
   test('projects one immutable viewer-scoped match snapshot', () => {
-    const scene = sampleContent.scenes[0]!;
+    const scene = gameCatalog.scenes[0]!;
     const players = [configuredPlayer(0), configuredPlayer(1)] as const;
     let state = createMatchSetupState({
       schemaVersion: 1,
@@ -73,7 +73,7 @@ describe('match-screen snapshot', () => {
       players,
       sceneId: scene.id,
       scenePhraseIds: scene.phrasePool,
-      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
       mode: 'hotseat',
       openingPlayerIndex: scene.openingPlayerIndex,
     });
@@ -143,14 +143,14 @@ describe('match-screen snapshot', () => {
   });
 
   test('projects charge for the segmented comeback action and optional approved sidekicks', () => {
-    const scene = sampleContent.scenes[0]!;
+    const scene = gameCatalog.scenes[0]!;
     let state = createMatchSetupState({
       schemaVersion: 1,
       seed: 20_260_823,
       players: [configuredPlayer(0), configuredPlayer(1)],
       sceneId: scene.id,
       scenePhraseIds: scene.phrasePool,
-      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
       mode: 'hotseat',
       openingPlayerIndex: scene.openingPlayerIndex,
     });
@@ -197,14 +197,14 @@ describe('match-screen snapshot', () => {
   });
 
   test('conceals the active AI hand from the human viewer', () => {
-    const scene = sampleContent.scenes[0]!;
+    const scene = gameCatalog.scenes[0]!;
     let state = createMatchSetupState({
       schemaVersion: 1,
       seed: 21,
       players: [configuredPlayer(0), configuredPlayer(1)],
       sceneId: scene.id,
       scenePhraseIds: scene.phrasePool,
-      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
       mode: 'ai',
       aiDifficulty: 'local-radio-caller',
       openingPlayerIndex: 1,
@@ -231,7 +231,7 @@ describe('match-screen snapshot', () => {
   });
 
   test('projects the modern debate studio asset layers', () => {
-    const scene = sampleContent.scenes.find(
+    const scene = gameCatalog.scenes.find(
       (candidate) => candidate.id === 'modern-debate-studio',
     )!;
     const players = [configuredPlayer(0), configuredPlayer(1)] as const;
@@ -241,7 +241,7 @@ describe('match-screen snapshot', () => {
       players,
       sceneId: scene.id,
       scenePhraseIds: scene.phrasePool,
-      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
       mode: 'hotseat',
       openingPlayerIndex: scene.openingPlayerIndex,
     });
@@ -267,7 +267,7 @@ describe('match-screen snapshot', () => {
   });
 
   test('projects the foundation scene through its own manifest and crop contract', () => {
-    const scene = sampleContent.scenes.find(
+    const scene = gameCatalog.scenes.find(
       (candidate) => candidate.id === 'county-council-ballroom',
     )!;
     let state = createMatchSetupState({
@@ -276,7 +276,7 @@ describe('match-screen snapshot', () => {
       players: [configuredPlayer(0), configuredPlayer(1)],
       sceneId: scene.id,
       scenePhraseIds: scene.phrasePool,
-      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
       mode: 'hotseat',
       openingPlayerIndex: scene.openingPlayerIndex,
     });
@@ -299,7 +299,7 @@ describe('match-screen snapshot', () => {
   });
 
   test('clears an incomplete sentence from the next round bubble', () => {
-    const scene = sampleContent.scenes[0]!;
+    const scene = gameCatalog.scenes[0]!;
     const players = [configuredPlayer(0), configuredPlayer(1)] as const;
     let state = createMatchSetupState({
       schemaVersion: 1,
@@ -307,7 +307,7 @@ describe('match-screen snapshot', () => {
       players,
       sceneId: scene.id,
       scenePhraseIds: scene.phrasePool,
-      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
       mode: 'hotseat',
       openingPlayerIndex: scene.openingPlayerIndex,
     });
@@ -315,7 +315,7 @@ describe('match-screen snapshot', () => {
     state = accept(state, lifecycleCommand('prepare-round'));
     const firstSpeakerId = state.activePlayerId;
     const nounSlot = state.draft!.board.slots.find((slot) => {
-      const phrase = sampleContent.phrases.find(
+      const phrase = gameCatalog.phrases.find(
         (candidate) => candidate.id === slot.phraseId,
       );
       return slot.available && phrase?.role === 'noun';
@@ -351,7 +351,7 @@ describe('match-screen snapshot', () => {
   });
 
   test('shows the new construction instead of a sentence from the previous round', () => {
-    const scene = sampleContent.scenes[0]!;
+    const scene = gameCatalog.scenes[0]!;
     const players = [configuredPlayer(0), configuredPlayer(1)] as const;
     let state = createMatchSetupState({
       schemaVersion: 1,
@@ -359,7 +359,7 @@ describe('match-screen snapshot', () => {
       players,
       sceneId: scene.id,
       scenePhraseIds: scene.phrasePool,
-      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
       mode: 'hotseat',
       openingPlayerIndex: scene.openingPlayerIndex,
     });
@@ -425,7 +425,7 @@ describe('match-screen snapshot', () => {
   });
 
   test('keeps a private-card sentence public after its speaker ends the turn', () => {
-    const scene = sampleContent.scenes[0]!;
+    const scene = gameCatalog.scenes[0]!;
     const players = [configuredPlayer(0), configuredPlayer(1)] as const;
     let state = createMatchSetupState({
       schemaVersion: 1,
@@ -433,7 +433,7 @@ describe('match-screen snapshot', () => {
       players,
       sceneId: scene.id,
       scenePhraseIds: scene.phrasePool,
-      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
       mode: 'hotseat',
       openingPlayerIndex: scene.openingPlayerIndex,
     });
@@ -462,14 +462,14 @@ describe('match-screen snapshot', () => {
   });
 
   test('projects clause, finisher, weakness, combo, and comeback score components', () => {
-    const scene = sampleContent.scenes[0]!;
+    const scene = gameCatalog.scenes[0]!;
     let state = createMatchSetupState({
       schemaVersion: 1,
       seed: 20_260_832,
       players: [configuredPlayer(0), configuredPlayer(1)],
       sceneId: scene.id,
       scenePhraseIds: scene.phrasePool,
-      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
       mode: 'hotseat',
       openingPlayerIndex: scene.openingPlayerIndex,
     });
@@ -703,7 +703,7 @@ function selectPrivateCard(
 }
 
 function configuredPlayer(index: 0 | 1): MatchConfiguredPlayer {
-  const character = sampleContent.characters[index]!;
+  const character = gameCatalog.characters[index]!;
   return {
     playerId: `player-${index + 1}`,
     characterId: character.id,

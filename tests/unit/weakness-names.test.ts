@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { sampleContent } from '../../src/game-content';
+import { gameCatalog } from '../../src/game-content';
 import {
   displayWeaknessName,
   romanianWeaknessNames,
@@ -11,7 +11,7 @@ describe('weakness labels', () => {
   test('names exactly the shipped weakness tags in Romanian', () => {
     const shippedTags = [
       ...new Set(
-        sampleContent.characters.flatMap((character) => character.weaknessTags),
+        gameCatalog.characters.flatMap((character) => character.weaknessTags),
       ),
     ].sort();
     expect(shippedTags.length).toBeGreaterThan(0);

@@ -27,12 +27,12 @@ import { loadGameContent } from './load-game-content';
 export function validateGameLocales(
   rootDirectory: string = process.cwd(),
 ): readonly GameLocaleFailure[] {
-  const { phraseCardCatalog, sampleContent } = loadGameContent(rootDirectory);
-  const romanian = sampleContent.locales.find(
+  const { phraseCardCatalog, gameCatalog } = loadGameContent(rootDirectory);
+  const romanian = gameCatalog.locales.find(
     (bundle) => bundle.locale === 'ro-RO',
   );
   return Object.freeze([
-    ...validateGameLocaleBundles(sampleContent.locales, referenceGameLocale),
+    ...validateGameLocaleBundles(gameCatalog.locales, referenceGameLocale),
     ...(romanian ? [
       ...validateLocaleNameParity(romanian.messages, {
         character: romanianCharacterNames,

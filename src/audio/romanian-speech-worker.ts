@@ -12,6 +12,7 @@ import { getPhonemes, initialize as initializePhonemizer, setVoice } from 'espea
 import { env, InferenceSession, Tensor } from 'onnxruntime-web/wasm';
 import runtimeModuleUrl from 'onnxruntime-web/ort-wasm-simd-threaded.mjs?url&no-inline';
 import type { NeuralSpeechCommand, NeuralSpeechMessage } from './speech-port';
+import { assertIntegrity, readExactBody } from './asset-integrity';
 import { piperControls, piperInput, piperMarkers } from './piper-text';
 
 type Voice = Readonly<{
@@ -49,11 +50,6 @@ let queue = Promise.resolve();
 const voices = new Map<string, { session: InferenceSession; config: Config; voice: Voice }>();
 const pending = new Map<string, Promise<void>>();
 
-const digest = async (bytes: ArrayBuffer): Promise<string> => {
-  const hash = new Uint8Array(await crypto.subtle.digest('SHA-256', bytes));
-  return Array.from(hash, (byte) => byte.toString(16).padStart(2, '0')).join('');
-};
-
 async function read(url: URL, record?: { bytes: number; sha256: string },
   progress?: { offset: number; total: number }): Promise<ArrayBuffer> {
   if (url.origin !== worker.location.origin) throw new Error('Romanian speech assets must use the application origin.');
@@ -61,24 +57,12 @@ async function read(url: URL, record?: { bytes: number; sha256: string },
   // can safely reuse a cached response without checking for an update.
   const response = await fetch(url, { credentials: 'omit', redirect: 'error', cache: record ? 'force-cache' : 'no-cache' });
   if (!response.ok) throw new Error('The Romanian speech asset is unavailable.');
-  let bytes: ArrayBuffer;
-  if (progress && response.body && record) {
-    const data = new Uint8Array(record.bytes);
-    const reader = response.body.getReader();
-    let loaded = 0;
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      if (loaded + value.length > data.length) throw new Error('Romanian speech asset size mismatch.');
-      data.set(value, loaded); loaded += value.length;
+  const bytes = progress && response.body && record
+    ? await readExactBody(response.body, record.bytes, 'Romanian speech asset', (loaded) => {
       worker.postMessage({ type: 'progress', loaded: progress.offset + loaded, total: progress.total });
-    }
-    if (loaded !== data.length) throw new Error('The Romanian speech asset is incomplete.');
-    bytes = data.buffer;
-  } else bytes = await response.arrayBuffer();
-  if (record && (bytes.byteLength !== record.bytes || (await digest(bytes)) !== record.sha256)) {
-    throw new Error('Romanian speech asset integrity failed.');
-  }
+    })
+    : await response.arrayBuffer();
+  if (record) await assertIntegrity(bytes, record, 'Romanian speech asset');
   return bytes;
 }
 
@@ -130,9 +114,8 @@ function ensureVoice(voice: Voice): Promise<void> {
       model.set(bytes, offset);
       offset += bytes.length;
     }
-    if (offset !== model.length || await digest(model.buffer) !== voice.model.sha256) {
-      throw new Error('Romanian model integrity failed.');
-    }
+    if (offset !== model.length) throw new Error('Romanian model integrity failed.');
+    await assertIntegrity(model, { bytes: model.length, sha256: voice.model.sha256 }, 'Romanian model');
     const session = await InferenceSession.create(model, { executionProviders: ['wasm'] });
     voices.set(voice.id, { session, config, voice });
     pending.delete(voice.id);

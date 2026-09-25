@@ -4,9 +4,9 @@ import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
 import {
   englishGameLocale,
   romanianGameLocale,
-  sampleContent,
+  gameCatalog,
 } from '../../src/game-content';
-import { createSimulationSetup, simulateMatch } from '../../src/engine/simulation';
+import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation';
 import {
   decodeMatchLog,
   decodeReplay,
@@ -33,19 +33,19 @@ import type { StoragePort } from '../../src/persistence/storage-port';
 const seed = 20_260_917;
 
 const englishContext: ReplayContext = {
-  catalog: sampleContent,
+  catalog: gameCatalog,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
 const romanianContext: ReplayContext = {
-  catalog: sampleContent,
+  catalog: gameCatalog,
   locale: romanianGameLocale,
   balance: basicScoringBalance,
 };
 
 const romanianCompleted = simulateMatch(
   seed,
-  createSimulationSetup(sampleContent, { gameLocale: 'ro-RO' }),
+  createSimulationSetup(gameCatalog, { gameLocale: 'ro-RO' }),
   romanianContext,
 );
 
@@ -108,7 +108,7 @@ describe('Romanian replay, match-log, and history records', () => {
   });
 
   test('keeps the English catalog fixtures valid under the new version', () => {
-    const english = simulateMatch(seed, createSimulationSetup(sampleContent, { gameLocale: 'en' }), englishContext);
+    const english = simulateMatch(seed, createSimulationSetup(gameCatalog, { gameLocale: 'en' }), englishContext);
     expect(english.replay.setup.gameLocale).toBe('en');
     const replayed = replayMatch(english.replayBytes, englishContext);
     expect(replayed.ok).toBe(true);
@@ -120,7 +120,7 @@ describe('Romanian replay, match-log, and history records', () => {
       ok: false,
       code: 'invalid-replay',
     });
-    const english = simulateMatch(seed, createSimulationSetup(sampleContent, { gameLocale: 'en' }), englishContext);
+    const english = simulateMatch(seed, createSimulationSetup(gameCatalog, { gameLocale: 'en' }), englishContext);
     expect(replayMatch(english.replayBytes, romanianContext)).toEqual({
       ok: false,
       code: 'invalid-replay',
@@ -386,7 +386,7 @@ describe('Romanian replay, match-log, and history records', () => {
       fc.property(fc.integer({ min: 0, max: 0xffff }), (value) => {
         const match = simulateMatch(
           value,
-          createSimulationSetup(sampleContent, { gameLocale: 'ro-RO' }),
+          createSimulationSetup(gameCatalog, { gameLocale: 'ro-RO' }),
           romanianContext,
         );
         expect(match.finalState.phase).toBe('results');
@@ -418,7 +418,7 @@ describe('Romanian replay, match-log, and history records', () => {
       ],
     });
     expect(serialized).not.toMatch(/interfaceLocale/u);
-    expect(serialized).toContain('"gameLocale": "ro-RO"');
+    expect(serialized).toContain('"gameLocale":"ro-RO"');
   });
 });
 

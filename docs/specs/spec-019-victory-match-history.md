@@ -90,6 +90,10 @@ Do this before the validation of the identity and the `completedAt` time of the 
 Keep each entry that continues to decode.
 Do not write the stored bytes again until the next stored update.
 
+The stored history document is compact JSON with one last newline and no indentation, because entries are never removed.
+The replay and match-log documents inside it keep the Milestone 014 field sequence.
+The decoder also accepts history that an earlier version stored with indentation.
+
 The app must add one entry, and no more, for each completed match.
 This rule also applies when the terminal state renders again or the viewport changes.
 Show the history with the newest entry first, and do not change its stored sequence.

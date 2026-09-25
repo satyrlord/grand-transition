@@ -1,16 +1,17 @@
 import { lockInSetup } from './setup-test-helpers';
 import { page } from 'vitest/browser';
-import { afterEach, beforeEach, expect, test, vi } from 'vitest';
+import { afterEach, beforeEach, expect, onTestFinished, test, vi } from 'vitest';
 import { GrandTransitionApp } from '../../src/app/app-shell';
+import { NeuralVoiceRouter } from '../../src/audio/neural-voice-router';
 import {
   matchCommandEventName,
   type GrandTransitionMatch,
 } from '../../src/app/screens/match-screen';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
-  type EnglishGrammarStep,
+  type GrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter';
 import type { MatchState } from '../../src/engine/match-lifecycle';
 import {
@@ -52,7 +53,7 @@ test('keeps a singular predicate complement for you in the sentence bubble', asy
   const steps = phraseIds.map((phraseId) => ({
     kind: 'phrase' as const,
     phrase: prepareEnglishGrammarPhrase(
-      sampleContent.phrases.find((phrase) => phrase.id === phraseId)!,
+      gameCatalog.phrases.find((phrase) => phrase.id === phraseId)!,
       englishGameLocale,
     ),
   }));
@@ -121,11 +122,11 @@ test('shows a coordinated copular complement as a complete sentence', async () =
   const phraseSteps = phraseIds.map((phraseId) => ({
     kind: 'phrase' as const,
     phrase: prepareEnglishGrammarPhrase(
-      sampleContent.phrases.find((phrase) => phrase.id === phraseId)!,
+      gameCatalog.phrases.find((phrase) => phrase.id === phraseId)!,
       englishGameLocale,
     ),
   }));
-  const steps: readonly EnglishGrammarStep[] = [
+  const steps: readonly GrammarStep[] = [
     ...phraseSteps,
     { kind: 'end' },
   ];
@@ -259,6 +260,22 @@ test.each([
 });
 
 test('a lethal grammar mistake shows persistent victory and restores history after reload', async () => {
+  // The replay records the speech setting of the match. Keep the neural
+  // voices from loading; this test covers only the recorded setting.
+  vi.spyOn(NeuralVoiceRouter.prototype, 'preload').mockResolvedValue(false);
+  vi.spyOn(NeuralVoiceRouter.prototype, 'initialize').mockResolvedValue(false);
+  const previousSettings = localStorage.getItem(settingsStorageKey);
+  onTestFinished(() => {
+    if (previousSettings === null) localStorage.removeItem(settingsStorageKey);
+    else localStorage.setItem(settingsStorageKey, previousSettings);
+  });
+  localStorage.setItem(settingsStorageKey, encodeSettings({
+    ...defaultSettings,
+    interfaceLocale: 'en',
+    gameLocale: 'en',
+    speechEnabled: true,
+    gpuVoices: false,
+  }));
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   let app = document.querySelector(
     'grand-transition-app',
@@ -337,6 +354,7 @@ test('a lethal grammar mistake shows persistent victory and restores history aft
   expect(storedBytes).not.toBeNull();
   const stored = decodeMatchHistory(storedBytes!);
   expect(stored.ok && stored.value.entries).toHaveLength(1);
+  expect(stored.ok && stored.value.entries[0]!.replay.setup.speechEnabled).toBe(true);
 
   match
     .querySelector<HTMLButtonElement>('.round-review-primary')!
@@ -508,14 +526,14 @@ function prepareComebackExchange(app: GrandTransitionApp): void {
     ended: boolean,
   ) => {
     const player = state.draft!.playerStates[playerId]!;
-    const phraseSteps: EnglishGrammarStep[] = phraseIds.map((phraseId) => ({
+    const phraseSteps: GrammarStep[] = phraseIds.map((phraseId) => ({
       kind: 'phrase',
       phrase: prepareEnglishGrammarPhrase(
-        sampleContent.phrases.find((phrase) => phrase.id === phraseId)!,
+        gameCatalog.phrases.find((phrase) => phrase.id === phraseId)!,
         englishGameLocale,
       ),
     }));
-    const steps: readonly EnglishGrammarStep[] = ended
+    const steps: readonly GrammarStep[] = ended
       ? [...phraseSteps, { kind: 'end' }]
       : phraseSteps;
     const result = englishGrammarAdapter.analyze({

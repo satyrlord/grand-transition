@@ -245,6 +245,9 @@ It also does not accept unknown fields, incorrect scoring data, or duplicates ac
 
 The browser build finds each character JSON file and portrait that agrees with the naming convention.
 Node tools find the same JSON files through the file system, and they send them to the same pure parser.
+`npm run build` validates the catalog in Node before the browser build.
+The production browser bundle then builds the same catalog without the schema checks, to keep them out of startup.
+Development, tests, and tools always validate.
 To add a character, only one new character JSON file and its approved `src/assets/characters/<character-id>.png` portrait are necessary.
 No TypeScript import, registry, locale, setup, or renderer edit is necessary.
 Content, localization, asset, simulation, and browser validation must pass before the character can ship.

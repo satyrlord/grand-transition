@@ -26,7 +26,7 @@ If the two players get to zero in the same exchange, start a cliffhanger.
 
 Set the Pride of the two players to 100 again.
 Clear comeback charge, noun combos, and continuations.
-Do not deal continuation cards.
+Do not deal continuation cards, in the round deal or in a hand refresh.
 Play one exchange.
 
 If one score is higher, that player deals 100 damage. The lower score deals:

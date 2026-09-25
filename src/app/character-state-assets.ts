@@ -2,6 +2,7 @@ import contract from '../assets/characters/state-contract.json' with { type: 'js
 import stateManifest from '../assets/characters/states/state-manifest.json' with { type: 'json' };
 import { characterAssetManifest, createSource, matchCharacterImageSizes, type CharacterAsset, type CharacterAssetVariant } from './character-assets';
 import { characterMotion, type CharacterFrame, type CharacterStateId } from './character-motion';
+import { isRecord } from '../engine/plain-values';
 
 export type CharacterStatePackage = Readonly<{
   ownerId: string;
@@ -15,10 +16,6 @@ const stateVariantUrls = import.meta.glob('../assets/characters/states/variants/
 const stateAssetReuse = contract.stateAssetReuse as Partial<
   Record<CharacterStateId, CharacterStateId>
 >;
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
 
 const packages = createCharacterStatePackages(stateManifest, characterAssetManifest, stateVariantUrls);
 const packagesBySkin = new Map(packages.map((entry) => [entry.ownerId + ':' + entry.skinId, entry.frames]));

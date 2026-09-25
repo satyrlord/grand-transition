@@ -1,6 +1,7 @@
 import { env, InferenceSession, Tensor } from 'onnxruntime-web/wasm';
 import { phonemize } from 'phonemizer';
 import type { NeuralSpeechCommand, NeuralSpeechMessage } from './speech-port';
+import { assertIntegrity, readExactBody } from './asset-integrity';
 import runtimeModuleUrl from 'onnxruntime-web/ort-wasm-simd-threaded.mjs?url&no-inline';
 import { piperControls, piperInput, piperMarkers } from './piper-text';
 
@@ -30,26 +31,12 @@ async function readAsset(name: string, measured = false): Promise<ArrayBuffer> {
   const response = await fetch(url, { credentials: 'omit', redirect: 'error', cache: 'force-cache' });
   if (!response.ok) throw new Error('The neural asset is unavailable.');
   const record = manifest?.files.find((file) => file.path === name);
-  let bytes: ArrayBuffer;
-  if (measured && response.body && record) {
-    const data = new Uint8Array(record.bytes);
-    const reader = response.body.getReader();
-    let loaded = 0;
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      if (loaded + value.length > data.length) throw new Error('Neural asset size mismatch.');
-      data.set(value, loaded); loaded += value.length;
-      worker.postMessage({ type: 'progress', loaded, total: data.length });
-    }
-    if (loaded !== data.length) throw new Error('Neural asset is incomplete.');
-    bytes = data.buffer;
-  } else bytes = await response.arrayBuffer();
-  if (record) {
-    const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', bytes));
-    const hex = Array.from(digest, (byte) => byte.toString(16).padStart(2, '0')).join('');
-    if (bytes.byteLength !== record.bytes || hex !== record.sha256) throw new Error('Neural asset integrity failed.');
-  }
+  const bytes = measured && response.body && record
+    ? await readExactBody(response.body, record.bytes, 'Neural asset', (loaded) => {
+      worker.postMessage({ type: 'progress', loaded, total: record.bytes });
+    })
+    : await response.arrayBuffer();
+  if (record) await assertIntegrity(bytes, record, 'Neural asset');
   return bytes;
 }
 

@@ -72,17 +72,18 @@ Translated text must not go into locale-neutral rules.
 - A speech request contains text, a BCP 47 language, and an optional rate, pitch, and volume.
   The port gives the availability, tells if it accepted the request, and lets the caller cancel the request.
 
-The pure-boundary checker scans `src/engine`, `src/ai`, `src/content`, the handwritten sources in `src/localization`, and `src/persistence/codecs` when it is there.
+The pure-boundary checker scans `src/engine`, `src/ai`, `src/simulation`, `src/content`, the handwritten sources in `src/localization`, and `src/persistence/codecs` when it is there.
 In those roots, it does not accept Lit imports, `window`, `document`, `customElements`, storage, speech synthesis, Canvas, and network APIs.
 Test fixtures can contain those names only when they show that the checker does not accept them.
 
 The checker also makes sure of these dependency directions:
 
 - Engine can import engine, content, and localization modules.
-  The development-only integration owner `src/engine/simulation.ts` can also import persistence codecs for replay evidence and match-log evidence.
-  It can import the `src/ai/easy-ai.ts` policy for AI simulation evidence.
-  No other engine module can import AI.
+  No engine module can import AI, simulation, or persistence modules.
 - AI can import AI, engine, content, and localization modules.
+- Simulation in `src/simulation` is the development-only integration owner for replay, match-log, and AI simulation evidence.
+  It can import simulation, engine, AI, persistence codecs, content, and localization modules.
+  No other pure root can import simulation.
 - Content can import content and localization modules.
 - Localization can import localization and content modules.
   Its code gets the same browser API checks and dependency checks as the other pure roots.

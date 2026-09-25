@@ -16,6 +16,7 @@ import {
 import type { StoragePort } from './storage-port';
 import { speechDiagnosticsSchema, type SpeechDiagnosticsDocument } from '../audio/speech-diagnostics';
 import type { GameLocale } from '../localization/game-locale';
+import { deepFreeze, isRecord } from '../engine/plain-values';
 
 export const matchHistoryStorageKey = 'grand-transition.match-history.v1';
 export const matchHistoryKind = 'grand-transition-match-history' as const;
@@ -209,7 +210,10 @@ export function encodeMatchHistory(document: MatchHistoryDocument): string {
       ...(entry.speechDiagnostics ? { speechDiagnostics: entry.speechDiagnostics } : {}),
     })),
   });
-  return normalizedJson(stored);
+  // Browser storage holds about five million characters per site and entries
+  // are never removed, so the stored document has no indentation. Exported
+  // replay and match-log documents keep their normalized two-space form.
+  return `${JSON.stringify(stored)}\n`;
 }
 
 export function decodeMatchHistory(serialized: string): MatchHistoryResult {
@@ -371,10 +375,6 @@ function storageFailure(code: string): MatchHistoryFailureCode {
     : 'storage-unavailable';
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
-
 function isForeignVersionPair(replay: unknown, matchLog: unknown): boolean {
   if (!isRecord(replay) || !isRecord(matchLog)) return false;
   const replayVersion = replay.schemaVersion;
@@ -385,16 +385,6 @@ function isForeignVersionPair(replay: unknown, matchLog: unknown): boolean {
     replayVersion !== replaySchemaVersion &&
     replayVersion === matchLogVersion
   );
-}
-
-function deepFreeze<Value>(value: Value): Value {
-  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
-    for (const nested of Object.values(value as Record<string, unknown>)) {
-      deepFreeze(nested);
-    }
-    Object.freeze(value);
-  }
-  return value;
 }
 
 export const matchHistoryDocumentKinds = Object.freeze({

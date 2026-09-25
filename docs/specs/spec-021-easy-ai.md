@@ -124,7 +124,10 @@ An eligible redraw uses the lower of the two replacement utilities, so one stron
 The thinking time is a seeded integer from 500 through 1100 milliseconds.
 It is a presentation delay, not a search time.
 The reduced delay uses 100 milliseconds.
-The AI calculates the decision before the delay, and it does not read the wall-clock time.
+The pure AI policy does not read the time.
+The application shows the thinking state first and calculates the decision in the next task.
+The measured search time counts toward the presentation delay, so the visible thinking time is the larger of the two.
+The decision, its seed, and the delay value do not change.
 
 Sort equal candidates by command type, and then by stable card ID.
 Make the decision seed from the reducer seed of that time and the normalized accepted command history.

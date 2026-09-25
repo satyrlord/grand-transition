@@ -1,7 +1,7 @@
 import {
   listLocalRadioCallerSimulationOptions,
   type SimulationOption,
-} from '../engine/simulation';
+} from './simulation';
 import type {
   MatchEngineContext,
   MatchState,
@@ -9,7 +9,7 @@ import type {
 import {
   decidePalaceOperator,
   decidePartyStrategist,
-} from './advanced-ai';
+} from '../ai/advanced-ai';
 
 export function listConfiguredAiSimulationOptions(
   state: MatchState,

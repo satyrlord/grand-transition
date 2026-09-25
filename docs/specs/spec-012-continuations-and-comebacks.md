@@ -19,7 +19,7 @@ Its visible cue is `[...]`.
 
 A continuation that is not broken keeps the previous noun-combo state of the player.
 A broken continuation clears the combos of that player.
-Sudden-death cliffhangers do not deal continuation cards.
+Sudden-death cliffhangers do not deal continuation cards, and a hand refresh in a cliffhanger does not deal one.
 
 ## Comebacks
 

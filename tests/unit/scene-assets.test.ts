@@ -7,7 +7,7 @@ import {
   sceneAssetManifest,
   sceneImageSizes,
 } from '../../src/app/scene-assets';
-import { sampleContent } from '../../src/game-content';
+import { gameCatalog } from '../../src/game-content';
 
 describe('scene asset resolver', () => {
   test('ships regenerated studio layers from native 4K Flare sources without upscaling', async () => {
@@ -211,14 +211,14 @@ describe('scene asset resolver', () => {
       },
     } as const;
 
-    for (const scene of sampleContent.scenes) {
+    for (const scene of gameCatalog.scenes) {
       expect(scene.backgroundLayers.map(({ media }) => media.assetId)).toEqual(
         expected[scene.id as keyof typeof expected].layers,
       );
       expect(scene.animationId).toBe(expected[scene.id as keyof typeof expected].animationId);
       expect(scene.effectIds).toEqual(expected[scene.id as keyof typeof expected].effectIds);
     }
-    expect(new Set(sampleContent.scenes.map(({ animationId }) => animationId)).size).toBe(7);
-    expect(new Set(sampleContent.scenes.flatMap(({ effectIds }) => effectIds)).size).toBe(14);
+    expect(new Set(gameCatalog.scenes.map(({ animationId }) => animationId)).size).toBe(7);
+    expect(new Set(gameCatalog.scenes.flatMap(({ effectIds }) => effectIds)).size).toBe(14);
   });
 });

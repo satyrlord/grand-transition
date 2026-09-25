@@ -144,7 +144,7 @@ function scoreNormalizedConstruction(
 }
 
 function structuralPotential(
-  catalog: ReturnType<typeof loadGameContent>['sampleContent'],
+  catalog: ReturnType<typeof loadGameContent>['gameCatalog'],
 ): readonly StructuralRow[] {
   const byId = new Map(catalog.phrases.map((phrase) => [phrase.id, phrase]));
   const rows: StructuralRow[] = [];
@@ -213,7 +213,7 @@ function hash(value: string): number {
 }
 
 function createBalanceCells(
-  catalog: ReturnType<typeof loadGameContent>['sampleContent'],
+  catalog: ReturnType<typeof loadGameContent>['gameCatalog'],
 ): readonly BalanceCell[] {
   const cells: BalanceCell[] = [];
   for (const [leftIndex, left] of catalog.characters.entries()) {
@@ -236,7 +236,7 @@ function createBalanceCells(
 }
 
 function directEligiblePhrases(
-  catalog: ReturnType<typeof loadGameContent>['sampleContent'],
+  catalog: ReturnType<typeof loadGameContent>['gameCatalog'],
   characterId: string,
   sceneId: string,
 ): readonly Phrase[] {
@@ -275,7 +275,7 @@ function sampleDirectDamage(
 }
 
 function simulateDirectCells(
-  catalog: ReturnType<typeof loadGameContent>['sampleContent'],
+  catalog: ReturnType<typeof loadGameContent>['gameCatalog'],
   cells: readonly BalanceCell[],
 ): SimulationChunk {
   const phraseById = new Map(catalog.phrases.map((phrase) => [phrase.id, phrase]));
@@ -368,10 +368,10 @@ function mergeChunk(
 
 function runBalanceWorker(): void {
   const data = workerData as BalanceWorkerData;
-  const { sampleContent } = loadGameContent();
-  const cells = createBalanceCells(sampleContent);
+  const { gameCatalog } = loadGameContent();
+  const cells = createBalanceCells(gameCatalog);
   const chunk = simulateDirectCells(
-    sampleContent,
+    gameCatalog,
     cells.slice(data.start, data.end),
   );
   parentPort!.postMessage(chunk);
@@ -408,7 +408,7 @@ function runWorkerSlice(
 }
 
 async function simulateBalance(
-  catalog: ReturnType<typeof loadGameContent>['sampleContent'],
+  catalog: ReturnType<typeof loadGameContent>['gameCatalog'],
 ): Promise<Readonly<{
   characters: readonly BalanceRow[];
   scenes: readonly BalanceRow[];
@@ -443,14 +443,14 @@ async function simulateBalance(
 }
 
 async function main(): Promise<void> {
-  const { sampleContent } = loadGameContent();
-  const structural = structuralPotential(sampleContent);
+  const { gameCatalog } = loadGameContent();
+  const structural = structuralPotential(gameCatalog);
   const structuralMean = structural.reduce((sum, row) => sum + row.averageDirectDamage, 0) / structural.length;
   const structuralFailures = structural.filter((row) =>
     row.averageDirectDamage < structuralMean * (1 - damageRatioTolerance) ||
     row.averageDirectDamage > structuralMean * (1 + damageRatioTolerance),
   );
-  const simulation = await simulateBalance(sampleContent);
+  const simulation = await simulateBalance(gameCatalog);
   const characterFailures = simulation.characters.filter((row) =>
     row.winRate < 0.5 - winRateTolerance ||
     row.winRate > 0.5 + winRateTolerance ||

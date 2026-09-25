@@ -5,7 +5,7 @@ import {
   basicScoringBalance,
   scoringBalanceForMultiplier,
 } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, romanianGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, romanianGameLocale, gameCatalog } from '../../src/game-content';
 import type { DraftCommand } from '../../src/engine/draft-actions';
 import {
   createMatchReducer,
@@ -20,7 +20,7 @@ import {
   simulateMatch,
   simulateMatches,
   summarizeSimulation,
-} from '../../src/engine/simulation';
+} from '../../src/simulation/simulation';
 import {
   createMatchLog,
   createReplayInitialState,
@@ -42,13 +42,13 @@ import {
 import type { StoragePort } from '../../src/persistence/storage-port';
 
 const context: ReplayContext = {
-  catalog: sampleContent,
+  catalog: gameCatalog,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
 const engineContext: MatchEngineContext = {
-  phrases: sampleContent.phrases,
-  characters: sampleContent.characters,
+  phrases: gameCatalog.phrases,
+  characters: gameCatalog.characters,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
@@ -56,13 +56,13 @@ const engineContext: MatchEngineContext = {
 describe('replay and local match-log codecs', () => {
   const completed = simulateMatch(
     20_260_823,
-    createSimulationSetup(sampleContent, { gameLocale: 'en' }),
+    createSimulationSetup(gameCatalog, { gameLocale: 'en' }),
     context,
   );
 
   test.each([1, 2, 3, 4, 5] as const)('captures multiplier %s and replays independently of the current balance', (multiplier) => {
     const match = simulateMatch(20_260_823,
-      { ...createSimulationSetup(sampleContent, { gameLocale: 'en' }), basePointsMultiplier: multiplier }, context);
+      { ...createSimulationSetup(gameCatalog, { gameLocale: 'en' }), basePointsMultiplier: multiplier }, context);
     expect(match.replay.setup.basePointsMultiplier).toBe(multiplier);
     expect(match.matchLog.setup.basePointsMultiplier).toBe(multiplier);
     const replayed = replayMatch(match.replayBytes, { ...context, balance: scoringBalanceForMultiplier(5) });
@@ -445,7 +445,7 @@ describe('replay and local match-log codecs', () => {
     const logStrings = collectStrings(JSON.parse(completed.matchLogBytes));
     expect(privateOnly.length).toBeGreaterThan(0);
     for (const card of privateOnly) {
-      const phrase = sampleContent.phrases.find(
+      const phrase = gameCatalog.phrases.find(
         (candidate) => candidate.id === card.phraseId,
       )!;
       const phraseText = englishGameLocale.messages[phrase.textKey]!;
@@ -470,7 +470,7 @@ describe('replay and local match-log codecs', () => {
 });
 
 describe('headless simulation and generated invariants', () => {
-  const setup = createSimulationSetup(sampleContent, { gameLocale: 'en' });
+  const setup = createSimulationSetup(gameCatalog, { gameLocale: 'en' });
 
   test.each([0, 0xffff_ffff])(
     'accepts boundary seed %s and repeats every byte',
@@ -516,18 +516,18 @@ describe('headless simulation and generated invariants', () => {
 
   test('rejects invalid setup values, counts, and seeds with named facts', () => {
     expect(() =>
-      createSimulationSetup(sampleContent, { sceneId: 'missing-scene' }),
+      createSimulationSetup(gameCatalog, { sceneId: 'missing-scene' }),
     ).toThrow('scene');
     expect(() =>
-      createSimulationSetup(sampleContent, {
-        characterIds: ['missing-character', sampleContent.characters[0]!.id],
+      createSimulationSetup(gameCatalog, {
+        characterIds: ['missing-character', gameCatalog.characters[0]!.id],
       }),
     ).toThrow('character');
     expect(() =>
-      createSimulationSetup(sampleContent, { pride: [-1, 100] }),
+      createSimulationSetup(gameCatalog, { pride: [-1, 100] }),
     ).toThrow('Pride');
     expect(() =>
-      createSimulationSetup(sampleContent, { charge: [0, 61] }),
+      createSimulationSetup(gameCatalog, { charge: [0, 61] }),
     ).toThrow('charge');
     expect(() => simulateMatches(0, 0, setup, context)).toThrow(
       'positive integer',

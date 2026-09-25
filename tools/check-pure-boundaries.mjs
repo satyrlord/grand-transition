@@ -18,21 +18,24 @@ const pureRootPolicies = [
       directoryDependency('src', 'content'),
       directoryDependency('src', 'localization'),
     ],
-    moduleOverrides: [
-      {
-        source: path.join('src', 'engine', 'simulation.ts'),
-        allowedDependencies: [
-          moduleDependency('src', 'ai', 'easy-ai'),
-          directoryDependency('src', 'persistence', 'codecs'),
-        ],
-      },
-    ],
   },
   {
     root: path.join('src', 'ai'),
     allowedDependencies: [
       directoryDependency('src', 'ai'),
       directoryDependency('src', 'engine'),
+      directoryDependency('src', 'content'),
+      directoryDependency('src', 'localization'),
+    ],
+  },
+  {
+    // Development-only replay and AI evidence sits above engine, AI, and codecs.
+    root: path.join('src', 'simulation'),
+    allowedDependencies: [
+      directoryDependency('src', 'simulation'),
+      directoryDependency('src', 'engine'),
+      directoryDependency('src', 'ai'),
+      directoryDependency('src', 'persistence', 'codecs'),
       directoryDependency('src', 'content'),
       directoryDependency('src', 'localization'),
     ],
@@ -389,15 +392,7 @@ function inspectSource(
 
 function dependencyIsAllowed(specifier, filePath, rootDirectory, policy) {
   const dependencyPath = path.resolve(path.dirname(filePath), specifier);
-  const relativeFilePath = path.relative(rootDirectory, filePath);
-  const moduleOverride = policy.moduleOverrides?.find(
-    (override) => override.source === relativeFilePath,
-  );
-  const allowedDependencies = [
-    ...policy.allowedDependencies,
-    ...(moduleOverride?.allowedDependencies ?? []),
-  ];
-  return allowedDependencies.some((allowed) => {
+  return policy.allowedDependencies.some((allowed) => {
     const allowedPath = path.resolve(rootDirectory, allowed.path);
     if (allowed.kind === 'module') return dependencyPath === allowedPath;
     return pathIsInside(dependencyPath, allowedPath);

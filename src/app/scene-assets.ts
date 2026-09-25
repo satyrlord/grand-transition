@@ -1,6 +1,7 @@
 import sceneManifest from '../assets/scenes/scene-manifest.json' with {
   type: 'json',
 };
+import { isRecord } from '../engine/plain-values';
 
 const sceneVariantUrls = {
   ...import.meta.glob('../assets/scenes/variants/*.avif', {
@@ -412,8 +413,4 @@ function freezeRecord<Value>(record: Readonly<Record<string, Value>>): Readonly<
       ]),
     ),
   ) as Readonly<Record<string, Value>>;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }

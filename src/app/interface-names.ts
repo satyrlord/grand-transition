@@ -1,4 +1,4 @@
-import { englishGameLocale, sampleContent } from '../game-content';
+import { englishGameLocale, gameCatalog } from '../game-content';
 import {
   displayCharacterName,
   displaySceneName,
@@ -12,7 +12,7 @@ import { interfaceLocale } from './interface-localization';
 // game-content catalog, so an English interface never shows a name taken from
 // whichever game language the match uses.
 export function interfaceCharacterName(characterId: string): string {
-  const nameKey = sampleContent.characters.find(
+  const nameKey = gameCatalog.characters.find(
     (character) => character.id === characterId,
   )?.nameKey;
   return displayCharacterName(
@@ -23,7 +23,7 @@ export function interfaceCharacterName(characterId: string): string {
 }
 
 export function interfaceSceneName(sceneId: string): string {
-  const nameKey = sampleContent.scenes.find((scene) => scene.id === sceneId)
+  const nameKey = gameCatalog.scenes.find((scene) => scene.id === sceneId)
     ?.nameKey;
   return displaySceneName(
     sceneId,

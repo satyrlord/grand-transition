@@ -1,21 +1,21 @@
 import { describe, expect, test } from 'vitest';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
-  type EnglishGrammarStep,
+  type GrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter';
 
 const phrase = (id: string) =>
   prepareEnglishGrammarPhrase(
-    sampleContent.phrases.find((candidate) => candidate.id === id)!,
+    gameCatalog.phrases.find((candidate) => candidate.id === id)!,
     englishGameLocale,
   );
-const add = (id: string): EnglishGrammarStep => ({
+const add = (id: string): GrammarStep => ({
   kind: 'phrase',
   phrase: phrase(id),
 });
-const analyze = (steps: readonly EnglishGrammarStep[]) =>
+const analyze = (steps: readonly GrammarStep[]) =>
   englishGrammarAdapter.analyze({
     steps,
     subjectNumber: 'singular',
@@ -214,7 +214,7 @@ describe('Hollywood Roast English grammar', () => {
       'black-sea-captain-predicate-002-past',
       'black-sea-captain-predicate-002-future',
     ] as const;
-    const nouns = sampleContent.phrases.filter(
+    const nouns = gameCatalog.phrases.filter(
       (candidate) => candidate.role === 'noun',
     );
 
@@ -386,7 +386,6 @@ describe('Hollywood Roast English grammar', () => {
         state: 'ENDED',
         resolution: {
           outgoingDamageIntent: 0,
-          selfDamageIntent: 0,
           constructionEnded: true,
         },
       },
@@ -520,7 +519,7 @@ describe('catalog-wide clause coverage', () => {
   });
 
   test('every shipped ending completes personal, nonpersonal, and plural clauses', () => {
-    for (const ending of sampleContent.phrases.filter(({ role }) => role === 'ending')) {
+    for (const ending of gameCatalog.phrases.filter(({ role }) => role === 'ending')) {
       for (const subject of ['common-noun-028', 'common-noun-019', 'common-noun-031']) {
         const result = analyze([
           add(subject), add('common-predicate-010-present'), add(ending.id),
@@ -538,7 +537,7 @@ describe('catalog-wide clause coverage', () => {
   });
 
   test('every shipped noun and modifier stays reachable in a complete clause', () => {
-    for (const entry of sampleContent.phrases) {
+    for (const entry of gameCatalog.phrases) {
       const ids = entry.role === 'noun'
         ? [entry.id, 'common-predicate-010-present', 'common-ending-008']
         : entry.role === 'modifier'

@@ -2,16 +2,16 @@ import { expect, test } from 'vitest';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
 import {
   romanianGameLocale,
-  sampleContent,
+  gameCatalog,
 } from '../../src/game-content';
-import { createSimulationSetup, simulateMatch } from '../../src/engine/simulation';
+import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation';
 import { encodeReplay, type ReplayContext } from '../../src/persistence/codecs/replay-codec';
 import { setInterfaceLocale } from '../../src/app/interface-localization';
 
 const seed = 20_260_917;
 
 const romanianContext: ReplayContext = {
-  catalog: sampleContent,
+  catalog: gameCatalog,
   locale: romanianGameLocale,
   balance: basicScoringBalance,
 };
@@ -19,7 +19,7 @@ const romanianContext: ReplayContext = {
 function runRomanianFixture() {
   const match = simulateMatch(
     seed,
-    createSimulationSetup(sampleContent, {
+    createSimulationSetup(gameCatalog, {
       aiDifficulty: 'palace-operator',
       gameLocale: 'ro-RO',
     }),

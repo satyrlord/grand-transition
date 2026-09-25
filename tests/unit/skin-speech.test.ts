@@ -1,4 +1,4 @@
-import { sampleContent, characterSkins } from '../../src/game-content';
+import { gameCatalog, characterSkins } from '../../src/game-content';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { skinSpeechProfile } from '../../src/audio/skin-speech-profile';
 import { CharacterSpeech } from '../../src/audio/character-speech';
@@ -9,7 +9,7 @@ import { defaultSettings } from '../../src/persistence/codecs/settings-codec';
 import { publicPlayer } from '../fixtures/narration';
 
 const character = (id: string, species: 'human' | 'robot' = 'human') => ({
-  id, species, voiceProfile: { ...sampleContent.characters.find((value) => value.id === id)!.voiceProfile, pitch: 0.9 },
+  id, species, voiceProfile: { ...gameCatalog.characters.find((value) => value.id === id)!.voiceProfile, pitch: 0.9 },
 });
 const femaleSpeechSkins = ['luxury-minister', 'midnight-sensationalist--alternate', 'oat-milk-reformist--alternate',
   'red-folded-chairman--alternate', 'retiring-cassandra--statesman', 'thunder-tribune--alternate', 'government-ai--schoolteacher'];

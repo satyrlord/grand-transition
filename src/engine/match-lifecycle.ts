@@ -1,4 +1,5 @@
 import type { BasePointsMultiplier, BasicScoringBalance } from '../content/basic-scoring-balance';
+import type { Phrase } from '../content/schemas';
 import type {
   ComboChainState,
   ComboFinisherScore,
@@ -257,19 +258,52 @@ export function createMatchSetupState(request: MatchSetupRequest): MatchState {
 export function createMatchReducer(
   context: MatchEngineContext,
 ): GameReducer<MatchState, MatchCommand, MatchLifecycleError> {
+  // Cliffhanger rounds never deal continuation cards: not in the opening deal
+  // and not in a hand refresh.
+  const suddenDeathContext: MatchEngineContext = {
+    ...context,
+    phrases: withoutContinuations(context.phrases),
+  };
   const draftReducer = createDraftReducer(context);
+  const suddenDeathDraftReducer = createDraftReducer(suddenDeathContext);
   return (state, command, randomSource) => {
     switch (command.type) {
       case 'start-match':
         return startMatch(state, command);
       case 'prepare-round':
-        return prepareRound(state, command, context, randomSource);
+        return prepareRound(
+          state,
+          command,
+          state.suddenDeathActive ? suddenDeathContext : context,
+          randomSource,
+        );
       case 'resolve-round':
         return resolveRound(state, command, context);
       default:
-        return reduceDraft(state, command, draftReducer, randomSource);
+        return reduceDraft(
+          state,
+          command,
+          state.suddenDeathActive ? suddenDeathDraftReducer : draftReducer,
+          randomSource,
+        );
     }
   };
+}
+
+const phrasesWithoutContinuations = new WeakMap<
+  readonly Phrase[],
+  readonly Phrase[]
+>();
+
+// AI search builds many reducers over one catalog, so the filtered list keeps
+// one identity per catalog and its phrase index is built once.
+function withoutContinuations(phrases: readonly Phrase[]): readonly Phrase[] {
+  let filtered = phrasesWithoutContinuations.get(phrases);
+  if (!filtered) {
+    filtered = phrases.filter((phrase) => phrase.role !== 'continuation');
+    phrasesWithoutContinuations.set(phrases, filtered);
+  }
+  return filtered;
 }
 
 export function reconstructMatchStatistics(
@@ -384,9 +418,6 @@ function prepareRound(
         : {}),
     } satisfies DraftPlayerSetup;
   }) as [DraftPlayerSetup, DraftPlayerSetup];
-  const draftPhrases = state.suddenDeathActive
-    ? context.phrases.filter((phrase) => phrase.role !== 'continuation')
-    : context.phrases;
   const prepared = prepareDraftRound(
     {
       schemaVersion: state.schemaVersion,
@@ -396,7 +427,7 @@ function prepareRound(
       sceneId: state.sceneId,
       scenePhraseIds: state.setup.scenePhraseIds,
       generalPhraseIds: state.setup.generalPhraseIds,
-      phrases: draftPhrases,
+      phrases: context.phrases,
       characters: context.characters,
       locale: context.locale,
       players,
@@ -639,9 +670,11 @@ function resolveRound(
     const attack = roundResolution.players[playerId]!;
     const opponentId = before.playerOrder[index === 0 ? 1 : 0];
     const opponentAttack = roundResolution.players[opponentId]!;
+    // Grammar-mistake and timeout self-damage already applied when they
+    // happened, so the exchange applies only the opponent's damage.
     const prideAfter = Math.max(
       0,
-      player.pride - attack.selfDamage - opponentAttack.outgoingDamage,
+      player.pride - opponentAttack.outgoingDamage,
     );
     const construction = draft.playerStates[playerId]!.construction;
     const completeValidInsult =
@@ -655,7 +688,7 @@ function resolveRound(
       constructionStatus: constructionStatus(construction),
       constructionPhrases: publicConstructionPhrases(construction),
       prideBefore: player.pride,
-      selfDamage: attack.selfDamage,
+      selfDamage: 0,
       opponentOutgoingDamage: opponentAttack.outgoingDamage,
       prideAfter,
       chargeBefore: player.comebackCharge,

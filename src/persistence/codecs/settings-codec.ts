@@ -12,6 +12,7 @@ import {
 } from '../../localization/game-locale';
 import { normalizedJson } from './replay-codec';
 import type { VersionedCodec } from '../storage-port';
+import { deepFreeze, isRecord } from '../../engine/plain-values';
 
 // One settings document format exists at a time. A field addition changes that
 // format and requires a new version, but no earlier document is migrated.
@@ -205,18 +206,4 @@ function pathFromIssue(path: readonly PropertyKey[] | undefined): string {
 
 function invalid(path: string): SettingsCodecFailure {
   return { ok: false, code: 'invalid-data', path };
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
-
-function deepFreeze<Value>(value: Value): Value {
-  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
-    for (const nested of Object.values(value as Record<string, unknown>)) {
-      deepFreeze(nested);
-    }
-    Object.freeze(value);
-  }
-  return value;
 }

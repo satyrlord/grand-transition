@@ -18,7 +18,7 @@ import {
   type AdvancedAiFeatures,
 } from '../../src/ai/advanced-ai';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import {
   createMatchReducer,
   createMatchSetupState,
@@ -31,12 +31,13 @@ import {
   createSimulationSetup,
   listLocalRadioCallerSimulationOptions,
   simulateMatch,
-} from '../../src/engine/simulation';
-import { listConfiguredAiSimulationOptions } from '../../src/ai/simulation-policy';
+} from '../../src/simulation/simulation';
+import { listConfiguredAiSimulationOptions } from '../../src/simulation/simulation-policy';
+import { evaluateLocalRadioCallerCandidates } from '../../src/ai/easy-ai';
 
 const context: MatchEngineContext = {
-  phrases: sampleContent.phrases,
-  characters: sampleContent.characters,
+  phrases: gameCatalog.phrases,
+  characters: gameCatalog.characters,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
@@ -364,12 +365,12 @@ describe('advanced AI ladder policies', () => {
       const committedByPlayer = new Map<string, number>();
       const result = simulateMatch(
         22,
-        createSimulationSetup(sampleContent, {
+        createSimulationSetup(gameCatalog, {
           aiDifficulty: difficulty,
           gameLocale: 'en',
         }),
         {
-          catalog: sampleContent,
+          catalog: gameCatalog,
           locale: englishGameLocale,
           balance: basicScoringBalance,
         },
@@ -435,8 +436,8 @@ describe('advanced AI ladder policies', () => {
 });
 
 function preparedMatch(seed = 22): MatchState {
-  const [first, second] = sampleContent.characters;
-  const scene = sampleContent.scenes[0]!;
+  const [first, second] = gameCatalog.characters;
+  const scene = gameCatalog.scenes[0]!;
   let state = createMatchSetupState({
     schemaVersion: 1,
     seed,
@@ -448,7 +449,7 @@ function preparedMatch(seed = 22): MatchState {
     ],
     sceneId: scene.id,
     scenePhraseIds: scene.phrasePool,
-    generalPhraseIds: sampleContent.phrases.map(({ id }) => id),
+    generalPhraseIds: gameCatalog.phrases.map(({ id }) => id),
     openingPlayerIndex: scene.openingPlayerIndex,
   });
   state = reduce(state, { type: 'start-match', source: 'ai', payload: {} });
@@ -456,7 +457,7 @@ function preparedMatch(seed = 22): MatchState {
 }
 
 function configuredPlayer(playerId: string, characterId: string) {
-  const character = sampleContent.characters.find(({ id }) => id === characterId)!;
+  const character = gameCatalog.characters.find(({ id }) => id === characterId)!;
   return {
     playerId,
     characterId,
@@ -543,4 +544,24 @@ test('scores current carry instead of prior-round continuation', () => {
   const withoutCarry = { ...state, playerStates: { ...state.playerStates, [opponent]: { ...state.playerStates[opponent]!, continuation: { steps: state.draft!.playerStates[opponent]!.construction.steps, analysis: state.draft!.playerStates[opponent]!.construction.analysis, publicText: state.draft!.playerStates[opponent]!.construction.previewText } } },
     draft: { ...state.draft!, playerStates: { ...state.draft!.playerStates, [opponent]: { ...state.draft!.playerStates[opponent]!, construction: { ...state.draft!.playerStates[opponent]!.construction, carryIntent: false } } } } };
   expect(evaluatePartyStrategistCandidates(withoutCarry, reviewContext).every(({ rawFeatures }) => rawFeatures.continuationBreak === 0)).toBe(true);
+});
+
+test('advanced policies keep the expected utility of a hand refresh', () => {
+  // Seed 5 offers a refresh whose replacement hand clears the Local Radio
+  // threshold. Its draft features are all zero, so only the carried expected
+  // utility gives it a value.
+  const state = preparedReviewState(5);
+  const easyRefresh = evaluateLocalRadioCallerCandidates(state, reviewContext)
+    .find(({ command }) => command.type === 'redraw-hand')!;
+  expect(easyRefresh.utility).toBeGreaterThan(0);
+  const partyRefresh = evaluatePartyStrategistCandidates(state, reviewContext)
+    .find(({ command }) => command.type === 'redraw-hand')!;
+  const personality = gameCatalog.characters.find(({ id }) =>
+    id === state.playerStates[state.activePlayerId]!.characterId)!.aiPersonality;
+  expect(partyRefresh.utility).toBeCloseTo(
+    scorePartyStrategistFeatureSet(partyRefresh.normalizedFeatures, personality) +
+      easyRefresh.utility,
+    12,
+  );
+  expect(partyRefresh.utility).toBeGreaterThan(0);
 });

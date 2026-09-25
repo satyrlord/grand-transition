@@ -8,6 +8,7 @@ import {
   type MatchState,
 } from '../engine/match-lifecycle';
 import { seededRandomSource, type RandomSource } from '../engine/random-source';
+import { stableHash } from '../engine/stable-hash';
 
 export const localRadioCallerWeights = Object.freeze({
   immediateDamage: 1,
@@ -514,13 +515,7 @@ function compareCandidates(left: EasyAiCandidate, right: EasyAiCandidate): numbe
 }
 
 function decisionSeed(state: MatchState): number {
-  let hash = state.seed >>> 0;
-  const text = JSON.stringify(state.commandHistory);
-  for (let index = 0; index < text.length; index += 1) {
-    hash ^= text.charCodeAt(index);
-    hash = Math.imul(hash, 16_777_619) >>> 0;
-  }
-  return hash;
+  return stableHash(JSON.stringify(state.commandHistory), state.seed);
 }
 
 function mean(values: readonly number[]): number {

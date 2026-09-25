@@ -2,9 +2,9 @@ import { expect, test, vi } from 'vitest';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
 import {
   romanianGameLocale,
-  sampleContent,
+  gameCatalog,
 } from '../../src/game-content';
-import { createSimulationSetup, simulateMatch } from '../../src/engine/simulation';
+import { createSimulationSetup, simulateMatch } from '../../src/simulation/simulation';
 import type { ReplayContext } from '../../src/persistence/codecs/replay-codec';
 import {
   createMatchHistoryEntry,
@@ -18,7 +18,7 @@ import { interfaceCharacterName } from '../../src/app/interface-names';
 const seed = 20_260_917;
 
 const romanianContext: ReplayContext = {
-  catalog: sampleContent,
+  catalog: gameCatalog,
   locale: romanianGameLocale,
   balance: basicScoringBalance,
 };
@@ -39,7 +39,7 @@ async function mountHistory(entries: readonly MatchHistoryEntry[]): Promise<void
 function romanianEntry(): MatchHistoryEntry {
   const match = simulateMatch(
     seed,
-    createSimulationSetup(sampleContent, {
+    createSimulationSetup(gameCatalog, {
       aiDifficulty: 'palace-operator',
       gameLocale: 'ro-RO',
     }),

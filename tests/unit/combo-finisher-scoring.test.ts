@@ -3,7 +3,7 @@ import {
   basicScoringBalance,
   type BasicScoringBalance,
 } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import {
   scoreComboFinisherConstruction,
   type ComboChainState,
@@ -11,13 +11,13 @@ import {
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
-  type EnglishGrammarStep,
+  type GrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter';
 
-const add = (id: string): EnglishGrammarStep => ({
+const add = (id: string): GrammarStep => ({
   kind: 'phrase',
   phrase: prepareEnglishGrammarPhrase(
-    sampleContent.phrases.find((phrase) => phrase.id === id)!,
+    gameCatalog.phrases.find((phrase) => phrase.id === id)!,
     englishGameLocale,
   ),
 });
@@ -41,7 +41,7 @@ const score = (
     attackerCharacterId: 'red-folded-chairman',
     comboState,
     analysis: analysis(ids),
-    phrases: sampleContent.phrases,
+    phrases: gameCatalog.phrases,
     defenderWeaknessTags: weaknesses,
     balance,
   });
@@ -162,7 +162,7 @@ describe('Hollywood Roast combos and finishers', () => {
         },
       },
       analysis: incomplete.analysis,
-      phrases: sampleContent.phrases,
+      phrases: gameCatalog.phrases,
       defenderWeaknessTags: [],
       balance: basicScoringBalance,
     });

@@ -1,7 +1,8 @@
 import { describe, expect, test } from 'vitest';
 import { contentCatalogSchema } from '../../src/content/content-catalog';
+import commonPhraseCards from '../../src/content/common-phrase-cards.json' with { type: 'json' };
 import { finalContentVolumeIssues } from '../../tools/final-content-volumes';
-import { createSampleContent } from '../../src/content/sample-content';
+import { createGameCatalog } from '../../src/content/game-catalog';
 import { createEnglishGameLocale } from '../../src/localization/en-game-locale';
 import {
   buildPhraseCardCatalog,
@@ -13,13 +14,13 @@ import {
   characterPortraitUrls,
   characterSkins,
   phraseCardCatalog,
-  sampleContent,
+  gameCatalog,
 } from '../../src/game-content';
 
 type MutableCatalog = ReturnType<typeof cloneCatalog>;
 
 function cloneCatalog() {
-  return structuredClone(sampleContent);
+  return structuredClone(gameCatalog);
 }
 
 interface NumericBoundaryCase {
@@ -653,11 +654,11 @@ describe('content schemas', () => {
         ...parsed.englishMessages,
       },
     };
-    const completeCatalog = createSampleContent(expandedCatalog, [
+    const completeCatalog = createGameCatalog(expandedCatalog, [
       createEnglishGameLocale(expandedCatalog.englishMessages),
     ]);
     expect(completeCatalog.characters).toHaveLength(
-      sampleContent.characters.length + 1,
+      gameCatalog.characters.length + 1,
     );
     expect(completeCatalog.characters.at(-1)?.characterPhraseIds).toEqual([
       'test-character-noun-001',
@@ -667,6 +668,22 @@ describe('content schemas', () => {
     expect(() =>
       parseCharacterCardFile(source, 'characters/wrong-name.json'),
     ).toThrow(/must be named "test-character-phrase-cards\.json"/iu);
+  });
+
+  test('builds the same catalog when the production bundle skips validation', () => {
+    const characterSources = import.meta.glob(
+      '../../src/content/characters/*-phrase-cards.json',
+      { eager: true, import: 'default' },
+    ) as Record<string, unknown>;
+    const trusted = buildPhraseCardCatalog(commonPhraseCards, characterSources, {
+      validate: false,
+    });
+    expect(trusted).toEqual(
+      buildPhraseCardCatalog(commonPhraseCards, characterSources),
+    );
+    expect(
+      createGameCatalog(trusted, gameCatalog.locales, { validate: false }),
+    ).toEqual(createGameCatalog(phraseCardCatalog, gameCatalog.locales));
   });
 
   test('rejects text-derived phrase and tense-family identifiers', () => {
@@ -774,7 +791,7 @@ describe('content schemas', () => {
   });
 
   test('accepts the ordered 19-character and seven-scene catalog', () => {
-    const result = contentCatalogSchema.parse(sampleContent);
+    const result = contentCatalogSchema.parse(gameCatalog);
 
     expect(result.characters.map(({ id }) => id)).toEqual([
       'red-folded-chairman',
@@ -1252,8 +1269,8 @@ describe('content schemas', () => {
       'common-verb-067',
       'common-verb-068',
     ];
-    const english = sampleContent.locales.find((locale) => locale.locale === 'en')!;
-    const romanian = sampleContent.locales.find((locale) => locale.locale === 'ro-RO')!;
+    const english = gameCatalog.locales.find((locale) => locale.locale === 'en')!;
+    const romanian = gameCatalog.locales.find((locale) => locale.locale === 'ro-RO')!;
     for (const family of families) {
       for (const tense of ['past', 'present', 'future']) {
         const phrase = phraseCardCatalog.phrases.find(
@@ -1405,7 +1422,7 @@ const finalRoles = [
 ] as const;
 
 test('the production catalog meets every Milestone 028 final volume', () => {
-  expect(finalContentVolumeIssues(sampleContent)).toEqual([]);
+  expect(finalContentVolumeIssues(gameCatalog)).toEqual([]);
 });
 
 test.each(finalRoles)('rejects general %s one below and above its final total', (role, required) => {

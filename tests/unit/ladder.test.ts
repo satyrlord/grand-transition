@@ -3,8 +3,10 @@ import {
   createLadderProgress,
   currentLadderRung,
   ladderDifficulty,
+  ladderMatchSeed,
   ladderProgressMatchesCatalog,
   reconcileLadderScenes,
+  recordLadderAttempt,
   recordLadderResult,
   type LadderProgress,
 } from '../../src/engine/ladder';
@@ -220,6 +222,29 @@ describe('ladder engine', () => {
     expect(recordLadderResult(progress, 'loss')).toBe(progress);
   });
 
+  test('a started match without a result changes the next seed until a result clears it', () => {
+    // The first attempt at a rung keeps the seed that shipped before attempts
+    // were counted, so existing ladder seeds and replays stay the same.
+    const previousSeed = (progress: LadderProgress) =>
+      ((progress.seed >>> 0) ^
+        Math.imul(progress.rungIndex + 1, 0x9e37_79b1) ^
+        Math.imul(progress.losses + 1, 0x85eb_ca6b)) >>> 0;
+    expect(ladderMatchSeed(golden)).toBe(previousSeed(golden));
+
+    const started = recordLadderAttempt(golden);
+    expect(started).toEqual({ ...golden, unfinishedAttempts: 1 });
+    expect(currentLadderRung(started)).toEqual(currentLadderRung(golden));
+    const restarted = recordLadderAttempt(started);
+    const seeds = new Set([golden, started, restarted].map(ladderMatchSeed));
+    expect(seeds.size).toBe(3);
+
+    expect(recordLadderResult(restarted, 'abandon')).toBe(restarted);
+    expect(recordLadderResult(restarted, 'loss')).toEqual({ ...golden, losses: 1 });
+    expect(recordLadderResult(restarted, 'win')).toEqual(recordLadderResult(golden, 'win'));
+    const completed = { ...golden, rungIndex: 9, wins: 9, completed: true };
+    expect(recordLadderAttempt(completed)).toBe(completed);
+  });
+
   test('rejects progress that no longer matches the playable catalog', () => {
     expect(ladderProgressMatchesCatalog(golden, characterIds, sceneIds)).toBe(
       true,
@@ -249,6 +274,18 @@ describe('ladder engine', () => {
 });
 
 describe('ladder progress codec and repository', () => {
+  test('round-trips unfinished attempts and still decodes progress without them', () => {
+    const started = recordLadderAttempt(recordLadderAttempt(golden));
+    expect(decodeLadderProgress(encodeLadderProgress(started))).toEqual({
+      ok: true,
+      value: started,
+    });
+    expect(encodeLadderProgress(golden)).not.toContain('unfinishedAttempts');
+    expect(
+      decodeLadderProgress(JSON.stringify({ ...golden, unfinishedAttempts: 0 })),
+    ).toMatchObject({ ok: false, path: 'unfinishedAttempts' });
+  });
+
   test('round-trips normalized progress and resumes at the same rung', () => {
     const afterWin = recordLadderResult(golden, 'win');
     const bytes = encodeLadderProgress(afterWin);

@@ -190,11 +190,27 @@ export type PhraseCardCatalog = Readonly<{
   englishMessages: Readonly<Record<string, string>>;
 }>;
 
+/**
+ * `validate: false` trusts sources that a Node build step already validated
+ * with this same parser. The production browser build uses it to skip the
+ * schema work at startup; every other caller validates.
+ */
+export type CatalogBuildOptions = Readonly<{ validate?: boolean }>;
+
+function parsed<Value>(
+  schema: Readonly<{ parse: (value: unknown) => Value }>,
+  value: unknown,
+  options: CatalogBuildOptions,
+): Value {
+  return options.validate === false ? (value as Value) : schema.parse(value);
+}
+
 export function parsePhraseCardCorpus(
   input: unknown,
   characterId?: string,
+  options: CatalogBuildOptions = {},
 ): PhraseCardCorpus {
-  const cards = manualPhraseCardsSchema.parse(input);
+  const cards = parsed(manualPhraseCardsSchema, input, options);
   const owner = characterId ? identifierSchema.parse(characterId) : undefined;
   const phrases: Phrase[] = [];
   const englishMessages: Record<string, string> = {};
@@ -214,7 +230,7 @@ export function parsePhraseCardCorpus(
     const personalSingularKey = `${textKey}.personal-singular`;
     const secondPersonKey = `${textKey}.second-person`;
     phrases.push(
-      phraseSchema.parse({
+      parsed(phraseSchema, {
         ...definition,
         characterIds: owner ? [owner] : undefined,
         textKey,
@@ -233,7 +249,7 @@ export function parsePhraseCardCorpus(
                     : undefined,
               }
             : undefined,
-      }),
+      }, options),
     );
     englishMessages[textKey] = text;
     if (singularText && pluralText) {
@@ -252,15 +268,16 @@ export function parsePhraseCardCorpus(
 export function parseCharacterCardFile(
   input: unknown,
   sourceName?: string,
+  options: CatalogBuildOptions = {},
 ): CharacterCardFile {
-  const source = manualCharacterFileSchema.parse(input);
+  const source = parsed(manualCharacterFileSchema, input, options);
   const expectedFileName = `${source.id}-phrase-cards.json`;
   if (sourceName && fileName(sourceName) !== expectedFileName) {
     throw new Error(
       `Character file "${sourceName}" must be named "${expectedFileName}".`,
     );
   }
-  const corpus = parsePhraseCardCorpus(source.phrases, source.id);
+  const corpus = parsePhraseCardCorpus(source.phrases, source.id, options);
   const nameKey = `character.${source.id}.name`;
   const descriptionKey = `character.${source.id}.description`;
   const comebackLinesByTier = {
@@ -276,13 +293,13 @@ export function parseCharacterCardFile(
     phrases: _phrases,
     ...definition
   } = source;
-  const character = characterSchema.parse({
+  const character = parsed(characterSchema, {
     ...definition,
     nameKey,
     descriptionKey,
     characterPhraseIds: corpus.phrases.map((phrase) => phrase.id),
     comebackLinesByTier,
-  });
+  }, options);
   const englishMessages = {
     ...corpus.englishMessages,
     [nameKey]: name,
@@ -297,10 +314,12 @@ export function parseCharacterCardFile(
 export function buildPhraseCardCatalog(
   commonSource: unknown,
   characterSources: Readonly<Record<string, unknown>>,
+  options: CatalogBuildOptions = {},
 ): PhraseCardCatalog {
-  const common = parsePhraseCardCorpus(commonSource);
+  const common = parsePhraseCardCorpus(commonSource, undefined, options);
   const characterFiles = Object.entries(characterSources)
-    .map(([sourceName, source]) => parseCharacterCardFile(source, sourceName))
+    .map(([sourceName, source]) =>
+      parseCharacterCardFile(source, sourceName, options))
     .toSorted(
       (left, right) =>
         left.rosterOrder - right.rosterOrder ||

@@ -28,7 +28,7 @@ import { basicScoringBalance } from '../content/basic-scoring-balance';
 import {
   characterSkins,
   gameLocaleBundle,
-  sampleContent,
+  gameCatalog,
 } from '../game-content';
 import {
   defaultGameLocale,
@@ -59,8 +59,10 @@ import {
 import {
   createLadderProgress,
   currentLadderRung,
+  ladderMatchSeed,
   ladderProgressMatchesCatalog,
   reconcileLadderScenes,
+  recordLadderAttempt,
   type LadderProgress,
 } from '../engine/ladder';
 import {
@@ -107,8 +109,8 @@ function createMatchId(seed: number): string {
 // Every match replaces `locale` at creation with the game language selected in
 // title Settings, so a running match never follows a later setting change.
 const matchContext: MatchEngineContext = {
-  phrases: sampleContent.phrases,
-  characters: sampleContent.characters,
+  phrases: gameCatalog.phrases,
+  characters: gameCatalog.characters,
   locale: gameLocaleBundle(defaultGameLocale),
   balance: basicScoringBalance,
 };
@@ -240,6 +242,12 @@ export class GrandTransitionApp extends LitElement {
   private roundPresentation: RoundPresentation | null = null;
   private readonly speechDiagnostics = new SpeechDiagnostics();
   private diagnosticFlush: ReturnType<typeof setTimeout> | undefined;
+  private liveSnapshot: Readonly<{
+    state: MatchState;
+    reaction: MatchArenaReaction | null;
+    skinKey: string;
+    snapshot: MatchScreenSnapshot;
+  }> | null = null;
 
   constructor() {
     super();
@@ -264,8 +272,8 @@ export class GrandTransitionApp extends LitElement {
     if (!storedLadderProgress) {
       this.ladderSnapshot = storedLadderSnapshot;
     } else {
-      const characterIds = sampleContent.characters.map(({ id }) => id);
-      const sceneIds = sampleContent.scenes.map(({ id }) => id);
+      const characterIds = gameCatalog.characters.map(({ id }) => id);
+      const sceneIds = gameCatalog.scenes.map(({ id }) => id);
       const reconciledProgress = reconcileLadderScenes(
         storedLadderProgress,
         sceneIds,
@@ -422,19 +430,7 @@ export class GrandTransitionApp extends LitElement {
         : null;
     const matchSnapshot =
       this.roundReviewSnapshot ??
-      (liveMatchState
-        ? createMatchScreenSnapshot(
-            liveMatchState,
-            this.matchCoordinator.locale,
-            this.matchArenaReaction,
-            null,
-            null,
-            this.currentMatchSkinIds(),
-            liveMatchState.setup.mode === 'ai'
-              ? 'player-one'
-              : liveMatchState.activePlayerId,
-          )
-        : null);
+      (liveMatchState ? this.liveMatchSnapshot(liveMatchState) : null);
     if (this.view === 'match' && matchSnapshot) {
       return html`<grand-transition-match
         .snapshot=${matchSnapshot}
@@ -535,6 +531,29 @@ export class GrandTransitionApp extends LitElement {
     }
   }
 
+  // Unrelated shell updates (thinking, pause, audio) keep the same snapshot, so
+  // the match screen keeps its hover preview and pending-command state.
+  private liveMatchSnapshot(state: MatchState): MatchScreenSnapshot {
+    const skins = this.currentMatchSkinIds();
+    const skinKey = `${skins['player-one']}|${skins['player-two']}`;
+    const cached = this.liveSnapshot;
+    if (cached && cached.state === state &&
+      cached.reaction === this.matchArenaReaction && cached.skinKey === skinKey) {
+      return cached.snapshot;
+    }
+    const snapshot = createMatchScreenSnapshot(
+      state,
+      this.matchCoordinator.locale,
+      this.matchArenaReaction,
+      null,
+      null,
+      skins,
+      state.setup.mode === 'ai' ? 'player-one' : state.activePlayerId,
+    );
+    this.liveSnapshot = { state, reaction: this.matchArenaReaction, skinKey, snapshot };
+    return snapshot;
+  }
+
   private readonly showSetup = (event: ShowSetupEvent): void => {
     event.stopPropagation();
     const mode = event.detail?.mode;
@@ -597,8 +616,8 @@ export class GrandTransitionApp extends LitElement {
           createLadderProgress(
             this.setupSnapshot.playerOneCharacterId,
             createMatchSeed(),
-            sampleContent.characters.map(({ id }) => id),
-            sampleContent.scenes.map(({ id }) => id),
+            gameCatalog.characters.map(({ id }) => id),
+            gameCatalog.scenes.map(({ id }) => id),
           ),
         );
       }
@@ -633,8 +652,8 @@ export class GrandTransitionApp extends LitElement {
         createLadderProgress(
           value,
           createMatchSeed(),
-          sampleContent.characters.map(({ id }) => id),
-          sampleContent.scenes.map(({ id }) => id),
+          gameCatalog.characters.map(({ id }) => id),
+          gameCatalog.scenes.map(({ id }) => id),
         ),
       );
       this.setupSnapshot = setupSnapshotForLadder(
@@ -674,7 +693,7 @@ export class GrandTransitionApp extends LitElement {
     const playerTwoCharacterId =
       ladderRung?.opponentCharacterId ?? payload.playerTwoCharacterId;
     const sceneId = ladderRung?.sceneId ?? payload.sceneId;
-    const scene = sampleContent.scenes.find(
+    const scene = gameCatalog.scenes.find(
       (candidate) => candidate.id === sceneId,
     );
     if (!scene) {
@@ -686,18 +705,25 @@ export class GrandTransitionApp extends LitElement {
       : createMatchSeed();
     this.matchInitialSeed = initialSeed;
     this.matchId = createMatchId(initialSeed);
+    if (ladderProgress) {
+      // Count the start now, so a reload or Abandon never replays this deal.
+      this.ladderSnapshot = this.ladderProgressRepository.replace(
+        recordLadderAttempt(ladderProgress),
+      );
+    }
     this.speechDiagnostics.reset();
     const state = createMatchSetupState({
       schemaVersion: 1,
       seed: initialSeed,
       basePointsMultiplier: this.settingsSnapshot.settings.basePointsMultiplier,
+      speechEnabled: this.settingsSnapshot.settings.speechEnabled,
       players: [
         configuredPlayer('player-one', playerOneCharacterId),
         configuredPlayer('player-two', playerTwoCharacterId),
       ],
       sceneId: scene.id,
       scenePhraseIds: scene.phrasePool,
-      generalPhraseIds: sampleContent.phrases.map((phrase) => phrase.id),
+      generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
       mode: payload.mode === 'hotseat' ? 'hotseat' : 'ai',
       aiDifficulty:
         payload.mode === 'ladder'
@@ -727,14 +753,14 @@ export class GrandTransitionApp extends LitElement {
 
   private readonly reduceMatchCommand = (event: MatchCommandEvent): void => {
     event.stopPropagation();
-    if (this.aiThinking) return;
-    this.applyMatchCommand(event.detail);
+    // A cancelled event tells the match screen that no new snapshot follows.
+    if (this.aiThinking || !this.applyMatchCommand(event.detail)) event.preventDefault();
   };
 
-  private applyMatchCommand(command: MatchCommand): void {
-    if (!this.matchState || !this.matchViewportReady || this.manuallyPaused) return;
+  /** Returns false when the command did not change the match. */
+  private applyMatchCommand(command: MatchCommand): boolean {
+    if (!this.matchState || !this.matchViewportReady || this.manuallyPaused) return false;
     if (!this.matchId) throw new Error('The active match does not have a stable ID.');
-    this.gameSpeech?.cancel();
     const transition = this.matchCoordinator.apply(this.matchState, command, {
       initialSeed: this.currentMatchInitialSeed(),
       id: this.matchId,
@@ -745,6 +771,8 @@ export class GrandTransitionApp extends LitElement {
         phraseColorCoding: this.phraseColorCoding,
       },
     });
+    if (!transition) return false;
+    this.gameSpeech?.cancel();
     this.matchState = transition.state;
     if (this.matchState.phase === 'results') this.flushSpeechDiagnostics();
     this.matchArenaReaction = transition.reaction;
@@ -768,7 +796,7 @@ export class GrandTransitionApp extends LitElement {
     if (review && this.roundReviewSnapshot && !directKnockout) {
       const skins = this.currentMatchSkinIds();
       const voices = Object.fromEntries(this.matchState.setup.players.map((player) => [
-        player.playerId, skinSpeechProfile(sampleContent.characters.find((character) => character.id === player.characterId)!,
+        player.playerId, skinSpeechProfile(gameCatalog.characters.find((character) => character.id === player.characterId)!,
           skins[player.playerId] ?? 'default', this.speech?.activeMode, currentGameTextLocale()),
       ]));
       this.roundPresentation?.start({ resolution: review.resolution,
@@ -789,6 +817,7 @@ export class GrandTransitionApp extends LitElement {
     this.ladderSnapshot = this.ladderProgressRepository.snapshot();
     this.matchHistory = this.matchHistoryRepository.snapshot();
     this.scheduleAiTurn();
+    return true;
   }
 
   private finishRoundPresentation(): void {
@@ -827,33 +856,7 @@ export class GrandTransitionApp extends LitElement {
   ): void => {
     event.stopPropagation();
     if (this.matchState?.phase !== 'results') return;
-    this.roundPresentation?.cancel('navigation');
-    this.flushSpeechDiagnostics('interrupted');
-    this.manuallyPaused = false;
-    this.matchArenaReaction = null;
-    this.roundReviewSnapshot = null;
-    this.matchState = null;
-    this.speech?.endMatch();
-    this.cancelAiTurn();
-    this.matchInitialSeed = null;
-    this.matchId = null;
-    if (this.currentMatchIsLadder && this.ladderSnapshot.progress) {
-      this.setupSnapshot = setupSnapshotForLadder(
-        { ...this.setupSnapshot, mode: 'ladder' },
-        this.ladderSnapshot.progress,
-      );
-      this.currentMatchIsLadder = false;
-      this.screenController.returnToSetup();
-      this.view = 'setup';
-      this.focusViewHeading('setup');
-    } else {
-      this.currentMatchIsLadder = false;
-      this.screenController.showTitle();
-      this.view = 'title';
-      this.focusViewHeading('title');
-    }
-    // The title and setup screens render the selected game language again.
-    this.applyGameTextLocale();
+    this.leaveMatch();
   };
 
   private readonly pauseMatch = (event: Event): void => {
@@ -879,6 +882,11 @@ export class GrandTransitionApp extends LitElement {
   private readonly returnToMenu = (event: Event): void => {
     event.stopPropagation();
     if (this.view !== 'match' || !this.manuallyPaused) return;
+    this.leaveMatch();
+  };
+
+  /** Ends the active match and returns to Ladder setup or to the title. */
+  private leaveMatch(): void {
     this.roundPresentation?.cancel('navigation');
     this.flushSpeechDiagnostics('interrupted');
     this.manuallyPaused = false;
@@ -889,22 +897,23 @@ export class GrandTransitionApp extends LitElement {
     this.cancelAiTurn();
     this.matchInitialSeed = null;
     this.matchId = null;
-    if (this.currentMatchIsLadder && this.ladderSnapshot.progress) {
+    const ladderProgress = this.currentMatchIsLadder ? this.ladderSnapshot.progress : null;
+    this.currentMatchIsLadder = false;
+    if (ladderProgress) {
       this.setupSnapshot = setupSnapshotForLadder(
         { ...this.setupSnapshot, mode: 'ladder' },
-        this.ladderSnapshot.progress,
+        ladderProgress,
       );
-      this.currentMatchIsLadder = false;
       this.screenController.returnToSetup();
       this.view = 'setup';
-      this.focusViewHeading('setup');
     } else {
-      this.currentMatchIsLadder = false;
       this.screenController.showTitle();
       this.view = 'title';
-      this.focusViewHeading('title');
     }
-  };
+    this.focusViewHeading(this.view);
+    // The title and setup screens render the selected game language again.
+    this.applyGameTextLocale();
+  }
 
   private readonly changeTurnTimer = (event: TurnTimerChangeEvent): void => {
     event.stopPropagation();
@@ -1037,7 +1046,7 @@ export class GrandTransitionApp extends LitElement {
         !this.manuallyPaused && this.matchViewportReady ? this.matchState : null,
       reducedDelay: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
       thinking: (value) => { this.aiThinking = value; },
-      apply: (command) => this.applyMatchCommand(command),
+      apply: (command) => { this.applyMatchCommand(command); },
     });
   }
 
@@ -1065,7 +1074,7 @@ function configuredPlayer(
   playerId: string,
   characterId: string,
 ): MatchConfiguredPlayer {
-  const character = sampleContent.characters.find(
+  const character = gameCatalog.characters.find(
     (candidate) => candidate.id === characterId,
   );
   if (!character) {
@@ -1087,8 +1096,8 @@ function publishDevelopmentGameLog(detail: MatchCommandLog): void {
 }
 
 export function createDefaultSetupSnapshot(): SetupSnapshot {
-  const [playerOne, playerTwo] = sampleContent.characters;
-  const [scene] = sampleContent.scenes;
+  const [playerOne, playerTwo] = gameCatalog.characters;
+  const [scene] = gameCatalog.scenes;
   if (!playerOne || !playerTwo || !scene) {
     throw new Error(
       'Setup needs at least two characters and one scene. Add valid catalog content.',
@@ -1127,12 +1136,6 @@ function setupSnapshotForLadder(
   });
 }
 
-function ladderMatchSeed(progress: LadderProgress): number {
-  let seed = progress.seed >>> 0;
-  seed ^= Math.imul(progress.rungIndex + 1, 0x9e37_79b1);
-  seed ^= Math.imul(progress.losses + 1, 0x85eb_ca6b);
-  return seed >>> 0;
-}
 
 function difficultyLabel(difficulty: string | null): string {
   if (difficulty === 'party-strategist') return msg('Party Strategist');

@@ -11,7 +11,7 @@ import {
   type EasyAiFeatures,
 } from '../../src/ai/easy-ai';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import {
   createMatchReducer,
   createMatchSetupState,
@@ -25,11 +25,11 @@ import {
   listLocalRadioCallerSimulationOptions,
   simulateMatch,
   simulateMatches,
-} from '../../src/engine/simulation';
+} from '../../src/simulation/simulation';
 
 const context: MatchEngineContext = {
-  phrases: sampleContent.phrases,
-  characters: sampleContent.characters,
+  phrases: gameCatalog.phrases,
+  characters: gameCatalog.characters,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
@@ -295,12 +295,12 @@ describe('Local Radio Caller', () => {
   });
 
   test('completes one replayable match through the Local Radio Caller policy', () => {
-    const setup = createSimulationSetup(sampleContent, {
+    const setup = createSimulationSetup(gameCatalog, {
       aiDifficulty: 'local-radio-caller',
       gameLocale: 'en',
     });
     const replayContext = {
-      catalog: sampleContent,
+      catalog: gameCatalog,
       locale: englishGameLocale,
       balance: basicScoringBalance,
     };
@@ -338,8 +338,8 @@ describe('Local Radio Caller', () => {
 });
 
 function preparedMatch(): MatchState {
-  const [first, second] = sampleContent.characters;
-  const scene = sampleContent.scenes[0]!;
+  const [first, second] = gameCatalog.characters;
+  const scene = gameCatalog.scenes[0]!;
   let state = createMatchSetupState({
     schemaVersion: 1,
     seed: 21,
@@ -348,7 +348,7 @@ function preparedMatch(): MatchState {
     players: [configuredPlayer('player-one', first!.id), configuredPlayer('player-two', second!.id)],
     sceneId: scene.id,
     scenePhraseIds: scene.phrasePool,
-    generalPhraseIds: sampleContent.phrases.map(({ id }) => id),
+    generalPhraseIds: gameCatalog.phrases.map(({ id }) => id),
     openingPlayerIndex: scene.openingPlayerIndex,
   });
   state = reduce(state, { type: 'start-match', source: 'ai', payload: {} });
@@ -356,7 +356,7 @@ function preparedMatch(): MatchState {
 }
 
 function configuredPlayer(playerId: string, characterId: string) {
-  const character = sampleContent.characters.find(({ id }) => id === characterId)!;
+  const character = gameCatalog.characters.find(({ id }) => id === characterId)!;
   return {
     playerId,
     characterId,

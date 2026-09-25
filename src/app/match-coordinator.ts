@@ -64,6 +64,8 @@ type CoordinatorDependencies = Readonly<{
   now: () => string;
   setTimeout: (callback: () => void, delay: number) => number;
   clearTimeout: (id: number) => void;
+  /** Monotonic milliseconds for AI decision time. */
+  elapsedNow?: () => number;
 }>;
 
 type AiTurnRequest = Readonly<{
@@ -110,7 +112,8 @@ export class MatchCoordinator {
     return this.lifecycle(state, 'prepare-round', initialSeed);
   }
 
-  apply(before: MatchState, command: MatchCommand, identity: MatchIdentity): MatchTransition {
+  /** Applies one command. A rejected command is logged and returns null. */
+  apply(before: MatchState, command: MatchCommand, identity: MatchIdentity): MatchTransition | null {
     const result = this.reducer(before, command, defaultMatchRandomSource);
     if (!result.ok) {
       this.dependencies.log({
@@ -118,7 +121,7 @@ export class MatchCoordinator {
         actorId: command.actorId ?? null, outcome: 'rejected',
         errorCode: result.error.code, command, before, after: before,
       });
-      throw new Error(`Match command ${command.type} failed: ${result.error.code}.`);
+      return null;
     }
     const reduced = result.state;
     this.logAccepted(identity.initialSeed, command, before, reduced);
@@ -147,8 +150,8 @@ export class MatchCoordinator {
     const decide = state.setup.aiDifficulty === 'party-strategist'
       ? decidePartyStrategist
       : state.setup.aiDifficulty === 'palace-operator' ? decidePalaceOperator : decideLocalRadioCaller;
-    const decision = decide(state, this.context, { reducedDelay: request.reducedDelay });
-    if (!decision) return;
+    const context = this.context;
+    const elapsedNow = this.dependencies.elapsedNow ?? (() => performance.now());
     this.aiRequest = request;
     request.thinking(true);
     const stillPending = () => {
@@ -159,19 +162,32 @@ export class MatchCoordinator {
       }
       return true;
     };
+    // Show the thinking state before the search runs. The search time counts
+    // toward the seeded presentation delay instead of adding to it.
     this.aiTimerId = this.dependencies.setTimeout(() => {
       if (!stillPending()) return;
       this.aiTimerId = undefined;
-      // Keep one task between presentation and command application so that
-      // an in-flight browser Back traversal can cancel the turn.
+      const started = elapsedNow();
+      const decision = decide(state, context, { reducedDelay: request.reducedDelay });
+      if (!decision) {
+        this.cancelAiTurn();
+        return;
+      }
+      const remainingDelay = Math.max(0, decision.delayMs - (elapsedNow() - started));
       this.aiTimerId = this.dependencies.setTimeout(() => {
         if (!stillPending()) return;
         this.aiTimerId = undefined;
-        this.aiRequest = undefined;
-        request.thinking(false);
-        request.apply(decision.command);
-      }, 0);
-    }, decision.delayMs);
+        // Keep one task between presentation and command application so that
+        // an in-flight browser Back traversal can cancel the turn.
+        this.aiTimerId = this.dependencies.setTimeout(() => {
+          if (!stillPending()) return;
+          this.aiTimerId = undefined;
+          this.aiRequest = undefined;
+          request.thinking(false);
+          request.apply(decision.command);
+        }, 0);
+      }, remainingDelay);
+    }, 0);
   }
 
   cancelAiTurn(): void {

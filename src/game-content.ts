@@ -6,7 +6,7 @@ import {
   buildPhraseCardCatalog,
   type PhraseCardCatalog,
 } from './content/phrase-card-catalog';
-import { createSampleContent } from './content/sample-content';
+import { createGameCatalog } from './content/game-catalog';
 import {
   indexGameLocaleBundles,
   selectGameLocaleBundle,
@@ -49,9 +49,15 @@ export type CharacterSkin = Readonly<{
   webp: CharacterAssetSource | null;
 }>;
 
+// `npm run build` validates these same sources in Node first, so the
+// production bundle skips the schema work at startup. Development, tests, and
+// tools always validate.
+const catalogBuildOptions = { validate: !import.meta.env.PROD } as const;
+
 export const phraseCardCatalog: PhraseCardCatalog = buildPhraseCardCatalog(
   commonSource,
   characterSources,
+  catalogBuildOptions,
 );
 
 export const englishGameLocale = createEnglishGameLocale(
@@ -62,14 +68,15 @@ export const romanianGameLocale = createRomanianGameLocale(
   mergeRomanianMessageFiles(romanianSources),
 );
 
-export const sampleContent = createSampleContent(phraseCardCatalog, [
-  englishGameLocale,
-  romanianGameLocale,
-]);
+export const gameCatalog = createGameCatalog(
+  phraseCardCatalog,
+  [englishGameLocale, romanianGameLocale],
+  catalogBuildOptions,
+);
 
 // Every shipped game-locale bundle, indexed by the locale it renders.
 export const gameLocaleBundles: GameLocaleBundles = indexGameLocaleBundles(
-  sampleContent.locales,
+  gameCatalog.locales,
 );
 
 // The bundle that renders a match's captured game locale. A locale without a

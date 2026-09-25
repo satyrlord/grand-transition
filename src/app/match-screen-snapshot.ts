@@ -3,10 +3,12 @@ export type { MatchArenaReaction } from './match-coordinator';
 import { msg, str } from '@lit/localize';
 import type { Phrase } from '../content/schemas';
 import {
+  handCardSlotIndex,
   snapshotDraftStateForPlayer,
   type ComebackTier,
   type DraftCardReference,
 } from '../engine/draft-actions';
+import { phraseIndex } from '../engine/phrase-index';
 import {
   comebackChargeCap,
   comebackRules,
@@ -14,20 +16,20 @@ import {
 } from '../engine/continuation-comeback-resolution';
 import type { ComboFinisherScore } from '../engine/combo-finisher-scoring';
 import { extractScoreClauseAnchors } from '../engine/basic-scoring';
-import type { EnglishGrammarAnalysis } from '../engine/grammar/english-grammar-adapter';
+import type { GrammarAnalysis } from '../engine/grammar/english-grammar-adapter';
 import { grammarFor } from '../engine/grammar/grammar-locale';
 import type {
   MatchResolution,
   MatchResolutionPlayer,
   MatchState,
 } from '../engine/match-lifecycle';
-import { characterSkins, sampleContent } from '../game-content';
+import { characterSkins, gameCatalog } from '../game-content';
 import type { GameLocaleBundle } from '../localization/game-locale-schema';
 import {
   interfaceCharacterName,
   interfaceSceneName,
 } from './interface-names';
-import { deepFreeze } from './deep-freeze';
+import { deepFreeze } from '../engine/plain-values';
 import { projectCharacterCue, type CharacterCue, type CharacterFrame } from './character-motion';
 import { resolveCharacterFrames } from './character-state-assets';
 import { matchCharacterImageSizes, type CharacterFacing } from './character-assets';
@@ -240,9 +242,7 @@ export function createMatchScreenSnapshot(
     state.draft,
     viewerId,
   );
-  const phraseById = new Map(
-    sampleContent.phrases.map((phrase) => [phrase.id, phrase]),
-  );
+  const phraseById = phraseIndex(gameCatalog.phrases);
   const selectedPhraseIds = new Set(
     Object.values(state.draft.playerStates).flatMap((player) =>
       player.construction.selectedCards.map((card) => card.phraseId),
@@ -277,8 +277,7 @@ export function createMatchScreenSnapshot(
 
   const privateSlots = Array.from<MatchCardView | undefined>({ length: 2 });
   for (const card of viewerSnapshot.players[activePlayerId]!.hand.cards ?? []) {
-    const parsedIndex = Number(card.id.match(/(\d+)$/u)?.[1] ?? 1) - 1;
-    const slotIndex = parsedIndex === 1 ? 1 : 0;
+    const slotIndex = handCardSlotIndex(card);
     const phrase = phraseById.get(card.phraseId)!;
     const reference: DraftCardReference = {
       source: 'private',
@@ -449,16 +448,14 @@ export function createMatchScreenSnapshot(
 
 function scoreComponentViews(
   result: MatchResolutionPlayer | undefined,
-  analysis: EnglishGrammarAnalysis,
+  analysis: GrammarAnalysis,
   locale: GameLocaleBundle,
 ): readonly MatchScoreComponentView[] {
   if (!result) return [];
   const phraseTextById = new Map(
     result.constructionPhrases.map((phrase) => [phrase.phraseId, phrase.text]),
   );
-  const phraseById = new Map(
-    sampleContent.phrases.map((phrase) => [phrase.id, phrase]),
-  );
+  const phraseById = phraseIndex(gameCatalog.phrases);
   const components: MatchScoreComponentView[] = [];
   const anchors = extractScoreClauseAnchors(analysis, phraseById);
   let clauseIndex = 0;
@@ -803,7 +800,7 @@ function characterSkin(characterId: string, skinId?: string) {
 }
 
 function sceneLayerViews(sceneId: string): readonly MatchSceneLayerView[] {
-  const scene = sampleContent.scenes.find(
+  const scene = gameCatalog.scenes.find(
     (candidate) => candidate.id === sceneId,
   );
   if (!scene) throw new Error(`Unknown match scene "${sceneId}".`);

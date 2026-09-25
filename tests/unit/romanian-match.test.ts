@@ -3,14 +3,14 @@ import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
 import {
   englishGameLocale,
   romanianGameLocale,
-  sampleContent,
+  gameCatalog,
 } from '../../src/game-content';
 import {
   createSimulationSetup,
   simulateMatch,
   simulateMatches,
   summarizeSimulation,
-} from '../../src/engine/simulation';
+} from '../../src/simulation/simulation';
 import {
   createMatchReducer,
   type MatchCommand,
@@ -32,25 +32,25 @@ import {
 const seed = 20_260_917;
 
 const englishContext: ReplayContext = {
-  catalog: sampleContent,
+  catalog: gameCatalog,
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
 const romanianContext: ReplayContext = {
-  catalog: sampleContent,
+  catalog: gameCatalog,
   locale: romanianGameLocale,
   balance: basicScoringBalance,
 };
 
 const engineContext = (locale: typeof englishGameLocale): MatchEngineContext => ({
-  phrases: sampleContent.phrases,
-  characters: sampleContent.characters,
+  phrases: gameCatalog.phrases,
+  characters: gameCatalog.characters,
   locale,
   balance: basicScoringBalance,
 });
 
 const romanianSetup = (options: Parameters<typeof createSimulationSetup>[1] = {}) =>
-  createSimulationSetup(sampleContent, { ...options, gameLocale: 'ro-RO' });
+  createSimulationSetup(gameCatalog, { ...options, gameLocale: 'ro-RO' });
 
 /** Score, weakness, combo, and continuation facts that must not depend on language. */
 function scoreFacts(resolutions: readonly MatchResolution[]) {
@@ -134,7 +134,7 @@ describe('Romanian deterministic play', () => {
   test('scores a matched semantic clause identically in both game locales', () => {
     const english = simulateMatch(
       seed,
-      createSimulationSetup(sampleContent, {
+      createSimulationSetup(gameCatalog, {
         aiDifficulty: 'palace-operator',
         gameLocale: 'en',
       }),

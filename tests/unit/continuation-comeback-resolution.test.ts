@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance';
-import { englishGameLocale, sampleContent } from '../../src/game-content';
+import { englishGameLocale, gameCatalog } from '../../src/game-content';
 import type { Phrase } from '../../src/content/schemas';
 import {
   addComebackCharge,
@@ -17,26 +17,26 @@ import type { ComboChainState } from '../../src/engine/combo-finisher-scoring';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
-  type EnglishGrammarAnalysis,
-  type EnglishGrammarStep,
+  type GrammarAnalysis,
+  type GrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter';
 
 const players = ['first-player', 'second-player'] as const;
-const characters = sampleContent.characters;
+const characters = gameCatalog.characters;
 
 function completeConstruction(): Readonly<{
-  steps: readonly EnglishGrammarStep[];
-  analysis: EnglishGrammarAnalysis;
+  steps: readonly GrammarStep[];
+  analysis: GrammarAnalysis;
   publicText: string;
 }> {
   const phraseIds = [
     'common-noun-001',
     'common-predicate-010-present',
   ] as const;
-  const steps: readonly EnglishGrammarStep[] = phraseIds.map((phraseId) => ({
+  const steps: readonly GrammarStep[] = phraseIds.map((phraseId) => ({
     kind: 'phrase',
     phrase: prepareEnglishGrammarPhrase(
-      sampleContent.phrases.find((phrase) => phrase.id === phraseId)!,
+      gameCatalog.phrases.find((phrase) => phrase.id === phraseId)!,
       englishGameLocale,
     ),
   }));
@@ -54,7 +54,7 @@ function completeConstruction(): Readonly<{
 }
 
 function phrasesForDamage(damage: number): readonly Phrase[] {
-  return sampleContent.phrases.map((phrase) => {
+  return gameCatalog.phrases.map((phrase) => {
     if (phrase.id === 'common-noun-001') {
       return { ...phrase, tags: ['neutral'] };
     }
@@ -87,25 +87,14 @@ function playerInput(
     readonly carry?: boolean;
     readonly comeback?: ComebackTier | null;
     readonly charge?: number;
-    readonly selfDamage?: number;
   } = {},
 ): ContinuationComebackPlayerInput {
   const construction = completeConstruction();
-  const analysis = options.selfDamage
-    ? {
-        ...construction.analysis,
-        resolution: {
-          ...construction.analysis.resolution,
-          selfDamageIntent: options.selfDamage,
-        },
-      }
-    : construction.analysis;
   return {
     playerId: players[index],
     characterId: characters[index]!.id,
     construction: {
       ...construction,
-      analysis,
       carryIntent: options.carry ?? false,
       selectedComeback:
         options.comeback === null || options.comeback === undefined
@@ -134,12 +123,11 @@ describe('continuation resolution', () => {
   test.each([0, 15])(
     'survives %i opponent damage and restores exact state facts once',
     (damage) => {
-      const carrier = playerInput(0, { carry: true, selfDamage: 99 });
+      const carrier = playerInput(0, { carry: true });
       const result = resolve(carrier, playerInput(1, { damage }));
       const resolved = result.players[players[0]]!;
 
       expect(resolved.outgoingDamage).toBe(0);
-      expect(resolved.selfDamage).toBe(99);
       expect(resolved.continuation.status).toBe('survived');
       expect(resolved.continuation.restoredCarry).toEqual({
         steps: carrier.construction.steps,
@@ -246,7 +234,7 @@ describe('comeback charge, selection, and scoring', () => {
   test('caps received opponent damage at 60 and does not use self-damage', () => {
     expect(addComebackCharge(59, 50)).toBe(60);
     const result = resolve(
-      playerInput(0, { charge: 19, selfDamage: 50 }),
+      playerInput(0, { charge: 19 }),
       playerInput(1, { damage: 4 }),
     );
     expect(result.players[players[0]]!.comebackCharge).toBe(23);

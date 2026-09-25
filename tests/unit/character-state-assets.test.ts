@@ -67,8 +67,6 @@ test('variant order cannot choose a smaller fallback image', () => {
 
 test('resolves the required reused state mappings', () => {
   const { manifest, selection, urls } = fixture();
-  const mappings = manifest.packages[0]!.states;
-
   const frames = createCharacterStatePackages(manifest, [selection], urls)[0]!.frames;
   expect(frames.find(({ stateId }) => stateId === 'idle')!.id).toBe(selection.id);
   expect(frames.find(({ stateId }) => stateId === 'comeback')!.id).toBe(`${selection.id}--delivery`);

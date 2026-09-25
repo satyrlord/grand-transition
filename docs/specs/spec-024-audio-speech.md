@@ -173,7 +173,9 @@ approved implementation is available.
 of it. `speech:build` prepares the package. `speech:validate` runs in the
 build, in asset validation, and in CI. The package is approximately 91 MB. It
 contains the shared model, the configuration, the runtime WASM, and the
-notices. Each file is less than 100 MiB.
+notices. Each file is less than 100 MiB. The speech workers load only this
+hash-checked runtime WASM, so the production build leaves out the fallback
+WASM copies that the libraries would otherwise add to `assets/`.
 
 Validation does checks of the pinned input hashes, the package identity, the
 full file inventory, and the output hashes. Missing files, duplicate files,

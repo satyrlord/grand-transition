@@ -3,7 +3,7 @@ import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import { pathToFileURL } from 'node:url';
 import path from 'node:path';
-import { sampleContent } from '../../src/game-content';
+import { gameCatalog } from '../../src/game-content';
 
 const tools = await import(pathToFileURL(path.resolve('tools/audio-assets.mjs')).href);
 const valid = { codec: 'vorbis', sampleRate: 48000, integratedLufs: -16, truePeakDbfs: -2 };
@@ -137,7 +137,7 @@ describe('audio asset inventory', () => {
     expect(new Set(music.map((asset: { id: string }) => asset.id)).size).toBe(8);
     const sceneMusic = new Map(music.map((asset: { id: string; sceneId: string }) => [asset.sceneId, asset.id]));
     expect(sceneMusic.get('menu')).toBe('menu-theme');
-    for (const scene of sampleContent.scenes) {
+    for (const scene of gameCatalog.scenes) {
       expect(sceneMusic.get(scene.id), scene.id).toBe(scene.music.assetId);
     }
     const playableMusic = music.filter((asset: { sceneId: string }) => asset.sceneId !== 'menu');

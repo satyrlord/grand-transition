@@ -1,6 +1,7 @@
 import { env, InferenceSession, Tensor } from 'onnxruntime-web/webgpu';
 import { phonemize } from 'phonemizer';
 import type { NeuralSpeechCommand, NeuralSpeechMessage } from './speech-port';
+import { assertIntegrity, readExactBody } from './asset-integrity';
 import runtimeModuleUrl from 'onnxruntime-web/ort-wasm-simd-threaded.asyncify.mjs?url&no-inline';
 import expectedManifest from './kokoro-gpu-manifest.json';
 
@@ -28,30 +29,18 @@ async function readAsset(name: string, measured = false): Promise<ArrayBuffer> {
   const response = await fetch(url, { credentials: 'omit', redirect: 'error', cache: 'force-cache' });
   if (!response.ok) throw new Error('The neural asset is unavailable.');
   const record = manifest?.files.find((file) => file.path === name);
-  let bytes: ArrayBuffer;
-  if (measured && response.body && record) {
-    const data = new Uint8Array(record.bytes);
-    const reader = response.body.getReader();
-    let loaded = 0;
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      if (loaded + value.length > data.length) throw new Error('Neural asset size mismatch.');
-      data.set(value, loaded); loaded += value.length;
-      if (performance.now() - lastProgressAt >= 100 || loaded === data.length) {
+  const bytes = measured && response.body && record
+    ? await readExactBody(response.body, record.bytes, 'Neural asset', (loaded) => {
+      if (performance.now() - lastProgressAt >= 100 || loaded === record.bytes) {
         lastProgressAt = performance.now();
         worker.postMessage({ type: 'progress', loaded: loadedBytes + loaded, total: manifest.files.reduce((sum, file) => sum + file.bytes, manifest.runtimeModule.bytes) });
       }
-    }
-    if (loaded !== data.length) throw new Error('Neural asset is incomplete.');
-    bytes = data.buffer;
-  } else bytes = await response.arrayBuffer();
+    })
+    : await response.arrayBuffer();
   if (record) {
-    const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', bytes));
-    const hex = Array.from(digest, (byte) => byte.toString(16).padStart(2, '0')).join('');
-    if (bytes.byteLength !== record.bytes || hex !== record.sha256) throw new Error('Neural asset integrity failed.');
+    await assertIntegrity(bytes, record, 'Neural asset');
+    loadedBytes += bytes.byteLength;
   }
-  if (record) loadedBytes += bytes.byteLength;
   return bytes;
 }
 
@@ -81,8 +70,7 @@ async function load(baseUrl: string): Promise<void> {
   const moduleResponse = await fetch(moduleUrl, { credentials: 'omit', redirect: 'error', cache: 'force-cache' });
   if (!moduleResponse.ok) throw new Error('The neural runtime is unavailable.');
   const moduleBytes = await moduleResponse.arrayBuffer();
-  const moduleDigest = new Uint8Array(await crypto.subtle.digest('SHA-256', moduleBytes));
-  if (moduleBytes.byteLength !== manifest.runtimeModule.bytes || Array.from(moduleDigest, byte => byte.toString(16).padStart(2, '0')).join('') !== manifest.runtimeModule.sha256) throw new Error('Invalid neural runtime.');
+  await assertIntegrity(moduleBytes, manifest.runtimeModule, 'Neural runtime');
   loadedBytes += moduleBytes.byteLength;
   // WebGPU intentionally leaves some shape/control-flow nodes on CPU. Keep
   // ONNX Runtime's expected placement warning out of the app error console,
@@ -95,8 +83,8 @@ async function load(baseUrl: string): Promise<void> {
     const bytes = new Uint8Array(await readAsset(shard, true));
     model.set(bytes, offset); offset += bytes.length;
   }
-  const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', model));
-  if (offset !== model.length || Array.from(digest, byte => byte.toString(16).padStart(2, '0')).join('') !== manifest.modelSha256) throw new Error('Invalid GPU model.');
+  if (offset !== model.length) throw new Error('Invalid GPU model.');
+  await assertIntegrity(model, { bytes: manifest.modelBytes, sha256: manifest.modelSha256 }, 'GPU model');
   // Session and run loggers have independent warning defaults in ONNX Runtime.
   session = await InferenceSession.create(model, { executionProviders: ['webgpu'], logSeverityLevel: 3 });
   const device = await env.webgpu.device as { queue?: unknown; adapterInfo?: { isFallbackAdapter?: boolean }; lost?: Promise<unknown> } | undefined;

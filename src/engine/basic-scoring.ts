@@ -1,6 +1,7 @@
 import type { BasicScoringBalance } from '../content/basic-scoring-balance';
 import type { Phrase } from '../content/schemas';
-import type { EnglishGrammarAnalysis } from './grammar/english-grammar-adapter';
+import type { GrammarAnalysis } from './grammar/english-grammar-adapter';
+import { phraseIndex } from './phrase-index';
 
 export type BasicScoreBreakdownItem =
   | Readonly<{
@@ -51,7 +52,7 @@ export type BasicScore = Readonly<{
 }>;
 
 export type BasicScoringRequest = Readonly<{
-  analysis: EnglishGrammarAnalysis;
+  analysis: GrammarAnalysis;
   phrases: readonly Phrase[];
   defenderWeaknessTags: readonly string[];
   balance: BasicScoringBalance;
@@ -81,9 +82,7 @@ export function scoreBasicConstruction(
   if (!isScoreable(request.analysis)) {
     return zeroScore();
   }
-  const phraseById = new Map(
-    request.phrases.map((phrase) => [phrase.id, phrase]),
-  );
+  const phraseById = phraseIndex(request.phrases);
   const clauses = extractScoreClauses(request.analysis, phraseById);
   const breakdown: BasicScoreBreakdownItem[] = [];
   for (const clause of clauses) {
@@ -93,34 +92,7 @@ export function scoreBasicConstruction(
       request.defenderWeaknessTags,
       request.balance,
     );
-    breakdown.push({
-      kind: 'clause-base',
-      operation: 'note',
-      phraseIds: clause.phraseIds,
-      amount: scored.base,
-    });
-    if (scored.restrictionFactor !== 1) {
-      breakdown.push({
-        kind: 'restriction-multiplier',
-        operation: 'note',
-        phraseIds: clause.phraseIds,
-        factor: scored.restrictionFactor,
-      });
-    }
-    breakdown.push(
-      ...scored.weaknessMatches.map((match) => ({
-        kind: 'weakness-match' as const,
-        operation: 'note' as const,
-        ...match,
-      })),
-    );
-    if (scored.weaknessFactor !== 1) {
-      breakdown.push({
-        kind: 'weakness-multiplier',
-        operation: 'note',
-        factor: scored.weaknessFactor,
-      });
-    }
+    breakdown.push(...clauseNoteItems(clause, scored));
     breakdown.push({
       kind: 'clause-score',
       operation: 'add',
@@ -144,8 +116,46 @@ export function scoreBasicConstruction(
   return { ...calculated, breakdown };
 }
 
+/** The explanation notes of one scored clause, before its clause score. */
+export function clauseNoteItems(
+  clause: ScoreClause,
+  scored: ScoredClause,
+): readonly BasicScoreBreakdownItem[] {
+  const items: BasicScoreBreakdownItem[] = [
+    {
+      kind: 'clause-base',
+      operation: 'note',
+      phraseIds: clause.phraseIds,
+      amount: scored.base,
+    },
+  ];
+  if (scored.restrictionFactor !== 1) {
+    items.push({
+      kind: 'restriction-multiplier',
+      operation: 'note',
+      phraseIds: clause.phraseIds,
+      factor: scored.restrictionFactor,
+    });
+  }
+  items.push(
+    ...scored.weaknessMatches.map((match) => ({
+      kind: 'weakness-match' as const,
+      operation: 'note' as const,
+      ...match,
+    })),
+  );
+  if (scored.weaknessFactor !== 1) {
+    items.push({
+      kind: 'weakness-multiplier',
+      operation: 'note',
+      factor: scored.weaknessFactor,
+    });
+  }
+  return items;
+}
+
 export function extractScoreClauses(
-  analysis: EnglishGrammarAnalysis,
+  analysis: GrammarAnalysis,
   phraseById: ReadonlyMap<string, Phrase>,
 ): readonly ScoreClause[] {
   return collectScoreClauses(analysis, phraseById).clauses;
@@ -153,14 +163,14 @@ export function extractScoreClauses(
 
 /** Phrase positions at which each scored clause first becomes complete. */
 export function extractScoreClauseAnchors(
-  analysis: EnglishGrammarAnalysis,
+  analysis: GrammarAnalysis,
   phraseById: ReadonlyMap<string, Phrase>,
 ): readonly number[] {
   return collectScoreClauses(analysis, phraseById).anchors;
 }
 
 function collectScoreClauses(
-  analysis: EnglishGrammarAnalysis,
+  analysis: GrammarAnalysis,
   phraseById: ReadonlyMap<string, Phrase>,
 ): Readonly<{ clauses: readonly ScoreClause[]; anchors: readonly number[] }> {
   const phrases = analysis.renderedPhrases.filter(
@@ -471,7 +481,7 @@ export function ceilDamage(value: number): number {
   return Math.ceil(value);
 }
 
-function isScoreable(analysis: EnglishGrammarAnalysis): boolean {
+function isScoreable(analysis: GrammarAnalysis): boolean {
   return analysis.complete && analysis.sentenceStatus === 'complete';
 }
 

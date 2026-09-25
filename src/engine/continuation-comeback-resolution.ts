@@ -8,10 +8,11 @@ import {
   type ComboFinisherScore,
 } from './combo-finisher-scoring';
 import type {
-  EnglishGrammarAnalysis,
-  EnglishGrammarStep,
+  GrammarAnalysis,
+  GrammarStep,
 } from './grammar/english-grammar-adapter';
 import { seededRandomSource, type RandomSource } from './random-source';
+import { stableHash } from './stable-hash';
 
 export const comebackTiers = ['weak', 'medium', 'strong'] as const;
 export type ComebackTier = (typeof comebackTiers)[number];
@@ -51,8 +52,8 @@ export type ComebackSelectionError = RuleError<
 >;
 
 export type ContinuationCarry = Readonly<{
-  steps: readonly EnglishGrammarStep[];
-  analysis: EnglishGrammarAnalysis;
+  steps: readonly GrammarStep[];
+  analysis: GrammarAnalysis;
   publicText: string;
 }>;
 
@@ -127,7 +128,7 @@ export function selectComebackTier(request: {
     request.seed,
   );
   const historyOffset =
-    stableHistoryHash(request.commandHistory ?? []) % lineKeys.length;
+    stableHash(JSON.stringify(request.commandHistory ?? [])) % lineKeys.length;
   const lineIndex =
     (Math.min(
       lineKeys.length - 1,
@@ -159,8 +160,8 @@ export type ContinuationComebackPlayerInput = Readonly<{
   playerId: string;
   characterId: string;
   construction: Readonly<{
-    steps: readonly EnglishGrammarStep[];
-    analysis: EnglishGrammarAnalysis;
+    steps: readonly GrammarStep[];
+    analysis: GrammarAnalysis;
     publicText: string;
     carryIntent: boolean;
     selectedComeback: ComebackSelection | null;
@@ -176,7 +177,6 @@ export type ContinuationComebackPlayerResult = Readonly<{
   sentenceDamage: number;
   comebackBonus: number;
   outgoingDamage: number;
-  selfDamage: number;
   comebackCharge: number;
   availableComebackTiers: readonly ComebackTier[];
   closingLine: string | null;
@@ -263,8 +263,6 @@ export function resolveContinuationComebackRound(request: {
       sentenceDamage: attack.sentenceDamage,
       comebackBonus: attack.comebackBonus,
       outgoingDamage: attack.outgoingDamage,
-      selfDamage:
-        attack.player.construction.analysis.resolution.selfDamageIntent,
       comebackCharge,
       availableComebackTiers: availableComebackTiers(comebackCharge),
       closingLine:
@@ -320,14 +318,4 @@ function normalizeDamage(damage: number): number {
     throw new Error('Received damage must be a non-negative integer.');
   }
   return damage;
-}
-
-function stableHistoryHash(history: readonly GameCommand[]): number {
-  const text = JSON.stringify(history);
-  let hash = 2_166_136_261;
-  for (let index = 0; index < text.length; index += 1) {
-    hash ^= text.charCodeAt(index);
-    hash = Math.imul(hash, 16_777_619);
-  }
-  return hash >>> 0;
 }

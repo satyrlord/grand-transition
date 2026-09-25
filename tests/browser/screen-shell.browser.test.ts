@@ -13,7 +13,7 @@ import {
   type SetupSnapshot,
   type StartMatchEvent,
 } from '../../src/app/screens/setup-screen';
-import { sampleContent } from '../../src/game-content';
+import { gameCatalog } from '../../src/game-content';
 import { displayWeaknessName } from '../../src/localization/romanian-display-names';
 import {
   createLadderProgress,
@@ -37,7 +37,7 @@ const lockButton = (side: 'one' | 'two'): HTMLButtonElement | null =>
   document.querySelector<HTMLButtonElement>(`[data-testid="lock-player-${side}"]`);
 
 const publicWeaknesses = (characterId: string): string =>
-  sampleContent.characters.find(({ id }) => id === characterId)!.weaknessTags
+  gameCatalog.characters.find(({ id }) => id === characterId)!.weaknessTags
     .map((tag) => displayWeaknessName(tag, 'en')).join(' · ');
 
 test('roster crops and selected stages keep full responsive portrait sources', async () => {
@@ -689,8 +689,8 @@ test.each([
 ) => {
   const progress = recordLadderResult(createLadderProgress(
     characterId, 22_026,
-    sampleContent.characters.map(({ id }) => id),
-    sampleContent.scenes.map(({ id }) => id),
+    gameCatalog.characters.map(({ id }) => id),
+    gameCatalog.scenes.map(({ id }) => id),
   ), result);
   const saved = encodeLadderProgress(progress);
   localStorage.setItem(ladderProgressStorageKey, saved);
@@ -723,8 +723,8 @@ test.each([
 test('Main Menu selects each mode without replacing saved ladder progress', async () => {
   const progress = recordLadderResult(createLadderProgress(
     'black-sea-captain', 22_026,
-    sampleContent.characters.map(({ id }) => id),
-    sampleContent.scenes.map(({ id }) => id),
+    gameCatalog.characters.map(({ id }) => id),
+    gameCatalog.scenes.map(({ id }) => id),
   ), 'win');
   const saved = encodeLadderProgress(progress);
   localStorage.setItem(ladderProgressStorageKey, saved);
@@ -747,14 +747,14 @@ test('Main Menu selects each mode without replacing saved ladder progress', asyn
 });
 
 test('reconciles saved Ladder scenes with the current catalog', async () => {
-  const previousSceneIds = sampleContent.scenes
+  const previousSceneIds = gameCatalog.scenes
     .map(({ id }) => id)
     .filter((id) => id !== 'civic-cypher-boxing-ring')
     .concat('retired-scene');
   const previousProgress = recordLadderResult(createLadderProgress(
     'black-sea-captain',
     22_026,
-    sampleContent.characters.map(({ id }) => id),
+    gameCatalog.characters.map(({ id }) => id),
     previousSceneIds,
   ), 'win');
   localStorage.setItem(
@@ -778,9 +778,9 @@ test('reconciles saved Ladder scenes with the current catalog', async () => {
     completed: false,
   });
   expect(new Set(decoded.value.sceneOrder)).toEqual(
-    new Set(sampleContent.scenes.map(({ id }) => id)),
+    new Set(gameCatalog.scenes.map(({ id }) => id)),
   );
-  const currentSceneIds = new Set(sampleContent.scenes.map(({ id }) => id));
+  const currentSceneIds = new Set(gameCatalog.scenes.map(({ id }) => id));
   const retainedSceneOrder = previousProgress.sceneOrder.filter(
     (sceneId) => currentSceneIds.has(sceneId),
   );
@@ -792,8 +792,8 @@ test('shows completed progress without starting a locked rung', async () => {
   let progress = createLadderProgress(
     'red-folded-chairman',
     22_026,
-    sampleContent.characters.map(({ id }) => id),
-    sampleContent.scenes.map(({ id }) => id),
+    gameCatalog.characters.map(({ id }) => id),
+    gameCatalog.scenes.map(({ id }) => id),
   );
   for (let index = 0; index < 9; index += 1) {
     progress = recordLadderResult(progress, 'win');

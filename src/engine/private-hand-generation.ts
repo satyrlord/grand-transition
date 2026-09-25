@@ -1,5 +1,12 @@
 import type { Phrase } from '../content/schemas';
 import { seededRandomSource, type RandomSource } from './random-source';
+import {
+  isClauseConnector,
+  pickWeighted,
+  preferredConnectors,
+  rarityWeight,
+  type WeightedPhrase,
+} from './weighted-selection';
 
 export const privateHandSize = 2;
 
@@ -36,19 +43,8 @@ export type PrivateHandGenerationResult =
   | Readonly<{ ok: true; hand: GeneratedPrivateHand }>
   | Readonly<{ ok: false; error: PrivateHandGenerationFailure }>;
 
-interface WeightedPhrase {
-  readonly phrase: Phrase;
-  readonly weight: number;
-}
-
-const rarityWeights = {
-  common: 4,
-  uncommon: 2,
-  rare: 1,
-} as const satisfies Readonly<Record<Phrase['rarity'], number>>;
-
 export function privateHandCandidateWeight(phrase: Phrase): number {
-  return rarityWeights[phrase.rarity];
+  return rarityWeight(phrase);
 }
 
 export function generatePrivateHand(
@@ -70,21 +66,15 @@ export function generatePrivateHand(
 
   const connectors = remaining.filter(
     (candidate) =>
-      candidate.phrase.role === 'conjunction' &&
-      ['and', 'but', 'yet'].includes(candidate.phrase.connectorKind ?? ''),
+      candidate.phrase.role === 'conjunction' && isClauseConnector(candidate),
   );
   if (step.value < 0.25 && connectors.length > 0) {
     step = randomSource.next(seed);
     seed = step.nextSeed;
-    const preferredKinds =
-      step.value < 0.25 ? new Set(['but', 'yet']) : new Set(['and']);
-    const preferred = connectors.filter((candidate) =>
-      preferredKinds.has(candidate.phrase.connectorKind ?? ''),
-    );
-    const pool = preferred.length > 0 ? preferred : connectors;
+    const pool = preferredConnectors(connectors, step.value);
     step = randomSource.next(seed);
     seed = step.nextSeed;
-    const connector = weightedCandidate(pool, step.value).phrase;
+    const connector = pickWeighted(pool, step.value).phrase;
     selected.push(connector);
     removePhrase(remaining, connector.id);
   }
@@ -92,7 +82,7 @@ export function generatePrivateHand(
   while (selected.length < privateHandSize) {
     step = randomSource.next(seed);
     seed = step.nextSeed;
-    const phrase = weightedCandidate(remaining, step.value).phrase;
+    const phrase = pickWeighted(remaining, step.value).phrase;
     selected.push(phrase);
     removePhrase(remaining, phrase.id);
   }
@@ -139,7 +129,7 @@ function collectCandidates(
         eligible = sharedPhraseIds.has(phrase.id);
       }
       if (!eligible) return [];
-      return [{ phrase, weight: privateHandCandidateWeight(phrase) }];
+      return [{ phrase, weight: rarityWeight(phrase) }];
     })
     .sort((left, right) => left.phrase.id.localeCompare(right.phrase.id, 'en'));
 }
@@ -148,22 +138,6 @@ function removePhrase(phrases: WeightedPhrase[], phraseId: string): void {
   for (let index = phrases.length - 1; index >= 0; index -= 1) {
     if (phrases[index]!.phrase.id === phraseId) phrases.splice(index, 1);
   }
-}
-
-function weightedCandidate(
-  candidates: readonly WeightedPhrase[],
-  value: number,
-): WeightedPhrase {
-  const totalWeight = candidates.reduce(
-    (total, candidate) => total + candidate.weight,
-    0,
-  );
-  let threshold = value * totalWeight;
-  for (const candidate of candidates) {
-    threshold -= candidate.weight;
-    if (threshold < 0) return candidate;
-  }
-  return candidates.at(-1)!;
 }
 
 function impossibleHand(

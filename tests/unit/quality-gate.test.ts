@@ -98,6 +98,7 @@ describe('quality-gate scaffold', () => {
         'node tools/neural-speech-assets.mjs validate && ' +
         'node tools/kokoro-gpu-assets.mjs validate && ' +
         'node tools/romanian-speech-assets.mjs validate && ' +
+        'tsx tools/check-final-content-volumes.ts && ' +
         'vite build',
     );
     expect(packageJson.scripts['assets:build']).toContain(

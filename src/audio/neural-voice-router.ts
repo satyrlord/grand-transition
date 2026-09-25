@@ -60,9 +60,14 @@ export class NeuralVoiceRouter implements SpeechPort {
     return NeuralVoiceRouter.isRomanian(voiceUri) ? this.romanianEngine : this.active;
   }
 
+  private get gpuUsable(): boolean { return this.gpu !== null && this.gpu.status !== 'unavailable'; }
+  private get gpuMatch(): boolean { return this.matchMode === 'gpu' && this.gpuUsable; }
+  /** A match that selected GPU voices keeps Piper for its rest once its GPU engine fails. */
+  private settleMatchMode(): void { if (this.matchMode === 'gpu' && !this.gpuUsable) this.matchMode = 'piper'; }
+
   get activeMode(): NeuralVoiceMode {
-    if (this.matchMode === 'gpu' && this.gpu?.status === 'unavailable') this.matchMode = 'piper';
-    return this.matchMode ?? (this.requested && this.gpu?.voices.length && this.gpu.status !== 'unavailable' ? 'gpu' : 'piper');
+    if (this.matchMode !== null) return this.gpuMatch ? 'gpu' : 'piper';
+    return this.requested && this.gpuUsable && this.gpu!.voices.length ? 'gpu' : 'piper';
   }
   private get active(): Engine { return this.activeMode === 'gpu' ? this.gpu! : this.piper; }
   get available(): boolean { return !this.disposed && (this.active.available || this.romanianEngine.available); }
@@ -78,8 +83,9 @@ export class NeuralVoiceRouter implements SpeechPort {
   configure(settings: { speechEnabled: boolean; gpuVoices: boolean }): void {
     this.enabled = settings.speechEnabled;
     this.requested = settings.gpuVoices;
+    this.settleMatchMode();
     if (!this.enabled) this.cancel('settings');
-    if ((!this.enabled || !this.requested) && this.matchMode !== 'gpu') this.releaseGpu();
+    if ((!this.enabled || !this.requested) && !this.gpuMatch) this.releaseGpu();
     this.changed();
   }
 
@@ -96,7 +102,7 @@ export class NeuralVoiceRouter implements SpeechPort {
     // Keep Piper ready for immediate match start and for device loss. GPU loading never gates it.
     const ready = this.piper.initialize(activate);
     if (this.requested) {
-      this.gpu ??= this.factory('gpu', this.changed);
+      this.gpu ??= this.factory('gpu', () => { this.settleMatchMode(); this.changed(); });
       if (this.gpu.status !== 'unavailable') void this.gpu.initialize(activate);
     }
     return ready;
@@ -115,6 +121,7 @@ export class NeuralVoiceRouter implements SpeechPort {
   }
 
   private request(request: SpeechRequest): SpeechRequest {
+    this.settleMatchMode();
     // Romanian speech is its own voice family: it is never replaced by the GPU
     // voices and never rewritten, so the selected Romanian voice survives.
     if (NeuralVoiceRouter.isRomanian(request.voiceUri)) {

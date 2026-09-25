@@ -6,7 +6,7 @@ import { defineConfig } from 'vitest/config';
 import { characterPortraitFallbackPlugin } from './vite.config.ts';
 
 const pureFileThresholds = Object.fromEntries(
-  ['src/engine', 'src/ai', 'src/persistence/codecs']
+  ['src/engine', 'src/ai', 'src/simulation', 'src/persistence/codecs']
     .flatMap((root) => listTypeScriptFiles(root))
     .map((file) => [
       file,
@@ -49,6 +49,7 @@ export default defineConfig({
       'tests/unit/replay-and-simulation.test.ts',
       'tests/unit/romanian-persistence.test.ts',
       'tests/unit/settings.test.ts',
+      'tests/unit/shared-rule-helpers.test.ts',
       'tests/unit/viewport-support.test.ts',
     ],
     browser: {

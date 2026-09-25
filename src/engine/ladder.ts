@@ -1,4 +1,5 @@
 import { seededRandomSource, type RandomSource } from './random-source';
+import { deepFreeze } from './plain-values';
 
 export const ladderRungCount = 9;
 
@@ -27,6 +28,11 @@ export type LadderProgress = Readonly<{
   wins: number;
   losses: number;
   completed: boolean;
+  /**
+   * Matches started on this rung since the last result. Present only when it
+   * is above zero, so an abandoned or reloaded match gets a new deal.
+   */
+  unfinishedAttempts?: number;
 }>;
 
 export type LadderRung = Readonly<{
@@ -92,16 +98,40 @@ export function recordLadderResult(
   result: LadderResult,
 ): LadderProgress {
   if (progress.completed || result === 'abandon') return progress;
+  const { unfinishedAttempts: _resolvedAttempts, ...resolved } = progress;
   if (result === 'loss') {
-    return deepFreeze({ ...progress, losses: progress.losses + 1 });
+    return deepFreeze({ ...resolved, losses: progress.losses + 1 });
   }
   const rungIndex = Math.min(ladderRungCount, progress.rungIndex + 1);
   return deepFreeze({
-    ...progress,
+    ...resolved,
     rungIndex,
     wins: progress.wins + 1,
     completed: rungIndex === ladderRungCount,
   });
+}
+
+/** Records a started ladder match until its win or loss clears the count. */
+export function recordLadderAttempt(progress: LadderProgress): LadderProgress {
+  if (progress.completed) return progress;
+  return deepFreeze({
+    ...progress,
+    unfinishedAttempts: (progress.unfinishedAttempts ?? 0) + 1,
+  });
+}
+
+/**
+ * The seed of the current rung's match. It changes with each loss and with
+ * each earlier start that ended without a result, so an abandoned match is
+ * never replayed with the same deal and the same AI choices.
+ */
+export function ladderMatchSeed(progress: LadderProgress): number {
+  let seed = progress.seed >>> 0;
+  seed ^= Math.imul(progress.rungIndex + 1, 0x9e37_79b1);
+  seed ^= Math.imul(progress.losses + 1, 0x85eb_ca6b);
+  const attempts = progress.unfinishedAttempts ?? 0;
+  if (attempts > 0) seed ^= Math.imul(attempts, 0xc2b2_ae35);
+  return seed >>> 0;
 }
 
 export function ladderProgressMatchesCatalog(
@@ -197,14 +227,4 @@ function validSceneIds(sceneIds: readonly string[]): string[] {
     throw new Error('A ladder needs unique scene identifiers.');
   }
   return [...sceneIds].toSorted();
-}
-
-function deepFreeze<Value>(value: Value): Value {
-  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
-    for (const nested of Object.values(value as Record<string, unknown>)) {
-      deepFreeze(nested);
-    }
-    Object.freeze(value);
-  }
-  return value;
 }
