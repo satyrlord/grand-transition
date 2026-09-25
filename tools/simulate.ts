@@ -16,19 +16,14 @@ export type SimulationArguments = Readonly<{
   seed: number;
   matches: number;
   output?: string;
-  difficulty?:
-    | 'local-radio-caller'
-    | 'palace-operator'
-    | 'party-strategist';
+  difficulty?: 'local-radio-caller' | 'palace-operator' | 'party-strategist';
 }>;
 
 export type SimulationArgumentResult =
   | Readonly<{ ok: true; value: SimulationArguments }>
   | Readonly<{ ok: false; option: string; message: string }>;
 
-export function parseSimulationArguments(
-  arguments_: readonly string[],
-): SimulationArgumentResult {
+export function parseSimulationArguments(arguments_: readonly string[]): SimulationArgumentResult {
   const values = new Map<string, string>();
   for (let index = 0; index < arguments_.length; index += 2) {
     const option = arguments_[index]!;
@@ -71,10 +66,7 @@ export function parseSimulationArguments(
     difficulty !== 'party-strategist' &&
     difficulty !== 'palace-operator'
   ) {
-    return invalid(
-      '--difficulty',
-      'Use local-radio-caller, party-strategist, or palace-operator.',
-    );
+    return invalid('--difficulty', 'Use local-radio-caller, party-strategist, or palace-operator.');
   }
   const normalizedDifficulty = difficulty as SimulationArguments['difficulty'];
   return {
@@ -83,9 +75,7 @@ export function parseSimulationArguments(
       seed,
       matches,
       ...(output ? { output } : {}),
-      ...(normalizedDifficulty
-        ? { difficulty: normalizedDifficulty }
-        : {}),
+      ...(normalizedDifficulty ? { difficulty: normalizedDifficulty } : {}),
     },
   };
 }
@@ -120,14 +110,8 @@ export async function runSimulationCommand(
       : listLocalRadioCallerSimulationOptions,
   );
   if (parsed.value.output) {
-    await writeFile(
-      parsed.value.output,
-      encodeSimulationReport(report),
-      'utf8',
-    );
-    output(
-      `Wrote ${report.completedMatches} match(es) to ${parsed.value.output}.`,
-    );
+    await writeFile(parsed.value.output, encodeSimulationReport(report), 'utf8');
+    output(`Wrote ${report.completedMatches} match(es) to ${parsed.value.output}.`);
   } else {
     output(summarizeSimulation(report));
   }

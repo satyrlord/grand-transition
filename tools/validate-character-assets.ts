@@ -27,17 +27,20 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
 
 function requireString(value: unknown, context: string): string {
-  if (typeof value !== 'string' || !value.trim()) throw new Error(`${context} must be a non-empty string.`);
+  if (typeof value !== 'string' || !value.trim())
+    throw new Error(`${context} must be a non-empty string.`);
   return value;
 }
 
 function requireHash(value: unknown, context: string): string {
-  if (typeof value !== 'string' || !hashPattern.test(value)) throw new Error(`${context} must be a lowercase SHA-256 hash.`);
+  if (typeof value !== 'string' || !hashPattern.test(value))
+    throw new Error(`${context} must be a lowercase SHA-256 hash.`);
   return value;
 }
 
 function requireInteger(value: unknown, context: string): number {
-  if (typeof value !== 'number' || !Number.isInteger(value) || value < 0) throw new Error(`${context} must be a non-negative integer.`);
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 0)
+    throw new Error(`${context} must be a non-negative integer.`);
   return value;
 }
 
@@ -87,15 +90,25 @@ export async function inspectRaster(
   await assertRegularFile(filePath, context);
   const input = await readFile(filePath);
   const metadata = await sharp(input).metadata();
-  const decodedFormat = expectedFormat === 'avif' ? metadata.format === 'heif' : metadata.format === expectedFormat;
+  const decodedFormat =
+    expectedFormat === 'avif' ? metadata.format === 'heif' : metadata.format === expectedFormat;
   if (!decodedFormat || metadata.width !== expectedWidth || metadata.height !== expectedHeight) {
-    throw new Error(`${context} must decode as ${expectedFormat} at ${expectedWidth}x${expectedHeight}.`);
+    throw new Error(
+      `${context} must decode as ${expectedFormat} at ${expectedWidth}x${expectedHeight}.`,
+    );
   }
   return { input, metadata };
 }
 
-export async function inspectAlpha(input: Buffer, context: string, { nativeAlpha = false } = {}): Promise<void> {
-  const { data, info } = await sharp(input).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+export async function inspectAlpha(
+  input: Buffer,
+  context: string,
+  { nativeAlpha = false } = {},
+): Promise<void> {
+  const { data, info } = await sharp(input)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
   let transparent = 0;
   let opaque = 0;
   let partial = 0;
@@ -111,9 +124,7 @@ export async function inspectAlpha(input: Buffer, context: string, { nativeAlpha
     if (alpha > 8) {
       visible += 1;
       const offset = pixelIndex * 4;
-      if (
-        isVisibleChromaGreen(data, offset)
-      ) {
+      if (isVisibleChromaGreen(data, offset)) {
         chromaGreen += 1;
       }
       const y = Math.floor(pixelIndex / info.width);
@@ -121,31 +132,46 @@ export async function inspectAlpha(input: Buffer, context: string, { nativeAlpha
       maximumY = Math.max(maximumY, y);
     }
   }
-  const corners = [3, (info.width - 1) * 4 + 3, (info.height - 1) * info.width * 4 + 3, (info.width * info.height - 1) * 4 + 3];
-  if (transparent === 0 || opaque === 0 || partial === 0 || corners.some((offset) => data[offset] !== 0)) {
-    throw new Error(`${context} must have transparent corners, opaque content, and partial-alpha edges.`);
+  const corners = [
+    3,
+    (info.width - 1) * 4 + 3,
+    (info.height - 1) * info.width * 4 + 3,
+    (info.width * info.height - 1) * 4 + 3,
+  ];
+  if (
+    transparent === 0 ||
+    opaque === 0 ||
+    partial === 0 ||
+    corners.some((offset) => data[offset] !== 0)
+  ) {
+    throw new Error(
+      `${context} must have transparent corners, opaque content, and partial-alpha edges.`,
+    );
   }
   if (nativeAlpha && opaque / (opaque + partial) < 0.5) {
-    throw new Error(`${context} must have a predominantly near-opaque native-alpha silhouette (alpha ${NATIVE_ALPHA_MIN_OPACITY} through 255).`);
+    throw new Error(
+      `${context} must have a predominantly near-opaque native-alpha silhouette (alpha ${NATIVE_ALPHA_MIN_OPACITY} through 255).`,
+    );
   }
   if (nativeAlpha) {
     const topology = measureNativeAlphaTopology(data, info.width, info.height);
     if (topology.nontransparentBorderPixels > 0) {
       throw new Error(`${context} must have a fully transparent outer border.`);
     }
-    if (topology.contourPartialAlphaPixels / topology.partialAlphaPixels < NATIVE_ALPHA_MIN_CONTOUR_RATIO) {
+    if (
+      topology.contourPartialAlphaPixels / topology.partialAlphaPixels <
+      NATIVE_ALPHA_MIN_CONTOUR_RATIO
+    ) {
       throw new Error(
         `${context} must keep at least ${NATIVE_ALPHA_MIN_CONTOUR_RATIO * 100}% of partial alpha within ` +
-        `${NATIVE_ALPHA_MAX_CONTOUR_DISTANCE} pixels of near-opaque content.`,
+          `${NATIVE_ALPHA_MAX_CONTOUR_DISTANCE} pixels of near-opaque content.`,
       );
     }
   }
   const visibleRatio = visible / (info.width * info.height);
   const heightRatio = (maximumY - minimumY + 1) / info.height;
   if (!nativeAlpha && chromaGreen > 0) {
-    throw new Error(
-      `${context} retains ${chromaGreen} visible chroma-green pixel(s).`,
-    );
+    throw new Error(`${context} retains ${chromaGreen} visible chroma-green pixel(s).`);
   }
   if (visibleRatio < 0.12 || heightRatio < 0.92 || heightRatio > 0.99) {
     throw new Error(
@@ -167,16 +193,13 @@ async function assertExactMasterSet(characterRoot: string): Promise<void> {
     .filter((entry) => entry.isFile() && path.extname(entry.name).toLowerCase() === '.png')
     .map((entry) => entry.name)
     .toSorted((left, right) => left.localeCompare(right, 'en'));
-  const missing = CHARACTER_MASTER_NAMES.filter(
-    (fileName) => !actual.includes(fileName),
-  );
+  const missing = CHARACTER_MASTER_NAMES.filter((fileName) => !actual.includes(fileName));
   if (missing.length > 0) {
     throw new Error(`Character master set is missing: ${missing.join(', ')}.`);
   }
-  const retired = [
-    'black-sea-captain--alternate.png',
-    'presidential-sphinx.png',
-  ].filter((fileName) => actual.includes(fileName));
+  const retired = ['black-sea-captain--alternate.png', 'presidential-sphinx.png'].filter(
+    (fileName) => actual.includes(fileName),
+  );
   if (retired.length > 0) {
     throw new Error(`Character master set contains retired assets: ${retired.join(', ')}.`);
   }
@@ -184,7 +207,10 @@ async function assertExactMasterSet(characterRoot: string): Promise<void> {
 
 async function listVariantFiles(variantsRoot: string): Promise<string[]> {
   const entries = await readdir(variantsRoot, { withFileTypes: true });
-  return entries.filter((entry) => entry.isFile()).map((entry) => `variants/${entry.name}`).toSorted((left, right) => left.localeCompare(right, 'en'));
+  return entries
+    .filter((entry) => entry.isFile())
+    .map((entry) => `variants/${entry.name}`)
+    .toSorted((left, right) => left.localeCompare(right, 'en'));
 }
 
 export async function validateCharacterAssets({
@@ -198,7 +224,9 @@ export async function validateCharacterAssets({
     throw new Error('Character manifest must declare schemaVersion 1 and an assets array.');
   }
   if (manifest.assets.length !== CHARACTER_MASTER_NAMES.length) {
-    throw new Error(`Character manifest must contain exactly ${CHARACTER_MASTER_NAMES.length} assets.`);
+    throw new Error(
+      `Character manifest must contain exactly ${CHARACTER_MASTER_NAMES.length} assets.`,
+    );
   }
   validateCharacterSkinInventory(manifest.assets);
   const expectedIds = new Set(CHARACTER_MASTER_NAMES.map((file) => path.parse(file).name));
@@ -208,26 +236,48 @@ export async function validateCharacterAssets({
     const context = `Character manifest asset ${index}`;
     if (!isRecord(asset)) throw new Error(`${context} must be an object.`);
     const id = requireString(asset.id, `${context}.id`);
-    if (!expectedIds.has(id)) throw new Error(`Character manifest contains unsupported asset ID "${id}".`);
+    if (!expectedIds.has(id))
+      throw new Error(`Character manifest contains unsupported asset ID "${id}".`);
     if (seenIds.has(id)) throw new Error(`Duplicate character asset ID "${id}".`);
     seenIds.add(id);
-    if (asset.ownerType !== 'character') throw new Error(`Character asset "${id}" must have ownerType character.`);
+    if (asset.ownerType !== 'character')
+      throw new Error(`Character asset "${id}" must have ownerType character.`);
     const expectedOwner = id.split('--', 1)[0];
     const expectedSkin = id.includes('--') ? id.slice(id.indexOf('--') + 2) : 'default';
-    if (asset.ownerId !== expectedOwner || asset.skinId !== expectedSkin) throw new Error(`Character asset "${id}" has incorrect owner or skin metadata.`);
-    if (asset.facing !== layout[id].facing) throw new Error(`Character asset "${id}" has missing or incorrect facing metadata.`);
-    if (asset.stateId !== 'selection' || asset.poseId !== 'selection' || asset.expressionId !== 'selection') {
-      throw new Error(`Character asset "${id}" must map the baseline portrait to the selection state.`);
+    if (asset.ownerId !== expectedOwner || asset.skinId !== expectedSkin)
+      throw new Error(`Character asset "${id}" has incorrect owner or skin metadata.`);
+    if (asset.facing !== layout[id].facing)
+      throw new Error(`Character asset "${id}" has missing or incorrect facing metadata.`);
+    if (
+      asset.stateId !== 'selection' ||
+      asset.poseId !== 'selection' ||
+      asset.expressionId !== 'selection'
+    ) {
+      throw new Error(
+        `Character asset "${id}" must map the baseline portrait to the selection state.`,
+      );
     }
     requireString(asset.sourceDescription, `Character asset "${id}" sourceDescription`);
     requireString(asset.licenseIdentifier, `Character asset "${id}" licenseIdentifier`);
     if (!isRecord(asset.source)) throw new Error(`Character asset "${id}" is missing its source.`);
     const sourcePath = requireString(asset.source.path, `Character asset "${id}" source.path`);
-    if (sourcePath !== `${id}.png` || asset.source.format !== 'png' || asset.source.width !== 2048 || asset.source.height !== 2048) {
+    if (
+      sourcePath !== `${id}.png` ||
+      asset.source.format !== 'png' ||
+      asset.source.width !== 2048 ||
+      asset.source.height !== 2048
+    ) {
       throw new Error(`Character asset "${id}" must use its 2048x2048 PNG source.`);
     }
-    const source = await inspectRaster(path.join(root, sourcePath), 'png', 2048, 2048, `Character asset "${id}" source`);
-    if (sha256(source.input) !== layout[id].sourceSha256) throw new Error(`Character asset "${id}" changed after the facing review.`);
+    const source = await inspectRaster(
+      path.join(root, sourcePath),
+      'png',
+      2048,
+      2048,
+      `Character asset "${id}" source`,
+    );
+    if (sha256(source.input) !== layout[id].sourceSha256)
+      throw new Error(`Character asset "${id}" changed after the facing review.`);
     const declaredSourceHash = requireHash(
       asset.source.sha256,
       `Character asset "${id}" source.sha256`,
@@ -244,7 +294,10 @@ export async function validateCharacterAssets({
     }
     const alphaOptions = { nativeAlpha: hasNativeAlphaProvenance(source.input) };
     await inspectAlpha(source.input, `Character asset "${id}" source`, alphaOptions);
-    if (!Array.isArray(asset.variants) || asset.variants.length !== CHARACTER_VARIANT_SIZES.length * CHARACTER_VARIANT_FORMATS.length) {
+    if (
+      !Array.isArray(asset.variants) ||
+      asset.variants.length !== CHARACTER_VARIANT_SIZES.length * CHARACTER_VARIANT_FORMATS.length
+    ) {
       throw new Error(`Character asset "${id}" must declare every runtime variant.`);
     }
     const variantKeys = new Set<string>();
@@ -254,28 +307,47 @@ export async function validateCharacterAssets({
       const width = requireInteger(variant.width, `${variantContext}.width`);
       const height = requireInteger(variant.height, `${variantContext}.height`);
       const format = variant.format as (typeof CHARACTER_VARIANT_FORMATS)[number];
-      if (!CHARACTER_VARIANT_SIZES.includes(width) || height !== width || !CHARACTER_VARIANT_FORMATS.includes(format)) {
+      if (
+        !CHARACTER_VARIANT_SIZES.includes(width) ||
+        height !== width ||
+        !CHARACTER_VARIANT_FORMATS.includes(format)
+      ) {
         throw new Error(`${variantContext} has unsupported dimensions or format.`);
       }
       const key = `${width}:${format}`;
       if (variantKeys.has(key)) throw new Error(`${variantContext} duplicates ${key}.`);
       variantKeys.add(key);
       const expectedPath = `variants/${id}-${width}x${width}.${format}`;
-      if (variant.path !== expectedPath || declaredVariants.has(expectedPath)) throw new Error(`${variantContext} has an incorrect or duplicate path.`);
+      if (variant.path !== expectedPath || declaredVariants.has(expectedPath))
+        throw new Error(`${variantContext} has an incorrect or duplicate path.`);
       declaredVariants.add(expectedPath);
-      const inspected = await inspectRaster(path.join(root, expectedPath), format, width, height, variantContext);
-      if (requireInteger(variant.bytes, `${variantContext}.bytes`) !== inspected.input.length || requireHash(variant.sha256, `${variantContext}.sha256`) !== sha256(inspected.input)) {
+      const inspected = await inspectRaster(
+        path.join(root, expectedPath),
+        format,
+        width,
+        height,
+        variantContext,
+      );
+      if (
+        requireInteger(variant.bytes, `${variantContext}.bytes`) !== inspected.input.length ||
+        requireHash(variant.sha256, `${variantContext}.sha256`) !== sha256(inspected.input)
+      ) {
         throw new Error(`${variantContext} bytes or SHA-256 do not match the file.`);
       }
-      if (inspected.input.length > CHARACTER_BYTE_BUDGETS[format]) throw new Error(`${variantContext} exceeds its byte budget.`);
+      if (inspected.input.length > CHARACTER_BYTE_BUDGETS[format])
+        throw new Error(`${variantContext} exceeds its byte budget.`);
       await inspectAlpha(inspected.input, variantContext, alphaOptions);
     }
   }
   const missingIds = [...expectedIds].filter((id) => !seenIds.has(id));
-  if (missingIds.length > 0) throw new Error(`Character manifest is missing asset IDs: ${missingIds.join(', ')}.`);
+  if (missingIds.length > 0)
+    throw new Error(`Character manifest is missing asset IDs: ${missingIds.join(', ')}.`);
   const actualVariants = await listVariantFiles(path.join(root, 'variants'));
-  const expectedVariants = [...declaredVariants].toSorted((left, right) => left.localeCompare(right, 'en'));
-  if (JSON.stringify(actualVariants) !== JSON.stringify(expectedVariants)) throw new Error('Character variant directory contains a missing or extra file.');
+  const expectedVariants = [...declaredVariants].toSorted((left, right) =>
+    left.localeCompare(right, 'en'),
+  );
+  if (JSON.stringify(actualVariants) !== JSON.stringify(expectedVariants))
+    throw new Error('Character variant directory contains a missing or extra file.');
   return manifest as { assets: unknown[] };
 }
 
@@ -283,7 +355,11 @@ const invokedScript = process.argv[1] ? path.resolve(process.argv[1]) : undefine
 if (invokedScript === path.resolve(fileURLToPath(import.meta.url))) {
   const characterRoot = process.argv[2] ? path.resolve(process.argv[2]) : undefined;
   validateCharacterAssets({ characterRoot })
-    .then((manifest) => process.stdout.write(`Character asset validation passed: ${manifest.assets.length} masters, ${manifest.assets.length * CHARACTER_VARIANT_SIZES.length * CHARACTER_VARIANT_FORMATS.length} variants.\n`))
+    .then((manifest) =>
+      process.stdout.write(
+        `Character asset validation passed: ${manifest.assets.length} masters, ${manifest.assets.length * CHARACTER_VARIANT_SIZES.length * CHARACTER_VARIANT_FORMATS.length} variants.\n`,
+      ),
+    )
     .catch((error) => {
       process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
       process.exitCode = 1;

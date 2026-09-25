@@ -42,9 +42,9 @@ type AssetRecord = ReturnType<typeof validateAssetShape> & {
   manifestAsset: { source: { width: number; height: number; bytes: number; sha256: string } };
 };
 export const SCENE_VARIANT_FORMATS: readonly SceneFormat[] = Object.freeze(['avif', 'webp']);
-const isSceneFormat = (value: unknown): value is SceneFormat => value === 'avif' || value === 'webp';
-export const REQUIRED_CROP_STRATEGY =
-  'symmetric-horizontal-bleed-to-four-by-three-core';
+const isSceneFormat = (value: unknown): value is SceneFormat =>
+  value === 'avif' || value === 'webp';
+export const REQUIRED_CROP_STRATEGY = 'symmetric-horizontal-bleed-to-four-by-three-core';
 
 const REQUIRED_CHARACTER_FOCAL_RECTANGLES = Object.freeze({
   leftGesture: Object.freeze({ x: 0.22, y: 0.18, width: 0.1, height: 0.18 }),
@@ -60,7 +60,8 @@ const REQUIRED_SAFE_RECTANGLES = Object.freeze({
 });
 const REQUIRED_FOREGROUND_CLEAR_RECTANGLES = Object.freeze(
   (['centralInteraction'] as const).map((name) =>
-    Object.freeze({ name, rectangle: REQUIRED_SAFE_RECTANGLES[name] })),
+    Object.freeze({ name, rectangle: REQUIRED_SAFE_RECTANGLES[name] }),
+  ),
 );
 const REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES = Object.freeze([
   Object.freeze({ name: 'leftDeskFront', x: 0.18, y: 0.74, width: 0.04, height: 0.18 }),
@@ -180,23 +181,22 @@ function expectedGeometry(identity: ReturnType<typeof expectedLayer>) {
   return {
     focalPoint: identity.isForeground
       ? { x: 0.5, y: 0.64 }
-      : hasModerator ? { x: 0.5, y: 0.43 } : { x: 0.5, y: 0.5 },
+      : hasModerator
+        ? { x: 0.5, y: 0.43 }
+        : { x: 0.5, y: 0.5 },
     focalRectangles: {
       ...REQUIRED_CHARACTER_FOCAL_RECTANGLES,
-      moderatorFace: identity.isForeground || !hasModerator
-        ? null
-        : {
-            x: 0.46,
-            y: 0.35,
-            width: 0.08,
-            height: 0.14,
-          },
-      leftDeskTopAndProps: identity.isForeground
-        ? LEFT_DESK_FOCAL_RECTANGLE
-        : null,
-      rightDeskTopAndProps: identity.isForeground
-        ? RIGHT_DESK_FOCAL_RECTANGLE
-        : null,
+      moderatorFace:
+        identity.isForeground || !hasModerator
+          ? null
+          : {
+              x: 0.46,
+              y: 0.35,
+              width: 0.08,
+              height: 0.14,
+            },
+      leftDeskTopAndProps: identity.isForeground ? LEFT_DESK_FOCAL_RECTANGLE : null,
+      rightDeskTopAndProps: identity.isForeground ? RIGHT_DESK_FOCAL_RECTANGLE : null,
     },
     sharedSafeRectangles: REQUIRED_SAFE_RECTANGLES,
     cropCore: REQUIRED_CROP_CORE,
@@ -243,7 +243,13 @@ async function assertFile(filePath: string, context: string): Promise<void> {
   }
 }
 
-async function inspectRaster(filePath: string, format: string, width: number, height: number, context: string) {
+async function inspectRaster(
+  filePath: string,
+  format: string,
+  width: number,
+  height: number,
+  context: string,
+) {
   const input = await readFile(filePath);
   let metadata;
   try {
@@ -255,8 +261,7 @@ async function inspectRaster(filePath: string, format: string, width: number, he
   }
 
   const expectedMediaType = `image/${format}`;
-  const decodedFormat =
-    format === 'avif' ? metadata.format === 'heif' : metadata.format === format;
+  const decodedFormat = format === 'avif' ? metadata.format === 'heif' : metadata.format === format;
   if (
     !decodedFormat ||
     metadata.mediaType !== expectedMediaType ||
@@ -280,10 +285,7 @@ export async function inspectAlpha(
 ): Promise<void> {
   let decoded;
   try {
-    decoded = await sharp(input)
-      .ensureAlpha()
-      .raw()
-      .toBuffer({ resolveWithObject: true });
+    decoded = await sharp(input).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   } catch (error) {
     throw new Error(`${context} alpha channel could not be decoded.`, {
       cause: error,
@@ -315,18 +317,30 @@ export async function inspectAlpha(
     return;
   }
 
-  if (nativeAlpha && (nativeEdgeCount === 0 || nearOpaqueCount / (decoded.data.length / 4 - transparentCount) < 0.5)) {
-    throw new Error(`${context} must contain predominantly near-opaque native content and partial-alpha edges below ${NATIVE_ALPHA_MIN_OPACITY}.`);
+  if (
+    nativeAlpha &&
+    (nativeEdgeCount === 0 || nearOpaqueCount / (decoded.data.length / 4 - transparentCount) < 0.5)
+  ) {
+    throw new Error(
+      `${context} must contain predominantly near-opaque native content and partial-alpha edges below ${NATIVE_ALPHA_MIN_OPACITY}.`,
+    );
   }
   if (nativeAlpha) {
-    const topology = measureNativeAlphaTopology(decoded.data, decoded.info.width, decoded.info.height);
+    const topology = measureNativeAlphaTopology(
+      decoded.data,
+      decoded.info.width,
+      decoded.info.height,
+    );
     if (topology.nontransparentBorderPixels > 0) {
       throw new Error(`${context} must have a fully transparent outer border.`);
     }
-    if (topology.contourPartialAlphaPixels / topology.partialAlphaPixels < NATIVE_ALPHA_MIN_CONTOUR_RATIO) {
+    if (
+      topology.contourPartialAlphaPixels / topology.partialAlphaPixels <
+      NATIVE_ALPHA_MIN_CONTOUR_RATIO
+    ) {
       throw new Error(
         `${context} must keep at least ${NATIVE_ALPHA_MIN_CONTOUR_RATIO * 100}% of partial alpha within ` +
-        `${NATIVE_ALPHA_MAX_CONTOUR_DISTANCE} pixels of near-opaque content.`,
+          `${NATIVE_ALPHA_MAX_CONTOUR_DISTANCE} pixels of near-opaque content.`,
       );
     }
   }
@@ -372,7 +386,9 @@ export async function inspectAlpha(
         if (decoded.data[(y * width + x) * 4 + 3] >= NATIVE_ALPHA_MIN_OPACITY) covered += 1;
       }
       if (covered / (right - left) < 0.9) {
-        throw new Error(`${context} must cover at least 90% of each ${rectangle.name} row with near-opaque pixels; row ${y} is incomplete.`);
+        throw new Error(
+          `${context} must cover at least 90% of each ${rectangle.name} row with near-opaque pixels; row ${y} is incomplete.`,
+        );
       }
     }
   }
@@ -391,9 +407,7 @@ async function listVariantFiles(variantsRoot: string): Promise<string[]> {
       } else if (entry.isFile()) {
         files.push(relativePath);
       } else {
-        throw new Error(
-          `Scene variant entry is not a regular file or directory: ${entryPath}.`,
-        );
+        throw new Error(`Scene variant entry is not a regular file or directory: ${entryPath}.`);
       }
     }
   }
@@ -421,9 +435,7 @@ async function assertMasterSet(sceneRoot: string): Promise<void> {
     .filter((entry) => entry.isFile() && path.extname(entry.name).toLowerCase() === '.png')
     .map((entry) => entry.name)
     .sort((left, right) => left.localeCompare(right, 'en'));
-  const expected = [...SCENE_MASTER_NAMES].sort((left, right) =>
-    left.localeCompare(right, 'en'),
-  );
+  const expected = [...SCENE_MASTER_NAMES].sort((left, right) => left.localeCompare(right, 'en'));
   if (JSON.stringify(actual) !== JSON.stringify(expected)) {
     throw new Error(
       `Scene master set must contain exactly: ${expected.join(', ')}. ` +
@@ -432,7 +444,11 @@ async function assertMasterSet(sceneRoot: string): Promise<void> {
   }
 }
 
-function assertDeclaredPathIsUnique(declaredPaths: Set<string>, relativePath: string, context: string): void {
+function assertDeclaredPathIsUnique(
+  declaredPaths: Set<string>,
+  relativePath: string,
+  context: string,
+): void {
   if (declaredPaths.has(relativePath)) {
     throw new Error(`${context} uses duplicate asset path "${relativePath}".`);
   }
@@ -446,11 +462,7 @@ function validateRectangles(
   nullable: boolean,
 ): asserts value is Record<string, unknown> {
   if (!isRecord(value)) throw new Error(`${context} must be an object.`);
-  const nullableNames = new Set([
-    'moderatorFace',
-    'leftDeskTopAndProps',
-    'rightDeskTopAndProps',
-  ]);
+  const nullableNames = new Set(['moderatorFace', 'leftDeskTopAndProps', 'rightDeskTopAndProps']);
   for (const name of names) {
     if (!(name in value)) {
       throw new Error(`${context} is missing required rectangle "${name}".`);
@@ -477,14 +489,10 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
   }
   const identity = expectedLayer(id);
   if (asset.ownerId !== identity.ownerId) {
-    throw new Error(
-      `Scene asset "${id}" must have ownerId "${identity.ownerId}".`,
-    );
+    throw new Error(`Scene asset "${id}" must have ownerId "${identity.ownerId}".`);
   }
   if (asset.layerRole !== identity.layerRole) {
-    throw new Error(
-      `Scene asset "${id}" must have layerRole "${identity.layerRole}".`,
-    );
+    throw new Error(`Scene asset "${id}" must have layerRole "${identity.layerRole}".`);
   }
   requiredString(asset.sourceDescription, `Scene asset "${id}" sourceDescription`);
   requiredString(asset.licenseIdentifier, `Scene asset "${id}" licenseIdentifier`);
@@ -493,15 +501,10 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
   if (!isRecord(source)) {
     throw new Error(`Scene asset "${id}" is missing its source.`);
   }
-  const sourcePath = requiredString(
-    source.path,
-    `Scene asset "${id}" source.path`,
-  );
+  const sourcePath = requiredString(source.path, `Scene asset "${id}" source.path`);
   const expectedSourcePath = `${id}.png`;
   if (sourcePath !== expectedSourcePath) {
-    throw new Error(
-      `Scene asset "${id}" source.path must be "${expectedSourcePath}".`,
-    );
+    throw new Error(`Scene asset "${id}" source.path must be "${expectedSourcePath}".`);
   }
   assertDeclaredPathIsUnique(declaredPaths, sourcePath, `Scene asset "${id}" source`);
   if (source.format !== 'png') {
@@ -509,14 +512,23 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
   }
   const masterSize = sceneMasterSize(id);
   const variantSizes = sceneVariantSizes(id);
-  const expectedVariantKeys = new Set(variantSizes.flatMap(({ width, height }) =>
-    SCENE_VARIANT_FORMATS.map((format) => `${width}x${height}:${format}`)));
+  const expectedVariantKeys = new Set(
+    variantSizes.flatMap(({ width, height }) =>
+      SCENE_VARIANT_FORMATS.map((format) => `${width}x${height}:${format}`),
+    ),
+  );
   if (source.width !== masterSize.width || source.height !== masterSize.height) {
-    throw new Error(`Scene asset "${id}" source must be exactly ${masterSize.width}x${masterSize.height}.`);
+    throw new Error(
+      `Scene asset "${id}" source must be exactly ${masterSize.width}x${masterSize.height}.`,
+    );
   }
   requiredInteger(source.bytes, `Scene asset "${id}" source.bytes`);
   const sourceSha256 = requiredHash(source.sha256, `Scene asset "${id}" source.sha256`);
-  if (replacementBaseline.assets.some((entry) => entry.file === sourcePath && entry.sha256 === sourceSha256)) {
+  if (
+    replacementBaseline.assets.some(
+      (entry) => entry.file === sourcePath && entry.sha256 === sourceSha256,
+    )
+  ) {
     throw new Error(`Scene asset "${id}" retains its replaced baseline source hash.`);
   }
 
@@ -531,7 +543,11 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
   if (identity.isForeground && focalRectangles.moderatorFace !== null) {
     throw new Error(`Scene asset "${id}" foreground moderatorFace must be null.`);
   }
-  if (!identity.isForeground && ['modern-debate-studio', 'transition-era-television-studio'].includes(identity.ownerId) && focalRectangles.moderatorFace === null) {
+  if (
+    !identity.isForeground &&
+    ['modern-debate-studio', 'transition-era-television-studio'].includes(identity.ownerId) &&
+    focalRectangles.moderatorFace === null
+  ) {
     throw new Error(`Scene asset "${id}" back moderatorFace is required.`);
   }
   for (const name of ['leftDeskTopAndProps', 'rightDeskTopAndProps']) {
@@ -555,17 +571,11 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
   }
   validateRectangle(asset.crop.core, `Scene asset "${id}" crop.core`);
   if (asset.crop.strategy !== REQUIRED_CROP_STRATEGY) {
-    throw new Error(
-      `Scene asset "${id}" crop.strategy must be "${REQUIRED_CROP_STRATEGY}".`,
-    );
+    throw new Error(`Scene asset "${id}" crop.strategy must be "${REQUIRED_CROP_STRATEGY}".`);
   }
 
   const geometry = expectedGeometry(identity);
-  assertExactGeometry(
-    asset.focalPoint,
-    geometry.focalPoint,
-    `Scene asset "${id}" focalPoint`,
-  );
+  assertExactGeometry(asset.focalPoint, geometry.focalPoint, `Scene asset "${id}" focalPoint`);
   assertExactGeometry(
     asset.focalRectangles,
     geometry.focalRectangles,
@@ -576,19 +586,20 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
     geometry.sharedSafeRectangles,
     `Scene asset "${id}" sharedSafeRectangles`,
   );
-  assertExactGeometry(
-    asset.crop.core,
-    geometry.cropCore,
-    `Scene asset "${id}" crop.core`,
-  );
+  assertExactGeometry(asset.crop.core, geometry.cropCore, `Scene asset "${id}" crop.core`);
 
   if (!Array.isArray(asset.variants)) {
     throw new Error(`Scene asset "${id}" is missing its variants.`);
   }
   const seenVariantKeys = new Set<string>();
   const variants: {
-    context: string; format: SceneFormat; height: number; id: string;
-    path: string; rawVariant: Record<string, unknown>; width: number;
+    context: string;
+    format: SceneFormat;
+    height: number;
+    id: string;
+    path: string;
+    rawVariant: Record<string, unknown>;
+    width: number;
   }[] = [];
   for (const [variantIndex, rawVariant] of asset.variants.entries()) {
     const context = `Scene asset "${id}" variant ${variantIndex}`;
@@ -619,9 +630,7 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
     seenVariantKeys.add(key);
     const expectedPath = `variants/${id}-${width}x${height}.${format}`;
     if (variantPath !== expectedPath) {
-      throw new Error(
-        `${context}.path must be "${expectedPath}" for its ID, size, and format.`,
-      );
+      throw new Error(`${context}.path must be "${expectedPath}" for its ID, size, and format.`);
     }
     assertDeclaredPathIsUnique(declaredPaths, variantPath, context);
     const bytes = requiredInteger(rawVariant.bytes, `${context}.bytes`);
@@ -648,13 +657,9 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
     });
   }
 
-  const missingVariantKeys = [...expectedVariantKeys].filter(
-    (key) => !seenVariantKeys.has(key),
-  );
+  const missingVariantKeys = [...expectedVariantKeys].filter((key) => !seenVariantKeys.has(key));
   if (missingVariantKeys.length > 0) {
-    throw new Error(
-      `Scene asset "${id}" is missing variants: ${missingVariantKeys.join(', ')}.`,
-    );
+    throw new Error(`Scene asset "${id}" is missing variants: ${missingVariantKeys.join(', ')}.`);
   }
   if (variants.length !== expectedVariantKeys.size) {
     throw new Error(
@@ -664,13 +669,14 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
   return { id, identity, sourcePath, variants };
 }
 
-async function validateAssetFiles(sceneRoot: string, assetRecords: readonly AssetRecord[]): Promise<void> {
+async function validateAssetFiles(
+  sceneRoot: string,
+  assetRecords: readonly AssetRecord[],
+): Promise<void> {
   const declaredVariantPaths = new Set(
     assetRecords.flatMap((asset) => asset.variants.map((variant) => variant.path)),
   );
-  const actualVariantPaths = new Set(
-    await listVariantFiles(path.join(sceneRoot, 'variants')),
-  );
+  const actualVariantPaths = new Set(await listVariantFiles(path.join(sceneRoot, 'variants')));
   for (const declaredPath of declaredVariantPaths) {
     if (!actualVariantPaths.has(declaredPath)) {
       throw new Error(`Declared scene variant file is missing: ${declaredPath}.`);
@@ -694,14 +700,10 @@ async function validateAssetFiles(sceneRoot: string, assetRecords: readonly Asse
     );
     const sourceRecord = asset.manifestAsset.source;
     if (sourceRecord.bytes !== source.input.length) {
-      throw new Error(
-        `Scene asset "${asset.id}" source byte count does not match the file.`,
-      );
+      throw new Error(`Scene asset "${asset.id}" source byte count does not match the file.`);
     }
     if (sourceRecord.sha256 !== sha256(source.input)) {
-      throw new Error(
-        `Scene asset "${asset.id}" source SHA-256 does not match the file.`,
-      );
+      throw new Error(`Scene asset "${asset.id}" source SHA-256 does not match the file.`);
     }
     const alphaOptions: AlphaOptions = {
       nativeAlpha: hasNativeAlphaProvenance(source.input),
@@ -712,7 +714,12 @@ async function validateAssetFiles(sceneRoot: string, assetRecords: readonly Asse
         ? REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES
         : [],
     };
-    await inspectAlpha(source.input, asset.identity.isForeground, `Scene asset "${asset.id}" source`, alphaOptions);
+    await inspectAlpha(
+      source.input,
+      asset.identity.isForeground,
+      `Scene asset "${asset.id}" source`,
+      alphaOptions,
+    );
 
     for (const variant of asset.variants) {
       const variantPath = path.join(sceneRoot, variant.path);
@@ -753,9 +760,7 @@ export async function validateSceneAssets({
     throw new Error('Scene manifest must declare an assets array.');
   }
   if (manifest.assets.length !== SCENE_MASTER_NAMES.length) {
-    throw new Error(
-      `Scene manifest must contain exactly ${SCENE_MASTER_NAMES.length} assets.`,
-    );
+    throw new Error(`Scene manifest must contain exactly ${SCENE_MASTER_NAMES.length} assets.`);
   }
 
   const ids = new Set<string>();
@@ -782,9 +787,7 @@ export async function validateSceneAssets({
   return manifest as { assets: { variants: unknown[] }[] };
 }
 
-const invokedScript = process.argv[1]
-  ? path.resolve(process.argv[1])
-  : undefined;
+const invokedScript = process.argv[1] ? path.resolve(process.argv[1]) : undefined;
 if (invokedScript === path.resolve(fileURLToPath(import.meta.url))) {
   const sceneRoot = process.argv[2] ? path.resolve(process.argv[2]) : undefined;
   validateSceneAssets({ sceneRoot })

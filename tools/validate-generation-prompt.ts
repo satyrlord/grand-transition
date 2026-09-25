@@ -29,8 +29,7 @@ const warmLightingPattern =
   /\bwarm\s+(?:(?:frontal|cinematic|studio)\s+)*(?:key\s+light|lighting)\b/iu;
 const globalWarmGradePattern =
   /\b(?:global|whole[- ]image|full[- ]frame|scene[- ]wide|image[- ]wide)\s+(?:yellow|amber|sepia|golden[- ]hour|mustard|beige|brown|warm)(?:\s+color)?\s+(?:wash(?:es)?|tint|grade|filter|cast)\b/iu;
-const sectionHeadingPattern =
-  /(?:^|\n)\s*(positive|negative)(?:\s+controls?)?\s*:/giu;
+const sectionHeadingPattern = /(?:^|\n)\s*(positive|negative)(?:\s+controls?)?\s*:/giu;
 
 function globalPattern(pattern: RegExp): RegExp {
   return new RegExp(
@@ -47,15 +46,10 @@ function isNegativeContext(prompt: string, matchIndex: number): boolean {
 
   const prefix = prompt.slice(0, matchIndex);
   const clauseStart =
-    Math.max(
-      prefix.lastIndexOf('\n'),
-      prefix.lastIndexOf('.'),
-      prefix.lastIndexOf(';'),
-    ) + 1;
-  const localNegativeControl =
-    /\b(?:avoid|no|without|exclude|reject|never)\b|\bdo\s+not\b/iu.test(
-      prefix.slice(clauseStart),
-    );
+    Math.max(prefix.lastIndexOf('\n'), prefix.lastIndexOf('.'), prefix.lastIndexOf(';')) + 1;
+  const localNegativeControl = /\b(?:avoid|no|without|exclude|reject|never)\b|\bdo\s+not\b/iu.test(
+    prefix.slice(clauseStart),
+  );
   if (localNegativeControl) return true;
   return section === 'negative';
 }
@@ -70,9 +64,7 @@ function hasPositiveMatch(prompt: string, pattern: RegExp): boolean {
 export function assertColorControlledPrompt(filePath: string, prompt: string): void {
   const missing = requiredColorControls
     .filter(({ pattern, polarity }) =>
-      polarity === 'negative'
-        ? !pattern.test(prompt)
-        : !hasPositiveMatch(prompt, pattern),
+      polarity === 'negative' ? !pattern.test(prompt) : !hasPositiveMatch(prompt, pattern),
     )
     .map(({ label }) => label);
   const issues: string[] = [];
@@ -105,9 +97,7 @@ async function validatePrompt(promptPath: string): Promise<void> {
   process.stdout.write(`Generation prompt color validation passed: ${promptPath}.\n`);
 }
 
-const invokedScript = process.argv[1]
-  ? path.resolve(process.argv[1])
-  : undefined;
+const invokedScript = process.argv[1] ? path.resolve(process.argv[1]) : undefined;
 if (invokedScript === path.resolve(fileURLToPath(import.meta.url))) {
   const [promptArgument] = process.argv.slice(2);
   if (promptArgument && process.argv.length === 3) {
@@ -116,9 +106,7 @@ if (invokedScript === path.resolve(fileURLToPath(import.meta.url))) {
       process.exitCode = 1;
     });
   } else {
-    process.stderr.write(
-      'Usage: validate-generation-prompt.ts <prompt-file>\n',
-    );
+    process.stderr.write('Usage: validate-generation-prompt.ts <prompt-file>\n');
     process.exitCode = 2;
   }
 }

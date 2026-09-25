@@ -28,7 +28,14 @@ export const MODERATOR_FOCAL_RECTS = Object.freeze([
 ]);
 
 type NormalizedRect = Readonly<{ x: number; y: number; width: number; height: number }>;
-type PixelRect = Readonly<{ left: number; top: number; right: number; bottom: number; width: number; height: number }>;
+type PixelRect = Readonly<{
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+  width: number;
+  height: number;
+}>;
 type PixelMask = ArrayLike<number>;
 export type SceneLayerPaths = Readonly<{
   compositePath: string;
@@ -45,7 +52,11 @@ function sha256(input: Uint8Array): string {
   return createHash('sha256').update(input).digest('hex');
 }
 
-function pixelRect(normalized: NormalizedRect, width = MASTER_WIDTH, height = MASTER_HEIGHT): PixelRect {
+function pixelRect(
+  normalized: NormalizedRect,
+  width = MASTER_WIDTH,
+  height = MASTER_HEIGHT,
+): PixelRect {
   const left = Math.floor(normalized.x * width);
   const top = Math.floor(normalized.y * height);
   const right = Math.ceil((normalized.x + normalized.width) * width);
@@ -82,9 +93,7 @@ function boundsForMask(mask: PixelMask, width: number, height: number) {
     bottom = Math.max(bottom, y);
     count += 1;
   }
-  return count === 0
-    ? null
-    : { left, top, width: right - left + 1, height: bottom - top + 1 };
+  return count === 0 ? null : { left, top, width: right - left + 1, height: bottom - top + 1 };
 }
 
 async function decodeNormalized(filePath: string) {
@@ -93,8 +102,7 @@ async function decodeNormalized(filePath: string) {
   if (!metadata.width || !metadata.height) {
     throw new Error(`Image dimensions are missing: ${filePath}`);
   }
-  const aspectErrorSourcePixels =
-    Math.abs(metadata.width * 9 - metadata.height * 16) / 16;
+  const aspectErrorSourcePixels = Math.abs(metadata.width * 9 - metadata.height * 16) / 16;
   if (aspectErrorSourcePixels > MAX_ASPECT_ERROR_SOURCE_PIXELS) {
     throw new Error(
       `Image must be 16:9 within one source pixel: ${filePath} (${metadata.width}x${metadata.height}).`,

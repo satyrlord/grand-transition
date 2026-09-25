@@ -13,9 +13,7 @@ import {
 } from '../src/localization/ro-game-locale.ts';
 import { indexGameLocaleBundles } from '../src/localization/game-locale-bundles.ts';
 
-const repositoryRoot = path.resolve(
-  fileURLToPath(new URL('..', import.meta.url)),
-);
+const repositoryRoot = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 
 export function loadGameContent(rootDirectory = repositoryRoot): {
   phraseCardCatalog: PhraseCardCatalog;
@@ -25,9 +23,7 @@ export function loadGameContent(rootDirectory = repositoryRoot): {
 } {
   const contentDirectory = path.join(rootDirectory, 'src', 'content');
   const characterDirectory = path.join(contentDirectory, 'characters');
-  const commonSource = readJson(
-    path.join(contentDirectory, 'common-phrase-cards.json'),
-  );
+  const commonSource = readJson(path.join(contentDirectory, 'common-phrase-cards.json'));
   const characterFileNames = readdirSync(characterDirectory)
     .filter((fileName) => fileName.endsWith('-phrase-cards.json'))
     .toSorted();
@@ -37,20 +33,10 @@ export function loadGameContent(rootDirectory = repositoryRoot): {
       readJson(path.join(characterDirectory, fileName)),
     ]),
   );
-  const phraseCardCatalog = buildPhraseCardCatalog(
-    commonSource,
-    characterSources,
-  );
-  const englishGameLocale = createEnglishGameLocale(
-    phraseCardCatalog.englishMessages,
-  );
-  const romanianGameLocale = createRomanianGameLocale(
-    readRomanianMessages(rootDirectory),
-  );
-  const gameCatalog = createGameCatalog(phraseCardCatalog, [
-    englishGameLocale,
-    romanianGameLocale,
-  ]);
+  const phraseCardCatalog = buildPhraseCardCatalog(commonSource, characterSources);
+  const englishGameLocale = createEnglishGameLocale(phraseCardCatalog.englishMessages);
+  const romanianGameLocale = createRomanianGameLocale(readRomanianMessages(rootDirectory));
+  const gameCatalog = createGameCatalog(phraseCardCatalog, [englishGameLocale, romanianGameLocale]);
   return {
     phraseCardCatalog,
     englishGameLocale,
@@ -61,13 +47,9 @@ export function loadGameContent(rootDirectory = repositoryRoot): {
 
 // The authored Romanian content tree is a flat locale-key map spread across
 // several files, so every file is merged into one message record.
-function readRomanianMessages(
-  rootDirectory: string,
-): Record<string, string> {
+function readRomanianMessages(rootDirectory: string): Record<string, string> {
   const sources: Record<string, Record<string, string>> = {};
-  for (const file of jsonFiles(
-    path.join(rootDirectory, 'src', 'content', 'ro'),
-  )) {
+  for (const file of jsonFiles(path.join(rootDirectory, 'src', 'content', 'ro'))) {
     sources[path.relative(rootDirectory, file)] = readJson(file) as Record<string, string>;
   }
   return mergeRomanianMessageFiles(sources);
