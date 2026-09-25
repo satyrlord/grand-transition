@@ -80,7 +80,7 @@ The minimum viable product (MVP) includes local single-player play and local hot
   Restrictions do not add damage.
 
   The seeded Local Radio Caller, Party Strategist, and Palace Operator AI policies select correct actions for single-player matches.
-  A local nine-rung ladder stores wins, losses, opponents, scenes, and the completed state.
+  A local ladder with one rung for each playable scene stores wins, losses, opponents, scenes, and the completed state.
 - While each character speaks one full public insult, each completed exchange stops the drafting.
   Inline score lines show each clause, the finisher, the Comeback, the applied weakness and combo multipliers, the total, and the applied Pride loss.
   The next round starts automatically after the two deliveries.

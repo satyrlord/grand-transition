@@ -8,9 +8,10 @@ import type { MatchEngineContext, MatchState } from '../src/engine/match-lifecyc
 import { loadGameContent } from '../tools/load-game-content';
 import { fullQualityGateRequested } from '../tools/quality-gate-mode';
 
-// The nine-rung persistence case plays the fixed-seed ladder until it wins nine
-// rungs, which needs up to twenty-one full matches (about 4.5 minutes alone).
-// The budget covers that fixed workload when a parallel worker shares the CPU.
+// The persistence case plays the fixed-seed ladder until it wins every rung,
+// one per playable scene. Nine rungs needed up to twenty-one full matches
+// (about 4.5 minutes alone). The budget covers that fixed workload when a
+// parallel worker shares the CPU.
 test.setTimeout(600_000);
 
 const { englishGameLocale, gameCatalog } = loadGameContent();
@@ -20,6 +21,8 @@ const matchContext: MatchEngineContext = {
   locale: englishGameLocale,
   balance: basicScoringBalance,
 };
+// The ladder has one rung per playable scene.
+const rungCount = gameCatalog.scenes.length;
 
 for (const viewport of [
   { width: 1_024, height: 720 },
@@ -39,7 +42,7 @@ for (const viewport of [
       .getByRole('button', { name: /Government AI — Original.*Select for player one/u })
       .click();
 
-    await expect(page.locator('.ladder-record')).toContainText('Rung 1/9');
+    await expect(page.locator('.ladder-record')).toContainText(`Rung 1/${rungCount}`);
     await expect(page.locator('.setup-heading > p:last-child')).toBeVisible();
     await expect(page.locator('.roster-choice')).toHaveCount(30);
     await page.locator('.contestant-portrait').evaluateAll(async (images) => {
@@ -146,7 +149,7 @@ for (const viewport of [
   });
 }
 
-test('the production ladder completes nine persisted rungs and resumes exactly', async ({
+test('the production ladder completes one persisted rung per scene and resumes exactly', async ({
   page,
 }) => {
   test.skip(!fullQualityGateRequested(), 'Requires the full quality gate.');
@@ -166,10 +169,10 @@ test('the production ladder completes nine persisted rungs and resumes exactly',
 
   let wins = 0;
   let attempts = 0;
-  while (wins < 9 && attempts < 30) {
+  while (wins < rungCount && attempts < 30) {
     attempts += 1;
     await expect(page.locator('.ladder-record')).toContainText(
-      `Rung ${wins + 1}/9`,
+      `Rung ${wins + 1}/${rungCount}`,
     );
     await page.getByTestId('lock-player-one').click();
     await page
@@ -191,9 +194,9 @@ test('the production ladder completes nine persisted rungs and resumes exactly',
       await page.reload();
       await page.getByRole('button', { name: 'Ladder' }).click();
       await expect(page.getByLabel('Mode', { exact: true })).toHaveCount(0);
-      if (wins < 9) {
+      if (wins < rungCount) {
         await expect(page.locator('.ladder-record')).toContainText(
-          `Rung ${wins + 1}/9`,
+          `Rung ${wins + 1}/${rungCount}`,
         );
       }
     } else {
@@ -201,15 +204,15 @@ test('the production ladder completes nine persisted rungs and resumes exactly',
       expect(progress.losses).toBeGreaterThan(0);
       await page.getByRole('button', { name: 'Continue ladder' }).click();
       await expect(page.locator('.ladder-record')).toContainText(
-        `Rung ${wins + 1}/9`,
+        `Rung ${wins + 1}/${rungCount}`,
       );
     }
   }
 
-  expect(wins).toBe(9);
+  expect(wins).toBe(rungCount);
   await expect(page.locator('.ladder-record')).toContainText('Ladder complete');
   await expect(page.locator('.ladder-record')).toContainText(
-    'Nine victories recorded',
+    `Victories recorded: ${rungCount}`,
   );
   await expect(
     page.locator('.contestant-stage--two .contestant-player'),
@@ -219,8 +222,8 @@ test('the production ladder completes nine persisted rungs and resumes exactly',
   ).toBeDisabled();
   const completed = await storedProgress(page);
   expect(completed).toMatchObject({
-    rungIndex: 9,
-    wins: 9,
+    rungIndex: rungCount,
+    wins: rungCount,
     completed: true,
   });
 });

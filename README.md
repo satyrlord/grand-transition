@@ -165,7 +165,7 @@ The local scoring, sound, speech, timer, Auto-complete, and Tutorial settings us
 They use browser storage, with a session memory fallback.
 
 Single player uses the seeded Local Radio Caller, Party Strategist, and Palace Operator AI policies.
-The local nine-rung ladder keeps its opponents, scenes, wins, losses, and completed state.
+The local ladder plays one rung for each playable scene. It keeps its opponents, scenes, wins, losses, and completed state.
 
 Sound starts after a user interaction.
 Settings controls Master, Music, Effects, and Speech.

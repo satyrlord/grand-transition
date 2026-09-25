@@ -19,7 +19,7 @@ import {
   type MatchState,
 } from '../../src/engine/match-lifecycle';
 import { seededRandomSource } from '../../src/engine/random-source';
-import { ladderDifficulty, ladderRungCount } from '../../src/engine/ladder';
+import { ladderDifficulty } from '../../src/engine/ladder';
 import {
   createReplayInitialState,
   encodeReplay,
@@ -114,8 +114,10 @@ describe('Romanian deterministic play', () => {
   }, 60_000);
 
   test('covers every ladder rung difficulty with a completed Romanian match', () => {
+    // The shipped ladder has one rung per playable scene.
+    const rungCount = gameCatalog.scenes.length;
     const difficulties = new Set(
-      Array.from({ length: ladderRungCount }, (_, rungIndex) => ladderDifficulty(rungIndex)),
+      Array.from({ length: rungCount }, (_, rungIndex) => ladderDifficulty(rungIndex, rungCount)),
     );
     expect(difficulties).toEqual(
       new Set(['local-radio-caller', 'party-strategist', 'palace-operator']),

@@ -25,6 +25,9 @@ import {
 } from '../../src/persistence/codecs/ladder-progress-codec';
 import { ladderProgressStorageKey } from '../../src/persistence/ladder-progress';
 
+// The ladder has one rung per playable scene.
+const shippedRungCount = gameCatalog.scenes.length;
+
 afterEach(() => {
   vi.restoreAllMocks();
   localStorage.removeItem(ladderProgressStorageKey);
@@ -587,7 +590,7 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
   await page.getByRole('button', { name: 'Ladder', exact: true }).click();
   await vi.waitFor(() =>
     expect(document.querySelector('.ladder-record')?.textContent).toContain(
-      'Rung 1/9',
+      `Rung 1/${shippedRungCount}`,
     ),
   );
   expect(
@@ -662,7 +665,7 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
   await page.getByRole('button', { name: 'Ladder', exact: true }).click();
   expect(document.querySelector<GrandTransitionSetup>('grand-transition-setup')?.snapshot?.mode).toBe('ladder');
   expect(document.querySelector('.ladder-record')?.textContent).toContain(
-    'Rung 1/9',
+    `Rung 1/${shippedRungCount}`,
   );
   expect(app).toBeTruthy();
 
@@ -672,7 +675,7 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
     expect(localStorage.getItem(ladderProgressStorageKey)).not.toBeNull(),
   );
   expect(document.querySelector<GrandTransitionSetup>('grand-transition-setup')?.snapshot?.mode).toBe('ladder');
-  expect(document.querySelector('.ladder-record')?.textContent).toContain('Rung 1/9');
+  expect(document.querySelector('.ladder-record')?.textContent).toContain(`Rung 1/${shippedRungCount}`);
   await expect
     .element(page.getByRole('button', { name: 'Ladder complete', exact: true }))
     .not.toBeInTheDocument();
@@ -735,7 +738,7 @@ test('Main Menu selects each mode without replacing saved ladder progress', asyn
     expect(setup.snapshot?.mode).toBe(mode);
     expect(setup.querySelector('select#mode')).toBeNull();
     if (mode === 'ladder') {
-      expect(setup.querySelector('.ladder-record')?.textContent).toContain('Rung 2/9');
+      expect(setup.querySelector('.ladder-record')?.textContent).toContain(`Rung 2/${shippedRungCount}`);
       expect(setup.snapshot?.playerOneCharacterId).toBe('black-sea-captain');
     } else {
       expect(setup.querySelector('.ladder-record')).toBeNull();
@@ -777,15 +780,40 @@ test('reconciles saved Ladder scenes with the current catalog', async () => {
     losses: 0,
     completed: false,
   });
-  expect(new Set(decoded.value.sceneOrder)).toEqual(
-    new Set(gameCatalog.scenes.map(({ id }) => id)),
+  // The rung count stays fixed, and the retired scene's rung moves in place
+  // to the only scene that the ladder does not use yet.
+  expect(decoded.value.sceneOrder).toEqual(
+    previousProgress.sceneOrder.map((sceneId) =>
+      sceneId === 'retired-scene' ? 'civic-cypher-boxing-ring' : sceneId),
   );
-  const currentSceneIds = new Set(gameCatalog.scenes.map(({ id }) => id));
-  const retainedSceneOrder = previousProgress.sceneOrder.filter(
-    (sceneId) => currentSceneIds.has(sceneId),
+});
+
+test('stores migrated nine-rung Ladder progress as one rung per scene', async () => {
+  const progress = recordLadderResult(createLadderProgress(
+    'black-sea-captain',
+    22_026,
+    gameCatalog.characters.map(({ id }) => id),
+    gameCatalog.scenes.map(({ id }) => id),
+  ), 'win');
+  const unusedOpponents = gameCatalog.characters
+    .map(({ id }) => id)
+    .filter((id) => id !== progress.selectedCharacterId && !progress.opponentIds.includes(id));
+  const nineRungBytes = JSON.stringify({
+    ...progress,
+    schemaVersion: 1,
+    opponentIds: [...progress.opponentIds, ...unusedOpponents.slice(0, 9 - shippedRungCount)],
+  });
+  localStorage.setItem(ladderProgressStorageKey, nineRungBytes);
+
+  await mountApp();
+
+  expect(localStorage.getItem(ladderProgressStorageKey)).toBe(
+    encodeLadderProgress(progress),
   );
-  expect(decoded.value.sceneOrder.slice(0, retainedSceneOrder.length))
-    .toEqual(retainedSceneOrder);
+  await page.getByRole('button', { name: 'Ladder', exact: true }).click();
+  expect(document.querySelector('.ladder-record')?.textContent).toContain(
+    `Rung 2/${shippedRungCount}`,
+  );
 });
 
 test('shows completed progress without starting a locked rung', async () => {
@@ -795,7 +823,7 @@ test('shows completed progress without starting a locked rung', async () => {
     gameCatalog.characters.map(({ id }) => id),
     gameCatalog.scenes.map(({ id }) => id),
   );
-  for (let index = 0; index < 9; index += 1) {
+  for (let index = 0; index < shippedRungCount; index += 1) {
     progress = recordLadderResult(progress, 'win');
   }
   localStorage.setItem(ladderProgressStorageKey, encodeLadderProgress(progress));
@@ -806,7 +834,7 @@ test('shows completed progress without starting a locked rung', async () => {
     'Ladder complete',
   );
   expect(document.querySelector('.ladder-record')?.textContent).toContain(
-    'Nine victories recorded',
+    `Victories recorded: ${shippedRungCount}`,
   );
   expect(
     document.querySelector('.contestant-stage--two .contestant-player')

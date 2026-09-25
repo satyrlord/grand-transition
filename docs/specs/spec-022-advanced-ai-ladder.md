@@ -74,22 +74,36 @@ This does not change the selected command, the evaluated-node count, or the prin
 
 ## Ladder contract
 
-A ladder has nine rungs: three Local Radio Caller opponents, three Party Strategist opponents, and three Palace Operator opponents, in that sequence.
-The ladder selects opponents without replacement from the other 18 characters in the 19-character catalog.
+A ladder has one rung for each playable scene in the catalog when the ladder starts.
+Each rung plays one match on its own scene.
+The shipped catalog has seven scenes, so a new ladder has seven rungs.
+When a person adds a scene to the catalog, the next new ladder has one more rung.
+No code change or constant controls the rung count.
+
+The rungs use the three difficulties in thirds, in the sequence Local Radio Caller, Party Strategist, and Palace Operator.
+When three does not divide the rung count, the extra rungs go to the harder difficulties.
+Thus seven rungs give two Local Radio Caller, two Party Strategist, and three Palace Operator opponents.
+Eight rungs give two, three, and three, and one rung gives one Palace Operator opponent.
+
+The ladder selects one opponent for each rung, without replacement, from the other characters in the catalog.
 It uses the ladder seed and the stable sequence of the character IDs.
-The scenes use a seeded permutation of each unique playable scene in the catalog of this time, in sequence.
-Then the permutation starts again.
+A new ladder does not accept a scene catalog that has more scenes than the other characters.
+The scenes use a seeded permutation of each unique playable scene in the catalog of this time.
+Rung n plays on scene n of the permutation.
 Scene identifiers are stable opaque strings.
 
-Ladder behavior is not related to a numeric identifier, a catalog position, the scene count, or the scene content.
+Ladder behavior is not related to a numeric identifier, a catalog position, or the scene content.
 A new ladder does not accept an empty scene catalog or duplicate scene identifiers.
 
-Version-1 progress stores a scene sequence that is not empty and has a variable length.
-When the playable catalog changes and the game loads the progress, it removes the scene IDs that are not available.
-It keeps the relative sequence of the IDs that stay.
-It shuffles each newly available ID deterministically, adds it to the end, and then stores the new progress.
-This does not change the selected character, the opponents, the rung, the wins, the losses, or the `completed` value.
-Then the game selects the scene for the rung of that time from the new sequence.
+The rung count of a ladder does not change after the ladder starts.
+When the playable catalog changes and the game loads the progress, each rung keeps its scene when that scene stays available.
+A rung whose scene is not available moves to a scene that the ladder does not use yet.
+The game selects these scenes from a deterministic shuffle with the ladder seed.
+When no unused scene stays, the rung moves to a scene that the ladder already uses, from the same deterministic shuffle.
+Then the game stores the new progress.
+A scene that a person adds after the ladder starts is not a new rung of that ladder.
+The next new ladder includes it.
+This does not change the selected character, the opponents, the rung count, the rung, the wins, the losses, or the `completed` value.
 One or more playable scenes must stay.
 
 A win advances one rung.
@@ -98,16 +112,28 @@ When the player uses Abandon on a match, the game keeps the rung and records no 
 Each ladder match start adds one unfinished attempt to the progress, and a win or a loss clears the count.
 The match seed uses the ladder seed, the rung, the loss count, and the unfinished attempts when there are any.
 Thus an abandoned or reloaded match does not repeat its deal and its AI choices, and the first attempt at a rung keeps its seed.
-The ladder is completed after the ninth win.
+The ladder is completed after the win on its last rung.
 
-Progress version 1 stores the selected character ID, the seed, and nine opponent IDs.
-It also stores the scene sequence, which is not empty and has a variable length.
-It also stores the rung index from 0 through 9, the win count, the loss count, and the `completed` value.
+Progress version 2 stores the selected character ID, the seed, and one unique opponent ID for each rung.
+The number of opponent IDs is the rung count.
+It also stores one scene ID for each rung, in rung sequence.
+A scene ID can occur again only after a reconciliation moved a rung to a scene that the ladder already uses.
+It also stores the rung index from 0 through the rung count, the win count, the loss count, and the `completed` value.
+
+Progress version 1 had nine rungs and started the scene permutation again after its last scene.
+The game migrates correct version-1 progress when it loads it.
+The migrated ladder keeps its first rungs, one for each scene of its stored permutation, up to nine.
+Each kept rung keeps its opponent and its scene, because version 1 played rung n on scene n of the permutation.
+The migration keeps the selected character, the seed, and the losses.
+The rung index and the wins become the smaller of their stored value and the new rung count.
+Progress past the new last rung becomes completed, and a completed ladder has no unfinished attempts.
+When the migrated progress agrees with the catalog, the game stores it as version 2.
+Corrupt version-1 progress uses the corruption fallback, and the game does not migrate it.
 The optional `unfinishedAttempts` field is a positive integer, and progress without it has zero unfinished attempts.
 Reset removes that progress after a confirmation.
 Corrupt progress uses the Milestone 020 fallback, and it does not make up an advancement.
 
-The storage key is `grand-transition.ladder-progress.v1`.
+The storage key is `grand-transition.ladder-progress.v1` for the two versions.
 When storage fails, the game keeps the progress without a change in session memory, and it shows a notice for the session only.
 Corrupt or unsupported bytes give no progress.
 The game does not change them until the player starts a new ladder or uses Reset after the confirmation.
@@ -149,12 +175,14 @@ Its locked opponent stage shows “Ladder complete,” not a previous difficulty
 - **AC-022-03:** Personality traits at the limits give only the nonlethal multipliers 0.8 and 1.2.
   They do not change a protected priority to the opposite sequence.
 - **AC-022-04:** All the delay limits agree with their ranges, and they do not change the selected command or the node count.
-- **AC-022-05:** A fixed character, seed, and scene catalog give the same nine unique opponents and one permutation that contains each catalog scene one time.
-  Fixtures include one scene, the shipped catalog, more scenes than ladder rungs, inputs in a different sequence, an empty catalog, and duplicate IDs.
-  They also include added scenes, removed scenes, and a reconciliation that gives the same result each time.
+- **AC-022-05:** A fixed character, seed, and scene catalog give one unique opponent for each scene and one permutation that contains each catalog scene one time.
+  Fixtures include one scene, the shipped catalog, twelve scenes, more scenes than opponents, inputs in a different sequence, an empty catalog, and duplicate IDs.
+  The difficulty fixtures include one, two, three, seven, eight, and nine rungs.
+  They also include added scenes, removed scenes, a removed scene with no unused scene, and a reconciliation that gives the same result each time.
   A win, a loss, an Abandon, a continuation of saved progress, a completed ladder, a corruption, and a reset each have a golden progress snapshot.
-  Reconciliation keeps all the progress fields that are not scene fields, and it stores the updated scene sequence.
-- **AC-022-06:** Playwright completes all nine rungs and stores the progress after each win.
+  Reconciliation keeps all the progress fields that are not scene fields and the rung count, and it stores the updated scene sequence.
+  Version-1 fixtures migrate progress before, at, and after the new last rung, and they reject corrupt version-1 progress.
+- **AC-022-06:** Playwright completes all the rungs of the shipped catalog and stores the progress after each win.
   After a reload, it is at the same rung, and it does not show a locked state or a completed state incorrectly.
 
 ## Objective verifiers
@@ -162,7 +190,7 @@ Its locked opponent stage shows “Ladder complete,” not a previous difficulty
 - `tests/unit/advanced-ai.test.ts` does checks of AC-022-01 through AC-022-04, deterministic matches with the advanced policies, and the delay limits.
 - `tests/unit/ladder.test.ts` does checks of the AC-022-05 progress generation, the transitions, the codec snapshots, and the fallback for corruption and for a changed catalog.
   It also does checks of the continuation of saved progress and of the reset.
-- `tests/browser/screen-shell.browser.test.ts` does checks of the difficulty selection, the ladder setup, the scene-catalog reconciliation, and the persistence.
+- `tests/browser/screen-shell.browser.test.ts` does checks of the difficulty selection, the ladder setup, the scene-catalog reconciliation, the version-1 migration, and the persistence.
   It also does checks of the completed ladder and of Reset after the confirmation.
 - `e2e/advanced-ai-ladder.spec.ts` does checks of AC-022-06 in the production build, with ladder seed 5 and Palace Operator as the automated human player.
 - The Impeccable records and `npm run ci` complete the evidence for the milestone.

@@ -122,6 +122,7 @@
 's6121beb7500a123a': `Un jucător`,
 's616be1819f76109e': `Acest loc este gol.`,
 's61814651c9d97390': str`Mândrie refăcută: ${0} ${1} mândrie · ${2} ${3} mândrie`,
+'s621715afd0400435': str`Victorii înregistrate: ${0}`,
 's631dd8f2edc93f2d': `Înregistrare tehnică`,
 's63310947e6976083': `contra`,
 's64e024a428fb7396': `Continuă în orientare verticală`,
@@ -277,7 +278,7 @@
 'sf1459a12de394b73': `Modul nu este acceptat. Revino la Meniul principal și alege Un jucător, Doi jucători sau Campanie.`,
 'sf1769de2735d47e9': str`${0}: ${1} daune suplimentare.`,
 'sf1f70949ad691126': `Se încarcă sunetul…`,
-'sf24cb54e29df4039': str`Treapta ${0}/9`,
+'sf24c964e29df0b8c': str`Treapta ${0}/${1}`,
 'sf342c119b552d464': `Jucătorul unu`,
 'sf5a77e5deb36b236': str`${0}. ${1}: ${2}. ${3} mândrie rămasă.`,
 'sf5eed050ae0f7ca4': str`Lista portretelor concurenților, ${0} portrete`,
@@ -285,7 +286,6 @@
 'sf9175b8006687910': `Următoarea alegere corectă gramatical`,
 'sf96e6859db7c2efd': `Aspectul jucătorului unu lipsește. Alege un aspect disponibil.`,
 'sfa5bc01ce096cdad': `Canalul 3`,
-'sfd5fb0cd89eec929': `Nouă victorii înregistrate`,
 'sfead05465f1ddff7': str`Replică: încărcare ${0} din ${1}`,
     };
   

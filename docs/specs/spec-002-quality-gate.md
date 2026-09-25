@@ -35,7 +35,7 @@ The production build validates the audio assets and the neural speech assets bef
 
 `quality:quick` runs `validate`, unit tests, browser tests, coverage, and end-to-end tests in that sequence.
 It does not run the slowest tests until their cumulative elapsed time gets to 20 percent of the last recorded full gate.
-These tests are the current-catalog 500-match calibration, the content-balance matrix, and the nine-rung production ladder flow.
+These tests are the current-catalog 500-match calibration, the content-balance matrix, and the production ladder flow, which plays one rung for each playable scene.
 They also include the isolated character content lifecycle with its two production builds.
 The Node runs, the Browser Mode runs, and the coverage runs do not include the calibration and the content-balance matrix.
 
@@ -50,7 +50,7 @@ An agent uses `quality:quick` for the usual validation.
 It must not run `quality:full` or `ci` unless the user tells it directly to use the full quality-gate skill.
 A pass of `quality:quick` is not full-gate evidence and is not release evidence.
 
-The calibration, the content-balance matrix, the nine-rung ladder flow, and the content lifecycle run only in the full gate.
+The calibration, the content-balance matrix, the ladder flow, and the content lifecycle run only in the full gate.
 The full gate runs only when the user tells the agent directly to run it.
 `quality:quick` and each test command that you run directly select the `quick` mode.
 This includes `npm run test`, `npm run test:browser`, `npm run test:coverage`, and `npm run test:e2e`.

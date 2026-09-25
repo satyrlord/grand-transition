@@ -286,7 +286,10 @@ export class GrandTransitionApp extends LitElement {
         this.ladderSnapshot = this.ladderProgressRepository.validateCatalog(
           () => false,
         );
-      } else if (reconciledProgress === storedLadderProgress) {
+      } else if (
+        reconciledProgress === storedLadderProgress &&
+        !this.ladderProgressRepository.storesLegacyProgress()
+      ) {
         this.ladderSnapshot = storedLadderSnapshot;
       } else {
         this.ladderSnapshot = this.ladderProgressRepository.replace(
@@ -1120,9 +1123,7 @@ function setupSnapshotForLadder(
 ): SetupSnapshot {
   const rung = currentLadderRung(progress);
   const opponentId = rung?.opponentCharacterId ?? progress.opponentIds.at(-1)!;
-  const sceneId =
-    rung?.sceneId ??
-      progress.sceneOrder[(progress.opponentIds.length - 1) % progress.sceneOrder.length]!;
+  const sceneId = rung?.sceneId ?? progress.sceneOrder.at(-1)!;
   return Object.freeze({
     ...snapshot,
     mode: 'ladder',

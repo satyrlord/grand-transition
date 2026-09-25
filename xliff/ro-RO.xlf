@@ -886,14 +886,6 @@
   <source>Choose Ladder again to create local progress.</source>
   <target>Alege din nou modul Campanie pentru a crea progres local.</target>
 </trans-unit>
-<trans-unit id="sf24cb54e29df4039">
-  <source>Rung <x id="0" equiv-text="${progress.rungIndex + 1}"/>/9</source>
-  <target>Treapta <x id="0" equiv-text="${progress.rungIndex + 1}"/>/9</target>
-</trans-unit>
-<trans-unit id="sfd5fb0cd89eec929">
-  <source>Nine victories recorded</source>
-  <target>Nouă victorii înregistrate</target>
-</trans-unit>
 <trans-unit id="sea4f3074c99b08df">
   <source>Progress is session-only.</source>
   <target>Progresul este doar pentru această sesiune.</target>
@@ -1113,6 +1105,14 @@
 <trans-unit id="sfead05465f1ddff7">
   <source>Comeback: <x id="0" equiv-text="${player.comeback.charge}"/> of <x id="1" equiv-text="${player.comeback.cap}"/> charge</source>
   <target>Replică: încărcare <x id="0" equiv-text="${player.comeback.charge}"/> din <x id="1" equiv-text="${player.comeback.cap}"/></target>
+</trans-unit>
+<trans-unit id="sf24c964e29df0b8c">
+  <source>Rung <x id="0" equiv-text="${progress.rungIndex + 1}"/>/<x id="1" equiv-text="${ladderRungCount(progress)}"/></source>
+  <target>Treapta <x id="0" equiv-text="${progress.rungIndex + 1}"/>/<x id="1" equiv-text="${ladderRungCount(progress)}"/></target>
+</trans-unit>
+<trans-unit id="s621715afd0400435">
+  <source>Victories recorded: <x id="0" equiv-text="${progress.wins}"/></source>
+  <target>Victorii înregistrate: <x id="0" equiv-text="${progress.wins}"/></target>
 </trans-unit>
 </body>
 </file>

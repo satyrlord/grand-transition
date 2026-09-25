@@ -20,7 +20,7 @@ import {
 import { resolveBrandAsset } from '../brand-assets';
 import type { MatchMode } from '../../engine/match-lifecycle';
 import type { LadderProgress } from '../../engine/ladder';
-import { ladderDifficulty } from '../../engine/ladder';
+import { ladderDifficulty, ladderRungCount } from '../../engine/ladder';
 import type { LadderProgressFailureCode } from '../../persistence/ladder-progress';
 
 const elementName = 'grand-transition-setup';
@@ -1030,13 +1030,13 @@ export class GrandTransitionSetup extends LitElement {
         ${
           progress.completed
             ? msg('Ladder complete')
-            : msg(str`Rung ${progress.rungIndex + 1}/9`)
+            : msg(str`Rung ${progress.rungIndex + 1}/${ladderRungCount(progress)}`)
         }
       </strong>
       <span>
         ${
           progress.completed
-            ? msg('Nine victories recorded')
+            ? msg(str`Victories recorded: ${progress.wins}`)
             : `${progress.wins}W · ${progress.losses}L`
         }
       </span>
@@ -1279,7 +1279,7 @@ function difficultyLabel(difficulty: string | null): string {
 
 function currentDifficulty(progress: LadderProgress | null): string | null {
   if (!progress || progress.completed) return null;
-  return ladderDifficulty(progress.rungIndex);
+  return ladderDifficulty(progress.rungIndex, ladderRungCount(progress));
 }
 
 export function registerGrandTransitionSetup(): void {

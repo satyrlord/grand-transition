@@ -27,6 +27,7 @@ export class LadderProgressRepository {
   private persistenceFailure: LadderProgressFailureCode | null = null;
   private usingMemoryFallback = false;
   private canReplaceInvalidStoredValue = false;
+  private legacyStoredValue = false;
 
   constructor(
     private readonly browserStorage: StoragePort,
@@ -46,6 +47,15 @@ export class LadderProgressRepository {
       return;
     }
     this.progress = decoded.value;
+    this.legacyStoredValue = decoded.migratedFrom !== undefined;
+  }
+
+  /**
+   * True while the stored bytes still use an earlier progress version. The
+   * caller writes the migrated progress after it checks it against the catalog.
+   */
+  storesLegacyProgress(): boolean {
+    return this.legacyStoredValue;
   }
 
   snapshot(): LadderProgressSnapshot {
@@ -75,6 +85,7 @@ export class LadderProgressRepository {
       throw new Error(`Normalized ladder progress failed at ${normalized.path}.`);
     }
     this.progress = normalized.value;
+    this.legacyStoredValue = false;
     if (this.usingMemoryFallback) {
       this.memoryStorage.write(ladderProgressStorageKey, serialized);
       if (this.canReplaceInvalidStoredValue) {
@@ -102,6 +113,7 @@ export class LadderProgressRepository {
 
   reset(): LadderProgressSnapshot {
     this.progress = null;
+    this.legacyStoredValue = false;
     this.memoryStorage.remove(ladderProgressStorageKey);
     const removed = this.browserStorage.remove(ladderProgressStorageKey);
     if (!removed.ok) {
