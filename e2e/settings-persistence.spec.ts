@@ -17,9 +17,7 @@ const supportedViewports = [
   { width: 1920, height: 1080 },
 ] as const;
 
-test('fresh defaults prepare voices before interaction without starting playback', async ({
-  page,
-}) => {
+test('fresh defaults defer voices until the first trusted interaction', async ({ page }) => {
   await page.addInitScript(() => {
     const Original = window.AudioContext;
     Object.assign(window, { createdAudioContexts: 0 });
@@ -36,7 +34,8 @@ test('fresh defaults prepare voices before interaction without starting playback
   });
   await page.goto('/grand-transition/');
   await expect(page.getByRole('button', { name: 'Settings', exact: true })).toBeVisible();
-  await expect.poll(() => resources.length).toBeGreaterThan(0);
+  await page.waitForLoadState('networkidle');
+  expect(resources).toEqual([]);
   expect(
     await page.evaluate(
       () => (window as unknown as { createdAudioContexts: number }).createdAudioContexts,
@@ -46,6 +45,44 @@ test('fresh defaults prepare voices before interaction without starting playback
   await expect(page.getByLabel('Speech enabled', { exact: true })).toBeChecked();
   await expect(page.getByRole('checkbox', { name: 'GPU voices', exact: true })).toBeChecked();
   await expect.poll(() => resources.length).toBeGreaterThan(0);
+});
+
+test('turning speech off terminates preparation workers and can enable fresh workers', async ({
+  page,
+}) => {
+  const errors: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.addInitScript(() => {
+    const NativeWorker = window.Worker;
+    const live = new Set<Worker>();
+    Object.defineProperty(window, 'liveSpeechWorkerCount', { get: () => live.size });
+    window.Worker = class extends NativeWorker {
+      constructor(url: string | URL, options?: WorkerOptions) {
+        super(url, options);
+        if (/neural-speech-worker|romanian-speech-worker|kokoro-gpu-worker/u.test(String(url)))
+          live.add(this);
+      }
+      override terminate() {
+        live.delete(this);
+        super.terminate();
+      }
+    };
+  });
+  const liveWorkers = () =>
+    page.evaluate(() => Reflect.get(window, 'liveSpeechWorkerCount') as number);
+  await page.goto('/grand-transition/');
+  await page.getByRole('button', { name: 'Settings', exact: true }).click();
+  await expect.poll(liveWorkers).toBeGreaterThan(0);
+  await page.getByLabel('Speech enabled', { exact: true }).uncheck();
+  await expect.poll(liveWorkers).toBe(0);
+  await page.getByRole('button', { name: 'Close', exact: true }).click();
+  await page.getByRole('button', { name: 'Settings', exact: true }).click();
+  expect(await liveWorkers()).toBe(0);
+  await page.getByLabel('Speech enabled', { exact: true }).check();
+  await expect.poll(liveWorkers).toBeGreaterThan(0);
+  await page.getByLabel('Speech enabled', { exact: true }).uncheck();
+  await expect.poll(liveWorkers).toBe(0);
+  expect(errors).toEqual([]);
 });
 
 test('keeps every stored preference and rewrites the document on a change', async ({ page }) => {

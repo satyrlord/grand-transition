@@ -1,6 +1,6 @@
 import manifest from '../assets/brand/brand-manifest.json' with { type: 'json' };
 
-const urls = import.meta.glob('../assets/brand/*.{png,avif,webp}', {
+const urls = import.meta.glob('../assets/brand/*.{avif,webp}', {
   eager: true,
   import: 'default',
   query: '?url&no-inline',
@@ -25,10 +25,9 @@ export function resolveBrandAsset(id: string) {
     height: asset.variants[0]!.height,
     avif: variant('avif'),
     webp: variant('webp'),
-    png: url(asset.source.path),
   });
 }
 
 export function brandImageSet(asset: ReturnType<typeof resolveBrandAsset>): string {
-  return `image-set(url("${asset.avif}") type("image/avif"), url("${asset.webp}") type("image/webp"), url("${asset.png}") type("image/png"))`;
+  return `image-set(url("${asset.avif}") type("image/avif"), url("${asset.webp}") type("image/webp"))`;
 }

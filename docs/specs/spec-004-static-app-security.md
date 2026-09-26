@@ -16,6 +16,8 @@ Set the Vite and Playwright base Uniform Resource Locator (URL) to `/grand-trans
 Put the production-only Content Security Policy (CSP) below into the HTML, without changes.
 Add a production preview smoke test for the entry page, the assets, and the refresh behavior.
 The test must also examine the remote connections that the policy does not let the page make.
+Milestone 030 declares the local brand emblem as the favicon in the entry HTML.
+Its WebP URL uses the Pages subpath, so browsers do not request a missing icon at the origin root.
 
 Production puts this policy into the HTML:
 

@@ -82,6 +82,11 @@
     .title-disclaimer {
       margin-top: 0;
     }
+    .title-voice-feedback {
+      position: static;
+      width: 100%;
+      margin-block-start: 0.9rem;
+    }
 
     .setup-screen {
       padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right))

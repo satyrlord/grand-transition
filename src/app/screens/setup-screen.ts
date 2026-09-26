@@ -627,7 +627,7 @@ export class GrandTransitionSetup extends LitElement {
         <source type="image/webp" srcset=${portraitFrame.webp} />
         <img
           class="roster-frame-overlay"
-          src=${portraitFrame.png}
+          src=${portraitFrame.webp}
           alt=""
           width="1086"
           height="1448"

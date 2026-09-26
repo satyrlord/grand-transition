@@ -1,6 +1,7 @@
 import type { IncomingMessage } from 'node:http';
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
+import sharp from 'sharp';
 import { defineConfig, normalizePath, type Plugin } from 'vite';
 import { maximumGameLogBytes, writeGameLog } from './tools/game-log-writer.ts';
 import brandManifest from './src/assets/brand/brand-manifest.json' with { type: 'json' };
@@ -76,6 +77,7 @@ export default defineConfig(({ command }) => ({
     },
   },
   plugins: [
+    releaseAssetsPlugin(),
     neuralPhonemizerPlugin(),
     omitFallbackSpeechWasmPlugin(),
     {
@@ -110,8 +112,8 @@ export default defineConfig(({ command }) => ({
       name: 'brand-image-preloads',
       transformIndexHtml: {
         order: 'pre',
-        handler: () =>
-          brandManifest.assets
+        handler: () => [
+          ...brandManifest.assets
             .filter(({ id }) => id !== 'politburo-portrait-frame')
             .map((asset) => ({
               tag: 'link',
@@ -126,6 +128,20 @@ export default defineConfig(({ command }) => ({
               },
               injectTo: 'head' as const,
             })),
+          {
+            tag: 'link',
+            attrs: {
+              rel: 'icon',
+              type: 'image/webp',
+              href:
+                '/src/assets/brand/' +
+                brandManifest.assets
+                  .find(({ id }) => id === 'grand-transition-emblem')!
+                  .variants.find(({ format }) => format === 'webp')!.path,
+            },
+            injectTo: 'head' as const,
+          },
+        ],
       },
     },
     characterPortraitFallbackPlugin(),
@@ -151,6 +167,37 @@ export default defineConfig(({ command }) => ({
       : [developmentGameLogPlugin()]),
   ],
 }));
+
+// Keep authored PNG sources for alpha metadata and development. Production
+// sidekicks use lossless WebP with the same canvas and visible pixel values.
+export function releaseAssetsPlugin(): Plugin {
+  return {
+    name: 'release-assets',
+    apply: 'build',
+    enforce: 'pre',
+    async load(id) {
+      const [filename, query] = id.split('?');
+      if (
+        !filename ||
+        !/\/src\/assets\/sidekicks\/[^/]+\.png$/u.test(normalizePath(filename)) ||
+        !new URLSearchParams(query).has('url')
+      )
+        return;
+      const source = await sharp(filename).webp({ lossless: true }).toBuffer();
+      const reference = this.emitFile({
+        type: 'asset',
+        name: `${path.parse(filename).name}-sidekick.webp`,
+        source,
+      });
+      return `export default import.meta.ROLLUP_FILE_URL_${reference};`;
+    },
+    async generateBundle() {
+      for (const name of ['CREDITS.md', 'LICENSE.md']) {
+        this.emitFile({ type: 'asset', fileName: name, source: await readFile(name, 'utf8') });
+      }
+    },
+  };
+}
 
 // The speech workers load hash-checked runtime and phonemizer WASM from
 // `public/tts/` and pass those bytes or paths to their libraries. The copies that

@@ -52,13 +52,15 @@ function createEngine(mode: EngineMode, changed: () => void): Engine {
 
 /** Select once per match. A failed GPU delivery ends silently; later requests use Piper. */
 export class NeuralVoiceRouter implements SpeechPort {
-  private readonly piper: Engine;
+  private piper: Engine | null;
   private romanian: Engine | null = null;
   private gpu: Engine | null = null;
   private enabled = false;
   private requested = false;
   private matchMode: NeuralVoiceMode | null = null;
   private disposed = false;
+  private releasedAvailable = false;
+  private readonly generations: Record<EngineMode, number> = { piper: 0, ro: 0, gpu: 0 };
 
   private readonly changed: () => void;
   private readonly factory: Factory;
@@ -66,12 +68,25 @@ export class NeuralVoiceRouter implements SpeechPort {
   constructor(changed: () => void = () => {}, factory: Factory = createEngine) {
     this.changed = changed;
     this.factory = factory;
-    this.piper = factory('piper', changed);
+    this.piper = this.newEngine('piper');
+  }
+
+  private newEngine(mode: EngineMode): Engine {
+    const generation = ++this.generations[mode];
+    return this.factory(mode, () => {
+      if (this.disposed || generation !== this.generations[mode]) return;
+      if (mode === 'gpu') this.settleMatchMode();
+      this.changed();
+    });
+  }
+
+  private get piperEngine(): Engine {
+    return (this.piper ??= this.newEngine('piper'));
   }
 
   /** Constructed on request or after English failure; resources load on request. */
   private get romanianEngine(): Engine {
-    return (this.romanian ??= this.factory('ro', this.changed));
+    return (this.romanian ??= this.newEngine('ro'));
   }
 
   /** Romanian voices are the package's own neural voices and are never substituted. */
@@ -79,7 +94,9 @@ export class NeuralVoiceRouter implements SpeechPort {
     return voiceUri?.startsWith('piper:ro_RO-') === true;
   }
   private engineFor(voiceUri: string | null | undefined): Engine {
-    return NeuralVoiceRouter.isRomanian(voiceUri) ? this.romanianEngine : this.active;
+    return NeuralVoiceRouter.isRomanian(voiceUri)
+      ? this.romanianEngine
+      : (this.active ?? this.piperEngine);
   }
 
   private get gpuUsable(): boolean {
@@ -97,20 +114,22 @@ export class NeuralVoiceRouter implements SpeechPort {
     if (this.matchMode !== null) return this.gpuMatch ? 'gpu' : 'piper';
     return this.requested && this.gpuUsable && this.gpu!.voices.length ? 'gpu' : 'piper';
   }
-  private get active(): Engine {
+  private get active(): Engine | null {
     return this.activeMode === 'gpu' ? this.gpu! : this.piper;
   }
   get available(): boolean {
-    return !this.disposed && (this.active.available || this.romanianEngine.available);
+    if (this.disposed) return false;
+    if (!this.piper) return this.releasedAvailable;
+    return this.active!.available || this.romanianEngine.available;
   }
   get status(): NeuralSpeechStatus {
-    return this.active.status;
+    return this.active?.status ?? 'idle';
   }
   get progress(): number | null {
-    return this.active.progress;
+    return this.active?.progress ?? null;
   }
   get voices(): readonly SpeechVoice[] {
-    return this.active.voices;
+    return this.active?.voices ?? [];
   }
   get gpuStatus(): 'idle' | 'loading' | 'ready' | 'unavailable' {
     const status = this.gpu?.status ?? 'idle';
@@ -121,10 +140,17 @@ export class NeuralVoiceRouter implements SpeechPort {
   }
 
   configure(settings: { speechEnabled: boolean; gpuVoices: boolean }): void {
+    const wasEnabled = this.enabled;
     this.enabled = settings.speechEnabled;
     this.requested = settings.gpuVoices;
     this.settleMatchMode();
-    if (!this.enabled) this.cancel('settings');
+    if (wasEnabled && !this.enabled) {
+      this.releasedAvailable = this.available;
+      this.cancel('settings');
+      this.releaseEngines();
+      // Re-enabling speech cannot restore a disposed GPU match engine.
+      if (this.matchMode !== null) this.matchMode = 'piper';
+    }
     if ((!this.enabled || !this.requested) && !this.gpuMatch) this.releaseGpu();
     this.changed();
   }
@@ -140,12 +166,9 @@ export class NeuralVoiceRouter implements SpeechPort {
   private load(activate: boolean): Promise<boolean> {
     if (this.disposed || !this.enabled) return Promise.resolve(false);
     // Keep Piper ready for immediate match start and for device loss. GPU loading never gates it.
-    const ready = this.piper.initialize(activate);
+    const ready = this.piperEngine.initialize(activate);
     if (this.requested) {
-      this.gpu ??= this.factory('gpu', () => {
-        this.settleMatchMode();
-        this.changed();
-      });
+      this.gpu ??= this.newEngine('gpu');
       if (this.gpu.status !== 'unavailable') void this.gpu.initialize(activate);
     }
     return ready;
@@ -187,10 +210,12 @@ export class NeuralVoiceRouter implements SpeechPort {
     };
   }
   speak(request: SpeechRequest) {
+    if (this.disposed || !this.enabled) return { accepted: false, reason: 'unavailable' };
     const routed = this.request(request);
     return this.engineFor(routed.voiceUri).speak(routed);
   }
   prepare(request: SpeechRequest) {
+    if (this.disposed || !this.enabled) return { accepted: false, reason: 'unavailable' };
     const routed = this.request(request);
     return (
       this.engineFor(routed.voiceUri).prepare?.(routed) ?? {
@@ -200,30 +225,40 @@ export class NeuralVoiceRouter implements SpeechPort {
     );
   }
   cancel(reason: SpeechCancellationReason = 'replacement'): void {
-    this.piper.cancel(reason);
+    this.piper?.cancel(reason);
     this.gpu?.cancel(reason);
     this.romanian?.cancel(reason);
   }
   pause(): void {
-    this.piper.pause?.();
+    this.piper?.pause?.();
     this.gpu?.pause?.();
     this.romanian?.pause?.();
   }
   resume(): void {
-    this.piper.resume?.();
+    this.piper?.resume?.();
     this.gpu?.resume?.();
     this.romanian?.resume?.();
   }
   dispose(): void {
     this.disposed = true;
     this.matchMode = null;
-    this.piper.dispose();
-    this.romanian?.dispose();
+    this.releaseEngines();
+  }
+  private releaseEngines(): void {
+    const piper = this.piper;
+    const romanian = this.romanian;
+    this.piper = null;
+    this.romanian = null;
+    this.generations.piper++;
+    this.generations.ro++;
     this.releaseGpu();
+    piper?.dispose();
+    romanian?.dispose();
   }
   private releaseGpu(): void {
     const gpu = this.gpu;
     this.gpu = null;
+    this.generations.gpu++;
     gpu?.dispose();
   }
 }

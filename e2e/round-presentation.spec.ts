@@ -300,6 +300,8 @@ test('long inline scores keep the latest line, bonuses, and total visible beside
   ]) {
     await page.setViewportSize(size);
     await expect(page.locator('.delivery-receipt')).toHaveAttribute('role', 'log');
+    // The paused test clock must paint the coalesced scroll update after resize.
+    await page.clock.runFor(32);
     await expect(page.locator('.delivery-score')).toHaveCount(10);
     await expect(page.locator('.delivery-score small')).toHaveCount(0);
     await expect(page.locator('[data-emphasis="combo"]')).toContainText('×2');

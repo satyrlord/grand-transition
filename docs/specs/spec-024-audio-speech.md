@@ -100,8 +100,19 @@ Audio does not change reducer state or use seeded game randomness.
 
 The first trusted pointer action or keyboard action makes the context and
 starts it again. Each subsequent activation uses the decoded buffers again.
+Milestone 030 also defers speech-worker preparation to that first trusted interaction.
+The initial title loads no speech worker or model before that interaction.
+Milestone 030 also stops the neural workers when Speech enabled changes to off.
+Late worker callbacks cannot restart loading or playback.
+When speech is enabled again, new local engines can use the cached assets.
 The states are idle, loading, ready, and unavailable. Settings gives Retry
 sound. If the Ogg file fails, the adapter tries the paired MP3 file.
+
+Milestone 030 loads only the music for the selected screen or scene and the shared effects.
+It decodes these assets before playback and reuses their buffers in the page session.
+It loads a different scene track only after that scene is selected.
+When the selection changes during loading, the old selection cannot start playback.
+Pause, concealment, or disposal during loading cannot start a late loop.
 
 If the two files fail, play continues with no sound. The adapter discards
 events that occur before decoding.

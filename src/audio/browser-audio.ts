@@ -18,7 +18,6 @@ const tracks: Readonly<Record<Exclude<AudioScene, null>, readonly string[]>> = {
   'influencer-campaign-livestream': [sceneMusicTrackIds['influencer-campaign-livestream']],
   'civic-cypher-boxing-ring': [sceneMusicTrackIds['civic-cypher-boxing-ring']],
 };
-const assetIds = [...new Set([...Object.values(tracks).flat(), ...effectIds])];
 const fadeSeconds = 0.3;
 type Format = 'ogg' | 'mp3';
 type Dependencies = {
@@ -61,6 +60,13 @@ export class BrowserAudio implements AudioPort {
 
   enable(): Promise<void> {
     if (this.disposed) return Promise.resolve();
+    if (
+      !this.pending &&
+      this.status === 'ready' &&
+      this.context?.state === 'running' &&
+      (this.scene === null || tracks[this.scene].every((id) => this.buffers.has(id)))
+    )
+      return Promise.resolve();
     try {
       const context = this.context ?? this.createGraph();
       const generation = this.generation;
@@ -105,6 +111,7 @@ export class BrowserAudio implements AudioPort {
     // A cue from the old screen never continues into a replacement screen.
     for (const source of this.sources) if (!source.node.loop) this.stop(source);
     this.syncLoops();
+    if (this.context && this.status === 'ready') void this.enable();
   }
 
   play(cue: EffectId): boolean {
@@ -148,17 +155,25 @@ export class BrowserAudio implements AudioPort {
   private async prepare(context: AudioContext, resumed: Promise<void>, generation: number) {
     try {
       await resumed;
-      for (const id of assetIds) {
+      // A scene can change while decoding. Finish the current batch, then load
+      // only the new selection before enabling its playback.
+      for (;;) {
         if (generation !== this.generation) return;
-        if (this.buffers.has(id)) continue;
-        let buffer: AudioBuffer;
-        try {
-          buffer = await context.decodeAudioData(await this.dependencies.load(id, 'ogg'));
-        } catch {
-          buffer = await context.decodeAudioData(await this.dependencies.load(id, 'mp3'));
-        }
-        if (generation !== this.generation) return;
-        this.buffers.set(id, buffer);
+        const selected = this.scene === null ? [] : tracks[this.scene];
+        const missing = [...selected, ...effectIds].filter((id) => !this.buffers.has(id));
+        if (missing.length === 0) break;
+        await Promise.all(
+          missing.map(async (id) => {
+            let buffer: AudioBuffer;
+            try {
+              buffer = await context.decodeAudioData(await this.dependencies.load(id, 'ogg'));
+            } catch {
+              if (generation !== this.generation) return;
+              buffer = await context.decodeAudioData(await this.dependencies.load(id, 'mp3'));
+            }
+            if (generation === this.generation) this.buffers.set(id, buffer);
+          }),
+        );
       }
       if (generation !== this.generation) return;
       const changed = this.status !== 'ready';

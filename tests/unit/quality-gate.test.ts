@@ -134,10 +134,6 @@ describe('quality-gate scaffold', () => {
     expect(playwrightConfig).toContain(
       "process.env.GRAND_TRANSITION_ASSETS_VALIDATED === '1' ? 'npm run build:bundle' : 'npm run build'",
     );
-    // Firefox and WebKit audio evidence belongs to the full gate only.
-    expect(playwrightConfig.replace(/\s+/gu, ' ')).toMatch(
-      /\.\.\.\(fullQualityGateRequested\(\) \? \[ \{ name: 'firefox-audio'.*name: 'webkit-audio'.*\] : \[\]\)/u,
-    );
     const [calibration, ladder, lifecycle, gateMode, browserConfig, phaseRunner, balanceValidator] =
       await Promise.all([
         readFile(path.resolve('tests', 'unit', 'replay-and-simulation.test.ts'), 'utf8'),
@@ -191,6 +187,59 @@ describe('quality-gate scaffold', () => {
       const currentIndex = gate.indexOf(`'${phase}'`);
       expect(currentIndex, phase).toBeGreaterThan(previousIndex);
       previousIndex = currentIndex;
+    }
+  });
+
+  test('reserves supplemental browser engines and isolated performance trials for the full gate', async () => {
+    type BrowserProject = {
+      name: string;
+      testIgnore?: string;
+      testMatch?: string | string[];
+      workers?: number;
+      retries?: number;
+      dependencies?: string[];
+      use?: { browserName?: string; channel?: string; isMobile?: boolean; hasTouch?: boolean };
+    };
+    const readProjects = async (mode: string, runner: string): Promise<BrowserProject[]> => {
+      const { stdout } = await execFileAsync(
+        process.execPath,
+        [
+          '--input-type=module',
+          '--eval',
+          "import config from './playwright.config.ts'; process.stdout.write(JSON.stringify(config.projects));",
+        ],
+        {
+          cwd: process.cwd(),
+          env: {
+            ...process.env,
+            GRAND_TRANSITION_QUALITY_GATE: mode,
+            GRAND_TRANSITION_QUALITY_GATE_RUNNER: runner,
+          },
+        },
+      );
+      return JSON.parse(stdout) as BrowserProject[];
+    };
+    const ordinary = await readProjects('quick', '1');
+    expect(ordinary.map(({ name }) => name)).toEqual(['chromium', 'mobile-chromium']);
+    expect(ordinary[0]?.testIgnore).toBe('**/release-performance.spec.ts');
+    expect(ordinary.every(({ use }) => use?.channel === 'chrome')).toBe(true);
+    expect(ordinary[1]?.testMatch).toContain('**/release-compatibility.spec.ts');
+    expect(ordinary[1]?.use).toMatchObject({ isMobile: true, hasTouch: true });
+    expect(await readProjects('full', '')).toEqual(ordinary);
+    const full = await readProjects('full', '1');
+    const measurement = full.find(({ name }) => name === 'release-performance');
+    expect(measurement).toMatchObject({
+      testMatch: '**/release-performance.spec.ts',
+      workers: 1,
+      retries: 0,
+      dependencies: full
+        .filter(({ name }) => name !== 'release-performance')
+        .map(({ name }) => name),
+    });
+    for (const name of ['firefox-audio', 'webkit-audio', 'mobile-webkit']) {
+      expect(full.find((project) => project.name === name)?.testMatch).toContain(
+        '**/release-compatibility.spec.ts',
+      );
     }
   });
 

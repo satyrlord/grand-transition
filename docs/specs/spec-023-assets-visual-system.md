@@ -198,6 +198,9 @@ not change.
 and the pixel bounds against each source PNG. After you change a source PNG,
 run `node tools/sidekick-assets.ts build`. Run
 `node tools/sidekick-assets.ts validate` to validate the generated metadata.
+Milestone 030 emits lossless WebP sidekicks during the production build.
+These derivatives keep the source canvas, visible pixel values, and alpha bounds.
+The PNG masters stay in the source package and in the development asset path.
 
 ## Regeneration baseline and decision recovery
 
@@ -999,7 +1002,7 @@ interface assets do not go into the fixed character and scene replacement
 inventory.
 
 Runtime views resolve these files through the brand manifest. The title uses
-AVIF first, WebP second, and the source PNG as its last fallback. The build
+AVIF first and WebP as the fallback. Milestone 030 removes the source PNG from production. The build
 gets its two AVIF preloads from the manifest before the app module. A
 browser that does not support AVIF does not use them, and it loads WebP. For
 each title format, the combined package stays at 300 KiB or less.

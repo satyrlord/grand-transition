@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from 'vitest';
 import { NeuralVoiceRouter, type NeuralEngineMode } from '../../src/audio/neural-voice-router.ts';
-import type { NeuralSpeechStatus } from '../../src/audio/neural-speech.ts';
-import type { SpeechRequest } from '../../src/audio/speech-port.ts';
+import { LocalNeuralSpeech, type NeuralSpeechStatus } from '../../src/audio/neural-speech.ts';
+import type { NeuralSpeechMessage, SpeechRequest } from '../../src/audio/speech-port.ts';
 
 function harness() {
   const engines: {
@@ -17,8 +17,10 @@ function harness() {
     pause: ReturnType<typeof vi.fn>;
     resume: ReturnType<typeof vi.fn>;
     dispose: ReturnType<typeof vi.fn>;
+    notify: () => void;
   }[] = [];
-  const router = new NeuralVoiceRouter(vi.fn(), (mode, changed) => {
+  const changed = vi.fn();
+  const router = new NeuralVoiceRouter(changed, (mode, notify) => {
     const engine = {
       mode,
       status: 'idle' as NeuralSpeechStatus,
@@ -27,7 +29,7 @@ function harness() {
       available: true,
       initialize: vi.fn(async () => {
         engine.status = 'loading';
-        changed();
+        notify();
         return true;
       }),
       speak: vi.fn((_request: SpeechRequest) => ({ accepted: true })),
@@ -36,6 +38,7 @@ function harness() {
       pause: vi.fn(),
       resume: vi.fn(),
       dispose: vi.fn(),
+      notify,
     };
     engines.push(engine);
     return engine;
@@ -44,7 +47,7 @@ function harness() {
     engines[index]!.status = 'ready';
     engines[index]!.voices = [{ voiceURI: 'voice', name: 'Voice', lang: 'en-GB', default: true }];
   };
-  return { router, engines, ready };
+  return { router, engines, ready, changed };
 }
 const request = {
   text: 'Your brother is a snitch.',
@@ -53,8 +56,67 @@ const request = {
 };
 
 describe('neural engine selection', () => {
+  test('speech off terminates a real adapter worker and settles pending initialization', async () => {
+    const workers: {
+      onmessage: ((event: MessageEvent<NeuralSpeechMessage>) => void) | null;
+      onerror: (() => void) | null;
+      postMessage: ReturnType<typeof vi.fn>;
+      terminate: ReturnType<typeof vi.fn>;
+    }[] = [];
+    const router = new NeuralVoiceRouter(
+      vi.fn(),
+      (_mode, changed) =>
+        new LocalNeuralSpeech(changed, {
+          supported: () => true,
+          baseUrl: '/grand-transition/tts/piper/',
+          createContext: () =>
+            ({ resume: async () => {}, close: async () => {} }) as unknown as AudioContext,
+          createWorker: () => {
+            const worker = {
+              onmessage: null,
+              onerror: null,
+              postMessage: vi.fn(),
+              terminate: vi.fn(),
+            };
+            workers.push(worker);
+            return worker as unknown as Worker;
+          },
+        }),
+    );
+    router.configure({ speechEnabled: true, gpuVoices: false });
+    const pending = router.preload();
+    const onDiagnostic = vi.fn();
+    expect(router.prepare({ ...request, onDiagnostic }).accepted).toBe(true);
+    expect(workers).toHaveLength(1);
+    const lateMessage = workers[0]!.onmessage!;
+    router.configure({ speechEnabled: false, gpuVoices: false });
+    expect(await pending).toBe(false);
+    expect(workers[0]!.terminate).toHaveBeenCalledOnce();
+    expect(onDiagnostic).toHaveBeenCalledWith(
+      expect.objectContaining({ type: 'cancel', reason: 'settings' }),
+    );
+    lateMessage(new MessageEvent('message', { data: { type: 'ready', voices: [] } }));
+    expect(router.status).toBe('idle');
+    router.configure({ speechEnabled: true, gpuVoices: false });
+    const renewed = router.preload();
+    expect(workers).toHaveLength(2);
+    workers[1]!.onmessage!(
+      new MessageEvent('message', {
+        data: {
+          type: 'ready',
+          voices: [{ voiceURI: request.voiceUri, name: 'Voice', lang: 'en-GB', default: true }],
+        },
+      }),
+    );
+    expect(await renewed).toBe(true);
+    expect(router.status).toBe('ready');
+    router.dispose();
+    expect(workers[1]!.terminate).toHaveBeenCalledOnce();
+  });
+
   test('Romanian availability survives an unavailable English engine', () => {
     const h = harness();
+    h.router.configure({ speechEnabled: true, gpuVoices: false });
     h.engines[0]!.available = false;
     expect(h.router.available).toBe(true);
     expect(h.engines.map(({ mode }) => mode)).toEqual(['piper', 'ro']);
@@ -193,15 +255,15 @@ describe('neural engine selection', () => {
     expect(h.router.activeMode).toBe('piper');
     h.router.dispose();
   });
-  test('preserves a match selection through mute and releases GPU when leaving with speech disabled', async () => {
+  test('preserves a GPU match when only the GPU preference is off and releases it on leaving', async () => {
     const h = harness();
     h.router.configure({ speechEnabled: true, gpuVoices: true });
     await h.router.initialize();
     h.ready(1);
     h.router.beginMatch();
-    h.router.configure({ speechEnabled: false, gpuVoices: true });
+    h.router.configure({ speechEnabled: true, gpuVoices: false });
     expect(h.router.activeMode).toBe('gpu');
-    expect(h.engines[1]!.cancel).toHaveBeenCalledWith('settings');
+    expect(h.engines[1]!.dispose).not.toHaveBeenCalled();
     h.router.pause();
     h.router.resume();
     expect(
@@ -215,6 +277,73 @@ describe('neural engine selection', () => {
     h.router.dispose();
     expect(await h.router.initialize()).toBe(false);
   });
+  test.each(['loading', 'ready', 'generating'] as const)(
+    'speech off disposes %s engines and re-enables fresh engines without stale callbacks',
+    async (status) => {
+      const h = harness();
+      h.router.configure({ speechEnabled: true, gpuVoices: true });
+      await h.router.preload();
+      h.ready(1);
+      h.router.beginMatch();
+      const romanian = {
+        text: 'Bună ziua.',
+        language: 'ro-RO',
+        voiceUri: 'piper:ro_RO-liana-medium',
+      };
+      h.router.prepare(request);
+      h.router.speak(request);
+      h.router.prepare(romanian);
+      expect(h.engines.map(({ mode }) => mode)).toEqual(['piper', 'gpu', 'ro']);
+      const retired = [...h.engines];
+      for (const engine of retired) engine.status = status;
+      h.router.configure({ speechEnabled: false, gpuVoices: true });
+      for (const engine of retired) {
+        expect(engine.cancel).toHaveBeenCalledWith('settings');
+        expect(engine.dispose).toHaveBeenCalledOnce();
+      }
+      expect(h.router.status).toBe('idle');
+      expect(h.router.progress).toBeNull();
+      expect(h.router.voices).toEqual([]);
+      expect(h.router.available).toBe(true);
+      expect(h.router.speak(request).accepted).toBe(false);
+      expect(h.router.prepare(romanian).accepted).toBe(false);
+      expect(await h.router.initialize()).toBe(false);
+      h.router.pause();
+      h.router.resume();
+      h.router.configure({ speechEnabled: false, gpuVoices: true });
+      expect(h.engines).toHaveLength(3);
+      expect(retired.every((engine) => engine.pause.mock.calls.length === 0)).toBe(true);
+
+      h.router.configure({ speechEnabled: true, gpuVoices: true });
+      expect(h.engines).toHaveLength(3);
+      await h.router.preload();
+      expect(h.engines.map(({ mode }) => mode)).toEqual(['piper', 'gpu', 'ro', 'piper', 'gpu']);
+      h.ready(4);
+      expect(h.router.activeMode).toBe('piper');
+      h.router.speak(request);
+      expect(h.engines[3]!.speak).toHaveBeenCalledOnce();
+      h.router.endMatch();
+      h.router.beginMatch();
+      expect(h.router.activeMode).toBe('gpu');
+      h.changed.mockClear();
+      for (const engine of retired) {
+        engine.status = 'unavailable';
+        engine.notify();
+      }
+      expect(h.changed).not.toHaveBeenCalled();
+      expect(h.router.activeMode).toBe('gpu');
+      expect(h.engines[4]!.dispose).not.toHaveBeenCalled();
+      h.router.prepare(romanian);
+      expect(h.engines[5]!.mode).toBe('ro');
+      expect(h.engines[5]!.prepare).toHaveBeenCalledOnce();
+      expect(retired.every((engine) => engine.dispose.mock.calls.length === 1)).toBe(true);
+      h.router.dispose();
+      expect(h.router.available).toBe(false);
+      expect(h.router.speak(request).accepted).toBe(false);
+      expect(h.router.prepare(romanian).accepted).toBe(false);
+      expect(h.engines).toHaveLength(6);
+    },
+  );
   test('disposes an in-flight GPU load when opt-out and creates a fresh instance on explicit retry', async () => {
     const h = harness();
     h.router.configure({ speechEnabled: true, gpuVoices: true });

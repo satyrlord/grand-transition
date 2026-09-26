@@ -1,9 +1,10 @@
 # Milestone 030: Release Hardening
 
-**Status:** Approved  
+**Status:** Approved, evidence pending: AC-030-01, AC-030-02, AC-030-03
+
 **Depends on:** 029\
 **Owns:** Release quality, compatibility, security, and the completed MVP  
-**Production-file budget:** 8
+**Production-file budget:** 8 per delivery package
 
 ## Terms
 
@@ -15,6 +16,16 @@
 
 ## Deliver
 
+Deliver the work in two packages, in this order:
+
+1. Artifact and provenance: build configuration, the quality workflow,
+   brand asset resolution and its views, and corrected speech-license metadata.
+2. Runtime performance: selected audio loading, deferred speech preparation,
+   measured rendering repairs, and browser measurement configuration.
+
+Each package has at most eight production files. Tests and necessary owner-document updates do not count.
+This division keeps build and provenance work separate from browser runtime behavior.
+
 Complete the last performance, browser, security, dependency, license, and documentation reviews.
 Measure the artifact with the last-quality assets, with the environment and the workload below.
 Repair the release defects that have evidence.
@@ -22,22 +33,30 @@ Repair the release defects that have evidence.
 Largest contentful paint, input event duration, animation frame interval, layout shift, and compressed JavaScript must agree with the measurement table below.
 Load the selected match assets only when the match must use them.
 Decode audio before the first playback.
+The initial title does not start speech workers or load their models.
+The first trusted pointer or keyboard interaction starts local voice preparation.
+This replaces preparation before interaction in the earlier title and speech implementation.
+The menu stays usable while voices prepare, and the existing per-match fallback rules apply.
+When speech is turned off, stop pending model preparation and worker processing as well as playback.
+Re-enabling speech can prepare a new local engine from the cached assets.
+Release focus before removing a consumed shared-card button or the draft controls.
+Keep focus on reused private-card buttons and rejected commands, and keep the keyboard tab order.
 Use AV1 Image File Format (AVIF) or WebP raster images.
 Use Scalable Vector Graphics (SVG) icons.
 
 Use Portable Network Graphics (PNG) only when AVIF, WebP, or SVG cannot show the necessary image.
 Use compressed audio fallbacks.
+The lossless WebP sidekick derivatives keep the approved PNG masters and their alpha geometry.
+For runtime brand assets, WebP replaces the PNG fallback of Milestone 015.
+The PNG masters remain source assets and do not go into the production artifact.
 
 Record the operating system (OS), browser, hardware, viewport, scene, cache, tool, workload, and result against the last-quality art.
 On the release date, the game must operate correctly in these browsers:
 
-- The last stable Chromium major version and its two previous major versions.
-- The last stable Safari major version and its two previous major versions.
-- The active Firefox Extended Support Release (ESR).
-- The last stable mobile Safari release and the last stable mobile Chrome release.
+- The last stable Chromium major version.
+- The last stable mobile Chrome release.
 
-Continuous integration (CI) runs Chromium, Firefox, WebKit, mobile Chromium, and mobile WebKit.
-Record the evidence for the supported Safari major version with the lowest number, or give it the status "not examined".
+Continuous integration (CI) runs Chromium and mobile Chromium.
 Do not add legacy polyfills or code for browsers that are not in the matrix without a new specification.
 
 ## Performance measurement contract
@@ -77,7 +96,10 @@ Do checks of the built files in `e2e/static-app-security.spec.ts`.
 This check of each chunk does not replace the total gzip budget above.
 
 On the release date, find the browser matrix and record the accurate versions.
-Continuous integration uses installed Chromium, Firefox, WebKit, mobile Chromium, and mobile WebKit.
+Continuous integration uses Chromium and mobile Chromium for the release flows.
+These projects use the installed stable Chrome channel; record its actual version.
+The full gate also runs supplemental Firefox, WebKit, and mobile WebKit engine checks.
+These Playwright engines and device profiles are not evidence for installed Safari or phone browsers.
 When the Safari and Chrome runtimes of the matrix are available, use automated production flows for those versions.
 Record the coverage of the supported Safari major version with the lowest number and the last macOS Safari.
 Also record the coverage of the last iOS Safari and the last Android Chrome.
@@ -109,6 +131,7 @@ A security failure, a privacy failure, a data-loss failure, or a runtime-network
 
 The minimum viable product (MVP) has a full flow from the title to the end of the match, and this flow operates correctly.
 It has all 19 characters, 6 different scenes, and 3 artificial intelligence (AI) difficulty levels with the different policies in Milestones 021 and 022.
+Specification 032 extends the shipped catalog to seven scenes; the six-scene MVP baseline stays complete.
 It has private hotseat play, and grammar and combat rules without errors.
 It shows each exchange that is not terminal through the Milestone 025 narrated inline sequence.
 
@@ -136,3 +159,53 @@ The browser projects that this specification names have no uncaught error.
 The performance targets pass, or approved deviations record the evidence.
 The bundle has no developer tool, asset without a license, remote request, or committed `dist/`.
 Stop before you enable the deployment.
+
+## Objective verifiers and evidence
+
+`e2e/release-performance.spec.ts` owns AC-030-01.
+Only the full quality gate runs its five cold and five warm trials.
+Its project runs after the other browser projects, with one worker and stable Chrome.
+The preview uses the production artifact, a clean browser context for each cold trial,
+the same context for the related warm trial, and the throttling above.
+Each trial records 40 deterministic draft inputs and five Pause and Resume pairs.
+Optional speech is off for this workload. Music, effects, and visual motion stay on.
+It keeps the native performance entries, the generated gzip counts, the environment,
+the artifact hash, and traces without screenshots or private-hand snapshots in `test-results/`.
+Audio decode time is the union of native decoder pending intervals.
+Concurrent decoders count elapsed time once; downloads and idle gaps do not count as decoding.
+Keep the sum of individual durations, the full first-to-last span, and each native call as separate diagnostics.
+Each played buffer must have completed its decode before playback.
+Input duration uses the maximum native Event Timing duration for each scripted interaction.
+Only entries with a nonzero interaction identifier belong to those interactions.
+Keep the raw entries and the 16 ms reporting bound for shorter events.
+Calculate layout shift with the standard session windows and recent-input exclusion;
+also keep raw card-update shifts as diagnostics.
+The quality workflow keeps that evidence for 14 days, including failed measurements.
+
+`e2e/release-compatibility.spec.ts` owns the release flow matrix in AC-030-02.
+It checks the terminal flow, reload, history, storage failure, unavailable speech, and private hands.
+It also checks the viewport boundaries and the longest shipped phrase text for AC-030-03.
+The existing `mobile-layout`, `mvp-content-viewport`, `round-presentation`, and
+`review-accessibility` production suites keep their wider layout and state assertions.
+Quick mode uses the reference viewports. The full gate uses the full matrices.
+
+`e2e/static-app-security.spec.ts` checks the built artifact for AC-030-04.
+It measures initial JavaScript after gzip separately from the limit for each chunk.
+It checks source maps, known credential signatures, developer code, the Pages subpath,
+the content security policy, remote requests, and the absence of tracked `dist/` files.
+Asset and speech validators check the manifests, license records, and pinned bytes.
+A signature scan is a bounded check, not proof that an arbitrary secret cannot exist.
+
+For AC-030-05, keep the lockfile inventory, package versions, licenses, registry URLs,
+integrity values, and `npm audit --json` output with the action review.
+Verify each action tag against its pinned commit and official repository.
+Record source revisions independently when a speech model and its phonemizer use different revisions.
+Keep local review records in `tmp/release-hardening/`.
+
+For AC-030-06, an empty deviation list gives no permission to ignore a failed check.
+A missing full-gate result or performance result keeps release acceptance open.
+Unavailable real-browser runtime evidence has the status `not examined` as above.
+Do not mark this milestone complete from quick-gate or emulated-browser results alone.
+
+Measurement references: [W3C Event Timing](https://www.w3.org/TR/event-timing/)
+and [Chrome layout-shift session accounting](https://github.com/GoogleChrome/web-vitals/blob/main/src/lib/LayoutShiftManager.ts).

@@ -325,7 +325,6 @@ export class GrandTransitionApp extends LitElement {
     this.audio = new BrowserAudio(this.refreshAudioControls);
     this.speech = new NeuralVoiceRouter(this.refreshAudioControls);
     this.speech.configure(this.settingsSnapshot.settings);
-    void this.speech.preload();
     this.gameAudio = new GameAudio(this.audio);
     this.gameSpeech = new GameSpeech(
       new CharacterSpeech(this.speech, new MicrosoftRobotSpeech()),

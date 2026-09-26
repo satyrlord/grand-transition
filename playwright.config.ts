@@ -1,4 +1,4 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices, type Project } from '@playwright/test';
 import path from 'node:path';
 import { fullQualityGateRequested } from './tools/quality-gate-mode.ts';
 
@@ -8,6 +8,46 @@ const developmentGameLogDirectory = path.resolve(process.cwd(), 'logs', 'test');
 const build =
   process.env.GRAND_TRANSITION_ASSETS_VALIDATED === '1' ? 'npm run build:bundle' : 'npm run build';
 
+const projects: Project[] = [
+  {
+    name: 'chromium',
+    testIgnore: '**/release-performance.spec.ts',
+    use: { browserName: 'chromium', channel: 'chrome' },
+  },
+  {
+    name: 'mobile-chromium',
+    testMatch: ['**/release-compatibility.spec.ts', '**/mobile-layout.spec.ts'],
+    use: { ...devices['Pixel 7 landscape'], channel: 'chrome' },
+  },
+];
+if (fullQualityGateRequested()) {
+  // These engines are supplemental evidence, not installed Safari or mobile browsers.
+  projects.push(
+    {
+      name: 'firefox-audio',
+      testMatch: ['**/audio-speech.spec.ts', '**/release-compatibility.spec.ts'],
+      use: { browserName: 'firefox' },
+    },
+    {
+      name: 'webkit-audio',
+      testMatch: ['**/audio-speech.spec.ts', '**/release-compatibility.spec.ts'],
+      use: { browserName: 'webkit' },
+    },
+    {
+      name: 'mobile-webkit',
+      testMatch: ['**/release-compatibility.spec.ts', '**/mobile-layout.spec.ts'],
+      use: { ...devices['iPhone 13 landscape'] },
+    },
+  );
+  projects.push({
+    name: 'release-performance',
+    testMatch: '**/release-performance.spec.ts',
+    workers: 1,
+    retries: 0,
+    dependencies: projects.map(({ name }) => name!),
+  });
+}
+
 export default defineConfig({
   testDir: './e2e',
   testMatch: '**/*.spec.ts',
@@ -16,24 +56,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : 2,
   reporter: 'line',
-  projects: [
-    { name: 'chromium', use: { browserName: 'chromium' } },
-    // The Firefox and WebKit audio evidence runs only in the full gate.
-    ...(fullQualityGateRequested()
-      ? [
-          {
-            name: 'firefox-audio',
-            testMatch: '**/audio-speech.spec.ts',
-            use: { browserName: 'firefox' as const },
-          },
-          {
-            name: 'webkit-audio',
-            testMatch: '**/audio-speech.spec.ts',
-            use: { browserName: 'webkit' as const },
-          },
-        ]
-      : []),
-  ],
+  projects,
   use: {
     baseURL: 'http://127.0.0.1:4173/grand-transition/',
     headless: true,

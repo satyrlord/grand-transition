@@ -7,6 +7,8 @@ import { afterEach, expect, test } from 'vitest';
 
 type ManifestFile = { path: string; bytes: number; sha256: string };
 type FixtureManifest = {
+  espeakRevision: string;
+  dictionaryEspeakRevision: string;
   files: ManifestFile[];
   voices: { id: string; license: string }[];
   runtime: { path: string; bytes: number; sha256: string };
@@ -51,6 +53,12 @@ test('rejects a manifest that no longer matches the pinned inventory', async () 
 });
 
 test.each([
+  [
+    'runtime source revision',
+    (manifest: FixtureManifest) => {
+      manifest.espeakRevision = manifest.dictionaryEspeakRevision;
+    },
+  ],
   [
     'voice identity',
     (manifest: FixtureManifest) => {

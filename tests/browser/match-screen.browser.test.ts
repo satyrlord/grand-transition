@@ -22,6 +22,8 @@ import {
 import { decodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
 import { settingsStorageKey } from '../../src/persistence/settings.ts';
 import { resetStoredData, storedDocument } from './persistence-test-helpers.ts';
+import { setInterfaceLocale } from '../../src/app/interface-localization.ts';
+import { currentGameTextLocale, setGameTextLocale } from '../../src/app/game-text-language.ts';
 
 afterEach(() => {
   vi.useRealTimers();
@@ -131,6 +133,7 @@ test.each([
       for (const sentenceText of samples) {
         match.snapshot = { ...match.snapshot!, sentenceText };
         await match.updateComplete;
+        await nextAnimationFrame();
         const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
         const textNode = [...preview.childNodes].find(
           (node) => node.nodeType === Node.TEXT_NODE && node.textContent === sentenceText,
@@ -158,9 +161,11 @@ test.each([
         expect(preview.getAttribute('aria-labelledby')).toBe('sentence-title');
         preview.focus();
         await userEvent.keyboard('{End}');
+        // Wait for native keyboard scrolling to finish before testing that a
+        // later render preserves its position.
         await vi.waitFor(() =>
           expect(preview.scrollTop + preview.clientHeight).toBeGreaterThanOrEqual(
-            preview.scrollHeight - 1,
+            preview.scrollHeight,
           ),
         );
         range.setStart(textNode, sentenceText.length - 1);
@@ -171,6 +176,7 @@ test.each([
         const scrollTop = preview.scrollTop;
         match.requestUpdate();
         await match.updateComplete;
+        await nextAnimationFrame();
         expect(preview.scrollTop).toBe(scrollTop);
         expect(document.documentElement.scrollWidth).toBeLessThanOrEqual(width);
         expect(document.documentElement.scrollHeight).toBeLessThanOrEqual(height);
@@ -178,10 +184,12 @@ test.each([
       const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
       match.snapshot = { ...match.snapshot!, activePlayerId: match.snapshot!.players[1].playerId };
       await match.updateComplete;
+      await nextAnimationFrame();
       expect(preview.scrollTop).toBe(0);
       preview.scrollTop = preview.scrollHeight;
       match.snapshot = { ...match.snapshot!, round: match.snapshot!.round + 1 };
       await match.updateComplete;
+      await nextAnimationFrame();
       expect(preview.scrollTop).toBe(0);
       match.snapshot = { ...match.snapshot!, sentenceText: 'Select a noun to begin.' };
       await match.updateComplete;
@@ -193,6 +201,158 @@ test.each([
     }
   },
 );
+
+test('coalesces sentence and score scrolling from the latest rendered presentation before paint', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const component: RoundPresentationFrame['components'][number] = {
+    narrationIndex: 0,
+    kind: 'clause',
+    phraseText: 'The first public score',
+    base: 5,
+    restrictionFactor: 1,
+    weaknessFactor: 1,
+    comboFactor: 1,
+    amount: 5,
+    weaknessTags: [],
+  };
+  const frame: RoundPresentationFrame = {
+    phase: 'reciting',
+    comebackActive: false,
+    speakerId: snapshot.activePlayerId,
+    text: 'The first public sentence.',
+    segment: 0,
+    components: [component],
+    emphasis: [],
+    outcome: null,
+    impact: null,
+    total: null,
+    damage: null,
+    pride: Object.fromEntries(snapshot.players.map((player) => [player.playerId, player.pride])),
+    cues: {},
+  };
+  match.presentation = frame;
+  await match.updateComplete;
+  await nextAnimationFrame();
+  const sentence = match.querySelector<HTMLElement>('.sentence-preview')!;
+  const scores = match.querySelector<HTMLElement>('.delivery-components')!;
+  const effects: string[] = [];
+  Object.defineProperty(scores, 'scrollHeight', {
+    get: () => {
+      effects.push('read score height');
+      return 420;
+    },
+  });
+  Object.defineProperty(sentence, 'scrollTop', {
+    set: (value: number) => effects.push(`sentence scroll ${value}`),
+  });
+  Object.defineProperty(scores, 'scrollTop', {
+    set: (value: number) => effects.push(`score scroll ${value}`),
+  });
+  const frames = interceptAnimationFrames();
+  try {
+    match.presentation = { ...frame, text: 'An intermediate sentence.' };
+    await match.updateComplete;
+    match.presentation = {
+      ...frame,
+      text: 'The latest public sentence.',
+      components: [component, { ...component, narrationIndex: 1 }],
+    };
+    await match.updateComplete;
+    window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(new Event('resize'));
+    expect(sentence.textContent).toContain('The latest public sentence.');
+    expect(frames.callbacks).toHaveLength(1);
+    expect(effects).toEqual([]);
+    frames.callbacks[0]!(performance.now());
+    expect(effects).toEqual(['read score height', 'sentence scroll 0', 'score scroll 420']);
+
+    effects.length = 0;
+    match.requestUpdate();
+    await match.updateComplete;
+    frames.callbacks[1]!(performance.now());
+    expect(effects).toEqual([]);
+  } finally {
+    frames.restore();
+  }
+});
+
+test('cancels queued scrolling across interruptions and disconnect without replaying stale frames', async () => {
+  const match = await startMatch();
+  await nextAnimationFrame();
+  const sentence = match.querySelector<HTMLElement>('.sentence-preview')!;
+  let writes = 0;
+  Object.defineProperty(sentence, 'scrollTop', { set: () => writes++ });
+  const frames = interceptAnimationFrames();
+  try {
+    for (const pauseMode of [
+      'manual',
+      'viewport',
+      'hotseat-portrait',
+      'landscape-recommended',
+    ] as const) {
+      match.snapshot = { ...match.snapshot!, sentenceText: `Pending ${pauseMode} sentence.` };
+      await match.updateComplete;
+      const stale = frames.callbacks.at(-1)!;
+      const oldFrameId = frames.callbacks.length;
+      match.pauseMode = pauseMode;
+      await match.updateComplete;
+      expect(frames.cancel).toHaveBeenCalledWith(oldFrameId);
+      expect(sentence.isConnected).toBe(false);
+      const before = writes;
+      stale(performance.now());
+      expect(writes).toBe(before);
+
+      match.pauseMode = 'running';
+      await match.updateComplete;
+      stale(performance.now());
+      expect(writes).toBe(before);
+      frames.callbacks.at(-1)!(performance.now());
+      expect(writes).toBe(before + 1);
+    }
+    match.snapshot = { ...match.snapshot!, sentenceText: 'A sentence before disconnect.' };
+    await match.updateComplete;
+    const stale = frames.callbacks.at(-1)!;
+    const before = writes;
+    match.remove();
+    expect(frames.cancel).toHaveBeenCalledWith(frames.callbacks.length);
+    stale(performance.now());
+    expect(writes).toBe(before);
+  } finally {
+    frames.restore();
+  }
+});
+
+test('updates player and card languages without replacing the immutable match snapshot', async () => {
+  const initial = await startMatch();
+  const snapshot = initial.snapshot!;
+  const gameLocale = currentGameTextLocale();
+  const match = new GrandTransitionMatch();
+  match.snapshot = snapshot;
+  document.body.replaceChildren(match);
+  try {
+    setGameTextLocale('en');
+    await match.updateComplete;
+    expect(match.querySelector('.player-health-label')?.textContent).toBe('Pride');
+    expect(labelledText(match.querySelector('.shared-board button'))).toContain('Shared');
+    expect(match.querySelector('.card-phrase')?.hasAttribute('lang')).toBe(false);
+
+    await setInterfaceLocale('ro-RO');
+    await match.updateComplete;
+    expect(match.querySelector('.player-health-label')?.textContent).toBe('Mândrie');
+    expect(labelledText(match.querySelector('.shared-board button'))).toContain('Comună');
+    expect(match.querySelector('.card-phrase')?.getAttribute('lang')).toBe('en');
+    setGameTextLocale('ro-RO');
+    match.requestUpdate();
+    await match.updateComplete;
+    expect(match.querySelector('.card-phrase')?.hasAttribute('lang')).toBe(false);
+    expect(match.snapshot).toBe(snapshot);
+  } finally {
+    match.remove();
+    setGameTextLocale(gameLocale);
+    await setInterfaceLocale('en');
+  }
+});
 
 test('tutorial highlights grammar-accepted choices only while human drafting is available', async () => {
   const match = await startMatch();
@@ -1382,6 +1542,107 @@ test('maps rapid pointer actions once', async () => {
   await vi.waitFor(() => expect(match.snapshot?.revision).toBeGreaterThan(current.revision));
 });
 
+test('keeps rejected shared-card focus and releases consumed focus before native removal', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const card = snapshot.sharedCards.find((choice) => choice.action === 'select')!;
+  const button = match.querySelector<HTMLButtonElement>(
+    `.shared-board [data-card-id="${card.reference!.cardId}"]`,
+  )!;
+  button.focus();
+  await match.updateComplete;
+  match.addEventListener(
+    matchCommandEventName,
+    (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    },
+    { capture: true, once: true },
+  );
+  button.click();
+  await match.updateComplete;
+  expect(document.activeElement).toBe(button);
+  expect(button.isConnected).toBe(true);
+  const focusedAtRemoval: boolean[] = [];
+  const nativeRemove = button.remove;
+  const remove = vi.spyOn(button, 'remove').mockImplementation(() => {
+    focusedAtRemoval.push(document.activeElement === button);
+    nativeRemove.call(button);
+  });
+  try {
+    button.click();
+    await vi.waitFor(() => expect(button.isConnected).toBe(false));
+    expect(focusedAtRemoval).toEqual([false]);
+    expect(document.activeElement).toBe(document.body);
+  } finally {
+    remove.mockRestore();
+  }
+});
+
+test('keeps focus on a private slot whose button is reused for a different card', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const card = snapshot.privateCards.find((choice) => choice.reference !== null)!;
+  const button = match.querySelector<HTMLButtonElement>(
+    `.private-hand [data-card-id="${card.reference!.cardId}"]`,
+  )!;
+  button.focus();
+  await match.updateComplete;
+  const replacementId = `${card.reference!.cardId}-replacement`;
+  match.snapshot = {
+    ...snapshot,
+    privateCards: snapshot.privateCards.map((choice) =>
+      choice === card
+        ? { ...choice, reference: { ...choice.reference!, cardId: replacementId } }
+        : choice,
+    ),
+  };
+  await match.updateComplete;
+  expect(match.querySelector(`[data-card-id="${replacementId}"]`)).toBe(button);
+  expect(document.activeElement).toBe(button);
+});
+
+test.each(['{Enter}', ' '])(
+  'preserves Tab order after consuming a shared card with %j',
+  async (key) => {
+    const match = await startMatch();
+    const buttons = [...match.querySelectorAll<HTMLButtonElement>('.shared-board button')];
+    const button = buttons[0]!;
+    const next = buttons[1]!;
+    const commands: string[] = [];
+    match.addEventListener(matchCommandEventName, (event) => commands.push(event.detail.type));
+    button.focus();
+    await userEvent.keyboard(key);
+    await vi.waitFor(() => expect(button.isConnected).toBe(false));
+    expect(document.activeElement).toBe(document.body);
+    await userEvent.tab();
+    expect(document.activeElement).toBe(next);
+    expect(commands).toEqual(['select-phrase']);
+  },
+);
+
+test('releases draft-control focus before removing the draft for round review', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const draft = match.querySelector<HTMLElement>('.draft-table')!;
+  const button = match.querySelector<HTMLButtonElement>('.action-reshuffle')!;
+  button.focus();
+  const focusedAtRemoval: boolean[] = [];
+  const nativeRemove = draft.remove;
+  const remove = vi.spyOn(draft, 'remove').mockImplementation(() => {
+    focusedAtRemoval.push(draft.contains(document.activeElement));
+    nativeRemove.call(draft);
+  });
+  try {
+    match.snapshot = { ...snapshot, roundReview: true };
+    await match.updateComplete;
+    expect(focusedAtRemoval).toEqual([false]);
+    expect(draft.isConnected).toBe(false);
+  } finally {
+    remove.mockRestore();
+  }
+});
+
 test('a rejected command unlocks the controls for the next command', async () => {
   const match = await startMatch();
   const commands: string[] = [];
@@ -1675,6 +1936,9 @@ test('conceals a paused match and resumes from the exact timer value', async () 
   const match = await startMatch();
   const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   const revision = match.snapshot!.revision;
+  const arena = match.querySelector('.match-screen')!;
+  const privateHand = match.querySelector('.private-hand')!;
+  const portrait = match.querySelector('grand-transition-character')!;
 
   await vi.advanceTimersByTimeAsync(5_900);
   await match.updateComplete;
@@ -1688,6 +1952,10 @@ test('conceals a paused match and resumes from the exact timer value', async () 
   expect(match.querySelector('.match-screen')).toBeNull();
   expect(match.querySelector('.phrase-card')).toBeNull();
   expect(match.querySelector('[data-timer]')).toBeNull();
+  expect(arena.isConnected).toBe(false);
+  expect(privateHand.isConnected).toBe(false);
+  expect(portrait.isConnected).toBe(false);
+  expect(document.querySelector('.private-hand')).toBeNull();
   expect(match.textContent).not.toContain(match.snapshot!.activePlayerName);
   await vi.waitFor(() => expect(document.activeElement?.textContent?.trim()).toBe('Resume'));
 
@@ -1698,6 +1966,9 @@ test('conceals a paused match and resumes from the exact timer value', async () 
 
   expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
   expect(match.snapshot!.revision).toBe(revision);
+  expect(match.querySelector('.match-screen')).toBe(arena);
+  expect(match.querySelector('.private-hand')).toBe(privateHand);
+  expect(match.querySelector('grand-transition-character')).toBe(portrait);
   expect(document.activeElement?.textContent?.trim()).toBe('Pause');
 
   await vi.advanceTimersByTimeAsync(99);
@@ -1732,17 +2003,24 @@ test.each(['viewport', 'hotseat-portrait', 'landscape-recommended'] as const)(
     await match.updateComplete;
     expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
     const snapshot = match.snapshot;
+    const arena = match.querySelector('.match-screen')!;
+    const privateHand = match.querySelector('.private-hand')!;
 
     match.pauseMode = pauseMode;
     await match.updateComplete;
     expect(match.querySelector('.match-screen')).toBeNull();
     expect(match.querySelector('.phrase-card')).toBeNull();
     expect(match.querySelector('[data-timer]')).toBeNull();
+    expect(arena.isConnected).toBe(false);
+    expect(privateHand.isConnected).toBe(false);
+    expect(document.querySelector('.private-hand')).toBeNull();
     await vi.advanceTimersByTimeAsync(45_000);
     expect(match.snapshot).toBe(snapshot);
 
     match.pauseMode = 'running';
     await match.updateComplete;
+    expect(match.querySelector('.match-screen')).toBe(arena);
+    expect(match.querySelector('.private-hand')).toBe(privateHand);
     expect(match.querySelector('[data-timer="25"]')).not.toBeNull();
     await vi.advanceTimersByTimeAsync(99);
     await match.updateComplete;
@@ -1752,6 +2030,34 @@ test.each(['viewport', 'hotseat-portrait', 'landscape-recommended'] as const)(
     expect(match.querySelector('[data-timer="24"]')).not.toBeNull();
   },
 );
+
+test('updates the detached arena from the latest snapshot before revealing private cards', async () => {
+  vi.useFakeTimers();
+  const match = await startMatch();
+  const arena = match.querySelector('.match-screen');
+  const snapshot = match.snapshot!;
+  const cards = snapshot.privateCards.toReversed();
+  expect(cards[0]?.reference?.cardId).not.toBe(snapshot.privateCards[0]?.reference?.cardId);
+
+  match.pauseMode = 'manual';
+  await match.updateComplete;
+  match.snapshot = { ...snapshot, revision: snapshot.revision + 1, privateCards: cards };
+  await match.updateComplete;
+  await vi.advanceTimersByTimeAsync(10_000);
+  expect(document.querySelector('.phrase-card')).toBeNull();
+  expect(document.querySelector('.private-hand')).toBeNull();
+  expect(match.textContent).not.toContain(cards[0]!.text);
+
+  match.pauseMode = 'running';
+  await match.updateComplete;
+  expect(match.querySelector('.match-screen')).toBe(arena);
+  expect(match.querySelector('[data-timer="30"]')).not.toBeNull();
+  expect(
+    [...match.querySelectorAll('.private-hand [data-card-id]')].map((card) =>
+      card.getAttribute('data-card-id'),
+    ),
+  ).toEqual(cards.map((card) => card.reference!.cardId));
+});
 
 test('resets fractional elapsed time for a new turn and expires it once', async () => {
   vi.useFakeTimers();
@@ -1942,6 +2248,27 @@ test('confirms a paused exit before it discards the match', async () => {
 function labelledText(element: Element | null): string {
   const ids = element?.getAttribute('aria-labelledby')?.split(/\s+/u) ?? [];
   return ids.map((id) => document.getElementById(id)?.textContent?.trim() ?? '').join(' ');
+}
+
+async function nextAnimationFrame(): Promise<void> {
+  await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+}
+
+function interceptAnimationFrames() {
+  const callbacks: FrameRequestCallback[] = [];
+  const request = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) => {
+    callbacks.push(callback);
+    return callbacks.length;
+  });
+  const cancel = vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(() => {});
+  return {
+    callbacks,
+    cancel,
+    restore: () => {
+      request.mockRestore();
+      cancel.mockRestore();
+    },
+  };
 }
 
 async function startMatch(

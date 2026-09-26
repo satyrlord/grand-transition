@@ -8,7 +8,7 @@
     "sha256": "ec8580a9d7b9476ceee52e10a7f94124e4dc71a019d666ed6d4726697c109a4d"
   },
   "pronunciation": "espeak-phonemizer@0.1.2",
-  "espeakRevision": "4870adfa25b1a32b4361592f1be8a40337c58d6c",
+  "espeakRevision": "724808c5a83f9ef95fdd0db886ba7ba537ff224a",
   "modification": "Expose predicted phoneme durations; retain all trained weights. Ship eSpeak NG data trimmed to Romanian with the upstream patched ro_dict.",
   "voices": [
     {
@@ -104,8 +104,8 @@
   "files": [
     {
       "path": "NOTICE.txt",
-      "bytes": 1591,
-      "sha256": "b7a1e09c92b1b444e112c09e1a378132a5702efcd996becd9e6e43720cfd446b"
+      "bytes": 1932,
+      "sha256": "1d997840a0e04fb6db654c03b65102c8d70cd490ea8bf0fff69322c200b992de"
     },
     {
       "path": "liana/MODEL_CARD",
@@ -167,5 +167,8 @@
       "bytes": 306459,
       "sha256": "8b087d038ee043a355b0bf6c0737328becab128e563e7181a663defb1408e587"
     }
-  ]
+  ],
+  "dictionaryEspeakRevision": "4870adfa25b1a32b4361592f1be8a40337c58d6c",
+  "phonemizerSource": "https://github.com/bernardoviotti/espeak-phonemizer",
+  "phonemizerRevision": "4ff1fa8eb45d746f3670d17f75edb2b21d842d32"
 }

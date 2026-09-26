@@ -237,7 +237,8 @@ The game can read history entries that have the replay document version and the 
 `npm run speech:build` prepares the pinned neural assets.
 The related `audio:validate` and `speech:validate` commands examine the manifests and the bytes in the build and in the quality gate.
 Milestones 024 and 025 control the audio acceptance and the presentation acceptance.
-This acceptance includes a different listening review and a different visual review.
+Automated checks record the playback and visual behavior.
+Listening observations and physical-device observations are optional and stay separate from those checks.
 
 Interface translation uses Lit localization.
 `npm run localization:extract` extracts the `msg` and `str` call sites into `xliff/`.
@@ -254,6 +255,12 @@ A pass of `npm run quality:quick` is not release evidence.
 `npm run quality:full` and `npm run ci` run all the checks.
 Agents run them only when the user tells them directly to use the full quality-gate skill.
 The slowest set runs only in the full gate.
+Release hardening adds Chromium and mobile Chromium production flows.
+The full gate also runs supplemental browser engines and ten throttled performance trials in stable Chrome.
+The Chromium production checks use stable Chrome in both gate modes.
+Install that browser with `npx playwright install chrome` before these checks.
+Measurement JSON and traces stay in `test-results/`; local dependency and browser reviews stay in `tmp/release-hardening/`.
+CI keeps release evidence for 14 days. Passing quick checks does not complete release acceptance.
 Thus, a test command, for example `npm run test`, `npm run test:browser`, `npm run test:coverage`, or `npm run test:e2e`, does not run it.
 
 The implementation has small milestones, in the sequence of their dependencies.

@@ -87,8 +87,6 @@ function audioHarness() {
 }
 
 describe('audio adapters', () => {
-  const musicTrackIds = ['menu-theme', ...Object.values(sceneMusicTrackIds)];
-
   test.each([0, 1])('mixer equations at volume %s', (value) => {
     expect(
       mixerGains({
@@ -124,10 +122,15 @@ describe('audio adapters', () => {
     }
     const notifications = changed.mock.calls.length;
     await Promise.all([audio.enable(), audio.enable()]);
+    expect(context.resume).toHaveBeenCalledOnce();
     expect(changed).toHaveBeenCalledTimes(notifications);
     expect(createContext).toHaveBeenCalledOnce();
-    expect(load.mock.calls.map(([id]) => id)).toEqual([...musicTrackIds, ...effectIds]);
+    expect(load.mock.calls.map(([id]) => id)).toEqual(['menu-theme', ...effectIds]);
     expect(nodes.filter((node) => node.loop)).toHaveLength(1);
+    context.state = 'suspended';
+    await audio.enable();
+    expect(context.resume).toHaveBeenCalledTimes(2);
+    expect(load.mock.calls.map(([id]) => id)).toEqual(['menu-theme', ...effectIds]);
     audio.dispose();
     expect(context.close).toHaveBeenCalledOnce();
   });
@@ -140,9 +143,11 @@ describe('audio adapters', () => {
     });
     await audio.enable();
     expect(audio.status).toBe('ready');
-    expect(load.mock.calls.map(([, format]) => format)).toEqual(
-      Array.from({ length: musicTrackIds.length + effectIds.length }, () => ['ogg', 'mp3']).flat(),
-    );
+    for (const id of ['menu-theme', ...effectIds]) {
+      expect(
+        load.mock.calls.filter(([loaded]) => loaded === id).map(([, format]) => format),
+      ).toEqual(['ogg', 'mp3']);
+    }
     audio.dispose();
     const failed = audioHarness();
     failed.load.mockRejectedValue(new Error('missing'));
@@ -162,6 +167,7 @@ describe('audio adapters', () => {
     await audio.enable();
     context.currentTime += 1;
     audio.setScene('transition-era-television-studio');
+    await audio.enable();
     expect(nodes).toHaveLength(2);
     expect(nodes[0]!.stop).toHaveBeenCalledExactlyOnceWith(11.3);
     const outgoing = params[3]!.curves.at(-1)!;
@@ -185,6 +191,7 @@ describe('audio adapters', () => {
     for (const [sceneId, trackId] of Object.entries(sceneMusicTrackIds)) {
       context.currentTime += 1;
       audio.setScene(audioScene(sceneId));
+      await audio.enable();
       expect(nodes.at(-1)!.buffer?.id, sceneId).toBe(trackId);
       expect(nodes.at(-1)!.loop, sceneId).toBe(true);
     }
@@ -206,6 +213,7 @@ describe('audio adapters', () => {
     expect(params[1]!.value).toBe(0);
     expect(params[2]!.value).toBe(0);
     audio.setScene('transition-era-television-studio');
+    await audio.enable();
     expect(nodes).toHaveLength(1);
     audio.configure(defaultSettings);
     expect(nodes).toHaveLength(2);
@@ -231,6 +239,53 @@ describe('audio adapters', () => {
     expect(audio.status).toBe('idle');
     await audio.enable();
     expect(nodes).toHaveLength(0);
+  });
+
+  test('scene changes during loading decode only requested tracks and never play a stale selection', async () => {
+    const { audio, load, nodes } = audioHarness();
+    let finish!: (value: ArrayBuffer) => void;
+    load.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          finish = resolve;
+        }),
+    );
+    const pending = audio.enable();
+    await Promise.resolve();
+    audio.setScene('palace-press-hall');
+    finish(Object.assign(new ArrayBuffer(1), { id: 'menu-theme' }));
+    await pending;
+    expect(load.mock.calls.map(([id]) => id)).toEqual([
+      'menu-theme',
+      ...effectIds,
+      'palace-press-hall-theme',
+    ]);
+    expect(nodes.map((node) => node.buffer?.id)).toEqual(['palace-press-hall-theme']);
+    audio.setScene('menu');
+    await audio.enable();
+    expect(load).toHaveBeenCalledTimes(effectIds.length + 2);
+    audio.dispose();
+  });
+
+  test('a scene decode completed after concealment cannot start its loop', async () => {
+    const { audio, load, nodes } = audioHarness();
+    await audio.enable();
+    let finish!: (value: ArrayBuffer) => void;
+    load.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          finish = resolve;
+        }),
+    );
+    audio.setScene('palace-press-hall');
+    const pending = audio.enable();
+    await Promise.resolve();
+    audio.setScene(null);
+    finish(Object.assign(new ArrayBuffer(1), { id: 'palace-press-hall-theme' }));
+    await pending;
+    expect(nodes).toHaveLength(1);
+    expect(nodes[0]!.stop).toHaveBeenCalledOnce();
+    audio.dispose();
   });
 
   test('rapid scene replacement retires every interrupted loop once', async () => {

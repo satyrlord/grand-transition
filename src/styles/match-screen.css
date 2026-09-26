@@ -666,11 +666,13 @@
   }
 
   .character-state-frame {
+    display: none;
     visibility: hidden;
     transform-origin: 50% 58%;
   }
 
   .character-state-frame[data-state-visible='true'] {
+    display: block;
     visibility: visible;
     animation-duration: var(--character-duration);
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);

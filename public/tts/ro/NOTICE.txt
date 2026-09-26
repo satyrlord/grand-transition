@@ -9,9 +9,11 @@ Liana is a third-party voice and is not project code; do not relabel it as MIT. 
 The shipped pronunciation dictionary ro_dict and its source ro_extra come from the same revision.
 
 Pronunciation runtime: espeak-phonemizer 0.1.2, GPL-3.0-only, inherited from eSpeak NG.
-eSpeak NG source revision: 4870adfa25b1a32b4361592f1be8a40337c58d6c (release 1.52.0).
-GPL obligation: the complete corresponding source of eSpeak NG is available at
-https://github.com/espeak-ng/espeak-ng and https://github.com/OHF-Voice/piper1-gpl at the pinned revisions above.
+Runtime eSpeak NG source: https://github.com/espeak-ng/espeak-ng/tree/724808c5a83f9ef95fdd0db886ba7ba537ff224a
+Pronunciation wrapper, build scripts, and patches: https://github.com/bernardoviotti/espeak-phonemizer/tree/4ff1fa8eb45d746f3670d17f75edb2b21d842d32
+The wrapper revision is the npm package gitHead. Its vendor/espeak-ng submodule pins the runtime revision above.
+Liana dictionary source uses eSpeak NG 4870adfa25b1a32b4361592f1be8a40337c58d6c (release 1.52.0), as recorded in its espeak-ng.pin.
+These runtime and dictionary revisions are different. The shipped runtime is the unchanged npm WebAssembly binary.
 See pronounce/espeak-phonemizer-LICENSE and pronounce/espeak-phonemizer-NOTICES.
 The shipped pronouncing data is trimmed to Romanian: core.data plus bundle-1.data.
 

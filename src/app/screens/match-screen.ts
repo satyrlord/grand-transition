@@ -2,6 +2,9 @@ import { msg, str, updateWhenLocaleChanges } from '@lit/localize';
 import { formatInterfaceNumber } from '../interface-format.ts';
 import { gameTextLanguage } from '../game-text-language.ts';
 import { styleMap } from 'lit/directives/style-map.js';
+import { cache } from 'lit/directives/cache.js';
+import { guard } from 'lit/directives/guard.js';
+import { interfaceLocale } from '../interface-localization.ts';
 import { LitElement, html, nothing, svg, type PropertyValues, type TemplateResult } from 'lit';
 import type { MatchCommand } from '../../engine/match-lifecycle.ts';
 import type { RoundPresentationFrame } from '../round-presentation.ts';
@@ -81,6 +84,8 @@ export class GrandTransitionMatch extends LitElement {
   private presentationAnnouncementKeys = new Set<string>();
   private postPresentationRevision: number | null = null;
   private sentenceScrollKey: string | null = null;
+  private scrollFrameId: number | undefined;
+  private scoreScrollPending = false;
   private readonly turnClock = new ApplicationTurnClock({
     onTick: (remainingSeconds) => {
       if (remainingSeconds <= timerTickSeconds) this.requestTimerTick();
@@ -121,6 +126,7 @@ export class GrandTransitionMatch extends LitElement {
 
   override disconnectedCallback(): void {
     window.removeEventListener('resize', this.followLatestScore);
+    this.cancelScrollUpdate();
     this.clearGrammarStrike();
     this.requestUpdate();
     this.turnClock.dispose();
@@ -130,9 +136,45 @@ export class GrandTransitionMatch extends LitElement {
   }
 
   private readonly followLatestScore = (): void => {
-    const list = this.querySelector<HTMLElement>('.delivery-components');
-    if (list) list.scrollTop = list.scrollHeight;
+    this.scoreScrollPending = true;
+    this.scheduleScrollUpdate();
   };
+
+  private cancelScrollUpdate(): void {
+    if (this.scrollFrameId !== undefined) cancelAnimationFrame(this.scrollFrameId);
+    this.scrollFrameId = undefined;
+    this.scoreScrollPending = false;
+  }
+
+  private scheduleScrollUpdate(): void {
+    if (!this.isConnected || this.pauseMode !== 'running') {
+      this.cancelScrollUpdate();
+      return;
+    }
+    if (this.scrollFrameId !== undefined) return;
+    const frameId = requestAnimationFrame(() => {
+      if (this.scrollFrameId !== frameId) return;
+      this.scrollFrameId = undefined;
+      const followScore = this.scoreScrollPending;
+      this.scoreScrollPending = false;
+      if (!this.isConnected || this.pauseMode !== 'running') return;
+      const sentence = this.querySelector<HTMLElement>('.sentence-preview');
+      const sentenceKey = JSON.stringify([
+        this.presentation?.speakerId ?? this.snapshot?.activePlayerId,
+        this.snapshot?.round,
+        sentence?.textContent?.trim(),
+      ]);
+      const list = followScore ? this.querySelector<HTMLElement>('.delivery-components') : null;
+      // Read score geometry before either scroll write can invalidate layout.
+      const scoreHeight = list?.scrollHeight;
+      if (sentence && sentenceKey !== this.sentenceScrollKey) {
+        sentence.scrollTop = 0;
+        this.sentenceScrollKey = sentenceKey;
+      }
+      if (list && scoreHeight !== undefined) list.scrollTop = scoreHeight;
+    });
+    this.scrollFrameId = frameId;
+  }
 
   protected override willUpdate(changed: PropertyValues<this>): void {
     const previousPresentation = changed.get('presentation') as
@@ -151,6 +193,7 @@ export class GrandTransitionMatch extends LitElement {
       this.previewText = null;
       this.commandPending = false;
       this.revealedWaitingPlayerId = null;
+      this.releaseRemovedDraftFocus();
       this.syncAutomaticWaitingSentenceReveal(previousSnapshot, currentWaitingPlayer);
       if (
         !currentWaitingPlayer?.sentence?.trim() ||
@@ -162,6 +205,7 @@ export class GrandTransitionMatch extends LitElement {
       this.syncTimer();
     }
     if (changed.has('pauseMode')) {
+      if (this.pauseMode !== 'running') this.cancelScrollUpdate();
       this.clearAutomaticWaitingSentenceReveal();
       this.revealedWaitingPlayerId = null;
       this.hoveredWaitingPlayerId = null;
@@ -176,26 +220,34 @@ export class GrandTransitionMatch extends LitElement {
     }
   }
 
-  protected override updated(changed: PropertyValues<this>): void {
-    const sentence = this.querySelector<HTMLElement>('.sentence-preview');
-    const sentenceScrollKey = JSON.stringify([
-      this.presentation?.speakerId ?? this.snapshot?.activePlayerId,
-      this.snapshot?.round,
-      sentence?.textContent?.trim(),
-    ]);
-    if (sentenceScrollKey !== this.sentenceScrollKey) {
-      if (sentence) sentence.scrollTop = 0;
-      this.sentenceScrollKey = sentenceScrollKey;
+  private releaseRemovedDraftFocus(): void {
+    const focused = document.activeElement;
+    if (!(focused instanceof HTMLElement) || !this.contains(focused) || !this.snapshot) return;
+    if (!focused.closest('.draft-table')) return;
+    const sharedSlot = focused.closest<HTMLElement>('.shared-board .phrase-slot');
+    const sharedCard = sharedSlot
+      ? this.snapshot.sharedCards[Number(sharedSlot.dataset.slot) - 1]
+      : undefined;
+    if (this.snapshot.roundReview || sharedCard?.reference === null) {
+      // Native removal of a focused node forces layout amid Lit's DOM writes.
+      // Release only controls that will be removed; private slots can reuse a
+      // focused button for the next card, and rejected commands keep focus.
+      focused.blur();
     }
+  }
+
+  protected override updated(changed: PropertyValues<this>): void {
+    this.scheduleScrollUpdate();
     const previousPresentation = changed.get('presentation') as
       RoundPresentationFrame | null | undefined;
     if (
       this.presentation &&
       (changed.has('pauseMode') ||
-        previousPresentation?.speakerId !== this.presentation.speakerId ||
-        previousPresentation?.components.length !== this.presentation.components.length ||
-        previousPresentation?.total !== this.presentation.total ||
-        previousPresentation?.emphasis.length !== this.presentation.emphasis.length)
+        (changed.has('presentation') &&
+          (previousPresentation?.speakerId !== this.presentation.speakerId ||
+            previousPresentation?.components.length !== this.presentation.components.length ||
+            previousPresentation?.total !== this.presentation.total ||
+            previousPresentation?.emphasis.length !== this.presentation.emphasis.length)))
     ) {
       this.followLatestScore();
     }
@@ -218,6 +270,15 @@ export class GrandTransitionMatch extends LitElement {
   }
 
   protected override render() {
+    const screen = this.renderScreen();
+    // Detach private match content during interruptions, then reuse its decoded
+    // images and DOM. Interruption controls must start fresh on each pause.
+    return html`${cache(this.pauseMode === 'running' ? screen : nothing)}${
+      this.pauseMode === 'running' ? nothing : screen
+    }`;
+  }
+
+  private renderScreen() {
     if (!this.snapshot) return nothing;
     if (this.pauseMode === 'hotseat-portrait' || this.pauseMode === 'landscape-recommended') {
       return html`<grand-transition-interruption
@@ -279,6 +340,30 @@ export class GrandTransitionMatch extends LitElement {
           ? 'red'
           : 'blue'
         : null;
+    const languageDependencies = [interfaceLocale(), gameTextLanguage()];
+    // A pointer preview changes the sentence, not these immutable view inputs.
+    const playerDependencies = [
+      this.snapshot,
+      this.presentation,
+      this.thinking,
+      this.pauseMode,
+      this.discardedPortraitSequence,
+      this.expiredGrammarStrikeSequence,
+      this.automaticWaitingPlayerId,
+      this.revealedWaitingPlayerId,
+      this.hoveredWaitingPlayerId,
+      this.focusedWaitingPlayerId,
+      ...languageDependencies,
+    ];
+    const cardDependencies = [
+      this.snapshot,
+      this.presentation,
+      this.thinking,
+      this.commandPending,
+      this.tutorialMode,
+      this.pauseMode,
+      ...languageDependencies,
+    ];
 
     return html`
       <main
@@ -298,7 +383,9 @@ export class GrandTransitionMatch extends LitElement {
           data-arena-reaction=${arenaReaction?.kind ?? nothing}
           data-reaction-side=${reactionSide ?? nothing}
         >
-          ${backgroundLayers.map((layer) => this.renderSceneLayer(layer, 'broadcast-stage-art'))}
+          ${guard([this.snapshot.sceneLayers], () =>
+            backgroundLayers.map((layer) => this.renderSceneLayer(layer, 'broadcast-stage-art')),
+          )}
           ${
             backgroundLayers[0]
               ? html`<grand-transition-scene-ambience
@@ -371,20 +458,25 @@ export class GrandTransitionMatch extends LitElement {
             aria-label=${msg('Public chamber')}
             ?inert=${Boolean(roundReview) || this.thinking}
           >
-            ${this.renderPlayer(
-              first,
-              'red',
-              arenaReaction?.kind === 'grammar-mistake' &&
-                arenaReaction.playerId === first.playerId,
-            )}
+            ${guard(
+              playerDependencies,
+              () => html`${this.renderPlayer(
+                first,
+                'red',
+                arenaReaction?.kind === 'grammar-mistake' &&
+                  arenaReaction.playerId === first.playerId,
+              )}
             ${this.renderPlayer(
               second,
               'blue',
               arenaReaction?.kind === 'grammar-mistake' &&
                 arenaReaction.playerId === second.playerId,
+            )}`,
             )}
-            ${foregroundLayers.map((layer) =>
-              this.renderSceneLayer(layer, 'broadcast-stage-foreground'),
+            ${guard([this.snapshot.sceneLayers], () =>
+              foregroundLayers.map((layer) =>
+                this.renderSceneLayer(layer, 'broadcast-stage-foreground'),
+              ),
             )}
           </section>
 
@@ -451,7 +543,7 @@ export class GrandTransitionMatch extends LitElement {
                       class="shared-board"
                       aria-label=${msg('Nine common phrase slots')}
                     >
-                      ${this.snapshot.sharedCards.map((card) => this.renderCard(card))}
+                      ${guard(cardDependencies, () => this.snapshot!.sharedCards.map((card) => this.renderCard(card)))}
                     </ol>
                   </section>
 
@@ -475,7 +567,7 @@ export class GrandTransitionMatch extends LitElement {
                     </h2>
                     <div class="private-hand-controls">
                       <ol>
-                        ${this.snapshot.privateCards.map((card) => this.renderCard(card))}
+                        ${guard(cardDependencies, () => this.snapshot!.privateCards.map((card) => this.renderCard(card)))}
                       </ol>
                       <button
                         type="button"

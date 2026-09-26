@@ -93,7 +93,7 @@ export class GrandTransitionTitle extends LitElement {
               <source srcset=${emblem.webp} type="image/webp" />
               <img
                 class="title-emblem"
-                src=${emblem.png}
+                src=${emblem.webp}
                 alt=""
                 width="640"
                 height="640"

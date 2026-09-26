@@ -159,6 +159,68 @@ test('the initial false pause value does not skip the selection state', async ()
   expect(visibleState(presenter)).toBe('selection');
 });
 
+test('a repeated non-loop cue restarts motion on retained decoded frame nodes', async () => {
+  const presenter = mount();
+  await ready(presenter);
+  vi.useFakeTimers();
+  const pictures = [...presenter.querySelectorAll('picture')];
+  const upperLayers = [...presenter.querySelectorAll('.character-state-upper')];
+  presenter.cue = { stateId: 'heavy-hit', sequence: 2 };
+  await presenter.updateComplete;
+  const frame = presenter.querySelector<HTMLElement>('[data-state-visible="true"]')!;
+  const animation = frame.getAnimations()[0]!;
+  animation.pause();
+  animation.currentTime = 130;
+
+  presenter.cue = { stateId: 'heavy-hit', sequence: 3 };
+  await presenter.updateComplete;
+  expect(presenter.querySelector('[data-state-visible="true"]')).toBe(frame);
+  expect(animation.playState).toBe('running');
+  expect(animation.currentTime).toBe(0);
+  presenter.cue = { stateId: 'idle', sequence: 4 };
+  await presenter.updateComplete;
+  presenter.cue = { stateId: 'idle', sequence: 5 };
+  await presenter.updateComplete;
+  expect(visibleState(presenter)).toBe('idle');
+  expect(presenter.querySelectorAll('picture')).toHaveLength(9);
+  expect(presenter.querySelectorAll('.character-state-upper')).toHaveLength(9);
+  [...presenter.querySelectorAll('picture')].forEach((picture, index) =>
+    expect(picture).toBe(pictures[index]),
+  );
+  [...presenter.querySelectorAll('.character-state-upper')].forEach((upper, index) =>
+    expect(upper).toBe(upperLayers[index]),
+  );
+});
+
+test('a replacement frame package refreshes native sources and its WebP fallback', async () => {
+  const presenter = mount();
+  await ready(presenter);
+  const asset = resolveCharacterAsset('thunder-tribune');
+  presenter.frames = Object.freeze(
+    presenter.frames.map((frame) =>
+      Object.freeze({
+        ...frame,
+        id: `replacement-${frame.stateId}`,
+        url: asset.url,
+        avif:
+          frame.stateId === 'delivery'
+            ? { ...asset.avif, srcSet: 'data:image/avif;base64,AAAA 320w' }
+            : asset.avif,
+        webp: asset.webp,
+      }),
+    ),
+  );
+  await ready(presenter);
+  for (const image of presenter.querySelectorAll('img')) {
+    expect(image.currentSrc).toContain('thunder-tribune');
+  }
+  const delivery = presenter.querySelector<HTMLImageElement>('[data-state-id="delivery"] img')!;
+  expect(delivery.currentSrc).toContain('.webp');
+  presenter.cue = { stateId: 'delivery', sequence: 2 };
+  await presenter.updateComplete;
+  expect(visibleState(presenter)).toBe('delivery');
+});
+
 test('a failed AVIF decode uses the same state WebP fallback', async () => {
   const presenter = mount('idle', true);
   await ready(presenter);
@@ -213,6 +275,39 @@ test('late decode cannot resurrect a superseded state', async () => {
     expect(presenter.querySelectorAll('.character-state-upper')).toHaveLength(9),
   );
   expect(visibleState(presenter)).not.toBe('delivery');
+});
+
+test('recovers a frame decoded while the cached arena was disconnected', async () => {
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  vi.spyOn(HTMLImageElement.prototype, 'decode').mockImplementation(function (
+    this: HTMLImageElement,
+  ) {
+    return this.closest<HTMLElement>('[data-state-id]')?.dataset.stateId === 'delivery'
+      ? gate
+      : Promise.resolve();
+  });
+  const presenter = mount();
+  await vi.waitFor(() =>
+    expect(presenter.querySelectorAll('.character-state-upper')).toHaveLength(8),
+  );
+  const container = presenter.parentElement!;
+  const image = presenter.querySelector('[data-state-id="delivery"] img');
+  document.createDocumentFragment().append(presenter);
+  release();
+  await gate;
+  await Promise.resolve();
+  expect(presenter.isConnected).toBe(false);
+  container.append(presenter);
+  await vi.waitFor(() =>
+    expect(presenter.querySelectorAll('.character-state-upper')).toHaveLength(9),
+  );
+  expect(presenter.querySelector('[data-state-id="delivery"] img')).toBe(image);
+  presenter.cue = { stateId: 'delivery', sequence: 2 };
+  await presenter.updateComplete;
+  expect(visibleState(presenter)).toBe('delivery');
 });
 
 test('pause discards a transient and resume does not replay it', async () => {

@@ -281,6 +281,7 @@ test('mobile AI delivery, victory and saved history remain readable and reachabl
   }
   expect(checkedPresentation).toBe(true);
   await expect(page.getByRole('dialog', { name: 'Victory' })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => window.visualViewport?.scale ?? 1)).toBe(1);
   for (const viewport of [
     portraitViewports[0],
     portraitViewports[2],
@@ -293,8 +294,23 @@ test('mobile AI delivery, victory and saved history remain readable and reachabl
     await page.getByRole('button', { name: 'Return to main menu' }).tap({ trial: true });
     await page.screenshot({
       path: testInfo.outputPath(`mobile-victory-${viewport.width}x${viewport.height}.png`),
-      fullPage: true,
+      // Fixed dialogs are viewport evidence. Full-page capture can change the
+      // emulated mobile page scale before the next native touch interaction.
+      fullPage: false,
     });
+    await expect.poll(() => page.evaluate(() => window.visualViewport?.scale ?? 1)).toBe(1);
+    const returnButton = page.getByRole('button', { name: 'Return to main menu' });
+    await returnButton.scrollIntoViewIfNeeded();
+    const returnGeometry = await returnButton.evaluate((button) => {
+      const box = button.getBoundingClientRect();
+      const scores = document.querySelector('.reaction-scores')!.getBoundingClientRect();
+      const target = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+      return {
+        belowScores: box.top >= scores.bottom,
+        receivesTouch: target !== null && button.contains(target),
+      };
+    });
+    expect(returnGeometry).toEqual({ belowScores: true, receivesTouch: true });
   }
   await page.getByRole('button', { name: 'Return to main menu' }).tap();
   await page.getByRole('button', { name: /Match history/u }).tap();
@@ -311,8 +327,9 @@ test('mobile AI delivery, victory and saved history remain readable and reachabl
     await page.getByRole('button', { name: 'Close', exact: true }).tap({ trial: true });
     await page.screenshot({
       path: testInfo.outputPath(`mobile-history-${viewport.width}x${viewport.height}.png`),
-      fullPage: true,
+      fullPage: false,
     });
+    await expect.poll(() => page.evaluate(() => window.visualViewport?.scale ?? 1)).toBe(1);
   }
   await page.getByRole('button', { name: 'Close', exact: true }).tap();
 });

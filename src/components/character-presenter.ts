@@ -1,5 +1,6 @@
 import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
+import { guard } from 'lit/directives/guard.js';
 import {
   characterMotion,
   type CharacterCue,
@@ -58,6 +59,7 @@ export class GrandTransitionCharacter extends LitElement {
       }
     });
     this.observer.observe(this);
+    if (this.hasUpdated) void this.recoverDecodedFrames();
   }
 
   override disconnectedCallback(): void {
@@ -72,17 +74,19 @@ export class GrandTransitionCharacter extends LitElement {
   }
 
   protected override willUpdate(changed: PropertyValues<this>): void {
-    const key = this.frames
-      .map((frame) => `${frame.id}:${frame.url}:${frame.avif.srcSet}:${frame.webp.srcSet}`)
-      .join('|');
-    if (key !== this.packageKey) {
-      this.packageKey = key;
-      this.decoded.clear();
-      this.webpOnly.clear();
-      this.stopTimer();
-      this.cueKey = '';
-      this.displayedState = 'selection';
-      this.requestedState = 'selection';
+    if (changed.has('frames')) {
+      const key = this.frames
+        .map((frame) => `${frame.id}:${frame.url}:${frame.avif.srcSet}:${frame.webp.srcSet}`)
+        .join('|');
+      if (key !== this.packageKey) {
+        this.packageKey = key;
+        this.decoded.clear();
+        this.webpOnly.clear();
+        this.stopTimer();
+        this.cueKey = '';
+        this.displayedState = 'selection';
+        this.requestedState = 'selection';
+      }
     }
     const cueKey = this.cue
       ? `${this.cue.sequence}:${this.cue.stateId}:${Boolean(this.cue.hold)}`
@@ -148,8 +152,19 @@ export class GrandTransitionCharacter extends LitElement {
     }
   }
 
-  private async imageLoaded(event: Event, frame: CharacterFrame): Promise<void> {
-    const image = event.currentTarget as HTMLImageElement;
+  private async recoverDecodedFrames(): Promise<void> {
+    // A cached arena can finish loading while disconnected, without another
+    // load event on resume. Wait for a possible package change before retrying.
+    await this.updateComplete;
+    if (!this.isConnected) return;
+    for (const frame of this.frames) {
+      if (this.decoded.has(frame.stateId)) continue;
+      const image = this.querySelector<HTMLImageElement>(`[data-state-id="${frame.stateId}"] img`);
+      if (image?.complete && image.naturalWidth > 0) void this.decodeImage(image, frame);
+    }
+  }
+
+  private async decodeImage(image: HTMLImageElement, frame: CharacterFrame): Promise<void> {
     const key = this.packageKey;
     try {
       await image.decode();
@@ -180,18 +195,21 @@ export class GrandTransitionCharacter extends LitElement {
       ${this.frames.map((frame) => {
         const visible = frame.stateId === this.displayedState;
         const decodedUrl = this.decoded.get(frame.stateId);
-        return html`<div class="character-state-frame"
+        const webpOnly = this.webpOnly.has(frame.stateId);
+        return guard(
+          [frame, visible, decodedUrl, webpOnly],
+          () => html`<div class="character-state-frame"
           data-state-id=${frame.stateId} data-state-visible=${visible ? 'true' : 'false'}
           style=${styleMap({ '--character-duration': `${characterMotion[frame.stateId].durationMs}ms` })}>
           <div class="character-state-drawing">
           <picture>
-            ${this.webpOnly.has(frame.stateId) ? nothing : html`<source type="image/avif" srcset=${frame.avif.srcSet} sizes=${frame.sizes} />`}
+            ${webpOnly ? nothing : html`<source type="image/avif" srcset=${frame.avif.srcSet} sizes=${frame.sizes} />`}
             <source type="image/webp" srcset=${frame.webp.srcSet} sizes=${frame.sizes} />
             <img class=${visible ? 'character-portrait' : 'character-state-preload'}
               data-character-part=${decodedUrl ? 'lower' : 'complete'}
               src=${frame.url} srcset=${frame.webp.srcSet} sizes=${frame.sizes}
               width="2048" height="2048" alt="" draggable="false"
-              @load=${(event: Event) => this.imageLoaded(event, frame)}
+              @load=${(event: Event) => this.decodeImage(event.currentTarget as HTMLImageElement, frame)}
               @error=${() => this.imageFailed(frame)} />
           </picture>
           ${
@@ -201,7 +219,8 @@ export class GrandTransitionCharacter extends LitElement {
               : nothing
           }
           </div>
-        </div>`;
+        </div>`,
+        );
       })}
     </div>`;
   }

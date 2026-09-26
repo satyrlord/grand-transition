@@ -31,6 +31,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install browsers for game and audio checks
-        run: npx playwright install --with-deps chromium firefox webkit
+        run: npx playwright install --with-deps chromium firefox webkit chrome
       - name: Run the quality gate without deployment
         run: npm run quality:full
+      - name: Keep release measurement evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-evidence
+          path: |
+            test-results/
+            tmp/release-hardening/
+          if-no-files-found: ignore
+          retention-days: 14

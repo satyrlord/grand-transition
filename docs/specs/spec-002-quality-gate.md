@@ -62,6 +62,14 @@ All other checks stay the same as the full gate.
 `quality:full` runs all the checks in the same sequence.
 This includes the calibration, the content-balance matrix, the ladder flow, and the content lifecycle.
 It also includes each viewport of each matrix and the Firefox and WebKit audio projects.
+Milestone 030 adds release flows in Chromium and mobile Chromium to both gate modes.
+The Chromium projects use the installed stable Chrome channel.
+Mobile Chromium is a device profile, not a physical Android browser.
+The full gate adds supplemental Firefox, WebKit, and mobile WebKit release flows.
+Its stable-Chrome performance project runs last with one worker.
+Only that project runs the five cold and five warm performance trials.
+Quick mode and direct quick test commands cannot select that workload.
+The quality workflow installs stable Chrome and keeps the performance records and traces for 14 days.
 `ci` is an alias of `quality:full`.
 Continuous integration uses the full gate.
 An agent uses `quality:quick` for the usual validation.

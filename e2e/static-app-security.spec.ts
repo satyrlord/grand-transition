@@ -1,8 +1,11 @@
 import { lockInSetup } from './helpers/setup.ts';
 import { finishPresentation } from './helpers/presentation.ts';
 import { expect, test, type Page } from '@playwright/test';
-import { readFile, readdir, rm } from 'node:fs/promises';
+import { readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { gzipSync } from 'node:zlib';
+import { execFileSync } from 'node:child_process';
+import sharp from 'sharp';
 import {
   planMatchBrowserFlow,
   type MatchBrowserAction,
@@ -28,14 +31,117 @@ const productionContentSecurityPolicy = [
 
 test.setTimeout(90_000);
 
+test('production ships credits and lossless sidekicks without PNG masters', async () => {
+  for (const name of ['CREDITS.md', 'LICENSE.md']) {
+    expect(await readFile(path.resolve('dist', name), 'utf8')).toBe(await readFile(name, 'utf8'));
+  }
+  const assets = await readdir('dist/assets');
+  const sources = (await readdir('src/assets/sidekicks')).filter((name) => name.endsWith('.png'));
+  expect(sources.length).toBeGreaterThan(0);
+  for (const source of sources) {
+    const id = path.parse(source).name;
+    const variants = assets.filter(
+      (name) => name.startsWith(`${id}-sidekick-`) && name.endsWith('.webp'),
+    );
+    expect(variants, id).toHaveLength(1);
+    const original = await sharp(path.resolve('src/assets/sidekicks', source))
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    const encoded = await sharp(path.resolve('dist/assets', variants[0]!))
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    expect(encoded.info).toEqual(original.info);
+    // RGB under fully transparent pixels is not visible. Lossless WebP can
+    // normalize it, but alpha and every visible color must stay exact.
+    for (let index = 0; index < original.data.length; index += 4) {
+      if (original.data[index + 3] === 0) {
+        original.data.fill(0, index, index + 3);
+        encoded.data.fill(0, index, index + 3);
+      }
+    }
+    expect(encoded.data.equals(original.data), id).toBe(true);
+  }
+  expect(assets.filter((name) => name.endsWith('.png'))).toEqual([]);
+});
+
 test('production JavaScript chunks stay within the default Vite warning limit', async () => {
   const assetDirectory = path.resolve('dist/assets');
-  const scripts = (await readdir(assetDirectory)).filter((name) => name.endsWith('.js'));
+  const scripts = (await readdir(assetDirectory)).filter((name) => /\.[cm]?js$/u.test(name));
   expect(scripts.length).toBeGreaterThan(0);
   for (const name of scripts) {
     const script = await readFile(path.join(assetDirectory, name));
     expect(script.byteLength, name).toBeLessThanOrEqual(500_000);
   }
+});
+
+test('initial production JavaScript stays within the total gzip budget', async ({ page }, info) => {
+  const scripts = new Set<string>();
+  page.on('request', (request) => {
+    if (request.resourceType() === 'script') scripts.add(request.url());
+  });
+  await page.goto('./');
+  await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
+  await page.waitForLoadState('networkidle');
+  const chunks = await Promise.all(
+    [...scripts].sort().map(async (url) => {
+      const resource = new URL(url);
+      expect(resource.origin).toBe(productionOrigin);
+      expect(resource.pathname).toMatch(/^\/grand-transition\/assets\/[^/]+\.[cm]?js$/u);
+      const file = path.basename(resource.pathname);
+      const bytes = await readFile(path.resolve('dist/assets', file));
+      return { file, bytes: bytes.length, gzipBytes: gzipSync(bytes).length };
+    }),
+  );
+  expect(chunks.length).toBeGreaterThan(0);
+  const gzipBytes = chunks.reduce((sum, chunk) => sum + chunk.gzipBytes, 0);
+  const resultPath = info.outputPath('initial-javascript-gzip.json');
+  await writeFile(
+    resultPath,
+    JSON.stringify({ budgetBytes: 350 * 1024, gzipBytes, chunks }, null, 2),
+  );
+  await info.attach('initial-javascript-gzip.json', {
+    path: resultPath,
+    contentType: 'application/json',
+  });
+  expect(gzipBytes).toBeLessThanOrEqual(350 * 1024);
+});
+
+test('production content and dependencies have separate emitted chunks', async () => {
+  const scripts = (await readdir(path.resolve('dist/assets'))).filter((name) =>
+    name.endsWith('.js'),
+  );
+  for (const group of ['common-phrase-data', 'character-phrase-data', 'content-data', 'vendor']) {
+    expect(
+      scripts.some((name) => name.startsWith(`${group}-`)),
+      group,
+    ).toBe(true);
+  }
+});
+
+test('production contains no source maps, secret files, or committed build output', async () => {
+  const files = await readdir(path.resolve('dist'), { recursive: true, withFileTypes: true });
+  const violations: string[] = [];
+  const sensitiveValue =
+    /-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----|\b(?:gh[pousr]_[A-Za-z0-9]{36,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[0-9A-Z]{16}|sk-(?:proj-)?[A-Za-z0-9_-]{40,})\b/u;
+  for (const file of files) {
+    if (!file.isFile()) continue;
+    const filename = path.join(file.parentPath, file.name);
+    const relative = path.relative(path.resolve('dist'), filename);
+    if (/\.map$/iu.test(file.name) || /^\.env(?:\.|$)/u.test(file.name)) {
+      violations.push(`${relative}: prohibited file type`);
+    }
+    if (!/\.(?:[cm]?js|css|html|json|md|txt|pem|key)$/iu.test(file.name)) continue;
+    const contents = await readFile(filename, 'utf8');
+    if (/(?:\/\/[#@]|\/\*[#@])\s*sourceMappingURL=/u.test(contents)) {
+      violations.push(`${relative}: source map reference`);
+    }
+    // Keep the matched value out of errors, traces, and test reports.
+    if (sensitiveValue.test(contents)) violations.push(`${relative}: possible credential`);
+  }
+  expect(violations).toEqual([]);
+  expect(execFileSync('git', ['ls-files', '--', 'dist'], { encoding: 'utf8' }).trim()).toBe('');
 });
 
 test('production preview loads the subpath shell and local assets after refresh', async ({
@@ -45,6 +151,7 @@ test('production preview loads the subpath shell and local assets after refresh'
   const failedRequests: string[] = [];
   const remoteRequests: string[] = [];
   const loadedAssetTypes = new Set<string>();
+  const otherAssets = new Set<string>();
   const pageErrors: string[] = [];
 
   await page.addInitScript(() => {
@@ -75,13 +182,20 @@ test('production preview loads the subpath shell and local assets after refresh'
   });
   page.on('response', (response) => {
     if (response.url().startsWith(`${productionOrigin}/grand-transition/assets/`)) {
-      loadedAssetTypes.add(response.request().resourceType());
+      const type = response.request().resourceType();
+      if (type === 'other') otherAssets.add(response.url());
+      else loadedAssetTypes.add(type);
     }
   });
 
   const response = await page.goto('./');
   expect(response?.status()).toBe(200);
   await expect(page).toHaveURL(`${productionOrigin}/grand-transition/`);
+  const icon = page.locator('link[rel="icon"]');
+  await expect(icon).toHaveAttribute('type', 'image/webp');
+  const iconUrl = await icon.getAttribute('href');
+  expect(iconUrl).toMatch(/^\/grand-transition\/assets\/grand-transition-emblem-.*\.webp$/u);
+  expect((await page.request.get(iconUrl!)).ok()).toBe(true);
   await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
   await expect(page.getByText('A Verbal Republic', { exact: true })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
@@ -94,6 +208,8 @@ test('production preview loads the subpath shell and local assets after refresh'
   expect(failedRequests).toEqual([]);
   expect(consoleErrors).toEqual([]);
   expect(pageErrors).toEqual([]);
+  // Chromium classifies favicon requests as "other", independently of MIME type.
+  for (const url of otherAssets) expect(url).toBe(new URL(iconUrl!, productionOrigin).href);
   expect(await page.evaluate(() => Reflect.get(window, 'startupPolicyViolations'))).toEqual([]);
 });
 
@@ -129,9 +245,6 @@ test('development and production render the same game UI with no tool surface', 
   const productionUi = await uiSignature(page);
 
   await page.goto(developmentUrl);
-  await page.evaluate(async () => {
-    await customElements.whenDefined('grand-transition-app');
-  });
   await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   const developmentUi = await uiSignature(page);

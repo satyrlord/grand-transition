@@ -72,6 +72,7 @@ test('main-menu GPU loading keeps setup available, fits supported sizes, and cle
 }) => {
   await holdGpu(page);
   await page.goto('/grand-transition/');
+  await page.locator('#game-title').click();
   const setup = page.getByRole('button', { name: 'Multiplayer' });
   const progress = page.getByRole('progressbar', { name: 'GPU voices' });
   await expect(progress).toHaveAttribute('aria-valuenow', '40');
@@ -106,6 +107,7 @@ test('main-menu GPU loading keeps setup available, fits supported sizes, and cle
 test('a match opens while GPU voices are still preparing', async ({ page }) => {
   await holdGpu(page);
   await page.goto('/grand-transition/');
+  await page.locator('#game-title').click();
   await expect(page.getByRole('progressbar', { name: 'GPU voices' })).toBeVisible();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await expect(page.getByRole('button', { name: 'Start match' })).toBeVisible();
@@ -114,6 +116,7 @@ test('a match opens while GPU voices are still preparing', async ({ page }) => {
 test('GPU failure presents the fallback on the menu', async ({ page }) => {
   await holdGpu(page);
   await page.goto('/grand-transition/');
+  await page.locator('#game-title').click();
   await expect(page.getByRole('button', { name: 'Multiplayer' })).toBeEnabled();
   await page.evaluate(() =>
     (window as unknown as { finishGpu: (ready: boolean) => void }).finishGpu(false),
@@ -128,6 +131,7 @@ test('GPU failure presents the fallback on the menu', async ({ page }) => {
 test('speech off removes the loader immediately', async ({ page }) => {
   await holdGpu(page);
   await page.goto('/grand-transition/');
+  await page.locator('#game-title').click();
   await expect(page.getByRole('progressbar')).toBeVisible();
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await expect(page.locator('grand-transition-settings [role="progressbar"]')).toHaveCount(0);
@@ -140,6 +144,49 @@ test('speech off removes the loader immediately', async ({ page }) => {
 test('stored speech off opens setup without a loader', async ({ page }) => {
   await holdGpu(page, false);
   await page.goto('/grand-transition/');
+  await page.locator('#game-title').click();
   await expect(page.getByRole('progressbar')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Multiplayer' })).toBeEnabled();
+});
+
+test('compact title separates voice fallback, storage notices, and the disclaimer', async ({
+  page,
+}, info) => {
+  await holdGpu(page);
+  await page.addInitScript(() => {
+    IDBFactory.prototype.open = () => {
+      throw new DOMException('Storage is blocked.', 'SecurityError');
+    };
+  });
+  await page.setViewportSize({ width: 360, height: 640 });
+  await page.goto('/grand-transition/');
+  await page.getByRole('button', { name: 'Continue in portrait' }).click();
+  await expect(page.getByRole('progressbar', { name: 'GPU voices' })).toBeVisible();
+  await page.evaluate(() =>
+    (window as unknown as { finishGpu: (ready: boolean) => void }).finishGpu(false),
+  );
+  const feedback = page.locator('.title-voice-feedback');
+  await expect(feedback).toContainText('GPU voices are unavailable.');
+  await expect(page.locator('.title-settings-notice')).toBeVisible();
+  for (const viewport of [
+    { width: 360, height: 640 },
+    { width: 740, height: 360 },
+  ]) {
+    await page.setViewportSize(viewport);
+    const bounds = await page.evaluate(() => {
+      const feedback = document.querySelector('.title-voice-feedback')!.getBoundingClientRect();
+      const disclaimer = document.querySelector('.title-disclaimer')!.getBoundingClientRect();
+      return {
+        feedbackBottom: feedback.bottom,
+        disclaimerTop: disclaimer.top,
+        width: document.documentElement.scrollWidth,
+      };
+    });
+    expect(bounds.feedbackBottom).toBeLessThanOrEqual(bounds.disclaimerTop);
+    expect(bounds.width).toBeLessThanOrEqual(viewport.width);
+    await page.screenshot({
+      path: info.outputPath(`title-fallback-${viewport.width}.png`),
+      fullPage: true,
+    });
+  }
 });

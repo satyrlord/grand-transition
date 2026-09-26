@@ -126,10 +126,22 @@ for (const scene of scenes) {
 
     for (const viewport of viewports) {
       await page.setViewportSize(viewport);
-      await page.evaluate(async () => {
-        await document.fonts.ready;
-        await Promise.all([...document.images].map((image) => image.decode()));
-      });
+      await expect
+        .poll(() =>
+          page.evaluate(async () => {
+            await document.fonts.ready;
+            const images = [...document.images];
+            try {
+              // A responsive source can change during decode after a resize.
+              // Require successful decoding of the settled sources, not just loading.
+              await Promise.all(images.map((image) => image.decode()));
+              return images.every((image) => image.complete && image.naturalWidth > 0);
+            } catch {
+              return false;
+            }
+          }),
+        )
+        .toBe(true);
       await expect
         .poll(() =>
           page

@@ -32,7 +32,10 @@ const piperBase = `${piperSource}/resolve/${piperRevision}/ro/ro_RO/mihai/medium
 const lianaRevision = 'acfc14ae87bb4c124947f0cb7ee0023ffceb0005';
 const lianaSource = 'https://huggingface.co/eduardem/piper-liana-romanian';
 const lianaBase = `${lianaSource}/resolve/${lianaRevision}/`;
-const espeakRevision = '4870adfa25b1a32b4361592f1be8a40337c58d6c';
+const espeakRevision = '724808c5a83f9ef95fdd0db886ba7ba537ff224a';
+const dictionaryEspeakRevision = '4870adfa25b1a32b4361592f1be8a40337c58d6c';
+const phonemizerSource = 'https://github.com/bernardoviotti/espeak-phonemizer';
+const phonemizerRevision = '4ff1fa8eb45d746f3670d17f75edb2b21d842d32';
 
 type PinnedSource = { name: string; url: string; bytes?: number; sha256?: string };
 const sources: PinnedSource[] = [
@@ -107,6 +110,9 @@ const identity = {
   runtime: 'onnxruntime-web@1.29.0',
   pronunciation: 'espeak-phonemizer@0.1.2',
   espeakRevision,
+  dictionaryEspeakRevision,
+  phonemizerSource,
+  phonemizerRevision,
   modification:
     'Expose predicted phoneme durations; retain all trained weights. Ship eSpeak NG data trimmed to Romanian with the upstream patched ro_dict.',
   voices: [
@@ -148,8 +154,8 @@ const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('h
 const expectedFiles = [
   {
     path: 'NOTICE.txt',
-    bytes: 1591,
-    sha256: 'b7a1e09c92b1b444e112c09e1a378132a5702efcd996becd9e6e43720cfd446b',
+    bytes: 1932,
+    sha256: '1d997840a0e04fb6db654c03b65102c8d70cd490ea8bf0fff69322c200b992de',
   },
   {
     path: 'liana/MODEL_CARD',
@@ -434,9 +440,11 @@ function notice(bucketName: string): string {
     `The shipped pronunciation dictionary ro_dict and its source ro_extra come from the same revision.`,
     '',
     'Pronunciation runtime: espeak-phonemizer 0.1.2, GPL-3.0-only, inherited from eSpeak NG.',
-    `eSpeak NG source revision: ${espeakRevision} (release 1.52.0).`,
-    'GPL obligation: the complete corresponding source of eSpeak NG is available at',
-    'https://github.com/espeak-ng/espeak-ng and https://github.com/OHF-Voice/piper1-gpl at the pinned revisions above.',
+    `Runtime eSpeak NG source: https://github.com/espeak-ng/espeak-ng/tree/${espeakRevision}`,
+    `Pronunciation wrapper, build scripts, and patches: ${phonemizerSource}/tree/${phonemizerRevision}`,
+    'The wrapper revision is the npm package gitHead. Its vendor/espeak-ng submodule pins the runtime revision above.',
+    `Liana dictionary source uses eSpeak NG ${dictionaryEspeakRevision} (release 1.52.0), as recorded in its espeak-ng.pin.`,
+    'These runtime and dictionary revisions are different. The shipped runtime is the unchanged npm WebAssembly binary.',
     'See pronounce/espeak-phonemizer-LICENSE and pronounce/espeak-phonemizer-NOTICES.',
     `The shipped pronouncing data is trimmed to Romanian: core.data plus ${bucketName}.data.`,
     '',

@@ -35,7 +35,8 @@ Screens use the light DOM.
 
 The title emblem uses real transparent alpha with a Portable Network Graphics fallback.
 Milestone 023 changes the 640-square emblem and the title proscenium to AVIF and WebP variants that the manifest resolves.
-The two keep their authored PNG fallback.
+Milestone 030 replaces their authored PNG fallback with WebP for the supported browser matrix.
+The PNG masters stay in the source asset package and do not ship.
 The production entry preloads the two AVIF files before the application module.
 Browsers that cannot use AVIF use WebP.
 
