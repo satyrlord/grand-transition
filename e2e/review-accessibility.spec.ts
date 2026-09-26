@@ -1,12 +1,13 @@
 import { lockInSetup } from './helpers/setup.ts';
 import { expect, test } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
+import { gateViewports } from './helpers/viewports.ts';
 
-for (const viewport of [
+for (const viewport of gateViewports([
   { width: 1024, height: 720 },
   { width: 1280, height: 720 },
   { width: 1920, height: 1080 },
-]) {
+])) {
   test(`forced colors preserve setup and Pause choices at ${viewport.width}`, async ({
     page,
   }, testInfo) => {

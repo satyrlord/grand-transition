@@ -37,7 +37,8 @@ After you change interface messages, run `localization:extract`.
 To generate `src/localization/generated/` again from the `xliff/` catalogs, run `localization:build`.
 
 Agents use `quality:quick` for the usual validation.
-It does not run only the documented slowest test set, which is 20 percent of the cumulative test time.
+It does not run the documented slowest test set, which is 20 percent of the cumulative test time.
+It also runs each viewport-matrix test at one reference viewport, and it runs the audio tests only in Chromium.
 `quality:full` and its `ci` alias are the full gate.
 An agent runs the full gate only when the user tells the agent directly to use the full quality-gate skill.
 Continuous integration (CI) continues to use the full gate.
@@ -91,6 +92,8 @@ Do not change fast-check seeds and replay paths.
 Run Lit tests in Vitest Browser Mode.
 Run full-build tests with Playwright.
 Run tests of the primary user interface (UI) states at the supported landscape viewport matrix.
+The full gate runs all the viewports of the matrix.
+`quality:quick` runs one reference viewport.
 Examine the visual quality and the speech that you hear manually.
 
 ## Commit and pull request guidelines

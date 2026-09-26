@@ -3,6 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 import { finishPresentation, reachDeliveryTotal } from './helpers/presentation.ts';
 import type { RoundPresentationFrame } from '../src/app/round-presentation.ts';
+import { gateViewports } from './helpers/viewports.ts';
 
 const portraitViewports = [
   { width: 384, height: 832 },
@@ -26,7 +27,10 @@ test.beforeEach(async ({ page }) => {
   await page.clock.pauseAt(new Date('2026-09-13T12:01:00Z'));
 });
 
-for (const viewport of [...portraitViewports, ...landscapeViewports]) {
+for (const viewport of [
+  ...gateViewports(portraitViewports),
+  ...gateViewports(landscapeViewports),
+]) {
   const portrait = viewport.height > viewport.width;
   test(`mobile ${viewport.width} by ${viewport.height} supports touch setup and drafting`, async ({
     page,

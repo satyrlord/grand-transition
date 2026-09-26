@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { gateViewports } from './helpers/viewports.ts';
 
 const viewports = [
   { width: 1024, height: 720 },
@@ -10,7 +11,7 @@ const viewports = [
 ];
 
 for (const deviceScaleFactor of [1, 2]) {
-  for (const viewport of viewports) {
+  for (const viewport of gateViewports(viewports)) {
     test(`roster crop resolution at ${viewport.width}x${viewport.height}, DPR ${deviceScaleFactor}`, async ({
       browser,
     }, testInfo) => {

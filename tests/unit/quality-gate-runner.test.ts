@@ -7,18 +7,11 @@ import { describe, expect, test } from 'vitest';
 
 const runner = path.resolve('tools/run-quality-gate.ts');
 const phaseRunner = path.resolve('tools/run-test-phase.ts');
-const phases = ['validate', 'test', 'test:browser', 'test:coverage', 'test:e2e'];
+const phases = ['validate', 'test', 'test:coverage', 'test:e2e'];
 // The full gate adds the long-running content-balance workload. It is not a
 // test phase, so it never takes the `:full` script suffix.
-const fullPhases = [
-  'validate',
-  'balance:validate',
-  'test',
-  'test:browser',
-  'test:coverage',
-  'test:e2e',
-];
-const fullScriptPhases = new Set(['test', 'test:browser', 'test:coverage', 'test:e2e']);
+const fullPhases = ['validate', 'balance:validate', 'test', 'test:coverage', 'test:e2e'];
+const fullScriptPhases = new Set(['test', 'test:coverage', 'test:e2e']);
 
 async function runFixture(mode: string, failPhase = '', includeNpm = true) {
   const root = await mkdtemp(path.join(os.tmpdir(), 'grand transition gate '));
@@ -32,6 +25,7 @@ appendFileSync(process.env.GT_GATE_CAPTURE, JSON.stringify({
   args: process.argv.slice(2), mode: process.env.GRAND_TRANSITION_QUALITY_GATE,
   runner: process.env.GRAND_TRANSITION_QUALITY_GATE_RUNNER,
   marker: process.env.GT_GATE_MARKER,
+  validated: process.env.GRAND_TRANSITION_ASSETS_VALIDATED ?? null,
 }) + '\\n');
 if (process.argv[3] === process.env.GT_GATE_FAIL_PHASE) process.exit(23);
 `,
@@ -62,6 +56,7 @@ if (process.argv[3] === process.env.GT_GATE_FAIL_PHASE) process.exit(23);
                 mode: string;
                 marker: string;
                 runner: string;
+                validated: string | null;
               },
           ),
       () => [],
@@ -107,13 +102,15 @@ describe('portable quality gate runner', () => {
           mode,
           marker: 'preserved value with spaces',
           runner: '1',
+          // Only the end-to-end build may skip the asset checks that validate ran.
+          validated: phase === 'test:e2e' ? '1' : null,
         })),
       );
     },
   );
 
   test('preserves the first failing phase exit code and stops later phases', async () => {
-    const { result, calls } = await runFixture('quick', 'test:browser');
+    const { result, calls } = await runFixture('quick', 'test:coverage');
     expect(result.status, result.stderr).toBe(23);
     expect(calls.map((call) => call.args[1])).toEqual(phases.slice(0, 3));
   });

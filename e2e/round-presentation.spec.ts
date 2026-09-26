@@ -4,6 +4,7 @@ import type { MatchState } from '../src/engine/match-lifecycle.ts';
 import type { RoundPresentationFrame } from '../src/app/round-presentation.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 import { pauseMockedClock } from './helpers/presentation.ts';
+import { gateViewports } from './helpers/viewports.ts';
 
 test.use({ contextOptions: { reducedMotion: 'reduce' } });
 
@@ -52,12 +53,12 @@ async function prepare(page: Page, lethal: boolean): Promise<number> {
   return draftingBubbleWidth;
 }
 
-for (const size of [
+for (const size of gateViewports([
   { width: 1024, height: 720 },
   { width: 1024, height: 768 },
   { width: 1280, height: 720 },
   { width: 1920, height: 1080 },
-]) {
+])) {
   test(`recitation, inline scoring, impact, and automatic next round at ${size.width}x${size.height}`, async ({
     page,
   }, info) => {

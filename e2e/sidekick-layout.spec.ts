@@ -4,6 +4,7 @@ import type { MatchPlayerView } from '../src/app/match-screen-snapshot.ts';
 import type { RoundPresentationFrame } from '../src/app/round-presentation.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 import { lockInSetup } from './helpers/setup.ts';
+import { gateViewports } from './helpers/viewports.ts';
 
 async function mountPublicDelivery(page: Page): Promise<void> {
   await page.setViewportSize({ width: 1280, height: 720 });
@@ -75,7 +76,7 @@ async function setDelivery(page: Page, index: number, active: boolean): Promise<
   );
 }
 
-for (const size of [
+for (const size of gateViewports([
   { width: 1024, height: 720 },
   { width: 1920, height: 1080 },
   { width: 640, height: 320 },
@@ -85,7 +86,7 @@ for (const size of [
   { width: 915, height: 412 },
   { width: 700, height: 384 },
   { width: 740, height: 360 },
-]) {
+])) {
   test(`sidekick floor, entrance, and motion at ${size.width}x${size.height}`, async ({
     page,
   }, info) => {

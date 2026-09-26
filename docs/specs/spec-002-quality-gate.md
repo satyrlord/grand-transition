@@ -28,24 +28,40 @@ Also give the scripts `localization:validate`, `boundaries:check`, `validate`, a
 `assets:build` builds the scene manifest, the fixed-baseline character manifest, and their deterministic AVIF and WebP variants.
 It also runs the audio generation of Milestone 024.
 `assets:validate` validates the two packages before it runs the shared provenance, alpha, and color checks.
-`validate` runs markdownlint-cli2, the Prettier format check, assets, content, localization, pure boundaries, typed lint, and types in that sequence.
+`validate` runs markdownlint-cli2, the Prettier format check, assets, content, localization, pure boundaries, typed lint, and types at the same time through `tools/run-parallel.ts`.
+`assets:validate` also runs its independent validators at the same time.
+The runner prints the complete output of each check as one block, it lets each check finish, and it fails when one or more checks fail.
 Asset validation examines the scaffold, the raster provenance and alpha workflow, and the global-color-cast guard.
 
 It also validates the audio manifest and the measurements of the encoded files.
 It validates the pinned neural speech identity, the full file inventory, the hashes, and the size limits.
 The production build validates the audio assets and the neural speech assets before it bundles them.
+`build:bundle` runs only the Vite bundle step of `build`.
 
-`quality:quick` runs `validate`, unit tests, browser tests, coverage, and end-to-end tests in that sequence.
+`quality:quick` runs `validate`, unit tests, coverage, and end-to-end tests in that sequence.
+The coverage phase runs the complete Browser Mode suite, so the gate does not run `test:browser` as a separate phase.
+The gate prints the elapsed time of each phase when it stops.
 It does not run the slowest tests until their cumulative elapsed time gets to 20 percent of the last recorded full gate.
 These tests are the current-catalog 500-match calibration, the content-balance matrix, and the production ladder flow, which plays one rung for each playable scene.
 They also include the isolated character content lifecycle with its two production builds.
 The Node runs, the Browser Mode runs, and the coverage runs do not include the calibration and the content-balance matrix.
 
 Only Playwright does not include the ladder flow and the content lifecycle.
+
+In `quality:quick`, Playwright also decreases its browser and viewport breadth.
+It runs the audio-speech specification only in Chromium.
+The Firefox and WebKit audio projects run only in the full gate.
+Some Playwright tests are made one time for each viewport of a supported viewport matrix.
+`e2e/helpers/viewports.ts` selects one viewport for these tests.
+It selects the reference landscape viewport, 1280 by 720, or the first viewport when the matrix does not contain it.
+A mobile matrix keeps one portrait viewport and one landscape viewport.
+A test that measures more than one viewport in the same page keeps all its viewports.
+The tests of the blocked viewport limits keep all their viewports.
 All other checks stay the same as the full gate.
 
 `quality:full` runs all the checks in the same sequence.
 This includes the calibration, the content-balance matrix, the ladder flow, and the content lifecycle.
+It also includes each viewport of each matrix and the Firefox and WebKit audio projects.
 `ci` is an alias of `quality:full`.
 Continuous integration uses the full gate.
 An agent uses `quality:quick` for the usual validation.
@@ -58,7 +74,8 @@ The full gate runs only when the user tells the agent directly to run it.
 This includes `npm run test`, `npm run test:browser`, `npm run test:coverage`, and `npm run test:e2e`.
 The slowest set cannot run by accident, or because the mode variable is missing.
 The test scripts that you run directly set the `quick` mode in their phase runner, also when they get full-mode environment variables from their parent.
-After the validation, the full gate calls `balance:validate` and the internal `test:full`, `test:browser:full`, `test:coverage:full`, and `test:e2e:full` scripts.
+After the validation, the full gate calls `balance:validate` and the internal `test:full`, `test:coverage:full`, and `test:e2e:full` scripts.
+`test:browser` and `test:browser:full` stay available for a direct Browser Mode run without coverage.
 
 `balance:validate` is not a check that an agent can run alone.
 The validator fails before it loads the catalog, unless the two full-gate environment markers are present.
@@ -66,6 +83,9 @@ The validator contains its 500-match matrix and its 64 structural samples as fix
 No environment setting can change the workload.
 Only `run-quality-gate.ts full` gives the runner marker.
 End-to-end tests build the production output before the preview.
+In the gate, `validate` has already checked each asset that `build` checks.
+Thus, the gate gives `GRAND_TRANSITION_ASSETS_VALIDATED=1` only to its end-to-end phase, and Playwright then builds with `build:bundle`.
+A direct `npm run test:e2e` builds with the complete `build` script.
 
 Pure tests use Vitest in Node and `*.test.ts`.
 Components use Vitest Browser Mode with Playwright, not only a simulated DOM.
@@ -151,8 +171,10 @@ Keep the default test timeout.
 Do checks of the full setup and cleanup through the default `npm test` command and `tests/unit/validate-character-assets.test.ts`.
 The E2E cases for reduced motion and long sentences keep all their assertions, and they pass with retries disabled.
 
-**AC-002-09:** `quality:quick` does not include only the documented slowest set, which is 20 percent of the cumulative test time.
-`quality:full` and `ci` include that set.
+**AC-002-09:** `quality:quick` does not include the documented slowest set, which is 20 percent of the cumulative test time.
+It also does not include the Firefox and WebKit audio projects or the extra viewports of a viewport matrix.
+`quality:full` and `ci` include all of them.
+The Playwright configuration and `e2e/helpers/viewports.ts` select this breadth from the same mode.
 The quality-gate runner exports the selected mode to all the child phases.
 Do checks of the scripts and the runner in `tests/unit/quality-gate.test.ts`.
 The calibration, ladder, and content-lifecycle tests select their full-only behavior from that mode.

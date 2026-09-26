@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import replacementBaseline from './scene-replacement-baseline.json' with { type: 'json' };
+import { mapWithConcurrency } from './build-character-assets.ts';
 
 export const SCENE_MASTER_NAMES = Object.freeze([
   'civic-cypher-boxing-ring.png',
@@ -420,29 +421,38 @@ export async function buildSceneAssets({
   const variantsRoot = path.join(stagingRoot, 'variants');
   await mkdir(variantsRoot);
   try {
+    // Each encode stays single-threaded for deterministic bytes, so independent
+    // variants encode at the same time. Results keep the manifest order.
+    const jobs = masters.flatMap((master) =>
+      sceneVariantSizes(master.identity.id).flatMap((size) =>
+        SCENE_FORMATS.map((format) => ({ master, size, format })),
+      ),
+    );
+    const encoded = await mapWithConcurrency(
+      jobs,
+      3,
+      async ({ master, size, format }): Promise<SceneVariant> => {
+        const reused = cached
+          .get(master.identity.id)
+          ?.find((variant) => variant.width === size.width && variant.format === format);
+        const { output, quality } =
+          reused ?? (await encodeWithinBudget(master.input, size, format));
+        const outputName = `${master.identity.id}-${size.width}x${size.height}.${format}`;
+        await writeFile(path.join(variantsRoot, outputName), output);
+        return {
+          path: `variants/${outputName}`,
+          width: size.width,
+          height: size.height,
+          bytes: output.length,
+          format,
+          quality,
+          sha256: sha256(output),
+        };
+      },
+    );
     const assets = [];
     for (const master of masters) {
-      const variants: SceneVariant[] = [];
-      for (const size of sceneVariantSizes(master.identity.id)) {
-        for (const format of SCENE_FORMATS) {
-          const reused = cached
-            .get(master.identity.id)
-            ?.find((variant) => variant.width === size.width && variant.format === format);
-          const { output, quality } =
-            reused ?? (await encodeWithinBudget(master.input, size, format));
-          const outputName = `${master.identity.id}-${size.width}x${size.height}.${format}`;
-          await writeFile(path.join(variantsRoot, outputName), output);
-          variants.push({
-            path: `variants/${outputName}`,
-            width: size.width,
-            height: size.height,
-            bytes: output.length,
-            format,
-            quality,
-            sha256: sha256(output),
-          });
-        }
-      }
+      const variants = encoded.filter((_, index) => jobs[index]!.master === master);
       const focal = focalContract(master.identity);
       assets.push({
         id: master.identity.id,

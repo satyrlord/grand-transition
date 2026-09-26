@@ -11,6 +11,7 @@ import { basicScoringBalance } from '../src/content/basic-scoring-balance.ts';
 import type { MatchEngineContext, MatchState } from '../src/engine/match-lifecycle.ts';
 import { loadGameContent } from '../tools/load-game-content.ts';
 import { fullQualityGateRequested } from '../tools/quality-gate-mode.ts';
+import { gateViewports } from './helpers/viewports.ts';
 
 // The persistence case plays the fixed-seed ladder until it wins every rung,
 // one per playable scene. Nine rungs needed up to twenty-one full matches
@@ -28,12 +29,12 @@ const matchContext: MatchEngineContext = {
 // The ladder has one rung per playable scene.
 const rungCount = gameCatalog.scenes.length;
 
-for (const viewport of [
+for (const viewport of gateViewports([
   { width: 1_024, height: 720 },
   { width: 1_024, height: 768 },
   { width: 1_280, height: 720 },
   { width: 1_920, height: 1_080 },
-] as const) {
+] as const)) {
   test(`ladder setup fits ${viewport.width} by ${viewport.height}`, async ({ page }) => {
     await page.setViewportSize(viewport);
     await page.clock.install();

@@ -3,6 +3,7 @@ import { finishPresentation } from './helpers/presentation.ts';
 import type { RoundPresentationFrame } from '../src/app/round-presentation.ts';
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
+import { gateViewports } from './helpers/viewports.ts';
 
 const sceneVariantDimensions = [
   [640, 360],
@@ -640,7 +641,7 @@ test('the selected roster characters load their local portrait assets', async ({
   ).toBe(true);
 });
 
-for (const viewport of [
+for (const viewport of gateViewports([
   { width: 1024, height: 720 },
   { width: 1024, height: 768 },
   { width: 1280, height: 720 },
@@ -650,7 +651,7 @@ for (const viewport of [
   { width: 2560, height: 1080 },
   { width: 3424, height: 1427 },
   { width: 5120, height: 1440 },
-]) {
+])) {
   test(`the selected modern debate studio loads both local scene layers at ${viewport.width}x${viewport.height}`, async ({
     page,
   }, testInfo) => {
@@ -1124,7 +1125,7 @@ test('waits for a replacement portrait before measuring moderator clearance', as
   });
 });
 
-for (const viewport of [
+for (const viewport of gateViewports([
   { width: 1024, height: 1023 },
   { width: 1024, height: 720 },
   { width: 1024, height: 768 },
@@ -1134,7 +1135,7 @@ for (const viewport of [
   { width: 2560, height: 1080 },
   { width: 3424, height: 1427 },
   { width: 5120, height: 1440 },
-]) {
+])) {
   test(`the match fits the supported landscape matrix at ${viewport.width}x${viewport.height}`, async ({
     page,
   }, testInfo) => {
@@ -1270,14 +1271,14 @@ for (const viewport of [
   });
 }
 
-for (const viewport of [
+for (const viewport of gateViewports([
   { width: 1024, height: 720 },
   { width: 1024, height: 768 },
   { width: 1280, height: 720 },
   { width: 1920, height: 1080 },
   { width: 3424, height: 1427 },
   { width: 5120, height: 1440 },
-]) {
+])) {
   test(`grammar feedback stays below speech and expires without player input at ${viewport.width}x${viewport.height}`, async ({
     page,
   }, testInfo) => {

@@ -116,14 +116,28 @@ describe('quality-gate scaffold', () => {
       );
     }
     const gate = await readFile(path.resolve('tools', 'run-quality-gate.ts'), 'utf8');
-    expect(gate).toContain(
-      "['validate', 'balance:validate', 'test', 'test:browser', 'test:coverage', 'test:e2e']",
-    );
-    expect(gate).toContain("['validate', 'test', 'test:browser', 'test:coverage', 'test:e2e']");
+    expect(gate).toContain("['validate', 'balance:validate', 'test', 'test:coverage', 'test:e2e']");
+    expect(gate).toContain("['validate', 'test', 'test:coverage', 'test:e2e']");
+    // Coverage runs the same Browser Mode suite, so the gate omits test:browser.
+    expect(gate).not.toContain("'test:browser'");
     expect(gate).toContain('GRAND_TRANSITION_QUALITY_GATE: mode');
     expect(gate).toContain("GRAND_TRANSITION_QUALITY_GATE_RUNNER: '1'");
     expect(gate).toContain('fullTestPhases.has(phase)');
     expect(gate).toContain("['quick', 'full']");
+    // Only the gate's end-to-end phase, after validate passed, skips the
+    // asset checks of the production build. A direct run keeps them.
+    expect(gate.replace(/\s+/gu, ' ')).toContain(
+      "phase === 'test:e2e' ? { ...environment, GRAND_TRANSITION_ASSETS_VALIDATED: '1' }",
+    );
+    expect(packageJson.scripts['build:bundle']).toBe('vite build');
+    const playwrightConfig = await readFile(path.resolve('playwright.config.ts'), 'utf8');
+    expect(playwrightConfig).toContain(
+      "process.env.GRAND_TRANSITION_ASSETS_VALIDATED === '1' ? 'npm run build:bundle' : 'npm run build'",
+    );
+    // Firefox and WebKit audio evidence belongs to the full gate only.
+    expect(playwrightConfig.replace(/\s+/gu, ' ')).toMatch(
+      /\.\.\.\(fullQualityGateRequested\(\) \? \[ \{ name: 'firefox-audio'.*name: 'webkit-audio'.*\] : \[\]\)/u,
+    );
     const [calibration, ladder, lifecycle, gateMode, browserConfig, phaseRunner, balanceValidator] =
       await Promise.all([
         readFile(path.resolve('tests', 'unit', 'replay-and-simulation.test.ts'), 'utf8'),
@@ -170,14 +184,7 @@ describe('quality-gate scaffold', () => {
     expect(fullQualityGateRequested({ GRAND_TRANSITION_QUALITY_GATE: 'quick' })).toBe(false);
     expect(fullQualityGateRequested({ GRAND_TRANSITION_QUALITY_GATE: '' })).toBe(false);
     expect(fullQualityGateRequested({})).toBe(false);
-    const phases = [
-      'validate',
-      'balance:validate',
-      'test',
-      'test:browser',
-      'test:coverage',
-      'test:e2e',
-    ];
+    const phases = ['validate', 'balance:validate', 'test', 'test:coverage', 'test:e2e'];
 
     let previousIndex = -1;
     for (const phase of phases) {
@@ -256,8 +263,10 @@ describe('quality-gate scaffold', () => {
     );
 
     expect(packageJson.scripts['format:check']).toBe('prettier --check .');
-    expect(packageJson.scripts.validate).toMatch(
-      /^npm run markdown:lint && npm run format:check && /u,
+    expect(packageJson.scripts.validate).toBe(
+      'node tools/run-parallel.ts "npm run markdown:lint" "npm run format:check" ' +
+        '"npm run assets:validate" "npm run content:validate" "npm run localization:validate" ' +
+        '"npm run boundaries:check" "npm run lint" "npm run typecheck"',
     );
     expect(ignored).toEqual(
       expect.arrayContaining(['*.json', '*.md', 'src/localization/generated/']),

@@ -186,11 +186,24 @@ test('development automatically writes one completed match text log', async ({ p
     expect(filename).toMatch(
       new RegExp(`^match-\\d{4}-\\d{2}-\\d{2}-seed-${String(plan.seed)}\\.log$`, 'u'),
     );
-    const text = await readFile(path.join(developmentGameLogDirectory, filename!), 'utf8');
-    const records = text
-      .trim()
-      .split('\n')
-      .map((line) => JSON.parse(line) as Record<string, any>);
+    // The server creates the file before it writes the text, so wait until
+    // the file holds a complete log instead of reading it the moment it exists.
+    let text = '';
+    let records: Record<string, any>[] = [];
+    await expect
+      .poll(async () => {
+        text = await readFile(path.join(developmentGameLogDirectory, filename!), 'utf8');
+        try {
+          records = text
+            .trim()
+            .split('\n')
+            .map((line) => JSON.parse(line) as Record<string, any>);
+          return text.trim().length > 0;
+        } catch {
+          return false;
+        }
+      })
+      .toBe(true);
     expect(records[0]).toEqual(
       expect.objectContaining({
         type: 'match-log',

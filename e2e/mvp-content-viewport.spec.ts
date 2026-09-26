@@ -3,6 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
 import { loadGameContent } from '../tools/load-game-content.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
+import { gateViewports } from './helpers/viewports.ts';
 
 const { gameCatalog: catalog } = loadGameContent();
 
@@ -34,7 +35,7 @@ test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
 });
 
-for (const viewport of supportedViewports) {
+for (const viewport of gateViewports(supportedViewports)) {
   test(`all roster skins and scene labels fit setup at ${viewport.width}x${viewport.height}`, async ({
     page,
   }) => {
@@ -179,10 +180,10 @@ for (const viewport of supportedViewports) {
   });
 }
 
-for (const viewport of [
+for (const viewport of gateViewports([
   { width: 1024, height: 720 },
   { width: 360, height: 640 },
-] as const) {
+] as const)) {
   test(`every discovered skin reaches both match sides at ${viewport.width}x${viewport.height}`, async ({
     page,
   }) => {

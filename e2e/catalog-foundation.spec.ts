@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import sharp from 'sharp';
 import { loadGameContent } from '../tools/load-game-content.ts';
+import { gateViewports } from './helpers/viewports.ts';
 
 const { gameCatalog: catalog, englishGameLocale: locale } = loadGameContent();
 const viewports = [
@@ -10,7 +11,7 @@ const viewports = [
   { width: 1920, height: 1080 },
 ];
 
-for (const viewport of viewports) {
+for (const viewport of gateViewports(viewports)) {
   test(`complete foundation selection at ${viewport.width}x${viewport.height}`, async ({
     page,
   }, testInfo) => {

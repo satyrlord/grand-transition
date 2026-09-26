@@ -307,6 +307,19 @@ describe('Romanian game content', () => {
     expect(withRomanianDiacritics.length).toBeGreaterThan(2_000);
   });
 
+  test('keeps each third-person plural relation distinct from its polite second-person form', () => {
+    // "votanții voștri exportă", not "exportați": Romanian never shares these forms.
+    const copiedForms = gameCatalog.phrases
+      .filter((phrase) => phrase.role === 'verb' || phrase.role === 'predicate')
+      .map((phrase) => phrase.textKey)
+      .filter(
+        (textKey) =>
+          romanianGameLocale.messages[`${textKey}.plural`] ===
+          romanianGameLocale.messages[`${textKey}.second-person`],
+      );
+    expect(copiedForms).toEqual([]);
+  });
+
   test('states the Romanian title and disclaimer in Romanian', () => {
     expect(romanianGameLocale.locale).toBe('ro-RO');
     expect(romanianGameLocale.title.name).toBe('Grand Transition: A Verbal Republic');

@@ -5,6 +5,7 @@ import characterManifest from '../src/assets/characters/character-manifest.json'
 import chairman from '../src/content/characters/red-folded-chairman-phrase-cards.json' with { type: 'json' };
 import captain from '../src/content/characters/black-sea-captain-phrase-cards.json' with { type: 'json' };
 import { displayWeaknessName } from '../src/localization/romanian-display-names.ts';
+import { gateViewports } from './helpers/viewports.ts';
 
 const chairmanWeaknesses = chairman.weaknessTags
   .map((tag) => displayWeaknessName(tag, 'en'))
@@ -23,7 +24,7 @@ const supportedViewports = [
   { name: 'recommended-pc', width: 1920, height: 1080 },
 ] as const;
 
-for (const viewport of supportedViewports) {
+for (const viewport of gateViewports(supportedViewports)) {
   test(`${viewport.name} pointer flow stays inside the viewport`, async ({ page }, testInfo) => {
     await page.setViewportSize(viewport);
     await page.goto('');
