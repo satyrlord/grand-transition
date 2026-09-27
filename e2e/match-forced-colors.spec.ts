@@ -92,26 +92,35 @@ test('forced colors preserve readable disabled choices during the computer turn'
 });
 
 async function assertPrideMeters(page: Page): Promise<void> {
-  const highlight = await page
-    .locator('.player-turn-status:not([hidden])')
-    .evaluate((element) => getComputedStyle(element).backgroundColor.match(/\d+/gu)!.map(Number));
+  const channels = (color: string) => color.match(/[\d.]+/gu)!.map(Number);
+  const highlight = channels(
+    await page
+      .locator('.player-turn-status:not([hidden])')
+      .evaluate((element) => getComputedStyle(element).backgroundColor),
+  );
   for (const meter of await page.locator('.player-health meter').all()) {
     await expect(meter).toHaveAttribute('value', '100');
+    // A forced-colors palette can give Highlight an alpha value. For example,
+    // Linux Chromium uses rgba(5, 0, 73, 0.8). The fill then paints that color
+    // over the Canvas background of the meter.
+    const canvas = channels(
+      await meter.evaluate((element) => getComputedStyle(element).backgroundColor),
+    );
+    const alpha = highlight[3] ?? 1;
+    const fill = [0, 1, 2].map((channel) =>
+      Math.round(highlight[channel]! * alpha + canvas[channel]! * (1 - alpha)),
+    );
     const { data, info } = await sharp(await meter.screenshot())
       .ensureAlpha()
       .raw()
       .toBuffer({ resolveWithObject: true });
-    // Linux screenshots can shift a system color by a few levels, so compare
-    // each channel with a tolerance instead of exact bytes.
     let filledPixels = 0;
     const colors = new Map<string, number>();
     for (let index = 0; index < data.length; index += 4) {
       const pixel = [data[index]!, data[index + 1]!, data[index + 2]!];
       const key = pixel.join(',');
       colors.set(key, (colors.get(key) ?? 0) + 1);
-      if (
-        pixel.every((channel, channelIndex) => Math.abs(channel - highlight[channelIndex]!) <= 24)
-      )
+      if (pixel.every((channel, channelIndex) => Math.abs(channel - fill[channelIndex]!) <= 2))
         filledPixels += 1;
     }
     const commonColors = [...colors]
@@ -121,7 +130,7 @@ async function assertPrideMeters(page: Page): Promise<void> {
       .join('; ');
     expect(
       filledPixels,
-      `Highlight ${highlight.join(',')}; most common colors ${commonColors}`,
+      `Highlight ${highlight.join(',')}; expected fill ${fill.join(',')}; most common colors ${commonColors}`,
     ).toBeGreaterThan((info.width * info.height) / 4);
   }
 }
