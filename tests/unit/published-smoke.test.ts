@@ -112,6 +112,62 @@ describe('published artifact comparison', () => {
     });
   });
 
+  test('retries a transient server error and passes when the retry serves the bytes', async () => {
+    const files = { 'index.html': '<!doctype html>', 'assets/desks.webp': 'desks' };
+    const { fetchFile } = server(files);
+    let failures = 1;
+    const flaky = async (url: string) => {
+      if (url.endsWith('desks.webp') && failures > 0) {
+        failures -= 1;
+        return { ok: false, status: 503, arrayBuffer: async () => new ArrayBuffer(0) };
+      }
+      return fetchFile(url);
+    };
+    const waits: number[] = [];
+
+    expect(
+      await findPublishedArtifactDifferences(
+        base,
+        await artifact(files),
+        flaky,
+        8,
+        [5, 7],
+        async (ms) => {
+          waits.push(ms);
+        },
+      ),
+    ).toEqual({ files: 2, differences: [] });
+    expect(waits).toEqual([5]);
+  });
+
+  test('reports a transient error that stays after every retry, and does not retry a 404', async () => {
+    const directory = await artifact({
+      'index.html': '<!doctype html>',
+      'assets/desks.webp': 'desks',
+      'assets/gone.js': 'gone',
+    });
+    const requested: string[] = [];
+    const fetchFile = async (url: string) => {
+      requested.push(url);
+      if (url.endsWith('desks.webp')) {
+        return { ok: false, status: 503, arrayBuffer: async () => new ArrayBuffer(0) };
+      }
+      if (url.endsWith('gone.js')) {
+        return { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0) };
+      }
+      return server({ 'index.html': '<!doctype html>' }).fetchFile(url);
+    };
+
+    expect(
+      await findPublishedArtifactDifferences(base, directory, fetchFile, 8, [1, 1], async () => {}),
+    ).toEqual({
+      files: 3,
+      differences: ['assets/desks.webp: HTTP 503 after 3 attempts', 'assets/gone.js: HTTP 404'],
+    });
+    expect(requested.filter((url) => url.endsWith('desks.webp'))).toHaveLength(3);
+    expect(requested.filter((url) => url.endsWith('gone.js'))).toHaveLength(1);
+  });
+
   test('refuses a directory that is not a Pages artifact', async () => {
     const directory = await artifact({ 'assets/app.js': 'export {};' });
 

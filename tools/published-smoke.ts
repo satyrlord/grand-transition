@@ -57,11 +57,21 @@ type Fetch = (url: string) => Promise<Pick<Response, 'ok' | 'status' | 'arrayBuf
  * Compare each file of the uploaded Pages artifact with the bytes that the
  * base URL serves. The check reads only, so it does not change the release.
  */
+/** Pages can answer one request of many with a transient error, such as HTTP 503. */
+const transientRetryDelaysMs = [1_000, 3_000, 9_000] as const;
+
+function isTransientStatus(status: number): boolean {
+  return status === 429 || status >= 500;
+}
+
 export async function findPublishedArtifactDifferences(
   baseUrl: string,
   artifactDirectory: string,
   fetchFile: Fetch = fetch,
   concurrency = 8,
+  retryDelaysMs: readonly number[] = transientRetryDelaysMs,
+  wait: (milliseconds: number) => Promise<void> = (milliseconds) =>
+    new Promise((resolve) => setTimeout(resolve, milliseconds)),
 ): Promise<{ files: number; differences: string[] }> {
   const entries = await readdir(artifactDirectory, { recursive: true, withFileTypes: true });
   const files = entries
@@ -81,9 +91,27 @@ export async function findPublishedArtifactDifferences(
       const file = files[next++]!;
       const expected = sha256(await readFile(path.join(artifactDirectory, file)));
       const url = new URL(file.split('/').map(encodeURIComponent).join('/'), baseUrl).href;
-      const response = await fetchFile(url);
-      if (!response.ok) {
-        differences.push(`${file}: HTTP ${response.status}`);
+      // Retry only a transient server or network failure. A missing file (404)
+      // or different bytes are release defects, so they fail at once.
+      let response: Awaited<ReturnType<Fetch>> | undefined;
+      let failure = '';
+      for (let attempt = 0; attempt <= retryDelaysMs.length; attempt += 1) {
+        if (attempt > 0) await wait(retryDelaysMs[attempt - 1]!);
+        try {
+          response = await fetchFile(url);
+          failure = `HTTP ${response.status}`;
+          if (!isTransientStatus(response.status)) break;
+        } catch (error) {
+          response = undefined;
+          failure = `request failed (${error instanceof Error ? error.message : String(error)})`;
+        }
+      }
+      if (!response?.ok) {
+        const retried =
+          response && !isTransientStatus(response.status)
+            ? ''
+            : ` after ${retryDelaysMs.length + 1} attempts`;
+        differences.push(`${file}: ${failure}${retried}`);
         continue;
       }
       const actual = sha256(new Uint8Array(await response.arrayBuffer()));

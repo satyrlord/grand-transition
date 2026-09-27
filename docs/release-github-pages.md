@@ -74,6 +74,7 @@ npm run test:published -- --base-url https://satyrlord.github.io/grand-transitio
 ```
 
 Add `--artifact-dir <directory>` to compare each file of an extracted Pages artifact with the served bytes.
+The comparison retries a transient HTTP 429 or 5xx answer, or a network failure, three times. A 404 answer or different bytes fail at once.
 On Windows, a checkout with `core.autocrlf=true` changes the line endings of `CREDITS.md` and `LICENSE.md`.
 Then the comparison of a local `dist/` shows these two files as different.
 CI builds on Linux, and the release workflow compares the deployed artifact itself.

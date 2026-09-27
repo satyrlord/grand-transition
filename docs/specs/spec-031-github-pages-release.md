@@ -60,6 +60,8 @@ These assertions are for the response, the assets, refresh, the CSP, runtime net
 They also make sure that the title shows a production game version, not the development label.
 It runs in the Milestone 030 browser matrix: stable desktop Chrome and mobile Chrome.
 The optional `--artifact-dir <directory>` argument compares each file of an extracted Pages artifact with the served bytes.
+It retries an HTTP 429 answer, an HTTP 5xx answer, or a network failure three times, after 1, 3, and 9 seconds, because Pages can fail one request of many for a short time.
+A 404 answer or different bytes fail at once.
 
 The published smoke test for the full match uses seed `20260823` and the first two roster characters.
 It uses the Transition-Era Television Studio and the default 30-second timer.
