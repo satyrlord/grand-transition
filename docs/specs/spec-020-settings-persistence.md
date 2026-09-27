@@ -135,6 +135,21 @@ Milestone 029 Phase 1 uses `schemaVersion` `2`, and Phase 2 makes the version of
 Tutorial mode is the only stored guidance preference.
 The product stores no tutorial progress, onboarding status, or other hint state.
 
+### Rehearsal match
+
+A match is a rehearsal when two conditions are true when it starts:
+the page loaded with no stored settings document and the player has changed no setting other than the interface language and the game language,
+and the local match history loaded and has no entry.
+A settings document at page load, or a change to a different setting, records user choices, so it ends the rehearsal.
+The languages control how the game reads, not how it plays, so a language change keeps the rehearsal.
+A rehearsal match uses tutorial mode and the Unlimited turn timer, for all modes.
+It does not change the stored settings.
+Setup shows the notice `Rehearsal match: Tutorial is on and there is no turn timer.` before the match starts.
+When the player selects a turn timer in Pause, the match uses that stored value for the rest of the match.
+The rule uses only the settings document and the match history, so it stores no new state.
+After the player completes a match or saves a setting, each new match uses the stored settings.
+If the history cannot load, the match is not a rehearsal.
+
 Each field is necessary, and the codec does not accept unknown fields.
 This includes a field that is part of a different settings shape.
 For a value that is missing, malformed, not on a step, or out of range, decoding gives `invalid-data` at the path of that field.
@@ -159,6 +174,13 @@ The adapter in memory stays active for the browser session.
   The control has its native accessible label and its related help text.
   Codec tests include a missing `tutorialMode`, an unknown field, kept preferences, and strict validation of the single document shape.
   Browser tests include the default, the enabled state, the disabled state, and the reload behavior.
+
+- **AC-020-12:** In a browser with no stored settings and an empty match history, the first match shows the rehearsal notice in setup.
+  It starts with the Unlimited timer and the tutorial glow, and the stored settings do not change.
+  A phrase language change in setup keeps the rehearsal.
+  After that match completes, after a change to a different setting, or after a reload with stored settings, the next match uses the stored settings.
+  A browser with stored settings or a history entry shows no notice.
+  `tests/browser/settings-persistence.browser.test.ts` and `e2e/settings-persistence.spec.ts` do checks of these paths.
 
 - **AC-020-10:** The game keeps all five scoring choices, and it shows them again after a reload.
   Each new match records the selected value for the two players.

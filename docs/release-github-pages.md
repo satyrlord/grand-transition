@@ -128,27 +128,26 @@ The records are `.impeccable/audit/spec-031-published-release.md` and
 
 - Audit: 16 of 20 (Good). No P0 or P1 finding.
 - Critique: 24 of 40 (Acceptable), from an isolated design review and an isolated detector and browser review.
-  No P0 or P1 finding remains after synthesis.
+  The design review rated three findings P1.
+  The owner decided that the three are release blockers, and they are repaired with changed specifications.
 
 Repaired before the release:
 
+- The sentence text region shows a scroll shadow at each edge that has more text (Milestone 016, AC-016-21).
+- Each Pride plaque shows the public weakness list of its character for all the match (Milestone 016, AC-016-20).
+- Setup shows a `Phrase language` select, so a different interface language and phrase language are visible before the match (Milestone 015, AC-015-15).
+- The first match in a new browser is a rehearsal with the Tutorial glow and no turn timer (Milestone 020, AC-020-12).
 - The delivery outcome ("Continuation held", "Incomplete statement", "Grammar mistake", and "Turn expired") ran into its detail line.
   The inline rule for delivery events now applies only to emphasis rows.
-  A browser regression test measures the stacked layout.
+- The waiting bubble no longer goes below the Pride plaque at 1280 by 720.
 
 Accepted P2 and P3 findings, with their owners:
 
-| Finding                                                                 | Priority | Decision and owner                                                                               |
-| ----------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------ |
-| The sentence bubble scrolls without a visible cue at 1280 by 720        | P2       | Meets AC-016-12, which forbids smaller speech type. Post-MVP repair of the Milestone 016 record. |
-| Opponent weaknesses show only before play                               | P2       | The approved contract. A change needs a post-MVP product decision.                               |
-| The first run has no rules, and Romanian is the default game language   | P2       | The approved defaults. Post-MVP onboarding decision.                                             |
-| Charge-cell dividers cross the Comeback label                           | P2       | Post-MVP polish of the Milestone 012 action.                                                     |
-| Functional labels from 10.2 to 11.8 pixels at 1024 pixels wide and less | P3       | They follow the DESIGN.md ramps. Post-MVP typography pass.                                       |
-| "Preparing GPU voices" waits for the first user gesture without a hint  | P3       | Post-MVP copy repair of the Milestone 024 status.                                                |
-
-The review design assessment rated the first three findings as P1.
-The synthesis classifies them as P2, because the approved specifications require the current behavior.
+| Finding                                                                 | Priority | Decision and owner                                         |
+| ----------------------------------------------------------------------- | -------- | ---------------------------------------------------------- |
+| Charge-cell dividers cross the Comeback label                           | P2       | Post-MVP polish of the Milestone 012 action.               |
+| Functional labels from 10.2 to 11.8 pixels at 1024 pixels wide and less | P3       | They follow the DESIGN.md ramps. Post-MVP typography pass. |
+| "Preparing GPU voices" waits for the first user gesture without a hint  | P3       | Post-MVP copy repair of the Milestone 024 status.          |
 
 ## Release record
 

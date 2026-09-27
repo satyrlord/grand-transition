@@ -47,6 +47,7 @@ import { type MatchCommandEvent, type ReturnToMainMenuEvent } from './screens/ma
 import {
   type StartMatchEvent,
   type ResetLadderEvent,
+  type GameLocaleChangeEvent,
   type SetupChangeEvent,
   type SetupSnapshot,
 } from './screens/setup-screen.ts';
@@ -186,6 +187,8 @@ export class GrandTransitionApp extends LitElement {
     setupSnapshot: { state: true },
     matchState: { state: true },
     matchArenaReaction: { state: true },
+    matchRehearsal: { state: true },
+    matchRehearsalTimer: { state: true },
     roundReviewSnapshot: { state: true },
     viewportSupported: { state: true },
     portraitViewport: { state: true },
@@ -221,6 +224,10 @@ export class GrandTransitionApp extends LitElement {
   declare private aiThinking: boolean;
   declare private ladderSnapshot: LadderProgressSnapshot;
   private matchInitialSeed: number | null = null;
+  // Milestone 020 rehearsal: the first match of a new browser uses tutorial
+  // mode and no turn timer without changing the stored settings.
+  declare private matchRehearsal: boolean;
+  declare private matchRehearsalTimer: boolean;
   private matchId: string | null = null;
   private readonly matchCoordinator: MatchCoordinator;
   private readonly screenController = new ScreenController();
@@ -299,6 +306,8 @@ export class GrandTransitionApp extends LitElement {
     this.portraitNoticeDismissed = false;
     this.portraitNoticeEncountered = this.viewportSupported && this.portraitViewport;
     this.manuallyPaused = false;
+    this.matchRehearsal = false;
+    this.matchRehearsalTimer = false;
     this.phraseColorCoding = true;
     this.matchHistory = this.matchHistoryRepository.snapshot();
     this.matchHistoryOpen = false;
@@ -362,6 +371,8 @@ export class GrandTransitionApp extends LitElement {
         this.speech?.endMatch();
         this.matchId = null;
         this.matchInitialSeed = null;
+        this.matchRehearsal = false;
+        this.matchRehearsalTimer = false;
       }
       const nextView =
         view === 'match' && (!this.matchState || this.matchState.phase === 'setup')
@@ -465,9 +476,9 @@ export class GrandTransitionApp extends LitElement {
                   ? 'manual'
                   : 'running'
         }
-        .turnTimerSeconds=${this.settingsSnapshot.settings.turnTimerSeconds}
+        .turnTimerSeconds=${this.matchTurnTimerSeconds()}
         .autoComplete=${this.settingsSnapshot.settings.autoComplete}
-        .tutorialMode=${this.settingsSnapshot.settings.tutorialMode}
+        .tutorialMode=${this.matchRehearsal || this.settingsSnapshot.settings.tutorialMode}
         .phraseColorCoding=${this.phraseColorCoding}
         .musicEnabled=${this.settingsSnapshot.settings.musicVolume > 0}
         .voicesEnabled=${this.settingsSnapshot.settings.speechEnabled}
@@ -536,7 +547,10 @@ export class GrandTransitionApp extends LitElement {
           .snapshot=${this.setupSnapshot}
           .ladderProgress=${this.ladderSnapshot.progress}
           .ladderPersistenceFailure=${this.ladderSnapshot.persistenceFailure}
+          .gameLocale=${this.settingsSnapshot.settings.gameLocale}
+          .rehearsal=${this.rehearsalAvailable()}
           @setup-change=${this.updateSetup}
+          @game-locale-change=${this.changeGameLocale}
           @reset-ladder=${this.resetLadder}
           @show-title=${this.showTitle}
           @start-match=${this.startMatch}
@@ -719,6 +733,8 @@ export class GrandTransitionApp extends LitElement {
 
     const initialSeed = ladderProgress ? ladderMatchSeed(ladderProgress) : createMatchSeed();
     this.matchInitialSeed = initialSeed;
+    this.matchRehearsal = this.rehearsalAvailable();
+    this.matchRehearsalTimer = this.matchRehearsal;
     this.matchId = createMatchId(initialSeed);
     if (ladderProgress) {
       // Count the start now, so a reload or Abandon never replays this deal.
@@ -781,7 +797,7 @@ export class GrandTransitionApp extends LitElement {
       id: this.matchId,
       ladder: this.currentMatchIsLadder,
       settings: {
-        turnTimerSeconds: this.settingsSnapshot.settings.turnTimerSeconds,
+        turnTimerSeconds: this.matchTurnTimerSeconds(),
         autoComplete: this.settingsSnapshot.settings.autoComplete,
         phraseColorCoding: this.phraseColorCoding,
       },
@@ -939,6 +955,8 @@ export class GrandTransitionApp extends LitElement {
     this.speech?.endMatch();
     this.cancelAiTurn();
     this.matchInitialSeed = null;
+    this.matchRehearsal = false;
+    this.matchRehearsalTimer = false;
     this.matchId = null;
     const ladderProgress = this.currentMatchIsLadder ? this.ladderSnapshot.progress : null;
     this.currentMatchIsLadder = false;
@@ -960,8 +978,27 @@ export class GrandTransitionApp extends LitElement {
 
   private readonly changeTurnTimer = (event: TurnTimerChangeEvent): void => {
     event.stopPropagation();
+    // A timer that the player selects in Pause ends the rehearsal timer.
+    this.matchRehearsalTimer = false;
     this.updateSettings('turnTimerSeconds', event.detail);
   };
+
+  private readonly changeGameLocale = (event: GameLocaleChangeEvent): void => {
+    event.stopPropagation();
+    this.replaceSettings({ ...this.settingsSnapshot.settings, gameLocale: event.detail });
+  };
+
+  private rehearsalAvailable(): boolean {
+    return (
+      !this.settingsSnapshot.customized &&
+      this.matchHistory.persistenceFailure === null &&
+      this.matchHistory.entries.length === 0
+    );
+  }
+
+  private matchTurnTimerSeconds(): SettingsSnapshot['settings']['turnTimerSeconds'] {
+    return this.matchRehearsalTimer ? null : this.settingsSnapshot.settings.turnTimerSeconds;
+  }
 
   private focusViewHeading(view: ScreenView): void {
     const selector =

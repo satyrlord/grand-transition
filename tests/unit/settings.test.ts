@@ -35,6 +35,7 @@ describe('settings codec', () => {
       settings: stored,
       persistenceFailure: null,
       usingMemoryFallback: false,
+      customized: true,
     });
     expect(storage.read(settingsStorageKey)).toEqual({ ok: true, value: serialized });
     repository.replace({ ...stored, basePointsMultiplier: 3 });
@@ -361,17 +362,26 @@ describe('settings repository', () => {
       tutorialMode: true,
     });
 
+    // A new browser has no settings document, which allows the rehearsal match.
     expect(repository.snapshot()).toEqual({
       settings: defaultSettings,
       persistenceFailure: null,
       usingMemoryFallback: false,
+      customized: false,
     });
+    // Language choices keep a new browser eligible for the rehearsal match.
+    expect(
+      repository.replace({ ...defaultSettings, interfaceLocale: 'ro-RO', gameLocale: 'en' })
+        .customized,
+    ).toBe(false);
     repository.replace(changed);
+    expect(repository.snapshot().customized).toBe(true);
 
     expect(new SettingsRepository(storage).snapshot()).toEqual({
       settings: changed,
       persistenceFailure: null,
       usingMemoryFallback: false,
+      customized: true,
     });
   });
 
@@ -389,6 +399,7 @@ describe('settings repository', () => {
       settings: defaultSettings,
       persistenceFailure: failure,
       usingMemoryFallback: true,
+      customized: true,
     });
     expect(storage.read(settingsStorageKey)).toEqual({
       ok: true,
@@ -408,6 +419,7 @@ describe('settings repository', () => {
       settings: settings({ masterVolume: 0.5, autoComplete: false }),
       persistenceFailure: null,
       usingMemoryFallback: false,
+      customized: true,
     });
   });
 
@@ -422,11 +434,13 @@ describe('settings repository', () => {
         settings: defaultSettings,
         persistenceFailure: failureCode,
         usingMemoryFallback: true,
+        customized: true,
       });
       expect(repository.replace(changed)).toEqual({
         settings: changed,
         persistenceFailure: failureCode,
         usingMemoryFallback: true,
+        customized: true,
       });
       expect(browser.write).not.toHaveBeenCalled();
     },
@@ -445,6 +459,7 @@ describe('settings repository', () => {
         settings: settings({ masterVolume: 0.45 }),
         persistenceFailure: failureCode,
         usingMemoryFallback: true,
+        customized: true,
       });
       expect(browser.write).toHaveBeenCalledTimes(1);
     },
@@ -465,6 +480,7 @@ describe('settings repository', () => {
       settings: settings({ masterVolume: 0.5 }),
       persistenceFailure: 'storage-quota',
       usingMemoryFallback: true,
+      customized: true,
     });
     repository.replace(settings({ masterVolume: 0.45 }));
     expect(write).toHaveBeenCalledTimes(1);

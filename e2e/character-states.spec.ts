@@ -1,5 +1,6 @@
 import { lockInSetup } from './helpers/setup.ts';
 import { expect, test } from '@playwright/test';
+import { useReturningPlayerSettings } from './helpers/stored-data.ts';
 import stateManifest from '../src/assets/characters/states/state-manifest.json' with { type: 'json' };
 import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
 
@@ -8,6 +9,9 @@ for (const entry of stateManifest.packages) {
     page,
   }, testInfo) => {
     await page.setViewportSize({ width: 1024, height: 720 });
+    // The rehearsal match pulses its Tutorial glow without end, so these
+    // layout checks use a returning player's settings.
+    await useReturningPlayerSettings(page);
     await page.addInitScript(() => {
       const shifts: number[] = [];
       Object.assign(window, { characterStateShifts: shifts });

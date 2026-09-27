@@ -7,6 +7,7 @@ import {
 import { ladderProgressStorageKey } from '../../src/persistence/ladder-progress.ts';
 import { matchHistoryStorageKey } from '../../src/persistence/match-history.ts';
 import { settingsStorageKey } from '../../src/persistence/settings.ts';
+import { defaultSettings, encodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
 
 const legacyKeys = [settingsStorageKey, ladderProgressStorageKey, matchHistoryStorageKey];
 
@@ -44,6 +45,18 @@ export async function storedDocumentKeys(): Promise<readonly string[]> {
     );
     return keys.map(String).sort();
   });
+}
+
+/**
+ * Stores default settings when none exist, as a returning player has. Such a
+ * browser does not get the Milestone 020 rehearsal match.
+ */
+export async function storeReturningPlayerSettings(): Promise<void> {
+  const documents = currentPersistence().documents;
+  const stored = documents.read(settingsStorageKey);
+  if (!stored.ok || stored.value !== null) return;
+  documents.write(settingsStorageKey, encodeSettings(defaultSettings));
+  await currentPersistence().settled();
 }
 
 /** Stored history entry records in first-write order. */

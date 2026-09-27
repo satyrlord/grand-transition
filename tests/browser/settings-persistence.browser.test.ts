@@ -273,6 +273,68 @@ test.each([
   },
 );
 
+test('a new browser plays one rehearsal match without changing stored settings', async () => {
+  const app = await mountApp();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await expect
+    .element(page.getByText('Rehearsal match: Tutorial is on and there is no turn timer.'))
+    .toBeVisible();
+  await lockInSetup();
+  await page.getByRole('button', { name: 'Start match' }).click();
+  await app.updateComplete;
+  let match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
+  expect(match.turnTimerSeconds).toBeNull();
+  expect(match.tutorialMode).toBe(true);
+  expect(await storedDocument(settingsStorageKey)).toBeNull();
+
+  await completeMatch(app);
+  await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
+  match.querySelector<HTMLButtonElement>('.round-review-primary')!.click();
+  await app.updateComplete;
+
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
+  expect(document.querySelector('.setup-rehearsal-note')).toBeNull();
+  await lockInSetup();
+  await page.getByRole('button', { name: 'Start match' }).click();
+  await app.updateComplete;
+  match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
+  expect(match.turnTimerSeconds).toBe(30);
+  expect(match.tutorialMode).toBe(false);
+});
+
+test('a timer selected in Pause replaces the rehearsal timer and ends the rehearsal', async () => {
+  const app = await mountApp();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
+  await lockInSetup();
+  await page.getByRole('button', { name: 'Start match' }).click();
+  await app.updateComplete;
+  const match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
+  expect(match.turnTimerSeconds).toBeNull();
+
+  match.dispatchEvent(new CustomEvent('turn-timer-change', { bubbles: true, detail: 15 }));
+  await app.updateComplete;
+  expect(match.turnTimerSeconds).toBe(15);
+  expect(match.tutorialMode).toBe(true);
+  expect(decodeSettings((await storedDocument(settingsStorageKey))!)).toMatchObject({
+    ok: true,
+    value: { turnTimerSeconds: 15, tutorialMode: false },
+  });
+  expect((app as unknown as { rehearsalAvailable(): boolean }).rehearsalAvailable()).toBe(false);
+});
+
+test('stored settings skip the rehearsal match', async () => {
+  localStorage.setItem(settingsStorageKey, encodeSettings(defaultSettings));
+  const app = await mountApp();
+  await page.getByRole('button', { name: 'Multiplayer' }).click();
+  expect(document.querySelector('.setup-rehearsal-note')).toBeNull();
+  await lockInSetup();
+  await page.getByRole('button', { name: 'Start match' }).click();
+  await app.updateComplete;
+  const match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
+  expect(match.turnTimerSeconds).toBe(30);
+  expect(match.tutorialMode).toBe(false);
+});
+
 test('the Settings modal traps focus, closes with Escape, and restores focus', async () => {
   const app = await mountApp();
   const settingsButton = document.querySelector<HTMLButtonElement>('.title-settings-action')!;

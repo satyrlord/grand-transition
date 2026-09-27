@@ -21,7 +21,12 @@ import {
 } from '../../src/app/screens/match-screen.ts';
 import { decodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
 import { settingsStorageKey } from '../../src/persistence/settings.ts';
-import { resetStoredData, storedDocument } from './persistence-test-helpers.ts';
+import { displayWeaknessName } from '../../src/localization/romanian-display-names.ts';
+import {
+  resetStoredData,
+  storeReturningPlayerSettings,
+  storedDocument,
+} from './persistence-test-helpers.ts';
 import { setInterfaceLocale } from '../../src/app/interface-localization.ts';
 import { currentGameTextLocale, setGameTextLocale } from '../../src/app/game-text-language.ts';
 
@@ -1366,6 +1371,90 @@ test('keeps both sidekick entrances outside the viewport and bounds their size a
   }
 });
 
+test.each([
+  { width: 1024, height: 720 },
+  { width: 1024, height: 768 },
+  { width: 1280, height: 720 },
+  { width: 1400, height: 1050 },
+  { width: 1920, height: 1080 },
+  { width: 915, height: 412 },
+  { width: 640, height: 320 },
+])(
+  'shows each public weakness list inside its Pride plaque at $width by $height',
+  async ({ width, height }) => {
+    const match = await startMatch();
+    const style = document.createElement('style');
+    style.textContent =
+      titleScreenStyles + screenShellStyles + matchScreenStyles + mobileLayoutStyles;
+    document.head.append(style);
+    try {
+      await page.viewport(width, height);
+      await nextAnimationFrame();
+      const plaques = [...match.querySelectorAll<HTMLElement>('.match-player .player-hud')];
+      expect(plaques).toHaveLength(2);
+      for (const [index, player] of match.snapshot!.players.entries()) {
+        const plaque = plaques[index]!;
+        const weaknesses = plaque.querySelector<HTMLElement>('.player-weaknesses')!;
+        expect(weaknesses.querySelector('.player-weaknesses-label')?.textContent?.trim()).toBe(
+          'Weaknesses',
+        );
+        expect(weaknesses.querySelector('.player-weaknesses-list')?.textContent?.trim()).toBe(
+          player.weaknessTags.map((tag) => displayWeaknessName(tag, 'en')).join(' · '),
+        );
+        const outer = plaque.getBoundingClientRect();
+        const inner = weaknesses.getBoundingClientRect();
+        expect(inner.top).toBeGreaterThanOrEqual(outer.top);
+        expect(inner.bottom).toBeLessThanOrEqual(outer.bottom + 0.5);
+        expect(inner.left).toBeGreaterThanOrEqual(outer.left - 0.5);
+        expect(inner.right).toBeLessThanOrEqual(outer.right + 0.5);
+        expect(parseFloat(getComputedStyle(weaknesses).fontSize)).toBeGreaterThanOrEqual(12);
+      }
+      const waiting = match.querySelector<HTMLElement>('.player-sentence--waiting');
+      if (waiting && getComputedStyle(waiting).display !== 'none') {
+        const bubble = waiting.getBoundingClientRect();
+        for (const plaque of match.querySelectorAll('.player-hud')) {
+          const box = plaque.getBoundingClientRect();
+          const overlaps =
+            bubble.left < box.right &&
+            bubble.right > box.left &&
+            bubble.top < box.bottom &&
+            bubble.bottom > box.top;
+          expect(overlaps, JSON.stringify({ bubble, box })).toBe(false);
+        }
+      }
+    } finally {
+      style.remove();
+      await page.viewport(1280, 720);
+    }
+  },
+);
+
+test('shows a scroll shadow only at an edge of the sentence that has more text', async () => {
+  const match = await startMatch();
+  const style = document.createElement('style');
+  style.textContent = titleScreenStyles + screenShellStyles + matchScreenStyles;
+  document.head.append(style);
+  try {
+    const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
+    const computed = getComputedStyle(preview);
+    // Paper covers scroll with the text; the shadows stay at the region edges.
+    expect(computed.backgroundAttachment).toBe('local, local, scroll, scroll');
+    expect(computed.backgroundImage.match(/gradient\(/gu)).toHaveLength(4);
+    match.snapshot = {
+      ...match.snapshot!,
+      sentenceText: Array(12)
+        .fill('and the transition will be televised after the next consultation')
+        .join(' '),
+    };
+    await match.updateComplete;
+    await nextAnimationFrame();
+    expect(preview.scrollHeight).toBeGreaterThan(preview.clientHeight);
+    expect(preview.scrollTop).toBe(0);
+  } finally {
+    style.remove();
+  }
+});
+
 test('stacks the delivery outcome label above its detail', async () => {
   const match = await startMatch();
   const snapshot = match.snapshot!;
@@ -2379,6 +2468,8 @@ async function startMatch(
   sceneId = 'transition-era-television-studio',
 ): Promise<GrandTransitionMatch> {
   await page.viewport(1280, 720);
+  // These checks cover a returning player's stored timer and Tutorial choices.
+  await storeReturningPlayerSettings();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;

@@ -64,6 +64,8 @@ export type MatchPlayerView = Readonly<{
   characterId: string;
   skinId: string;
   characterName: string;
+  /** Public catalog weaknesses, in catalog order, shown on the Pride plaque. */
+  weaknessTags: readonly string[];
   portraitUrl: string;
   portraitAvifSrcSet: string | null;
   portraitWebpSrcSet: string | null;
@@ -300,6 +302,7 @@ export function createMatchScreenSnapshot(
       characterId: player.characterId,
       skinId: skin.id,
       characterName: characterName(player.characterId),
+      weaknessTags: player.weaknessTags,
       portraitUrl: skin.portraitUrl,
       portraitAvifSrcSet: skin.avif?.srcSet ?? null,
       portraitWebpSrcSet: skin.webp?.srcSet ?? null,

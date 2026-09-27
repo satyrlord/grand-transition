@@ -680,26 +680,29 @@
   }
 
   .match-settings--hotseat {
-    grid-template-areas: 'heading scene';
+    grid-template-areas: 'heading scene language';
     grid-template-columns:
       minmax(max-content, auto)
-      minmax(15rem, 1fr);
+      minmax(15rem, 1fr)
+      minmax(7.5rem, 0.5fr);
   }
 
   .match-settings--single-player {
-    grid-template-areas: 'heading difficulty scene';
+    grid-template-areas: 'heading difficulty scene language';
     grid-template-columns:
       minmax(max-content, auto)
-      minmax(15rem, 0.9fr)
-      minmax(18rem, 1.1fr);
+      minmax(12rem, 0.9fr)
+      minmax(13rem, 1.1fr)
+      minmax(8.5rem, 0.5fr);
   }
 
   .match-settings--ladder {
-    grid-template-areas: 'heading difficulty scene';
+    grid-template-areas: 'heading difficulty scene language';
     grid-template-columns:
       minmax(max-content, auto)
-      minmax(13rem, 1fr)
-      minmax(14rem, 0.9fr);
+      minmax(11rem, 1fr)
+      minmax(11rem, 0.9fr)
+      minmax(7.5rem, 0.5fr);
   }
 
   .match-settings legend {
@@ -723,6 +726,15 @@
   .match-settings-scene {
     grid-area: scene;
     min-width: 0;
+  }
+
+  .match-settings-language {
+    grid-area: language;
+  }
+
+  .setup-heading .setup-rehearsal-note {
+    color: var(--broadcast-brass-light);
+    font-weight: 700;
   }
 
   .match-settings-scene:has(output) {
@@ -927,21 +939,24 @@
     .match-settings--hotseat {
       grid-template-columns:
         minmax(7.75rem, auto)
-        minmax(14rem, 1.4fr);
+        minmax(14rem, 1.4fr)
+        minmax(8rem, 0.6fr);
     }
 
     .match-settings--single-player {
       grid-template-columns:
         minmax(7.75rem, auto)
         minmax(10rem, 0.9fr)
-        minmax(15rem, 1.5fr);
+        minmax(12.5rem, 1.4fr)
+        minmax(8rem, 0.6fr);
     }
 
     .match-settings--ladder {
       grid-template-columns:
         minmax(7.75rem, auto)
-        minmax(11.5rem, 1fr)
-        minmax(12rem, 1.2fr);
+        minmax(9.5rem, 0.9fr)
+        minmax(12.5rem, 1.3fr)
+        minmax(7.5rem, 0.5fr);
     }
 
     .match-settings .setup-field {

@@ -1,4 +1,5 @@
 import type { Page } from '@playwright/test';
+import { defaultSettings, encodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
 
 export const settingsStorageKey = 'grand-transition.settings.v1';
 export const ladderProgressStorageKey = 'grand-transition.ladder-progress.v1';
@@ -98,4 +99,17 @@ export async function replaceStoredHistory(page: Page, values: readonly string[]
 export async function clearStoredHistory(page: Page): Promise<void> {
   await replaceStoredHistory(page, []);
   await removeStoredDocument(page, matchHistoryStorageKey);
+}
+
+/**
+ * Stores default settings before each page load when none exist, as a
+ * returning player has. Such a browser skips the Milestone 020 rehearsal match.
+ */
+export async function useReturningPlayerSettings(page: Page): Promise<void> {
+  await page.addInitScript(
+    ({ key, value }) => {
+      if (localStorage.getItem(key) === null) localStorage.setItem(key, value);
+    },
+    { key: settingsStorageKey, value: encodeSettings(defaultSettings) },
+  );
 }

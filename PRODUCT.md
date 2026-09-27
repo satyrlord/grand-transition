@@ -50,6 +50,8 @@ The minimum viable product (MVP) includes local single-player play and local hot
   It includes the local history and settings on the title, the safe fallback for settings storage, and the blocking viewport and orientation contract.
 - Main-menu Settings includes an optional Tutorial mode. It is off by default.
   It shows all the next phrases that the grammar accepts, and it does not change the rules.
+  The first match in a new browser is a rehearsal: it uses the tutorial glow and no turn timer, and it stores no state.
+- Setup shows the phrase language next to the match settings, and each Pride plaque shows the public weaknesses of its character.
 - The platform in the code includes the toolchain, the quality gate, the immutable architecture contracts, and the ports that you can replace.
   It also includes the pure-module boundary checks and the secured static production shell.
 - The content in the code includes Zod 4 schemas and English and Romanian game-locale bundles.

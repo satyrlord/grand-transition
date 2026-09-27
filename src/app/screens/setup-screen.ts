@@ -12,6 +12,13 @@ import type { MatchMode } from '../../engine/match-lifecycle.ts';
 import type { LadderProgress } from '../../engine/ladder.ts';
 import { ladderDifficulty, ladderRungCount } from '../../engine/ladder.ts';
 import type { LadderProgressFailureCode } from '../../persistence/ladder-progress.ts';
+import {
+  defaultGameLocale,
+  gameLocaleAutonyms,
+  gameLocales,
+  isGameLocale,
+  type GameLocale,
+} from '../../localization/game-locale.ts';
 
 const elementName = 'grand-transition-setup';
 const portraitFrame = resolveBrandAsset('politburo-portrait-frame');
@@ -20,6 +27,7 @@ export const setupChangeEventName = 'setup-change';
 export const showTitleEventName = 'show-title';
 export const startMatchEventName = 'start-match';
 export const resetLadderEventName = 'reset-ladder';
+export const gameLocaleChangeEventName = 'game-locale-change';
 
 export type SetupField =
   | 'mode'
@@ -64,6 +72,7 @@ export type SetupChangeEvent = CustomEvent<
 export type ShowTitleEvent = CustomEvent<Readonly<{ type: 'show-title' }>>;
 export type StartMatchEvent = CustomEvent<StartMatchPayload>;
 export type ResetLadderEvent = CustomEvent<Readonly<{ type: 'reset-ladder' }>>;
+export type GameLocaleChangeEvent = CustomEvent<GameLocale>;
 
 type SetupErrors = Partial<Record<SetupField, string>>;
 
@@ -93,6 +102,8 @@ export class GrandTransitionSetup extends LitElement {
     previewPinned: { state: true },
     ladderProgress: { attribute: false },
     ladderPersistenceFailure: { attribute: false },
+    gameLocale: { attribute: false },
+    rehearsal: { attribute: false },
   };
 
   declare snapshot: SetupSnapshot | undefined;
@@ -105,6 +116,8 @@ export class GrandTransitionSetup extends LitElement {
   declare private previewPinned: boolean;
   declare ladderProgress: LadderProgress | null;
   declare ladderPersistenceFailure: LadderProgressFailureCode | null;
+  declare gameLocale: GameLocale;
+  declare rehearsal: boolean;
   private submissionLocked = false;
 
   constructor() {
@@ -119,6 +132,8 @@ export class GrandTransitionSetup extends LitElement {
     this.previewPinned = false;
     this.ladderProgress = null;
     this.ladderPersistenceFailure = null;
+    this.gameLocale = defaultGameLocale;
+    this.rehearsal = false;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -169,13 +184,21 @@ export class GrandTransitionSetup extends LitElement {
           <h1 id="setup-title" tabindex="-1">
             ${msg('Select your debaters')}
           </h1>
-          <p>
-            ${
-              this.snapshot.mode === 'ladder'
-                ? msg('Choose your debater. Your opponent and scene follow ladder progress.')
-                : msg('Choose both contestants, confirm the studio, and open the transmission.')
-            }
-          </p>
+          ${
+            this.rehearsal
+              ? html`<p class="setup-rehearsal-note" role="note">
+                  ${msg('Rehearsal match: Tutorial is on and there is no turn timer.')}
+                </p>`
+              : html`<p>
+                  ${
+                    this.snapshot.mode === 'ladder'
+                      ? msg('Choose your debater. Your opponent and scene follow ladder progress.')
+                      : msg(
+                          'Choose both contestants, confirm the studio, and open the transmission.',
+                        )
+                  }
+                </p>`
+          }
         </header>
 
         <form class="setup-form" novalidate @submit=${this.submit}>
@@ -314,6 +337,17 @@ export class GrandTransitionSetup extends LitElement {
                       })),
                     })
               }
+            </div>
+            <div class="match-settings-language setup-field">
+              <label for="gameLocale">${msg('Phrase language')}</label>
+              <select id="gameLocale" name="gameLocale" .value=${this.gameLocale}
+                @change=${this.changeGameLocale}>
+                ${gameLocales.map(
+                  (locale) => html`<option value=${locale} .selected=${locale === this.gameLocale}>
+                    ${gameLocaleAutonyms[locale]}
+                  </option>`,
+                )}
+              </select>
             </div>
           </fieldset>
 
@@ -710,6 +744,19 @@ export class GrandTransitionSetup extends LitElement {
       </div>
     `;
   }
+
+  private readonly changeGameLocale = (event: Event): void => {
+    event.stopPropagation();
+    const control = event.currentTarget as HTMLSelectElement;
+    if (!isGameLocale(control.value) || control.value === this.gameLocale) return;
+    this.dispatchEvent(
+      new CustomEvent(gameLocaleChangeEventName, {
+        bubbles: true,
+        composed: true,
+        detail: control.value,
+      }),
+    );
+  };
 
   private readonly chooseSelectionTarget = (event: Event): void => {
     const control = event.currentTarget as HTMLButtonElement;
@@ -1216,5 +1263,6 @@ declare global {
     [showTitleEventName]: ShowTitleEvent;
     [startMatchEventName]: StartMatchEvent;
     [resetLadderEventName]: ResetLadderEvent;
+    [gameLocaleChangeEventName]: GameLocaleChangeEvent;
   }
 }

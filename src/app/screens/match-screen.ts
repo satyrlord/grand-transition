@@ -655,6 +655,12 @@ export class GrandTransitionMatch extends LitElement {
               >${this.thinking ? msg('Thinking') : msg('Your turn')}</span
             >
           </div>
+          <p class="player-weaknesses">
+            <span class="player-weaknesses-label">${msg('Weaknesses')}</span>
+            <span class="player-weaknesses-list"
+              >${player.weaknessTags.map(interfaceWeaknessName).join(' · ')}</span
+            >
+          </p>
         </header>
         <div class="character-frame" aria-hidden="true"
           data-source-facing=${player.portraitFacing}

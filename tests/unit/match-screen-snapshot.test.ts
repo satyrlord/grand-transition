@@ -98,6 +98,10 @@ describe('match-screen snapshot', () => {
     });
 
     expect(snapshot.activePlayerId).toBe(state.activePlayerId);
+    // AC-016-20: each Pride plaque keeps the public catalog weaknesses in order.
+    expect(snapshot.players.map((player) => player.weaknessTags)).toEqual(
+      [0, 1].map((index) => gameCatalog.characters[index]!.weaknessTags),
+    );
     expect(snapshot.sharedCards).toHaveLength(9);
     expect(snapshot.privateCards).toHaveLength(2);
     expect(snapshot.sceneLayers).toHaveLength(2);

@@ -114,7 +114,7 @@ Match reactions give the facts of the event, and they do not teach tactics.
 Milestone 016 also lets the game show an optional tutorial glow during drafting.
 The glow is on the next phrases that the grammar accepts.
 The game does not show the glow during the round presentation of these reactions.
-Do not add an onboarding flow, a guided match, an objective, a recovery instruction, or an explanation of card roles or weaknesses.
+Other than the Milestone 020 rehearsal match, do not add an onboarding flow, a guided match, an objective, a recovery instruction, or an explanation of card roles or weaknesses.
 Do not add a shortcut guide, a skip action, a replay action, or a progress state.
 
 The presentation uses civic-debate motifs, for example folders, lower thirds, stamps, microphone plaques, voting panels, tickers, switchboards, and archive labels.

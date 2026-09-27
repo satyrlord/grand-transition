@@ -564,6 +564,29 @@
     flex-direction: row-reverse;
   }
 
+  /* Public setup facts: the weaknesses stay on the plaque for all the match. */
+  .player-weaknesses {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.1rem 0.45rem;
+    min-width: 0;
+    margin: 0;
+    color: var(--broadcast-paper-light);
+    font: 600 0.75rem/1.15 var(--font-interface);
+  }
+
+  .match-player[data-side='blue'] .player-weaknesses {
+    justify-content: flex-end;
+  }
+
+  .player-weaknesses-label {
+    color: var(--broadcast-gold-light);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
   .match-player h2 {
     display: grid;
     align-content: center;
@@ -938,7 +961,8 @@
   .player-sentence--waiting {
     position: absolute;
     z-index: 7;
-    top: calc(100svh - var(--scene-height) * 0.87);
+    /* The floor keeps the bubble below the Pride plaque and its weakness row. */
+    top: max(calc(100svh - var(--scene-height) * 0.87 + 1.1rem), 7.9rem);
     display: grid;
     box-sizing: border-box;
     place-items: center;
@@ -1120,6 +1144,18 @@
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
+    /* Scroll shadows: paper covers scroll with the text and hide each shadow
+       at the matching end, so a shadow shows only where more text exists.
+       Backgrounds paint behind the glyphs, so no word is covered. */
+    background:
+      linear-gradient(rgb(252 250 246) 40%, rgb(252 250 246 / 0%)) center top / 100% 1.3rem
+        no-repeat local,
+      linear-gradient(rgb(252 250 246 / 0%), rgb(252 250 246) 60%) center bottom / 100% 1.3rem
+        no-repeat local,
+      radial-gradient(farthest-side at 50% 0, rgb(0 0 0 / 45%), rgb(0 0 0 / 0%)) center top / 100%
+        0.9rem no-repeat scroll,
+      radial-gradient(farthest-side at 50% 100%, rgb(0 0 0 / 45%), rgb(0 0 0 / 0%)) center bottom /
+        100% 0.9rem no-repeat scroll;
     scrollbar-color: #242424 rgb(252 250 246);
     scrollbar-width: thin;
     font: 900 clamp(1.02rem, 1.65vw, 1.62rem) / 1.14 var(--font-speech);
@@ -2606,6 +2642,10 @@
       display: none;
     }
 
+    .sentence-preview {
+      background: none;
+    }
+
     .player-hud,
     .sentence-ledger,
     .round-review-dialog,
@@ -2670,7 +2710,7 @@
       animation: none;
     }
 
-    .match-screen .player-hud :is(h2, .player-health-label, strong) {
+    .match-screen .player-hud :is(h2, .player-health-label, strong, .player-weaknesses *) {
       color: CanvasText;
       text-shadow: none;
     }

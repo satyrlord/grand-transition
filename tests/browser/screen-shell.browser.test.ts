@@ -1073,6 +1073,42 @@ test('rotated hotseat setup disables Start and rejects submit and stale start co
   await vi.waitFor(() => expect(app.querySelector('.match-screen')).not.toBeNull());
 });
 
+test('setup shows the stored phrase language and changes the stored game language', async () => {
+  const app = await mountApp();
+  for (const mode of ['Multiplayer', 'Single Player', 'Ladder'] as const) {
+    await page.getByRole('button', { name: mode, exact: true }).click();
+    await app.updateComplete;
+    const select = document.querySelector<HTMLSelectElement>('select[name="gameLocale"]')!;
+    expect(select.labels?.[0]?.textContent?.trim()).toBe('Phrase language');
+    expect(select.value).toBe('ro-RO');
+    await page.getByRole('button', { name: 'Back', exact: true }).click();
+    await app.updateComplete;
+  }
+
+  await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
+  await app.updateComplete;
+  const select = document.querySelector<HTMLSelectElement>('select[name="gameLocale"]')!;
+  select.value = 'en';
+  select.dispatchEvent(new Event('change', { bubbles: true }));
+  await app.updateComplete;
+  expect(JSON.parse((await storedDocument('grand-transition.settings.v1'))!)).toMatchObject({
+    gameLocale: 'en',
+  });
+  await lockInSetup();
+  await page.getByRole('button', { name: 'Start match', exact: true }).click();
+  await app.updateComplete;
+  expect(
+    (app as unknown as { matchCoordinator: { locale: { locale: string } } }).matchCoordinator.locale
+      .locale,
+  ).toBe('en');
+
+  document.body.innerHTML = '';
+  const reloaded = await mountApp();
+  await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
+  await reloaded.updateComplete;
+  expect(document.querySelector<HTMLSelectElement>('select[name="gameLocale"]')!.value).toBe('en');
+});
+
 async function mountApp(): Promise<GrandTransitionApp> {
   await page.viewport(1280, 720);
   await reloadStoredData();

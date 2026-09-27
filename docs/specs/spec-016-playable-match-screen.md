@@ -105,7 +105,10 @@ input.
 
 For each portrait, use one complete compact archetype name in the two-line
 nameplate that Milestone 023 keeps for it. Add a visible Pride label and a
-Pride bar. The two top Pride frames are
+Pride bar. Below the name, each Pride frame shows the full public weakness list of
+its character, in the catalog order that setup shows, with a visible `Weaknesses` label.
+The list is public setup information. It stays the same for all the match and does
+not tell which phrase fits it. The two top Pride frames are
 rectangular, with square
 corners and parallel vertical ends. The compact strip can remove the article at
 the start of the full English name. Text and controls must not go across a face,
@@ -207,9 +210,10 @@ round presentation, and victory. Use only the snapshot for the viewer. Do not
 show the private hand of a different player. This preference does not go into
 game state, commands, replay, AI choices, scoring, or match history.
 
-Other than this optional grammar indication, do not add
+Other than this optional grammar indication and the rehearsal match of
+Milestone 020, do not add
 guided first turns, explanations of card roles, or weakness
-hints. Do not add help for disabled actions, strategy prompts, expert
+hints. The public weakness list on each Pride frame is not a hint. Do not add help for disabled actions, strategy prompts, expert
 shortcuts, or recovery instructions. The semantic
 names and the native control behavior stay, but the product does not add a
 different help layer.
@@ -250,7 +254,9 @@ scrolling.
 
 Do not cut text or use a sentence ellipsis.
 Do not make the speech type sizes smaller to fit more words. Short sentences stay fully visible without a
-scrollbar. When the sentence that the screen shows, the speaker, or the round
+scrollbar. When the text region has more text above or below the visible lines,
+a scroll shadow shows at that edge, in addition to the native scrollbar.
+The shadow is behind the text, and it goes away when the region shows that edge. When the sentence that the screen shows, the speaker, or the round
 changes, start the text region at the top. Other view updates keep its scroll
 position.
 A new construction
@@ -582,6 +588,15 @@ and abuse that adds time to the timer.
   feature keeps visible phrase rows text-only. It does not change accessible
   labels, phrase actions, game truth, or timer behavior. Browser tests do checks
   of the default, the two Pause choices, and the rendered role and rarity data.
+- **AC-016-20:** Each Pride frame shows the `Weaknesses` label and the catalog
+  weakness list of its character for all the match, in the interface language.
+  The list fits in the frame without overlap at each supported viewport, and it
+  does not change the phrase rows. Verifiers: `tests/unit/match-screen-snapshot.test.ts`
+  and `tests/browser/match-screen.browser.test.ts`.
+- **AC-016-21:** When the sentence text region overflows, a scroll shadow shows at
+  each edge that has more text, and it goes away at the first word and the last
+  word. The shadow does not cover the text, and short text shows no shadow.
+  Verifier: `tests/browser/match-screen.browser.test.ts`.
 
 ## Impeccable UI validation
 

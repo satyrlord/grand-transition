@@ -21,6 +21,12 @@ export type SettingsSnapshot = Readonly<{
   settings: SettingsDocument;
   persistenceFailure: SettingsFailureCode | null;
   usingMemoryFallback: boolean;
+  /**
+   * False only while this browser had no settings document at load and the
+   * user has changed no setting other than the two languages. Milestone 020
+   * uses it for the rehearsal match.
+   */
+  customized: boolean;
 }>;
 
 export class SettingsRepository {
@@ -28,6 +34,8 @@ export class SettingsRepository {
   private persistenceFailure: SettingsFailureCode | null = null;
   private usingMemoryFallback = false;
   private canReplaceInvalidStoredValue = false;
+  // An unreadable store is not proof of a new browser, so it counts as customized.
+  private customized = true;
 
   private readonly browserStorage: StoragePort;
   private readonly memoryStorage: StoragePort;
@@ -40,7 +48,10 @@ export class SettingsRepository {
       this.activateStorageFallback(stored.code);
       return;
     }
-    if (stored.value === null) return;
+    if (stored.value === null) {
+      this.customized = false;
+      return;
+    }
     const decoded = decodeSettings(stored.value);
     if (!decoded.ok) {
       this.persistenceFailure = decoded.code;
@@ -57,6 +68,7 @@ export class SettingsRepository {
       settings: this.settings,
       persistenceFailure: this.persistenceFailure,
       usingMemoryFallback: this.usingMemoryFallback,
+      customized: this.customized,
     });
   }
 
@@ -66,6 +78,7 @@ export class SettingsRepository {
     if (!normalized.ok) {
       throw new Error(`Normalized settings failed at ${normalized.path}.`);
     }
+    if (changesPlayChoice(this.settings, normalized.value)) this.customized = true;
     this.settings = normalized.value;
 
     if (this.usingMemoryFallback) {
@@ -107,6 +120,14 @@ export class SettingsRepository {
   private writeMemorySettings(): void {
     this.memoryStorage.write(settingsStorageKey, encodeSettings(this.settings));
   }
+}
+
+// The languages choose how the game reads, not how it plays.
+function changesPlayChoice(previous: SettingsDocument, next: SettingsDocument): boolean {
+  return (Object.keys(next) as (keyof SettingsDocument)[]).some(
+    (field) =>
+      field !== 'interfaceLocale' && field !== 'gameLocale' && previous[field] !== next[field],
+  );
 }
 
 function storageFailure(code: string): SettingsFailureCode {

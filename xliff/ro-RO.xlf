@@ -1114,6 +1114,14 @@
   <source>Victories recorded: <x id="0" equiv-text="${progress.wins}"/></source>
   <target>Victorii înregistrate: <x id="0" equiv-text="${progress.wins}"/></target>
 </trans-unit>
+<trans-unit id="s1bec0a9765ef5ca2">
+  <source>Phrase language</source>
+  <target>Limba replicilor</target>
+</trans-unit>
+<trans-unit id="s3af2a85c7ddb57a4">
+  <source>Rehearsal match: Tutorial is on and there is no turn timer.</source>
+  <target>Meci de repetiție: tutorialul este activ și nu există cronometru pentru rând.</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

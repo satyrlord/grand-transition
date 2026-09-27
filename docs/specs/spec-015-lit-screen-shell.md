@@ -101,6 +101,10 @@ It keeps the setup values for a subsequent setup visit.
 The setup fields are the player-one character and skin, the player-two character and skin, and the scene.
 The mode is part of the Main Menu, and it stays in the setup payload.
 The label of the bottom fieldset is “Match settings.”
+It also has a native `Phrase language` select with the Milestone 029 game languages.
+The select shows the stored game language, so an interface language that is different from the phrase language is always visible before the match.
+A change updates the stored `gameLocale` setting immediately, the same as the title Settings.
+The value does not go into the setup snapshot or the start-match payload. The match captures the game language when it starts.
 The defaults are hotseat, the first two catalog characters, the first skin of each character, and the first scene.
 The application session starts with the browser default of 30 seconds.
 Timer changes occur only on the paused match surface that Milestone 016 controls.
@@ -265,6 +269,9 @@ The game does not disable submission only to hide the validation.
   The lock of the person stays necessary.
   The click handlers, right-click handlers, and keyboard handlers do not accept changes to locked players or waiting players.
   `tests/browser/screen-shell.browser.test.ts` and `e2e/screen-shell.spec.ts` do checks of the lock sequence and the input guards.
+- **AC-015-15:** Setup shows the stored game language in the `Phrase language` select for each mode.
+  A change there updates the title Settings and the phrases of the next match, and it stays after a reload.
+  `tests/browser/screen-shell.browser.test.ts` does checks of the select and the settings update.
 
 ## Impeccable UI validation
 
