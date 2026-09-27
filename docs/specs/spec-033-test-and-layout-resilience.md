@@ -90,8 +90,10 @@ The command uses the same mode and the same environment as the gate.
 The gate does not retry a failed test.
 A test that fails and then passes when you run it again is a defect in that test.
 Record it, and repair its cause.
-The current case is `keeps long sentence text reachable inside the fixed speech record at 1920 by 1080` in `tests/browser/match-screen.browser.test.ts`.
-Its hover sometimes times out when the complete suite runs.
+An example is `keeps long sentence text reachable inside the fixed speech record at 1920 by 1080` in `tests/browser/match-screen.browser.test.ts`.
+Its hover located the speech record by its text, and a hover preview could change that text first.
+It stopped Release #7 in the coverage phase.
+The test now hovers the record through its `sentence-ledger` test ID.
 
 ### Gate record and pre-push check
 

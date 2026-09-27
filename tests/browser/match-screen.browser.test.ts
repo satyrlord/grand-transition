@@ -69,7 +69,8 @@ test.each([
       };
       await match.updateComplete;
       const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
-      await userEvent.hover(ledger);
+      // A test ID keeps the locator stable when a hover preview changes the text.
+      await page.getByTestId('sentence-ledger').hover();
       await document.fonts.ready;
       await nextAnimationFrame();
       await nextAnimationFrame();
@@ -192,7 +193,7 @@ test.each([
       const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
       // Park the pointer off the hand. After the resize, a card can move under
       // the previous pointer position, and a hover preview replaces the sentence.
-      await userEvent.hover(ledger);
+      await page.getByTestId('sentence-ledger').hover();
       const originalBounds = ledger.getBoundingClientRect();
       const samples = [
         text,

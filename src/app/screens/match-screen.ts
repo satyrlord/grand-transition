@@ -482,6 +482,7 @@ export class GrandTransitionMatch extends LitElement {
 
           <section
             class="sentence-ledger"
+            data-testid="sentence-ledger"
             data-speaker-side=${first.isActive ? 'red' : 'blue'}
             data-presenting=${this.presentation ? 'true' : nothing}
             aria-labelledby="sentence-title"
