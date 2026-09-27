@@ -533,6 +533,8 @@
   }
 
   .player-health meter {
+    /* Without this, Linux Chromium keeps the native meter painting. */
+    appearance: none;
     width: 100%;
     height: 0.66rem;
     border: 1px solid rgb(228 193 125 / 58%);

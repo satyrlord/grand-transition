@@ -936,27 +936,33 @@
       min-height: 4.15rem;
     }
 
+    /* The heading takes two lines, so the longest scene name fits beside the
+       difficulty and phrase-language selects at 1024 pixels wide. */
+    .match-settings-heading {
+      line-height: 1.1;
+    }
+
     .match-settings--hotseat {
       grid-template-columns:
-        minmax(7.75rem, auto)
-        minmax(14rem, 1.4fr)
+        min-content
+        minmax(14.75rem, 1.4fr)
         minmax(8rem, 0.6fr);
     }
 
     .match-settings--single-player {
       grid-template-columns:
-        minmax(7.75rem, auto)
-        minmax(10rem, 0.9fr)
-        minmax(12.5rem, 1.4fr)
+        min-content
+        minmax(9.5rem, 0.9fr)
+        minmax(14.75rem, 1.4fr)
         minmax(8rem, 0.6fr);
     }
 
     .match-settings--ladder {
       grid-template-columns:
-        minmax(7.75rem, auto)
+        min-content
         minmax(9.5rem, 0.9fr)
         minmax(12.5rem, 1.3fr)
-        minmax(7.5rem, 0.5fr);
+        minmax(8rem, 0.5fr);
     }
 
     .match-settings .setup-field {
