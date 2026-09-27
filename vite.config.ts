@@ -5,6 +5,7 @@ import sharp from 'sharp';
 import { defineConfig, normalizePath, type Plugin } from 'vite';
 import { maximumGameLogBytes, writeGameLog } from './tools/game-log-writer.ts';
 import brandManifest from './src/assets/brand/brand-manifest.json' with { type: 'json' };
+import { readGameVersion } from './tools/game-version.ts';
 import { neuralPhonemizerPlugin } from './tools/neural-phonemizer-plugin.ts';
 
 export const productionContentSecurityPolicy = [
@@ -23,6 +24,12 @@ export const productionContentSecurityPolicy = [
 
 export default defineConfig(({ command }) => ({
   base: '/grand-transition/',
+  define: {
+    // The title screen shows this build-time version. See tools/game-version.ts.
+    __GAME_VERSION__: JSON.stringify(
+      readGameVersion(command === 'build' ? 'production' : 'development'),
+    ),
+  },
   server: {
     watch: {
       ignored: (watchedPath) => {

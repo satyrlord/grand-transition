@@ -108,6 +108,8 @@ test('subpath serves local assets and the exact policy after refresh', async ({
   expect(response?.status()).toBe(200);
   await expect(page).toHaveURL(baseURL!);
   await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
+  // A production build counts its commits. It never shows the development label.
+  await expect(page.locator('.title-version')).toHaveText(/^\s*Game version\s+v\d+\.[1-9]\d*\s*$/u);
   await page.evaluate(() => document.fonts.ready);
   await page.waitForLoadState('networkidle');
   for (const type of ['font', 'image', 'script', 'stylesheet']) {

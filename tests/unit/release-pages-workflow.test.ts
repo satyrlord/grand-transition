@@ -22,6 +22,7 @@ describe('Milestone 031 release workflow', () => {
     const qualityWorkflow = await readFile('.github/workflows/quality-gate.yml', 'utf8');
     expect(qualityWorkflow).toMatch(/\non:\n {2}pull_request:\n/u);
     expect(qualityWorkflow).toContain('run: npm run quality:full');
+    expect(qualityWorkflow).toMatch(/\n\s+fetch-depth: 0\n/u);
     expect(qualityWorkflow).not.toMatch(/deploy-pages|pages: write|id-token/u);
   });
 
@@ -102,6 +103,10 @@ describe('Milestone 031 release workflow', () => {
     ).toBe(true);
     expect([...positions].sort((a, b) => a - b)).toEqual(positions);
     expect(build).toMatch(/node-version: 24\n/u);
+    // The game version counts all commits, so the build checks out the full history.
+    expect(build).toMatch(
+      /uses: actions\/checkout@\S+ # v\S+\n\s+with:\n(?:\s+#.*\n)?\s+fetch-depth: 0\n/u,
+    );
     expect(build).toMatch(/key: lfs-\$\{\{ hashFiles\('\.lfs-assets-id'\) \}\}/u);
     expect(build).toMatch(
       /uses: actions\/upload-pages-artifact@\S+ # v\S+\n\s+with:\n\s+path: \.\/dist\n/u,

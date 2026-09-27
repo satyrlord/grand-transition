@@ -112,6 +112,7 @@ Each workflow pins each third-party action to a full commit SHA, with its releas
 Milestone 031 gave this rule first for the deployment workflow.
 Dependabot keeps the `github-actions` pins current through `.github/dependabot.yml`.
 The repository keeps PNG, WAV, OGG, MP3, ONNX, BIN, and WASM files in Git Large File Storage (LFS) through `.gitattributes`.
+Each workflow checks out the complete history (`fetch-depth: 0`), because the build counts the commits for the game version of Milestone 015.
 Each workflow restores the LFS objects from a cache after checkout, and it runs `git lfs pull` before it installs the dependencies.
 
 Collect the production TypeScript coverage from the component suite in a real browser.

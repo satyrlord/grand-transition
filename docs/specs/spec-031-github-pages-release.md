@@ -40,7 +40,8 @@ The build job and the deploy job are different jobs.
 The deploy job has a `needs` dependency on the build job.
 It cannot run after a build that failed, a canceled build, a build from a pull request, or a build that is not from `main`.
 
-The build job checks out the commit of the change and installs Node.js 24.
+The build job checks out the commit of the change with the complete history (`fetch-depth: 0`), because the game version counts the commits.
+It installs Node.js 24.
 It restores the Git LFS objects from a cache with a key from the LFS object list, and it runs `git lfs pull`.
 It installs the npm version in `packageManager` and runs `npm ci`.
 It installs Playwright Chromium and stable Chrome with their dependencies and runs `npm run ci`.
@@ -56,6 +57,7 @@ Add `npm run test:published -- --base-url <url>`.
 The command does not change the published state.
 It stops with a nonzero exit code when an assertion fails.
 These assertions are for the response, the assets, refresh, the CSP, runtime network requests, the speech state, and the full match.
+They also make sure that the title shows a production game version, not the development label.
 It runs in the Milestone 030 browser matrix: stable desktop Chrome and mobile Chrome.
 The optional `--artifact-dir <directory>` argument compares each file of an extracted Pages artifact with the served bytes.
 

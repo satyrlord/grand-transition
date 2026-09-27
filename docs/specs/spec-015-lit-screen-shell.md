@@ -28,6 +28,13 @@ Add hotseat mode, character choices, and scene choices, and let the player selec
 Subsequent milestones add artificial intelligence (AI), speech, and saved options when their behavior is in the code.
 
 The title screen shows the generated new game emblem, the live game name, three mode actions, and the satire disclaimer about fictional composites.
+The title footer also shows the game version as a small label, for example `v1.177`.
+The build makes the version from the major part of the `package.json` version and the number of commits that the built commit can reach (`git rev-list --count HEAD`).
+A production build stops when the Git history is missing or shallow, so a published label is always correct.
+The development server shows `v1.dev` in that case.
+The label has the accessible name prefix `Game version`.
+In the desktop layout, it is at the bottom right in the title frame, opposite the Channel 3 badge.
+In the compact layout, it is below the disclaimer.
 It uses the last visual system of the match and of Pause.
 Setup uses native controls, and it prevents only incorrect combinations.
 Mirror characters are correct.
@@ -272,6 +279,8 @@ The game does not disable submission only to hide the validation.
 - **AC-015-15:** Setup shows the stored game language in the `Phrase language` select for each mode.
   A change there updates the title Settings and the phrases of the next match, and it stays after a reload.
   `tests/browser/screen-shell.browser.test.ts` does checks of the select and the settings update.
+- **AC-015-16:** The title footer shows `v<major>.<commit count>` for a production build, and a production build without the complete history stops.
+  `tests/unit/game-version.test.ts`, `tests/browser/title-screen.browser.test.ts`, and the published smoke do checks of the version.
 
 ## Impeccable UI validation
 

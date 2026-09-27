@@ -1122,6 +1122,10 @@
   <source>Rehearsal match: Tutorial is on and there is no turn timer.</source>
   <target>Meci de repetiție: tutorialul este activ și nu există cronometru pentru rând.</target>
 </trans-unit>
+<trans-unit id="s65529929c59b9fd7">
+  <source>Game version</source>
+  <target>Versiunea jocului</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

@@ -192,6 +192,10 @@ export class GrandTransitionTitle extends LitElement {
         <p class="title-disclaimer">
           ${msg('All characters and events are fictional composites created for satire.')}
         </p>
+        <p class="title-version">
+          <span class="visually-hidden">${msg('Game version')}</span>
+          ${__GAME_VERSION__}
+        </p>
         ${
           this.historyOpen
             ? html`<grand-transition-match-history

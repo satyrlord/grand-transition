@@ -128,6 +128,7 @@
 's631dd8f2edc93f2d': `Înregistrare tehnică`,
 's63310947e6976083': `contra`,
 's64e024a428fb7396': `Continuă în orientare verticală`,
+'s65529929c59b9fd7': `Versiunea jocului`,
 's65bea29068a8d288': `Pierdere de mândrie`,
 's65e20e46b64ca73f': `Doi jucători necesită orientarea orizontală.`,
 's66722bc2ea775e05': `Indisponibil`,

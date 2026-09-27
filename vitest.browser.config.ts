@@ -3,6 +3,7 @@ import { existsSync, readdirSync } from 'node:fs';
 import { createServer } from 'node:net';
 import path from 'node:path';
 import { defineConfig } from 'vitest/config';
+import { readGameVersion } from './tools/game-version.ts';
 import { characterPortraitFallbackPlugin } from './vite.config.ts';
 
 const pureFileThresholds = Object.fromEntries(
@@ -15,6 +16,7 @@ const browserApiPort = await findAvailableLoopbackPort();
 export default defineConfig({
   plugins: [characterPortraitFallbackPlugin()],
   define: {
+    __GAME_VERSION__: JSON.stringify(readGameVersion('development')),
     // Inline the mode and runner marker verbatim. The runtime helper requires
     // both before it enables the slowest set.
     'process.env.GRAND_TRANSITION_QUALITY_GATE': JSON.stringify(

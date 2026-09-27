@@ -1073,6 +1073,20 @@
     user-select: text;
   }
 
+  /* The version mirrors the Channel 3 badge in the opposite corner of the
+     frame, so it never moves the menu. */
+  .title-version {
+    position: absolute;
+    z-index: 5;
+    right: clamp(1.55rem, 3vw, 2.75rem);
+    bottom: clamp(1.55rem, 3vw, 2.75rem);
+    margin: 0;
+    color: rgb(229 216 185 / 70%);
+    font: 400 0.75rem/1 var(--font-timer);
+    letter-spacing: 0.08em;
+    user-select: text;
+  }
+
   @keyframes title-curtain-light {
     to {
       clip-path: inset(0);

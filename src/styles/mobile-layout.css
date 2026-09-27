@@ -82,6 +82,12 @@
     .title-disclaimer {
       margin-top: 0;
     }
+    /* The frame is too close to the edge for a corner label here. */
+    .title-version {
+      position: static;
+      justify-self: center;
+      margin-top: -1rem;
+    }
     .title-voice-feedback {
       position: static;
       width: 100%;

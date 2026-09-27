@@ -24,6 +24,16 @@ test('renders the title screen in a real browser', async () => {
   }
 });
 
+test('shows the build version in the title footer', async () => {
+  document.body.innerHTML = '<grand-transition-title></grand-transition-title>';
+  await vi.waitFor(() => expect(document.querySelector('.title-version')).not.toBeNull());
+  const version = document.querySelector<HTMLElement>('.title-version')!;
+  expect(version.querySelector('.visually-hidden')?.textContent).toBe('Game version');
+  expect(version.textContent?.replace(/\s+/gu, ' ').trim()).toMatch(
+    /^Game version v1\.(?:[1-9]\d*|dev)$/u,
+  );
+});
+
 test('selects the manifest AVIF emblem and decodes WebP when AVIF is unsupported', async () => {
   document.body.innerHTML = '<grand-transition-title></grand-transition-title>';
   await vi.waitFor(() => expect(document.querySelector('.title-emblem')).not.toBeNull());
