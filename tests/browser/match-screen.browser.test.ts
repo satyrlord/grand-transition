@@ -271,6 +271,43 @@ test.each([
   },
 );
 
+test('grows each speech size with the speech record above 1920 by 1080', async () => {
+  const match = await startMatch();
+  const style = document.createElement('style');
+  style.textContent = titleScreenStyles + screenShellStyles + matchScreenStyles;
+  document.head.append(style);
+  const samples = {
+    regular: 'The transition will be televised.',
+    compact:
+      'The transition will be televised after the next consultation of the county council and the press.',
+    dense: `${Array(3).fill('The transition will be televised after the next consultation').join(', ')}.`,
+  };
+  try {
+    const proportions = async (width: number, height: number) => {
+      await page.viewport(width, height);
+      const result: Record<string, number> = {};
+      for (const [density, sentenceText] of Object.entries(samples)) {
+        match.snapshot = { ...match.snapshot!, sentenceText };
+        await match.updateComplete;
+        await nextAnimationFrame();
+        const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
+        expect(preview.dataset.density).toBe(density);
+        const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
+        result[density] =
+          Number.parseFloat(getComputedStyle(preview).fontSize) / ledger.offsetHeight;
+      }
+      return result;
+    };
+    const reference = await proportions(1920, 1080);
+    const large = await proportions(3840, 2160);
+    for (const density of Object.keys(samples)) {
+      expect(large[density]).toBeCloseTo(reference[density]!, 3);
+    }
+  } finally {
+    style.remove();
+  }
+});
+
 test('coalesces sentence and score scrolling from the latest rendered presentation before paint', async () => {
   const match = await startMatch();
   const snapshot = match.snapshot!;

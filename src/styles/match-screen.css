@@ -1160,7 +1160,10 @@
         100% 0.9rem no-repeat scroll;
     scrollbar-color: #242424 rgb(252 250 246);
     scrollbar-width: thin;
-    font: 900 clamp(1.02rem, 1.65vw, 1.62rem) / 1.14 var(--font-speech);
+    /* Each speech size reaches its 1080-pixel scene value there, and then grows
+       with the scene, so a larger speech record keeps the same text proportion. */
+    font: 900 clamp(1.02rem, 1.65vw, max(1.62rem, calc(var(--scene-height) * 0.024))) / 1.14
+      var(--font-speech);
     letter-spacing: 0.015em;
     text-align: left;
     text-transform: uppercase;
@@ -1173,12 +1176,16 @@
   }
 
   .sentence-preview[data-density='compact'] {
-    font-size: clamp(0.86rem, 1.25vw, 1.25rem);
+    font-size: clamp(0.86rem, 1.25vw, max(1.25rem, calc(var(--scene-height) * 0.0185)));
     line-height: 1.1;
   }
 
   .sentence-preview[data-density='dense'] {
-    font-size: clamp(0.72rem, calc(var(--scene-height) * 0.016), 1rem);
+    font-size: clamp(
+      0.72rem,
+      calc(var(--scene-height) * 0.016),
+      max(1rem, calc(var(--scene-height) * 0.0148))
+    );
     line-height: 1.08;
   }
 

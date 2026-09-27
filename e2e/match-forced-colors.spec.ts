@@ -101,16 +101,28 @@ async function assertPrideMeters(page: Page): Promise<void> {
       .ensureAlpha()
       .raw()
       .toBuffer({ resolveWithObject: true });
+    // Linux screenshots can shift a system color by a few levels, so compare
+    // each channel with a tolerance instead of exact bytes.
     let filledPixels = 0;
+    const colors = new Map<string, number>();
     for (let index = 0; index < data.length; index += 4) {
+      const pixel = [data[index]!, data[index + 1]!, data[index + 2]!];
+      const key = pixel.join(',');
+      colors.set(key, (colors.get(key) ?? 0) + 1);
       if (
-        data[index] === highlight[0] &&
-        data[index + 1] === highlight[1] &&
-        data[index + 2] === highlight[2]
+        pixel.every((channel, channelIndex) => Math.abs(channel - highlight[channelIndex]!) <= 24)
       )
         filledPixels += 1;
     }
-    expect(filledPixels).toBeGreaterThan((info.width * info.height) / 4);
+    const commonColors = [...colors]
+      .sort((first, second) => second[1] - first[1])
+      .slice(0, 4)
+      .map(([color, count]) => `${color} x${count}`)
+      .join('; ');
+    expect(
+      filledPixels,
+      `Highlight ${highlight.join(',')}; most common colors ${commonColors}`,
+    ).toBeGreaterThan((info.width * info.height) / 4);
   }
 }
 
