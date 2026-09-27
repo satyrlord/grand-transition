@@ -624,12 +624,11 @@ test('renders an immutable complete match snapshot and previews without changing
   style.textContent = matchScreenStyles;
   document.head.append(style);
   try {
-    const bluePicture = match.querySelector(
-      '.match-player[data-side="blue"] .character-state-drawing',
-    )!;
-    const redPicture = match.querySelector(
-      '.match-player[data-side="red"] .character-state-drawing',
-    )!;
+    // A hidden state frame has no layout box, so its computed transform is
+    // `none`. Which frame shows depends on how fast the images decode.
+    const visibleDrawing = '[data-state-visible="true"] .character-state-drawing';
+    const bluePicture = match.querySelector(`.match-player[data-side="blue"] ${visibleDrawing}`)!;
+    const redPicture = match.querySelector(`.match-player[data-side="red"] ${visibleDrawing}`)!;
     expect(getComputedStyle(bluePicture).transform).toBe('matrix(-1, 0, 0, 1, 0, 0)');
     expect(getComputedStyle(redPicture).transform).toBe('none');
     expect(getComputedStyle(bluePicture).pointerEvents).toBe('none');
