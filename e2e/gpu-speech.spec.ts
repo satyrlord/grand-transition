@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { createHash } from 'node:crypto';
 import manifest from '../src/audio/kokoro-gpu-manifest.json' with { type: 'json' };
 

@@ -1,4 +1,5 @@
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import type { GrandTransitionMatch } from '../src/app/screens/match-screen.ts';
 import type { MatchPlayerView } from '../src/app/match-screen-snapshot.ts';
 import type { RoundPresentationFrame } from '../src/app/round-presentation.ts';

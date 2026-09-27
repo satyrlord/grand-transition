@@ -1,6 +1,7 @@
 import { productionOrigin } from './helpers/production-preview.ts';
 import { lockInSetup } from './helpers/setup.ts';
-import { expect, test, type Locator, type Page } from '@playwright/test';
+import { type Locator, type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 import {
   clearStoredHistory,

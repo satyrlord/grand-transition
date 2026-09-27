@@ -1,6 +1,7 @@
 import { lockInSetup } from './helpers/setup.ts';
 import { pauseMockedClock, reachDeliveryTotal } from './helpers/presentation.ts';
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 
 const targetCards = [

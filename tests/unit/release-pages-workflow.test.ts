@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { describe, expect, test } from 'vitest';
 
 const workflowPath = '.github/workflows/release-github-pages.yml';
@@ -23,6 +23,18 @@ describe('Milestone 031 release workflow', () => {
     expect(qualityWorkflow).toMatch(/\non:\n {2}pull_request:\n/u);
     expect(qualityWorkflow).toContain('run: npm run quality:full');
     expect(qualityWorkflow).not.toMatch(/deploy-pages|pages: write|id-token/u);
+  });
+
+  test('is the only workflow that can deploy to GitHub Pages', async () => {
+    const workflowFiles = await readdir('.github/workflows');
+    const deployers: string[] = [];
+    for (const file of workflowFiles) {
+      const workflow = await readFile(`.github/workflows/${file}`, 'utf8');
+      if (/actions\/deploy-pages@|upload-pages-artifact@|pages: write/u.test(workflow)) {
+        deployers.push(`.github/workflows/${file}`);
+      }
+    }
+    expect(deployers).toEqual([workflowPath]);
   });
 
   test('gives each job only the permissions that it needs', async () => {

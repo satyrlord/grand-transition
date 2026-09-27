@@ -1,7 +1,8 @@
 import { lockInSetup } from './helpers/setup.ts';
 import { finishPresentation } from './helpers/presentation.ts';
 import type { RoundPresentationFrame } from '../src/app/round-presentation.ts';
-import { expect, test, type Locator, type Page } from '@playwright/test';
+import { type Locator, type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 import { gateViewports } from './helpers/viewports.ts';
 

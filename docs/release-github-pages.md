@@ -21,7 +21,6 @@ If this document does not agree with the specification, obey the specification.
 | Pages subpath           | `/grand-transition/`                             |
 | Deployed URL            | <https://satyrlord.github.io/grand-transition/>  |
 | Release workflow        | `.github/workflows/release-github-pages.yml`     |
-| Tester workflow         | `.github/workflows/deploy-github-pages.yml`      |
 | Pull-request workflow   | `.github/workflows/quality-gate.yml`             |
 | Pages environment       | `github-pages`                                   |
 | Pages concurrency group | `pages`, with `cancel-in-progress: false`        |
@@ -56,16 +55,14 @@ A failed published smoke makes the workflow run fail, and that run is not a rele
 Pull requests run the Milestone 002 quality workflow.
 That workflow runs the same full gate, and it has no deployment job.
 
-## Tester path
+## Removed tester workflow
 
-The tester workflow publishes the last `main` build for testers and early adopters.
-It runs `npm ci` and `npm run build`, and it deploys `dist/` without the release gate or the published smoke.
-A tester deployment is not a Milestone 031 release.
-
-The two workflows deploy to the same Pages site.
-Both use the `pages` concurrency group, so only one deployment runs at a time.
-The release workflow runs longer, so for one push its tested artifact deploys after the tester artifact.
-Examine the `published-smoke` job of the release run to know that the site serves the tested artifact.
+The repository had a tester workflow, `.github/workflows/deploy-github-pages.yml`.
+It deployed each `main` build after only `npm run build`, to the same Pages site.
+It was removed on 2026-09-27, because it put builds that did not pass the gate on the site,
+and it could replace the site during the `published-smoke` job of a release.
+The specification gives all the reasons.
+The release workflow is now the only workflow that deploys to Pages.
 
 ## Published smoke
 
@@ -121,7 +118,8 @@ Rehearse the recovery on a branch, so that no production artifact changes:
 
 ## Impeccable validation
 
-The audit and the critique examined the published tester build of `ebef97b` on 2026-09-27.
+The audit and the critique examined the published build of `ebef97b` on 2026-09-27.
+The removed tester workflow deployed that build.
 They used Impeccable skill 0.1.5 and detector command-line interface 4.0.0.
 The records are `.impeccable/audit/spec-031-published-release.md` and
 `.impeccable/critique/2026-09-27T12-53-35Z__satyrlord-github-io-grand-transition.md`.

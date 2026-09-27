@@ -1,6 +1,7 @@
 import { lockInSetup } from './helpers/setup.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import captainContent from '../src/content/characters/black-sea-captain-phrase-cards.json' with { type: 'json' };
 // Keep this spec free of application modules that pull in Vite-only virtual
 // imports: Playwright loads it through the default ESM loader.

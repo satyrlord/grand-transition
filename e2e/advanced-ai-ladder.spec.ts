@@ -1,5 +1,6 @@
 import { finishPresentation } from './helpers/presentation.ts';
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import {
   ladderProgressStorageKey,
   removeStoredDocument,

@@ -102,13 +102,19 @@ export async function clearStoredHistory(page: Page): Promise<void> {
 }
 
 /**
- * Stores default settings before each page load when none exist, as a
- * returning player has. Such a browser skips the Milestone 020 rehearsal match.
+ * Stores default settings on each page load when none exist, as a returning
+ * player has. Such a browser skips the Milestone 020 rehearsal match. The write
+ * waits until the document is interactive, so the init scripts of the test
+ * store their own settings first. The application reads Web Storage only
+ * after it opens its database, which is later.
  */
 export async function useReturningPlayerSettings(page: Page): Promise<void> {
   await page.addInitScript(
     ({ key, value }) => {
-      if (localStorage.getItem(key) === null) localStorage.setItem(key, value);
+      document.addEventListener('readystatechange', () => {
+        if (document.readyState !== 'interactive') return;
+        if (localStorage.getItem(key) === null) localStorage.setItem(key, value);
+      });
     },
     { key: settingsStorageKey, value: encodeSettings(defaultSettings) },
   );

@@ -317,6 +317,18 @@ A review that uses only the source code does not satisfy them.
     a full scene phrase pool, and local boom-bap music. It includes
     related production-browser evidence. The catalog-driven Ladder scene order
     includes the new scene automatically.
+33. [Test and layout resilience](spec-033-test-and-layout-resilience.md). Budget: 6.
+    Draft, not approved. Tests declare their storage profile, the gate reports all
+    failures, an optional pre-push check needs a gate pass, and one shared test
+    checks the layout regions of each primary screen.
+34. [Who said that?](spec-034-who-said-that.md). Budget: 10. Draft, not approved.
+    After a match, the game shows which committed phrases come from real speech,
+    and in which context, with no names or links. It adds a Real-or-invented
+    guess and a local quote archive.
+35. [Party mode with room codes](spec-035-party-mode-room-codes.md). Budget: 12.
+    Draft, not approved. A host screen runs the game, and each player uses a phone
+    as a controller with a private hand. A Cloudflare relay joins them through a
+    room code. It changes the online-play scope rule of this index.
 
 Each milestone obeys its **Depends on** field.
 Milestone file names, headings, acceptance IDs, and references use the same numeric identifier.

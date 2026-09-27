@@ -1,5 +1,5 @@
 import { lockInSetup } from './helpers/setup.ts';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 
 test.beforeEach(async ({ page }) => {

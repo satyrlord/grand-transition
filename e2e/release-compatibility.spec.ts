@@ -1,4 +1,5 @@
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import os from 'node:os';
 import type { MatchScreenSnapshot } from '../src/app/match-screen-snapshot.ts';
 import { loadGameContent } from '../tools/load-game-content.ts';

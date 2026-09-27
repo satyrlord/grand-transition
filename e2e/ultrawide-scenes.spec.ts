@@ -1,6 +1,6 @@
 import { lockInSetup } from './helpers/setup.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 
 for (const scene of [
   'county-council-ballroom',

@@ -1,5 +1,5 @@
 import { lockInSetup } from './helpers/setup.ts';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 
 test('the draft shows one unambiguous continuation cue', async ({ page }) => {
   await page.goto('/grand-transition/');

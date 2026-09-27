@@ -1,4 +1,5 @@
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { defaultSettings } from '../src/persistence/codecs/settings-codec.ts';
 
 async function holdGpu(page: Page, speechEnabled = true) {

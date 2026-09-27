@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { gateViewports } from './helpers/viewports.ts';
 
 const viewports = [

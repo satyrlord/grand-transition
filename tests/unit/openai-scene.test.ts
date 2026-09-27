@@ -1,5 +1,5 @@
 import { execFileSync, spawnSync } from 'node:child_process';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
@@ -212,6 +212,8 @@ describe('OpenAI scene generation and credit controls', () => {
   });
 
   test('existing run paths fail before credential loading or generation', async () => {
+    // A clean checkout has no ignored `tmp/` folder.
+    await mkdir(path.resolve('tmp'), { recursive: true });
     const dir = await mkdtemp(path.resolve('tmp/flare-existing-run-'));
     roots.push(dir);
     const result = spawnSync(
@@ -236,6 +238,7 @@ describe('OpenAI scene generation and credit controls', () => {
   });
 
   test('native preparation rejects invalid input without writing output or replacing evidence', async () => {
+    await mkdir(path.resolve('tmp'), { recursive: true });
     const dir = await mkdtemp(path.resolve('tmp/flare-native-output-'));
     roots.push(dir);
     const input = path.join(dir, 'input.png'),

@@ -1395,7 +1395,11 @@ reaction, or a character state is replaced or updated, the layout shift is
 
 - **AC-023-02:** From masters with no changes, Sharp makes the variant
   dimensions and paths again with the same bytes. Each file is in its budget for each
-  file and in the package budget.
+  file and in the package budget. The AVIF encoder output depends on the platform
+  and the CPU. Thus on a platform that did not build the shipped files, an AVIF
+  variant keeps its format and dimensions, a byte size in 10 percent, and a mean
+  absolute pixel difference of 2.5 or less. WebP variants keep the same bytes on
+  each platform.
 - **AC-023-03:** Browser tests select AVIF when the browser can use it, and
   they use WebP as the fallback. They keep the dimensions before decode, and
   they load no unselected match package.

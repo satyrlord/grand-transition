@@ -1,5 +1,6 @@
 import { lockInSetup } from './helpers/setup.ts';
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import type { MatchState } from '../src/engine/match-lifecycle.ts';
 import type { RoundPresentationFrame } from '../src/app/round-presentation.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';

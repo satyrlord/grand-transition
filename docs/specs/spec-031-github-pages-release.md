@@ -75,19 +75,28 @@ It records the Milestone 030 evidence links, the deviations, and the release dat
 Recovery is a revert on `main`, and then the same full build, gate, deploy, and smoke process.
 Do not deploy a historical artifact that has no tests directly.
 
-## Tester and early-adopter deployment
+## Removed tester deployment
 
-The repository also has a different pre-release workflow at `.github/workflows/deploy-github-pages.yml`.
-It publishes the last `main` build for testers and early adopters.
-It runs for a push to `main`, or for a manual dispatch that selects `main`.
-It runs `npm ci` and `npm run build`.
-Then it uploads only `dist/` and deploys that artifact through the `github-pages` environment.
+An earlier version of this milestone had a tester workflow at `.github/workflows/deploy-github-pages.yml`.
+It ran for each push to `main`, and it ran only `npm ci` and `npm run build`.
+Then it deployed `dist/` to the same Pages site as the release workflow.
+It gave testers and early adopters the last `main` build before the release workflow existed.
 
-This path does not run `npm run ci`, `npm run test:published`, the full browser matrix, or the smoke test for the full match.
-It also does not collect release evidence, and it does not do a recovery rehearsal.
-It does not deploy pull requests or other branches.
-A tester deployment that passes is not a Milestone 031 release, and it does not complete the minimum viable product.
-The full release path continues to control AC-031-01 through AC-031-06.
+The release workflow replaced it, and the repository removed it on 2026-09-27, for these reasons:
+
+- A repository has only one Pages site.
+  Each tester deployment replaced the published site with a build that did not pass `npm run ci`.
+  Thus a commit that the release gate stopped was also on the site, and AC-031-01 and AC-031-03 were not true in practice.
+- The release workflow runs for each push to `main`, so it gives testers the same last build after the full gate.
+  The only difference was time: approximately 5 minutes for the tester build, and approximately 25 minutes for the release.
+- The `published-smoke` job of the release is not in the `pages` concurrency group.
+  A tester deployment of a later push could replace the site during that job.
+  Then the digest check could fail for a cause that was not a defect, and the release record could be wrong.
+- A concurrency group keeps only one pending run.
+  A tester run that was pending could cancel a pending release deployment.
+
+Do not add a different workflow that deploys to Pages.
+To publish again without a new commit, dispatch the release workflow manually from `main`.
 
 ## Acceptance criteria
 
@@ -101,11 +110,9 @@ The full release path continues to control AC-031-01 through AC-031-06.
 - **AC-031-05:** The release documentation contains each necessary value, and its artifact digest agrees with the deployed build.
 - **AC-031-06:** A recovery rehearsal uses a Pages artifact that is not production.
   It shows the sequence of revert, rebuild, gate, deploy, and smoke, and it does all these steps.
-- **AC-031-07:** The tester workflow runs for `main` pushes and for manual dispatch from `main`.
-  Its deploy job can run only after the build job passes.
-  Pull requests and workflow dispatches that are not from `main` do not deploy.
-- **AC-031-08:** The tester workflow installs the lockfile dependencies, runs the production build, and uploads only `dist/`.
-  It does not run the full release gate or the published smoke command.
+- **AC-031-07:** The release workflow is the only workflow that can deploy to Pages.
+  No other workflow has `pages: write`, `upload-pages-artifact`, or `deploy-pages`.
+- **AC-031-08:** Removed. It was the build contract of the removed tester workflow.
 
 ## Impeccable UI validation
 
@@ -122,9 +129,6 @@ The published `/grand-transition/` URL passes the asset, refresh, CSP, speech-st
 Record the evidence for the Chromium and mobile Chrome versions in the Milestone 030 support matrix.
 The minimum viable product (MVP) is completed.
 Stop before the post-MVP scope.
-
-The tester path is completed when its workflow contract test passes and a `main` run that passes publishes the last build.
-This evidence is not sufficient for the full release acceptance criteria above.
 
 ## Reference
 

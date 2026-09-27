@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import sharp from 'sharp';
 import { loadGameContent } from '../tools/load-game-content.ts';
 import { gateViewports } from './helpers/viewports.ts';

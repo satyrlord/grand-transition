@@ -1,5 +1,5 @@
 import { lockInSetup } from './helpers/setup.ts';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 

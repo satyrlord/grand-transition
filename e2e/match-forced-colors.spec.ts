@@ -1,5 +1,6 @@
 import { lockInSetup } from './helpers/setup.ts';
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import sharp from 'sharp';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 

@@ -1,5 +1,6 @@
 import { lockInSetup } from './helpers/setup.ts';
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { fullQualityGateRequested } from '../tools/quality-gate-mode.ts';
 import {
   copyFileSync,

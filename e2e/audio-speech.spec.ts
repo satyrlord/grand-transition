@@ -1,6 +1,7 @@
 import { productionOrigin } from './helpers/production-preview.ts';
 import { lockInSetup } from './helpers/setup.ts';
-import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { type Page, type TestInfo } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { writeFile } from 'node:fs/promises';
 import { effectIds, sceneMusicTrackIds } from '../src/audio/audio-port.ts';
 import { defaultSettings } from '../src/persistence/codecs/settings-codec.ts';

@@ -1,5 +1,5 @@
 import { lockInSetup } from './helpers/setup.ts';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { stat } from 'node:fs/promises';
 import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
 import chairman from '../src/content/characters/red-folded-chairman-phrase-cards.json' with { type: 'json' };

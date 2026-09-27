@@ -1,5 +1,6 @@
 import { lockInSetup } from './helpers/setup.ts';
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import {
   removeStoredDocument,
   settingsStorageKey as settingsKey,
@@ -475,30 +476,36 @@ async function assertDialogGeometry(page: Page): Promise<void> {
   });
 }
 
-test('a new browser gets one rehearsal match with Tutorial and no turn timer', async ({ page }) => {
-  await page.setViewportSize({ width: 1280, height: 720 });
-  await page.goto('/grand-transition/');
-  await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
-  await expect(
-    page.getByText('Rehearsal match: Tutorial is on and there is no turn timer.'),
-  ).toBeVisible();
-  await expect(page.getByLabel('Phrase language')).toHaveValue('ro-RO');
-  await page.getByLabel('Phrase language').selectOption('en');
-  await lockInSetup(page);
-  await page.getByRole('button', { name: 'Start match', exact: true }).click();
-  await expect(page.locator('[data-timer="unlimited"]')).toBeVisible();
-  await expect(page.locator('button.phrase-card[data-tutorial="true"]').first()).toBeVisible();
-  const stored = await storedJson(page, settingsKey);
-  expect(stored).toMatchObject({ gameLocale: 'en', turnTimerSeconds: 30, tutorialMode: false });
-  await page.screenshot({ path: 'tmp/rehearsal/rehearsal-match-1280x720.png' });
+test.describe('first run', () => {
+  test.use({ storedProfile: 'first-run' });
 
-  // A stored settings document means this browser now has player choices.
-  await page.reload();
-  await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
-  await expect(page.getByLabel('Phrase language')).toHaveValue('en');
-  await expect(page.locator('.setup-rehearsal-note')).toHaveCount(0);
-  await lockInSetup(page);
-  await page.getByRole('button', { name: 'Start match', exact: true }).click();
-  await expect(page.locator('[data-timer="30"]')).toBeVisible();
-  await expect(page.locator('button.phrase-card[data-tutorial="true"]')).toHaveCount(0);
+  test('a new browser gets one rehearsal match with Tutorial and no turn timer', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto('/grand-transition/');
+    await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
+    await expect(
+      page.getByText('Rehearsal match: Tutorial is on and there is no turn timer.'),
+    ).toBeVisible();
+    await expect(page.getByLabel('Phrase language')).toHaveValue('ro-RO');
+    await page.getByLabel('Phrase language').selectOption('en');
+    await lockInSetup(page);
+    await page.getByRole('button', { name: 'Start match', exact: true }).click();
+    await expect(page.locator('[data-timer="unlimited"]')).toBeVisible();
+    await expect(page.locator('button.phrase-card[data-tutorial="true"]').first()).toBeVisible();
+    const stored = await storedJson(page, settingsKey);
+    expect(stored).toMatchObject({ gameLocale: 'en', turnTimerSeconds: 30, tutorialMode: false });
+    await page.screenshot({ path: 'tmp/rehearsal/rehearsal-match-1280x720.png' });
+
+    // A stored settings document means this browser now has player choices.
+    await page.reload();
+    await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
+    await expect(page.getByLabel('Phrase language')).toHaveValue('en');
+    await expect(page.locator('.setup-rehearsal-note')).toHaveCount(0);
+    await lockInSetup(page);
+    await page.getByRole('button', { name: 'Start match', exact: true }).click();
+    await expect(page.locator('[data-timer="30"]')).toBeVisible();
+    await expect(page.locator('button.phrase-card[data-tutorial="true"]')).toHaveCount(0);
+  });
 });

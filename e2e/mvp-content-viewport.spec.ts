@@ -1,5 +1,6 @@
 import { lockInSetup } from './helpers/setup.ts';
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
 import { loadGameContent } from '../tools/load-game-content.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';

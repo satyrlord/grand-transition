@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { mergeRomanianMessageFiles } from '../../src/localization/ro-game-locale.ts';
 import type { GameLocaleBundle } from '../../src/localization/game-locale-schema.ts';
@@ -198,6 +198,8 @@ describe('game-locale bundle validation', () => {
 
   test('the shipped-locale gate reports name mismatch and relation tails', () => {
     const tmpRoot = path.resolve(process.cwd(), 'tmp');
+    // A clean checkout has no ignored `tmp/` folder.
+    mkdirSync(tmpRoot, { recursive: true });
     const fixtureRoot = mkdtempSync(path.join(tmpRoot, 'locale-gate-'));
     expect(fixtureRoot.startsWith(`${tmpRoot}${path.sep}`)).toBe(true);
     try {

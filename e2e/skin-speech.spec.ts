@@ -1,5 +1,6 @@
 import { lockInSetup } from './helpers/setup.ts';
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { writeFile } from 'node:fs/promises';
 import type { MatchState } from '../src/engine/match-lifecycle.ts';
 import {

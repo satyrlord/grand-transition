@@ -6,7 +6,7 @@
 // the least-capable supported environment we can reproduce locally: Chromium
 // with the CPU throttled to a low-end machine and the HTTP cache disabled.
 
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import os from 'node:os';
 import { writeFile } from 'node:fs/promises';
 import {

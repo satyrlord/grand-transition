@@ -18,7 +18,12 @@ import {
   encodeLadderProgress,
 } from '../../src/persistence/codecs/ladder-progress-codec.ts';
 import { ladderProgressStorageKey } from '../../src/persistence/ladder-progress.ts';
-import { reloadStoredData, resetStoredData, storedDocument } from './persistence-test-helpers.ts';
+import {
+  reloadStoredData,
+  resetStoredData,
+  storeReturningPlayerSettings,
+  storedDocument,
+} from './persistence-test-helpers.ts';
 
 // The ladder has one rung per playable scene.
 const shippedRungCount = gameCatalog.scenes.length;
@@ -527,6 +532,9 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
     (array as Uint32Array)[0] = 22_026;
     return array;
   });
+  // A returning player sees the ladder instruction, not the rehearsal notice.
+  await reloadStoredData();
+  await storeReturningPlayerSettings();
   let app = await mountApp();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await page.getByRole('button', { name: 'Back', exact: true }).click();

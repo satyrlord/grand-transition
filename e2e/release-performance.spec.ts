@@ -1,5 +1,6 @@
 import { productionBaseURL } from './helpers/production-preview.ts';
-import { chromium, expect, test, type CDPSession, type Locator, type Page } from '@playwright/test';
+import { chromium, type CDPSession, type Locator, type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { open, readFile, writeFile } from 'node:fs/promises';

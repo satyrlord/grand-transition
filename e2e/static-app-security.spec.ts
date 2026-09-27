@@ -1,7 +1,8 @@
 import { productionOrigin } from './helpers/production-preview.ts';
 import { lockInSetup } from './helpers/setup.ts';
 import { finishPresentation } from './helpers/presentation.ts';
-import { expect, test, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { expect, test } from './helpers/fixtures.ts';
 import { readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { gzipSync } from 'node:zlib';

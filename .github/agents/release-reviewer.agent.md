@@ -32,10 +32,9 @@ Examine the production Content Security Policy (CSP) and the network restriction
 Make sure that the build makes `dist/`, and that the repository does not commit it.
 Make sure that production has no developer tools.
 Make sure that the release deployment uploads only the tested artifact.
-Keep the Milestone 031 tester workflow apart from the last release workflow.
+Make sure that the release workflow is the only workflow that deploys to Pages.
+Milestone 031 removed the tester workflow, which deployed builds without the full quality gate.
 
-The tester path builds and publishes `dist/` without the full quality gate.
-A tester deployment does not complete the release.
 A performance result does not have verification until the evidence records the environment, the workload, the method, and the result.
 
 When command output is available, examine it.

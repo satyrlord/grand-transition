@@ -1,6 +1,7 @@
 import { copyFile, mkdtemp, readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
+import sharp from 'sharp';
 import { expect, test } from 'vitest';
 import manifest from '../../src/assets/brand/brand-manifest.json' with { type: 'json' };
 import {
@@ -54,9 +55,26 @@ test('Sharp reproduces the shipped brand package and rejects changed source byte
       );
     }
     const rebuilt = await buildBrandAssets(root);
-    expect(rebuilt).toEqual(manifest);
-    expect(await validateBrandAssets(root)).toEqual(manifest);
-    const file = manifest.assets[0]!.variants[0]!.path;
+    // WebP output is the same on each platform. AVIF output depends on the
+    // platform and the CPU, so an AVIF variant keeps its format and dimensions,
+    // a byte size in 10 percent, and almost the same pixels. A quality change
+    // moves the byte size, and a geometry change moves the pixels.
+    expect(withoutAvifBytes(rebuilt)).toEqual(withoutAvifBytes(manifest));
+    for (const [assetIndex, asset] of manifest.assets.entries()) {
+      for (const [variantIndex, variant] of asset.variants.entries()) {
+        if (variant.format !== 'avif') continue;
+        const rebuiltBytes = rebuilt.assets[assetIndex]!.variants[variantIndex]!.bytes;
+        expect(Math.abs(rebuiltBytes - variant.bytes) / variant.bytes).toBeLessThanOrEqual(0.1);
+        expect(
+          await meanAbsoluteDifference(
+            path.join(root, variant.path),
+            path.resolve('src/assets/brand', variant.path),
+          ),
+        ).toBeLessThanOrEqual(2.5);
+      }
+    }
+    expect(await validateBrandAssets(root)).toEqual(rebuilt);
+    const file = manifest.assets[0]!.variants.find((variant) => variant.format === 'webp')!.path;
     expect(await readFile(path.join(root, file))).toEqual(
       await readFile(path.resolve('src/assets/brand', file)),
     );
@@ -69,3 +87,24 @@ test('Sharp reproduces the shipped brand package and rejects changed source byte
     if (path.dirname(root) === os.tmpdir()) await rm(root, { recursive: true, force: true });
   }
 }, 120_000);
+
+type VariantFacts = { format: string; bytes: number; sha256: string };
+
+function withoutAvifBytes(value: { assets: readonly { variants: readonly VariantFacts[] }[] }) {
+  return value.assets.map((asset) => ({
+    ...asset,
+    variants: asset.variants.map((variant) =>
+      variant.format === 'avif' ? { ...variant, bytes: 0, sha256: '' } : variant,
+    ),
+  }));
+}
+
+async function meanAbsoluteDifference(first: string, second: string): Promise<number> {
+  const [a, b] = await Promise.all(
+    [first, second].map((file) => sharp(file).ensureAlpha().raw().toBuffer()),
+  );
+  expect(a!.length).toBe(b!.length);
+  let total = 0;
+  for (let index = 0; index < a!.length; index += 1) total += Math.abs(a![index]! - b![index]!);
+  return total / a!.length;
+}
