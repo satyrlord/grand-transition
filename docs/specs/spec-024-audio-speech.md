@@ -553,10 +553,8 @@ calls and neural calls.
   during speech. Victory waits for the two deliveries. Milestone 025 tests do
   checks of scores, total, damage, and automatic progression.
 - **AC-024-06:** Signal tests, routing tests, and production-browser tests
-  record the Chromium, Firefox, and WebKit runtimes and the available audio
-  support. Unsupported audio uses the tested silent fallback. Windows
-  Playwright WebKit does not have Web Audio. Its fallback result does not show
-  WebKit output that a person can hear.
+  record the Chromium runtime and the available audio support.
+  Unsupported audio uses the tested silent fallback.
   Listening observations and physical-device observations are optional. They
   are not necessary to complete the milestone.
 - **AC-024-07:** GPU asset tests and worker tests reject changed packages,

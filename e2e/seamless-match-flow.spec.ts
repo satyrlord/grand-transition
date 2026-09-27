@@ -1,3 +1,4 @@
+import { productionOrigin } from './helpers/production-preview.ts';
 import { lockInSetup } from './helpers/setup.ts';
 import {
   finishPresentation,
@@ -43,7 +44,7 @@ test('a hotseat match reaches persistent victory and restores title history', as
     const url = new URL(request.url());
     if (
       (url.protocol === 'http:' || url.protocol === 'https:') &&
-      url.origin !== 'http://127.0.0.1:4173'
+      url.origin !== productionOrigin
     ) {
       remoteRequests.push(request.url());
     }

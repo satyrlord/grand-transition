@@ -1,6 +1,7 @@
 import { defineConfig, devices, type Project } from '@playwright/test';
 import path from 'node:path';
 import { fullQualityGateRequested } from './tools/quality-gate-mode.ts';
+import { productionBaseURL, productionTestPort } from './e2e/helpers/production-preview.ts';
 
 const developmentGameLogDirectory = path.resolve(process.cwd(), 'logs', 'test');
 // The quality gate sets this marker after its validate phase has checked every
@@ -21,29 +22,13 @@ const projects: Project[] = [
   },
 ];
 if (fullQualityGateRequested()) {
-  // These engines are supplemental evidence, not installed Safari or mobile browsers.
-  projects.push(
-    {
-      name: 'firefox-audio',
-      testMatch: ['**/audio-speech.spec.ts', '**/release-compatibility.spec.ts'],
-      use: { browserName: 'firefox' },
-    },
-    {
-      name: 'webkit-audio',
-      testMatch: ['**/audio-speech.spec.ts', '**/release-compatibility.spec.ts'],
-      use: { browserName: 'webkit' },
-    },
-    {
-      name: 'mobile-webkit',
-      testMatch: ['**/release-compatibility.spec.ts', '**/mobile-layout.spec.ts'],
-      use: { ...devices['iPhone 13 landscape'] },
-    },
-  );
   projects.push({
     name: 'release-performance',
     testMatch: '**/release-performance.spec.ts',
     workers: 1,
     retries: 0,
+    // The benchmark owns native CDP traces; avoid UI snapshots and duplicate recording.
+    use: { trace: 'off' },
     dependencies: projects.map(({ name }) => name!),
   });
 }
@@ -58,15 +43,15 @@ export default defineConfig({
   reporter: 'line',
   projects,
   use: {
-    baseURL: 'http://127.0.0.1:4173/grand-transition/',
+    baseURL: productionBaseURL,
     headless: true,
     trace: 'retain-on-failure',
   },
   webServer: [
     {
-      command: `${build} && npm run preview -- --host 127.0.0.1 --strictPort`,
-      url: 'http://127.0.0.1:4173/grand-transition/',
-      reuseExistingServer: !process.env.CI,
+      command: `${build} && npm run preview -- --host 127.0.0.1 --port ${productionTestPort} --strictPort`,
+      url: productionBaseURL,
+      reuseExistingServer: false,
       timeout: 300_000,
     },
     {
@@ -75,7 +60,7 @@ export default defineConfig({
       env: {
         GRAND_TRANSITION_LOG_DIR: developmentGameLogDirectory,
       },
-      reuseExistingServer: !process.env.CI,
+      reuseExistingServer: false,
       timeout: 120_000,
     },
   ],

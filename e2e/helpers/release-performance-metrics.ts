@@ -55,3 +55,76 @@ export function summarizeDecodeIntervals(intervals: readonly DecodeInterval[]) {
     spanMs: end - first.startTime,
   };
 }
+
+/** Nearest-rank percentile, so each result is an observed sample. */
+export function percentile(values: readonly number[], fraction: number): number {
+  if (values.length === 0) throw new Error('A percentile needs at least one sample.');
+  return values.toSorted((left, right) => left - right)[Math.ceil(values.length * fraction) - 1]!;
+}
+
+export type TimingTrial = Readonly<{
+  lcpMs: number;
+  inputDurationsMs: readonly number[];
+  frameIntervalsMs: readonly number[];
+  audioDecodeMs: number;
+}>;
+
+export type TimingBudget = Readonly<{
+  criterion: string;
+  measured: number;
+  limit: number;
+  comparison: '<' | '<=';
+  passed: boolean;
+}>;
+
+const timingLimits = {
+  cold: { lcpMedianMs: 2_500, lcpMaximumMs: 3_000 },
+  warm: { lcpMedianMs: 2_000, lcpMaximumMs: 2_500 },
+} as const;
+
+/**
+ * Timing budgets pool the samples of the five trials of one cache mode, so a
+ * single host-noise outlier cannot decide a tail metric of one small trial.
+ * Per-trial values stay in the report as diagnostics.
+ */
+export function evaluateTimingBudgets(
+  cache: 'cold' | 'warm',
+  trials: readonly TimingTrial[],
+): TimingBudget[] {
+  const lcp = trials.map((trial) => trial.lcpMs);
+  const inputs = trials.flatMap((trial) => trial.inputDurationsMs);
+  const frames = trials.flatMap((trial) => trial.frameIntervalsMs);
+  const budget = (
+    criterion: string,
+    measured: number,
+    comparison: '<' | '<=',
+    limit: number,
+  ): TimingBudget => ({
+    criterion: `${cache} ${criterion}`,
+    measured,
+    limit,
+    comparison,
+    passed: comparison === '<' ? measured < limit : measured <= limit,
+  });
+  return [
+    budget('LCP median', percentile(lcp, 0.5), '<=', timingLimits[cache].lcpMedianMs),
+    budget('LCP maximum', Math.max(...lcp), '<=', timingLimits[cache].lcpMaximumMs),
+    budget('pooled input duration p95', percentile(inputs, 0.95), '<', 150),
+    budget('pooled frame interval p95', percentile(frames, 0.95), '<=', 18.2),
+    budget(
+      'pooled fraction of frames above 50 ms',
+      frames.filter((duration) => duration > 50).length / frames.length,
+      '<',
+      0.02,
+    ),
+    budget(
+      'median selected audio decode',
+      percentile(
+        trials.map((trial) => trial.audioDecodeMs),
+        0.5,
+      ),
+      '<=',
+      1_000,
+    ),
+  ];
+}

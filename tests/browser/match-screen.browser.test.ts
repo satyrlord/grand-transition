@@ -30,6 +30,70 @@ afterEach(() => {
   document.body.innerHTML = '';
 });
 
+test.each([
+  { width: 1024, height: 720 },
+  { width: 1024, height: 768 },
+  { width: 1280, height: 720 },
+  { width: 1400, height: 1050 },
+  { width: 1920, height: 1080 },
+])(
+  'keeps the sentence preview stable when a hover adds wrapped lines at $width by $height',
+  async ({ width, height }) => {
+    const match = await startMatch();
+    const style = document.createElement('style');
+    style.textContent = titleScreenStyles + screenShellStyles + matchScreenStyles;
+    document.head.append(style);
+    const shifts: number[] = [];
+    const observer = new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        shifts.push((entry as PerformanceEntry & { value: number }).value);
+      }
+    });
+    try {
+      await page.viewport(width, height);
+      const snapshot = match.snapshot!;
+      const card = snapshot.sharedCards.find((candidate) => candidate.action === 'select')!;
+      const previewText =
+        'The committee promises another careful review after the next public consultation.';
+      match.snapshot = {
+        ...snapshot,
+        sentenceText: 'The committee',
+        sharedCards: snapshot.sharedCards.map((candidate) =>
+          candidate === card ? { ...candidate, previewText } : candidate,
+        ),
+      };
+      await match.updateComplete;
+      const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
+      await userEvent.hover(ledger);
+      await document.fonts.ready;
+      await nextAnimationFrame();
+      await nextAnimationFrame();
+      const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
+      const before = preview.getBoundingClientRect().toJSON();
+      observer.observe({ type: 'layout-shift' });
+      const control = match.querySelector<HTMLElement>(
+        `[data-card-id="${card.reference!.cardId}"]`,
+      )!;
+      control.dispatchEvent(new PointerEvent('pointerenter'));
+      await match.updateComplete;
+      await nextAnimationFrame();
+      await nextAnimationFrame();
+      expect(preview.textContent?.trim()).toBe(previewText);
+      expect(preview.getBoundingClientRect().toJSON()).toEqual(before);
+      control.dispatchEvent(new PointerEvent('pointerleave'));
+      await match.updateComplete;
+      await nextAnimationFrame();
+      await nextAnimationFrame();
+      expect(preview.textContent?.trim()).toBe('The committee');
+      expect(preview.getBoundingClientRect().toJSON()).toEqual(before);
+      expect(shifts.reduce((sum, value) => sum + value, 0)).toBe(0);
+    } finally {
+      observer.disconnect();
+      style.remove();
+    }
+  },
+);
+
 test('explains secret-police weakness in accessible phrase labels', async () => {
   const match = await startMatch();
   const snapshot = match.snapshot!;
@@ -1564,10 +1628,10 @@ test('keeps rejected shared-card focus and releases consumed focus before native
   expect(document.activeElement).toBe(button);
   expect(button.isConnected).toBe(true);
   const focusedAtRemoval: boolean[] = [];
-  const nativeRemove = button.remove;
+  const nativeRemove = button.remove.bind(button);
   const remove = vi.spyOn(button, 'remove').mockImplementation(() => {
     focusedAtRemoval.push(document.activeElement === button);
-    nativeRemove.call(button);
+    nativeRemove();
   });
   try {
     button.click();
@@ -1628,10 +1692,10 @@ test('releases draft-control focus before removing the draft for round review', 
   const button = match.querySelector<HTMLButtonElement>('.action-reshuffle')!;
   button.focus();
   const focusedAtRemoval: boolean[] = [];
-  const nativeRemove = draft.remove;
+  const nativeRemove = draft.remove.bind(draft);
   const remove = vi.spyOn(draft, 'remove').mockImplementation(() => {
     focusedAtRemoval.push(draft.contains(document.activeElement));
-    nativeRemove.call(draft);
+    nativeRemove();
   });
   try {
     match.snapshot = { ...snapshot, roundReview: true };

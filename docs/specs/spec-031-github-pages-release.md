@@ -20,7 +20,7 @@ The repository is `satyrlord/grand-transition`, the default branch is `main`, an
 After a rename, a transfer, a move to a root site, or a branch change, update the specification, Vite, Playwright, and the workflow together.
 
 The workflow installs Node.js 24 and runs `npm ci`.
-It installs Playwright Chromium, Firefox, and WebKit with their dependencies.
+It installs Playwright Chromium and stable Chrome with their dependencies.
 It runs `npm run ci`, and it uploads only `dist/` with the official Pages artifact action.
 It deploys only a `main` build that passes.
 Use only `contents: read`, `pages: write`, and `id-token: write`.
@@ -40,7 +40,7 @@ It cannot run after a build that failed, a canceled build, a build from a pull r
 The build job checks out the commit of the change and installs Node.js 24.
 It restores the Git LFS objects from a cache with a key from the LFS object list, and it runs `git lfs pull`.
 It installs the npm version in `packageManager` and runs `npm ci`.
-It installs the three Playwright browsers with their dependencies and runs `npm run ci`.
+It installs Playwright Chromium and stable Chrome with their dependencies and runs `npm run ci`.
 It uploads one artifact that contains only files from `dist/`.
 The artifact contains no repository file from other directories.
 Record the SHA-256 digest of the deployed artifact.
@@ -109,7 +109,7 @@ Apply the shared Impeccable evidence and severity gate in the milestone index.
 A pull request runs, but it does not deploy.
 `main` deploys the tested artifact.
 The published `/grand-transition/` URL passes the asset, refresh, CSP, speech-state, Milestone 030 browser-matrix, and full-match smoke tests.
-Record the evidence for the Safari version with the lowest supported version number, or give it the status "not examined".
+Record the evidence for the Chromium and mobile Chrome versions in the Milestone 030 support matrix.
 The minimum viable product (MVP) is completed.
 Stop before the post-MVP scope.
 

@@ -48,9 +48,13 @@ The Node runs, the Browser Mode runs, and the coverage runs do not include the c
 
 Only Playwright does not include the ladder flow and the content lifecycle.
 
-In `quality:quick`, Playwright also decreases its browser and viewport breadth.
-It runs the audio-speech specification only in Chromium.
-The Firefox and WebKit audio projects run only in the full gate.
+All browser tests use Chromium in both gate modes.
+Playwright starts its own production and development servers and does not reuse an existing server.
+The production preview uses port 4173 by default.
+Set `GRAND_TRANSITION_TEST_PORT` to an available TCP port when another local application uses that port.
+The preview, browser base URL, performance navigation, and local-request checks use the same configured origin.
+An occupied port fails the run instead of testing another application.
+In `quality:quick`, Playwright decreases its viewport breadth.
 Some Playwright tests are made one time for each viewport of a supported viewport matrix.
 `e2e/helpers/viewports.ts` selects one viewport for these tests.
 It selects the reference landscape viewport, 1280 by 720, or the first viewport when the matrix does not contain it.
@@ -61,13 +65,13 @@ All other checks stay the same as the full gate.
 
 `quality:full` runs all the checks in the same sequence.
 This includes the calibration, the content-balance matrix, the ladder flow, and the content lifecycle.
-It also includes each viewport of each matrix and the Firefox and WebKit audio projects.
+It also includes each viewport of each matrix.
 Milestone 030 adds release flows in Chromium and mobile Chromium to both gate modes.
 The Chromium projects use the installed stable Chrome channel.
 Mobile Chromium is a device profile, not a physical Android browser.
-The full gate adds supplemental Firefox, WebKit, and mobile WebKit release flows.
-Its stable-Chrome performance project runs last with one worker.
+The full gate's stable-Chrome performance project runs last with one worker.
 Only that project runs the five cold and five warm performance trials.
+On a hosted CI runner, it records the Milestone 030 timing budgets without enforcing them.
 Quick mode and direct quick test commands cannot select that workload.
 The quality workflow installs stable Chrome and keeps the performance records and traces for 14 days.
 `ci` is an alias of `quality:full`.
@@ -180,7 +184,7 @@ Do checks of the full setup and cleanup through the default `npm test` command a
 The E2E cases for reduced motion and long sentences keep all their assertions, and they pass with retries disabled.
 
 **AC-002-09:** `quality:quick` does not include the documented slowest set, which is 20 percent of the cumulative test time.
-It also does not include the Firefox and WebKit audio projects or the extra viewports of a viewport matrix.
+It also does not include the extra viewports of a viewport matrix or the Milestone 030 performance trials.
 `quality:full` and `ci` include all of them.
 The Playwright configuration and `e2e/helpers/viewports.ts` select this breadth from the same mode.
 The quality-gate runner exports the selected mode to all the child phases.

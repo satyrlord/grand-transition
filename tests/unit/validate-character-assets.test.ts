@@ -38,8 +38,11 @@ let fixtureReady: Promise<void>;
 
 async function prepareFixture(): Promise<void> {
   fixture = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-character-validation-'));
-  await cp(path.resolve('src', 'assets', 'characters'), fixture, {
+  const characterRoot = path.resolve('src', 'assets', 'characters');
+  await cp(characterRoot, fixture, {
     recursive: true,
+    // Selection validation does not read the separate animation-state package.
+    filter: (source) => source !== path.join(characterRoot, 'states'),
   });
   baseManifestText = await readFile(path.join(fixture, 'character-manifest.json'), 'utf8');
 }

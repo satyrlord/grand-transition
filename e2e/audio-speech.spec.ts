@@ -1,3 +1,4 @@
+import { productionOrigin } from './helpers/production-preview.ts';
 import { lockInSetup } from './helpers/setup.ts';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
@@ -197,25 +198,11 @@ test('native decoded menu, scene, cues, mute, and exit under production CSP', as
       !/\/assets\/[^/]+\.(?:ogg|mp3)$/u.test(new URL(request.url()).pathname)
     )
       errors.push('Unexpected asset fetch');
-    if (!request.url().startsWith('http://127.0.0.1:4173/')) errors.push('Nonlocal request');
+    if (!request.url().startsWith(`${productionOrigin}/`)) errors.push('Nonlocal request');
   });
   await page.goto('/grand-transition/');
   expect(await page.evaluate(() => window.audioEvidence.contexts.length)).toBe(0);
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
-  if (info.project.name === 'webkit-audio' && process.platform === 'win32') {
-    expect(await page.evaluate(() => typeof window.AudioContext)).toBe('undefined');
-    await expect(
-      page.getByText('Sound is unavailable. You can continue without sound.'),
-    ).toBeVisible();
-    expect(await page.evaluate(() => window.audioEvidence.starts)).toEqual([]);
-    expect(errors).toEqual([]);
-    await recordEvidence(page, info, 'audio-measurements', {
-      nativeAudio: 'unavailable in the Windows Playwright WebKit binary',
-      silentFallback: 'passed',
-      audiblePlayback: 'blocked; requires a WebKit environment with Web Audio',
-    });
-    return;
-  }
   await ready(page);
   await expect.poll(() => samplePeak(page)).toBeGreaterThan(0.001);
   const count = await page.evaluate(() => window.audioEvidence.starts.length);
@@ -285,28 +272,12 @@ test('native decoded menu, scene, cues, mute, and exit under production CSP', as
   });
 });
 
-test('every playable scene routes its distinct music treatment', async ({ page }, info) => {
+test('every playable scene routes its distinct music treatment', async ({ page }) => {
   test.setTimeout(120_000);
   await page.setViewportSize({ width: 1280, height: 720 });
   await probe(page);
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
-  if (info.project.name === 'webkit-audio' && process.platform === 'win32') {
-    await expect
-      .poll(() =>
-        page.evaluate(
-          () =>
-            (
-              document.querySelector('grand-transition-app') as unknown as {
-                audio: { status: string };
-              }
-            ).audio.status,
-        ),
-      )
-      .toBe('unavailable');
-    expect(await page.evaluate(() => window.audioEvidence.starts)).toEqual([]);
-    return;
-  }
   await ready(page);
   const scenes = Object.entries(sceneMusicTrackIds);
   for (const [index, [sceneId, trackId]] of scenes.entries()) {
@@ -465,14 +436,6 @@ test('real local neural speech narrates both public bubbles before Victory', asy
   await page.goto('/grand-transition/');
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await page.getByLabel('Speech enabled').check();
-  if (info.project.name === 'webkit-audio' && process.platform === 'win32') {
-    await expect(
-      page.getByText('Local neural speech is unavailable. You can continue without narration.'),
-    ).toBeVisible();
-    expect(errors).toEqual([]);
-    expect(requests.every((url) => url.startsWith('http://127.0.0.1:4173/'))).toBe(true);
-    return;
-  }
   const began = Date.now();
   await expect
     .poll(
@@ -582,7 +545,7 @@ test('real local neural speech narrates both public bubbles before Victory', asy
     result.players['player-one']!.insultText,
   ]);
   expect(commands.every((command) => command.voiceId === 'vctk-p226')).toBe(true);
-  expect(requests.every((url) => url.startsWith('http://127.0.0.1:4173/'))).toBe(true);
+  expect(requests.every((url) => url.startsWith(`${productionOrigin}/`))).toBe(true);
   expect(errors).toEqual([]);
   const timings = await page.evaluate(
     () =>

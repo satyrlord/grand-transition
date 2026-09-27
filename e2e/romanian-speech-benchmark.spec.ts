@@ -21,10 +21,6 @@ test.skip(
   process.env.GRAND_TRANSITION_BENCHMARK !== '1',
   'Set GRAND_TRANSITION_BENCHMARK=1 to record the Romanian speech benchmark.',
 );
-test.skip(
-  ({ browserName }) => browserName !== 'chromium',
-  'CPU throttling and heap sampling need Chromium.',
-);
 
 const cpuThrottleRate = 4;
 const synthesisTimeoutMs = 60_000;

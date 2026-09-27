@@ -45,7 +45,6 @@ test('title reaches victory and reload restores history when speech is unavailab
   test.setTimeout(120_000);
   await page.addInitScript(() => {
     Object.defineProperty(window, 'AudioContext', { configurable: true, value: undefined });
-    Object.defineProperty(window, 'webkitAudioContext', { configurable: true, value: undefined });
   });
   await page.clock.install();
   await page.goto('');
@@ -198,6 +197,9 @@ for (const viewport of gateViewports([
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await page.clock.install();
     await page.clock.pauseAt(new Date(Date.now() + 1000));
+    await expect
+      .poll(() => page.evaluate(() => ({ width: innerWidth, height: innerHeight })))
+      .toEqual(viewport);
     const longestPhrases = catalog.locales.map(
       (locale) =>
         catalog.phrases

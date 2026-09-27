@@ -46,7 +46,7 @@ function audioHarness() {
         },
         cancelScheduledValues: vi.fn((startTime: number) => {
           // A value curve's event time is its start time, so a curve that has
-          // already begun stays active, exactly as Firefox keeps it.
+          // already begun stays active.
           if (curveStart !== null && curveStart >= startTime && curveStart > context.currentTime) {
             curveStart = null;
           }
@@ -295,8 +295,8 @@ describe('audio adapters', () => {
     audio.setScene('transition-era-television-studio');
     const fade = params[3]!.curves.at(-1)!;
     expect(fade[0]).toBeCloseTo(Math.sin(((0.05 / 0.3) * Math.PI) / 2));
-    // The interrupted fade-in curve cannot be removed, and Firefox rejects any
-    // event scheduled during it, so the replacement fade starts when it ends.
+    // The replacement fade starts after the active fade-in curve ends,
+    // so their scheduled automation does not overlap.
     expect(params[3]!.cancelScheduledValues).toHaveBeenLastCalledWith(10.3);
     expect(nodes[0]!.stop).toHaveBeenCalledOnce();
     expect(nodes[0]!.stop.mock.calls[0]![0]).toBeCloseTo(10.6, 6);

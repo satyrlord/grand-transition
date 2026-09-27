@@ -253,10 +253,22 @@ It does not run the slowest test set, which is 20 percent of the cumulative test
 [Milestone 002](docs/specs/spec-002-quality-gate.md) gives this set.
 A pass of `npm run quality:quick` is not release evidence.
 `npm run quality:full` and `npm run ci` run all the checks.
+
+Browser tests start their own servers. They do not reuse a server from another process.
+If port 4173 is occupied, select a free production-preview port before running the gate:
+
+```powershell
+$env:GRAND_TRANSITION_TEST_PORT = '4183'
+npm run quality:full
+```
+
+The development comparison server also needs port 5174 to be free.
 Agents run them only when the user tells them directly to use the full quality-gate skill.
 The slowest set runs only in the full gate.
+The game supports Chromium and mobile Chrome. All browser tests use Chromium.
 Release hardening adds Chromium and mobile Chromium production flows.
-The full gate also runs supplemental browser engines and ten throttled performance trials in stable Chrome.
+The full gate also runs all supported viewports and ten throttled performance trials in stable Chrome.
+Hosted CI records the timing results of these trials but does not enforce them.
 The Chromium production checks use stable Chrome in both gate modes.
 Install that browser with `npx playwright install chrome` before these checks.
 Measurement JSON and traces stay in `test-results/`; local dependency and browser reviews stay in `tmp/release-hardening/`.

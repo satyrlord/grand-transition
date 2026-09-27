@@ -43,7 +43,7 @@ The game does not select a remote platform voice.
 Human skins continue to use the local neural worker.
 
 Before the entry module imports the application schemas, it disables the optional runtime code generation of Zod.
-In Firefox, a capability probe that the code catches continues to break the policy.
+Runtime capability probes must not violate the policy, even when the code catches their errors.
 The production audio test makes sure that navigation and playback cause no such console error.
 This configuration does not change the results of schema validation.
 Chunk grouping must keep Zod in the vendor chunk, isolated from the initialization of the application schemas.

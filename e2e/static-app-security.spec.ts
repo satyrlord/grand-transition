@@ -1,3 +1,4 @@
+import { productionOrigin } from './helpers/production-preview.ts';
 import { lockInSetup } from './helpers/setup.ts';
 import { finishPresentation } from './helpers/presentation.ts';
 import { expect, test, type Page } from '@playwright/test';
@@ -12,7 +13,6 @@ import {
   useFixedBrowserMatchSeed,
 } from './helpers/match-flow.ts';
 
-const productionOrigin = 'http://127.0.0.1:4173';
 const developmentUrl = 'http://127.0.0.1:5174/grand-transition/';
 const developmentGameLogDirectory = path.resolve(process.cwd(), 'logs', 'test');
 const productionContentSecurityPolicy = [
@@ -211,6 +211,47 @@ test('production preview loads the subpath shell and local assets after refresh'
   // Chromium classifies favicon requests as "other", independently of MIME type.
   for (const url of otherAssets) expect(url).toBe(new URL(iconUrl!, productionOrigin).href);
   expect(await page.evaluate(() => Reflect.get(window, 'startupPolicyViolations'))).toEqual([]);
+});
+
+test('production preloads and reuses the match timer and speech fonts before setup', async ({
+  page,
+}) => {
+  const requests: string[] = [];
+  page.on('request', (request) => {
+    if (request.resourceType() === 'font') requests.push(request.url());
+  });
+  await page.goto('./');
+  const preloads = page.locator('link[rel="preload"][as="font"]');
+  await expect(preloads).toHaveCount(3);
+  const urls = await preloads.evaluateAll((links) =>
+    links.map((link) => {
+      const preload = link as HTMLLinkElement;
+      return { href: preload.href, crossOrigin: preload.crossOrigin, type: preload.type };
+    }),
+  );
+  expect(urls.map(({ href }) => new URL(href).pathname).sort()).toEqual([
+    expect.stringMatching(/^\/grand-transition\/assets\/nunito-latin-ext-wght-normal-.*\.woff2$/u),
+    expect.stringMatching(/^\/grand-transition\/assets\/nunito-latin-wght-normal-.*\.woff2$/u),
+    expect.stringMatching(
+      /^\/grand-transition\/assets\/share-tech-mono-latin-400-normal-.*\.woff2$/u,
+    ),
+  ]);
+  await page.waitForLoadState('networkidle');
+  for (const font of urls) {
+    expect(new URL(font.href).origin).toBe(productionOrigin);
+    expect(font.crossOrigin).toBe('anonymous');
+    expect(font.type).toBe('font/woff2');
+    expect(requests.filter((url) => url === font.href)).toHaveLength(1);
+  }
+  await page.evaluate(async () => {
+    await Promise.all([
+      document.fonts.load('400 16px "Share Tech Mono"', '0123456789'),
+      document.fonts.load('700 16px "Nunito Variable"', 'English Țară'),
+    ]);
+  });
+  for (const font of urls) {
+    expect(requests.filter((url) => url === font.href)).toHaveLength(1);
+  }
 });
 
 test('production injects the exact policy and blocks a remote connection', async ({ page }) => {

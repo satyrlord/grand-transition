@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
   cumulativeLayoutShift,
+  evaluateTimingBudgets,
+  percentile,
   summarizeDecodeIntervals,
 } from '../../e2e/helpers/release-performance-metrics.ts';
 
@@ -70,5 +72,74 @@ describe('native audio decode wall time', () => {
   it('reports no measured decoding for an empty sample set', () => {
     // The browser acceptance test separately requires real decode samples.
     expect(summarizeDecodeIntervals([])).toEqual({ pendingWallMs: 0, cumulativeMs: 0, spanMs: 0 });
+  });
+});
+
+describe('pooled timing budgets', () => {
+  const trial = (overrides: Partial<Parameters<typeof evaluateTimingBudgets>[1][number]> = {}) => ({
+    lcpMs: 2_000,
+    inputDurationsMs: Array.from({ length: 50 }, () => 96),
+    frameIntervalsMs: Array.from({ length: 300 }, () => 16.7),
+    audioDecodeMs: 450,
+    ...overrides,
+  });
+  const failed = (budgets: ReturnType<typeof evaluateTimingBudgets>) =>
+    budgets.filter(({ passed }) => !passed).map(({ criterion }) => criterion);
+
+  it('uses observed nearest-rank samples', () => {
+    expect(percentile([5, 1, 4, 2, 3], 0.5)).toBe(3);
+    expect(percentile([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 0.95)).toBe(10);
+    expect(() => percentile([], 0.5)).toThrow();
+  });
+
+  it('does not let one slow trial decide a pooled tail metric', () => {
+    const noisy = trial({
+      inputDurationsMs: [...Array.from({ length: 45 }, () => 96), 160, 160, 168, 168, 176],
+      frameIntervalsMs: [
+        ...Array.from({ length: 291 }, () => 16.7),
+        ...Array.from({ length: 9 }, () => 66),
+      ],
+      audioDecodeMs: 1_076,
+    });
+    expect(
+      failed(evaluateTimingBudgets('cold', [trial(), trial(), noisy, trial(), trial()])),
+    ).toEqual([]);
+  });
+
+  it('fails pooled limits that most trials exceed', () => {
+    const slow = trial({
+      lcpMs: 2_600,
+      inputDurationsMs: Array.from({ length: 50 }, () => 152),
+      frameIntervalsMs: [
+        ...Array.from({ length: 290 }, () => 18.4),
+        ...Array.from({ length: 10 }, () => 51),
+      ],
+      audioDecodeMs: 1_001,
+    });
+    expect(failed(evaluateTimingBudgets('warm', [slow, slow, slow, trial(), trial()]))).toEqual([
+      'warm LCP median',
+      'warm LCP maximum',
+      'warm pooled input duration p95',
+      'warm pooled frame interval p95',
+      'warm pooled fraction of frames above 50 ms',
+      'warm median selected audio decode',
+    ]);
+  });
+
+  it('keeps strict and inclusive limits at their boundaries', () => {
+    const boundary = trial({
+      lcpMs: 3_000,
+      inputDurationsMs: Array.from({ length: 50 }, () => 150),
+      frameIntervalsMs: Array.from({ length: 300 }, () => 18.2),
+      audioDecodeMs: 1_000,
+    });
+    expect(
+      failed(
+        evaluateTimingBudgets(
+          'cold',
+          Array.from({ length: 5 }, () => boundary),
+        ),
+      ),
+    ).toEqual(['cold LCP median', 'cold pooled input duration p95']);
   });
 });

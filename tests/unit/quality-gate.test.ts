@@ -190,7 +190,7 @@ describe('quality-gate scaffold', () => {
     }
   });
 
-  test('reserves supplemental browser engines and isolated performance trials for the full gate', async () => {
+  test('keeps all browser projects Chromium-only and reserves isolated performance for the full gate', async () => {
     type BrowserProject = {
       name: string;
       testIgnore?: string;
@@ -198,7 +198,13 @@ describe('quality-gate scaffold', () => {
       workers?: number;
       retries?: number;
       dependencies?: string[];
-      use?: { browserName?: string; channel?: string; isMobile?: boolean; hasTouch?: boolean };
+      use?: {
+        browserName?: string;
+        channel?: string;
+        isMobile?: boolean;
+        hasTouch?: boolean;
+        trace?: string;
+      };
     };
     const readProjects = async (mode: string, runner: string): Promise<BrowserProject[]> => {
       const { stdout } = await execFileAsync(
@@ -232,16 +238,74 @@ describe('quality-gate scaffold', () => {
       testMatch: '**/release-performance.spec.ts',
       workers: 1,
       retries: 0,
+      use: { trace: 'off' },
       dependencies: full
         .filter(({ name }) => name !== 'release-performance')
         .map(({ name }) => name),
     });
-    for (const name of ['firefox-audio', 'webkit-audio', 'mobile-webkit']) {
-      expect(full.find((project) => project.name === name)?.testMatch).toContain(
-        '**/release-compatibility.spec.ts',
-      );
-    }
+    expect(full.map(({ name }) => name)).toEqual([
+      'chromium',
+      'mobile-chromium',
+      'release-performance',
+    ]);
+    expect(full.every(({ use }) => (use?.browserName ?? 'chromium') === 'chromium')).toBe(true);
+    const workflow = await readFile('.github/workflows/quality-gate.yml', 'utf8');
+    expect(workflow.match(/npx playwright install[^\r\n]*/gu)).toEqual([
+      'npx playwright install --with-deps chromium chrome',
+    ]);
   });
+
+  test.each([
+    { configuredPort: undefined, port: 4173 },
+    { configuredPort: '4273', port: 4273 },
+  ])(
+    'owns its test servers and uses production port $port consistently',
+    async ({ configuredPort, port }) => {
+      const environment = { ...process.env };
+      delete environment.GRAND_TRANSITION_TEST_PORT;
+      if (configuredPort !== undefined) environment.GRAND_TRANSITION_TEST_PORT = configuredPort;
+      const { stdout } = await execFileAsync(
+        process.execPath,
+        [
+          '--input-type=module',
+          '--eval',
+          "import config from './playwright.config.ts'; process.stdout.write(JSON.stringify(config));",
+        ],
+        { cwd: process.cwd(), env: environment },
+      );
+      const config = JSON.parse(stdout) as {
+        use: { baseURL: string };
+        webServer: { command: string; url: string; reuseExistingServer: boolean }[];
+      };
+      const baseURL = `http://127.0.0.1:${port}/grand-transition/`;
+      expect(config.use.baseURL).toBe(baseURL);
+      expect(config.webServer[0]).toMatchObject({ url: baseURL, reuseExistingServer: false });
+      expect(config.webServer[0]!.command).toContain(
+        `--host 127.0.0.1 --port ${port} --strictPort`,
+      );
+      expect(config.webServer[1]).toMatchObject({
+        url: 'http://127.0.0.1:5174/grand-transition/',
+        reuseExistingServer: false,
+      });
+    },
+  );
+
+  test.each(['', '0', '65536', '12.5', 'invalid', '4173 --host 0.0.0.0'])(
+    'rejects invalid production test port %j before starting a server',
+    async (port) => {
+      await expect(
+        execFileAsync(
+          process.execPath,
+          ['--input-type=module', '--eval', "await import('./playwright.config.ts');"],
+          { cwd: process.cwd(), env: { ...process.env, GRAND_TRANSITION_TEST_PORT: port } },
+        ),
+      ).rejects.toMatchObject({
+        stderr: expect.stringContaining(
+          'GRAND_TRANSITION_TEST_PORT must be an integer from 1 to 65535.',
+        ),
+      });
+    },
+  );
 
   test('blocks direct content-balance execution outside the full gate', async () => {
     const environment = { ...process.env };

@@ -51,7 +51,9 @@ for (const viewport of [
     await page.getByRole('button', { name: 'Single Player', exact: true }).tap();
     await expect(page.getByRole('heading', { name: 'Select your debaters' })).toBeVisible();
     await expectNoHorizontalOverflow(page);
-    await page.screenshot({ path: testInfo.outputPath('mobile-setup.png'), fullPage: true });
+    // Full-page capture can change mobile emulation zoom before the next touch.
+    await page.screenshot({ path: testInfo.outputPath('mobile-setup.png'), fullPage: false });
+    expect(await page.evaluate(() => visualViewport?.scale)).toBe(1);
     await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).tap();
     await expect(page.locator('.match-screen')).toBeVisible();
@@ -86,7 +88,8 @@ for (const viewport of [
       expect(geometry.oneColumn).toBe(true);
       expect(geometry.separateRows).toBe(true);
     }
-    await page.screenshot({ path: testInfo.outputPath('mobile-match.png'), fullPage: true });
+    await page.screenshot({ path: testInfo.outputPath('mobile-match.png'), fullPage: false });
+    expect(await page.evaluate(() => visualViewport?.scale)).toBe(1);
     await page.locator('.private-hand button.phrase-card').first().tap({ trial: true });
     await page.getByRole('button', { name: 'End', exact: true }).tap({ trial: true });
     await page.getByRole('button', { name: 'Reshuffle private phrases', exact: true }).tap();
@@ -229,7 +232,11 @@ test('mobile AI delivery, victory and saved history remain readable and reachabl
         await expect(page.locator('.delivery-total')).toBeVisible();
         await expectNoHorizontalOverflow(page);
         await expectHorizontallyContained(page, '.delivery-receipt');
-        await page.screenshot({ path: testInfo.outputPath('mobile-delivery.png'), fullPage: true });
+        await page.screenshot({
+          path: testInfo.outputPath('mobile-delivery.png'),
+          fullPage: false,
+        });
+        expect(await page.evaluate(() => visualViewport?.scale)).toBe(1);
         checkedPresentation = true;
       }
       await finishPresentation(page);

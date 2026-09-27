@@ -1,3 +1,4 @@
+import { productionOrigin } from './helpers/production-preview.ts';
 import { lockInSetup } from './helpers/setup.ts';
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
@@ -243,7 +244,6 @@ function observeProductionRuntime(page: Page): Readonly<{
   remoteRequests: string[];
   runtimeRequests: string[];
 }> {
-  const applicationOrigin = 'http://127.0.0.1:4173';
   const failedRequests: string[] = [];
   const consoleErrors: string[] = [];
   const pageErrors: string[] = [];
@@ -253,14 +253,14 @@ function observeProductionRuntime(page: Page): Readonly<{
   page.on('request', (request) => {
     const url = new URL(request.url());
     if (url.protocol === 'http:' || url.protocol === 'https:') {
-      if (url.origin !== applicationOrigin) remoteRequests.push(request.url());
+      if (url.origin !== productionOrigin) remoteRequests.push(request.url());
     }
     const localAudio =
       request.method() === 'GET' &&
       request.resourceType() === 'fetch' &&
-      /^http:\/\/127\.0\.0\.1:4173\/grand-transition\/assets\/[^/]+\.(?:ogg|mp3)$/u.test(
-        request.url(),
-      );
+      url.origin === productionOrigin &&
+      url.search === '' &&
+      /^\/grand-transition\/assets\/[^/]+\.(?:ogg|mp3)$/u.test(url.pathname);
     if (
       !localAudio &&
       ['fetch', 'xhr', 'websocket', 'eventsource'].includes(request.resourceType())

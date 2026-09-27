@@ -1111,6 +1111,8 @@
   }
 
   .sentence-preview {
+    /* Hover previews grow from a fixed origin without moving existing words. */
+    align-self: stretch;
     min-height: 0;
     max-height: 100%;
     margin: 0;
@@ -1122,8 +1124,7 @@
     scrollbar-width: thin;
     font: 900 clamp(1.02rem, 1.65vw, 1.62rem) / 1.14 var(--font-speech);
     letter-spacing: 0.015em;
-    text-align: center;
-    text-wrap: balance;
+    text-align: left;
     text-transform: uppercase;
     overflow-wrap: anywhere;
   }
@@ -2200,6 +2201,12 @@
     text-overflow: clip;
     white-space: normal;
     overflow-wrap: anywhere;
+  }
+
+  @media (width >= 1024px) and (height >= 720px) and (orientation: landscape) and (aspect-ratio <= 4 / 3) {
+    .shared-board .card-phrase {
+      line-height: 1.25;
+    }
   }
 
   .match-screen[data-phrase-color-coding='on'] .card-phrase {

@@ -38,7 +38,8 @@ To generate `src/localization/generated/` again from the `xliff/` catalogs, run 
 
 Agents use `quality:quick` for the usual validation.
 It does not run the documented slowest test set, which is 20 percent of the cumulative test time.
-It also runs each viewport-matrix test at one reference viewport, and it runs the audio tests only in Chromium.
+It also runs each viewport-matrix test at one reference viewport.
+All browser tests use Chromium in both gates.
 `quality:full` and its `ci` alias are the full gate.
 An agent runs the full gate only when the user tells the agent directly to use the full quality-gate skill.
 Continuous integration (CI) continues to use the full gate.
