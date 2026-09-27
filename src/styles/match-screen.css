@@ -1510,7 +1510,8 @@
     grid-row: 3;
     color: var(--broadcast-gold-light);
   }
-  .delivery-events p {
+  /* Emphasis rows flow inline; the outcome record keeps its stacked grid. */
+  .delivery-events p[data-emphasis] {
     display: inline;
     margin: 0 0.5em 0 0;
   }

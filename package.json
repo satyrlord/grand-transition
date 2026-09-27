@@ -35,6 +35,7 @@
     "test:coverage:full": "node tools/run-test-phase.ts test:coverage full",
     "test:browser:full": "node tools/run-test-phase.ts test:browser full",
     "test:e2e:full": "node tools/run-test-phase.ts test:e2e full",
+    "test:published": "node tools/run-published-smoke.ts",
     "markdown:lint": "markdownlint-cli2 \"AGENTS.md\" \"README.md\" \"PRODUCT.md\" \"DESIGN.md\" \"CREDITS.md\" \"LICENSE.md\" \"docs/*.md\" \"docs/specs/**/*.md\" \"docs/assets/**/*.md\" \".github/**/*.md\"",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

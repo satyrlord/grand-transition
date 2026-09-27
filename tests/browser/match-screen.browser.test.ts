@@ -1366,6 +1366,46 @@ test('keeps both sidekick entrances outside the viewport and bounds their size a
   }
 });
 
+test('stacks the delivery outcome label above its detail', async () => {
+  const match = await startMatch();
+  const snapshot = match.snapshot!;
+  const speaker = snapshot.players[0];
+  const style = document.createElement('style');
+  style.textContent = titleScreenStyles + screenShellStyles + matchScreenStyles;
+  document.head.append(style);
+  try {
+    match.snapshot = { ...snapshot, roundReview: true };
+    match.presentation = {
+      phase: 'hesitating',
+      comebackActive: false,
+      speakerId: speaker.playerId,
+      text: speaker.sentence ?? '',
+      segment: -1,
+      components: [],
+      emphasis: [],
+      outcome: { kind: 'continuation-held', playerId: speaker.playerId, amount: 0 },
+      impact: null,
+      total: null,
+      damage: null,
+      pride: Object.fromEntries(snapshot.players.map((player) => [player.playerId, player.pride])),
+      cues: Object.fromEntries(
+        snapshot.players.map((player, sequence) => [
+          player.playerId,
+          { stateId: 'idle', sequence },
+        ]),
+      ),
+    } as RoundPresentationFrame;
+    await match.updateComplete;
+    const outcome = match.querySelector<HTMLElement>('.delivery-outcome')!;
+    const label = outcome.querySelector('strong')!.getBoundingClientRect();
+    const detail = outcome.querySelector('span')!.getBoundingClientRect();
+    expect(getComputedStyle(outcome).display).toBe('grid');
+    expect(detail.top).toBeGreaterThanOrEqual(label.bottom);
+  } finally {
+    style.remove();
+  }
+});
+
 test('renders public continuation and target-side impact records without early damage', async () => {
   const match = await startMatch();
   const snapshot = match.snapshot!;

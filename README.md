@@ -273,6 +273,9 @@ The Chromium production checks use stable Chrome in both gate modes.
 Install that browser with `npx playwright install chrome` before these checks.
 Measurement JSON and traces stay in `test-results/`; local dependency and browser reviews stay in `tmp/release-hardening/`.
 CI keeps release evidence for 14 days. Passing quick checks does not complete release acceptance.
+The release workflow deploys only a `main` build that passes `npm run ci`, and then runs the published smoke.
+To examine a published build, run `npm run test:published -- --base-url https://satyrlord.github.io/grand-transition/`.
+The [GitHub Pages release document](docs/release-github-pages.md) gives the release path, the recovery, and the release record.
 Thus, a test command, for example `npm run test`, `npm run test:browser`, `npm run test:coverage`, or `npm run test:e2e`, does not run it.
 
 The implementation has small milestones, in the sequence of their dependencies.

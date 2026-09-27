@@ -26,6 +26,9 @@ It deploys only a `main` build that passes.
 Use only `contents: read`, `pages: write`, and `id-token: write`.
 
 Pull requests do not deploy.
+The release workflow is `.github/workflows/release-github-pages.yml`.
+It runs for a push to `main` and for a manual dispatch.
+Pull requests run the Milestone 002 quality workflow, which runs the same `npm run ci` gate and has no deployment job.
 The published evidence includes the repository Uniform Resource Locator (URL), the subpath assets, refresh, the Content Security Policy (CSP), the speech availability, and a full match.
 
 ## Workflow and recovery contract
@@ -44,11 +47,17 @@ It installs Playwright Chromium and stable Chrome with their dependencies and ru
 It uploads one artifact that contains only files from `dist/`.
 The artifact contains no repository file from other directories.
 Record the SHA-256 digest of the deployed artifact.
+Before the upload is available to the deploy job, the build job serves the uploaded archive on a local server outside production.
+It runs `npm run test:published` against that server, so a smoke failure stops the deployment.
+After the deployment, a smoke job downloads the deployed artifact and makes sure that its digest agrees with the build job.
+It runs `npm run test:published` against the `page_url`, and it compares each artifact file with the served bytes.
 
 Add `npm run test:published -- --base-url <url>`.
 The command does not change the published state.
 It stops with a nonzero exit code when an assertion fails.
 These assertions are for the response, the assets, refresh, the CSP, runtime network requests, the speech state, and the full match.
+It runs in the Milestone 030 browser matrix: stable desktop Chrome and mobile Chrome.
+The optional `--artifact-dir <directory>` argument compares each file of an extracted Pages artifact with the served bytes.
 
 The published smoke test for the full match uses seed `20260823` and the first two roster characters.
 It uses the Transition-Era Television Studio and the default 30-second timer.
@@ -59,7 +68,8 @@ It shows the Milestone 019 victory state, and it goes back to the title screen.
 
 After a reload, it opens the stored match again through the history modal on the title.
 
-The release documentation records the commit SHA, the workflow URL, the deployed URL, and the artifact digest.
+The release documentation is [`docs/release-github-pages.md`](../release-github-pages.md).
+It records the commit SHA, the workflow URL, the deployed URL, and the artifact digest.
 It records the action SHAs, the Node and npm versions, the browser versions, and each smoke result.
 It records the Milestone 030 evidence links, the deviations, and the release date.
 Recovery is a revert on `main`, and then the same full build, gate, deploy, and smoke process.

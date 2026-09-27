@@ -27,6 +27,7 @@ npm run content:validate | simulate
 npm run localization:extract | localization:build | localization:validate
 npm run test | test:coverage | test:browser | test:e2e
 npm run test:full | test:coverage:full | test:browser:full | test:e2e:full
+npm run test:published -- --base-url <url>
 npm run quality:quick | quality:full | ci
 ```
 
@@ -120,6 +121,7 @@ Generate AVIF and WebP image variants and metadata through the approved Sharp to
 Keep controls and necessary text out of the canvas.
 
 For a release, deploy only `dist/` through GitHub Actions after `npm run ci`.
+The release process and its record are in `docs/release-github-pages.md`.
 Milestone 031 also lets you do a tester deployment after `npm run build`.
 That path is not evidence for a release.
 Do not change the Vite `/grand-transition/` base path.
