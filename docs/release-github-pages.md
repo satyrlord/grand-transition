@@ -170,6 +170,30 @@ Accepted P2 and P3 findings, with their owners:
 Record one row for each release run.
 Get the values from the job summary of the `build` job and from `tmp/published-smoke/summary.json`.
 
+### Release 3: `v1.186`
+
+| Value                             | Record                                                                               |
+| --------------------------------- | ------------------------------------------------------------------------------------ |
+| Release date                      | 2026-09-28, the run ended at 13:42 UTC                                               |
+| Commit SHA                        | `a5e37f3a4c662bdd28f12485229078227c688646`                                           |
+| Game version                      | `v1.186`                                                                             |
+| Workflow run URL                  | <https://github.com/satyrlord/grand-transition/actions/runs/36422398674>             |
+| Deployed URL                      | <https://satyrlord.github.io/grand-transition/>                                      |
+| Artifact SHA-256 digest           | `7407b429322ee2163770e3b579a6750b49b5993ddedc854fabfe450352caafb1`                   |
+| Node.js and npm versions          | Node.js 24.21.0, npm 12.0.2, Playwright 1.63.0                                       |
+| Chrome and mobile Chrome versions | Chrome 154.0.8037.57 on the desktop and in Pixel 7 landscape emulation               |
+| Published smoke results           | 12 of 12 before and after deployment, and 0 of 1461 files differ                     |
+| Recovery rehearsal run URL        | <https://github.com/satyrlord/grand-transition/actions/runs/36398903597> (release 1) |
+| Milestone 030 evidence links      | The `release-build-evidence` and `published-smoke-evidence` run artifacts            |
+| Deviations                        | None                                                                                 |
+
+Release 3 fits the speech size to the record and keeps the wide-stage record clear of the Pride plaques and the status rail.
+The owner reported both defects on a 3440 by 1440 display with the developer tools open, which gives a 3440 by 1050 page.
+After the deployment, the live record at 3440 by 1050 showed a 170-character sentence at 25.9 pixels with 98 percent fill.
+The live records at 1920 by 950 and 3440 by 1050 did not overlap a plaque or the rail for either speaker.
+The full gate passed 370 end-to-end tests. The installed Android Chrome runtime is not examined.
+Release 3 is the current deployed build.
+
 ### Release 2: `v1.184`
 
 | Value                             | Record                                                                               |
@@ -190,7 +214,6 @@ Get the values from the job summary of the `build` job and from `tmp/published-s
 Release 2 carries the P1 repair of the release 1 Impeccable re-verification: the `Phrase language` select at 1400 by 1050.
 After the deployment, a sweep of the live setup footer at 1400 by 1050 passed for the three modes and for the Romanian interface.
 The full gate passed 370 end-to-end tests. The installed Android Chrome runtime is not examined.
-Release 2 is the current deployed build.
 
 ### Release 1: `v1.182`
 
