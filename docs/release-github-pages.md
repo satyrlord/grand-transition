@@ -30,7 +30,8 @@ the specification, `vite.config.ts`, `tools/published-smoke.ts`, the Playwright 
 
 ## Release path
 
-A push to `main` starts the release workflow.
+A push to `main` starts the release workflow, unless the push changes only files in `docs/`.
+Thus the commit that fills the release record does not replace the recorded build.
 A manual dispatch also starts it.
 The workflow has three jobs.
 

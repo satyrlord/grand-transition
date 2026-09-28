@@ -28,6 +28,10 @@ Use only `contents: read`, `pages: write`, and `id-token: write`.
 Pull requests do not deploy.
 The release workflow is `.github/workflows/release-github-pages.yml`.
 It runs for a push to `main` and for a manual dispatch.
+A push that changes only files in `docs/` does not start it.
+The game version of Milestone 015 counts each commit, so each release build is different.
+Thus without this rule, the commit that fills the release record would deploy a new build, and the record would not agree with the deployed build.
+A docs-only commit still counts for the version of the next release.
 Pull requests run the Milestone 002 quality workflow, which runs the same `npm run ci` gate and has no deployment job.
 The published evidence includes the repository Uniform Resource Locator (URL), the subpath assets, refresh, the Content Security Policy (CSP), the speech availability, and a full match.
 

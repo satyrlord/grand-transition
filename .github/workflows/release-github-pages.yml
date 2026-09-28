@@ -6,6 +6,9 @@ on:
   push:
     branches:
       - main
+    # A docs-only push keeps the recorded release live. See Milestone 031.
+    paths-ignore:
+      - 'docs/**'
   workflow_dispatch:
 
 permissions:

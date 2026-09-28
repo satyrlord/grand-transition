@@ -16,7 +16,7 @@ describe('Milestone 031 release workflow', () => {
     const workflow = await readFile(workflowPath, 'utf8');
 
     expect(workflow).toMatch(
-      /\non:\n {2}push:\n {4}branches:\n {6}- main\n {2}workflow_dispatch:\n/u,
+      /\non:\n {2}push:\n {4}branches:\n {6}- main\n(?: {4}#.*\n)? {4}paths-ignore:\n {6}- 'docs\/\*\*'\n {2}workflow_dispatch:\n/u,
     );
     expect(workflow).not.toMatch(/^\s+pull_request/mu);
     const qualityWorkflow = await readFile('.github/workflows/quality-gate.yml', 'utf8');
