@@ -157,19 +157,44 @@ Accepted P2 and P3 findings, with their owners:
 Record one row for each release run.
 Get the values from the job summary of the `build` job and from `tmp/published-smoke/summary.json`.
 
-| Value                             | Record  |
-| --------------------------------- | ------- |
-| Release date                      | Pending |
-| Commit SHA                        | Pending |
-| Workflow run URL                  | Pending |
-| Deployed URL                      | Pending |
-| Artifact SHA-256 digest           | Pending |
-| Node.js and npm versions          | Pending |
-| Chrome and mobile Chrome versions | Pending |
-| Published smoke results           | Pending |
-| Recovery rehearsal run URL        | Pending |
-| Milestone 030 evidence links      | Pending |
-| Deviations                        | Pending |
+### Release 1: `v1.182`
+
+| Value                             | Record                                                                    |
+| --------------------------------- | ------------------------------------------------------------------------- |
+| Release date                      | 2026-09-28, the run ended at 09:39 UTC                                    |
+| Commit SHA                        | `f173639a2a599da49a1ff65d86a07987358c57bb`                                |
+| Game version                      | `v1.182`                                                                  |
+| Workflow run URL                  | <https://github.com/satyrlord/grand-transition/actions/runs/36398790104>  |
+| Deployed URL                      | <https://satyrlord.github.io/grand-transition/>                           |
+| Artifact SHA-256 digest           | `75d2fc29ec566473d32c56b0e4d0d099f157c0b6700e63ff04f3b3c835063ff1`        |
+| Node.js and npm versions          | Node.js 24.21.0, npm 12.0.2, Playwright 1.63.0                            |
+| Chrome and mobile Chrome versions | Chrome 154.0.8037.57 on the desktop and in Pixel 7 landscape emulation    |
+| Published smoke results           | 12 of 12 before and after deployment, and 0 of 1461 files differ          |
+| Recovery rehearsal run URL        | <https://github.com/satyrlord/grand-transition/actions/runs/36398903597>  |
+| Milestone 030 evidence links      | The `release-build-evidence` and `published-smoke-evidence` run artifacts |
+| Deviations                        | None                                                                      |
+
+The build upload and the download of the deployed artifact have the same digest.
+The smoke ran on the local server before the deployment and on the `page_url` after it.
+The full gate passed 370 end-to-end tests.
+The installed Android Chrome runtime is not examined.
+
+Release gate history before this release:
+Release runs 2 through 8 stopped in the `build` job, so they did not deploy.
+They found tests that passed only on Windows and two layout defects at 1024 pixels wide.
+Release run 9 (<https://github.com/satyrlord/grand-transition/actions/runs/36346845044>) deployed, but its published smoke failed.
+The first attempt got one transient HTTP 503 answer from Pages, and the second attempt counted a cancelled sidekick image load as a failure.
+Commits `eaff62f` and `bf6b524` repair the smoke. Their release runs passed, and the run above records the current build.
+
+Recovery rehearsal on 2026-09-28:
+
+1. The branch `rehearsal/recovery-031` starts at `f173639`.
+2. Commit `f1d7cb2` adds a simulated defect: the title subtitle says "A Verbal Republik".
+3. Commit `a783f7c` reverts the defect, so the tree is equal to `f173639`.
+4. A manual dispatch of the release workflow on the branch ran the full gate and uploaded the Pages artifact
+   `efc41446078f27b854fd9228b25e1bcc1df93140ec4127fe3536973461aa8cac`.
+   It served that artifact on the local server outside production, and the smoke passed 12 of 12 with 0 of 1461 files different.
+5. The `deploy` and `published-smoke` jobs were skipped, because the branch is not `main`. The production site did not change.
 
 Action SHAs in the release workflow:
 
