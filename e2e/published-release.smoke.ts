@@ -57,7 +57,12 @@ test.beforeEach(async ({ page, baseURL }) => {
     }
   });
   page.on('requestfailed', (request) => {
-    observed.failedRequests.push(`${request.url()}: ${request.failure()?.errorText ?? 'failed'}`);
+    const errorText = request.failure()?.errorText ?? 'failed';
+    // The browser cancels an image load when the game removes the image, for
+    // example a comeback sidekick after its exchange. A missing image still
+    // fails through its HTTP status or a different network error.
+    if (request.resourceType() === 'image' && errorText === 'net::ERR_ABORTED') return;
+    observed.failedRequests.push(`${request.url()}: ${errorText}`);
   });
   page.on('response', (response) => {
     if (response.status() >= 400) {

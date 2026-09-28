@@ -87,6 +87,7 @@ It runs these checks in stable Chrome and in mobile Chrome (Pixel 7 landscape):
 - The game version on the title, which must be a production version such as `v1.177`, not `v1.dev`.
 - The exact CSP from `vite.config.ts`, no CSP violation, and a blocked remote request.
 - Zero remote requests and zero runtime requests, other than static release files.
+- No failed request. An image load that the browser cancels (`net::ERR_ABORTED`) because the game removed the image is not a failure.
 - Supported speech, which loads the local voice, and speech that is not available.
 - The 15-second and Unlimited timer settings.
 - The full match: seed `20260823`, the first two roster characters, the Transition-Era Television Studio,
