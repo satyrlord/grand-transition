@@ -112,6 +112,29 @@ for (const viewport of gateViewports(supportedViewports)) {
       }));
     });
     expect(labelGeometry.filter(({ fits }) => !fits)).toEqual([]);
+    // Each match-settings select shows its longest option. At 1400 by 1050, the
+    // Phrase language select once had 40 pixels beside its inline label.
+    const settingsGeometry = await page.locator('.match-settings').evaluate((fieldset) => {
+      const context = document.createElement('canvas').getContext('2d')!;
+      const bounds = fieldset.getBoundingClientRect();
+      return [...fieldset.querySelectorAll<HTMLSelectElement>('select')].flatMap((select) => {
+        const style = getComputedStyle(select);
+        context.font = style.font;
+        const available =
+          select.clientWidth -
+          Number.parseFloat(style.paddingLeft) -
+          Number.parseFloat(style.paddingRight) -
+          12;
+        const box = select.getBoundingClientRect();
+        return [...select.options]
+          .filter(
+            (option) =>
+              context.measureText(option.text).width > available || box.right > bounds.right + 0.5,
+          )
+          .map((option) => `${select.id}: ${option.text}`);
+      });
+    });
+    expect(settingsGeometry).toEqual([]);
 
     const characterNames = catalog.characters.map(
       ({ nameKey }) => catalog.locales[0]!.messages[nameKey]!,

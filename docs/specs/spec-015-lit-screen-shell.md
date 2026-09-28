@@ -277,6 +277,7 @@ The game does not disable submission only to hide the validation.
   The click handlers, right-click handlers, and keyboard handlers do not accept changes to locked players or waiting players.
   `tests/browser/screen-shell.browser.test.ts` and `e2e/screen-shell.spec.ts` do checks of the lock sequence and the input guards.
 - **AC-015-15:** Setup shows the stored game language in the `Phrase language` select for each mode.
+  At each supported landscape viewport, each select of the match settings shows its longest option, and it stays inside the fieldset.
   A change there updates the title Settings and the phrases of the next match, and it stays after a reload.
   `tests/browser/screen-shell.browser.test.ts` does checks of the select and the settings update.
 - **AC-015-16:** The title footer shows `v<major>.<commit count>` for a production build, and a production build without the complete history stops.

@@ -679,12 +679,14 @@
     background: var(--broadcast-ink);
   }
 
+  /* Wide footers keep each label beside its select. The language column fits
+     its label and a select that shows the whole language name. */
   .match-settings--hotseat {
     grid-template-areas: 'heading scene language';
     grid-template-columns:
       minmax(max-content, auto)
       minmax(15rem, 1fr)
-      minmax(7.5rem, 0.5fr);
+      minmax(16.5rem, 0.5fr);
   }
 
   .match-settings--single-player {
@@ -693,7 +695,7 @@
       minmax(max-content, auto)
       minmax(12rem, 0.9fr)
       minmax(13rem, 1.1fr)
-      minmax(8.5rem, 0.5fr);
+      minmax(16.5rem, 0.5fr);
   }
 
   .match-settings--ladder {
@@ -702,7 +704,7 @@
       minmax(max-content, auto)
       minmax(11rem, 1fr)
       minmax(11rem, 0.9fr)
-      minmax(7.5rem, 0.5fr);
+      minmax(16.5rem, 0.5fr);
   }
 
   .match-settings legend {
@@ -931,7 +933,9 @@
     background: var(--television-blue);
   }
 
-  @media (max-width: 80rem) {
+  /* Up to 100rem, the inline labels leave too little space for the selects,
+     so each label goes above its select. */
+  @media (max-width: 100rem) {
     .match-settings {
       min-height: 4.15rem;
     }

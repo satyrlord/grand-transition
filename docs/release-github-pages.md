@@ -144,6 +144,18 @@ Repaired before the release:
   The inline rule for delivery events now applies only to emphasis rows.
 - The waiting bubble no longer goes below the Pride plaque at 1280 by 720.
 
+Re-verification of release 1 (`v1.182`) on 2026-09-28:
+The bounded audit and critique examined the live build again.
+The records are the release 1 section of `.impeccable/audit/spec-031-published-release.md` and
+`.impeccable/critique/2026-09-28T10-16-33Z__satyrlord-github-io-grand-transition.md`.
+
+- The four repairs above pass on the live build, and so do the 1024-wide setup footer, the speech sizes above 1080p, and the title version label.
+- Critique: 26 of 40 (Acceptable). Recognition and help each gained one point.
+- It found one P1: at 1400 by 1050, the `Phrase language` select was 40 pixels wide beside its label and hid its value.
+  The repair puts each label above its select up to 100rem and widens the language column above that.
+  An end-to-end check now measures each match-settings select at each supported viewport.
+  The next release carries the repair.
+
 Accepted P2 and P3 findings, with their owners:
 
 | Finding                                                                 | Priority | Decision and owner                                         |
@@ -151,6 +163,7 @@ Accepted P2 and P3 findings, with their owners:
 | Charge-cell dividers cross the Comeback label                           | P2       | Post-MVP polish of the Milestone 012 action.               |
 | Functional labels from 10.2 to 11.8 pixels at 1024 pixels wide and less | P3       | They follow the DESIGN.md ramps. Post-MVP typography pass. |
 | "Preparing GPU voices" waits for the first user gesture without a hint  | P3       | Post-MVP copy repair of the Milestone 024 status.          |
+| The Romanian scene select wraps the longest scene name at 1024 wide     | P3       | No text is clipped. Post-MVP typography pass.              |
 
 ## Release record
 
