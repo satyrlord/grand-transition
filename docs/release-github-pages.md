@@ -170,6 +170,28 @@ Accepted P2 and P3 findings, with their owners:
 Record one row for each release run.
 Get the values from the job summary of the `build` job and from `tmp/published-smoke/summary.json`.
 
+### Release 2: `v1.184`
+
+| Value                             | Record                                                                               |
+| --------------------------------- | ------------------------------------------------------------------------------------ |
+| Release date                      | 2026-09-28, the run ended at 11:30 UTC                                               |
+| Commit SHA                        | `d8bd3e54c3688134887c157f945d2d74215e6df1`                                           |
+| Game version                      | `v1.184`                                                                             |
+| Workflow run URL                  | <https://github.com/satyrlord/grand-transition/actions/runs/36408952667>             |
+| Deployed URL                      | <https://satyrlord.github.io/grand-transition/>                                      |
+| Artifact SHA-256 digest           | `e2fb085332cd82975b433ec4d44fe21598ce6b18565e218033557e7892d36ae9`                   |
+| Node.js and npm versions          | Node.js 24.21.0, npm 12.0.2, Playwright 1.63.0                                       |
+| Chrome and mobile Chrome versions | Chrome 154.0.8037.57 on the desktop and in Pixel 7 landscape emulation               |
+| Published smoke results           | 12 of 12 before and after deployment, and 0 of 1461 files differ                     |
+| Recovery rehearsal run URL        | <https://github.com/satyrlord/grand-transition/actions/runs/36398903597> (release 1) |
+| Milestone 030 evidence links      | The `release-build-evidence` and `published-smoke-evidence` run artifacts            |
+| Deviations                        | None                                                                                 |
+
+Release 2 carries the P1 repair of the release 1 Impeccable re-verification: the `Phrase language` select at 1400 by 1050.
+After the deployment, a sweep of the live setup footer at 1400 by 1050 passed for the three modes and for the Romanian interface.
+The full gate passed 370 end-to-end tests. The installed Android Chrome runtime is not examined.
+Release 2 is the current deployed build.
+
 ### Release 1: `v1.182`
 
 | Value                             | Record                                                                    |
