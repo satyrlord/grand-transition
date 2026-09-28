@@ -1,7 +1,8 @@
 import { env, InferenceSession, Tensor } from 'onnxruntime-web/wasm';
 import { phonemize } from 'phonemizer';
 import type { NeuralSpeechCommand, NeuralSpeechMessage } from './speech-port.ts';
-import { assertIntegrity, readExactBody } from './asset-integrity.ts';
+import { assertIntegrity, readExactBody, sha256Hex } from './asset-integrity.ts';
+import { assetCache, type AssetCache } from './asset-cache.ts';
 import runtimeModuleUrl from 'onnxruntime-web/ort-wasm-simd-threaded.mjs?url&no-inline';
 import { piperControls, piperInput, piperMarkers } from './piper-text.ts';
 
@@ -25,6 +26,7 @@ let config: {
   inference: { noise_scale: number; length_scale: number; noise_w: number };
 };
 let session: InferenceSession;
+let packageCache: AssetCache;
 let loading: Promise<void> | null = null;
 let queue = Promise.resolve();
 
@@ -33,21 +35,28 @@ async function readAsset(name: string, measured = false): Promise<ArrayBuffer> {
   const url = new URL(name, base);
   if (url.origin !== worker.location.origin)
     throw new Error('Neural assets must use the application origin.');
-  const response = await fetch(url, {
-    credentials: 'omit',
-    redirect: 'error',
-    cache: 'force-cache',
-  });
-  if (!response.ok) throw new Error('The neural asset is unavailable.');
   const record = manifest?.files.find((file) => file.path === name);
-  const bytes =
-    measured && response.body && record
-      ? await readExactBody(response.body, record.bytes, 'Neural asset', (loaded) => {
-          worker.postMessage({ type: 'progress', loaded, total: record.bytes });
-        })
-      : await response.arrayBuffer();
-  if (record) await assertIntegrity(bytes, record, 'Neural asset');
-  return bytes;
+  // Revalidate so that a stale HTTP cache entry cannot fail a new package.
+  const download = async () => {
+    const response = await fetch(url, {
+      credentials: 'omit',
+      redirect: 'error',
+      cache: 'no-cache',
+    });
+    if (!response.ok) throw new Error('The neural asset is unavailable.');
+    return response;
+  };
+  const verify = async (response: Response) => {
+    const bytes =
+      measured && response.body && record
+        ? await readExactBody(response.body, record.bytes, 'Neural asset', (loaded) => {
+            worker.postMessage({ type: 'progress', loaded, total: record.bytes });
+          })
+        : await response.arrayBuffer();
+    if (record) await assertIntegrity(bytes, record, 'Neural asset');
+    return bytes;
+  };
+  return record ? packageCache.read(url, download, verify) : verify(await download());
 }
 
 async function load(baseUrl: string): Promise<void> {
@@ -60,7 +69,9 @@ async function load(baseUrl: string): Promise<void> {
   ) {
     throw new Error('Invalid neural asset origin.');
   }
-  manifest = JSON.parse(new TextDecoder().decode(await readAsset('manifest.json'))) as Manifest;
+  const manifestBytes = await readAsset('manifest.json');
+  manifest = JSON.parse(new TextDecoder().decode(manifestBytes)) as Manifest;
+  packageCache = assetCache('grand-transition-piper-', await sha256Hex(manifestBytes));
   if (manifest.sampleRate !== 22050 || manifest.samplesPerDurationFrame !== 256)
     throw new Error('Unsupported neural model.');
   config = JSON.parse(new TextDecoder().decode(await readAsset('config.json'))) as typeof config;

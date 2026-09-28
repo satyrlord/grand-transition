@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { afterEach, expect, test, vi } from 'vitest';
 import type { NeuralSpeechCommand, NeuralSpeechMessage } from '../../src/audio/speech-port.ts';
+import { stubCacheStorage } from './helpers/fake-cache-storage.ts';
 
 const state = vi.hoisted(() => ({ models: [] as Uint8Array[] }));
 vi.mock('onnxruntime-web/ort-wasm-simd-threaded.mjs?url&no-inline', () => ({
@@ -107,7 +108,7 @@ async function harness(cachedManifest?: unknown) {
         (name) => new URL(name, base).href === url.href,
       );
       expect(options).toMatchObject({ credentials: 'omit', redirect: 'error' });
-      if (file !== 'manifest.json') expect(options.cache).toBe('force-cache');
+      expect(options.cache).toBe('no-cache');
       fetched.push(file ?? url.href);
       const bytes =
         file === 'manifest.json'
@@ -129,7 +130,8 @@ async function harness(cachedManifest?: unknown) {
   };
   const speak = (voiceId = 'ro_RO-liana-medium', id = 1) =>
     send({ type: 'synthesize', id, segments: ['Public'], voiceId, rate: 1, pitch: 1 });
-  return { ready, speak, manifest, messages, fetched, files };
+  const warm = (voiceId: string) => send({ type: 'warm', voiceId });
+  return { ready, speak, warm, manifest, messages, fetched, files };
 }
 
 test('revalidates a cached package manifest so a deployed voice change loads the current model', async () => {
@@ -200,3 +202,61 @@ test.each(['missing', 'corrupt', 'unmanifested', 'wrong-size', 'wrong-digest'] a
     expect(h.messages.some(({ type }) => type === 'speech')).toBe(false);
   },
 );
+
+test('keeps a verified voice in Cache Storage so that a new visit downloads no model bytes', async () => {
+  const storage = stubCacheStorage();
+  const first = await harness();
+  await first.ready();
+  first.speak();
+  await vi.waitFor(() => expect(first.messages.some(({ type }) => type === 'speech')).toBe(true));
+  expect(first.fetched).toContain('liana/model.onnx');
+  expect([...storage.stores.keys()]).toHaveLength(1);
+  expect([...storage.stores.keys()][0]).toMatch(/^grand-transition-romanian-[0-9a-f]{64}$/u);
+
+  vi.resetModules();
+  state.models.length = 0;
+  const second = await harness();
+  await second.ready();
+  second.speak();
+  await vi.waitFor(() => expect(second.messages.some(({ type }) => type === 'speech')).toBe(true));
+  expect(state.models.map((model) => Array.from(model))).toEqual([[4, 5, 6, 7]]);
+  expect(second.fetched).toEqual(['manifest.json']);
+});
+
+test('warms a voice before its first delivery, so that the delivery downloads nothing', async () => {
+  const h = await harness();
+  await h.ready();
+  h.warm('ro_RO-unknown-medium');
+  h.warm('ro_RO-liana-medium');
+  await vi.waitFor(() => expect(state.models).toHaveLength(1));
+  expect(h.fetched.filter((path) => path.includes('model'))).toEqual(['liana/model.onnx']);
+  expect(h.messages.some(({ type }) => type === 'speech' || type === 'error')).toBe(false);
+  h.speak();
+  await vi.waitFor(() => expect(h.messages.some(({ type }) => type === 'speech')).toBe(true));
+  expect(state.models.map((model) => Array.from(model))).toEqual([[4, 5, 6, 7]]);
+  expect(h.fetched.filter((path) => path.includes('model'))).toEqual(['liana/model.onnx']);
+});
+
+test('a failed warmup reports its error on the first delivery of that voice', async () => {
+  const h = await harness();
+  h.files.set('liana/model.onnx', new Uint8Array([9, 9, 9, 9]));
+  await h.ready();
+  h.warm('ro_RO-liana-medium');
+  await vi.waitFor(() => expect(h.fetched).toContain('liana/model.onnx'));
+  expect(h.messages.some(({ type }) => type === 'error')).toBe(false);
+  h.speak();
+  await vi.waitFor(() => expect(h.messages).toContainEqual({ type: 'error', id: 1 }));
+  expect(state.models).toHaveLength(0);
+});
+
+test('hashes a single-part model once, because its part pin is the model pin', async () => {
+  const digest = vi.spyOn(crypto.subtle, 'digest');
+  const h = await harness();
+  await h.ready();
+  h.speak();
+  await vi.waitFor(() => expect(h.messages.some(({ type }) => type === 'speech')).toBe(true));
+  const modelDigests = digest.mock.calls.filter(
+    ([, data]) => (data as ArrayBuffer | ArrayBufferView).byteLength === 4,
+  );
+  expect(modelDigests).toHaveLength(1);
+});

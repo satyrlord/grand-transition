@@ -162,7 +162,7 @@ Accepted P2 and P3 findings, with their owners:
 | ----------------------------------------------------------------------- | -------- | ---------------------------------------------------------- |
 | Charge-cell dividers cross the Comeback label                           | P2       | Post-MVP polish of the Milestone 012 action.               |
 | Functional labels from 10.2 to 11.8 pixels at 1024 pixels wide and less | P3       | They follow the DESIGN.md ramps. Post-MVP typography pass. |
-| "Preparing GPU voices" waits for the first user gesture without a hint  | P3       | Post-MVP copy repair of the Milestone 024 status.          |
+| "Preparing GPU voices" waits for the first user gesture without a hint  | P3       | Repaired: preparation starts when the loaded menu is idle. |
 | The Romanian scene select wraps the longest scene name at 1024 wide     | P3       | No text is clipped. Post-MVP typography pass.              |
 
 ## Release record

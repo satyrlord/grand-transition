@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { afterEach, expect, test, vi } from 'vitest';
 import type { NeuralSpeechCommand, NeuralSpeechMessage } from '../../src/audio/speech-port.ts';
+import { stubCacheStorage } from './helpers/fake-cache-storage.ts';
 
 const inference = vi.hoisted(() => ({
   inputs: [] as Array<{ input: { data: BigInt64Array }; scales: { data: Float32Array } }>,
@@ -139,4 +140,28 @@ test('a model base with URL state is rejected without any request', async () => 
   h.send({ type: 'load', baseUrl: `${h.base}?variant=remote` });
   await vi.waitFor(() => expect(h.messages).toContainEqual({ type: 'error', id: null }));
   expect(h.fetch).not.toHaveBeenCalled();
+});
+
+test('keeps the verified package in Cache Storage so that a new visit downloads no model bytes', async () => {
+  const storage = stubCacheStorage();
+  const first = await workerHarness();
+  first.send({ type: 'load', baseUrl: first.base });
+  await vi.waitFor(() =>
+    expect(first.messages.some((message) => message.type === 'ready')).toBe(true),
+  );
+  expect([...storage.stores.keys()]).toEqual([
+    `grand-transition-piper-${createHash('sha256').update(first.files.get('manifest.json')!).digest('hex')}`,
+  ]);
+  for (const [, options] of first.fetch.mock.calls) expect(options.cache).toBe('no-cache');
+
+  vi.resetModules();
+  const second = await workerHarness();
+  second.send({ type: 'load', baseUrl: second.base });
+  await vi.waitFor(() =>
+    expect(second.messages.some((message) => message.type === 'ready')).toBe(true),
+  );
+  expect(second.fetch.mock.calls.map(([url]) => url.pathname.split('/').at(-1))).toEqual([
+    'manifest.json',
+  ]);
+  expect(second.messages.some((message) => message.type === 'progress')).toBe(true);
 });

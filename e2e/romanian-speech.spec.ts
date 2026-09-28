@@ -254,10 +254,11 @@ test('a missing Romanian package keeps the delivery silent without breaking the 
   page,
 }) => {
   test.setTimeout(180_000);
-  await configure(page, { interfaceLocale: 'en', gameLocale: 'ro-RO' });
+  // Match start begins to load the Romanian voices, so the package is missing before setup.
   await page.route('**/tts/ro/manifest.json', (route) =>
     route.fulfill({ status: 404, body: 'gone' }),
   );
+  await configure(page, { interfaceLocale: 'en', gameLocale: 'ro-RO' });
   const { evidence, diagnostics, errors } = await playRound(page, interfaceText.en.end);
   expect(evidence.neural).toEqual([]);
   expect(evidence.messages.some((message) => (message as { type?: string }).type === 'error')).toBe(

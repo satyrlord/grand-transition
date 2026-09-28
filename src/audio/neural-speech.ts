@@ -76,6 +76,8 @@ export class LocalNeuralSpeech implements SpeechPort {
   private generation = 0;
   private disposed = false;
   private paused = false;
+  /** A failure with no request to report it, such as a failed warmup. The next request reports it. */
+  private unreportedFailure: SpeechDiagnostic['reason'] | null = null;
 
   private readonly changed: () => void;
   private readonly dependencies: Dependencies;
@@ -142,6 +144,18 @@ export class LocalNeuralSpeech implements SpeechPort {
     }
   }
 
+  /** Load one voice before its first delivery. It plays nothing and makes no audio context. */
+  warm(voiceUri: string): void {
+    if (!this.available) return;
+    void this.initialize(false).then((ready) => {
+      if (ready && this.voices.some((voice) => voice.voiceURI === voiceUri))
+        this.send({
+          type: 'warm',
+          voiceId: voiceUri.replace(this.dependencies.voicePrefix ?? 'piper:', ''),
+        });
+    });
+  }
+
   speak(request: SpeechRequest): SpeechResult {
     return this.enqueue(request, true);
   }
@@ -151,7 +165,17 @@ export class LocalNeuralSpeech implements SpeechPort {
   }
 
   private enqueue(request: SpeechRequest, playback: boolean): SpeechResult {
-    if (!this.available) return { accepted: false, reason: 'unavailable' };
+    if (!this.available) {
+      if (this.unreportedFailure) {
+        reportSpeech(request, {
+          type: 'error',
+          provider: 'neural',
+          reason: this.unreportedFailure,
+        });
+        this.unreportedFailure = null;
+      }
+      return { accepted: false, reason: 'unavailable' };
+    }
     if (!request.text.trim() || request.volume === 0) return { accepted: false, reason: 'silent' };
     if (
       !(
@@ -512,6 +536,7 @@ export class LocalNeuralSpeech implements SpeechPort {
 
   private fail(reason: SpeechDiagnostic['reason'] = 'audio'): void {
     clearTimeout(this.initializationWatchdog);
+    if (!this.pending.size) this.unreportedFailure = reason;
     for (const pending of this.pending.values())
       reportSpeech(pending.request, { type: 'error', provider: 'neural', reason });
     const requests = [...this.pending.values()]

@@ -211,7 +211,7 @@ New settings use a speech rate of 1.00.
 A correct saved rate does not change.
 
 Romanian matches use the local Mihai medium and Liana medium voices for all skins.
-Only the requested Romanian voice loads.
+Only the Romanian voices of the match load. They start to load when the match starts.
 A voice that is not available stays silent.
 
 The game does not upload phrases.

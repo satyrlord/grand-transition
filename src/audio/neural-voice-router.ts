@@ -11,6 +11,7 @@ type Engine = SpeechPort & {
   progress: number | null;
   voices: readonly SpeechVoice[];
   initialize(activate?: boolean): Promise<boolean>;
+  warm?(voiceUri: string): void;
   dispose(): void;
 };
 type Factory = (mode: EngineMode, changed: () => void) => Engine;
@@ -172,6 +173,13 @@ export class NeuralVoiceRouter implements SpeechPort {
       if (this.gpu.status !== 'unavailable') void this.gpu.initialize(activate);
     }
     return ready;
+  }
+
+  /** Load the Romanian voices that a match speaks with before its first delivery. */
+  warmVoices(voiceUris: readonly string[]): void {
+    if (this.disposed || !this.enabled) return;
+    for (const voiceUri of new Set(voiceUris))
+      if (NeuralVoiceRouter.isRomanian(voiceUri)) this.romanianEngine.warm?.(voiceUri);
   }
 
   beginMatch(): void {

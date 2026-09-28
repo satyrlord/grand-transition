@@ -719,3 +719,47 @@ describe('local neural speech', () => {
     h.speech.dispose();
   });
 });
+
+describe('voice warmup', () => {
+  test('asks the worker for a known voice after readiness without an audio context', async () => {
+    const h = harness();
+    const created = vi.spyOn(h.context, 'resume');
+    h.speech.warm('piper:vctk-p225');
+    h.speech.warm('piper:missing');
+    h.emit({ type: 'booted' });
+    h.emit({ type: 'ready', voices });
+    await vi.waitFor(() =>
+      expect(h.workers[0]!.postMessage).toHaveBeenCalledWith({
+        type: 'warm',
+        voiceId: 'vctk-p225',
+      }),
+    );
+    expect(
+      h.workers[0]!.postMessage.mock.calls.filter(([message]) => message.type === 'warm'),
+    ).toHaveLength(1);
+    expect(created).not.toHaveBeenCalled();
+  });
+
+  test('a failed warmup reports its error once, on the next delivery', async () => {
+    const h = harness();
+    h.speech.warm('piper:vctk-p225');
+    h.emit({ type: 'booted' });
+    h.emit({ type: 'error', id: null });
+    await Promise.resolve();
+    expect(h.speech.status).toBe('unavailable');
+    const first = vi.fn();
+    const second = vi.fn();
+    const request = { text: 'Public.', language: 'en-GB', voiceUri: 'piper:vctk-p225' };
+    expect(h.speech.speak({ ...request, onDiagnostic: first }).accepted).toBe(false);
+    expect(h.speech.speak({ ...request, onDiagnostic: second }).accepted).toBe(false);
+    expect(first.mock.calls).toEqual([[{ type: 'error', provider: 'neural', reason: 'worker' }]]);
+    expect(second).not.toHaveBeenCalled();
+  });
+
+  test('an unavailable engine starts no worker to warm a voice', () => {
+    const h = harness();
+    h.supported.mockReturnValue(false);
+    h.speech.warm('piper:vctk-p225');
+    expect(h.workers).toHaveLength(0);
+  });
+});

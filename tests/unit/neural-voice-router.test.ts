@@ -17,6 +17,7 @@ function harness() {
     pause: ReturnType<typeof vi.fn>;
     resume: ReturnType<typeof vi.fn>;
     dispose: ReturnType<typeof vi.fn>;
+    warm: ReturnType<typeof vi.fn>;
     notify: () => void;
   }[] = [];
   const changed = vi.fn();
@@ -38,6 +39,7 @@ function harness() {
       pause: vi.fn(),
       resume: vi.fn(),
       dispose: vi.fn(),
+      warm: vi.fn(),
       notify,
     };
     engines.push(engine);
@@ -356,5 +358,37 @@ describe('neural engine selection', () => {
     await h.router.initialize();
     expect(h.engines).toHaveLength(3);
     h.router.dispose();
+  });
+});
+
+describe('match voice warmup', () => {
+  test('warms each Romanian voice of a match once and leaves other voices alone', () => {
+    const h = harness();
+    h.router.configure({ speechEnabled: true, gpuVoices: false });
+    h.router.warmVoices([
+      'piper:ro_RO-mihai-medium',
+      'piper:vctk-p226',
+      'piper:ro_RO-mihai-medium',
+      'piper:ro_RO-liana-medium',
+    ]);
+    const romanian = h.engines.find((engine) => engine.mode === 'ro')!;
+    expect(romanian.warm.mock.calls).toEqual([
+      ['piper:ro_RO-mihai-medium'],
+      ['piper:ro_RO-liana-medium'],
+    ]);
+    expect(
+      h.engines
+        .filter((engine) => engine.mode !== 'ro')
+        .every(({ warm }) => !warm.mock.calls.length),
+    ).toBe(true);
+  });
+
+  test('English voices create no Romanian engine, and speech off warms nothing', () => {
+    const h = harness();
+    h.router.configure({ speechEnabled: true, gpuVoices: false });
+    h.router.warmVoices(['piper:vctk-p226', 'kokoro:bf_emma']);
+    h.router.configure({ speechEnabled: false, gpuVoices: false });
+    h.router.warmVoices(['piper:ro_RO-liana-medium']);
+    expect(h.engines.map(({ mode }) => mode)).toEqual(['piper']);
   });
 });

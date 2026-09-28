@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { afterEach, expect, test, vi } from 'vitest';
 import type { NeuralSpeechCommand, NeuralSpeechMessage } from '../../src/audio/speech-port.ts';
+import { stubCacheStorage } from './helpers/fake-cache-storage.ts';
 
 const state = vi.hoisted(() => ({
   manifest: {} as unknown,
@@ -186,6 +187,46 @@ test('keeps error and fatal logging enabled for initialization, warmup, and deli
     expect(h.messages.some((message) => message.type === 'speech')).toBe(true),
   );
   expect(state.runOptions).toEqual([{ logSeverityLevel: 3 }, { logSeverityLevel: 3 }]);
+});
+
+const fileName = (url: string) => url.split('/').at(-1)!;
+const byName = (a: string, b: string) => a.localeCompare(b);
+const fetchedNames = (fetch: ReturnType<typeof vi.fn>) =>
+  fetch.mock.calls.map(([url]) => fileName((url as URL).pathname)).sort(byName);
+
+test('keeps the verified package in Cache Storage so that a new visit downloads no model bytes', async () => {
+  const storage = stubCacheStorage();
+  storage.store('grand-transition-kokoro-gpu-retired').set('stale', new Uint8Array([1]));
+  storage.store('another-application').set('kept', new Uint8Array([1]));
+  const first = await harness();
+  const current = `grand-transition-kokoro-gpu-${(state.manifest as { modelSha256: string }).modelSha256}`;
+  first.send({ type: 'load', baseUrl: first.base });
+  await vi.waitFor(() =>
+    expect(first.messages.some((message) => message.type === 'ready')).toBe(true),
+  );
+  expect([...storage.stores.keys()].sort(byName)).toEqual(['another-application', current]);
+  expect([...storage.store(current).keys()].map(fileName).sort(byName)).toEqual([
+    'bf_emma.bin',
+    'bm_george.bin',
+    'model-01.bin',
+    'ort-wasm-simd-threaded.asyncify.wasm',
+    'vocabulary.json',
+  ]);
+  for (const [url, options] of first.fetch.mock.calls)
+    if (!(url as URL).pathname.endsWith('.mjs'))
+      expect((options as RequestInit).cache).toBe('no-cache');
+
+  vi.resetModules();
+  const second = await harness();
+  second.send({ type: 'load', baseUrl: second.base });
+  await vi.waitFor(() =>
+    expect(second.messages.some((message) => message.type === 'ready')).toBe(true),
+  );
+  expect(fetchedNames(second.fetch)).toEqual([
+    'manifest.json',
+    'ort-wasm-simd-threaded.asyncify.mjs',
+  ]);
+  expect(second.messages.some((message) => message.type === 'progress')).toBe(true);
 });
 
 test.each(['missing-gpu', 'cpu-session', 'warmup', 'corrupt-shard', 'remote-origin'])(

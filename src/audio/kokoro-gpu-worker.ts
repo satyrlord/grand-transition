@@ -2,6 +2,7 @@ import { env, InferenceSession, Tensor } from 'onnxruntime-web/webgpu';
 import { phonemize } from 'phonemizer';
 import type { NeuralSpeechCommand, NeuralSpeechMessage } from './speech-port.ts';
 import { assertIntegrity, readExactBody } from './asset-integrity.ts';
+import { assetCache } from './asset-cache.ts';
 import runtimeModuleUrl from 'onnxruntime-web/ort-wasm-simd-threaded.asyncify.mjs?url&no-inline';
 import expectedManifest from './kokoro-gpu-manifest.json';
 
@@ -21,19 +22,33 @@ let loadedBytes = 0;
 let lastProgressAt = 0;
 let deviceLost = false;
 const styles = new Map<string, Float32Array>();
+const packageCache = assetCache('grand-transition-kokoro-gpu-', expectedManifest.modelSha256);
 
 async function readAsset(name: string, measured = false): Promise<ArrayBuffer> {
   if (!/^[a-zA-Z0-9_.-]+$/u.test(name)) throw new Error('Invalid neural asset name.');
   const url = new URL(name, base);
   if (url.origin !== worker.location.origin)
     throw new Error('Neural assets must use the application origin.');
-  const response = await fetch(url, {
-    credentials: 'omit',
-    redirect: 'error',
-    cache: 'force-cache',
-  });
-  if (!response.ok) throw new Error('The neural asset is unavailable.');
   const record = manifest?.files.find((file) => file.path === name);
+  // Revalidate so that a stale HTTP cache entry cannot fail a new package.
+  const download = async () => {
+    const response = await fetch(url, {
+      credentials: 'omit',
+      redirect: 'error',
+      cache: 'no-cache',
+    });
+    if (!response.ok) throw new Error('The neural asset is unavailable.');
+    return response;
+  };
+  const verify = (response: Response) => readVerified(response, record, measured);
+  return record ? packageCache.read(url, download, verify) : verify(await download());
+}
+
+async function readVerified(
+  response: Response,
+  record: Manifest['files'][number] | undefined,
+  measured: boolean,
+): Promise<ArrayBuffer> {
   const bytes =
     measured && response.body && record
       ? await readExactBody(response.body, record.bytes, 'Neural asset', (loaded) => {
@@ -121,12 +136,8 @@ async function load(baseUrl: string): Promise<void> {
     model.set(bytes, offset);
     offset += bytes.length;
   }
+  // Each shard passed its pinned hash, and asset validation pins their ordered concatenation.
   if (offset !== model.length) throw new Error('Invalid GPU model.');
-  await assertIntegrity(
-    model,
-    { bytes: manifest.modelBytes, sha256: manifest.modelSha256 },
-    'GPU model',
-  );
   // Session and run loggers have independent warning defaults in ONNX Runtime.
   session = await InferenceSession.create(model, {
     executionProviders: ['webgpu'],

@@ -7,7 +7,7 @@ import { GameAudio } from '../audio/game-audio.ts';
 import { GameSpeech } from '../audio/game-speech.ts';
 import { CharacterSpeech } from '../audio/character-speech.ts';
 import { MicrosoftRobotSpeech } from '../audio/microsoft-robot-speech.ts';
-import { skinSpeechProfile } from '../audio/skin-speech-profile.ts';
+import { skinSpeechProfile, type SkinSpeechProfile } from '../audio/skin-speech-profile.ts';
 import { RoundPresentation, type RoundPresentationFrame } from './round-presentation.ts';
 import { msg, updateWhenLocaleChanges } from '@lit/localize';
 import { setInterfaceLocale } from './interface-localization.ts';
@@ -241,6 +241,7 @@ export class GrandTransitionApp extends LitElement {
   private audio: BrowserAudio | null = null;
   private speech: NeuralVoiceRouter | null = null;
   private audioActivated = false;
+  private voicePreparation: number | null = null;
   private gameAudio: GameAudio | null = null;
   private gameSpeech: GameSpeech | null = null;
   declare private presentation: RoundPresentationFrame | null;
@@ -334,6 +335,8 @@ export class GrandTransitionApp extends LitElement {
     this.audio = new BrowserAudio(this.refreshAudioControls);
     this.speech = new NeuralVoiceRouter(this.refreshAudioControls);
     this.speech.configure(this.settingsSnapshot.settings);
+    if (document.readyState === 'complete') this.scheduleVoicePreparation();
+    else window.addEventListener('load', this.scheduleVoicePreparation, { once: true });
     this.gameAudio = new GameAudio(this.audio);
     this.gameSpeech = new GameSpeech(
       new CharacterSpeech(this.speech, new MicrosoftRobotSpeech()),
@@ -395,6 +398,9 @@ export class GrandTransitionApp extends LitElement {
     this.removeEventListener('keydown', this.activateAudio);
     this.removeEventListener('retry-audio', this.retryAudio);
     document.removeEventListener('visibilitychange', this.syncAudioVisibility);
+    window.removeEventListener('load', this.scheduleVoicePreparation);
+    if (this.voicePreparation !== null) cancelIdleCallback(this.voicePreparation);
+    this.voicePreparation = null;
     this.audio?.dispose();
     this.speech?.dispose();
     this.cancelAiTurn();
@@ -407,6 +413,17 @@ export class GrandTransitionApp extends LitElement {
   protected override updated(): void {
     this.syncAudioVisibility();
   }
+
+  /** Voice models stay off the initial title load, then prepare without waiting for a gesture. */
+  private readonly scheduleVoicePreparation = (): void => {
+    this.voicePreparation = requestIdleCallback(
+      () => {
+        this.voicePreparation = null;
+        if (this.settingsSnapshot.settings.speechEnabled) void this.speech?.preload();
+      },
+      { timeout: 1000 },
+    );
+  };
 
   private readonly activateAudio = (event: Event): void => {
     if (!event.isTrusted) return;
@@ -778,6 +795,10 @@ export class GrandTransitionApp extends LitElement {
     this.screenController.showMatch();
     this.view = 'match';
     this.applyGameTextLocale();
+    // Load the Romanian voices of this match while the first round is drafted.
+    this.speech?.warmVoices(
+      Object.values(this.matchSpeechProfiles(this.matchState)).map(({ voiceUri }) => voiceUri),
+    );
     this.focusViewHeading('match');
     this.scheduleAiTurn();
   };
@@ -826,18 +847,7 @@ export class GrandTransitionApp extends LitElement {
       this.matchState.phase === 'results' &&
       (transition.reaction !== null || command.type === 'expire-turn');
     if (review && this.roundReviewSnapshot && !directKnockout) {
-      const skins = this.currentMatchSkinIds();
-      const voices = Object.fromEntries(
-        this.matchState.setup.players.map((player) => [
-          player.playerId,
-          skinSpeechProfile(
-            gameCatalog.characters.find((character) => character.id === player.characterId)!,
-            skins[player.playerId] ?? 'default',
-            this.speech?.activeMode,
-            currentGameTextLocale(),
-          ),
-        ]),
-      );
+      const voices = this.matchSpeechProfiles(this.matchState);
       this.roundPresentation?.start(
         {
           resolution: review.resolution,
@@ -1148,6 +1158,22 @@ export class GrandTransitionApp extends LitElement {
       throw new Error('The active match does not have an initial seed.');
     }
     return this.matchInitialSeed;
+  }
+
+  /** Each player's speech profile in the game language of the running match. */
+  private matchSpeechProfiles(state: MatchState): Record<string, SkinSpeechProfile> {
+    const skins = this.currentMatchSkinIds();
+    return Object.fromEntries(
+      state.setup.players.map((player) => [
+        player.playerId,
+        skinSpeechProfile(
+          gameCatalog.characters.find((character) => character.id === player.characterId)!,
+          skins[player.playerId] ?? 'default',
+          this.speech?.activeMode,
+          currentGameTextLocale(),
+        ),
+      ]),
+    );
   }
 
   private currentMatchSkinIds(): Readonly<Record<string, string>> {

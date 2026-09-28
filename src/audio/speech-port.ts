@@ -42,6 +42,8 @@ export type SpeechVoice = Readonly<{
 
 export type NeuralSpeechCommand =
   | Readonly<{ type: 'load'; baseUrl: string }>
+  /** Load one voice before its first delivery. A worker without per-voice weights ignores it. */
+  | Readonly<{ type: 'warm'; voiceId: string }>
   | Readonly<{
       type: 'synthesize';
       id: number;

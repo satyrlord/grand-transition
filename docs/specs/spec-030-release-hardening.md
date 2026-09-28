@@ -34,9 +34,11 @@ Repair the release defects that have evidence.
 Largest contentful paint, input event duration, animation frame interval, layout shift, and compressed JavaScript must agree with the measurement table below.
 Load the selected match assets only when the match must use them.
 Decode audio before the first playback.
-The initial title does not start speech workers or load their models.
-The first trusted pointer or keyboard interaction starts local voice preparation.
-This replaces preparation before interaction in the earlier title and speech implementation.
+The initial title load does not start speech workers or load their models.
+After the window `load` event, the first idle period starts local voice preparation.
+Preparation does not wait for a trusted interaction. The first trusted pointer or
+keyboard interaction only makes the audio context, or starts preparation if it comes first.
+This replaces the preparation that started only on the first trusted interaction.
 The menu stays usable while voices prepare, and the existing per-match fallback rules apply.
 When speech is turned off, stop pending model preparation and worker processing as well as playback.
 Re-enabling speech can prepare a new local engine from the cached assets.
@@ -95,6 +97,8 @@ The other rows apply to each trial.
 
 Use browser performance entries and a kept trace for the time values.
 Use the generated gzip bytes for the JavaScript total.
+Initial JavaScript contains the scripts that the title requests before the first speech worker starts.
+The speech workers and the scripts that they load start after the title is idle, so the check records them separately.
 Do not use development-server measurements as an alternative.
 The shared viewport matrix uses the last art and the longest shipped content.
 

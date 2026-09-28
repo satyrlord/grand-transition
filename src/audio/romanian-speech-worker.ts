@@ -2,8 +2,8 @@
 //
 // Mirrors neural-speech-worker.ts but for the spec-029 Romanian package: it
 // phonemizes with eSpeak NG carrying Liana's patched Romanian dictionary and it
-// loads a voice's weights only when that voice is first asked to speak, so a
-// match that uses one voice never fetches the other.
+// loads a voice's weights only when a match that uses the voice starts or the
+// voice first speaks, so a match that uses one voice never fetches the other.
 //
 // Everything is served from the application origin. The pronunciation runtime
 // is told where its data lives so it cannot fall back to a public CDN.
@@ -12,7 +12,8 @@ import { getPhonemes, initialize as initializePhonemizer, setVoice } from 'espea
 import { env, InferenceSession, Tensor } from 'onnxruntime-web/wasm';
 import runtimeModuleUrl from 'onnxruntime-web/ort-wasm-simd-threaded.mjs?url&no-inline';
 import type { NeuralSpeechCommand, NeuralSpeechMessage } from './speech-port.ts';
-import { assertIntegrity, readExactBody } from './asset-integrity.ts';
+import { assertIntegrity, readExactBody, sha256Hex } from './asset-integrity.ts';
+import { assetCache, type AssetCache } from './asset-cache.ts';
 import { piperControls, piperInput, piperMarkers } from './piper-text.ts';
 
 type Voice = Readonly<{
@@ -45,6 +46,7 @@ const worker = globalThis as unknown as {
 };
 let base: URL;
 let manifest: Manifest;
+let packageCache: AssetCache;
 let loading: Promise<void> | null = null;
 let queue = Promise.resolve();
 const voices = new Map<string, { session: InferenceSession; config: Config; voice: Voice }>();
@@ -57,26 +59,32 @@ async function read(
 ): Promise<ArrayBuffer> {
   if (url.origin !== worker.location.origin)
     throw new Error('Romanian speech assets must use the application origin.');
-  // Revalidate the manifest after deployment; only content pinned by its hash
-  // can safely reuse a cached response without checking for an update.
-  const response = await fetch(url, {
-    credentials: 'omit',
-    redirect: 'error',
-    cache: record ? 'force-cache' : 'no-cache',
-  });
-  if (!response.ok) throw new Error('The Romanian speech asset is unavailable.');
-  const bytes =
-    progress && response.body && record
-      ? await readExactBody(response.body, record.bytes, 'Romanian speech asset', (loaded) => {
-          worker.postMessage({
-            type: 'progress',
-            loaded: progress.offset + loaded,
-            total: progress.total,
-          });
-        })
-      : await response.arrayBuffer();
-  if (record) await assertIntegrity(bytes, record, 'Romanian speech asset');
-  return bytes;
+  // Revalidate after deployment. Package content pinned by its hash persists in
+  // the package cache, so a stale HTTP cache entry cannot fail a new package.
+  const download = async () => {
+    const response = await fetch(url, {
+      credentials: 'omit',
+      redirect: 'error',
+      cache: 'no-cache',
+    });
+    if (!response.ok) throw new Error('The Romanian speech asset is unavailable.');
+    return response;
+  };
+  const verify = async (response: Response) => {
+    const bytes =
+      progress && response.body && record
+        ? await readExactBody(response.body, record.bytes, 'Romanian speech asset', (loaded) => {
+            worker.postMessage({
+              type: 'progress',
+              loaded: progress.offset + loaded,
+              total: progress.total,
+            });
+          })
+        : await response.arrayBuffer();
+    if (record) await assertIntegrity(bytes, record, 'Romanian speech asset');
+    return bytes;
+  };
+  return record ? packageCache.read(url, download, verify) : verify(await download());
 }
 
 async function load(baseUrl: string): Promise<void> {
@@ -89,9 +97,9 @@ async function load(baseUrl: string): Promise<void> {
   ) {
     throw new Error('Invalid Romanian speech asset origin.');
   }
-  manifest = JSON.parse(
-    new TextDecoder().decode(await read(new URL('manifest.json', base))),
-  ) as Manifest;
+  const manifestBytes = await read(new URL('manifest.json', base));
+  manifest = JSON.parse(new TextDecoder().decode(manifestBytes)) as Manifest;
+  packageCache = assetCache('grand-transition-romanian-', await sha256Hex(manifestBytes));
   if (
     manifest.sampleRate !== 22050 ||
     manifest.samplesPerDurationFrame !== 256 ||
@@ -121,7 +129,7 @@ async function load(baseUrl: string): Promise<void> {
   });
 }
 
-// Weights are fetched the first time a voice speaks, never at package load.
+// Weights load when a match warms its voice or the voice first speaks, never at package load.
 function ensureVoice(voice: Voice): Promise<void> {
   const existing = voices.get(voice.id);
   if (existing) return Promise.resolve();
@@ -143,30 +151,46 @@ function ensureVoice(voice: Voice): Promise<void> {
     ) {
       throw new Error('Unsupported Romanian voice configuration.');
     }
-    const model = new Uint8Array(voice.model.bytes);
-    let offset = 0;
-    for (const file of voice.model.files) {
-      const record = manifest.files.find(({ path }) => path === file);
-      if (!record || offset + record.bytes > model.length)
-        throw new Error('Invalid Romanian model inventory.');
-      const bytes = new Uint8Array(
-        await read(new URL(file, base), record, { offset, total: model.length }),
-      );
-      model.set(bytes, offset);
-      offset += bytes.length;
-    }
-    if (offset !== model.length) throw new Error('Romanian model integrity failed.');
-    await assertIntegrity(
-      model,
-      { bytes: model.length, sha256: voice.model.sha256 },
-      'Romanian model',
-    );
-    const session = await InferenceSession.create(model, { executionProviders: ['wasm'] });
+    const session = await InferenceSession.create(await readModel(voice), {
+      executionProviders: ['wasm'],
+    });
     voices.set(voice.id, { session, config, voice });
     pending.delete(voice.id);
   })();
   pending.set(voice.id, pendingLoad);
   return pendingLoad;
+}
+
+async function readModel(voice: Voice): Promise<Uint8Array> {
+  const records = voice.model.files.map((file) => manifest.files.find(({ path }) => path === file));
+  const [only] = records;
+  // A single part pinned with the model's own size and digest passes the model check with its own.
+  if (
+    records.length === 1 &&
+    only?.bytes === voice.model.bytes &&
+    only.sha256 === voice.model.sha256
+  )
+    return new Uint8Array(
+      await read(new URL(only.path, base), only, { offset: 0, total: only.bytes }),
+    );
+  const model = new Uint8Array(voice.model.bytes);
+  let offset = 0;
+  for (const record of records) {
+    if (!record || offset + record.bytes > model.length)
+      throw new Error('Invalid Romanian model inventory.');
+    const bytes = new Uint8Array(
+      await read(new URL(record.path, base), record, { offset, total: model.length }),
+    );
+    model.set(bytes, offset);
+    offset += bytes.length;
+  }
+  if (offset !== model.length) throw new Error('Romanian model integrity failed.');
+  await assertIntegrity(
+    model,
+    { bytes: model.length, sha256: voice.model.sha256 },
+    'Romanian model',
+  );
+  return model;
 }
 
 function phonesFor(text: string): string {
@@ -296,6 +320,13 @@ worker.onmessage = ({ data }) => {
   if (data.type === 'load') {
     loading ??= load(data.baseUrl);
     void loading.catch(() => worker.postMessage({ type: 'error', id: null }));
+  } else if (data.type === 'warm') {
+    // A failed voice load stays pending, so its first delivery reports the error.
+    void (async () => {
+      await loading;
+      const voice = manifest?.voices.find(({ id }) => id === data.voiceId);
+      if (voice) await ensureVoice(voice);
+    })().catch(() => {});
   } else if (data.type === 'synthesize') {
     queue = queue
       .then(() => synthesize(data))

@@ -100,8 +100,9 @@ Audio does not change reducer state or use seeded game randomness.
 
 The first trusted pointer action or keyboard action makes the context and
 starts it again. Each subsequent activation uses the decoded buffers again.
-Milestone 030 also defers speech-worker preparation to that first trusted interaction.
-The initial title loads no speech worker or model before that interaction.
+Milestone 030 keeps speech-worker preparation out of the initial title load.
+Preparation starts in the first idle period after the window `load` event, or at the
+first trusted interaction if it comes first. It does not wait for an interaction.
 Milestone 030 also stops the neural workers when Speech enabled changes to off.
 Late worker callbacks cannot restart loading or playback.
 When speech is enabled again, new local engines can use the cached assets.
@@ -282,6 +283,26 @@ rejects the responses that come after cancellation. There is no persistent cache
 Native Microsoft requests start immediately. If the installed voice for the
 request is missing, the selected neural engine is the fallback.
 
+### Speech package storage
+
+The browser HTTP cache does not keep single entries as large as the speech
+models. Chromium keeps a 25 MB file but drops the 63 MB Romanian models, the
+77 MB Piper model, and the 96 MiB GPU shards. Thus, each speech worker keeps each
+package file that has a manifest record in Cache Storage after its hash check
+passes. The caches are `grand-transition-kokoro-gpu-<model SHA-256>`,
+`grand-transition-piper-<manifest SHA-256>`, and
+`grand-transition-romanian-<manifest SHA-256>`. `src/audio/asset-cache.ts` owns
+this rule.
+
+A subsequent visit reads each package from its cache and downloads no model
+bytes. The worker examines the hash of each cached file again before use. It
+replaces a file that fails the check with a new network copy, and it deletes
+the caches of earlier versions of the same package. Network requests for
+package files and manifests revalidate with `no-cache`, so a stale HTTP cache
+entry cannot fail a new package. If Cache Storage is not available or full,
+loading continues from the network. These caches keep only public model
+packages, never generated speech.
+
 ### Optional GPU voices
 
 The title Settings checkbox `GPU voices` is on by default. Its setting is
@@ -290,6 +311,10 @@ British George and Emma voices.
 The local GPU package is approximately 353 MB. It uses the compact
 WebGPU entry point of ONNX Runtime Web 1.29.0 and the Asyncify runtime that
 agrees with it. Each model shard is less than 100 MiB.
+
+The worker checks the pinned hash of each shard. It does not hash the
+assembled model again, because asset validation pins the hash of the ordered
+shards and the worker compiles the manifest pins.
 
 `tools/kokoro-gpu-assets.ts` pins the source model, the change to the
 duration output, the runtime, the voices, the license notices, the full
@@ -305,8 +330,8 @@ code transforms. Thus, the same runtime hash check works in development and in
 production. The checks of worker boot and runtime bytes include the
 development path.
 
-When the menu opens and the Speech enabled setting is on, initialize the
-voice resources. For GPU resources, the GPU voices setting must also be on. Preparation makes no audio
+When the menu has loaded and the Speech enabled setting is on, initialize the
+voice resources in the first idle period, without a trusted interaction. For GPU resources, the GPU voices setting must also be on. Preparation makes no audio
 context and plays no sound. Subsequently, a trusted interaction starts playback.
 Examine a real adapter and device before
 you download the model.

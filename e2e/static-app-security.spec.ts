@@ -78,29 +78,48 @@ test('production JavaScript chunks stay within the default Vite warning limit', 
 });
 
 test('initial production JavaScript stays within the total gzip budget', async ({ page }, info) => {
+  // Voice preparation starts when the loaded title is idle. Its worker scripts are
+  // measured apart from the initial JavaScript of the title.
+  const speechWorker = /(?:neural-speech|romanian-speech|kokoro-gpu)-worker/u;
   const scripts = new Set<string>();
+  const voiceScripts = new Set<string>();
+  let voicePreparation = false;
+  page.on('worker', (worker) => {
+    if (speechWorker.test(worker.url())) voicePreparation = true;
+  });
   page.on('request', (request) => {
-    if (request.resourceType() === 'script') scripts.add(request.url());
+    if (request.resourceType() !== 'script') return;
+    if (speechWorker.test(request.url())) voicePreparation = true;
+    (voicePreparation ? voiceScripts : scripts).add(request.url());
   });
   await page.goto('./');
   await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
   await page.waitForLoadState('networkidle');
-  const chunks = await Promise.all(
-    [...scripts].sort().map(async (url) => {
-      const resource = new URL(url);
-      expect(resource.origin).toBe(productionOrigin);
-      expect(resource.pathname).toMatch(/^\/grand-transition\/assets\/[^/]+\.[cm]?js$/u);
-      const file = path.basename(resource.pathname);
-      const bytes = await readFile(path.resolve('dist/assets', file));
-      return { file, bytes: bytes.length, gzipBytes: gzipSync(bytes).length };
-    }),
-  );
+  const measure = (urls: Set<string>) =>
+    Promise.all(
+      [...urls].sort().map(async (url) => {
+        const resource = new URL(url);
+        expect(resource.origin).toBe(productionOrigin);
+        expect(resource.pathname).toMatch(/^\/grand-transition\/assets\/[^/]+\.[cm]?js$/u);
+        const file = path.basename(resource.pathname);
+        const bytes = await readFile(path.resolve('dist/assets', file));
+        return { file, bytes: bytes.length, gzipBytes: gzipSync(bytes).length };
+      }),
+    );
+  const chunks = await measure(scripts);
+  const voiceChunks = await measure(voiceScripts);
   expect(chunks.length).toBeGreaterThan(0);
+  expect(voiceChunks.length).toBeGreaterThan(0);
   const gzipBytes = chunks.reduce((sum, chunk) => sum + chunk.gzipBytes, 0);
+  const voiceGzipBytes = voiceChunks.reduce((sum, chunk) => sum + chunk.gzipBytes, 0);
   const resultPath = info.outputPath('initial-javascript-gzip.json');
   await writeFile(
     resultPath,
-    JSON.stringify({ budgetBytes: 350 * 1024, gzipBytes, chunks }, null, 2),
+    JSON.stringify(
+      { budgetBytes: 350 * 1024, gzipBytes, chunks, voiceGzipBytes, voiceChunks },
+      null,
+      2,
+    ),
   );
   await info.attach('initial-javascript-gzip.json', {
     path: resultPath,

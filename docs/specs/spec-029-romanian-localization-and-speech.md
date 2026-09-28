@@ -474,7 +474,10 @@ Use a local module worker and ONNX Runtime Web with single-thread WASM with
 the production CSP. Ship weights, model configuration, Romanian pronunciation
 resources, runtime files, and notices from the app origin, in the
 `/grand-transition/` base. No phrase goes out of the device. Load only the
-selected Romanian voice, and only when Romanian game speech uses it. A change
+Romanian voices that a Romanian match uses. When the match starts, begin to
+load the voice of each speaker, so that the first delivery does not wait for
+the model. Do not load a voice that no speaker of the match uses. When the
+warmup fails, the next delivery reports the error once and stays silent. A change
 of the interface language must not select or download a speech model.
 
 A change of the
@@ -492,7 +495,9 @@ models into ordered static parts of 96 MiB or less each. Before inference,
 assemble the model bytes again, with no changes.
 
 Validate each part, and validate the byte count and the SHA-256 hash of the assembled
-model. When the worker initializes, validate the package manifest again. Thus,
+model. When a model has one part, and the part has the byte count and the hash of
+the model, the check of the part is the check of the model. Do not hash the same
+bytes again. When the worker initializes, validate the package manifest again. Thus,
 a new deployment cannot use an out-of-date voice inventory. Files with a hash
 pin can use the browser cache. Mihai keeps its single model file. The English
 Piper package and the GPU package keep their budgets.

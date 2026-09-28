@@ -18,7 +18,9 @@ const supportedViewports = [
   { width: 1920, height: 1080 },
 ] as const;
 
-test('fresh defaults defer voices until the first trusted interaction', async ({ page }) => {
+test('fresh defaults prepare voices after the title loads without an interaction', async ({
+  page,
+}) => {
   await page.addInitScript(() => {
     const Original = window.AudioContext;
     Object.assign(window, { createdAudioContexts: 0 });
@@ -30,13 +32,18 @@ test('fresh defaults defer voices until the first trusted interaction', async ({
     };
   });
   const resources: string[] = [];
+  const beforeLoad: string[] = [];
+  let loaded = false;
+  page.on('load', () => (loaded = true));
   page.on('request', (request) => {
-    if (new URL(request.url()).pathname.includes('/tts/')) resources.push(request.url());
+    if (!new URL(request.url()).pathname.includes('/tts/')) return;
+    resources.push(request.url());
+    if (!loaded) beforeLoad.push(request.url());
   });
   await page.goto('/grand-transition/');
   await expect(page.getByRole('button', { name: 'Settings', exact: true })).toBeVisible();
-  await page.waitForLoadState('networkidle');
-  expect(resources).toEqual([]);
+  await expect.poll(() => resources.length).toBeGreaterThan(0);
+  expect(beforeLoad).toEqual([]);
   expect(
     await page.evaluate(
       () => (window as unknown as { createdAudioContexts: number }).createdAudioContexts,
@@ -45,7 +52,6 @@ test('fresh defaults defer voices until the first trusted interaction', async ({
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await expect(page.getByLabel('Speech enabled', { exact: true })).toBeChecked();
   await expect(page.getByRole('checkbox', { name: 'GPU voices', exact: true })).toBeChecked();
-  await expect.poll(() => resources.length).toBeGreaterThan(0);
 });
 
 test('turning speech off terminates preparation workers and can enable fresh workers', async ({
