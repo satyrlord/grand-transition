@@ -122,10 +122,14 @@ export class GrandTransitionMatch extends LitElement {
   override connectedCallback(): void {
     super.connectedCallback();
     window.addEventListener('resize', this.followLatestScore);
+    window.addEventListener('resize', this.refitSentence);
+    // Web fonts change the text measure, so fit the sentence again after they load.
+    void document.fonts?.ready.then(this.refitSentence);
   }
 
   override disconnectedCallback(): void {
     window.removeEventListener('resize', this.followLatestScore);
+    window.removeEventListener('resize', this.refitSentence);
     this.cancelScrollUpdate();
     this.clearGrammarStrike();
     this.requestUpdate();
@@ -236,7 +240,32 @@ export class GrandTransitionMatch extends LitElement {
     }
   }
 
+  private fittedSentenceKey = '';
+
+  private readonly refitSentence = (): void => {
+    this.fittedSentenceKey = '';
+    this.fitSentence();
+  };
+
+  /**
+   * Uses the largest of the three speech sizes that shows the whole sentence
+   * without scrolling. Only a sentence that the smallest size cannot show
+   * scrolls in its text region.
+   */
+  private fitSentence(): void {
+    const region = this.querySelector<HTMLElement>('.sentence-preview');
+    if (!region) return;
+    const key = `${region.textContent}|${region.clientWidth}|${region.clientHeight}`;
+    if (key === this.fittedSentenceKey) return;
+    for (const density of speechDensities) {
+      region.dataset.density = density;
+      if (region.scrollHeight <= region.clientHeight + 1) break;
+    }
+    this.fittedSentenceKey = `${region.textContent}|${region.clientWidth}|${region.clientHeight}`;
+  }
+
   protected override updated(changed: PropertyValues<this>): void {
+    this.fitSentence();
     this.scheduleScrollUpdate();
     const previousPresentation = changed.get('presentation') as
       RoundPresentationFrame | null | undefined;
@@ -493,7 +522,6 @@ export class GrandTransitionMatch extends LitElement {
             <p
               class="sentence-preview"
               lang=${displayedSentenceIsGameText ? (gameTextLanguage() ?? nothing) : nothing}
-              data-density=${sentenceDensity(displayedSentence)}
               tabindex="0"
               role="region"
               aria-labelledby="sentence-title"
@@ -1619,11 +1647,8 @@ export class GrandTransitionMatch extends LitElement {
   }
 }
 
-function sentenceDensity(text: string): 'compact' | 'dense' | 'regular' {
-  if (text.length > 160) return 'dense';
-  if (text.length > 90) return 'compact';
-  return 'regular';
-}
+/** The three speech sizes, from the largest to the smallest. */
+const speechDensities = ['regular', 'compact', 'dense'] as const;
 
 function formatScoreNumber(value: number): string {
   return formatInterfaceNumber(

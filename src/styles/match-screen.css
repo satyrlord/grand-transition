@@ -17,6 +17,8 @@
     --scene-width: calc(var(--scene-height) * 16 / 9);
     --sentence-top: calc(100svh - var(--scene-height) * 0.82);
     --sentence-height: calc(var(--scene-height) * 0.16);
+    --status-rail-width: clamp(7.6rem, 11vw, 10.5rem);
+    --player-hud-width: 25.5rem;
     --broadcast-gold: #b48a48;
     --broadcast-gold-light: #e4c17d;
     --broadcast-paper: #e5d8b9;
@@ -332,7 +334,7 @@
     z-index: 12;
     top: 0.55rem;
     left: 50%;
-    width: clamp(7.6rem, 11vw, 10.5rem);
+    width: var(--status-rail-width);
     transform: translateX(-50%);
   }
 
@@ -474,7 +476,7 @@
     top: 0.6rem;
     display: grid;
     gap: 0.28rem;
-    width: min(25.5rem, 96%);
+    width: min(var(--player-hud-width), 96%);
     padding: 0.35rem 0.62rem 0.42rem;
     border: 3px double var(--broadcast-gold);
     background: rgb(91 21 25 / 96%);
@@ -1120,6 +1122,36 @@
 
   .sentence-ledger[data-speaker-side='blue'] {
     left: calc(50% + var(--scene-width) * 0.11);
+  }
+
+  /* A stage wider than 16:9 puts the speech record at the height of the Pride
+     plaques and the status rail. The record stays in the band between its
+     speaker's plaque and the rail, with 1rem clear on each side. */
+  @media (aspect-ratio > 16 / 9) {
+    .sentence-ledger[data-speaker-side] {
+      --sentence-band-width: calc(
+        50% - var(--status-rail-width) / 2 - var(--player-hud-width) - 2.65rem
+      );
+      --sentence-width: min(calc(var(--scene-width) * 0.32), var(--sentence-band-width));
+
+      width: var(--sentence-width);
+    }
+
+    .sentence-ledger[data-speaker-side='red'] {
+      left: clamp(
+        calc(var(--player-hud-width) + 1.65rem + var(--sentence-width) / 2),
+        calc(50% - var(--scene-width) * 0.11),
+        calc(50% - var(--status-rail-width) / 2 - 1rem - var(--sentence-width) / 2)
+      );
+    }
+
+    .sentence-ledger[data-speaker-side='blue'] {
+      left: clamp(
+        calc(50% + var(--status-rail-width) / 2 + 1rem + var(--sentence-width) / 2),
+        calc(50% + var(--scene-width) * 0.11),
+        calc(100% - var(--player-hud-width) - 1.65rem - var(--sentence-width) / 2)
+      );
+    }
   }
 
   .sentence-ledger[data-presenting='true'] {
@@ -2576,8 +2608,12 @@
   }
 
   @media (min-width: 90rem) and (min-height: 50rem) {
+    .match-screen {
+      --player-hud-width: 31rem;
+    }
+
     .player-hud {
-      width: min(31rem, 94%);
+      width: min(var(--player-hud-width), 94%);
     }
 
     .common-phrases {

@@ -1256,7 +1256,19 @@ for (const viewport of gateViewports([
     expect(facts.requiredInside, `${viewport.width}x${viewport.height}`).toBe(true);
     expect(facts.textClipping, `${viewport.width}x${viewport.height}`).toEqual([]);
     expect(facts.sentence.text).toBe(longSentence);
-    expect(facts.sentence.density).toBe('dense');
+    // The record uses the largest speech size that shows the whole sentence.
+    const fit = await page.locator('.sentence-preview').evaluate((node) => {
+      const order = ['regular', 'compact', 'dense'];
+      const chosen = node.dataset.density!;
+      const largerOverflow = order.slice(0, order.indexOf(chosen)).every((density) => {
+        node.dataset.density = density;
+        return node.scrollHeight > node.clientHeight + 1;
+      });
+      node.dataset.density = chosen;
+      return { chosen, largerOverflow, scrolls: node.scrollHeight > node.clientHeight + 1 };
+    });
+    expect(fit.largerOverflow, `${viewport.width}x${viewport.height}`).toBe(true);
+    expect(fit.scrolls && fit.chosen !== 'dense').toBe(false);
     expect(facts.sentence.textOverflow).not.toBe('ellipsis');
     expect(await actionRailsUseBoardMargins(page)).toBe(true);
     expect(await centeredHeaderControls(page)).toBe(true);

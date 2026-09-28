@@ -247,8 +247,10 @@ The wide bubble keeps the full sentence of this time or the full preview
 sentence. It can use a maximum of three responsive speech sizes. Keep the fixed
 geometry of the speech record and the clearance of the moderator.
 Above a scene height of 1080 pixels, each speech size grows with the scene height.
-Thus a larger speech record keeps the text proportion of the 1920 by 1080 record, and it does not show more empty paper.
-A sentence can be taller than the available height.
+The record uses the largest of the three sizes that shows the whole sentence without scrolling.
+It measures again when the sentence, the record size, or the loaded fonts change.
+Thus a wide or large speech record does not show small type on empty paper, and a longer sentence never gets a larger size.
+A sentence can be taller than the available height at the smallest size.
 Then its named text region uses native vertical scrolling.
 This region can get keyboard focus. Wheel input and
 keyboard input must get to the first word and the last word without page

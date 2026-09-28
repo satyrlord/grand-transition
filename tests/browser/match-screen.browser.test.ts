@@ -277,23 +277,18 @@ test('grows each speech size with the speech record above 1920 by 1080', async (
   const style = document.createElement('style');
   style.textContent = titleScreenStyles + screenShellStyles + matchScreenStyles;
   document.head.append(style);
-  const samples = {
-    regular: 'The transition will be televised.',
-    compact:
-      'The transition will be televised after the next consultation of the county council and the press.',
-    dense: `${Array(3).fill('The transition will be televised after the next consultation').join(', ')}.`,
-  };
+  const densities = ['regular', 'compact', 'dense'];
   try {
     const proportions = async (width: number, height: number) => {
       await page.viewport(width, height);
+      match.snapshot = { ...match.snapshot!, sentenceText: 'The transition will be televised.' };
+      await match.updateComplete;
+      await nextAnimationFrame();
+      const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
+      const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
       const result: Record<string, number> = {};
-      for (const [density, sentenceText] of Object.entries(samples)) {
-        match.snapshot = { ...match.snapshot!, sentenceText };
-        await match.updateComplete;
-        await nextAnimationFrame();
-        const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
-        expect(preview.dataset.density).toBe(density);
-        const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
+      for (const density of densities) {
+        preview.dataset.density = density;
         result[density] =
           Number.parseFloat(getComputedStyle(preview).fontSize) / ledger.offsetHeight;
       }
@@ -301,13 +296,96 @@ test('grows each speech size with the speech record above 1920 by 1080', async (
     };
     const reference = await proportions(1920, 1080);
     const large = await proportions(3840, 2160);
-    for (const density of Object.keys(samples)) {
+    for (const density of densities) {
       expect(large[density]).toBeCloseTo(reference[density]!, 3);
     }
   } finally {
     style.remove();
   }
 });
+
+test('uses the largest speech size that shows the whole sentence', async () => {
+  const match = await startMatch();
+  const style = document.createElement('style');
+  style.textContent = titleScreenStyles + screenShellStyles + matchScreenStyles;
+  document.head.append(style);
+  const clause = 'the transition will be televised after the next consultation';
+  try {
+    await page.viewport(1920, 1080);
+    await document.fonts.ready;
+    const order = ['regular', 'compact', 'dense'];
+    const chosen: string[] = [];
+    for (const count of [1, 2, 3, 4, 5, 8]) {
+      const sentenceText = `${Array(count).fill(clause).join(', ')}.`;
+      match.snapshot = { ...match.snapshot!, sentenceText };
+      await match.updateComplete;
+      await nextAnimationFrame();
+      const preview = match.querySelector<HTMLElement>('.sentence-preview')!;
+      const density = preview.dataset.density!;
+      chosen.push(density);
+      const scrolls = preview.scrollHeight > preview.clientHeight + 1;
+      // Only the smallest size can scroll, and each larger size overflows.
+      expect(scrolls && density !== 'dense', sentenceText).toBe(false);
+      for (const larger of order.slice(0, order.indexOf(density))) {
+        preview.dataset.density = larger;
+        expect(preview.scrollHeight, `${larger} for ${count} clauses`).toBeGreaterThan(
+          preview.clientHeight + 1,
+        );
+      }
+      preview.dataset.density = density;
+    }
+    expect(chosen[0]).toBe('regular');
+    expect(chosen.at(-1)).toBe('dense');
+    // A longer sentence never gets a larger size.
+    expect(chosen.map((density) => order.indexOf(density))).toEqual(
+      [...chosen.map((density) => order.indexOf(density))].sort((a, b) => a - b),
+    );
+  } finally {
+    style.remove();
+  }
+});
+
+test.each([
+  { width: 1920, height: 950 },
+  { width: 2560, height: 1080 },
+  { width: 3440, height: 1050 },
+])(
+  'keeps the wide-stage speech record between the Pride plaque and the status rail at $width by $height',
+  async ({ width, height }) => {
+    const match = await startMatch();
+    const style = document.createElement('style');
+    style.textContent = titleScreenStyles + screenShellStyles + matchScreenStyles;
+    document.head.append(style);
+    try {
+      await page.viewport(width, height);
+      await nextAnimationFrame();
+      const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
+      const intersects = (selector: string) => {
+        const record = ledger.getBoundingClientRect();
+        const other = match.querySelector(selector)!.getBoundingClientRect();
+        return !(
+          other.right <= record.left ||
+          other.left >= record.right ||
+          other.bottom <= record.top ||
+          other.top >= record.bottom
+        );
+      };
+      for (const side of ['red', 'blue']) {
+        ledger.dataset.speakerSide = side;
+        ledger.dataset.presenting = 'true';
+        for (const selector of [
+          '.match-status-rail',
+          '.match-player[data-side="red"] .player-hud',
+          '.match-player[data-side="blue"] .player-hud',
+        ]) {
+          expect(intersects(selector), `${side} record and ${selector}`).toBe(false);
+        }
+      }
+    } finally {
+      style.remove();
+    }
+  },
+);
 
 test('coalesces sentence and score scrolling from the latest rendered presentation before paint', async () => {
   const match = await startMatch();

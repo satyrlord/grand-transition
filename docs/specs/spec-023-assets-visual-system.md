@@ -806,6 +806,10 @@ and the foreground aligned, without side bars or image distortion. Keep the
 portrait size based on the viewport height and the horizontal portrait anchors
 based on the scene width. Move the speech record above the cropped moderator
 face region and make it shorter.
+The record is then at the height of the Pride plaques and the status rail.
+Keep it in the band between its speaker's plaque and the rail, with 1rem clear on each side.
+Its width is the smaller of 32 percent of the scene width and that band.
+Do checks at 1920 by 950, 2560 by 1080, and 3440 by 1050, the sizes of desktop browser windows that have toolbars or developer tools.
 Do checks of the coverage at 2560 by 1080, 3424 by 1427, and 5120 by 1440.
 
 For a supported landscape ratio narrower than 4:3, fit the protected 4:3 core
