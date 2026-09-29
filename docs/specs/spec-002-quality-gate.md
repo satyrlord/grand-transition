@@ -73,11 +73,16 @@ The full gate's stable-Chrome performance project runs last with one worker.
 Only that project runs the five cold and five warm performance trials.
 On a hosted CI runner, it records the Milestone 030 timing budgets without enforcing them.
 Quick mode and direct quick test commands cannot select that workload.
-The quality workflow installs stable Chrome and keeps the performance records and traces for 14 days.
 `ci` is an alias of `quality:full`.
-Continuous integration uses the full gate.
+A GitHub workflow never runs `quality:full`, `ci`, or an end-to-end test script.
+`quality:release` is the full gate without the `test:e2e:full` phase.
+It runs `build:bundle` in place of that phase, because the release workflow of Milestone 031 deploys the `dist/` output of the gate.
+The pull-request quality workflow and the release workflow run `quality:release`.
+Thus, the end-to-end tests and the performance trials run only in a local full gate.
+The quality workflow installs stable Chrome and keeps the gate records for 14 days.
+The release gate gives the same full-mode environment markers as the full gate.
 An agent uses `quality:quick` for the usual validation.
-It must not run `quality:full` or `ci` unless the user tells it directly to use the full quality-gate skill.
+It must not run `quality:full`, `ci`, or `quality:release` unless the user tells it directly to use the full quality-gate skill.
 A pass of `quality:quick` is not full-gate evidence and is not release evidence.
 
 The calibration, the content-balance matrix, the ladder flow, and the content lifecycle run only in the full gate.
@@ -93,7 +98,7 @@ After the validation, the full gate calls `balance:validate` and the internal `t
 The validator fails before it loads the catalog, unless the two full-gate environment markers are present.
 The validator contains its 500-match matrix and its 64 structural samples as fixed values.
 No environment setting can change the workload.
-Only `run-quality-gate.ts full` gives the runner marker.
+Only `run-quality-gate.ts full` and `run-quality-gate.ts release` give the runner marker.
 End-to-end tests build the production output before the preview.
 In the gate, `validate` has already checked each asset that `build` checks.
 Thus, the gate gives `GRAND_TRANSITION_ASSETS_VALIDATED=1` only to its end-to-end phase, and Playwright then builds with `build:bundle`.

@@ -11,6 +11,9 @@ const phases = ['validate', 'test', 'test:coverage', 'test:e2e'];
 // The full gate adds the long-running content-balance workload. It is not a
 // test phase, so it never takes the `:full` script suffix.
 const fullPhases = ['validate', 'balance:validate', 'test', 'test:coverage', 'test:e2e'];
+// The release gate is the full gate without the end-to-end phase. It builds
+// the bundle that the release workflow deploys.
+const releasePhases = ['validate', 'balance:validate', 'test', 'test:coverage', 'build:bundle'];
 const fullScriptPhases = new Set(['test', 'test:coverage', 'test:e2e']);
 
 async function runFixture(mode: string, failPhase = '', includeNpm = true) {
@@ -89,17 +92,22 @@ describe('portable quality gate runner', () => {
     expect(stripVTControlCharacters(result.stdout)).toMatch(/Tests\s+\d+ skipped \(\d+\)/u);
   }, 125_000);
 
-  test.each(['quick', 'full'])(
+  test.each(['quick', 'full', 'release'])(
     'runs %s phases using the npm CLI path with spaces',
     async (mode) => {
       const { result, calls } = await runFixture(mode);
       expect(result.error).toBeUndefined();
       expect(result.status, result.stderr).toBe(0);
-      const expectedPhases = mode === 'full' ? fullPhases : phases;
+      const expectedPhases =
+        mode === 'full' ? fullPhases : mode === 'release' ? releasePhases : phases;
+      const gateMode = mode === 'quick' ? 'quick' : 'full';
       expect(calls).toEqual(
         expectedPhases.map((phase) => ({
-          args: ['run', mode === 'full' && fullScriptPhases.has(phase) ? `${phase}:full` : phase],
-          mode,
+          args: [
+            'run',
+            gateMode === 'full' && fullScriptPhases.has(phase) ? `${phase}:full` : phase,
+          ],
+          mode: gateMode,
           marker: 'preserved value with spaces',
           runner: '1',
           // Only the end-to-end build may skip the asset checks that validate ran.
@@ -119,7 +127,7 @@ describe('portable quality gate runner', () => {
     const { result, calls } = await runFixture('quick', '', false);
     expect(result.status).toBe(1);
     expect(result.stderr).toContain(
-      'Run this gate through npm run quality:quick or npm run quality:full.',
+      'Run this gate through npm run quality:quick, quality:full, or quality:release.',
     );
     expect(calls).toEqual([]);
   });
@@ -127,7 +135,7 @@ describe('portable quality gate runner', () => {
   test('rejects an unsupported mode before it starts a phase', async () => {
     const { result, calls } = await runFixture('other');
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain('Use run-quality-gate.ts quick or full.');
+    expect(result.stderr).toContain('Use run-quality-gate.ts quick, full, or release.');
     expect(calls).toEqual([]);
   });
 });

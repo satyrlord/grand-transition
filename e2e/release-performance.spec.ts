@@ -208,9 +208,10 @@ test('release performance meets every cold and warm production budget', async ({
       expect.soft(trial.inputCount, label).toBe(50);
       expect.soft(trial.initialCls, `${label} initial CLS`).toBeLessThanOrEqual(0.05);
       expect.soft(trial.cardUpdateCls, `${label} card-update CLS`).toBe(0);
+      // The trial also counts the early voice-preparation scripts. See Milestone 030.
       expect
         .soft(trial.initialGzipBytes, `${label} initial JavaScript gzip`)
-        .toBeLessThanOrEqual(350 * 1024);
+        .toBeLessThanOrEqual(500 * 1024);
       expect
         .soft(trial.audioDecodedBeforePlayback, `${label} decoded audio before playback`)
         .toBe(true);

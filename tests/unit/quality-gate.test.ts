@@ -108,6 +108,7 @@ describe('quality-gate scaffold', () => {
     };
     expect(packageJson.scripts['quality:quick']).toBe('node tools/run-quality-gate.ts quick');
     expect(packageJson.scripts['quality:full']).toBe('node tools/run-quality-gate.ts full');
+    expect(packageJson.scripts['quality:release']).toBe('node tools/run-quality-gate.ts release');
     expect(packageJson.scripts.ci).toBe('npm run quality:full');
     for (const phase of ['test', 'test:browser', 'test:coverage', 'test:e2e']) {
       expect(packageJson.scripts[phase]).toBe(`node tools/run-test-phase.ts ${phase} quick`);
@@ -118,12 +119,15 @@ describe('quality-gate scaffold', () => {
     const gate = await readFile(path.resolve('tools', 'run-quality-gate.ts'), 'utf8');
     expect(gate).toContain("['validate', 'balance:validate', 'test', 'test:coverage', 'test:e2e']");
     expect(gate).toContain("['validate', 'test', 'test:coverage', 'test:e2e']");
+    expect(gate).toContain(
+      "['validate', 'balance:validate', 'test', 'test:coverage', 'build:bundle']",
+    );
     // Coverage runs the same Browser Mode suite, so the gate omits test:browser.
     expect(gate).not.toContain("'test:browser'");
-    expect(gate).toContain('GRAND_TRANSITION_QUALITY_GATE: mode');
+    expect(gate).toContain('GRAND_TRANSITION_QUALITY_GATE: gateMode');
     expect(gate).toContain("GRAND_TRANSITION_QUALITY_GATE_RUNNER: '1'");
     expect(gate).toContain('fullTestPhases.has(phase)');
-    expect(gate).toContain("['quick', 'full']");
+    expect(gate).toContain("['quick', 'full', 'release']");
     // Only the gate's end-to-end phase, after validate passed, skips the
     // asset checks of the production build. A direct run keeps them.
     expect(gate.replace(/\s+/gu, ' ')).toContain(

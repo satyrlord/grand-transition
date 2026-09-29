@@ -1,7 +1,7 @@
 name: Release to GitHub Pages
 
 # Milestone 031 release path. Pull requests run the Milestone 002 quality
-# workflow, which runs the same gate and has no deployment job.
+# workflow, which runs the same release gate and has no deployment job.
 on:
   push:
     branches:
@@ -48,8 +48,9 @@ jobs:
         run: npm ci
       - name: Install Chromium and stable Chrome
         run: npx playwright install --with-deps chromium chrome
+      # The release gate is the full gate without test:e2e:full. It builds dist/.
       - name: Run the release gate
-        run: npm run ci
+        run: npm run quality:release
       - name: Upload the tested dist artifact
         id: upload
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0

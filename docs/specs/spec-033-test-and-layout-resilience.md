@@ -110,7 +110,7 @@ Set `GRAND_TRANSITION_SKIP_GATE_CHECK=1` to push without the check, for example 
 Other branches do not get the check.
 
 The pre-push check does not replace the release workflow.
-The release workflow continues to run `npm run ci`, and it controls the release.
+The release workflow runs `npm run quality:release`, and it controls the release.
 
 ### Layout region contract
 

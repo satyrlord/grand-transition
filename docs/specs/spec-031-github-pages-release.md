@@ -12,7 +12,7 @@
 ## Deliver
 
 Enable the approved Pages workflow for the default branch, with the minimum permissions.
-It must install the tool versions in the lockfile and run `npm run ci`.
+It must install the tool versions in the lockfile and run `npm run quality:release`.
 It must upload only `dist/`, and it must deploy only after success.
 Complete the release documentation.
 
@@ -21,7 +21,9 @@ After a rename, a transfer, a move to a root site, or a branch change, update th
 
 The workflow installs Node.js 24 and runs `npm ci`.
 It installs Playwright Chromium and stable Chrome with their dependencies.
-It runs `npm run ci`, and it uploads only `dist/` with the official Pages artifact action.
+It runs `npm run quality:release`, and it uploads only `dist/` with the official Pages artifact action.
+The release gate is the Milestone 002 full gate without `test:e2e:full`.
+The published smoke before and after deployment stays in the release path.
 It deploys only a `main` build that passes.
 Use only `contents: read`, `pages: write`, and `id-token: write`.
 
@@ -32,7 +34,8 @@ A push that changes only files in `docs/` does not start it.
 The game version of Milestone 015 counts each commit, so each release build is different.
 Thus without this rule, the commit that fills the release record would deploy a new build, and the record would not agree with the deployed build.
 A docs-only commit still counts for the version of the next release.
-Pull requests run the Milestone 002 quality workflow, which runs the same `npm run ci` gate and has no deployment job.
+Pull requests run the Milestone 002 quality workflow, which runs the same `npm run quality:release` gate and has no deployment job.
+No GitHub workflow runs `quality:full`.
 The published evidence includes the repository Uniform Resource Locator (URL), the subpath assets, refresh, the Content Security Policy (CSP), the speech availability, and a full match.
 
 ## Workflow and recovery contract
@@ -48,7 +51,7 @@ The build job checks out the commit of the change with the complete history (`fe
 It installs Node.js 24.
 It restores the Git LFS objects from a cache with a key from the LFS object list, and it runs `git lfs pull`.
 It installs the npm version in `packageManager` and runs `npm ci`.
-It installs Playwright Chromium and stable Chrome with their dependencies and runs `npm run ci`.
+It installs Playwright Chromium and stable Chrome with their dependencies and runs `npm run quality:release`.
 It uploads one artifact that contains only files from `dist/`.
 The artifact contains no repository file from other directories.
 Record the SHA-256 digest of the deployed artifact.

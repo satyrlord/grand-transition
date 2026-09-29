@@ -61,7 +61,8 @@ On the release date, the game must operate correctly in these browsers:
 - The last stable Chromium major version.
 - The last stable mobile Chrome release.
 
-Continuous integration (CI) runs Chromium and mobile Chromium.
+The local full gate runs Chromium and mobile Chromium.
+Continuous integration (CI) does not run the end-to-end tests, as Milestone 002 specifies.
 Do not add legacy polyfills or code for browsers that are not in the matrix without a new specification.
 
 ## Performance measurement contract
@@ -92,13 +93,15 @@ The other rows apply to each trial.
 | Animation frame interval      | Pooled 95th percentile 18.2 ms or less. Pooled share above 50 ms below 2 percent             |
 | Initial page CLS              | 0.05 or less in each trial                                                                   |
 | Card-update CLS               | 0 in each trial                                                                              |
-| Initial JavaScript            | 350 KiB or less in total after gzip, without media, in each trial                            |
+| Initial JavaScript            | 350 KiB or less in total after gzip, without media and without voice-preparation scripts     |
+| Trial JavaScript              | 500 KiB or less in total after gzip, without media, in each trial                            |
 | Selected audio decode         | Median 1 second or less for each cache mode. Each trial decodes before the first playback    |
 
 Use browser performance entries and a kept trace for the time values.
 Use the generated gzip bytes for the JavaScript total.
 Initial JavaScript contains the scripts that the title requests before the first speech worker starts.
 The speech workers and the scripts that they load start after the title is idle, so the check records them separately.
+Trial JavaScript contains all the scripts that the title loads before the network is idle, which includes the early voice preparation.
 Do not use development-server measurements as an alternative.
 The shared viewport matrix uses the last art and the longest shipped content.
 
@@ -109,9 +112,8 @@ Do checks of the built files in `e2e/static-app-security.spec.ts`.
 This check of each chunk does not replace the total gzip budget above.
 
 On the release date, find the browser matrix and record the accurate versions.
-Continuous integration uses Chromium and mobile Chromium for the release flows.
-A hosted CI runner is not the recorded measurement workstation.
-On a hosted runner, the performance project records the timing rows and their results, but it does not enforce them.
+The local full gate uses Chromium and mobile Chromium for the release flows.
+A hosted CI runner does not run the performance project.
 It continues to enforce the rows that apply to each trial.
 AC-030-01 acceptance comes from a full-gate run on the recorded workstation.
 These projects use the installed stable Chrome channel; record its actual version.
@@ -198,7 +200,7 @@ Only entries with a nonzero interaction identifier belong to those interactions.
 Keep the raw entries and the 16 ms reporting bound for shorter events.
 Calculate layout shift with the standard session windows and recent-input exclusion;
 also keep raw card-update shifts as diagnostics.
-The quality workflow keeps that evidence for 14 days, including failed measurements.
+The local full gate keeps that evidence in `tmp/release-hardening/`, including failed measurements.
 
 `e2e/release-compatibility.spec.ts` owns the release flow matrix in AC-030-02.
 It checks the terminal flow, reload, history, storage failure, unavailable speech, and private hands.

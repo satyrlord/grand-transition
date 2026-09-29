@@ -35,8 +35,10 @@ jobs:
         run: npm ci
       - name: Install Chromium for game and audio checks
         run: npx playwright install --with-deps chromium chrome
-      - name: Run the quality gate without deployment
-        run: npm run quality:full
+      # GitHub workflows never run quality:full. The release gate is the full
+      # gate without test:e2e:full. See Milestone 002.
+      - name: Run the release gate without deployment
+        run: npm run quality:release
       - name: Keep release measurement evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

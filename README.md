@@ -268,7 +268,8 @@ The slowest set runs only in the full gate.
 The game supports Chromium and mobile Chrome. All browser tests use Chromium.
 Release hardening adds Chromium and mobile Chromium production flows.
 The full gate also runs all supported viewports and ten throttled performance trials in stable Chrome.
-Hosted CI records the timing results of these trials but does not enforce them.
+GitHub workflows run `npm run quality:release`, which is the full gate without the end-to-end tests.
+Thus, the end-to-end tests and the performance trials run only in a local full gate.
 The Chromium production checks use stable Chrome in both gate modes.
 Install that browser with `npx playwright install chrome` before these checks.
 Measurement JSON and traces stay in `test-results/`; local dependency and browser reviews stay in `tmp/release-hardening/`.

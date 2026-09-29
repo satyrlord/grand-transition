@@ -40,7 +40,8 @@ The workflow has three jobs.
       The complete history gives the commit count of the game version, for example `v1.177`.
    2. It installs Node.js 24, the npm version in `packageManager`, and the lockfile dependencies.
    3. It installs Playwright Chromium and stable Chrome with their dependencies.
-   4. It runs `npm run ci`, which is the full quality gate.
+   4. It runs `npm run quality:release`, which is the full quality gate without `test:e2e:full`.
+      It builds `dist/` with `build:bundle` after the other phases pass.
    5. It uploads `dist/` with the official Pages artifact action.
    6. It records the SHA-256 digest of the artifact archive, and the Node.js, npm, Playwright, and Chrome versions, in the job summary.
    7. It extracts the uploaded archive, serves it on `127.0.0.1` outside production, and runs the published smoke against it.
@@ -55,7 +56,8 @@ A failed gate, a failed upload, a failed smoke before deployment, or a canceled 
 Then the `deploy` job does not run.
 A failed published smoke makes the workflow run fail, and that run is not a release.
 Pull requests run the Milestone 002 quality workflow.
-That workflow runs the same full gate, and it has no deployment job.
+That workflow runs the same release gate, and it has no deployment job.
+No GitHub workflow runs `quality:full` or the end-to-end tests.
 
 ## Removed tester workflow
 

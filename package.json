@@ -42,6 +42,7 @@
     "validate": "node tools/run-parallel.ts \"npm run markdown:lint\" \"npm run format:check\" \"npm run assets:validate\" \"npm run content:validate\" \"npm run localization:validate\" \"npm run boundaries:check\" \"npm run lint\" \"npm run typecheck\"",
     "quality:quick": "node tools/run-quality-gate.ts quick",
     "quality:full": "node tools/run-quality-gate.ts full",
+    "quality:release": "node tools/run-quality-gate.ts release",
     "ci": "npm run quality:full",
     "audio:build": "node tools/audio-assets.ts build",
     "audio:validate": "node tools/audio-assets.ts validate",

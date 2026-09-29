@@ -43,7 +43,8 @@ It also runs each viewport-matrix test at one reference viewport.
 All browser tests use Chromium in both gates.
 `quality:full` and its `ci` alias are the full gate.
 An agent runs the full gate only when the user tells the agent directly to use the full quality-gate skill.
-Continuous integration (CI) continues to use the full gate.
+Continuous integration (CI) never runs the full gate.
+The pull-request workflow and the release workflow run `quality:release`, which is the full gate without `test:e2e:full`.
 
 These test commands do not run the slowest set: `npm run test`, `npm run test:browser`, `npm run test:coverage`, and `npm run test:e2e`.
 Do not say that a check passed until the scripts are in `package.json` and run.
@@ -120,7 +121,8 @@ Do not add network calls at runtime.
 Generate AVIF and WebP image variants and metadata through the approved Sharp tool.
 Keep controls and necessary text out of the canvas.
 
-For a release, deploy only `dist/` through GitHub Actions after `npm run ci`.
+For a release, deploy only `dist/` through GitHub Actions after `npm run quality:release`.
+The release gate is the full gate without `test:e2e:full`.
 The release process and its record are in `docs/release-github-pages.md`.
 No other workflow deploys to Pages. Milestone 031 removed the tester workflow.
 Do not change the Vite `/grand-transition/` base path.

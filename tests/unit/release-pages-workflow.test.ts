@@ -1,4 +1,5 @@
 import { readFile, readdir } from 'node:fs/promises';
+import path from 'node:path';
 import { describe, expect, test } from 'vitest';
 
 const workflowPath = '.github/workflows/release-github-pages.yml';
@@ -21,9 +22,17 @@ describe('Milestone 031 release workflow', () => {
     expect(workflow).not.toMatch(/^\s+pull_request/mu);
     const qualityWorkflow = await readFile('.github/workflows/quality-gate.yml', 'utf8');
     expect(qualityWorkflow).toMatch(/\non:\n {2}pull_request:\n/u);
-    expect(qualityWorkflow).toContain('run: npm run quality:full');
+    expect(qualityWorkflow).toContain('run: npm run quality:release');
     expect(qualityWorkflow).toMatch(/\n\s+fetch-depth: 0\n/u);
     expect(qualityWorkflow).not.toMatch(/deploy-pages|pages: write|id-token/u);
+  });
+
+  test('never runs the full gate or the end-to-end tests in a GitHub workflow', async () => {
+    const workflowFiles = await readdir('.github/workflows');
+    for (const file of workflowFiles) {
+      const workflow = await readFile(path.join('.github/workflows', file), 'utf8');
+      expect(workflow, file).not.toMatch(/npm run (?:ci|quality:full|test:e2e)/u);
+    }
   });
 
   test('is the only workflow that can deploy to GitHub Pages', async () => {
@@ -90,7 +99,7 @@ describe('Milestone 031 release workflow', () => {
       "require('./package.json').packageManager",
       'run: npm ci',
       'run: npx playwright install --with-deps chromium chrome',
-      'run: npm run ci',
+      'run: npm run quality:release',
       'uses: actions/upload-pages-artifact@',
       'sha256sum "$RUNNER_TEMP/artifact.tar"',
       'npm run test:published --',
@@ -112,6 +121,8 @@ describe('Milestone 031 release workflow', () => {
       /uses: actions\/upload-pages-artifact@\S+ # v\S+\n\s+with:\n\s+path: \.\/dist\n/u,
     );
     expect(workflow.match(/actions\/upload-pages-artifact@/gu)).toHaveLength(1);
+    // The release gate omits test:e2e:full, and the pull request gate keeps it.
+    expect(workflow).not.toMatch(/run: npm run (?:ci|quality:full|test:e2e)/u);
     expect(build).toContain('artifact-digest: ${{ steps.digest.outputs.sha256 }}');
   });
 
