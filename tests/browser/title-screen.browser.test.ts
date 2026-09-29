@@ -86,6 +86,21 @@ test('preserves an existing title-screen registration', async () => {
   expect(customElements.get('grand-transition-title')).toBe(registeredElement);
 });
 
+test('prevents the browser context menu only while the app shell is connected', async () => {
+  await resetStoredData();
+  document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
+  const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
+  await app.updateComplete;
+  const rightClick = (target: EventTarget) =>
+    target.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true }));
+
+  expect(rightClick(app.querySelector('main')!)).toBe(false);
+  expect(rightClick(document.body)).toBe(false);
+
+  app.remove();
+  expect(rightClick(document.body)).toBe(true);
+});
+
 test('opens an empty title-only history modal and traps keyboard focus', async () => {
   await page.viewport(1280, 720);
   await resetStoredData();

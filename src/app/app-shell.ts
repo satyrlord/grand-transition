@@ -360,6 +360,7 @@ export class GrandTransitionApp extends LitElement {
     this.addEventListener('keydown', this.activateAudio);
     this.addEventListener('retry-audio', this.retryAudio);
     document.addEventListener('visibilitychange', this.syncAudioVisibility);
+    document.addEventListener('contextmenu', this.suppressContextMenu);
     this.screenController.connect((view) => {
       if (view !== 'match') this.cancelAiTurn();
       if (this.matchState?.phase === 'results') {
@@ -398,6 +399,7 @@ export class GrandTransitionApp extends LitElement {
     this.removeEventListener('keydown', this.activateAudio);
     this.removeEventListener('retry-audio', this.retryAudio);
     document.removeEventListener('visibilitychange', this.syncAudioVisibility);
+    document.removeEventListener('contextmenu', this.suppressContextMenu);
     window.removeEventListener('load', this.scheduleVoicePreparation);
     if (this.voicePreparation !== null) cancelIdleCallback(this.voicePreparation);
     this.voicePreparation = null;
@@ -452,6 +454,10 @@ export class GrandTransitionApp extends LitElement {
   private readonly refreshAudioControls = (): void => {
     // Audio availability belongs to title Settings, not the active match snapshot.
     if (this.view === 'title') this.requestUpdate();
+  };
+
+  private readonly suppressContextMenu = (event: Event): void => {
+    event.preventDefault();
   };
 
   private readonly syncAudioVisibility = (): void => {

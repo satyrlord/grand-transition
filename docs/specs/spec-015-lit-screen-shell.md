@@ -194,6 +194,9 @@ When the hover or the focus goes away, a temporary panel closes.
 A right-click on a roster character prevents the browser context menu and pins the panel.
 Escape, or a pointer activation or keyboard activation out of the roster and the panel, closes a pinned panel.
 
+While the app shell is connected, it prevents the browser context menu on all the page.
+The right-click actions of the setup screen continue to operate.
+
 The panel contains only public content, and it does not trap the focus.
 
 Validation occurs on submission and after an incorrect field changes.
@@ -282,6 +285,9 @@ The game does not disable submission only to hide the validation.
   `tests/browser/screen-shell.browser.test.ts` does checks of the select and the settings update.
 - **AC-015-16:** The title footer shows `v<major>.<commit count>` for a production build, and a production build without the complete history stops.
   `tests/unit/game-version.test.ts`, `tests/browser/title-screen.browser.test.ts`, and the published smoke do checks of the version.
+- **AC-015-17:** A right-click on each screen and each modal of the connected app shell does not open the browser context menu.
+  After the app shell disconnects, the browser context menu operates again.
+  `tests/browser/title-screen.browser.test.ts` does checks of the prevention and the removal.
 
 ## Impeccable UI validation
 
