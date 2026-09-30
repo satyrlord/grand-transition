@@ -1,6 +1,6 @@
 interface:
   display_name: 'Generate Scene Art with OpenAI'
   short_description: 'Generate chat assets and Flare 4K backgrounds'
-  default_prompt: 'Use $generate-scene-openai for scene and shared raster art. Apply the accepted flat editorial cartoon style to all scene art: broad clean shapes, two-tone shading, and clearly drawn fictional people. Preserve scene geometry and clearance. Use Flare only for opaque 4K scene backgrounds. Use the built-in chat generator for desks, props, foregrounds, and other assets. Keep good native alpha unchanged and build runtime variants locally without enlargement. Do not use an API fallback for a missing chat tool.'
+  default_prompt: 'Use $generate-scene-openai for scene and shared raster art. Research real settings and visually inspect at least five distinct scene references before generation. Build a richly detailed, colorful original setting with clear contrast against actual characters. Research any source-inspired moderator identity separately. Keep the approved flat editorial-cartoon rendering, geometry, and interface clearance. Use Flare only for opaque 4K backgrounds and chat generation for other assets. Keep private research and previews out of public documentation. Honor deferred quality gates and never use a paid fallback for a missing chat tool.'
 policy:
   allow_implicit_invocation: true

@@ -25,6 +25,9 @@ Check the following items at source and runtime scales:
 
 - Identity, objects, clothing, and prop counts.
 - Character resemblance to the visually researched subject, separately from rendering style.
+- Moderator resemblance to its researched inspiration when applicable.
+- Scene-specific architectural detail, furnishing, equipment, and colors supported by inspected references.
+- Clear value and hue separation between the scene and the actual roster characters.
 - Approved style, varied proportions, drawn faces, and consistent linework.
 - Composition, camera, silhouette, safe margins, and crop space.
 - Layer alignment, alpha edges, and foreground occlusion.

@@ -7,12 +7,16 @@
 **Production-file budget:** 10
 
 The rendering direction, the three researched pilot selections, and all fifteen
-matching poses have product-owner approval. The complete pilot packages are in
-local integration; final runtime verification remains pending.
-The Red-Folded Chairman selection master is also approved and retained outside
-the game until its five matching poses are complete and checked.
-The remaining human-roster rollout and seven scene-background replacements
-remain pending.
+matching poses have product-owner approval. The complete pilot packages are
+installed; final runtime verification remains pending.
+The approved Red-Folded Chairman selection and five matching poses are installed,
+together with the new Transition-Era Television Studio background. Focused asset
+checks and production-browser checks passed for all nine Chairman states on both
+player sides at 1024 by 768 and 1280 by 720.
+The owner has deferred that background's moderator/speech clearance decision
+to manual in-game testing. This scoped deferral does not change other scenes'
+clearance requirements. The remaining human-roster and scene replacements
+remain open.
 The three approved pilot packages use their canonical source paths under
 `src/assets/characters/`. Private research and review material do not ship.
 
@@ -407,8 +411,9 @@ Do not copy the art, brands, names, ornament, fonts, or proportions of a
 different game. Also do not copy its unsupported actions or its rasterized
 interface text. Do not use generic dashboard cards and stock fantasy frames.
 
-Use a dark institutional palette with navy, charcoal, paper,
-oxide red, brass, television blue, and cream. Tricolor is a sparse accent.
+Keep the institutional interface palette of navy, charcoal, paper,
+oxide red, brass, television blue, and cream. Give scene artwork its own
+researched palette with clear character/background separation. Tricolor is a sparse accent.
 
 ### Color and white balance
 
@@ -480,10 +485,10 @@ Use the approved [Football Tycoon](../../src/assets/characters/football-tycoon.p
 [EU-Funds Alchemist](../../src/assets/characters/eu-funds-alchemist.png), and
 [Luxury Minister](../../src/assets/characters/luxury-minister.png) selections
 together for style comparison, not as identity sources for another character.
-The approved Red-Folded Chairman master remains private until the matching
-package is complete. Use only that master as the image reference for its five future poses. Its
-existing shipping package stays in place until the replacement is complete and
-checked. This approval does not complete the remaining human roster.
+The approved Red-Folded Chairman selection and five matching poses are installed
+at their canonical source paths. Each pose used only its approved selection as
+the image reference. Focused integration checks passed. This approval does not
+complete the remaining human roster.
 
 Generate selections and poses with the built-in chat image generator using
 native transparency. Use a square source of at least 1024 pixels per edge.
@@ -535,13 +540,39 @@ generic provenance. They do not publish private prompts or reference identities.
 
 ### Scene art direction
 
-All seven opaque scene backgrounds are queued for replacement through Flare
-at native 3840 by 2160. Use the accepted flat editorial cartoon rendering of
+Opaque scene backgrounds use Flare at native 3840 by 2160.
+The first studio's approved new artwork is installed with derived runtime variants.
+Its moderator/speech clearance issue is explicitly deferred to owner testing
+in the game and does not block this replacement. Keep the approved pixels and
+the existing interface geometry. Other background replacements remain open.
+Use the accepted flat editorial cartoon rendering of
 the character trial: broad clean shapes, controlled contours, one base tone,
 and one hard-edged shadow tone. Use a sparse highlight only for readability.
 Fictional moderators and crowd figures have clearly drawn, nonrealistic faces
 and varied adult proportions. Avoid photographic surfaces, painterly blending,
 realistic portrait modeling, and tiny decorative texture.
+
+Research each real-world setting, period, architecture, furniture, equipment,
+and color language before a new scene. Start with user-supplied references.
+Visually inspect at least five distinct relevant images across different views
+or real examples, and use more when needed. Prefer original portfolios,
+institutional photographs, and reliable archives. Record sources, dates when
+known, and observed design choices in private research. Verified web evidence
+overrides conflicting private notes.
+
+Richness comes from specific large and medium architectural forms, furnishing,
+equipment, authored color, and layered composition. Flat shading does not
+require empty walls, sparse scenes, or one repeated palette. Keep identifying
+details inside the narrow crop. Use quieter detail behind faces and controls
+without turning those regions into featureless voids. Compare the palette
+with real roster art: silhouettes, faces, hands, and props must remain clear.
+Do not place navy clothing against a dominant navy field without separation.
+
+For a source-inspired moderator, apply the character identity research rules
+before generation. Reference inputs have explicit environment, palette,
+identity, and rendering roles. Make an original design rather than copying
+one photograph, its branding, or its exact arrangement. Source photographs,
+private mappings, prompts, and review pages do not belong in public documents.
 
 Keep the identity, camera, normalized geometry, focal regions, crop, and
 interface clearance of each scene. This pending regeneration is not completed
@@ -553,8 +584,10 @@ Use the flat cel-shaded editorial-cartoon direction for Transition-Era
 Television Studio. Keep the identity direction of the blonde adult moderator
 in the private generation brief. Use an attentive adult caricature that is a
 small quantity angry, with a navy jacket and a light blouse. Reject anime,
-childlike, doll-like, and geometric-placeholder faces. Generate only through
-text prompts, without image references.
+childlike, doll-like, and geometric-placeholder faces. The owner-authorized
+reference workflow replaces the earlier text-only restriction: inspected
+studio references inform design, identity references inform the moderator,
+and approved cartoon art informs rendering. Keep these roles separate.
 
 Keep the shared camera, layer separation, focal regions,
 color controls, and interface clearance below. A correct generation does not
@@ -1128,8 +1161,12 @@ Keep accepted 4K foreground sources. Do not enlarge new foregrounds to 4K.
 Milestone 026 controls the foundation scenes. Milestone 032 controls the
 seventh scene, which has no foreground plate.
 
-The existing Transition-Era Television Studio background has native
-`gpt-image-2.5-sunburst` provenance. The existing Modern Debate Studio and
+The approved Transition-Era Television Studio background uses native
+3840 by 2160 `gpt-image-2.5-flare` output with inspected reference inputs and
+a focused composition edit. It uses ivory and terracotta architecture,
+wood and metal furniture, and detailed broadcast equipment. It replaces the
+previous background without moving its approved pixels to satisfy the
+deferred moderator-clearance check. The Modern Debate Studio and
 foundation backgrounds have native `gpt-image-2.5-flare` provenance. Existing
 studio and foundation foregrounds retain their recorded Flare composition,
 extraction, fitting, and green-matte conversion provenance. These are facts

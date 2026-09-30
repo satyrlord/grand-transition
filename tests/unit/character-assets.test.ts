@@ -43,8 +43,11 @@ describe('character asset resolver', () => {
     expect(characterAssetManifest).toHaveLength(30);
     expect(characterImageSizes).toBe('(max-width: 1100px) 320px, 640px');
     for (const asset of characterAssetManifest) {
-      expect(asset.width).toBe(2048);
-      expect(asset.height).toBe(2048);
+      const source = manifest.assets.find((entry) => entry.id === asset.id)!.source;
+      expect(asset.width).toBe(source.width);
+      expect(asset.height).toBe(source.height);
+      expect(asset.width).toBeGreaterThanOrEqual(1024);
+      expect(asset.height).toBe(asset.width);
       expect(asset.avif.variants).toHaveLength(5);
       expect(asset.webp.variants).toHaveLength(5);
       expect(asset.avif.srcSet).toMatch(/128w/u);

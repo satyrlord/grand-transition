@@ -78,20 +78,23 @@ describe('scene asset resolver', () => {
     }
   });
 
-  test('ships the selected native 4K OpenAI background instead of the previous upscale', async () => {
+  test('ships the approved reference-guided native 4K background with truthful provenance', async () => {
     const root = path.resolve('src/assets/scenes');
     const bytes = await readFile(path.join(root, 'transition-era-television-studio.png'));
     const hash = createHash('sha256').update(bytes).digest('hex');
-    expect(hash).toBe('76368f93b5a8391c2ad3614ba4b87804b4bb95a0ebfd5e7a177601c644f62442');
+    expect(hash).toBe('b122f8e78cceb02b68f0d34a2cefbfed5bd301c72a675209d0156053ca055547');
     const manifest = JSON.parse(await readFile(path.join(root, 'scene-manifest.json'), 'utf8'));
     const scene = manifest.assets.find(
       (asset: { id: string }) => asset.id === 'transition-era-television-studio',
     );
     expect(scene.source).toMatchObject({ sha256: hash, width: 3840, height: 2160 });
-    expect(scene.sourceDescription).toContain('OpenAI API, gpt-image-2.5-sunburst');
+    expect(scene.sourceDescription).toContain('OpenAI API, gpt-image-2.5-flare');
     expect(scene.sourceDescription).toContain('native 3840x2160');
     expect(scene.sourceDescription).toContain('editorial-cartoon');
-    expect(scene.sourceDescription).toContain('shifted down 72 pixels');
+    expect(scene.sourceDescription).toContain('Reference-guided original studio design');
+    expect(scene.sourceDescription).toContain(
+      'no pixel preparation, resizing, repositioning, or upscaling',
+    );
     expect(scene.sourceDescription).not.toContain('anime');
     expect(scene.sourceDescription).not.toContain('upscaled from');
     expect(scene.variants).toHaveLength(10);

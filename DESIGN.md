@@ -221,10 +221,19 @@ Preserve approved robot art.
 
 Fixed moderators, scene architecture, furniture, fixtures, and props use the same broad cartoon rendering.
 Materials show through silhouette, color, and contour rather than realistic surface detail.
+Research real settings before each new scene. Inspect at least five distinct
+relevant reference images and retain their sources privately.
+Build richly detailed architecture, furnishings, and period equipment from
+that evidence. Flat rendering does not mean empty or minimal scenery.
+Give each scene a distinct authored palette with clear value and hue contrast
+against the actual characters. Avoid large blue backgrounds behind navy clothing.
+Research any source-inspired moderator separately; preserve recognizable drawn likeness.
 Use the built-in chat image generator for transparent characters, poses, desks, props, and foregrounds.
 Keep native source dimensions and clean alpha.
 Use Flare only for opaque 4K scene backgrounds.
-All seven backgrounds await regeneration in this shared cartoon direction.
+The first studio's approved replacement is installed. Its moderator/speech
+clearance decision is deferred to owner testing in the game. Other backgrounds
+still need regeneration.
 Preserve their scene identities, geometry, and interface clearance.
 Build smaller runtime variants locally without enlargement or artificial sharpening.
 

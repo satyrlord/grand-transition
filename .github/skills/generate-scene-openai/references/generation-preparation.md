@@ -5,14 +5,18 @@ Read this module before prompt work or generation.
 ## Set the role and inputs
 
 Select the route from the asset role in the skill entry point.
-Use text-only generation unless the task and the asset contract authorize references.
+For scene work, complete [scene research](scene-research.md) before writing the prompt.
+Use inspected, task-authorized references with explicit environment, palette, identity, and rendering roles.
+Use text-only generation when the active task requires it or no suitable authorized image input is available.
 For the initial character style trial, do not impose an existing raster as its style source.
 For an approved edit, inspect the target before use.
 Keep scene-specific clean-room restrictions.
+Apply a later explicit user reference instruction before an older text-only restriction for that task.
 Do not interpret visual inspection as approval to upload a different raster.
 
 Use one short brief with the asset identity, composition, objects, counts, and exclusions.
 For scenes, give the camera, focal regions, responsive crop, and interface clearance.
+Give the researched period details, a rich object inventory, and the palette's contrast with the actual characters.
 For characters, use [identity and prop consistency](../../generate-character-openai/references/prompt-consistency.md).
 For an edit, identify the features and composition that must stay unchanged.
 
@@ -32,6 +36,8 @@ Do not use photographic surfaces, painterly blending, or realistic portrait mode
 Use clearly drawn faces with varied adult proportions and moderate head exaggeration.
 Keep approved robots unchanged.
 Keep materials readable through shape and color.
+Keep architecture and equipment richly designed while their rendering stays in the shared cartoon language.
+Do not confuse simple shading with a sparse scene.
 Avoid photographic texture, soft portrait shading, and tiny detail.
 
 Include these positive color controls:
@@ -39,7 +45,7 @@ Include these positive color controls:
 ```text
 Neutral sRGB white balance. Ungraded colors.
 Warm color is local to authored materials or lights.
-Use neutral charcoal and navy shadows, with clear blue and oxblood separation.
+Use neutral charcoal shadows and clear separation between authored material colors.
 ```
 
 Include these negative controls:

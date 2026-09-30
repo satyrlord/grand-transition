@@ -56,6 +56,8 @@ Raster work for scenes uses
 [generate-scene-openai](skills/generate-scene-openai/SKILL.md).
 Use the built-in chat image generator for characters, poses, desks, props, and foregrounds.
 The scene skill uses Flare only for opaque 4K scene backgrounds.
+Its scene workflow starts with deep visual web research, then a rich original
+set design and a palette that separates the characters from the background.
 Keep good native alpha unchanged.
 Use local asset tools for provenance, compression, runtime sizes, and manifests.
 Do not use a missing chat tool or requested dimensions as an API fallback.

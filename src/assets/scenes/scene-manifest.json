@@ -1997,14 +1997,14 @@
       "ownerType": "scene",
       "ownerId": "transition-era-television-studio",
       "layerRole": "back",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon background generated from text only with the OpenAI API, gpt-image-2.5-sunburst, high quality, at native 3840x2160. Background shifted down 72 pixels with dark top-edge continuation and lower-floor crop for moderator clearance. No image references or upscaling. Runtime variants derive from this master.",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon studio background created with the OpenAI API, gpt-image-2.5-flare, high quality, at native 3840x2160. Reference-guided original studio design followed by a focused composition edit. Metadata-only provenance registration; no pixel preparation, resizing, repositioning, or upscaling. Runtime variants derive from this master.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "transition-era-television-studio.png",
-        "sha256": "76368f93b5a8391c2ad3614ba4b87804b4bb95a0ebfd5e7a177601c644f62442",
+        "sha256": "b122f8e78cceb02b68f0d34a2cefbfed5bd301c72a675209d0156053ca055547",
         "width": 3840,
         "height": 2160,
-        "bytes": 10053731,
+        "bytes": 7704144,
         "format": "png"
       },
       "focalPoint": {
@@ -2085,91 +2085,91 @@
           "path": "variants/transition-era-television-studio-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 18276,
+          "bytes": 27770,
           "format": "avif",
           "quality": 70,
-          "sha256": "e58824ccc1da2fe79ac687f241f78b270656303357c29d11515505ae270b9b44"
+          "sha256": "638725a1a6d65568ac104e10e9fa122cc143943d05fd32ddca5671feb308da86"
         },
         {
           "path": "variants/transition-era-television-studio-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 19950,
+          "bytes": 35016,
           "format": "webp",
           "quality": 86,
-          "sha256": "831ec3cf26140c3eaaee77bae6a1736cf8f6a7889d6beb40a6e78419786d95b3"
+          "sha256": "94341bd5c1927279dc0553a59fc1f63b639a40dfcbc90274396843f8b131c42d"
         },
         {
           "path": "variants/transition-era-television-studio-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 51535,
+          "bytes": 78948,
           "format": "avif",
           "quality": 70,
-          "sha256": "874f523aeb3ffae79db9c0525ddcba7efd56e951d6f167bccd01a8b1d84d7743"
+          "sha256": "85e49e29a58515c3a669bb9a4ba1f4625d810eeb094c0ea931ed29f335610634"
         },
         {
           "path": "variants/transition-era-television-studio-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 55862,
+          "bytes": 103772,
           "format": "webp",
           "quality": 86,
-          "sha256": "11cc8c3807db9322b6fcf8b1d876c188098e91302631e3024181aa5e33862714"
+          "sha256": "11a126033b99e7f77c2a6b4b74c915416c5ac44b7bbcc7b90d783e123d2ece55"
         },
         {
           "path": "variants/transition-era-television-studio-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 93759,
+          "bytes": 141879,
           "format": "avif",
           "quality": 70,
-          "sha256": "470a87d0f15f68d06c0e5b977afbfbf519f0e168445dd14cafd9e44a43d2642e"
+          "sha256": "db0ef76da929dc72a8b0b263333217e39d3778b01467670a6e2b2c296fcb2eb9"
         },
         {
           "path": "variants/transition-era-television-studio-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 105164,
+          "bytes": 184730,
           "format": "webp",
           "quality": 86,
-          "sha256": "9f5fbd456aff864a2b3768644ed7620c553f6b685571d9bfe7b0e478948ccded"
+          "sha256": "e5b2a6912f6260332e2f8c5fb58bde1d36edf297a7b10f6061e84cfd7e68dc13"
         },
         {
           "path": "variants/transition-era-television-studio-2560x1440.avif",
           "width": 2560,
           "height": 1440,
-          "bytes": 142575,
+          "bytes": 208626,
           "format": "avif",
           "quality": 70,
-          "sha256": "f00979c723c6cb203720dd3bc47946cedf4b14cca15eeadeb3dcf0bb01e973b0"
+          "sha256": "c37dbd68f71a5a52bcef3eddeae683f7d5a2e1c06922cbee504c007ac92da61a"
         },
         {
           "path": "variants/transition-era-television-studio-2560x1440.webp",
           "width": 2560,
           "height": 1440,
-          "bytes": 158870,
+          "bytes": 279868,
           "format": "webp",
           "quality": 86,
-          "sha256": "c8382796f26479b87e641997fe43423be5e86fb424414798a85e33784d17dfba"
+          "sha256": "04346efc407742a03056be671fa1305733d58666486b6124746ae8482e375f0a"
         },
         {
           "path": "variants/transition-era-television-studio-3840x2160.avif",
           "width": 3840,
           "height": 2160,
-          "bytes": 247951,
+          "bytes": 315646,
           "format": "avif",
-          "quality": 70,
-          "sha256": "38599e1c756d8fe6248d9a97b9e9fd714adea4b12bada096e97d45b826edd10c"
+          "quality": 66,
+          "sha256": "48ef4567d4c7cdf143f3ac1615a06d2326aff17e538c117b4a34d85b75b13928"
         },
         {
           "path": "variants/transition-era-television-studio-3840x2160.webp",
           "width": 3840,
           "height": 2160,
-          "bytes": 282058,
+          "bytes": 483238,
           "format": "webp",
           "quality": 86,
-          "sha256": "6fb6bcdd26a7a158400bc6b992e2d83e39cfee1cd906fd5834fd5520471802ea"
+          "sha256": "2970fdde2b18f4f04d85b659486d32784d04cc516840a5ae87b530582e9238fb"
         }
       ]
     },

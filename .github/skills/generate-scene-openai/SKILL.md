@@ -14,6 +14,7 @@ Read the selected scene definition, asset manifest, renderer, and tests.
 Inspect the current checkout before edits.
 Get the asset identifier, role, composition, transparency, and interface clearance from those sources.
 Apply the art direction most recently approved by the user.
+Complete [scene research](references/scene-research.md) before a new background or substantial scene redesign.
 Keep private prompts and retained source notes in `research/`.
 Keep candidates and previews in `tmp/scene-generation/`.
 
@@ -33,11 +34,14 @@ Use a sparse hard-edged highlight only when it improves readability.
 Draw fictional moderators and crowds with clear nonrealistic faces and varied adult proportions.
 Do not use photographic skin, realistic portrait modeling, painterly blending, or detailed surface texture.
 Keep architecture, furniture, props, and people in one coherent cartoon world.
+Build a specific, richly furnished setting from inspected real-world references.
+Flat shading does not mean minimal detail, empty backgrounds, or one repeated palette.
+Use value and hue contrast to separate the actual characters from the background.
 Preserve each scene's identity, camera, crop, normalized geometry, and interface clearance.
 Do not enlarge heads or add detail that hides hands, props, or controls.
 
-All seven opaque scene backgrounds are queued for regeneration in this direction through Flare at 3840 by 2160.
-This pending work is not completed by a skill or documentation update.
+Generate opaque scene backgrounds in this direction through Flare at 3840 by 2160.
+Track visual approval and integration verification separately for each replacement.
 Keep existing shipping backgrounds until each replacement passes review and local integration checks.
 Use chat generation for desks, props, and transparent foreground layers.
 A plan for future background regeneration does not itself send paid requests.
@@ -67,6 +71,7 @@ Use the local asset build for compression, runtime sizes, and manifests.
 ## Load the necessary modules
 
 - Before prompt work, read [generation preparation](references/generation-preparation.md).
+- Before a new scene master or major redesign, read [scene research](references/scene-research.md).
 - Before a 4K background API request, read [API generation](references/api-generation.md).
 - Before candidate review, read [candidate review](references/candidate-review.md).
 - Before transparent integration, read [native alpha](references/native-alpha.md).

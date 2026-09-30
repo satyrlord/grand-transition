@@ -29,7 +29,8 @@ Automatic skill selection is not that instruction.
 - [`generate-character-openai`](generate-character-openai/SKILL.md): Generate
   flat editorial cartoon selections and five-pose packages with native transparency in chat.
 - [`generate-scene-openai`](generate-scene-openai/SKILL.md): Generate or edit
-  scene art and shared raster assets in chat. Use Flare only for opaque 4K scene backgrounds.
+  researched, richly detailed cartoon scenes with clear character contrast.
+  Use Flare only for opaque 4K backgrounds and chat for other raster assets.
 - [`grill-me`](grill-me/SKILL.md): Resolve one product, architecture, or design
   decision at a time.
 - [`improve-codebase-architecture`](improve-codebase-architecture/SKILL.md):
