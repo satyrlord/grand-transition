@@ -7,6 +7,7 @@ import screenShellStyles from '../../src/styles/screen-shell.css?raw';
 import titleScreenStyles from '../../src/styles/title-screen.css?raw';
 import '../../src/styles/fonts.css';
 import { GrandTransitionApp } from '../../src/app/app-shell.ts';
+import { resolveCharacterAsset } from '../../src/app/character-assets.ts';
 import type { RoundPresentationFrame } from '../../src/app/round-presentation.ts';
 import type { MatchPlayerView } from '../../src/app/match-screen-snapshot.ts';
 import type { GrandTransitionCharacter } from '../../src/components/character-presenter.ts';
@@ -68,7 +69,6 @@ test.each([
         ),
       };
       await match.updateComplete;
-      const ledger = match.querySelector<HTMLElement>('.sentence-ledger')!;
       // A test ID keeps the locator stable when a hover preview changes the text.
       await page.getByTestId('sentence-ledger').hover();
       await document.fonts.ready;
@@ -338,7 +338,7 @@ test('uses the largest speech size that shows the whole sentence', async () => {
     expect(chosen.at(-1)).toBe('dense');
     // A longer sentence never gets a larger size.
     expect(chosen.map((density) => order.indexOf(density))).toEqual(
-      [...chosen.map((density) => order.indexOf(density))].sort((a, b) => a - b),
+      chosen.map((density) => order.indexOf(density)).sort((a, b) => a - b),
     );
   } finally {
     style.remove();
@@ -751,16 +751,23 @@ test('renders an immutable complete match snapshot and previews without changing
   } finally {
     style.remove();
   }
+  const expectedPortraitAssets = ['red-folded-chairman', 'thunder-tribune'].map(
+    resolveCharacterAsset,
+  );
   for (const picture of characterPictures) {
     const source = picture.querySelector<HTMLSourceElement>('source')!;
     const image = picture.querySelector<HTMLImageElement>('img')!;
+    const asset = expectedPortraitAssets.find(
+      (candidate) => new URL(candidate.url, document.baseURI).href === image.src,
+    );
+    expect(asset).toBeDefined();
     expect(source.type).toBe('image/avif');
     expect(source.getAttribute('srcset')).toMatch(/128w.*960w/u);
     expect(image.getAttribute('src')).toContain('.webp');
     expect(image.getAttribute('src')).not.toContain('.png');
     expect(image.getAttribute('srcset')).toMatch(/128w.*960w/u);
-    expect(image.getAttribute('width')).toBe('2048');
-    expect(image.getAttribute('height')).toBe('2048');
+    expect(image.getAttribute('width')).toBe(String(asset!.width));
+    expect(image.getAttribute('height')).toBe(String(asset!.height));
     expect(image.getAttribute('sizes')).toBe('min(80svh, 60vw)');
     await vi.waitFor(() => {
       expect(image.currentSrc).toContain('.avif');

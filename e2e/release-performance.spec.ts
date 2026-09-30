@@ -1,5 +1,5 @@
 import { productionBaseURL } from './helpers/production-preview.ts';
-import { chromium, type CDPSession, type Locator, type Page } from '@playwright/test';
+import { chromium, type CDPSession, type Locator, type Page, type Request } from '@playwright/test';
 import { expect, test } from './helpers/fixtures.ts';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -115,6 +115,8 @@ test('release performance meets every cold and warm production budget', async ({
   try {
     for (let pair = 1; pair <= 5; pair++) {
       const context = await browser.newContext({ viewport, reducedMotion: 'no-preference' });
+      context.setDefaultTimeout(120_000);
+      context.setDefaultNavigationTimeout(120_000);
       const page = await context.newPage();
       const session = await context.newCDPSession(page);
       await session.send('Network.enable');
@@ -141,6 +143,7 @@ test('release performance meets every cold and warm production budget', async ({
       try {
         for (const cache of ['cold', 'warm'] as const) {
           const name = `${cache}-${pair}`;
+          console.log(`[release performance] ${name}: starting`);
           const tracePath = info.outputPath(`${name}.trace.json`);
           await session.send('Tracing.start', {
             categories: 'devtools.timeline,blink.user_timing,loading,latencyInfo',
@@ -148,6 +151,7 @@ test('release performance meets every cold and warm production budget', async ({
           });
           try {
             const measured = await measureTrial(page, cache, plan);
+            console.log(`[release performance] ${name}: completed`);
             measurements.push(measured);
             results.push({
               pair,
@@ -232,6 +236,23 @@ async function measureTrial(
 ) {
   const pageErrors: string[] = [];
   const onError = (error: Error) => pageErrors.push(error.message);
+  const pendingScripts = new Set<Request>();
+  let lastScriptActivity = Date.now();
+  let voicePreparationStarted = false;
+  const onRequest = (request: Request) => {
+    if (!/\.[cm]?js$/u.test(new URL(request.url()).pathname)) return;
+    pendingScripts.add(request);
+    lastScriptActivity = Date.now();
+    if (/(?:neural-speech|romanian-speech|kokoro-gpu)-worker/u.test(request.url())) {
+      voicePreparationStarted = true;
+    }
+  };
+  const onRequestDone = (request: Request) => {
+    if (pendingScripts.delete(request)) lastScriptActivity = Date.now();
+  };
+  page.on('request', onRequest);
+  page.on('requestfinished', onRequestDone);
+  page.on('requestfailed', onRequestDone);
   page.on('pageerror', onError);
   try {
     if (cache === 'cold') await page.goto(productionBaseURL);
@@ -241,9 +262,37 @@ async function measureTrial(
       await page.reload();
     }
     await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
-    await page.evaluate(() => document.fonts.ready);
-    await page.waitForLoadState('networkidle');
+    await expect(page.getByRole('button', { name: 'Settings', exact: true })).toBeEnabled();
+    // Voice models can continue downloading while the title is usable. Wait for
+    // its visuals and early scripts, not for unrelated model traffic to stop.
+    await expect
+      .poll(
+        async () => {
+          const title = await page.evaluate(() => {
+            const image = document.querySelector<HTMLImageElement>('.title-emblem');
+            const screen = document.querySelector('grand-transition-title');
+            return {
+              fontsReady: document.fonts.status === 'loaded',
+              imageReady: Boolean(image?.complete && image.naturalWidth > 0),
+              speechStarted:
+                screen !== null &&
+                ['loading', 'ready', 'unavailable'].includes(Reflect.get(screen, 'speechStatus')),
+            };
+          });
+          return (
+            title.fontsReady &&
+            title.imageReady &&
+            (voicePreparationStarted || title.speechStarted) &&
+            pendingScripts.size === 0 &&
+            Date.now() - lastScriptActivity >= 500
+          );
+        },
+        { timeout: 120_000, message: 'Title visuals and early voice scripts become ready' },
+      )
+      .toBe(true);
+    await page.locator('.title-emblem').evaluate((image: HTMLImageElement) => image.decode());
     await twoFrames(page);
+    console.log(`[release performance] ${cache}: title ready`);
     const initial = await page.evaluate(() => ({
       lcpMs: window.releasePerformance.lcp.at(-1),
       shifts: window.releasePerformance.shifts.filter((entry) => !entry.hadRecentInput),
@@ -278,12 +327,17 @@ async function measureTrial(
     await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match' }).click();
     await expect(page.locator(`.broadcast-stage-art[data-scene-asset="${sceneId}"]`)).toBeVisible();
-    await page.waitForLoadState('networkidle');
+    // Global network idleness can retain requests from terminated speech workers.
+    // Decode the selected match package before measuring its input workload.
+    await page.locator('.match-screen img').evaluateAll(async (images) => {
+      await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
+    });
     await expect
       .poll(() => page.evaluate(() => window.releasePerformance.playback.length), {
         timeout: 60_000,
       })
       .toBeGreaterThan(0);
+    console.log(`[release performance] ${cache}: match ready`);
     await twoFrames(page);
     await page.evaluate(() => {
       window.releasePerformance.workload = true;
@@ -408,6 +462,9 @@ async function measureTrial(
     };
   } finally {
     page.off('pageerror', onError);
+    page.off('request', onRequest);
+    page.off('requestfinished', onRequestDone);
+    page.off('requestfailed', onRequestDone);
   }
 }
 

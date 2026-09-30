@@ -101,7 +101,9 @@ Use browser performance entries and a kept trace for the time values.
 Use the generated gzip bytes for the JavaScript total.
 Initial JavaScript contains the scripts that the title requests before the first speech worker starts.
 The speech workers and the scripts that they load start after the title is idle, so the check records them separately.
-Trial JavaScript contains all the scripts that the title loads before the network is idle, which includes the early voice preparation.
+Trial JavaScript contains the title resource-timing script entries after its fonts and emblem are ready and early voice preparation has started.
+Wait until pending script requests finish and no script request starts or finishes for 500 ms, with a 120-second limit.
+Model and media downloads do not block title readiness. This boundary includes early voice-preparation scripts without waiting for their models.
 Do not use development-server measurements as an alternative.
 The shared viewport matrix uses the last art and the longest shipped content.
 

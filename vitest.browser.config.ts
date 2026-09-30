@@ -26,7 +26,15 @@ export default defineConfig({
       process.env.GRAND_TRANSITION_QUALITY_GATE_RUNNER ?? '',
     ),
   },
-  optimizeDeps: { include: ['lit/directives/style-map.js', 'onnxruntime-web/wasm', 'phonemizer'] },
+  optimizeDeps: {
+    include: [
+      'lit/directives/style-map.js',
+      'onnxruntime-web/wasm',
+      'onnxruntime-web/webgpu',
+      'phonemizer',
+      'espeak-phonemizer',
+    ],
+  },
   test: {
     include: [
       'tests/browser/**/*.browser.test.ts',

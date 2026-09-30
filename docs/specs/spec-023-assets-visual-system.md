@@ -13,10 +13,10 @@ The approved Red-Folded Chairman selection and five matching poses are installed
 together with the new Transition-Era Television Studio background. Focused asset
 checks and production-browser checks passed for all nine Chairman states on both
 player sides at 1024 by 768 and 1280 by 720.
-The owner has deferred that background's moderator/speech clearance decision
-to manual in-game testing. This scoped deferral does not change other scenes'
-clearance requirements. The remaining human-roster and scene replacements
-remain open.
+The owner tested that background in the game and accepted its moderator/speech
+clearance. There is no outstanding moderator-clearance concern for this
+background. Other scenes' clearance requirements stay unchanged. The remaining
+human-roster and scene replacements remain open.
 The three approved pilot packages use their canonical source paths under
 `src/assets/characters/`. Private research and review material do not ship.
 
@@ -542,9 +542,9 @@ generic provenance. They do not publish private prompts or reference identities.
 
 Opaque scene backgrounds use Flare at native 3840 by 2160.
 The first studio's approved new artwork is installed with derived runtime variants.
-Its moderator/speech clearance issue is explicitly deferred to owner testing
-in the game and does not block this replacement. Keep the approved pixels and
-the existing interface geometry. Other background replacements remain open.
+The owner accepted its moderator/speech clearance after testing in the game.
+Keep the approved pixels and the existing interface geometry. Other background
+replacements remain open.
 Use the accepted flat editorial cartoon rendering of
 the character trial: broad clean shapes, controlled contours, one base tone,
 and one hard-edged shadow tone. Use a sparse highlight only for readability.
@@ -1165,8 +1165,8 @@ The approved Transition-Era Television Studio background uses native
 3840 by 2160 `gpt-image-2.5-flare` output with inspected reference inputs and
 a focused composition edit. It uses ivory and terracotta architecture,
 wood and metal furniture, and detailed broadcast equipment. It replaces the
-previous background without moving its approved pixels to satisfy the
-deferred moderator-clearance check. The Modern Debate Studio and
+previous background without moving its approved pixels. The owner accepted
+its moderator/speech clearance in the game. The Modern Debate Studio and
 foundation backgrounds have native `gpt-image-2.5-flare` provenance. Existing
 studio and foundation foregrounds retain their recorded Flare composition,
 extraction, fitting, and green-matte conversion provenance. These are facts

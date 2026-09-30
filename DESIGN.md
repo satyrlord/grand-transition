@@ -231,9 +231,9 @@ Research any source-inspired moderator separately; preserve recognizable drawn l
 Use the built-in chat image generator for transparent characters, poses, desks, props, and foregrounds.
 Keep native source dimensions and clean alpha.
 Use Flare only for opaque 4K scene backgrounds.
-The first studio's approved replacement is installed. Its moderator/speech
-clearance decision is deferred to owner testing in the game. Other backgrounds
-still need regeneration.
+The first studio's approved replacement is installed. The owner tested it in
+the game and accepted its moderator/speech clearance. Other backgrounds still
+need regeneration.
 Preserve their scene identities, geometry, and interface clearance.
 Build smaller runtime variants locally without enlargement or artificial sharpening.
 
