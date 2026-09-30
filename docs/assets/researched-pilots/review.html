@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Grand Transition: researched character pilots</title>
+    <style>
+      :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #10151d; color: #f0f3f7; --stage: #182330; --size: 320px; }
+      body { margin: 0; padding: 32px; }
+      h1 { font-size: 25px; margin: 0 0 8px; }
+      p { color: #bbc6d5; line-height: 1.5; max-width: 80ch; }
+      .controls { display: flex; flex-wrap: wrap; gap: 24px; margin: 28px 0; }
+      label { display: flex; gap: 12px; align-items: center; }
+      select { font: inherit; padding: 6px 10px; }
+      main { display: flex; flex-wrap: wrap; align-items: start; gap: 24px; }
+      figure { margin: 0; }
+      .stage { width: var(--size); height: var(--size); background: var(--stage); }
+      img { display: block; width: 100%; height: 100%; object-fit: contain; }
+      figcaption { padding: 12px 0; max-width: var(--size); }
+      a { color: #a9d8ff; }
+      .note { font-size: 14px; margin-top: 24px; }
+    </style>
+  </head>
+  <body>
+    <h1>Three researched character pilots</h1>
+    <p>Fresh chat generations after five distinct reference photographs per identity. These are candidates for visual review, not installed character packages. The robots are unchanged.</p>
+    <div class="controls">
+      <label>Image size <select id="size"><option>128</option><option selected>320</option><option>640</option><option>960</option><option>1254</option></select> px</label>
+      <label>Background <select id="background"><option value="#182330">Dark</option><option value="#f3f3f0">Light</option><option value="#757575">Mid-gray</option></select></label>
+      <label>Source <select id="format"><option value="webp">Encoded WebP</option><option value="avif">Encoded AVIF</option><option value="png">Native PNG</option></select></label>
+    </div>
+    <main>
+      <figure data-id="football-tycoon"><div class="stage"><img src="football-tycoon.png" alt="Football Tycoon pilot" width="1254" height="1254" /></div><figcaption><a href="football-tycoon.png">Football Tycoon</a></figcaption></figure>
+      <figure data-id="eu-funds-alchemist"><div class="stage"><img src="eu-funds-alchemist.png" alt="EU-Funds Alchemist pilot" width="1254" height="1254" /></div><figcaption><a href="eu-funds-alchemist.png">EU-Funds Alchemist</a></figcaption></figure>
+      <figure data-id="luxury-minister"><div class="stage"><img src="luxury-minister.png" alt="Luxury Minister pilot" width="1254" height="1254" /></div><figcaption><a href="luxury-minister.png">Luxury Minister</a></figcaption></figure>
+    </main>
+    <p class="note">The native canvases are 1254 square pixels. Encoded variants stop at 960 pixels; the 1254-pixel encoded view deliberately shows browser enlargement for comparison. No sharpening filter is added.</p>
+    <script>
+      const size = document.querySelector('#size');
+      const background = document.querySelector('#background');
+      const format = document.querySelector('#format');
+      function update() {
+        const width = Number(size.value);
+        document.documentElement.style.setProperty('--size', `${width}px`);
+        document.documentElement.style.setProperty('--stage', background.value);
+        for (const figure of document.querySelectorAll('figure')) {
+          const id = figure.dataset.id;
+          figure.querySelector('img').src = format.value === 'png' ? `${id}.png` : `variants/${id}-${Math.min(width, 960)}x${Math.min(width, 960)}.${format.value}`;
+        }
+      }
+      for (const input of [size, background, format]) input.addEventListener('change', update);
+      update();
+    </script>
+  </body>
+</html>

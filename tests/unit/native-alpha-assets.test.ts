@@ -15,6 +15,36 @@ import { encodeVariant, encodeVariantWithMetadata } from '../../tools/build-char
 const execFileAsync = promisify(execFile);
 const script = path.resolve('.github/skills/repair-scene-composition/scripts/green-chroma-key.ts');
 
+test.each([0.8, 0.84, 0.9])(
+  'accepts a native 1024 character with %s silhouette height and safe margins',
+  async (heightRatio) => {
+    const height = Math.ceil(1024 * heightRatio);
+    const input = await sharp(
+      Buffer.from(
+        `<svg width="1024" height="1024"><rect x="260" y="${Math.floor((1024 - height) / 2)}" width="500" height="${height}" rx="40" fill="#aabbcc"/></svg>`,
+      ),
+    )
+      .png()
+      .toBuffer();
+    await expect(
+      inspectCharacter(input, 'native trial', { nativeAlpha: true }),
+    ).resolves.toBeUndefined();
+  },
+);
+
+test('rejects a native character that occupies less than eighty percent of the canvas height', async () => {
+  const input = await sharp(
+    Buffer.from(
+      '<svg width="1024" height="1024"><rect x="260" y="120" width="500" height="780" rx="40" fill="#aabbcc"/></svg>',
+    ),
+  )
+    .png()
+    .toBuffer();
+  await expect(
+    inspectCharacter(input, 'small native trial', { nativeAlpha: true }),
+  ).rejects.toThrow(/readable full-body silhouette/u);
+});
+
 test('shipped native Local Baron portrait satisfies production border and contour checks', async () => {
   const input = await readFile(
     path.resolve('src/assets/characters/county-baron--municipal-patron.png'),

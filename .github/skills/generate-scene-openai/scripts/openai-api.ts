@@ -3,12 +3,13 @@
 export const MODEL = 'gpt-image-2.5-flare';
 const API_ROOT = 'https://api.openai.com/v1/images/';
 
-export type FlareBackground = 'transparent' | 'opaque' | 'auto';
+export type AssetRole = 'scene-background' | 'character' | 'desk' | 'prop' | 'foreground' | 'other';
 export interface ReferenceImage {
   bytes: Buffer;
   format: string;
 }
 export interface FlareRequest {
+  assetRole: 'scene-background';
   endpoint: string;
   body: string | FormData;
   contentType?: string;
@@ -16,40 +17,33 @@ export interface FlareRequest {
 type Fetcher = (input: string, init: RequestInit) => Promise<Response>;
 
 export function validateFlareSize(size: string) {
-  const match = /^(\d+)x(\d+)$/u.exec(size);
-  const width = Number(match?.[1]),
-    height = Number(match?.[2]);
-  const pixels = width * height;
-  if (
-    !Number.isSafeInteger(pixels) ||
-    width < 1 ||
-    height < 1 ||
-    width % 16 ||
-    height % 16 ||
-    Math.max(width, height) > 3840 ||
-    Math.max(width, height) / Math.min(width, height) > 3 ||
-    pixels < 655_360 ||
-    pixels > 8_294_400
-  ) {
-    throw new Error('The requested size is outside the supported Flare dimensions.');
-  }
-  return { width, height, pixels };
+  if (size !== '3840x2160')
+    throw new Error('Flare is permitted only for 3840x2160 scene backgrounds.');
+  return { width: 3840, height: 2160, pixels: 3840 * 2160 };
+}
+
+export function assertFlareAsset(assetRole: unknown, size: string, background: unknown) {
+  if (assetRole !== 'scene-background' || background !== 'opaque')
+    throw new Error(
+      'Flare is permitted only for an explicit opaque 3840x2160 scene-background asset. Use built-in image generation for other assets.',
+    );
+  validateFlareSize(size);
 }
 
 export function buildFlareRequest({
   promptText,
   size,
-  background = 'auto',
+  assetRole,
+  background,
   referenceImages = [],
 }: {
   promptText: string;
   size: string;
+  assetRole?: AssetRole;
   background?: string;
   referenceImages?: ReferenceImage[];
 }): FlareRequest {
-  validateFlareSize(size);
-  if (!['transparent', 'opaque', 'auto'].includes(background))
-    throw new Error('Use transparent, opaque, or auto for the background.');
+  assertFlareAsset(assetRole, size, background);
   if (typeof promptText !== 'string' || !promptText.trim())
     throw new Error('The generation prompt is empty.');
   if (referenceImages.length > 16) throw new Error('Use no more than 16 reference images.');
@@ -64,6 +58,7 @@ export function buildFlareRequest({
   };
   if (referenceImages.length === 0) {
     return {
+      assetRole: 'scene-background',
       endpoint: `${API_ROOT}generations`,
       body: JSON.stringify(fields),
       contentType: 'application/json',
@@ -86,7 +81,7 @@ export function buildFlareRequest({
       `reference-${index + 1}.${image.format}`,
     );
   }
-  return { endpoint: `${API_ROOT}edits`, body };
+  return { assetRole: 'scene-background', endpoint: `${API_ROOT}edits`, body };
 }
 
 export class FlareRequestError extends Error {
@@ -106,6 +101,27 @@ export async function sendFlareRequest(
   key: string,
   fetcher: Fetcher = globalThis.fetch,
 ): Promise<Buffer> {
+  // Recheck the actual payload at the public transport entry point. Callers can
+  // construct requests directly or change a request after the builder returns.
+  let fields: Record<string, unknown>;
+  if (typeof request.body === 'string') {
+    try {
+      fields = JSON.parse(request.body) as Record<string, unknown>;
+    } catch {
+      throw new Error('Use a valid scene-background image request.');
+    }
+  } else if (request.body instanceof FormData) {
+    fields = Object.fromEntries(request.body.entries());
+    for (const field of ['size', 'background', 'model', 'n']) {
+      if (request.body.getAll(field).length !== 1)
+        throw new Error(`Use one ${field} value for the scene-background request.`);
+    }
+  } else {
+    throw new Error('Use a valid scene-background image request.');
+  }
+  assertFlareAsset(request.assetRole, String(fields?.size), fields?.background);
+  if (fields.model !== MODEL || ![1, '1'].includes(fields.n as number | string))
+    throw new Error('Use one Flare image for each scene-background request.');
   if (![`${API_ROOT}generations`, `${API_ROOT}edits`].includes(request.endpoint)) {
     throw new Error('Use the fixed OpenAI image endpoint.');
   }

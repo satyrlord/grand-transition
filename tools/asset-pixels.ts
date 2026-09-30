@@ -9,12 +9,12 @@ export function isVisibleChromaGreen(data: ArrayLike<number>, offset: number): b
   );
 }
 
-export function hasNativeAlphaProvenance(png: Buffer): boolean {
-  if (!png.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) return false;
+function readPngTextEntries(png: Buffer): Map<string, string> | null {
+  if (!png.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) return null;
   const entries = new Map<string, string>();
   for (let offset = 8; offset + 12 <= png.length;) {
     const length = png.readUInt32BE(offset);
-    if (offset + length + 12 > png.length) return false;
+    if (offset + length + 12 > png.length) return null;
     if (png.toString('ascii', offset + 4, offset + 8) === 'iTXt') {
       const data = png.subarray(offset + 8, offset + 8 + length);
       const end = data.indexOf(0);
@@ -22,10 +22,20 @@ export function hasNativeAlphaProvenance(png: Buffer): boolean {
     }
     offset += length + 12;
   }
+  return entries;
+}
+
+export function hasNativeAlphaProvenance(png: Buffer): boolean {
+  const entries = readPngTextEntries(png);
   return (
-    entries.get('Alpha Workflow') === 'native-alpha-v1' &&
+    entries?.get('Alpha Workflow') === 'native-alpha-v1' &&
     entries.get('Alpha Source') === 'generated-alpha-v1'
   );
+}
+
+// The provenance command of the alpha utility stamps this generic source text on a staged master.
+export function readGenerationSource(png: Buffer): string | undefined {
+  return readPngTextEntries(png)?.get('Generation Source')?.trim() || undefined;
 }
 
 export function measureNativeAlphaTopology(data: ArrayLike<number>, width: number, height: number) {

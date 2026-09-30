@@ -15,6 +15,7 @@ import sharp from 'sharp';
 import baseline from './character-replacement-baseline.json' with { type: 'json' };
 import portraitLayout from '../src/assets/characters/portrait-layout.json' with { type: 'json' };
 import { hasNativeAlphaProvenance } from './asset-pixels.ts';
+import { isCharacterSourceSize } from '../src/visual/asset-resolution.ts';
 
 export const CHARACTER_MASTER_NAMES = Object.freeze(
   [
@@ -73,7 +74,13 @@ export type CharacterAsset = {
   variants: CharacterVariant[];
 };
 export type CharacterManifest = { schemaVersion: number; assets: CharacterAsset[] };
-type CharacterMaster = { fileName: string; id: string; input: Buffer };
+type CharacterMaster = {
+  fileName: string;
+  id: string;
+  input: Buffer;
+  width: number;
+  height: number;
+};
 
 const sha256 = (input: Uint8Array) => createHash('sha256').update(input).digest('hex');
 const assetId = (fileName: string) => path.parse(fileName).name;
@@ -126,6 +133,7 @@ export async function encodeVariantWithMetadata(
   let pipeline = sharp(input).resize(width, width, {
     fit: 'contain',
     kernel: sharp.kernel.lanczos3,
+    withoutEnlargement: true,
   });
   const nativeAlpha = hasNativeAlphaProvenance(input);
   if (nativeAlpha) {
@@ -183,13 +191,14 @@ async function readMaster(characterRoot: string, fileName: string) {
   const metadata = await sharp(input).metadata();
   if (
     metadata.format !== 'png' ||
-    metadata.width !== 2048 ||
-    metadata.height !== 2048 ||
+    !isCharacterSourceSize(metadata.width, metadata.height) ||
     !metadata.hasAlpha
   ) {
-    throw new Error(`${fileName}: character master must be a transparent 2048x2048 PNG.`);
+    throw new Error(
+      `${fileName}: character master must be a transparent square PNG of at least 1024x1024.`,
+    );
   }
-  return { input, filePath };
+  return { input, filePath, width: metadata.width, height: metadata.width };
 }
 
 async function assertMasterSet(
@@ -255,8 +264,8 @@ async function verifiedCachedAssets(
       asset.poseId !== 'selection' ||
       asset.expressionId !== 'selection' ||
       asset.source?.path !== master.fileName ||
-      asset.source.width !== 2048 ||
-      asset.source.height !== 2048 ||
+      asset.source.width !== master.width ||
+      asset.source.height !== master.height ||
       asset.source.format !== 'png' ||
       asset.source.bytes !== master.input.length ||
       asset.source.sha256 !== sha256(master.input)
@@ -362,10 +371,10 @@ export async function buildCharacterAssets({
   const masters = await Promise.all(
     masterNames.map(async (fileName) => {
       const id = assetId(fileName);
-      const { input } = await readMaster(resolvedRoot, fileName);
+      const { input, width, height } = await readMaster(resolvedRoot, fileName);
       if (layout[id]!.sourceSha256 !== sha256(input))
         throw new Error(`${id}: source changed after the facing review.`);
-      return { fileName, id, input };
+      return { fileName, id, input, width, height };
     }),
   );
   const cached = selected
@@ -378,7 +387,13 @@ export async function buildCharacterAssets({
     const assets = await mapWithConcurrency(
       masters,
       3,
-      async ({ fileName, id, input }): Promise<CharacterAsset> => {
+      async ({
+        fileName,
+        id,
+        input,
+        width: sourceWidth,
+        height: sourceHeight,
+      }): Promise<CharacterAsset> => {
         const cachedAsset = cached.get(id);
         if (cachedAsset) {
           await Promise.all(
@@ -430,8 +445,8 @@ export async function buildCharacterAssets({
           licenseIdentifier: LICENSE_IDENTIFIER,
           source: {
             path: fileName,
-            width: 2048,
-            height: 2048,
+            width: sourceWidth,
+            height: sourceHeight,
             format: 'png',
             bytes: input.length,
             sha256: sha256(input),

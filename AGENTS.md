@@ -104,7 +104,7 @@ Examine the visual quality and the speech that you hear manually.
 Commit subjects use the Conventional Commits format.
 Use a type, an optional list of scopes, and a short imperative description in lowercase.
 Examples are `docs(guidance): rewrite AI guidance in Simplified Technical English` and
-`feat(assets,docs): regenerate county-baron art with big-head standard`.
+`feat(assets,docs): regenerate county-baron art with flat editorial cartoon style`.
 Pull requests must give the specification sections, the checks, and the differences from the specifications.
 For changes that the user can see, pull requests must include evidence.
 When the architecture or the behavior changes, update all the related specifications.
@@ -128,6 +128,9 @@ No other workflow deploys to Pages. Milestone 031 removed the tester workflow.
 Do not change the Vite `/grand-transition/` base path.
 
 All generated representational raster art must agree with the shared cel-shaded editorial-cartoon direction in Milestone 023.
-Character skins and states use the funny big-head rendering standard of that milestone.
-The only visual reference for that standard is `county-baron--municipal-patron`.
+Character skins and states use the flat editorial cartoon direction of that milestone.
+Use the accepted three-character trial as the shared style reference after product-owner acceptance.
+Preserve approved robot art.
+Use the built-in chat image generator for characters, poses, desks, props, and foregrounds.
+Use Flare only for opaque 4K scene backgrounds.
 Do not generate painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, three-dimensional-render, or mixed-style assets.

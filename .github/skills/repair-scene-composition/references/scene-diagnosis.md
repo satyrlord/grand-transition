@@ -158,7 +158,9 @@ More local scale changes make the cause not easy to find, and they cause failure
 
 For a full regeneration, make one full composite first.
 Get approval for its camera, human scale, furniture scale, focal regions, and the regions that the interface must keep clear.
-Then make each runtime layer from the same composite and the same masks.
+Then make each runtime layer with the same camera, composition, and normalized positions.
+Use the chat generator for transparent layers and Flare only for the opaque 4K background.
+Keep transparent layers at their native size without enlargement.
 Do not generate each layer as a different composition.
 
 ## Validate transparent layers

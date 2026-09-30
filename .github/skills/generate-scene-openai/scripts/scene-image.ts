@@ -6,14 +6,14 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs, parseEnv } from 'node:util';
 import sharp from 'sharp';
 import { SCENE_MASTER_NAMES } from '../../../../tools/build-scene-assets.ts';
-import { sceneMasterSize } from '../../../../tools/scene-resolution.ts';
+import { readSceneMasterSize } from '../../../../tools/scene-resolution.ts';
 import { assertColorControlledPrompt } from '../../../../tools/validate-generation-prompt.ts';
-import { assertCharacterBrief, parseBrief } from '../../../../tools/validate-character-prompt.ts';
 import {
   MODEL,
+  assertFlareAsset,
   buildFlareRequest,
   sendFlareRequest,
-  validateFlareSize,
+  type AssetRole,
   type ReferenceImage,
 } from './openai-api.ts';
 import { inspectNativeAlpha, prepareNativeAlpha } from './native-alpha.ts';
@@ -24,8 +24,8 @@ interface ImageSize {
   height: number;
 }
 interface RouteOptions {
+  assetRole?: string;
   background?: string;
-  exactSize?: boolean;
 }
 interface ImageFacts {
   sha256: string;
@@ -44,7 +44,6 @@ interface ReviewRecord {
 
 export { MODEL };
 export const NATIVE_SIZE = Object.freeze({ width: 3840, height: 2160 });
-export const INTERNAL_PIXEL_LIMIT = 1920 * 1080;
 export const REVIEW_CHECKS = Object.freeze([
   'sceneIdentity',
   'style',
@@ -85,14 +84,23 @@ function imageDimensions(size: string) {
 
 export function selectRoute(
   size = '3840x2160',
-  { background, exactSize = false }: RouteOptions = {},
+  { assetRole = 'other', background }: RouteOptions = {},
 ) {
   assertBackground(background);
+  if (!['scene-background', 'character', 'desk', 'prop', 'foreground', 'other'].includes(assetRole))
+    throw new Error(
+      'Use scene-background, character, desk, prop, foreground, or other for the asset role.',
+    );
   const { width, height, pixels } = imageDimensions(size);
-  const needsApi =
-    background === 'transparent' || exactSize || width * height > INTERNAL_PIXEL_LIMIT;
-  if (needsApi) validateFlareSize(size);
-  return { width, height, pixels, route: needsApi ? ('api' as const) : ('internal' as const) };
+  const needsApi = assetRole === 'scene-background';
+  if (needsApi) assertFlareAsset(assetRole, size, background);
+  return {
+    assetRole: assetRole as AssetRole,
+    width,
+    height,
+    pixels,
+    route: needsApi ? ('api' as const) : ('internal' as const),
+  };
 }
 
 export function candidateReviewState(alpha?: { valid?: boolean }) {
@@ -103,7 +111,7 @@ function assertApiSize(size: string, options: RouteOptions) {
   const plan = selectRoute(size, options);
   if (plan.route === 'internal')
     throw new Error(
-      'Use the local image generation tool for small opaque drafts. No API request is permitted. Without a local image generation tool, add --exact-size.',
+      'Use built-in image generation for this asset. No API request is permitted. Only explicit opaque 3840x2160 scene-background assets can use Flare.',
     );
   return plan;
 }
@@ -244,69 +252,24 @@ export async function prepareImage(
   bytes: Buffer,
   review: ReviewRecord,
   scene: string,
-  expectedSize: ImageSize = NATIVE_SIZE,
+  expectedSize?: ImageSize,
 ) {
   if (!SCENE_MASTER_NAMES.includes(`${scene}.png`))
     throw new Error('The scene builder does not declare this scene master ID.');
-  const source = await inspectImage(bytes, expectedSize);
+  const dimensions = expectedSize ?? (await sharp(bytes, { failOn: 'warning' }).metadata());
+  const source = await inspectImage(bytes, { width: dimensions.width, height: dimensions.height });
   assertReview(review, source);
-  const size = sceneMasterSize(scene);
-  if (source.width < size.width || source.height < size.height)
-    throw new Error('The candidate is too small for the declared master. Do not upscale.');
-  const sameSize = source.width === size.width && source.height === size.height;
-  const output = sameSize
-    ? bytes
-    : await sharp(bytes)
-        .toColourspace('srgb')
-        .resize({
-          ...size,
-          fit: 'cover',
-          position: 'centre',
-          kernel: sharp.kernel.lanczos3,
-          withoutEnlargement: true,
-        })
-        .png()
-        .toBuffer();
+  const size = readSceneMasterSize(scene, source.width, source.height);
+  const output = bytes;
   return {
     output,
     record: {
       source,
       scene,
-      operation: sameSize ? 'preserve-native-pixels' : 'center-cover-lanczos3-downsample',
+      operation: 'preserve-native-pixels',
       output: { sha256: sha256(output), ...size, bytes: output.length },
     },
   };
-}
-
-// A character master is a 2048-square transparent run in `tmp/character-generation/`.
-// Each of those requests needs a brief that the prompt check accepts before any paid request.
-export async function checkCharacterBrief(
-  values: { brief?: string; prompt?: string; size?: string; background?: string },
-  out: string,
-  promptText: string,
-  references: { sha256: string }[],
-) {
-  const characterRoot = path.join(await realpath(REPO), 'tmp', 'character-generation') + path.sep;
-  const isCharacterMaster =
-    values.size === '2048x2048' &&
-    values.background === 'transparent' &&
-    `${out}${path.sep}`.startsWith(characterRoot);
-  if (!values.brief) {
-    if (isCharacterMaster)
-      throw new Error(
-        'A character master request needs --brief <brief.json>. Read the prompt consistency reference of generate-character-openai. Send no request.',
-      );
-    return;
-  }
-  const briefPath = path.resolve(values.brief);
-  const brief = parseBrief(JSON.parse(await readFile(briefPath, 'utf8')));
-  if (path.resolve(path.dirname(briefPath), brief.promptFile) !== path.resolve(values.prompt ?? ''))
-    throw new Error('The brief names a different prompt file than --prompt. Send no request.');
-  assertCharacterBrief(values.brief, brief, {
-    prompt: promptText,
-    study: await readFile(path.resolve(brief.studyFile), 'utf8'),
-    referenceHashes: references.map((reference) => reference.sha256),
-  });
 }
 
 async function main() {
@@ -319,26 +282,16 @@ async function main() {
       out: { type: 'string' },
       input: { type: 'string' },
       review: { type: 'string' },
-      brief: { type: 'string' },
+      'asset-role': { type: 'string' },
       scene: { type: 'string' },
       size: { type: 'string' },
       background: { type: 'string' },
       'dry-run': { type: 'boolean' },
-      'exact-size': { type: 'boolean' },
     },
   });
   const allowed = {
-    plan: ['size', 'background', 'exact-size'],
-    generate: [
-      'prompt',
-      'reference',
-      'out',
-      'brief',
-      'size',
-      'background',
-      'exact-size',
-      'dry-run',
-    ],
+    plan: ['size', 'background', 'asset-role'],
+    generate: ['prompt', 'reference', 'out', 'asset-role', 'size', 'background', 'dry-run'],
     inspect: ['input', 'size', 'background'],
     prepare: ['input', 'review', 'scene', 'out', 'size'],
     'prepare-native': ['input', 'out'],
@@ -346,7 +299,7 @@ async function main() {
   if (!allowed || Object.keys(values).some((key) => !allowed.includes(key)))
     throw new Error('Use a documented scene helper command and its arguments.');
   const size = values.size ?? '3840x2160';
-  const routeOptions = { background: values.background, exactSize: values['exact-size'] ?? false };
+  const routeOptions = { background: values.background, assetRole: values['asset-role'] };
   assertBackground(values.background);
   const plan =
     command === 'plan' || command === 'generate'
@@ -357,13 +310,9 @@ async function main() {
     return;
   }
   if (command === 'generate' && values.prompt && values.out) {
-    assertBackground(values.background);
-    if ('route' in plan && plan.route === 'internal') {
-      if (values['dry-run']) {
-        console.log(JSON.stringify({ ...plan, networkRequest: false }));
-        return;
-      }
-      assertApiSize(size, routeOptions);
+    if ('route' in plan && plan.route === 'internal' && values['dry-run']) {
+      console.log(JSON.stringify({ ...plan, networkRequest: false }));
+      return;
     }
     assertApiSize(size, routeOptions);
     const out = await temporaryPath(values.out);
@@ -372,19 +321,20 @@ async function main() {
       values.prompt,
       values.reference,
     );
-    await checkCharacterBrief(values, out, promptText, inputs.references);
     const request = buildFlareRequest({
       promptText,
       referenceImages,
       size,
+      assetRole: routeOptions.assetRole as AssetRole | undefined,
       background: values.background,
     });
     const record = {
       model: MODEL,
+      assetRole: request.assetRole,
       requestedSize: size,
       quality: 'high',
       outputFormat: 'png',
-      background: values.background ?? 'auto',
+      background: values.background,
       inputMode: referenceImages.length ? 'edit' : 'text',
       endpoint: request.endpoint,
       ...inputs,
@@ -432,7 +382,6 @@ async function main() {
     let facts: ImageFacts;
     try {
       facts = await inspectImage(bytes, plan);
-      if (values.background === 'transparent') facts.alpha = await inspectNativeAlpha(bytes);
     } catch {
       await status({
         state: 'candidate-invalid',
@@ -444,10 +393,8 @@ async function main() {
       );
     }
     await writeJson(path.join(out, 'inspection.json'), facts);
-    const valid = facts.alpha?.valid ?? true;
-    await status({ state: candidateReviewState(facts.alpha), automaticRetries: 0 });
+    await status({ state: candidateReviewState(), automaticRetries: 0 });
     console.log(JSON.stringify({ candidate: output, ...facts, visualReview: 'required' }));
-    if (!valid) process.exitCode = 1;
   } else if (command === 'inspect' && values.input) {
     const bytes = await readFile(values.input);
     const facts = await inspectImage(bytes, plan);
@@ -473,7 +420,7 @@ async function main() {
       await readFile(values.input),
       JSON.parse(await readFile(values.review, 'utf8')),
       values.scene,
-      plan,
+      values.size ? plan : undefined,
     );
     await mkdir(path.dirname(out), { recursive: true });
     await writeFile(out, output, { flag: 'wx' });

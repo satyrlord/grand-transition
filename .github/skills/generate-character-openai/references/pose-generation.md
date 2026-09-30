@@ -2,33 +2,18 @@
 
 Read this module before pose generation or pose review.
 
-## Do a check of the active skin
+## Continue from an accepted selection
 
-Read the work-unit record and the skin status records.
-Do work on one given skin at a time.
-Do a check of the locked selection hash.
-If the hash changed, stop.
+Read the researched character brief and the work record.
+Use a selection accepted for resemblance as well as style.
+Do not repeat web research for each pose of that accepted selection.
+Inspect the accepted selection and its recorded source hash.
+Use that selection as the only image reference.
+Keep its identity, build, clothing, palette, contours, shading, and prop system.
+Reuse accepted poses from the same work unit.
+Resolve unknown request results before a new request.
 
-Use the locked selection as the only image reference.
-Do not use a style source, an identity image, a private design, an previous pose, or a rejected candidate.
-Keep the accepted identity, style, proportions, construction, palette, and prop system.
-
-## Continue without duplicate work
-
-Examine each necessary state in the status record.
-If there is a locked pose, do a check of its hash and review.
-When the two values agree, use that pose again.
-Do not make a new request for that state.
-
-If a request does not have a recorded result, stop.
-Do not send that request again.
-If a recorded output has a hash that is different from the recorded hash, stop.
-
-Continue from the first state that is not completed.
-
-## Generate the states in sequence
-
-Use this sequence:
+Generate the missing states in this order:
 
 1. `thinking`
 2. `delivery`
@@ -36,110 +21,60 @@ Use this sequence:
 4. `heavy-hit`
 5. `weakness`
 
-Use Flare at high quality.
-Use Portable Network Graphics (PNG) output of 2048 by 2048 pixels.
-Use the background method in the cycle record.
+Use the built-in chat image generator with native transparency.
+Keep the selection's square canvas dimensions when the tool supports them.
+Use at least 1024 pixels per edge without enlargement.
+Do not use Flare for poses.
 
-Write one prompt for each state.
-Build all the pose prompts from one shared text file, and add only the header and the action.
-Give all the identity and style invariants again in each prompt.
-Get the action from the private study of the character.
-Get the hand and the zone of each prop from the prop table of the study.
-Write one brief for each state, and run the set check of [prompt consistency](prompt-consistency.md) for all five briefs before the first request.
+## Keep each action distinct
 
-Give one body action that is different from the other states.
-Give one expression that is different from the other states.
-Keep all the necessary anatomy and props in the safe margins.
-Tell the model not to add text, shadows, scenery, more subjects, or more props.
+Reuse one stable identity and prop brief.
+Change only the action and expression for the state.
+Keep each signature prop in the visible runtime window.
+Give the prop count and the canvas side of the hand that holds it.
+Keep the full silhouette and safe margins.
+Do not add text, scenery, detached shadows, or extra props.
 
-Use these state functions as general limits:
+- `thinking` shows concentration.
+- `delivery` shows confident speech to the audience.
+- `light-hit` shows a small movement back.
+- `heavy-hit` shows a larger movement back while the character stays vertical.
+- `weakness` shows reduced confidence.
 
-- `thinking` shows that the character thinks.
-- `delivery` shows that the character speaks to the audience and is sure.
-- `light-hit` shows a small, temporary movement back.
-- `heavy-hit` shows a large movement back while the character stays vertical.
-- `weakness` shows that the character is less sure.
+Make the poses different from the selection and from each other.
+Use the character's own gestures.
 
-Do not copy the poses and gestures of a different character.
-Make all five poses different from the selection pose.
-Make all five poses different from each other.
+## Inspect each result before continuation
 
-## Examine one state before the next request
+Use [candidate review](../../generate-scene-openai/references/candidate-review.md).
+Inspect dimensions, native alpha, anatomy, identity, and prop visibility.
+Run the runtime-window overlay from [identity and prop consistency](prompt-consistency.md).
+Compare the result with the accepted selection at equal figure height.
+Keep clean generated pixels unchanged.
+Apply alpha cleanup only for the defect described in the native-alpha module.
 
-Do a dry run with `--brief`.
-Make sure that the locked selection is the only reference.
-After the dry run passes, send one request.
-Examine the raw output before preparation.
-Run the runtime-window overlay after the alpha check, and reject the pose when a necessary prop is in a hidden area.
+If the result fails, correct the observed defect within the authorized request limit.
+Do not continue to the next state with an unresolved defect.
+Record the accepted source and state once in the work record.
 
-Apply only the approved background preparation.
-Examine the prepared output at source dimensions.
-Examine the light composite and the dark composite.
-Examine the face or the display.
-Examine all the hands, appendages, props, and extremities that you can see.
+Compare the completed selection and five poses together.
+Check identity, scale, baseline, facing, line weight, shading, and prop continuity.
+Confirm that each action remains readable at runtime scale.
 
-Run the alpha validation and the color validation in an isolated directory.
-Compare the pose with the locked selection at equal figure height.
-Record all seven candidate-review checks.
-Connect the review to the hash of the prepared file.
+## Integrate the selected package
 
-Make sure that all these conditions are correct:
+Use [character integration](../../generate-scene-openai/references/character-integration.md).
+Stage from the current shipping tree.
+Replace only the approved character files.
+Build one selected skin with:
 
-- The identity and the given species agree.
-- The build and the construction agree.
-- The clothing or the chassis agrees.
-- The footwear and the prop system agree.
-- The office clip-art style agrees.
-- The action and the expression of the state are different from the other states.
-- The anatomy that you can see is correct.
-- The image has all the necessary props, in the correct hand, and inside the runtime window.
-- The image has no crop and no shadow.
-- The image has no matte damage and no warm wash.
+```text
+node tools/build-character-package.ts <staged-character-root> --skin <skin-id>
+```
 
-If one check fails, stop.
-Do not send the request for the next state.
-Do not make a correction that the user did not give approval for.
-
-If all the checks pass, copy the pose to a unique locked path.
-Record the raw hash, the prepared hash, and the locked hash.
-Update the state status.
-Then continue to the next state that is not completed.
-
-## Examine the full skin
-
-Compare the selection and all five poses at equal figure height.
-Make sure that the six poses are different from each other.
-Make sure that the poses show five or more expressions.
-Do a check of the identity, scale, baseline, facing, contours, shading, and prop continuity.
-Record one review for the full skin.
-
-## Integrate in package mode
-
-In selection mode, do not do the steps in this section.
-Stage from the shipping character tree as it is at that time.
-Replace only the files in the given work unit.
-Run `node tools/build-character-package.ts <staged-character-root> --skin <skin-id>`.
-
-Use this targeted builder for one skin that you generated again.
-Do not run the full-tree builders for one work unit.
-The targeted builder validates all the manifest entries and variants that the package uses again.
-Do not edit generated variants or manifests manually.
-
-Validate the staged package before installation.
-Do a check of the shipping tree again before installation.
-Keep each source byte that is not related to the work unit.
-
-If the accepted package is installed, do a check of all the hashes.
-When all the hashes agree, do not change files.
-If they do not agree, install the package that you examined as one unit.
-
-Run the character asset tests that the package touches.
-Run the character state tests that the package touches.
-Run the production build.
-Run headless browser checks for the two player sides.
+Validate before installation.
+Re-read the shipping tree before installation to preserve unrelated work.
+Run the affected asset and state tests, the production build, and the two-sided runtime checks.
 Examine all nine logical states.
-
-Record the results of these checks.
-Stop after the given work unit is completed.
-Do not start a different work unit.
-Do not run a quality gate for the full project.
+Report any unavailable browser or visual check.
+Stop at the work unit requested by the user.

@@ -52,8 +52,9 @@ A statement in a file that is not in `docs/specs/` does not replace, change, or 
 - All generated representational raster art uses the shared cel-shaded editorial-cartoon direction that Milestone 023 owns.
   This rule applies to each character, skin, state, moderator, scene, foreground plate, architecture element, furniture item, fixture, and prop.
   Painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, and three-dimensional-render styles are not permitted.
-  All character skins and states use the funny big-head cartoon standard of Milestone 023.
-  The `county-baron--municipal-patron` selection portrait is the only visual reference.
+  New human character art follows the flat editorial cartoon direction and three-character trial of Milestone 023.
+  Use clearly drawn faces, varied adult proportions, and researched recognizable likeness cues.
+  Preserve approved robot art.
   Do not change a skin into a prestige portrait that is not funny or that is realistic.
   This rule also applies when the skin uses outlines and cel shading.
 - Use fictional composite archetypes.

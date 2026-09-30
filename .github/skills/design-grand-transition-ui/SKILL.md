@@ -58,10 +58,10 @@ Use bold dark contours, large flat color shapes, and two or three value levels w
 Use caricature, materials with a small number of details, and a small quantity of print texture.
 Apply these rules to characters, moderators, scenes, furniture, fixtures, and props.
 
-For character skins and states, apply the funny big-head rendering standard of Milestone 023.
-Use `county-baron--municipal-patron` as the only visual reference, at the same displayed figure height.
-Keep expressive interior lines and grouped hair detail.
-Do not decrease character art to minimalist vector shapes or sticker-like figures.
+For character skins and states, apply the flat editorial cartoon direction of Milestone 023.
+Use clearly drawn faces, varied adult proportions, moderate head exaggeration, and broad two-tone shading.
+Use the accepted three-character trial as the shared style reference after product-owner acceptance.
+Preserve approved robot art.
 
 Do not accept painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, three-dimensional-render, or mixed-style output.
 Make phrase cards and tactical state easy to read.

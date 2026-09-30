@@ -200,23 +200,32 @@ A fully mechanical character is clearly a robot.
 ### Image language
 
 All generated representational raster art uses one flat cel-shaded editorial-cartoon language.
-The approved playable-character finish is the **office clip-art style**.
-Each character skin and state uses the funny big-head rendering standard in Specification 023.
-This standard has these features:
+New playable-character art uses **flat editorial cartoons** under Specification 023.
+Use clearly drawn faces, varied adult body and head shapes, and moderate head exaggeration.
+Use controlled dark contours, large clean shapes, and broad two-tone cel shading.
+Keep the face and body in the same drawn style.
+Make each identity readable through its silhouette, clothing, gesture, and large signature prop.
+Keep props inside the visible runtime window.
+Avoid realistic skin detail, photographic portrait shading, and one repeated head template.
 
-- An adult full-body silhouette with a clearly oversized head or mechanical face.
-- An expression, a posture, or a prop that is funny immediately.
-- Controlled dark contours.
-- Large clean shapes.
-- Broad cel shading with hard edges.
+Test Football Tycoon, EU-Funds Alchemist, and Luxury Minister before roster expansion.
+The rendering style is accepted; individual resemblance and selection acceptance remain separate.
+Before each new master, visually inspect at least three distinct usable web photographs and target five.
+Use more when likeness is unclear, with varied views from a coherent chosen era.
+Do not count duplicates or resized copies. Correct conflicting private notes.
+Compare source images, small roster crops, setup portraits, and match compositions on the two player sides.
+Use the actual three-character artwork as the shared style reference only after product-owner acceptance.
+Do not impose an existing raster as the trial style reference.
+Preserve approved robot art.
 
-Use `county-baron--municipal-patron` as the only visual reference.
-Fixed moderators, scene architecture, furniture, fixtures, and props use the same construction.
-The design uses exaggeration on purpose.
-Materials show through silhouette, color, contour, and a small quantity of flat pattern, not through realistic surface detail.
-
-The office clip-art style is not generic stock clip art.
-It does not accept pasted photographic faces, sticker-like vector simplification, chibi bodies, or mixed face-and-body rendering.
+Fixed moderators, scene architecture, furniture, fixtures, and props use the same broad cartoon rendering.
+Materials show through silhouette, color, and contour rather than realistic surface detail.
+Use the built-in chat image generator for transparent characters, poses, desks, props, and foregrounds.
+Keep native source dimensions and clean alpha.
+Use Flare only for opaque 4K scene backgrounds.
+All seven backgrounds await regeneration in this shared cartoon direction.
+Preserve their scene identities, geometry, and interface clearance.
+Build smaller runtime variants locally without enlargement or artificial sharpening.
 
 Light uses designed shadow shapes and highlight shapes with hard edges.
 A small quantity of paper texture or screen-print texture can be on large shapes, and it does not model volume.
@@ -365,8 +374,10 @@ Do not use animal anatomy or hybrid anatomy in portraits, tokens, poses, states,
 Do not give a robot human anatomy.
 
 **The Adult Caricature Rule.** Default characters and scene figures stay clearly adult, and they use correct human or mechanical anatomy.
-Playable characters use funny proportions on purpose, with a clearly oversized head or mechanical face.
-Do not use a child, chibi, or naturalistic prestige-portrait proportion system.
+New human characters use varied adult proportions and moderate head exaggeration.
+Natural adult proportions are permitted. Keep researched likeness cues clearly drawn.
+Keep approved robot proportions unchanged.
+Do not use child or chibi proportions or realistic portrait rendering.
 
 ## Colors
 

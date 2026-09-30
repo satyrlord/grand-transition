@@ -20,7 +20,12 @@ let baseManifestText: string;
 let baseVariantBytes: Map<string, Buffer>;
 
 async function writeMaster(root: string, fileName: string): Promise<void> {
-  const width = 3840;
+  const width =
+    fileName === 'county-council-ballroom-foreground.png'
+      ? 1280
+      : fileName === 'modern-debate-studio-desks.png'
+        ? 1536
+        : 3840;
   const height = (width * 9) / 16;
   const filePath = path.join(root, fileName);
   if (!fileName.includes('-desks') && !fileName.includes('-foreground')) {
@@ -40,10 +45,10 @@ async function writeMaster(root: string, fileName: string): Promise<void> {
   const pixels = Buffer.alloc(width * height * 4);
   const finalForeground = fileName.includes('-foreground');
   const left = Math.ceil(width * (finalForeground ? 0.13 : 0.26));
-  const right = Math.ceil(width * (finalForeground ? 0.69 : 0.68));
+  const right = Math.ceil(width * (finalForeground ? 0.7 : 0.68));
   const top = Math.floor(height * (finalForeground ? 0.54 : 0.56));
   const bottom = finalForeground ? Math.floor(height * 0.98) : height;
-  const objectWidth = Math.floor(width * (finalForeground ? 0.18 : 0.06));
+  const objectWidth = Math.floor(width * (finalForeground ? 0.17 : 0.06));
   for (let y = top; y < bottom; y += 1) {
     for (const start of [left, right]) {
       for (let x = start; x < Math.min(width, start + objectWidth); x += 1) {

@@ -1,6 +1,6 @@
 interface:
   display_name: 'Generate Character Art with OpenAI'
-  short_description: 'Generate office clip-art characters and five-pose packages'
-  default_prompt: 'Use $generate-character-openai for one given character work unit. Set review, selection, or package mode. Record if the session has a local image generation tool. Without one, generate the private identity design through the Flare API helper. Continue only from hashes that you examined. Before each request, write the prop table and the brief, and pass the prompt check of the prompt consistency reference. Do not send a completed request or a request without a recorded result again.'
+  short_description: 'Generate native-transparent cartoon character art'
+  default_prompt: 'Use $generate-character-openai to generate native-transparent flat editorial cartoons in chat. Preserve approved robots. Before a selection, visually inspect at least three distinct usable photos from reliable labeled web sources, target five, and use more if likeness is unclear. Use varied views in a coherent era. Do not count duplicate photos. Correct conflicting private notes. Use one stable researched identity and prop brief. Check resemblance as well as style. Inspect dimensions, alpha, and runtime scale. Complete the three-character trial and obtain artwork acceptance before roster expansion. Do not use Flare for characters or repeat accepted work.'
 policy:
   allow_implicit_invocation: true

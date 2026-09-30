@@ -359,12 +359,12 @@ describe('complete character state contract', () => {
       );
       for (const [index, stateId] of requiredStates.entries()) {
         const figure = Buffer.from(
-          `<svg width="2048" height="2048"><ellipse cx="1024" cy="1040" rx="${500 + index}" ry="820" fill="#${index + 2}45678"/></svg>`,
+          `<svg width="1024" height="1024"><ellipse cx="512" cy="520" rx="${250 + index}" ry="430" fill="#${index + 2}45678"/></svg>`,
         );
         await sharp({
           create: {
-            width: 2048,
-            height: 2048,
+            width: 1024,
+            height: 1024,
             channels: 4,
             background: { r: 0, g: 0, b: 0, alpha: 0 },
           },
@@ -387,8 +387,17 @@ describe('complete character state contract', () => {
       await expect(prepareCharacterStatePackage(root, skin)).rejects.toThrow(/exactly/u);
       await rm(path.join(sourceRoot, 'idle.png'));
 
+      const thinkingPath = path.join(sourceRoot, 'thinking.png');
+      const thinking = await readFile(thinkingPath);
+      await writeFile(thinkingPath, await sharp(thinking).resize(960, 960).png().toBuffer());
+      await expect(prepareCharacterStatePackage(root, skin)).rejects.toThrow(/at least 1024x1024/u);
+      await writeFile(thinkingPath, thinking);
+
       const prepared = await prepareCharacterStatePackage(root, skin);
       const first = await buildCharacterStatePackage(prepared, firstVariants);
+      expect(
+        first.assets.every(({ source }) => source.width === 1024 && source.height === 1024),
+      ).toBe(true);
       const second = await buildCharacterStatePackage(prepared, secondVariants);
       const manifestText = (built: typeof first) =>
         `${JSON.stringify(

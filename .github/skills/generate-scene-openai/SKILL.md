@@ -1,166 +1,99 @@
 ---
 name: generate-scene-openai
-description: Generate, edit, examine, and integrate Grand Transition scene raster art and shared Flare assets. Use generate-character-openai for playable character selections and pose packages. Use Flare for transparent assets, masters with accurate dimensions, and output larger than 1080p. Use it with or without a local image generation tool.
+description: Generate, review, or integrate Grand Transition scene backgrounds, desks, props, foregrounds, and shared raster art. Use Flare only for opaque 4K scene backgrounds. Use the built-in chat image generator for all other assets. Use generate-character-openai for playable characters.
 ---
 
-# Generate and edit raster art with OpenAI
+# Generate scene and shared raster art
 
-For selection work and pose work on playable characters, use
-[generate-character-openai](../generate-character-openai/SKILL.md).
-This skill controls the shared application programming interface (API), review, alpha, and integration modules.
+For playable character selections and poses, use [generate-character-openai](../generate-character-openai/SKILL.md).
 
-## Get the artwork task
+## Read the task contract
 
-Read `AGENTS.md`, `DESIGN.md`, and Specifications 016, 018, 023, and 026.
-For the Civic Cypher Boxing Ring scene, also read Specification 032.
-Read the definition of the character or the scene, its art, its manifest, its renderer, and its tests.
-Examine the repository status before edits.
+Read `AGENTS.md`, `DESIGN.md`, and the applicable approved specifications.
+Read the selected scene definition, asset manifest, renderer, and tests.
+Inspect the current checkout before edits.
+Get the asset identifier, role, composition, transparency, and interface clearance from those sources.
+Apply the art direction most recently approved by the user.
+Keep private prompts and retained source notes in `research/`.
+Keep candidates and previews in `tmp/scene-generation/`.
 
-Get the asset identifier (ID), the output role, and the dimensions from those contracts.
-Get the transparency, the composition, and the interface clearance from the same contracts.
-For characters, get the private study, the approved rendering standard, the facing direction, and the full silhouette.
-Apply the art direction that the user approved last, and its exceptions for each scene.
-Before generation, get a decision for each necessary item that is open.
+An instruction to generate or edit art authorizes generation within that scope.
+Honor reference, route, cost, and request limits from the user.
+Do not request the same approval again.
+Review and route-planning tasks do not authorize generation or shipping changes.
+A preview task does not authorize shipping integration.
+If the scope changes, read the newly applicable modules.
+If the user prevents edits or tests, report the unfinished checks.
 
-Keep private directions and source notes that the project keeps in the ignored `research/` folder.
-Use Markdown file names that identify each topic.
-Keep raw prompts, input records, generated candidates, reviews, and staged assets in ignored `tmp/` paths.
+## Match the accepted cartoon direction
 
-## Get the approval for generation
+Use the same flat editorial cartoon rendering as the [accepted character style trial](../../../docs/assets/flat-editorial-style.md).
+Use broad clean flat shapes, controlled contours, one base tone, and one hard-edged shadow tone.
+Use a sparse hard-edged highlight only when it improves readability.
+Draw fictional moderators and crowds with clear nonrealistic faces and varied adult proportions.
+Do not use photographic skin, realistic portrait modeling, painterly blending, or detailed surface texture.
+Keep architecture, furniture, props, and people in one coherent cartoon world.
+Preserve each scene's identity, camera, crop, normalized geometry, and interface clearance.
+Do not enlarge heads or add detail that hides hands, props, or controls.
 
-Skill work, reviews, and dry runs do not give approval for generation.
-An instruction to make or edit artwork gives approval for the necessary route.
-It also gives approval for the standard deterministic preparation in its scope.
-An approved edit can use its target as a reference when the asset contract lets it use that input.
-Keep the clean-room restrictions for scenes.
-Keep each route limit, reference limit, cost limit, and try limit that the user gives.
-Do not tell the user to give the same approval again.
+All seven opaque scene backgrounds are queued for regeneration in this direction through Flare at 3840 by 2160.
+This pending work is not completed by a skill or documentation update.
+Keep existing shipping backgrounds until each replacement passes review and local integration checks.
+Use chat generation for desks, props, and transparent foreground layers.
+A plan for future background regeneration does not itself send paid requests.
 
-In review mode or route planning, do not change files.
-In an approved generation task, change only the temporary files, the assets, and the related records in its scope.
-If the user changes the scope, read the new necessary modules before the actions that use them.
-If the user prevents edits or tests, give the checks that you did not run in the report.
-In that condition, do not give the task the status completed.
+## Select the route by asset role
 
-## Load the task modules
+| Asset role | Generation route | Source dimensions |
+| --- | --- | --- |
+| Opaque scene background | Flare application programming interface (API) | 3840 by 2160, called 4K |
+| Desks and scene foregrounds | Built-in chat image generator, native alpha | Native 16:9, at least 1280 by 720 |
+| Characters and poses | Built-in chat image generator, native alpha | Native square, at least 1024 pixels per edge |
+| Props and other isolated assets | Built-in chat image generator, native alpha | Native dimensions sufficient for the approved runtime use |
+| Drafts and other shared art | Built-in chat image generator | Native dimensions appropriate to the task |
 
-Load only the necessary modules:
+Keep existing higher-resolution sources when they are accepted.
+Do not enlarge smaller sources or add a paid request to satisfy the old 2048 or foreground 4K requirements.
+Transparency, an accurate size request, and a missing chat tool do not select the API.
+If the chat tool is unavailable, prepare the brief and report that generation is blocked.
+Do not use Flare as a fallback.
+Only the opaque 4K scene-background role can use Flare.
 
-- Before prompt work, generation, or an API dry run, read [generation preparation](references/generation-preparation.md).
-  This rule also applies to a prompt that you did not write.
-  This module controls input approval and the color check before generation.
-- Before an API dry run or an approved API generation, read [API generation](references/api-generation.md).
-  Generation with a local image generation tool does not use this module.
-- Before you examine a candidate or give approval for it, read [candidate inspection and review](references/candidate-review.md).
-  This rule includes candidates and previews that are on the disk, from all the routes.
-- Before you prepare or integrate transparent output, read [native alpha preparation](references/native-alpha.md).
-  This module controls the bounded background cleanup and the provenance sequence.
-- Before scene master preparation or integration, read [scene integration](references/scene-integration.md).
-- Before character master preparation or integration, read [character integration](references/character-integration.md).
+Use one generation as the shipping candidate.
+Inspect actual output dimensions and alpha before acceptance.
+Keep good generated alpha unchanged.
+Use the local asset build for compression, runtime sizes, and manifests.
 
-A preview-only instruction does not include integration, and it does not give approval to import.
+## Load the necessary modules
 
-For route planning only, use this entry point without the API procedures.
-In the report, give the route, the necessary inputs, and the open decisions.
-Do not generate or integrate artwork in route planning.
+- Before prompt work, read [generation preparation](references/generation-preparation.md).
+- Before a 4K background API request, read [API generation](references/api-generation.md).
+- Before candidate review, read [candidate review](references/candidate-review.md).
+- Before transparent integration, read [native alpha](references/native-alpha.md).
+- Before scene integration, read [scene integration](references/scene-integration.md).
+- Before character integration, read [character integration](references/character-integration.md).
 
-## Find the image capability of the session
+For route planning, use this entry point only.
+Report the route and missing inputs without generation.
 
-A **local image generation tool** is a tool in your session that generates an image directly.
-An example is the built-in `image_gen` tool of the installed `imagegen` skill.
-Before route selection, find if your session has a local image generation tool.
-Do not use a different product or a network service as a local image generation tool.
+## Limit requests and preserve results
 
-The Flare API route does not use a local image generation tool.
-All the shipping masters use the Flare API route.
-Thus, a session without a local image generation tool can do all the shipping work of this skill.
-Only the small opaque draft route changes.
+Generate one candidate per request.
+After a visible defect, make at most one corrective request unless the user gives a different limit.
+Stop after a refusal, authentication failure, or a timeout with an unknown result.
+Do not repeat a completed request or a request whose result is unknown.
+Reuse an accepted candidate when its recorded source and review still agree.
+Do not infer a model name from the tool name.
 
-## Select the generation route
+## Integrate and complete
 
-In this skill, 1080p is 1920 by 1080, or 2,073,600 pixels.
-Apply the transparency requirement and the requirement for accurate master dimensions before the pixel-count limit.
-
-| Asset requirement | Necessary route |
-| --- | --- |
-| Transparent output at a supported size | Flare API through the repository helper |
-| A master with accurate dimensions, also a smaller opaque master | Flare API through the repository helper |
-| More than 2,073,600 pixels | Flare API through the repository helper |
-| An opaque draft at 2,073,600 pixels or fewer, with a local image generation tool | Local image generation tool |
-| An opaque draft at 2,073,600 pixels or fewer, without a local image generation tool | Flare API through the repository helper, with `--exact-size` |
-
-The **API draft route** is the last row of the table.
-An instruction to make or edit artwork gives approval for the API draft route.
-If a route limit or a cost limit of the user prevents API requests, stop and give the limit in the report.
-If the API key is not available, stop and give that condition in the report.
-Each API draft request counts against the try limit and the cost limit.
-
-The API draft route uses the Flare size limits.
-Thus, a draft must have 655,360 pixels or more, and each dimension must be a multiple of 16.
-For example, use 1024 by 1024 or 1280 by 720.
-Do not request 1920 by 1080.
-The route does not change the output role.
-Do not identify an API draft as a master.
-
-Get the shipping master dimensions and the API source request dimensions as different values.
-Use the master dimensions of the asset pipeline directly only when Flare can make those dimensions.
-Character masters use transparent output of 2048 by 2048 pixels.
-
-The scene masters at this time use output of 3840 by 2160 pixels.
-The name of this size is 4K.
-For the master dimensions at this time, read `tools/scene-resolution.ts`.
-If an approved contract gives a smaller master, use the scene preparation procedure after generation.
-
-Do not request native API output of 1920 by 1080 pixels, because 1080 is not a multiple of 16.
-When it applies, use `plan --size WIDTHxHEIGHT` with `--background transparent` or `--exact-size`.
-The `--size` value gives the dimensions of the generation source.
-The plan command does not accept API dimensions that Flare cannot make.
-
-When the user tells you directly to use the local image generation tool, obey that instruction.
-In that condition, give the measured output limits in the report.
-Do not tell the user that the master will have accurate dimensions.
-If your session does not have that tool, stop.
-Do not use the API draft route in its place.
-Tell the user that the session has no local image generation tool.
-
-Use native transparent Portable Network Graphics (PNG) output for isolated scene foreground layers and character portraits.
-On the API route, use `--background transparent`.
-Keep the alpha that the API gives.
-Change it only through the bounded preparation in the native alpha module.
-Use green-matte conversion only for an approved fallback.
-
-## Limit generation and approval
-
-Generate one candidate for each request.
-After a visual defect that you see, you can send one corrective request for each asset.
-The user can give a different limit.
-Stop when one of these conditions occurs:
-
-- You get to the limit.
-- The provider gives a refusal or an authentication failure.
-- A timeout occurs that can have a cost.
-
-In the report, give the result and the necessary next step.
-The repository API adapter does not send requests again automatically.
-After a timeout or an interruption, you can have no record of the cost or the result.
-In that condition, do not send the request again.
-
-Examine the raw output before deterministic preparation.
-Before master integration, get a review pass for the hash of the file at this time.
-
-## Integrate and complete the task
-
-Use the loaded integration procedure only in the approved scope, and only after the candidate review passes.
+Integrate only reviewed assets in the authorized scope.
 Keep rejected candidates out of `src/assets/`.
-For replacements, keep the stable asset IDs.
-For new identities, update the approved specification, catalog, localization, resolver, and tests.
-Integration is completed when these conditions occur:
+Keep stable asset identifiers for replacements.
+For new identities, update the specifications, catalog, localization, resolver, and tests.
+Build and validate the local package before installation.
+Inspect runtime composition at the supported scales.
 
-- The shipping assets are correct.
-- The source records give only facts.
-- The runtime uses the assets.
-- The applicable checks pass.
-
-For a preview-only instruction, save and examine the image, but do not import it.
-Record visual acceptance by the product owner only when the user gives it.
-In the report, give the provider route, the model when you know it, the input mode, the measured dimensions, the checks, and the open limits.
+Report the route, known model, measured dimensions, generated files, checks, and open limits.
+Keep agent review distinct from product-owner acceptance.
+Do not commit or publish without a user instruction.

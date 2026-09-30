@@ -54,9 +54,11 @@ Raster work for playable characters uses
 [generate-character-openai](skills/generate-character-openai/SKILL.md).
 Raster work for scenes uses
 [generate-scene-openai](skills/generate-scene-openai/SKILL.md).
-The scene skill controls the shared Flare application programming interface (API) adapter.
-It also controls the bounded alpha preparation, the provenance, and the staged asset integration.
-Generic image CLIs do not control the Flare request contract of this repository.
+Use the built-in chat image generator for characters, poses, desks, props, and foregrounds.
+The scene skill uses Flare only for opaque 4K scene backgrounds.
+Keep good native alpha unchanged.
+Use local asset tools for provenance, compression, runtime sizes, and manifests.
+Do not use a missing chat tool or requested dimensions as an API fallback.
 
 ## Model Context Protocol policy
 

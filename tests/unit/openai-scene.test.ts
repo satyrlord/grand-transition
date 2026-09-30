@@ -54,25 +54,41 @@ async function raster(width: number, height: number) {
 }
 
 describe('OpenAI scene generation and credit controls', () => {
-  test('routes by requested pixel count and keeps exactly 1080p internal', () => {
-    for (const size of ['1280x720', '1920x1080', '1080x1920', '1024x1024', '1600x1200']) {
+  test('defaults to built-in generation at every valid size', () => {
+    for (const size of [
+      '1280x720',
+      '1920x1080',
+      '1080x1920',
+      '1024x1024',
+      '2048x2048',
+      '3840x2160',
+      '4096x4096',
+    ]) {
       expect(selectRoute(size).route).toBe('internal');
-    }
-    for (const size of ['1920x1088', '2048x2048', '3840x2160', '2160x3840']) {
-      expect(selectRoute(size).route).toBe('api');
     }
     for (const size of ['auto', '0x1080', '-1x1080', '1920.5x1080'])
       expect(() => selectRoute(size)).toThrow();
   });
 
-  test('routes transparent and exact-size masters directly to Flare', () => {
-    expect(selectRoute('1024x1024', { background: 'transparent' }).route).toBe('api');
-    expect(selectRoute('1024x1024', { exactSize: true }).route).toBe('api');
-    expect(() => selectRoute('1920x1080', { exactSize: true })).toThrow(
-      'supported Flare dimensions',
+  test('only an explicit opaque 4K scene background selects Flare', () => {
+    expect(
+      selectRoute('3840x2160', { assetRole: 'scene-background', background: 'opaque' }).route,
+    ).toBe('api');
+    for (const assetRole of ['character', 'desk', 'prop', 'foreground', 'other']) {
+      for (const size of ['1024x1024', '2048x2048', '3840x2160']) {
+        expect(selectRoute(size, { assetRole, background: 'transparent' }).route).toBe('internal');
+      }
+    }
+    expect(() =>
+      selectRoute('2048x2048', { assetRole: 'scene-background', background: 'opaque' }),
+    ).toThrow('only for 3840x2160');
+    expect(() =>
+      selectRoute('3840x2160', { assetRole: 'scene-background', background: 'transparent' }),
+    ).toThrow('explicit opaque');
+    expect(() => selectRoute('3840x2160', { assetRole: 'scene-background' })).toThrow(
+      'explicit opaque',
     );
-    expect(selectRoute('1920x1080', { background: 'opaque' }).route).toBe('internal');
-    expect(selectRoute('2048x2048', { background: 'transparent' }).route).toBe('api');
+    expect(() => selectRoute('3840x2160', { assetRole: 'unknown' })).toThrow('asset role');
   });
 
   test('requires alpha review without claiming that bounded preparation can repair every defect', () => {
@@ -81,27 +97,34 @@ describe('OpenAI scene generation and credit controls', () => {
     expect(candidateReviewState(undefined)).toBe('visual-review-required');
   });
 
-  test('blocks unintended small opaque API calls before reading inputs', () => {
-    const result = spawnSync(
-      process.execPath,
-      [
-        helper,
-        'generate',
-        '--size',
-        '1280x720',
-        '--prompt',
-        'missing-prompt',
-        '--out',
-        'missing-output',
-      ],
-      { encoding: 'utf8' },
-    );
-    expect(result.status).toBe(1);
-    expect(result.stderr).toContain('No API request is permitted');
-    expect(result.stderr).not.toContain('ENOENT');
-  });
+  test.each(['character', 'desk', 'prop', 'foreground', 'other'])(
+    'blocks %s API calls before reading inputs or credentials',
+    (assetRole) => {
+      const result = spawnSync(
+        process.execPath,
+        [
+          helper,
+          'generate',
+          '--asset-role',
+          assetRole,
+          '--size',
+          '3840x2160',
+          '--background',
+          'transparent',
+          '--prompt',
+          'missing-prompt',
+          '--out',
+          'missing-output',
+        ],
+        { encoding: 'utf8' },
+      );
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain('No API request is permitted');
+      expect(result.stderr).not.toContain('ENOENT');
+    },
+  );
 
-  test('unsupported native HD dimensions fail before inputs; HD masters use a supported 4K source', () => {
+  test('the removed exact-size flag cannot bypass built-in routing', () => {
     const result = spawnSync(
       process.execPath,
       [
@@ -114,14 +137,12 @@ describe('OpenAI scene generation and credit controls', () => {
         'missing-prompt',
         '--out',
         'tmp/unsupported-hd-source',
-        '--dry-run',
       ],
       { encoding: 'utf8' },
     );
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain('supported Flare dimensions');
+    expect(result.stderr).toContain('exact-size');
     expect(result.stderr).not.toContain('ENOENT');
-    expect(selectRoute('3840x2160', { exactSize: true }).route).toBe('api');
   });
 
   test('rejects invalid background selection before reading inputs', () => {
@@ -145,7 +166,7 @@ describe('OpenAI scene generation and credit controls', () => {
     expect(result.stderr).not.toContain('ENOENT');
   });
 
-  test('constructs a transparent edit request without an installed CLI, credential read or output files', async () => {
+  test('constructs an opaque 4K background edit without credentials, network access or output files', async () => {
     const dir = await root(),
       promptFile = path.join(dir, 'prompt.txt');
     await writeFile(promptFile, prompt);
@@ -156,16 +177,18 @@ describe('OpenAI scene generation and credit controls', () => {
       [
         helper,
         'generate',
+        '--asset-role',
+        'scene-background',
         '--background',
-        'transparent',
+        'opaque',
         '--size',
-        '2048x2048',
+        '3840x2160',
         '--reference',
         image,
         '--prompt',
         promptFile,
         '--out',
-        'tmp/transparency-dry-run',
+        'tmp/background-dry-run',
         '--dry-run',
       ],
       {
@@ -180,16 +203,17 @@ describe('OpenAI scene generation and credit controls', () => {
     );
     expect(result.status).toBe(0);
     expect(JSON.parse(result.stdout)).toMatchObject({
-      background: 'transparent',
+      assetRole: 'scene-background',
+      background: 'opaque',
       networkRequest: false,
       requestConstructed: true,
       inputMode: 'edit',
       endpoint: 'https://api.openai.com/v1/images/edits',
-      requestedSize: '2048x2048',
+      requestedSize: '3840x2160',
     });
     expect(result.stdout).not.toContain('must-not-be-read');
     expect(result.stdout).not.toContain(prompt);
-    await expect(readFile('tmp/transparency-dry-run/request-record.json')).rejects.toThrow();
+    await expect(readFile('tmp/background-dry-run/request-record.json')).rejects.toThrow();
   });
 
   test('validates private prompts and reference bytes without a network request', async () => {
@@ -221,10 +245,12 @@ describe('OpenAI scene generation and credit controls', () => {
       [
         helper,
         'generate',
+        '--asset-role',
+        'scene-background',
         '--background',
-        'transparent',
+        'opaque',
         '--size',
-        '2048x2048',
+        '3840x2160',
         '--prompt',
         'missing-prompt',
         '--out',
@@ -318,10 +344,23 @@ describe('OpenAI scene generation and credit controls', () => {
         width: 1920,
         height: 1080,
       }),
-    ).rejects.toThrow('Do not upscale');
+    ).rejects.toThrow('background source must be exactly 3840x2160');
     await expect(prepareImage(bytes, reviewFor(facts.sha256), 'undeclared-scene')).rejects.toThrow(
       'does not declare this scene master ID',
     );
+  });
+
+  test('preserves native foreground dimensions and bytes during optional scene preparation', async () => {
+    const bytes = await raster(1536, 864);
+    const facts = await inspectImage(bytes, { width: 1536, height: 864 });
+    const prepared = await prepareImage(
+      bytes,
+      reviewFor(facts.sha256),
+      'modern-debate-studio-desks',
+    );
+    expect(prepared.output).toEqual(bytes);
+    expect(prepared.record.output).toMatchObject({ width: 1536, height: 864 });
+    expect(prepared.record.operation).toBe('preserve-native-pixels');
   });
 
   test('reads only the ignored OpenAI credential file and rejects tracked credentials', async () => {

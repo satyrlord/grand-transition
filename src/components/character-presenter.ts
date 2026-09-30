@@ -208,7 +208,7 @@ export class GrandTransitionCharacter extends LitElement {
             <img class=${visible ? 'character-portrait' : 'character-state-preload'}
               data-character-part=${decodedUrl ? 'lower' : 'complete'}
               src=${frame.url} srcset=${frame.webp.srcSet} sizes=${frame.sizes}
-              width="2048" height="2048" alt="" draggable="false"
+              width=${frame.width} height=${frame.height} alt="" draggable="false"
               @load=${(event: Event) => this.decodeImage(event.currentTarget as HTMLImageElement, frame)}
               @error=${() => this.imageFailed(frame)} />
           </picture>

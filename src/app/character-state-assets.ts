@@ -9,6 +9,7 @@ import {
 } from './character-assets.ts';
 import { characterMotion, type CharacterFrame, type CharacterStateId } from './character-motion.ts';
 import { isRecord } from '../engine/plain-values.ts';
+import { isCharacterSourceSize } from '../visual/asset-resolution.ts';
 
 export type CharacterStatePackage = Readonly<{
   ownerId: string;
@@ -135,6 +136,8 @@ export function createCharacterStatePackages(
             id: selection.id,
             stateId,
             url: selection.url,
+            width: selection.width,
+            height: selection.height,
             sizes: matchCharacterImageSizes,
             avif: selection.avif,
             webp: selection.webp,
@@ -156,6 +159,8 @@ export function createCharacterStatePackages(
             id: selection.id,
             stateId,
             url: selection.url,
+            width: selection.width,
+            height: selection.height,
             sizes: matchCharacterImageSizes,
             avif: selection.avif,
             webp: selection.webp,
@@ -171,6 +176,10 @@ export function createCharacterStatePackages(
         ) {
           throw new Error(key + ': missing or incorrect asset for ' + stateId);
         }
+        const source = isRecord(asset.source) ? asset.source : {};
+        if (!isCharacterSourceSize(source.width, source.height)) {
+          throw new Error(assetId + ': state source must be a square of at least 1024x1024.');
+        }
         const variants = readVariants(assetId, asset.variants, urls);
         const avif = createSource(variants, 'avif');
         const webp = createSource(variants, 'webp');
@@ -178,6 +187,8 @@ export function createCharacterStatePackages(
           id: assetId,
           stateId,
           url: webp.variants.at(-1)!.url,
+          width: source.width,
+          height: source.width,
           sizes: matchCharacterImageSizes,
           avif,
           webp,

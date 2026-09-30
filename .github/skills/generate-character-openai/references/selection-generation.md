@@ -1,183 +1,103 @@
-# Generate and accept a selection master
+# Generate a selection candidate
 
 Read this module before selection generation or selection review.
 
-## Do a check of the work unit
+## Research identity before selection generation
 
-Read the cycle record.
-Do a check of the owner identifier (ID), the skin IDs, the mode, and the request limits.
-Do work only on the given skin IDs.
-Use one status record for each skin.
+Before each new selection master, confirm the private inspiration mapping.
+Open reliable, clearly labeled web sources.
+Visually inspect at least three distinct usable photographs of that subject.
+Target five photographs.
+Inspect more when the likeness remains unclear.
+Do not count duplicates, crops, or resized copies of the same photograph as different images.
+Choose varied views and expressions, with front, three-quarter, and profile views when available.
+Do not infer appearance from search snippets, an unviewed image, or a stale private description.
+Use dated photos from a coherent role or era when appearances differ over time.
+Record each source URL, the inspection date, the selected era, and observed face, hair, and build traits.
+Keep that short record in the private character study.
+Separate factual appearance from deliberate cartoon exaggeration and the fictional role.
 
-If there is a locked selection, do a check of its hash and review.
-When the two values agree, use the locked selection again.
-Do not make a new request for that skin.
-When a recorded file has a hash that is different from the recorded hash, stop.
+Verified web evidence takes precedence over conflicting private research about identity and appearance.
+Correct the private study before generation.
+Do not average conflicting traits or preserve a disproved description.
+Keep the user's approved cartoon style and fictional role as the rendering and satire contract.
+When the inspiration mapping is unresolved, research it before making a master.
+Do not invent a mapping.
 
-## Measure the style source
+Reuse a previously researched dossier only after its sources, appearance, and minimum distinct-image count are checked again.
+Use recognizable researched likeness cues with drawn faces, not photographic rendering.
+Style references control rendering only.
+Do not copy their identity into the selected character.
+Keep real names, source photos, and private reference descriptions out of shipped metadata.
+Poses inherit the researched, accepted selection and do not need a new web study for each state.
 
-Get the approved style reference from the art contracts that control it.
-Examine it at equal displayed figure height.
-Measure the bounds that you can see.
-Record the part of the figure that the face or the display fills.
-Record the ratio between the top and the bottom of the body, and the width relations.
+## Prepare one stable brief
 
-Copy these measurements into the cycle record of this cycle.
-Do not put measurements of previous characters in a prompt that you will use again.
-Keep the anatomy of the given human or mechanical species.
-Do not accept chibi construction or prestige-portrait construction.
+Read the selected character study and existing work record.
+Keep the fictional public identity and approved species.
+Write the face shape, age cues, build, silhouette, clothing, palette, signature prop, and visual joke.
+Use different proportions across the three trial characters.
+Keep any approved likeness cues in the same drawn style as the body.
+Do not require a separate private portrait or a two-stage generation process.
 
-Make the candidate agree with these properties:
+Use [identity and prop consistency](prompt-consistency.md) to place props in the visible runtime window.
+Give the facing, full-body placement, safe margins, and prop count.
+Use neutral sRGB white balance and ungraded colors.
+Keep warm color local to materials or lights.
+Do not add a global warm wash, text, labels, scenery, or extra subjects.
 
-- Use a small quantity of adult exaggeration.
-- Use one role silhouette that is easy to read.
-- Use one visual joke that the user sees immediately.
-- Use dark contours of different weights.
-- Use expressive interior lines.
-- Use large clean color shapes.
-- Use large areas of color value with hard edges.
-- Use neutral white balance.
-- Keep warm color local.
+Use the researched identity brief for trial generation.
+Use authorized identity references when they improve the recognizable cartoon likeness.
+After the trial is accepted, use its approved illustrated style references as needed.
+Use reference images only when the task and the asset contract authorize them.
+Inspect each reference before use.
+Keep identity cues of different characters separate.
 
-## Get the identity
+Keep the research count separate from the tool's attachment limit.
+Select the most useful identity photos and one accepted style example within that limit.
+For a five-image limit, use up to four identity photos and one style example.
+Put the observations from all researched photos in the brief.
+Label the identity and style roles explicitly in the request.
+Do not switch to the paid API to increase the attachment count.
 
-For a fictional identity or a mechanical identity, use the private study for that character.
-For an approved identity that has a real person as its source, use the two-stage method.
+## Generate the shipping candidate
 
-For the two-stage method, do these steps:
+Use the built-in chat image generator.
+Request one square native-transparent PNG, at least 1024 pixels per edge.
+Request the complete figure and each prop inside safe margins.
+For the trial, target 82 to 88 percent figure height with generous margins.
+Use a clearly drawn face, varied adult proportions, restrained head exaggeration, broad shapes, and two-tone cel shading.
+Do not generate a separate draft when the same request can make a shipping candidate.
+Save the returned source unchanged in the task directory.
+Record the measured dimensions and the route.
+Record the model only if the tool exposes it.
 
-1. Make sure that the identity image is a file on the disk.
-2. Examine the supplied identity image privately.
-3. Crop the image to the identity features only.
-4. Remove text, logos, flags, and details of the location.
-5. Generate one private style-transfer design from the shoulders up.
-6. Give the approved style reference the style role.
-7. Give the crop the identity role.
-8. Use a result that is fully illustrated.
-9. Do not accept photographic texture or photographic light.
-10. Save the accepted design in the cycle directory.
+## Examine and present
 
-Do not upload the identity photograph to the last request.
-A photograph in the request can keep realistic skin.
-This can cause a face and a body with different styles.
+Use [candidate review](../../generate-scene-openai/references/candidate-review.md).
+Reject realistic faces, mixed rendering, generic identity, damaged anatomy, missing props, duplicate props, or crop loss.
+Compare the candidate with the researched subject for recognizable facial structure and other stable identity traits.
+Do not accept style agreement as proof of resemblance.
+Inspect actual transparency with [native alpha](../../generate-scene-openai/references/native-alpha.md).
+Keep good generated alpha unchanged.
+Run the runtime-window overlay:
 
-### Put the identity image on the disk
-
-A local image generation tool can accept an image from the conversation.
-The repository helper reads only files on the disk.
-When your session does not have a local image generation tool, the identity image must be a file.
-If the user gave the image only in the conversation, stop before the crop.
-Tell the user to save the image in `tmp/character-study/references/<owner-id>/`.
-Continue after the file is on the disk.
-Record its source, rights, hash, and purpose in the cycle record.
-
-Make the crop with a deterministic operation, for example a Sharp crop in a Node command.
-Save the crop in the cycle directory, and record its hash.
-If a rectangular crop cannot remove text, logos, flags, or details of the location, stop.
-Tell the user to give a different identity image.
-Do not paint over the image.
-
-### Generate the private design
-
-When your session has a local image generation tool, use it for step 5.
-Give it the style reference and the crop in the roles of steps 6 and 7.
-
-When your session does not have a local image generation tool, use the Flare API for step 5.
-Read [API generation](../../generate-scene-openai/references/api-generation.md) before the request.
-Do these steps:
-
-1. Write the private design prompt in the cycle directory.
-2. In the prompt, identify the first reference image as the style reference.
-3. In the prompt, identify the second reference image as the identity reference.
-4. Request an illustrated design from the shoulders up on a flat neutral background.
-5. Include the positive color controls and the negative color controls.
-6. Use a new output directory, for example `<cycle-directory>/identity-design-1/`.
-7. Give the style reference first and the crop second.
-8. Use `--size 1024x1024 --background opaque --exact-size`.
-9. Do a dry run, and do a check of the reference sequence and the hashes.
-10. After the dry run passes, send one request.
-11. Record the route, the request, and the result in the cycle record.
-
-For example:
-
-```powershell
-node .github/skills/generate-scene-openai/scripts/scene-image.ts generate `
-  --prompt <cycle-directory>/identity-design-prompt.txt `
-  --reference <approved-style-reference> --reference <cycle-directory>/identity-crop.png `
-  --out <cycle-directory>/identity-design-1 --size 1024x1024 --background opaque --exact-size --dry-run
+```text
+node tools/character-runtime-window.ts <candidate.png> <overlay.png>
 ```
 
-Examine the private design with a tool that shows images.
-Apply the acceptance conditions of steps 8 and 9.
-If the private design fails, do not send one more request unless the user gave approval for corrections.
-The private design stays private evidence.
-Do not put it in `src/assets/`.
+Inspect the face, silhouette, contour, and prop at source and runtime scales.
+Show light and dark composites and the runtime window to the product owner.
+For the style trial, compare all three characters at equal displayed figure height.
+Make sure their shapes and identities stay distinct.
+Check small roster crops, setup portraits, and the two match sides.
+Do not call isolated thumbnails production-browser evidence.
 
-## Make the last request
+## Keep accepted work
 
-For a two-stage identity, give Flare two illustrated references.
-Give the approved style reference the full-body style role.
-Give the accepted identity design the identity role.
-
-For a different identity type, use the applicable private study.
-Use only the references that the active contracts let you use.
-Do not upload a different character as identity content.
-Do not upload a rejected candidate.
-
-In the prompt, give the identity, the construction, the clothing or the chassis, the prop system, the facing, and the gesture.
-Give all the necessary exclusions.
-Use the measurements of this cycle.
-Use the approved figure height and the safe margins.
-Use the background method in the cycle record.
-Tell the model not to add text, logos, more subjects, or more props.
-
-Write the prop table in the private study and the brief for the request.
-Run the prompt check of [prompt consistency](prompt-consistency.md).
-Do a dry run with `--brief` before a paid request.
-Do a check of the model, the quality, the dimensions, the background, the reference sequence, and the hashes.
-After the dry run passes, send one request.
-Write the request result to the cycle record.
-
-## Examine the candidate
-
-Do not accept a candidate with one of these defects:
-
-- The proportions do not agree with the measured style source.
-- The identity becomes generic.
-- The face keeps photographic rendering.
-- The face and the body use different styles.
-- The anatomy that you can see has an incorrect shape.
-- A necessary prop is missing, or the image shows it two times.
-- The image has a global warm wash.
-- The subject has matte color that is not permitted.
-
-Examine the raw candidate before preparation.
-After the alpha check passes, run the runtime-window overlay of [prompt consistency](prompt-consistency.md).
-Reject the candidate when a necessary prop is in a hidden area.
-Apply only the approved background preparation.
-Examine the prepared result on light and dark backgrounds.
-Examine the face or the display at source dimensions.
-Examine all the hands, appendages, props, and extremities that you can see.
-
-Run the alpha validation and the color validation in an isolated directory.
-Compare the candidate with the style source at equal figure height.
-
-Record all seven candidate-review checks.
-Connect the review to the hash of the prepared file.
-Show the prepared candidate and its runtime-window overlay to the product owner.
-
-## Lock the accepted selection
-
-Get acceptance from the product owner.
-Copy the prepared master to a unique locked path.
-Record the raw hash, the prepared hash, and the locked hash.
-Record the acceptance decision and the date.
-Do not change the locked file.
-
-Use the locked selection as the only pose reference.
-Do not use the style source as a pose reference.
-Do not use an identity image or a private design as a pose reference.
-Do not use a rejected selection or a previous pose as a pose reference.
-
-In selection mode, stop after all the given selections are locked.
-In package mode, continue with the pose procedure.
+Record the candidate path, the acceptance decision, and the accepted source hash once.
+Keep the accepted source unchanged.
+Use it as the only image reference for that character's poses.
+Stop at the requested trial or selection boundary.
+Continue to poses only after the product owner accepts the selection.
+Do not expand the trial to the roster before the product owner accepts the trial artwork.

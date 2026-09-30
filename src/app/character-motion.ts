@@ -24,6 +24,8 @@ export type CharacterFrame = Readonly<{
   id: string;
   stateId: CharacterStateId;
   url: string;
+  width: number;
+  height: number;
   sizes: string;
   avif: CharacterAssetSource;
   webp: CharacterAssetSource;

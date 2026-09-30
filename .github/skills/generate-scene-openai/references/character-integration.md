@@ -19,24 +19,28 @@ Use the full-tree commands in this module only when the approved task includes t
 For other state drawings, use the state inventory and the `tools/build-character-states.ts` contract.
 
 For a new identity or a new state, add the code for its approved inventory contract before you import artwork.
-The selection-portrait builder accepts only transparent PNG masters of 2048 by 2048 pixels.
-Do not resize an undersized candidate to agree with that contract.
+The selection-portrait builder accepts native transparent square PNG masters of at least 1024 pixels per edge.
+Keep a larger accepted native source unchanged.
+Do not enlarge an undersized candidate.
 
 Use [native alpha preparation](native-alpha.md).
 This procedure includes the raw inspection, the bounded cleanup when it applies, and the review of the prepared image.
-Examine the character at the same displayed figure height as `county-baron--municipal-patron`, the only visual reference.
-Do a check of the approved linework, the grouped hair detail, and the hard-edged shading.
+Compare characters at equal displayed figure height.
+For the trial, use the approved written direction without imposing an existing raster.
+After product-owner acceptance, use the three trial characters as the shared style reference.
+Do a check of the drawn face, varied adult proportions, broad shapes, and two-tone shading.
 Also do a check of the facial features and the requested edit.
 Do a check of the facing direction, the full-body silhouette, the props, the full extremities, and the safe outer margins.
 
-For character validation, the height of the figure must be 92 to 99 percent of the square canvas.
+For character validation, the height of the figure must be 80 to 99 percent of the square canvas.
 The area of the figure must be 12 percent or more of the canvas.
 Keep the requested accessory in those silhouette limits and clearance limits.
 
 Stamp a provenance record that gives only facts, and register native alpha as the native alpha module tells you.
-Keep the raw hash, the prepared hash, and the last hash with the provenance stamp in private evidence.
+Keep the initial source and its provenance in the task record.
+Record the accepted source hash once for the layout and asset manifest.
 After you examine the facing direction, use the hash of the last stamped PNG for `portrait-layout.json`.
-After preparation or metadata changes, do not use the raw API hash again.
+After metadata changes, use the hash of the staged PNG.
 
 ## Build the full character package
 
@@ -56,7 +60,8 @@ node tools/validate-asset-color.ts validate tmp/character-generation/run/charact
 ```
 
 Do not validate while the builder writes variants.
-Examine each changed manifest field and all five AVIF sizes and WebP sizes.
+Examine each changed manifest field and the generated runtime variants.
+Do not generate variants larger than their native source.
 Use the native-alpha border rules and the lossless AVIF decisions of the builder.
 Do not change encoded variants. Do not change alpha checks so that a failed package passes.
 Keep the ownership, license, source description, source hash, dimensions, and byte budgets.

@@ -27,11 +27,9 @@ Automatic skill selection is not that instruction.
 - [`full-code-review`](full-code-review/SKILL.md): Review a diff, branch,
   milestone, or full checkout.
 - [`generate-character-openai`](generate-character-openai/SKILL.md): Generate
-  office clip-art character selections and five-pose Flare packages.
+  flat editorial cartoon selections and five-pose packages with native transparency in chat.
 - [`generate-scene-openai`](generate-scene-openai/SKILL.md): Generate or edit
-  scene art and shared raster assets. Use the Flare application programming
-  interface (API) for transparency, masters with accurate dimensions, and
-  output larger than 1080p.
+  scene art and shared raster assets in chat. Use Flare only for opaque 4K scene backgrounds.
 - [`grill-me`](grill-me/SKILL.md): Resolve one product, architecture, or design
   decision at a time.
 - [`improve-codebase-architecture`](improve-codebase-architecture/SKILL.md):

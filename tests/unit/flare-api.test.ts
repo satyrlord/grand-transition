@@ -3,30 +3,46 @@ import {
   buildFlareRequest,
   sendFlareRequest,
   validateFlareSize,
+  type AssetRole,
+  type FlareRequest,
 } from '../../.github/skills/generate-scene-openai/scripts/openai-api.ts';
 
 const options = {
   promptText: 'Private synthetic prompt',
-  size: '2048x2048',
-  background: 'transparent',
+  assetRole: 'scene-background' as const,
+  size: '3840x2160',
+  background: 'opaque',
 };
 
-test('Flare accepts supported custom dimensions and rejects invalid API sizes', () => {
-  for (const size of ['1024x1024', '2048x2048', '3840x2160', '2160x3840'])
-    expect(validateFlareSize(size).pixels).toBeGreaterThanOrEqual(655_360);
-  for (const size of ['auto', '256x256', '2049x2048', '4096x2048', '3840x3840', '3840x512']) {
-    expect(() => validateFlareSize(size)).toThrow('supported Flare dimensions');
+test('Flare permits only the approved landscape 4K scene size', () => {
+  expect(validateFlareSize('3840x2160')).toEqual({ width: 3840, height: 2160, pixels: 8_294_400 });
+  for (const size of ['auto', '1024x1024', '2048x2048', '2160x3840', '4096x2048', '3840x3840']) {
+    expect(() => validateFlareSize(size)).toThrow('only for 3840x2160 scene backgrounds');
   }
 });
 
-test('text requests preserve model, prompt, exact size and native transparency', () => {
+test.each(['character', 'desk', 'prop', 'foreground', 'other', undefined] as const)(
+  'request construction rejects the %s role before a request can be sent',
+  (assetRole) => {
+    expect(() => buildFlareRequest({ ...options, assetRole })).toThrow('explicit opaque');
+  },
+);
+
+test.each(['transparent', 'auto', undefined])(
+  'scene background construction rejects %s without explicit opaque output',
+  (background) => {
+    expect(() => buildFlareRequest({ ...options, background })).toThrow('explicit opaque');
+  },
+);
+
+test('text requests preserve model, prompt and the opaque 4K scene size', () => {
   const request = buildFlareRequest(options);
   expect(request.endpoint).toBe('https://api.openai.com/v1/images/generations');
   expect(JSON.parse(request.body as string)).toEqual({
     model: 'gpt-image-2.5-flare',
     prompt: options.promptText,
     size: options.size,
-    background: 'transparent',
+    background: 'opaque',
     quality: 'high',
     output_format: 'png',
     n: 1,
@@ -46,8 +62,8 @@ test('reference requests use multipart image arrays with exact input bytes', asy
   expect(request.contentType).toBeUndefined();
   const body = request.body as FormData;
   expect(body.get('model')).toBe('gpt-image-2.5-flare');
-  expect(body.get('size')).toBe('2048x2048');
-  expect(body.get('background')).toBe('transparent');
+  expect(body.get('size')).toBe('3840x2160');
+  expect(body.get('background')).toBe('opaque');
   const images = body.getAll('image[]') as File[];
   expect(images).toHaveLength(2);
   expect(Buffer.from(await images[0]!.arrayBuffer())).toEqual(bytes);
@@ -121,3 +137,52 @@ test('credentials cannot be redirected through a substituted endpoint', async ()
   ).rejects.toThrow('fixed OpenAI');
   expect(fetcher).not.toHaveBeenCalled();
 });
+
+test.each(['character', 'desk', 'prop', 'foreground', 'other', undefined] as (
+  AssetRole | undefined
+)[])(
+  'direct transport rejects the %s role before credentials or network access',
+  async (assetRole) => {
+    const fetcher = vi.fn();
+    const request = { ...buildFlareRequest(options), assetRole } as FlareRequest;
+    await expect(sendFlareRequest(request, '', fetcher)).rejects.toThrow('explicit opaque');
+    expect(fetcher).not.toHaveBeenCalled();
+  },
+);
+
+test.each([{ size: '2048x2048' }, { background: 'transparent' }, { background: 'auto' }])(
+  'direct transport rejects altered JSON request constraints: %j',
+  async (override) => {
+    const request = buildFlareRequest(options);
+    request.body = JSON.stringify({ ...JSON.parse(request.body as string), ...override });
+    const fetcher = vi.fn();
+    await expect(sendFlareRequest(request, '', fetcher)).rejects.toThrow('Flare is permitted only');
+    expect(fetcher).not.toHaveBeenCalled();
+  },
+);
+
+test('direct transport rejects changed or duplicate multipart constraints', async () => {
+  const request = buildFlareRequest({
+    ...options,
+    referenceImages: [{ bytes: Buffer.from('synthetic image'), format: 'png' }],
+  });
+  const body = request.body as FormData;
+  const fetcher = vi.fn();
+  body.set('background', 'transparent');
+  await expect(sendFlareRequest(request, '', fetcher)).rejects.toThrow('explicit opaque');
+  body.set('background', 'opaque');
+  body.append('size', '2048x2048');
+  await expect(sendFlareRequest(request, '', fetcher)).rejects.toThrow('one size');
+  expect(fetcher).not.toHaveBeenCalled();
+});
+
+test.each([{ n: 2 }, { model: 'another-paid-model' }])(
+  'direct transport keeps one Flare image per request: %j',
+  async (override) => {
+    const request = buildFlareRequest(options);
+    request.body = JSON.stringify({ ...JSON.parse(request.body as string), ...override });
+    const fetcher = vi.fn();
+    await expect(sendFlareRequest(request, '', fetcher)).rejects.toThrow('one Flare image');
+    expect(fetcher).not.toHaveBeenCalled();
+  },
+);

@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import replacementBaseline from './scene-replacement-baseline.json' with { type: 'json' };
+import { readGenerationSource } from './asset-pixels.ts';
 import { mapWithConcurrency } from './build-character-assets.ts';
 
 export const SCENE_MASTER_NAMES = Object.freeze([
@@ -21,38 +22,11 @@ export const SCENE_MASTER_NAMES = Object.freeze([
   'transition-era-television-studio.png',
   'transition-era-television-studio-desks.png',
 ]);
-import { sceneMasterSize, sceneVariantSizes, SCENE_BYTE_BUDGETS } from './scene-resolution.ts';
+import { readSceneMasterSize, sceneVariantSizes, SCENE_BYTE_BUDGETS } from './scene-resolution.ts';
 export { SCENE_VARIANT_SIZES, SCENE_BYTE_BUDGETS } from './scene-resolution.ts';
 
 const SOURCE_DESCRIPTION =
   'Original flat cel-shaded editorial-cartoon scene art created for Grand Transition.';
-const FINAL_SCENE_SOURCE_DESCRIPTIONS: Readonly<Record<string, string>> = Object.freeze({
-  ...Object.fromEntries(
-    [
-      'county-council-ballroom',
-      'midnight-call-in-studio',
-      'palace-press-hall',
-      'influencer-campaign-livestream',
-    ].flatMap((id) => [
-      [
-        id,
-        'Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. Text-only composite followed by reference edits for the deskless background. No upscaling.',
-      ],
-      [
-        `${id}-foreground`,
-        'Original flat cel-shaded editorial-cartoon desks from the same OpenAI gpt-image-2.5-flare native 3840x2160 opaque composite. Contour masks extract both desk groups, fitted to shared standing-desk coordinates; repository green-matte conversion supplies antialiased alpha. Native-alpha candidates were not used.',
-      ],
-    ]),
-  ),
-  'modern-debate-studio':
-    'Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. A text-only composite was reference-edited to remove the standing desks and correct fictional moderator details while preserving the camera and set. The background was translated down 96 pixels without resampling, with top-edge continuation and lower-floor crop for moderator clearance. No upscaling.',
-  'modern-debate-studio-desks':
-    'Original flat cel-shaded editorial-cartoon desks reference-edited from the same OpenAI gpt-image-2.5-flare native 3840x2160 composite onto a green matte. The complete raster was translated down 161 pixels and each desk group was proportionally downsampled into codec-safe shared standing-desk coordinates. Repository green-matte conversion supplied antialiased alpha. No upscaling.',
-  'transition-era-television-studio-desks':
-    'Original flat cel-shaded editorial-cartoon desks generated text-only with OpenAI gpt-image-2.5-flare on a native 3840x2160 green-matte canvas. Complete tabletop and prop groups were proportionally downsampled and fitted into codec-safe shared standing-desk coordinates; only the lower front panels were vertically extended to the canvas edge. Repository green-matte conversion supplied antialiased alpha. No upscaling.',
-});
-const CIVIC_CYPHER_SOURCE_DESCRIPTION =
-  'Original flat cel-shaded editorial-cartoon Romanian municipal boxing-ring cypher scene generated text-only with OpenAI gpt-image-2.5-flare at native 3840x2160, then reference-edited to clear the microphones. Original microphone artwork was contour-extracted, reduced, and composited at fixed clear positions with matching suspension cords. No upscaling.';
 const LICENSE_IDENTIFIER = 'LicenseRef-Grand-Transition-Original';
 const SHARED_SAFE_RECTANGLES = Object.freeze({
   protectedTopBand: Object.freeze({ x: 0.125, y: 0, width: 0.75, height: 0.18 }),
@@ -93,12 +67,14 @@ type SceneMaster = {
   input: Buffer;
   sourceSha256: string;
   bytes: number;
+  size: SceneSize;
 };
 type CachedVariant = SceneVariant & { output: Buffer };
 type StoredSceneManifest = {
   schemaVersion: number;
   assets: {
     id: string;
+    sourceDescription?: string;
     source?: {
       sha256: string;
       path: string;
@@ -163,14 +139,8 @@ async function assertMasterSet(sceneRoot: string): Promise<void> {
 async function inspectMaster(filePath: string, identity: SceneIdentity) {
   const input = await readFile(filePath);
   const metadata = await sharp(input).metadata();
-  const size = sceneMasterSize(identity.id);
-  if (
-    metadata.format !== 'png' ||
-    metadata.width !== size.width ||
-    metadata.height !== size.height
-  ) {
-    throw new Error(`${filePath} must be a ${size.width}x${size.height} PNG master.`);
-  }
+  const size = readSceneMasterSize(identity.id, metadata.width, metadata.height);
+  if (metadata.format !== 'png') throw new Error(`${filePath} must be a PNG master.`);
   const { data, info } = await sharp(input)
     .ensureAlpha()
     .raw()
@@ -199,7 +169,7 @@ async function inspectMaster(filePath: string, identity: SceneIdentity) {
   } else if (transparentCount !== 0 || partialAlphaCount !== 0) {
     throw new Error(`${filePath} must be fully opaque.`);
   }
-  return { input, sourceSha256: sha256(input), bytes: input.length };
+  return { input, sourceSha256: sha256(input), bytes: input.length, size };
 }
 
 const FORMAT_SETTINGS = Object.freeze({
@@ -215,6 +185,7 @@ async function encodeWithinBudget(input: Buffer, size: SceneSize, format: SceneF
       height: size.height,
       fit: 'fill',
       kernel: sharp.kernel.lanczos3,
+      withoutEnlargement: true,
     });
     image =
       format === 'avif'
@@ -322,7 +293,7 @@ async function verifiedCachedVariants(
     const id = master.identity.id;
     if (selected.has(id)) continue;
     const asset = manifest.assets.find((entry) => entry.id === id)!;
-    const size = sceneMasterSize(id);
+    const size = master.size;
     if (
       asset.source?.sha256 !== master.sourceSha256 ||
       asset.source.path !== master.fileName ||
@@ -335,7 +306,7 @@ async function verifiedCachedVariants(
         `Cached scene source "${id}" changed or has invalid metadata; select it for rebuilding.`,
       );
     }
-    const expected = sceneVariantSizes(id).flatMap((variantSize) =>
+    const expected = sceneVariantSizes(id, size.width).flatMap((variantSize) =>
       SCENE_FORMATS.map((format) => ({
         ...variantSize,
         format,
@@ -400,6 +371,19 @@ export async function buildSceneAssets({
   const resolvedRoot = path.resolve(sceneRoot);
   await assertMasterSet(resolvedRoot);
 
+  const previousDescriptions = new Map<string, string>();
+  try {
+    const previous = JSON.parse(
+      await readFile(path.join(resolvedRoot, 'scene-manifest.json'), 'utf8'),
+    ) as StoredSceneManifest;
+    for (const asset of previous.assets) {
+      if (asset.source?.sha256 && typeof asset.sourceDescription === 'string') {
+        previousDescriptions.set(`${asset.id}:${asset.source.sha256}`, asset.sourceDescription);
+      }
+    }
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+  }
   const masters: SceneMaster[] = [];
   for (const fileName of SCENE_MASTER_NAMES) {
     const identity = sceneIdentity(fileName);
@@ -424,7 +408,7 @@ export async function buildSceneAssets({
     // Each encode stays single-threaded for deterministic bytes, so independent
     // variants encode at the same time. Results keep the manifest order.
     const jobs = masters.flatMap((master) =>
-      sceneVariantSizes(master.identity.id).flatMap((size) =>
+      sceneVariantSizes(master.identity.id, master.size.width).flatMap((size) =>
         SCENE_FORMATS.map((format) => ({ master, size, format })),
       ),
     );
@@ -460,17 +444,14 @@ export async function buildSceneAssets({
         ownerId: master.identity.ownerId,
         layerRole: master.identity.isForeground ? 'foreground' : 'back',
         sourceDescription:
-          master.identity.id === 'civic-cypher-boxing-ring'
-            ? CIVIC_CYPHER_SOURCE_DESCRIPTION
-            : (FINAL_SCENE_SOURCE_DESCRIPTIONS[master.identity.id] ??
-              (master.identity.id === 'transition-era-television-studio'
-                ? 'Original flat cel-shaded editorial-cartoon background generated from text only with the OpenAI API, gpt-image-2.5-sunburst, high quality, at native 3840x2160. Background shifted down 72 pixels with dark top-edge continuation and lower-floor crop for moderator clearance. No image references or upscaling. Runtime variants derive from this master.'
-                : SOURCE_DESCRIPTION)),
+          previousDescriptions.get(`${master.identity.id}:${master.sourceSha256}`) ??
+          readGenerationSource(master.input) ??
+          SOURCE_DESCRIPTION,
         licenseIdentifier: LICENSE_IDENTIFIER,
         source: {
           path: master.fileName,
           sha256: master.sourceSha256,
-          ...sceneMasterSize(master.identity.id),
+          ...master.size,
           bytes: master.bytes,
           format: 'png',
         },

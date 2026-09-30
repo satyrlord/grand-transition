@@ -6,10 +6,50 @@ import {
   resolveSceneAsset,
   sceneAssetManifest,
   sceneImageSizes,
+  readSceneManifestAssets,
 } from '../../src/app/scene-assets.ts';
+import manifest from '../../src/assets/scenes/scene-manifest.json';
 import { gameCatalog } from '../../src/game-content.ts';
 
 describe('scene asset resolver', () => {
+  test.each([1280, 1536])(
+    'accepts a native %s foreground and rejects upscaled variants',
+    (width) => {
+      const candidate = structuredClone(manifest);
+      const foreground = candidate.assets.find(({ layerRole }) => layerRole === 'foreground')!;
+      foreground.source.width = width;
+      foreground.source.height = (width * 9) / 16;
+      foreground.variants = foreground.variants.filter((variant) => variant.width <= width);
+      if (width === 1536) {
+        foreground.variants.push(
+          ...foreground.variants
+            .filter((variant) => variant.width === 1280)
+            .map((variant) => ({
+              ...variant,
+              width,
+              height: (width * 9) / 16,
+              path: variant.path.replace('1280x720', '1536x864'),
+            })),
+        );
+      }
+      expect(
+        readSceneManifestAssets(candidate).find(({ id }) => id === foreground.id)?.source.width,
+      ).toBe(width);
+      foreground.variants[0].width = 1920;
+      foreground.variants[0].height = 1080;
+      expect(() => readSceneManifestAssets(candidate)).toThrow(/unsupported dimensions/u);
+    },
+  );
+
+  test('keeps backgrounds at 4K and rejects undersized foregrounds', () => {
+    for (const layerRole of ['back', 'foreground']) {
+      const candidate = structuredClone(manifest);
+      const layer = candidate.assets.find((asset) => asset.layerRole === layerRole)!;
+      layer.source.width = 1024;
+      layer.source.height = 576;
+      expect(() => readSceneManifestAssets(candidate)).toThrow(/invalid PNG source dimensions/u);
+    }
+  });
   test('ships regenerated studio layers from native 4K Flare sources without upscaling', async () => {
     const root = path.resolve('src/assets/scenes');
     const expected = [

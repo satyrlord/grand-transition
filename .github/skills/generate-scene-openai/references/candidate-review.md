@@ -1,62 +1,48 @@
-# Examine and review a candidate
+# Inspect a candidate
 
-Read this module before you examine a candidate or give approval for it.
+Read this module before candidate acceptance or integration.
 
-## Examine the saved image
+## Measure the source
 
-Do a check of the decoded pixel dimensions before you resize the image.
-Examine the full candidate and crops at source scale with a tool that shows images.
-An image viewer or a file-read tool that shows image files can do this.
-A session without a local image generation tool can do the full review with such a tool.
-Compare the content that you can see with each requirement in the private brief.
-Run the color guard, and record the result that you saw for each item.
-A correct pixel count does not show that the content is correct.
-The description that the generator gives of its output also does not show that the content is correct.
-To examine an image on the disk without generation, use its necessary target dimensions:
+Open the saved image with an image viewer.
+Measure its decoded dimensions and alpha.
+Use those dimensions in the inspection command:
 
 ```text
-node .github/skills/generate-scene-openai/scripts/scene-image.ts inspect --input tmp/scene-generation/run/candidate.png --size 3840x2160
-node tools/validate-asset-color.ts validate tmp/scene-generation/run
+node .github/skills/generate-scene-openai/scripts/scene-image.ts inspect --input <candidate.png> --size WIDTHxHEIGHT --background transparent
 ```
 
-For transparent output, add `--background transparent`, and read [native alpha preparation](native-alpha.md).
-When the raw image contains alpha-1 residue that the procedure can remove, use that procedure before the last approval.
-Keep crops for inspection and rejected candidates out of the directory for color validation.
-Before integration, do the color validation again on the full staged asset tree.
+For opaque backgrounds, use `--background opaque`.
+Compare the measured dimensions with the asset-role contract.
+A source that meets its role's native minimum does not need enlargement.
+For transparent sources, use [native alpha](native-alpha.md).
+Run `node tools/validate-asset-color.ts validate <candidate-directory>`.
+Keep rejected images and inspection crops outside that directory.
 
-For outputs of a local image generation tool, compare the measured dimensions with the request and with the use that the contract gives.
-A preview can stay smaller than its requested size if the report gives the accurate size.
-An undersized master cannot pass preparation.
+## Inspect the visible result
 
-## Review the content that you can see
+Check the following items at source and runtime scales:
 
-Use this review for all the generation routes.
-Open the image.
-When the viewer makes the image smaller, examine crops at source scale.
-For all seven checks, record a pass or a fail with the results that you saw:
+- Identity, objects, clothing, and prop counts.
+- Character resemblance to the visually researched subject, separately from rendering style.
+- Approved style, varied proportions, drawn faces, and consistent linework.
+- Composition, camera, silhouette, safe margins, and crop space.
+- Layer alignment, alpha edges, and foreground occlusion.
+- Interface clearance and visibility of the face, hands, and signature props.
+- Anatomy, seams, blur, duplicated props, text, and other artifacts.
+- Neutral color anchors and the absence of a global warm wash.
 
-- `sceneIdentity`: The scene identity and objects are correct.
-  For a character, the identity, features, clothing, and requested edit are correct.
-- `style`: The art direction that the user approved last, and the materials, proportions, and linework.
-- `composition`: The camera, perspective, scale, focal positions, and crop space.
-- `layering`: The scene boundaries and occlusion.
-  For a character, the full isolated silhouette with native alpha that the game can use.
-- `interfaceClearance`: Scene interface regions that the game can use.
-  For a character, safe margins and full extremities at runtime size.
-- `artifacts`: No text that the brief did not include, and no incorrect anatomy.
-  Also no prop two times, no blur, no seams, and no matte damage.
-- `color`: The color validation passes, and you can see neutral anchors.
+Inspect transparent edges against light and dark backgrounds.
+Inspect characters at roster, setup, and match scales.
+Inspect scene layers in their final composition with real characters and interface content.
+A correct pixel count or a generator description does not establish visual quality.
 
-Write a private JavaScript Object Notation (JSON) record with `sha256`, `reviewer`, `checks`, and `issues`.
-Copy the hash from the file that you examined.
-After the inspection, give each named check the value `{ "pass": true, "evidence": "Specific observed result." }`.
-Put the open defects in the `issues` array.
+Record the candidate path, decision, and observed defects in the existing task record.
+Plain Markdown is sufficient for chat-generated candidates.
+A second JSON review and duplicate hashes are not necessary for direct native adoption.
+If the optional scene `prepare` helper is used, supply its supported seven-check JSON review.
+That helper checks `sceneIdentity`, `style`, `composition`, `layering`, `interfaceClearance`, `artifacts`, and `color` against the source hash.
 
-A review that passes has no open issues.
-Scene master preparation does not accept missing checks, failures, or hashes that do not agree with the file.
-Apply the same review record to character integration.
-When a scene item does not apply to a character, record the character evidence with the stable check name.
-
-Do not identify a review by an agent as approval by the product owner.
-If you cannot see the image, or if a necessary check is not available, do not give approval for the candidate.
-In that condition, give the candidate path and the automated results to the user for review.
+Keep agent review distinct from product-owner acceptance.
+If an image cannot be viewed, report the candidate path and the uncompleted visual review.
+For the three-character trial, obtain product-owner acceptance before roster expansion.

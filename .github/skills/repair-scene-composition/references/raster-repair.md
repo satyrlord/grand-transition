@@ -13,24 +13,24 @@ For raster generation and edits of playable characters, use
 [generate-character-openai](../../generate-character-openai/SKILL.md).
 For raster generation and edits of scenes, use
 [generate-scene-openai](../../generate-scene-openai/SKILL.md).
-That skill selects the Flare API for transparency, masters with accurate dimensions, and output larger than 1080p.
-It uses the internal image tool for small opaque drafts when a local image generation tool is available.
-Without that tool, it uses the Flare API draft route with `--exact-size`.
-Its repository helper controls the API request.
-Do not change an installed image CLI.
+Use Flare only for opaque 4K scene backgrounds.
+Use the built-in chat image generator for characters, desks, props, and foregrounds.
+Do not use a missing chat tool, transparency, or requested dimensions as an API fallback.
 
 ## Keep the raster contract
 
 Keep the Milestone 023 flat cel-shaded editorial-cartoon direction in the full scene package.
 Use the same bold contour weight and flat colors.
 Use two or three shading levels with hard edges.
-Keep the shape exaggeration the same for characters, moderators, architecture, furniture, fixtures, and props.
+Keep rendering consistent across characters, moderators, architecture, furniture, fixtures, and props.
+Vary character shapes and proportions to preserve distinct identities.
 Keep the small quantity of print texture the same for all these items.
 Do not accept painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, three-dimensional-render, or mixed-style repairs.
 
-For character skins and states, apply the funny big-head rendering standard of Milestone 023.
-Compare with `county-baron--municipal-patron`, the only visual reference, at equal figure height.
-Do not change their linework, hair, or shading into minimalist shapes.
+For character skins and states, use flat editorial cartoons with clearly drawn faces and varied adult proportions.
+Use moderate head exaggeration, broad shapes, and two-tone shading.
+Preserve approved robot art.
+Use the accepted three-character trial as the shared style reference after product-owner acceptance.
 
 Use neutral sRGB white balance and a color treatment without a grade.
 In the private generation brief, put the positive color controls before the style details.
@@ -44,7 +44,8 @@ Use a real alpha channel for transparent layers.
 Do not accept a checkerboard in the pixels.
 When the selected model can give native transparent PNG output, use it.
 Keep its alpha and its decoded colors.
-The only permitted change is the approved bounded alpha-1 preparation.
+Use the generated alpha directly when inspection passes.
+Use bounded alpha-1 preparation only for the measured defect that it can repair.
 
 Before adoption, use [native alpha preparation](../../generate-scene-openai/references/native-alpha.md).
 Examine the result against light and dark backgrounds.
@@ -53,7 +54,7 @@ Then use `adopt-native` in [`scripts/green-chroma-key.ts`](../scripts/green-chro
 This path records native-alpha metadata.
 It does not do color keying, and it does not change pixels.
 
-Use flat `#00FF00` chroma green only for a model that cannot give transparency or for an approved matte repair.
+Use flat `#00FF00` chroma green only for an explicitly approved repair of existing matte art.
 Do not put the key color in subjects that you generate through that fallback.
 
 Change the matte to alpha with [`scripts/green-chroma-key.ts`](../scripts/green-chroma-key.ts).

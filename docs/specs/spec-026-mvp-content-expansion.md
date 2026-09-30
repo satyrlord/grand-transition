@@ -43,8 +43,10 @@ Milestone 028 replaces the temporary opaque background of each foundation scene 
 Each new generated temporary portrait or scene uses the flat cel-shaded editorial-cartoon direction of Milestone 023.
 The temporary status can decrease the state count, the variant count, and the finish depth.
 It cannot use a different rendering style.
-Each playable portrait continues to use the funny big-head character standard and the `county-baron--municipal-patron` visual reference.
-The temporary status does not permit a realistic portrait, a portrait without humor, or a portrait with natural proportions.
+New playable portraits use the flat editorial cartoon direction and researched identity workflow in Milestone 023.
+Natural adult proportions are permitted. Use moderate head exaggeration and distinct silhouettes.
+The temporary status does not permit realistic faces or mixed rendering.
+Preserve approved robot art.
 
 It also uses neutral sRGB white balance without a global yellow, amber, sepia, or other warm color wash.
 Local warm materials and light stay correct when the shared asset color guard can continue to measure neutral or cool anchors.

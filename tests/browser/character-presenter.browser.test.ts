@@ -38,6 +38,8 @@ function mount(initialState: 'idle' | 'selection' = 'idle', failDeliveryAvif = f
         id: 'fixture-' + id,
         stateId: id as CharacterStateId,
         url: asset.url,
+        width: 1024,
+        height: 1024,
         sizes: '320px',
         avif:
           failDeliveryAvif && id === 'delivery'
@@ -121,8 +123,8 @@ test('reserves one image plane, preloads only its supplied package, and splits d
   expect(presenter.querySelectorAll('.character-portrait')).toHaveLength(1);
   expect(presenter.querySelectorAll('[data-state-visible="true"]')).toHaveLength(1);
   for (const image of presenter.querySelectorAll('img')) {
-    expect(image.getAttribute('width')).toBe('2048');
-    expect(image.getAttribute('height')).toBe('2048');
+    expect(image.getAttribute('width')).toBe('1024');
+    expect(image.getAttribute('height')).toBe('1024');
     expect(image.getAttribute('alt')).toBe('');
     expect(image.currentSrc).toContain('red-folded-chairman');
     expect(image.currentSrc).toContain('.avif');

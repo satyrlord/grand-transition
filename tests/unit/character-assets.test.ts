@@ -5,9 +5,25 @@ import {
   characterAssetManifest,
   characterImageSizes,
   resolveCharacterAsset,
+  readCharacterManifestAssets,
 } from '../../src/app/character-assets.ts';
+import manifest from '../../src/assets/characters/character-manifest.json';
 
 describe('character asset resolver', () => {
+  test('accepts native 1024 character sources and rejects undersized or nonsquare sources', () => {
+    const candidate = structuredClone(manifest);
+    candidate.assets[0].source.width = 1024;
+    candidate.assets[0].source.height = 1024;
+    expect(readCharacterManifestAssets(candidate)[0].source).toMatchObject({
+      width: 1024,
+      height: 1024,
+    });
+    candidate.assets[0].source.height = 1023;
+    expect(() => readCharacterManifestAssets(candidate)).toThrow(/at least 1024x1024/u);
+    candidate.assets[0].source.width = 960;
+    candidate.assets[0].source.height = 960;
+    expect(() => readCharacterManifestAssets(candidate)).toThrow(/at least 1024x1024/u);
+  });
   test('keeps every character variant outside the JavaScript bundle', async () => {
     const source = await readFile(
       path.resolve(process.cwd(), 'src', 'app', 'character-assets.ts'),

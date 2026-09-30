@@ -1,3 +1,4 @@
+import { isCharacterSourceSize } from '../src/visual/asset-resolution.ts';
 import {
   hasNativeAlphaProvenance,
   isVisibleChromaGreen,
@@ -173,7 +174,7 @@ export async function inspectAlpha(
   if (!nativeAlpha && chromaGreen > 0) {
     throw new Error(`${context} retains ${chromaGreen} visible chroma-green pixel(s).`);
   }
-  if (visibleRatio < 0.12 || heightRatio < 0.92 || heightRatio > 0.99) {
+  if (visibleRatio < 0.12 || heightRatio < 0.8 || heightRatio > 0.99) {
     throw new Error(
       `${context} must keep a readable full-body silhouette inside the square canvas (area=${visibleRatio.toFixed(4)}, height=${heightRatio.toFixed(4)}).`,
     );
@@ -264,16 +265,17 @@ export async function validateCharacterAssets({
     if (
       sourcePath !== `${id}.png` ||
       asset.source.format !== 'png' ||
-      asset.source.width !== 2048 ||
-      asset.source.height !== 2048
+      !isCharacterSourceSize(asset.source.width, asset.source.height)
     ) {
-      throw new Error(`Character asset "${id}" must use its 2048x2048 PNG source.`);
+      throw new Error(
+        `Character asset "${id}" must use a square PNG source of at least 1024x1024.`,
+      );
     }
     const source = await inspectRaster(
       path.join(root, sourcePath),
       'png',
-      2048,
-      2048,
+      asset.source.width,
+      asset.source.width,
       `Character asset "${id}" source`,
     );
     if (sha256(source.input) !== layout[id].sourceSha256)

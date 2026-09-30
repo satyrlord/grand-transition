@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
-// The match screen shows only part of a 2048-square character master.
+// The match screen shows only part of a square character master, at any source resolution.
 // `.character-frame` in `src/styles/match-screen.css` is a square of 0.8 scene heights. Its center
 // sits 0.3 scene widths from the stage center, so the outer side of the square leaves the screen.
 // At the narrowest supported ratio (4:3) that is the outer 33 percent of the width. The standing

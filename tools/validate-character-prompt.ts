@@ -13,7 +13,6 @@ export const CHARACTER_STATES = Object.freeze([
 ]);
 const REFERENCE_ROLES = ['style', 'identity', 'locked-selection'] as const;
 const HANDS = ['canvas-left', 'canvas-right', 'both'] as const;
-const CANVAS_PIXELS = 2048;
 const LIMB_WORD = /\b(?:hand(?!\s+(?:lines|articulation|detail))|arm|fist|palm|thumb)\b/iu;
 const SIDED_LIMB =
   /\bcanvas[- ](?:left|right)\s+(?:hand|arm|fist|palm|thumb)\b|\bboth\s+(?:hands|arms|fists)\b/iu;
@@ -38,7 +37,12 @@ export interface CharacterBrief {
   studyFile: string;
   action: string;
   stateText: string[];
-  figure: { heightPercent: Range; headHeightPercent: Range; marginPx: number };
+  figure: {
+    canvasPixels: number;
+    heightPercent: Range;
+    headHeightPercent: Range;
+    marginPx: number;
+  };
   references: { role: (typeof REFERENCE_ROLES)[number]; sha256: string }[];
   props: PropBrief[];
 }
@@ -79,12 +83,16 @@ export function parseBrief(source: unknown): CharacterBrief {
   const figure = brief.figure;
   if (
     !figure ||
+    !Number.isInteger(figure.canvasPixels) ||
+    figure.canvasPixels < 1024 ||
     !isRange(figure.heightPercent) ||
     !isRange(figure.headHeightPercent) ||
     typeof figure.marginPx !== 'number' ||
     figure.marginPx < 0
   )
-    problems.push('figure needs heightPercent, headHeightPercent, and marginPx');
+    problems.push(
+      'figure needs canvasPixels of at least 1024, heightPercent, headHeightPercent, and marginPx',
+    );
   if (
     !Array.isArray(brief.references) ||
     brief.references.some(
@@ -141,7 +149,7 @@ export function checkBrief(brief: CharacterBrief, context: BriefContext): string
 
   const [heightLow, heightHigh] = brief.figure.heightPercent;
   const heightMatch = new RegExp(
-    `${heightLow} to ${heightHigh} percent of the (?:2048-square )?canvas height`,
+    `${heightLow} to ${heightHigh} percent of the (?:${brief.figure.canvasPixels}-square )?canvas height`,
     'iu',
   );
   if (!heightMatch.test(prompt))
@@ -155,8 +163,6 @@ export function checkBrief(brief: CharacterBrief, context: BriefContext): string
     issues.push(
       `The prompt head size must say "${rangeText(brief.figure.headHeightPercent)} of the visible figure height".`,
     );
-  if (!/\boversized\b/iu.test(prompt))
-    issues.push('The prompt does not require an oversized head.');
   const margins = [...prompt.matchAll(/at least (\d+) pixels/giu)].map((match) => Number(match[1]));
   if (!margins.some((value) => value >= brief.figure.marginPx))
     issues.push(
@@ -177,7 +183,7 @@ export function checkBrief(brief: CharacterBrief, context: BriefContext): string
         `Name the canvas side of each hand or arm. Ambiguous sentence: "${sentence.slice(0, 90)}".`,
       );
 
-  const marginPercent = (brief.figure.marginPx / CANVAS_PIXELS) * 100;
+  const marginPercent = (brief.figure.marginPx / brief.figure.canvasPixels) * 100;
   for (const prop of brief.props) {
     const pattern = new RegExp(prop.pattern, 'iu');
     if (!pattern.test(lowered)) {
@@ -197,7 +203,12 @@ export function checkBrief(brief: CharacterBrief, context: BriefContext): string
       issues.push(`The prompt does not name the ${prop.hand} hand that holds "${prop.id}".`);
     const [x0, x1] = prop.zone.x;
     const [y0, y1] = prop.zone.y;
-    if (x0 < marginPercent || x1 > 100 - marginPercent || y0 < 0 || y1 > 100)
+    if (
+      x0 < marginPercent ||
+      x1 > 100 - marginPercent ||
+      y0 < marginPercent ||
+      y1 > 100 - marginPercent
+    )
       issues.push(`The zone of "${prop.id}" is inside the ${brief.figure.marginPx} pixel margin.`);
     if (prop.signature && !prop.runtimeVisibilityWaiver) {
       if (x0 < RUNTIME_WINDOW.innerXMinPercent || y1 > RUNTIME_WINDOW.yMaxPercent)
@@ -220,8 +231,10 @@ export function checkBrief(brief: CharacterBrief, context: BriefContext): string
   }
   const roles = brief.references.map((reference) => reference.role);
   if (brief.state === 'selection') {
-    if (roles[0] !== 'style' || roles.includes('locked-selection'))
-      issues.push('A selection request needs the style reference first and no locked selection.');
+    if (roles.includes('locked-selection') || (roles.length > 0 && roles[0] !== 'style'))
+      issues.push(
+        'A selection can use text only, or a style reference first, with no locked selection.',
+      );
     if (roles.length > 1 && !/reference 2/iu.test(prompt))
       issues.push('The prompt does not describe "Reference 2".');
   } else if (roles.length !== 1 || roles[0] !== 'locked-selection') {
@@ -242,18 +255,6 @@ export function checkBrief(brief: CharacterBrief, context: BriefContext): string
     }
   }
   return issues;
-}
-
-export function assertCharacterBrief(
-  briefLabel: string,
-  brief: CharacterBrief,
-  context: BriefContext,
-): void {
-  const issues = checkBrief(brief, context);
-  if (issues.length)
-    throw new Error(
-      `${briefLabel}: character prompt check failed. Send no request.\n- ${issues.join('\n- ')}`,
-    );
 }
 
 const shingles = (text: string) => {

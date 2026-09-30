@@ -16,6 +16,7 @@ function fixture() {
       ownerId: selection.ownerId,
       skinId: selection.skinId,
       stateId,
+      source: { width: 1024, height: 1024 },
       variants: [320, 640, 960].flatMap((width) =>
         ['avif', 'webp'].map((format) => ({
           path: 'states/variants/' + id + '-' + width + 'x' + width + '.' + format,
@@ -81,6 +82,18 @@ test('resolves nine immutable frames from selection and exactly five state maste
       expect(frame.avif.srcSet).toMatch(/320w.*640w.*960w/u);
     }
   }
+});
+
+test('frames carry the native source size of their master', () => {
+  const { manifest, selection, urls } = fixture();
+  for (const frame of createCharacterStatePackages(manifest, [selection], urls)[0]!.frames) {
+    const expected = frame.id === selection.id ? selection.width : 1024;
+    expect(frame).toMatchObject({ width: expected, height: expected });
+  }
+  manifest.assets[0]!.source = { width: 960, height: 960 };
+  expect(() => createCharacterStatePackages(manifest, [selection], urls)).toThrow(
+    /at least 1024x1024/u,
+  );
 });
 
 test('variant order cannot choose a smaller fallback image', () => {

@@ -95,8 +95,9 @@ portrait contour must not be visible adjacent to a desk.
 Keep the desk mass in the lower third of the
 stage, so that the candidates stay dominant. Default characters and scene
 figures stay recognizably adult, with coherent anatomy. Playable portraits use
-the funny big-head caricature proportions of Milestone 023. Do not use child,
-chibi, or naturalistic prestige-portrait proportions.
+the flat editorial cartoon direction of Milestone 023, with varied adult proportions
+and moderate head exaggeration. Keep signature props visible above desk occlusion.
+Do not use child or chibi proportions, realistic facial rendering, or photographic skin detail.
 
 The match uses the setup skin ID of each player only to select the portrait
 asset. The skin choice does not change these items: character identity,

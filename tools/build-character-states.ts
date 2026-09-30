@@ -13,6 +13,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import contract from '../src/assets/characters/state-contract.json' with { type: 'json' };
+import { isCharacterSourceSize } from '../src/visual/asset-resolution.ts';
 import {
   CHARACTER_BYTE_BUDGETS,
   encodeVariant,
@@ -40,7 +41,14 @@ export type StateManifest = {
 type StateSkin = Pick<CharacterAsset, 'id' | 'ownerId' | 'skinId'>;
 type PreparedStatePackage = {
   skin: StateSkin;
-  sources: { skin: StateSkin; state: ContractState; relativePath: string; input: Buffer }[];
+  sources: {
+    skin: StateSkin;
+    state: ContractState;
+    relativePath: string;
+    input: Buffer;
+    width: number;
+    height: number;
+  }[];
   availableStateIds: Set<string>;
 };
 type BuiltStatePackage = { manifestPackage: StatePackage; assets: CharacterAsset[] };
@@ -166,8 +174,7 @@ async function verifiedCachedStatePackages(
         !contract.stateMasterIds.includes(asset.stateId) ||
         asset.id !== `${skin.id}--${asset.stateId}` ||
         asset.source?.path !== `states/${skin.id}/${asset.stateId}.png` ||
-        asset.source.width !== 2048 ||
-        asset.source.height !== 2048 ||
+        !isCharacterSourceSize(asset.source.width, asset.source.height) ||
         asset.source.format !== 'png'
       ) {
         throw new Error(`Cached state asset "${asset.id}" has invalid source metadata.`);
@@ -177,8 +184,8 @@ async function verifiedCachedStatePackages(
       if (
         source.length !== asset.source.bytes ||
         sha256(source) !== asset.source.sha256 ||
-        sourceMetadata.width !== 2048 ||
-        sourceMetadata.height !== 2048 ||
+        sourceMetadata.width !== asset.source.width ||
+        sourceMetadata.height !== asset.source.height ||
         sourceMetadata.format !== 'png' ||
         !sourceMetadata.hasAlpha
       ) {
@@ -262,14 +269,22 @@ export async function prepareCharacterStatePackage(
     const metadata = await sharp(input).metadata();
     if (
       metadata.format !== 'png' ||
-      metadata.width !== 2048 ||
-      metadata.height !== 2048 ||
+      !isCharacterSourceSize(metadata.width, metadata.height) ||
       !metadata.hasAlpha
     ) {
-      throw new Error(`${relativePath}: state master must be a transparent 2048x2048 PNG.`);
+      throw new Error(
+        `${relativePath}: state master must be a transparent square PNG of at least 1024x1024.`,
+      );
     }
     availableStateIds.add(state.id);
-    sources.push({ skin, state, relativePath, input });
+    sources.push({
+      skin,
+      state,
+      relativePath,
+      input,
+      width: metadata.width,
+      height: metadata.width,
+    });
   }
   for (const state of contract.states) stateAssetId(skin.id, state.id, availableStateIds);
   return { skin, sources, availableStateIds };
@@ -283,7 +298,13 @@ export async function buildCharacterStatePackage(
   const assets = await mapWithConcurrency(
     sources,
     3,
-    async ({ state, relativePath, input }): Promise<CharacterAsset> => {
+    async ({
+      state,
+      relativePath,
+      input,
+      width: sourceWidth,
+      height: sourceHeight,
+    }): Promise<CharacterAsset> => {
       const id = `${skin.id}--${state.id}`;
       const variants: CharacterVariant[] = [];
       for (const width of stateWidths) {
@@ -316,8 +337,8 @@ export async function buildCharacterStatePackage(
         licenseIdentifier: 'LicenseRef-Grand-Transition-Original',
         source: {
           path: relativePath,
-          width: 2048,
-          height: 2048,
+          width: sourceWidth,
+          height: sourceHeight,
           format: 'png',
           bytes: input.length,
           sha256: sha256(input),

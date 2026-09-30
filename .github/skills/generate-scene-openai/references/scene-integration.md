@@ -9,7 +9,16 @@ Use this procedure only after the candidate review passes.
 For transparent output, first use [native alpha preparation](native-alpha.md).
 When that step changed alpha, use the reviewed prepared-native image as the source.
 Read `tools/scene-resolution.ts`, `tools/build-scene-assets.ts`, and the manifest entry of the selected scene.
-Use the helper to prepare the shipping dimensions:
+Use opaque background masters of 3840 by 2160 pixels.
+Use native 16:9 desk and foreground masters of at least 1280 by 720 pixels.
+Keep accepted existing 4K foregrounds unchanged.
+Keep the native source dimensions and normalized composition of each layer.
+Do not enlarge a chat source to match its background dimensions.
+The local builder caps runtime variants to the native source size.
+
+A compliant native candidate can go directly to metadata registration and the staged asset build.
+Do not require a second preparation file or review JSON for that path.
+The optional scene preparation helper validates and copies reviewed native bytes:
 
 ```powershell
 node .github/skills/generate-scene-openai/scripts/scene-image.ts prepare `
@@ -18,25 +27,10 @@ node .github/skills/generate-scene-openai/scripts/scene-image.ts prepare `
   --scene modern-debate-studio --out tmp/scene-generation/run/prepared.png
 ```
 
-The helper reads the shipping dimensions from `sceneMasterSize`.
-Generation requests use supported source dimensions.
-They do not change these shipping dimensions.
-The helper accepts the masters in `SCENE_MASTER_NAMES`.
-These masters include the two `-desks` layers and the four foundation `-foreground` layers.
-For a new identifier, add the code for its approved pipeline contract before preparation.
-Do not go around the master inventory check.
-
-When the candidate is not 3840 by 2160 pixels, give `--size WIDTHxHEIGHT`.
-When the source has the master dimensions, the helper keeps the initial bytes.
-For a larger source, it uses centered Lanczos3 cover fitting, and it does not make the image larger.
-It does not accept undersized sources, and this includes outputs of a local image generation tool that are not sufficient.
-Examine the prepared image again for crop loss and edge defects.
-Its private preparation record includes the source hash, the output hash, and the dimensions.
-
-All seven scenes at this time use background masters and foreground masters of 3840 by 2160 pixels.
-Generate replacements at those dimensions, and keep their native pixels.
-Flare cannot generate native output of 1920 by 1080 pixels, because 1080 is not a multiple of 16.
-A 4K source does not give approval to change the shipping-resolution contract of a different scene.
+Use the supported master identifier and measured input dimensions.
+Do not bypass the master inventory or enlarge an undersized source.
+The helper does not resize the source.
+Inspect edge quality before adoption.
 
 For native transparent art, keep the reviewed decoded pixels and alpha during metadata registration.
 Stamp generic provenance.
@@ -51,16 +45,17 @@ Replace the example source text with facts that you examined.
 The script keeps its historical file name for the callers that use it.
 Native adoption changes only metadata.
 It does not do background cleanup, alpha normalization, or color changes.
-After these operations, record the last stamped hash next to the raw hash and the prepared hash.
+Use the staged source hash for the generated manifest.
 
-For a green-matte fallback, use the converter in the repository:
+For an explicitly authorized repair of existing green-matte art, use the legacy converter:
 
 ```text
 node .github/skills/repair-scene-composition/scripts/green-chroma-key.ts convert tmp/scene-generation/run/prepared.png tmp/scene-generation/run/foreground.png --prompt-file tmp/scene-generation/run/prompt.txt
 ```
 
 Examine alpha edges against dark and light backgrounds.
-Do not accept missing partial alpha, opaque corners, or detached shadows.
+Do not accept opaque corners or detached shadows.
+Apply the native-alpha contour checks.
 Do not accept green residue in art from a color key.
 Native art can contain green material that is part of the design.
 Use `adopt` only to keep a legacy alpha source that you examined in its workflow.
@@ -95,9 +90,10 @@ Do not change `tools/scene-replacement-baseline.json` to accept a rejected previ
 That file records historical source hashes that are not permitted.
 It is not a record of approvals.
 
-The builder records the generation origin and the upscale origin of each scene.
+The builder records the generation source of each scene.
 A new replacement must not keep the source text of the asset that it replaces.
-Before you build again, update the builder metadata, the source text in Specification 023, and the related tests.
+Before the build, update the asset-specific provenance and affected tests.
+Do not give new chat art the old asset's API model name.
 Use provenance with facts for each asset.
 Do not change the labels of studio assets that the task did not change.
 Make that change during the approved replacement task, not during skill installation.

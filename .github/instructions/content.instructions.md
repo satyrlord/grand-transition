@@ -71,6 +71,6 @@ Use only media that is new or that has a license.
 
 Generate runtime image variants and metadata through the approved asset tool.
 All generated representational raster art uses the shared cel-shaded editorial-cartoon direction in Milestone 023.
-Character skins and states use the funny big-head rendering standard of that milestone.
+Character skins and states use the flat editorial cartoon direction of that milestone.
 Do not accept painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, three-dimensional-render, or mixed-style output.
 Do not edit generated assets manually.

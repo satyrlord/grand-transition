@@ -70,8 +70,10 @@ An archetype can keep only its default skin.
 
 The Black Sea Captain keeps only its default skin in the approved roster of this time.
 
-Local Baron (`county-baron`) adds the `municipal-patron` portrait with native transparency and the shared funny big-head character style.
-It is the only visual reference for each playable selection and state.
+Local Baron (`county-baron`) has the `municipal-patron` portrait with native transparency.
+Its installed appearance stays until an authorized replacement.
+It is not the mandatory style reference for new art.
+The flat editorial cartoon trial and researched identity workflow in Milestone 023 control new human art.
 File-name discovery shows it in the setup and carries it into matches.
 Do not change its default portrait, character identity, phrases, balance, and voice.
 It uses the selection-art fallback, without a new state package.
@@ -83,7 +85,7 @@ The banknote edges are pale blue so that they are not the key color.
 Keep the alpha checks and the color checks.
 Matches use the selection-art fallback, without a new pose package or state package.
 
-The subsequent funny big-head consistency program of Milestone 023 identifies the Reluctant Theorem for a full replacement of the selection and the poses.
+A later authorized replacement of the Reluctant Theorem must follow the art direction and trial acceptance boundary in Milestone 023.
 Keep the fallback and the package counts of this time until the user gives approval directly for that one-archetype cycle.
 The cycle must also be integrated, validated, and accepted manually.
 That integration removes `reluctant-theorem` from the fallback list, and it adds its five state masters.
@@ -161,8 +163,11 @@ Warm color is local to authored materials and light, not a color grade for the f
 
 Each scene has a layered master, landscape crops, light, motion, and a music treatment.
 It also has 35 eligible phrase-pool IDs: 34 scene-restricted cards and the global continuation.
-All six packages use back masters and foreground masters of 3840x2160.
-They have runtime variants with widths of 640, 1280, 1920, 2560, and 3840 pixels in the two formats.
+All six packages use opaque back masters of 3840x2160.
+Foregrounds use native transparent 16:9 masters of at least 1280x720; existing 4K foregrounds remain valid.
+Background runtime widths are 640, 1280, 1920, 2560, and 3840 pixels in the two formats.
+Foreground widths use those targets only up to the source width and include the native width.
+Use the built-in chat generator for foregrounds and Flare only for opaque 4K backgrounds.
 The four foundation foreground IDs are `county-council-ballroom-foreground`, `midnight-call-in-studio-foreground`, `palace-press-hall-foreground`, and `influencer-campaign-livestream-foreground`.
 Each transparent foreground stays in the shared scene plane, and it keeps the central interaction rectangle clear.
 Broad standing-desk fronts cover the bottom of the bodies of the two candidates.

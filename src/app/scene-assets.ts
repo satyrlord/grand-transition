@@ -1,5 +1,6 @@
 import sceneManifest from '../assets/scenes/scene-manifest.json' with { type: 'json' };
 import { isRecord } from '../engine/plain-values.ts';
+import { isSceneSourceSize, sceneWidthsForSource } from '../visual/asset-resolution.ts';
 
 const sceneVariantUrls = {
   ...import.meta.glob('../assets/scenes/variants/*.avif', {
@@ -14,7 +15,6 @@ const sceneVariantUrls = {
   }),
 } as Record<string, string>;
 
-const supportedVariantWidths = [640, 1280, 1920, 2560, 3840] as const;
 const supportedVariantFormats = ['avif', 'webp'] as const;
 
 export type SceneVariantFormat = (typeof supportedVariantFormats)[number];
@@ -63,8 +63,6 @@ type SceneAssetBase = Readonly<{
 export type SceneManifestAsset = SceneAssetBase &
   Readonly<{
     kind: 'manifest';
-    width: 3840;
-    height: 2160;
     avif: SceneAssetSource;
     sizes: typeof sceneImageSizes;
     focalPoint: ScenePoint;
@@ -80,7 +78,7 @@ export type SceneAsset = SceneManifestAsset;
 
 export const sceneImageSizes = '(max-aspect-ratio: 4/3) 134vw, 100vw';
 
-const manifestAssets = readManifestAssets(sceneManifest);
+const manifestAssets = readSceneManifestAssets(sceneManifest);
 
 /**
  * The complete scene package is validated while this module loads. A missing
@@ -107,8 +105,8 @@ type ManifestAsset = {
   layerRole: 'back' | 'foreground';
   source: {
     path: string;
-    width: 3840;
-    height: 2160;
+    width: number;
+    height: number;
     format: 'png';
   };
   focalPoint: ScenePoint;
@@ -126,7 +124,7 @@ type ManifestAsset = {
   }>;
 };
 
-function readManifestAssets(value: unknown): readonly ManifestAsset[] {
+export function readSceneManifestAssets(value: unknown): readonly ManifestAsset[] {
   if (!isRecord(value) || value.schemaVersion !== 1) {
     throw new Error('Scene manifest must declare schemaVersion 1.');
   }
@@ -153,14 +151,12 @@ function readManifestAssets(value: unknown): readonly ManifestAsset[] {
       if (!isRecord(asset.source)) {
         throw new Error(`Scene asset "${id}" is missing its source.`);
       }
-      const width = 3840;
-      const height = 2160;
-      if (
-        asset.source.width !== width ||
-        asset.source.height !== height ||
-        asset.source.format !== 'png'
-      ) {
-        throw new Error(`Scene asset "${id}" must have a ${width}x${height} PNG source.`);
+      const width = asset.source.width;
+      const height = asset.source.height;
+      if (!isSceneSourceSize(layerRole, width, height) || asset.source.format !== 'png') {
+        throw new Error(
+          `Scene asset "${id}" has invalid PNG source dimensions for its ${layerRole} layer.`,
+        );
       }
       const variants = readVariants(id, asset.variants, width);
       return {
@@ -171,7 +167,7 @@ function readManifestAssets(value: unknown): readonly ManifestAsset[] {
         source: {
           path: requireString(asset.source.path, `Scene asset "${id}" is missing its source path.`),
           width,
-          height,
+          height: (width * 9) / 16,
           format: 'png',
         },
         focalPoint: readPoint(asset.focalPoint, `Scene asset "${id}" focal point`),
@@ -195,9 +191,9 @@ function readVariants(id: string, value: unknown, masterWidth: number): Manifest
     throw new Error(`Scene asset "${id}" is missing its variants.`);
   }
   const expected = new Set(
-    supportedVariantWidths
-      .filter((width) => width <= masterWidth)
-      .flatMap((width) => supportedVariantFormats.map((format) => `${width}:${format}`)),
+    sceneWidthsForSource(masterWidth).flatMap((width) =>
+      supportedVariantFormats.map((format) => `${width}:${format}`),
+    ),
   );
   const seen = new Set<string>();
   const variants = value.map((variant, index) => {
@@ -220,7 +216,7 @@ function readVariants(id: string, value: unknown, masterWidth: number): Manifest
     const formatName = typeof format === 'string' ? format : 'unknown';
     if (
       !supportedVariantFormats.includes(format as SceneVariantFormat) ||
-      !supportedVariantWidths.includes(width as (typeof supportedVariantWidths)[number]) ||
+      !sceneWidthsForSource(masterWidth).includes(width) ||
       width > masterWidth ||
       height !== width * (9 / 16)
     ) {
@@ -284,7 +280,7 @@ function createSource(
       .filter((variant) => variant.format === format)
       .sort((left, right) => left.width - right.width),
   );
-  if (selected.length !== supportedVariantWidths.filter((width) => width <= masterWidth).length) {
+  if (selected.length !== sceneWidthsForSource(masterWidth).length) {
     throw new Error(`Scene asset is missing its ${format.toUpperCase()} variants.`);
   }
   const srcSet = selected.map((variant) => `${variant.url} ${variant.width}w`).join(', ');

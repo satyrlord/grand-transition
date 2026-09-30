@@ -15,7 +15,7 @@ const helper = path.resolve('.github/skills/generate-scene-openai/scripts/scene-
 const lockedHash = 'a'.repeat(64);
 const styleHash = 'b'.repeat(64);
 const study = '- `delivery`: He raises the prayer beads in one hand.\n';
-const common = `The only image reference is the accepted selection. Draw the figure at 94 to 97 percent of the 2048-square canvas height with at least 120 pixels of clear margin. The whole head is 28 to 31 percent of the visible figure height and conspicuously oversized. Use exactly one loop of prayer beads. Every pixel outside the contour must have zero alpha. No glow, halo, or backlight. Keep the head facing canvas right.
+const common = `The only image reference is the accepted selection. Draw the figure at 82 to 88 percent of the 1024-square canvas height with at least 60 pixels of clear margin. The whole head is 17 to 20 percent of the visible figure height, with moderate adult caricature proportions. Use exactly one loop of prayer beads. Every pixel outside the contour must have zero alpha. No glow, halo, or backlight. Keep the head facing canvas right.
 Neutral sRGB white balance. Ungraded colors. Warm color is local to skin. No whole-image color tint.`;
 
 function fixture(state: string, action: string, hand = 'canvas-right hand') {
@@ -31,7 +31,12 @@ function fixture(state: string, action: string, hand = 'canvas-right hand') {
     studyFile: 'study.md',
     action: action.replace('{hand}', hand),
     stateText: [stateText],
-    figure: { heightPercent: [94, 97], headHeightPercent: [28, 31], marginPx: 120 },
+    figure: {
+      canvasPixels: 1024,
+      heightPercent: [82, 88],
+      headHeightPercent: [17, 20],
+      marginPx: 60,
+    },
     references: [{ role: 'locked-selection', sha256: lockedHash }],
     props: [
       {
@@ -53,6 +58,21 @@ const delivery = () =>
   );
 
 describe('character prompt brief', () => {
+  test('accepts a text-only style trial with moderate head proportions', () => {
+    const { brief, prompt } = delivery();
+    brief.state = 'selection';
+    brief.references = [];
+    expect(checkBrief(brief, { prompt, referenceHashes: [] })).toEqual([]);
+  });
+
+  test('measures the prop margin against the declared native canvas', () => {
+    const { brief, prompt } = delivery();
+    brief.props[0]!.zone = { x: [92, 95], y: [25, 44] };
+    expect(checkBrief(brief, { prompt }).join('\n')).toContain('pixel margin');
+    brief.figure.canvasPixels = 2048;
+    expect(checkBrief(brief, { prompt: prompt.replace('1024-square', '2048-square') })).toEqual([]);
+  });
+
   test('accepts a consistent brief', () => {
     const { brief, prompt } = delivery();
     expect(checkBrief(brief, { prompt, study, referenceHashes: [lockedHash] })).toEqual([]);
@@ -112,8 +132,8 @@ describe('character prompt brief', () => {
 
   test('rejects a brief that does not match the prompt text', () => {
     const { brief, prompt } = delivery();
-    const issues = checkBrief(brief, { prompt: prompt.replace('94 to 97', '90 to 99') });
-    expect(issues.join('\n')).toContain('94 to 97 percent');
+    const issues = checkBrief(brief, { prompt: prompt.replace('82 to 88', '90 to 99') });
+    expect(issues.join('\n')).toContain('82 to 88 percent');
   });
 });
 
@@ -188,7 +208,7 @@ describe('helper requirement', () => {
     await Promise.all(roots.map((root) => rm(root, { force: true, recursive: true })));
   });
 
-  test('a character master request needs a brief before any request', async () => {
+  test('a character dry run routes to built-in generation without constructing a paid request', async () => {
     await mkdir(path.resolve('tmp/character-generation'), { recursive: true });
     const dir = await mkdtemp(path.resolve('tmp/character-generation/brief-required-'));
     roots.push(dir);
@@ -199,6 +219,8 @@ describe('helper requirement', () => {
       [
         helper,
         'generate',
+        '--asset-role',
+        'character',
         '--background',
         'transparent',
         '--size',
@@ -211,7 +233,12 @@ describe('helper requirement', () => {
       ],
       { encoding: 'utf8' },
     );
-    expect(result.status).toBe(1);
-    expect(result.stderr).toContain('needs --brief');
+    expect(result.status).toBe(0);
+    expect(JSON.parse(result.stdout)).toMatchObject({
+      assetRole: 'character',
+      route: 'internal',
+      networkRequest: false,
+    });
+    expect(JSON.parse(result.stdout).requestConstructed).toBeUndefined();
   }, 30_000);
 });

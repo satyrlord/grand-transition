@@ -39,8 +39,8 @@ export type CharacterSkin = Readonly<{
   id: string;
   facing: CharacterFacing;
   portraitUrl: string;
-  width: 2048;
-  height: 2048;
+  width: number;
+  height: number;
   sizes: string;
   avif: CharacterAssetSource | null;
   webp: CharacterAssetSource | null;

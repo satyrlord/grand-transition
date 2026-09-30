@@ -1,3 +1,4 @@
+import { isCharacterSourceSize } from '../src/visual/asset-resolution.ts';
 import { createHash } from 'node:crypto';
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -150,8 +151,7 @@ export function validateStateManifest(
         isRecord(source) &&
           source.path === `states/${skin.id}/${asset.stateId}.png` &&
           source.format === 'png' &&
-          source.width === 2048 &&
-          source.height === 2048 &&
+          isCharacterSourceSize(source.width, source.height) &&
           hash(source.sha256) &&
           Number.isInteger(source.bytes) &&
           source.bytes > 0,

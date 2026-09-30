@@ -1,5 +1,6 @@
 import characterManifest from '../assets/characters/character-manifest.json' with { type: 'json' };
 import { isRecord } from '../engine/plain-values.ts';
+import { isCharacterSourceSize } from '../visual/asset-resolution.ts';
 
 const characterVariantUrls = {
   ...import.meta.glob('../assets/characters/variants/*.avif', {
@@ -43,8 +44,8 @@ export type CharacterAsset = Readonly<{
   stateId: 'selection';
   poseId: 'selection';
   expressionId: 'selection';
-  width: 2048;
-  height: 2048;
+  width: number;
+  height: number;
   url: string;
   sizes: string;
   avif: CharacterAssetSource;
@@ -60,7 +61,7 @@ type ManifestAsset = {
   stateId: 'selection';
   poseId: 'selection';
   expressionId: 'selection';
-  source: { width: 2048; height: 2048; format: 'png' };
+  source: { width: number; height: number; format: 'png' };
   variants: Array<{
     path: string;
     width: number;
@@ -73,7 +74,7 @@ export const characterImageSizes = '(max-width: 1100px) 320px, 640px';
 export const matchCharacterImageSizes = 'min(80svh, 60vw)';
 
 export const characterAssetManifest: readonly CharacterAsset[] = Object.freeze(
-  readManifestAssets(characterManifest).map(createCharacterAsset),
+  readCharacterManifestAssets(characterManifest).map(createCharacterAsset),
 );
 
 const characterAssetById = new Map(
@@ -88,7 +89,7 @@ export function resolveCharacterAsset(assetId: string): CharacterAsset {
   return asset;
 }
 
-function readManifestAssets(value: unknown): readonly ManifestAsset[] {
+export function readCharacterManifestAssets(value: unknown): readonly ManifestAsset[] {
   if (!isRecord(value) || value.schemaVersion !== 1) {
     throw new Error('Character manifest must declare schemaVersion 1.');
   }
@@ -110,11 +111,12 @@ function readManifestAssets(value: unknown): readonly ManifestAsset[] {
         throw new Error(`Character asset "${id}" is missing its source.`);
       }
       if (
-        rawAsset.source.width !== 2048 ||
-        rawAsset.source.height !== 2048 ||
+        !isCharacterSourceSize(rawAsset.source.width, rawAsset.source.height) ||
         rawAsset.source.format !== 'png'
       ) {
-        throw new Error(`Character asset "${id}" must have a 2048x2048 PNG source.`);
+        throw new Error(
+          `Character asset "${id}" must have a square PNG source of at least 1024x1024.`,
+        );
       }
       if (rawAsset.facing !== 'left' && rawAsset.facing !== 'right') {
         throw new Error(`Character asset "${id}" is missing its facing direction.`);
@@ -131,7 +133,7 @@ function readManifestAssets(value: unknown): readonly ManifestAsset[] {
         poseId: requireSelection(rawAsset.poseId, id, 'pose'),
         expressionId: requireSelection(rawAsset.expressionId, id, 'expression'),
         facing: rawAsset.facing,
-        source: { width: 2048, height: 2048, format: 'png' },
+        source: { width: rawAsset.source.width, height: rawAsset.source.width, format: 'png' },
         variants: readVariants(id, rawAsset.variants),
       };
       return asset;
@@ -194,8 +196,8 @@ function createCharacterAsset(asset: ManifestAsset): CharacterAsset {
     stateId: asset.stateId,
     poseId: asset.poseId,
     expressionId: asset.expressionId,
-    width: 2048,
-    height: 2048,
+    width: asset.source.width,
+    height: asset.source.height,
     url: webp.variants.at(-1)?.url ?? '',
     sizes: characterImageSizes,
     avif,

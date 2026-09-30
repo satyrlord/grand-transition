@@ -65,7 +65,8 @@ The minimum viable product (MVP) includes local single-player play and local hot
 
   The last representational raster art uses one shared cel-shaded editorial-cartoon direction.
   This direction applies to characters, moderators, scenes, furniture, fixtures, and props.
-  Character skins and states obey the funny big-head rendering standard in Specification 023.
+  New human character art follows the flat editorial cartoon direction and researched identity workflow in Specification 023.
+  Approved robot art stays unchanged.
   All seven playable scenes use different local cartoon backgrounds through the same responsive scene asset pipeline.
   Six scenes use transparent foreground plates.
   The Civic Cypher Boxing Ring has no desks and no moderator, and it uses one back layer with no foreground layer.

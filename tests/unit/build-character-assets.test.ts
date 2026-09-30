@@ -33,14 +33,14 @@ const { buildCharacterAssets, mapWithConcurrency } = characterBuilder as {
 
 let fixture: string;
 
-async function writeMaster(fileName: string, color: string): Promise<void> {
+async function writeMaster(fileName: string, color: string, size = 2048): Promise<void> {
   const figure = Buffer.from(
-    `<svg width="2048" height="2048"><ellipse cx="1024" cy="1040" rx="520" ry="820" fill="${color}"/></svg>`,
+    `<svg width="${size}" height="${size}" viewBox="0 0 2048 2048"><ellipse cx="1024" cy="1040" rx="520" ry="860" fill="${color}"/></svg>`,
   );
   await sharp({
     create: {
-      width: 2048,
-      height: 2048,
+      width: size,
+      height: size,
       channels: 4,
       background: { r: 0, g: 0, b: 0, alpha: 0 },
     },
@@ -53,7 +53,7 @@ async function writeMaster(fileName: string, color: string): Promise<void> {
 beforeAll(async () => {
   fixture = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-character-build-'));
   await writeMaster('alpha.png', '#223344');
-  await writeMaster('beta--alternate.png', '#884422');
+  await writeMaster('beta--alternate.png', '#884422', 1024);
   const portraits = Object.fromEntries(
     await Promise.all(
       ['alpha', 'beta--alternate'].map(async (id) => [
@@ -161,6 +161,7 @@ describe('character asset builder', () => {
       ownerId: 'beta',
       skinId: 'alternate',
       stateId: 'selection',
+      source: { width: 1024, height: 1024 },
     });
   }, 180_000);
 
@@ -210,4 +211,19 @@ describe('character asset builder', () => {
     ).rejects.toThrow(/Cached character variant/u);
     await writeFile(betaVariant, betaBytes);
   }, 240_000);
+
+  test('rejects undersized character sources before writing variants', async () => {
+    const original = await readFile(path.join(fixture, 'alpha.png'));
+    try {
+      await writeMaster('alpha.png', '#223344', 960);
+      await expect(
+        buildCharacterAssets({
+          characterRoot: fixture,
+          masterNames: ['alpha.png', 'beta--alternate.png'],
+        }),
+      ).rejects.toThrow(/at least 1024x1024/u);
+    } finally {
+      await writeFile(path.join(fixture, 'alpha.png'), original);
+    }
+  });
 });

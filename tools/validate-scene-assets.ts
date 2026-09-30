@@ -29,7 +29,7 @@ export const SCENE_MASTER_NAMES = Object.freeze([
   'transition-era-television-studio.png',
   'transition-era-television-studio-desks.png',
 ]);
-import { sceneMasterSize, sceneVariantSizes, SCENE_BYTE_BUDGETS } from './scene-resolution.ts';
+import { readSceneMasterSize, sceneVariantSizes, SCENE_BYTE_BUDGETS } from './scene-resolution.ts';
 export { SCENE_VARIANT_SIZES, SCENE_BYTE_BUDGETS } from './scene-resolution.ts';
 type SceneFormat = 'avif' | 'webp';
 type NormalizedRect = Readonly<{ x: number; y: number; width: number; height: number }>;
@@ -510,18 +510,13 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
   if (source.format !== 'png') {
     throw new Error(`Scene asset "${id}" source must use PNG format.`);
   }
-  const masterSize = sceneMasterSize(id);
-  const variantSizes = sceneVariantSizes(id);
+  const masterSize = readSceneMasterSize(id, source.width, source.height);
+  const variantSizes = sceneVariantSizes(id, masterSize.width);
   const expectedVariantKeys = new Set(
     variantSizes.flatMap(({ width, height }) =>
       SCENE_VARIANT_FORMATS.map((format) => `${width}x${height}:${format}`),
     ),
   );
-  if (source.width !== masterSize.width || source.height !== masterSize.height) {
-    throw new Error(
-      `Scene asset "${id}" source must be exactly ${masterSize.width}x${masterSize.height}.`,
-    );
-  }
   requiredInteger(source.bytes, `Scene asset "${id}" source.bytes`);
   const sourceSha256 = requiredHash(source.sha256, `Scene asset "${id}" source.sha256`);
   if (

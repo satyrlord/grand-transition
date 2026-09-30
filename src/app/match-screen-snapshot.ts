@@ -70,8 +70,8 @@ export type MatchPlayerView = Readonly<{
   portraitAvifSrcSet: string | null;
   portraitWebpSrcSet: string | null;
   portraitSizes: string;
-  portraitWidth: 2048;
-  portraitHeight: 2048;
+  portraitWidth: number;
+  portraitHeight: number;
   portraitCue: CharacterCue;
   portraitFacing: CharacterFacing;
   portraitFrames: readonly CharacterFrame[] | null;
@@ -114,8 +114,8 @@ type MatchSceneLayerBase = Readonly<{
 export type MatchManifestSceneLayerView = MatchSceneLayerBase &
   Readonly<{
     kind: 'manifest';
-    width: 1920 | 3840;
-    height: 1080 | 2160;
+    width: number;
+    height: number;
     sizes: typeof sceneImageSizes;
     avif: SceneAssetSource;
     sources: Readonly<{

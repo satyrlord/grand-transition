@@ -1,171 +1,93 @@
 ---
 name: generate-character-openai
-description: Generate, examine, accept, and integrate one given Grand Transition character work unit. Use for office clip-art selection masters, five-pose packages, identity control, or 2048-square Flare output. Also use it for a safe continuation of a regeneration. Use it with or without a local image generation tool.
+description: Generate, review, or integrate Grand Transition character selections and pose packages with the built-in chat image generator. Use for the flat editorial cartoon trial, identity and prop continuity, and continuation of accepted work. Preserve approved robot art.
 ---
 
-# Generate character art with OpenAI
+# Generate character art in chat
 
-## Use Simplified Technical English
+## Select the scope
 
-Obey the writing rules in `.github/PROSE.md`.
-Use short sentences and approved technical terms.
-Put one instruction in each sentence.
-Put each condition before its action.
-Use the same term for the same item.
+Read `AGENTS.md`, `DESIGN.md`, Specification 023, the selected character studies, and the relevant asset inventory.
+Use the character and skin identifiers in the authorized task.
+Keep unrelated assets and approved robot art unchanged.
+Apply the user's limits on edits, generation, and tests.
 
-Image prompts can contain the visual terms that are necessary for the image.
-Cycle records and operator instructions must use Simplified Technical English.
+- **Review:** Examine the selected files without generation or shipping edits.
+- **Selection:** Generate and review the selected portraits.
+- **Package:** Complete the accepted selection, five poses, and local integration.
 
-## Define one work unit
+An instruction to generate artwork authorizes the necessary chat requests in that scope.
+Do not add a numeric approval form or an API stage.
+Honor a request limit when the user gives one.
+Generate one candidate at a time.
+After a visible defect, make at most one corrective request unless the user gives a different limit.
+Do not repeat a request whose result is unknown.
 
-A **work unit** contains one owner identifier (ID) and a list of skin IDs that the user gives.
-One invocation controls only the given work unit.
-The work unit can be the only work unit, or it can be one work unit in a larger sequence.
-Do not add work units that the user did not give.
-Do not start a different work unit.
+## Use the approved direction and route
 
-Select one mode before the work starts:
+Use the built-in chat image generator for all character selections and poses.
+Request one transparent Portable Network Graphics (PNG) image as the shipping candidate.
+Use a native square source of at least 1024 pixels per edge.
+Keep a larger native source when it is available.
+Do not enlarge a source to satisfy a dimension check.
 
-- **Review mode** examines files and makes no asset changes.
-- **Selection mode** makes and locks accepted selection masters only.
-- **Package mode** completes the selection, the five poses, the integration, and the related checks.
+Do not use the Flare application programming interface (API) for character work.
+Transparency, accurate dimensions, and a missing chat tool do not authorize an API fallback.
+If the chat tool is unavailable, complete the brief and report the blocked generation step.
 
-Record the mode, the owner ID, and the skin IDs in the cycle record.
-For selection mode or package mode, record the request limits.
-If a necessary value is missing, stop.
-Review mode does not use generation limits.
-If the user did not give a number of permitted corrections, do not make corrections.
+Use flat editorial cartoons with clearly drawn faces and varied adult body and head shapes.
+Use moderate head exaggeration, broad color shapes, controlled contours, and two-tone cel shading.
+Use large props that stay visible in the game.
+Keep face and body rendering consistent.
+Do not use photographic skin detail, realistic portrait shading, or one repeated head template.
 
-## Read the active contracts
+Complete the three-character style trial before roster expansion.
+Use Football Tycoon, EU-Funds Alchemist, and Luxury Minister unless the user changes the trial scope.
+Show the actual artwork at source, roster, setup, and match scales.
+Get the product owner's acceptance of that artwork before bulk regeneration.
+The product owner accepted the flat editorial cartoon rendering direction from the trial.
+Individual identity and selection acceptance remain separate.
+Before each new selection master, visually inspect at least three distinct usable web photographs.
+Target five.
+Inspect more when the likeness remains unclear.
+Use varied angles and expressions from a coherent chosen era.
+Do not count duplicates or resized copies.
+Complete researched resemblance checks and selection acceptance before roster expansion.
+Use the [three style examples](../../../docs/assets/flat-editorial-style.md) together for rendering comparison.
+Keep identity acceptance separate from style acceptance.
+Do not copy a reference character's identity into another character.
+Specification 023 remains the durable written style authority.
+Keep temporary trial output as review evidence, not the sole long-term style contract.
+Do not impose an existing raster as the style reference for the trial.
 
-Read `AGENTS.md`, `DESIGN.md`, and the applicable approved specifications.
-Read the primary art-direction note in the private character-study folder.
-Read each private character study that the work unit touches.
-When there is a regeneration plan for the work unit, read it.
-Examine the selection manifest, the state contract, and the checkout.
+## Load only the necessary procedure
 
-Get the approved style reference from the art contracts that control it.
-Get all identity content from the given work unit and from its character studies.
-Do not put character content in this skill.
-Do not use assets of other characters as identity content.
+- Before a selection, read [selection generation](references/selection-generation.md) and complete its web identity research.
+- Before a prompt, read [identity and prop consistency](references/prompt-consistency.md).
+- Before poses, read [pose generation](references/pose-generation.md).
+- Before candidate review, read [candidate review](../generate-scene-openai/references/candidate-review.md).
+- Before transparent integration, read [native alpha](../generate-scene-openai/references/native-alpha.md).
+- Before shipping edits, read [character integration](../generate-scene-openai/references/character-integration.md).
 
-## Apply the office clip-art style
+If the scope changes, select the necessary modules again.
+Keep private briefs and retained source notes in `research/`.
+Keep candidates and previews in `tmp/character-generation/`.
+Use one short record with the researched sources, brief, output paths, observed dimensions, decisions, and unfinished states.
+Do not require duplicate JSON records or hashes for each workflow stage.
+Retain source provenance and the accepted source hash used by the asset manifests.
 
-Use the product term **office clip-art style**.
-Use a funny adult political-office caricature with a small quantity of exaggeration.
-Use human or mechanical anatomy that is correct.
-Use a construction that agrees with the role, and one visual joke that the user sees immediately.
-Use controlled dark contours and expressive interior lines.
-Use large clean shapes and cel shading with hard edges.
+## Continue and complete
 
-Do not make generic stock clip art.
-Do not use a pasted photographic face.
-Do not use chibi proportions, sticker art, or prestige illustration.
-Do not use different rendering styles for the face and the body.
-Do not move identity content from a different character.
+Read the existing record before a new request.
+Reuse accepted files that still match their recorded source and decision.
+Inspect an unexpected file change before continuation.
+Do not generate an accepted selection or pose again without an instruction to replace it.
+Get selection acceptance before pose generation.
+Use that accepted selection as the only pose image reference.
 
-## Load the necessary procedures
-
-Before selection generation or selection review, read [selection generation](references/selection-generation.md).
-Before pose generation or pose review, read [pose generation](references/pose-generation.md).
-Before you write a prompt, before each dry run, and before each corrective request, read [prompt consistency](references/prompt-consistency.md).
-
-API: application programming interface.
-Load these shared procedures before their actions:
-
-- Before prompt work, read [generation preparation](../generate-scene-openai/references/generation-preparation.md).
-- Before a Flare request, read [API generation](../generate-scene-openai/references/api-generation.md).
-- Before candidate approval, read [candidate review](../generate-scene-openai/references/candidate-review.md).
-- Before alpha preparation, read [native alpha preparation](../generate-scene-openai/references/native-alpha.md).
-- Before integration, read [character integration](../generate-scene-openai/references/character-integration.md).
-
-When the mode or the work stage changes, examine the module selection again.
-Obey the user's limits on edits and tests.
-If the user prevents a necessary check, give the stage as not completed in the report.
-Do not give a pass for that stage.
-If a necessary procedure is missing, do not do the action that uses it.
-In review mode, do only the steps that examine files and give the report.
-
-## Use the correct route
-
-Use `gpt-image-2.5-flare` for each shipping master.
-Use high quality and Portable Network Graphics (PNG) output of 2048 by 2048 pixels.
-Use the repository helper for each Flare request.
-Do not make an undersized result larger.
-
-A **local image generation tool** is a tool in your session that generates an image directly.
-An example is the built-in `image_gen` tool of the installed `imagegen` skill.
-Before the work starts, find if your session has a local image generation tool.
-Record the result in the cycle record.
-
-All the shipping masters use Flare.
-Only the private identity design can use a local image generation tool.
-Select the route of the private identity design with these rules:
-
-- When your session has a local image generation tool, use it.
-- When your session does not have a local image generation tool, use the Flare API through the repository helper.
-
-The selection procedure gives the two private design routes.
-An instruction to make the work unit gives approval for the applicable route.
-Each Flare request for a private design counts against the request limits of the cycle record.
-If the request limits do not permit that request, stop, and give the necessary limit in the report.
-Do not identify the private design as a shipping master.
-Do not integrate the private design.
-
-A session without a local image generation tool must have a tool that shows image files.
-Use that tool for each visual check.
-If your session cannot show images, do not accept a candidate.
-Give the candidate path to the product owner for review.
-
-Generate one candidate for each request.
-Before each request, run the prompt check of [prompt consistency](references/prompt-consistency.md).
-The check must pass for the whole package, and each request must use `--brief`.
-A request that did not pass the check is not approved, also when the user approved corrections.
-Use a new output directory for each request.
-Do not send a request again when it does not have a recorded result.
-When you use all the permitted requests, stop.
-When a candidate has a necessary prop outside the runtime window, reject it before the product owner sees it.
-Do not use the approval of the user for corrections to pay for a defect that the prompt check finds.
-
-## Make each continuation idempotent
-
-Read the cycle record before each action.
-Do a check of each recorded Secure Hash Algorithm 256 (SHA-256) value.
-Use each accepted file again when its hash and its review agree.
-Do not generate an accepted selection or pose again.
-Do not send a completed request again.
-Do not send a request without a recorded result again.
-
-If there is a deterministic output, do a check of its source hash and output hash.
-When the two hashes agree, use the output again.
-When a recorded file has a hash that is different from the recorded hash, stop.
-
-Before integration, stage from the shipping tree as it is at that time.
-Replace only the files in the given work unit.
-Keep each source byte that is not related to the work unit.
-If the full package is installed, compare its hashes with the accepted package.
-When the hashes agree, do not change files.
-
-## Obey the gates
-
-Do not generate poses from a selection that the product owner did not accept.
-Record the acceptance of the selection by the product owner.
-Lock the hash of the accepted selection before pose generation.
-Use that locked selection as the only pose reference.
-
-Generate five pose masters in the approved sequence.
-Examine each pose before the next request.
-After a failed acceptance check, stop.
-Do not make a correction that the user did not give approval for.
-
-## Complete one invocation
-
-Review mode is completed when the report gives each selected file a status and each finding its evidence.
-Selection mode is completed after each given selection is accepted and locked.
-Package mode is completed after the given package passes the related checks.
-
-In the report, give all the requests, hashes, rejected candidates, checks, and open risks.
-Give the status of the work unit.
-Do not start a different work unit.
-Do not run a quality gate for the full project in this skill.
-The caller controls the sequence of the full project and its last gates.
+Review completes with evidence for each finding.
+Selection work completes with the reviewed trial or accepted selections requested by the user.
+Package work completes after the local build, asset checks, and relevant runtime checks pass.
+Report the route, generated files, visual decisions, checks, and open limits.
+Keep agent review distinct from product-owner acceptance.
+Do not run the full quality gate, commit, or publish from this skill without the applicable user instruction.
