@@ -4098,8 +4098,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1349107,
-        "sha256": "f0ac81422017d9f01aa17368950d456c0c4457be35af5a10daaac6c8ceb62c4a"
+        "bytes": 2011652,
+        "sha256": "5b031fd444ff662651662bfe99dc63c41b39a31b862fd6e2f6998ea67687eb17"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4118,48 +4118,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7631,
-          "sha256": "6d107e7750118958ad1887f8d11edd7e8966043d228e671cc4c48d921f92f3ef"
+          "bytes": 53343,
+          "sha256": "d97d313ea3dc7b8e124163bfb7b2b1d589cef41550ad58647437ae97abf6e3cc"
         },
         {
           "path": "states/variants/eu-funds-alchemist--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9768,
-          "sha256": "a4f1b8b676f3cd51dc2b30cdc067fe4453086c8a0f72d94d0e6901022ee1a5cc"
+          "bytes": 14330,
+          "sha256": "9c0e4db3e1e48ee14f1a00e5cec59b4ce1554eb68403a7a8ce9815a14e0f2bfc"
         },
         {
           "path": "states/variants/eu-funds-alchemist--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 16504,
-          "sha256": "61cc6b56a16a6aec37036bf667149171084b8e4f33a588e392dfae610b0d2022"
+          "bytes": 21518,
+          "sha256": "1c72533cc63b0eb3dc28080e40325eeecf8333f76e8da22b64a5a6b9c3cc40a1"
         },
         {
           "path": "states/variants/eu-funds-alchemist--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 22480,
-          "sha256": "42b3ba3612c34cb8016d31325948c41916b98e385a0b2ff3652ee2ae9872b7cb"
+          "bytes": 34710,
+          "sha256": "09cded77dbadb2fe140c6f6d161d0a09eb3240559b515c1e1657fe3b9a26451b"
         },
         {
           "path": "states/variants/eu-funds-alchemist--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 28293,
-          "sha256": "42193367c618dd593875beb852f197477f690f0551a415d1b6dae32f5a2544ee"
+          "bytes": 36926,
+          "sha256": "247f406df06de2ea18b960f9c3ca150dd78a98c04ec46a47978e2bb80b947cd9"
         },
         {
           "path": "states/variants/eu-funds-alchemist--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 37276,
-          "sha256": "004b5a2e7bef59d2acd2b268dec5ac2bb77c2f116354111a8cbe37b6698e3537"
+          "bytes": 59276,
+          "sha256": "e255c4991d8a3d19f5007e440143469ea43d3104a396ec2a0f78a297f4002224"
         }
       ]
     },
@@ -4178,8 +4178,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1525238,
-        "sha256": "71d222d60c4f43ad47dfa7ca90ba126b8fa949ea2fdcc0175873d093ee4dd402"
+        "bytes": 2086490,
+        "sha256": "df543cefcb536b0759b4cec7b8be41bc9ce5ab81aa428e2a7f02e465d454e77c"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4198,48 +4198,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9611,
-          "sha256": "9fa578a92455dd0b37286b34e930d143052b493eb0d48faacf0de524e0917638"
+          "bytes": 57443,
+          "sha256": "7da7380852d01afbb4f35d20f51876913d70cc52bc4926d899f6b086c539eba4"
         },
         {
           "path": "states/variants/eu-funds-alchemist--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12270,
-          "sha256": "60b3fb73c34ceba5caa31b7a269ca8eeb44785cb1ce99b12d8656050b4dd58ec"
+          "bytes": 16146,
+          "sha256": "bc1ba949235625f26d575e18291783d732729bda6d380ef24fbb9ac7427a84b7"
         },
         {
           "path": "states/variants/eu-funds-alchemist--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 20268,
-          "sha256": "2cbdaa25291d27d5c56a1be1fb2a1584b9aa9db672abda4cb63004d7cd89b3dc"
+          "bytes": 23518,
+          "sha256": "6f4b174562c091b45ca0c744fdedb0e7028af70ab8a5dc93243118d2f7a74aa0"
         },
         {
           "path": "states/variants/eu-funds-alchemist--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 27772,
-          "sha256": "c8f250c11447daca44b18c9e1de06655221ece6da3de3fc1a69a0aff7b747bd1"
+          "bytes": 38170,
+          "sha256": "199804ff530da28425334185cf4424e4c39d814555a153f1abf69458b4c4106b"
         },
         {
           "path": "states/variants/eu-funds-alchemist--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 35060,
-          "sha256": "192b83e682f622bbc1a9e3da58199eed6ded24115db35f2815f4f27556cc30cf"
+          "bytes": 39920,
+          "sha256": "efa802f323d6099e582dc1f0ef450b9c83f7ee4ec0fa0626941306153ececb33"
         },
         {
           "path": "states/variants/eu-funds-alchemist--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 46874,
-          "sha256": "8a3b1944b7d47e2cc25e9e758b4a0d080a66943f32886c2c660220ec6be1ef7b"
+          "bytes": 64958,
+          "sha256": "9083f97ac92b0a63a8f4c7081b5a5b454fd969a4d5afabf16df974e498e8ca9a"
         }
       ]
     },
@@ -4258,8 +4258,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1438392,
-        "sha256": "db25176e706d21a809076ecf04cbe856d4fd085fabd79e1bba5d07c36b236e21"
+        "bytes": 1903941,
+        "sha256": "df04442b7d70951175003a9bb12e0afb98ff203983915bf232192e44c50c9507"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4278,48 +4278,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8470,
-          "sha256": "d9fe2cf1ee75ebae50f0b67a8c41d4717fe839a15253b52314ce08d5863bdf42"
+          "bytes": 56362,
+          "sha256": "fa597fa3ebc0ebbf6e9cf038e541c2b42075f828499ee1bab2851cfe2ce793ed"
         },
         {
           "path": "states/variants/eu-funds-alchemist--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10586,
-          "sha256": "70c837444e403294be3eb125e743ece87d98b97a17fbfd8c5f0739d560d9aba7"
+          "bytes": 14326,
+          "sha256": "d5c9f13df2fdfdbaa38ad19a71e25bab6131a626605e89e1fe5fbe2b2569b105"
         },
         {
           "path": "states/variants/eu-funds-alchemist--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 17960,
-          "sha256": "ca0bda52d4679222b55f763bcfdfc99863977a39a4f0aec1fe9b66d4598a102e"
+          "bytes": 23116,
+          "sha256": "f239a41855ce009f5db39aca720989fd00758a58666be7144da3b286bb116443"
         },
         {
           "path": "states/variants/eu-funds-alchemist--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 24188,
-          "sha256": "897a3070dd8d93fe6b9400dbaa5664d33143fe0807cf4c6e3e6d0d06419a754f"
+          "bytes": 34358,
+          "sha256": "f1902638072fbfe6274b513ef9fba8c22b0fdee1f2be821207409b731220e59c"
         },
         {
           "path": "states/variants/eu-funds-alchemist--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 30813,
-          "sha256": "8cb03cefb23e0cfc8c9caa212f2381a1a64139100f7d7d1235317ad9e00817ca"
+          "bytes": 38444,
+          "sha256": "0e29095acb2cda7ec3336e03aed00c31001cf628c16ac740880edf7ce8be9b06"
         },
         {
           "path": "states/variants/eu-funds-alchemist--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 41002,
-          "sha256": "2c0b07e6808ad08660fee9dbcc98fee7d14c0ae842fd7fef420f22830831caac"
+          "bytes": 59074,
+          "sha256": "b923a13cfcc9c9da6f3dc5b3f51503a45671f7e71a2d29a375bd306516b9165e"
         }
       ]
     },
@@ -4338,8 +4338,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1738331,
-        "sha256": "ef74b034cfd1c5d566564712424176f74f177345350dad8e25fabf517d17f7b4"
+        "bytes": 2029854,
+        "sha256": "30e379ef6e730ae26d2d7e059277b1db02dce9602125ff69255557c77894a6a4"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4358,48 +4358,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9871,
-          "sha256": "0fa28d9eb8f6381982c1d32c686fcc7b77b89da7ff5a912698a0e9d13ee9efc1"
+          "bytes": 56809,
+          "sha256": "cca73a35f296afa6801d5c16930b6fd716c5f0923586e644b1a9bca99e57cc04"
         },
         {
           "path": "states/variants/eu-funds-alchemist--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11910,
-          "sha256": "e39e9a005b78b5558baa950bc8ce6da49314e7557274c63b2e79084aaed245f7"
+          "bytes": 14742,
+          "sha256": "bf660c7a86442ce9d24cb6f2cf4f7fb2d97903250a4a75ec0de7910d09c04ca3"
         },
         {
           "path": "states/variants/eu-funds-alchemist--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 21167,
-          "sha256": "16e6dc3fc41ba75a6914a114b8866f9e4157be0b735970d918788e08e1642215"
+          "bytes": 23469,
+          "sha256": "965ebfb9cdeeddb9156d38268d83b1cc61edd106b20fa77e1a0c54b9e0fb5cfd"
         },
         {
           "path": "states/variants/eu-funds-alchemist--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 27562,
-          "sha256": "da381c892b5cd5a23f37e1aadd570e2d0901f5edefe7010f6959439dd7f95a14"
+          "bytes": 35442,
+          "sha256": "307ff336116473ea3f0456610ebfbc66ea18128d63890962c31a1e4e279f4bf1"
         },
         {
           "path": "states/variants/eu-funds-alchemist--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 36564,
-          "sha256": "0f13bf1e89466ef9d5653d07c7b61904f73dcef7b583740b9d2914564612baea"
+          "bytes": 39591,
+          "sha256": "30be2f2a44f5058272fa05323edd7518145f7c4e6c94a2fb15ce3bbc0eb0e7d7"
         },
         {
           "path": "states/variants/eu-funds-alchemist--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 46554,
-          "sha256": "efb1bb1f4dfe67a56c134a5c23401c9a6aa38d7bdbc196e4c7c75ccfc6a84b44"
+          "bytes": 60082,
+          "sha256": "f56904a3ebc92f191659f6d172b54b1f0de8b54dc709e143c8c655b87ac8d60a"
         }
       ]
     },
@@ -4418,8 +4418,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1747588,
-        "sha256": "05e2eecb6642a26825904dc504b7f9db6e1346bbb4e996f88329f27c8135693e"
+        "bytes": 1835661,
+        "sha256": "430dd59f45218d24f39d9dd47968244bb31bae385fd6ea6788ab63ecd68b0c84"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4438,48 +4438,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8692,
-          "sha256": "01966cdd83aed9fea6ffe7b17b40ddfdf2089d66970be4bc71bf26cc497b596f"
+          "bytes": 50351,
+          "sha256": "71158c9c7a8de5a0fbf864f6c16f29208452f4f53c4dcc8080eba6e259dfe324"
         },
         {
           "path": "states/variants/eu-funds-alchemist--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10842,
-          "sha256": "74296a05311b2afdcce91e1a6404607e105e4acfc345f6e1b14e37c52dad6067"
+          "bytes": 13062,
+          "sha256": "f4ece95e4a147e048bf3b594bcb808aabd9512e295c82e774e62768fea2a27cd"
         },
         {
           "path": "states/variants/eu-funds-alchemist--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 20458,
-          "sha256": "a7e593049b7b194fc0067e8aa01a07c3acc2ce63230d29bc6800fe3da78229dd"
+          "bytes": 20260,
+          "sha256": "568249f6acfb5a57f1442f285ec073eab67b90f985fa24f749dd92ea00617b72"
         },
         {
           "path": "states/variants/eu-funds-alchemist--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 25824,
-          "sha256": "2bb70a26f03403d917eeb3bc9e6ce0d6c8907adb9a3712dd7e4c417b5cb09d0c"
+          "bytes": 31372,
+          "sha256": "9f11d1e06b69f3fe4034516daf97ad049072630a8eaa2fd31a54a7f5fca56ad8"
         },
         {
           "path": "states/variants/eu-funds-alchemist--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 33415,
-          "sha256": "a888a1f86fa1c65067118467fdb257c97511421e6b22cc5d0a564726e42aeaba"
+          "bytes": 34469,
+          "sha256": "150ffdd5d33923ae0e88192fa9bc1831e032bfb4faef7e6c59f6acb98fe6a086"
         },
         {
           "path": "states/variants/eu-funds-alchemist--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 43136,
-          "sha256": "06a08e70b27e1221d171402519e463281de56aa60261d299810c67d64f45cd2f"
+          "bytes": 54056,
+          "sha256": "c4508ea63371c8fdc4ab109b59258b2c1706fa4d4262add2487719ea6bcb9f41"
         }
       ]
     },

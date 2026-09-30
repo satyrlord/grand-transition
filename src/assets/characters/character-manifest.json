@@ -893,8 +893,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 1417008,
-        "sha256": "e63984dee75ccfc6a783df43238834e58c357d630f846e0e0836eb500d938955"
+        "bytes": 1966429,
+        "sha256": "829486247bdda7b60bb8b7bf8e18b0a7b148e32d5e6940c9d8bd951ec29ee7dc"
       },
       "focalPoint": {
         "x": 0.5,
@@ -913,9 +913,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 3008,
-          "sha256": "c45ee82c10f23dc0bb476202b7d2b9e82408ea10b8bad33a4008abcec5771528"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 15222,
+          "sha256": "562f7dd68c72dd13ceabb133554b368b796392222cb34c86fa3e739f47833237"
         },
         {
           "path": "variants/eu-funds-alchemist-128x128.webp",
@@ -923,17 +924,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 3420,
-          "sha256": "090650baa75bd935c16a7fa0a5be2478c1d7d1a2cc818dd62b428a460a6aecc4"
+          "bytes": 4622,
+          "sha256": "8bba192ec5606d090410ce51447f9f15304ce4fbe97d811403903eeddb37d0ab"
         },
         {
           "path": "variants/eu-funds-alchemist-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 6046,
-          "sha256": "9adc689d703e425a08153a79bdd966cb9b58beddc023c41e5e5beb5733567518"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 39957,
+          "sha256": "92bf12e95198f72848cd430cffeebdaffbe560bf58136d30d74bff05e68c99ca"
         },
         {
           "path": "variants/eu-funds-alchemist-256x256.webp",
@@ -941,17 +943,18 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 7480,
-          "sha256": "0bc9925bde71c6e4883112d39ad5bf7aa852687884f4c6a6b2d88a9feb45de48"
+          "bytes": 10596,
+          "sha256": "cd9feae12bc0b1aa7d6f0e876e5a0e992e21df4b599efb9d53666b337d7e57cb"
         },
         {
           "path": "variants/eu-funds-alchemist-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "quality": 70,
-          "bytes": 7454,
-          "sha256": "79541fce11011a36dfc41759c74ce2b124a2c7ed220cf95a5f3fc2705a8786b9"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 56265,
+          "sha256": "5276f61cafa8c22df47bf8f81564d8fd8a1340b1abbed0081e177aa93ae85780"
         },
         {
           "path": "variants/eu-funds-alchemist-320x320.webp",
@@ -959,8 +962,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 9478,
-          "sha256": "a93942bf0796fcbcd5b43fb3284557bbcb3850d47daf6da3df0fb31c57a45ff3"
+          "bytes": 13946,
+          "sha256": "ba326bb55b55cbdbe6a217bffa1bfbd69686ed04e51e01bb8b87a7169f5c5659"
         },
         {
           "path": "variants/eu-funds-alchemist-640x640.avif",
@@ -968,8 +971,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 17313,
-          "sha256": "5f54812d5be9d59fb6bc7f81d8d80e2e6179cf18e45e5448bc640fba8d1de2fc"
+          "bytes": 23888,
+          "sha256": "6d50a06f9f3f5d0dbe131079a24e839151cc5d32176cf23ebf60eca0ed818420"
         },
         {
           "path": "variants/eu-funds-alchemist-640x640.webp",
@@ -977,8 +980,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 22660,
-          "sha256": "b0ec61a2dd1c5479b947b5f4593230d1d0fe971f4f8d87c934e1c1dad294a7ca"
+          "bytes": 34180,
+          "sha256": "5c4639e1017b7fdfbd1a954f477403ecc7ff21e2c0fb922d29c14f0d7b7c6ed7"
         },
         {
           "path": "variants/eu-funds-alchemist-960x960.avif",
@@ -986,8 +989,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 30604,
-          "sha256": "53ca51780e8f14c93bf0fe4247703dde3641add388d8595f8ae441958954942c"
+          "bytes": 39461,
+          "sha256": "3ccff18d53950fe575d949f7f8dcb7d3a93ca67830e8d00d2f4c2c58bec87821"
         },
         {
           "path": "variants/eu-funds-alchemist-960x960.webp",
@@ -995,8 +998,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 38576,
-          "sha256": "18408da2e2205815716170a9ce6a5f32f96f872fad989c95866ea60e7a1b23df"
+          "bytes": 58084,
+          "sha256": "47f47b5114078656cca241aca11cece2380c52dbb7879de857799f9bba86b9e6"
         }
       ]
     },

@@ -1091,6 +1091,17 @@ normalize alpha, or make colors flat only to fit the older keying process.
 Examine the real transparency, the contour quality, and the light and dark
 composites.
 
+The EU-Funds Alchemist default-skin package has one safe-margin exception.
+After review of its native 2048-square Flare selection and five poses,
+downsample each complete image to 2032 square pixels with Sharp. Center it in
+a transparent 2048-square canvas with eight pixels of padding on each side.
+Apply the same operation to all six images before the variant build. Keep the
+accepted locked originals and their hashes as private evidence. Record the
+resize and the final source hashes in the installed PNG provenance. This
+exception gives the 128-pixel selection variant and the 320-pixel state
+variants a safe border. It does not change the preparation of any other
+character.
+
 Register native output with `adopt-native` in the alpha utility.
 Record `Alpha Workflow=native-alpha-v1` and
 `Alpha Source=generated-alpha-v1`. For native output, do not record a statement
