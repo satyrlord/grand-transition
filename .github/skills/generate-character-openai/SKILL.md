@@ -68,6 +68,7 @@ Do not move identity content from a different character.
 
 Before selection generation or selection review, read [selection generation](references/selection-generation.md).
 Before pose generation or pose review, read [pose generation](references/pose-generation.md).
+Before you write a prompt, before each dry run, and before each corrective request, read [prompt consistency](references/prompt-consistency.md).
 
 API: application programming interface.
 Load these shared procedures before their actions:
@@ -117,9 +118,14 @@ If your session cannot show images, do not accept a candidate.
 Give the candidate path to the product owner for review.
 
 Generate one candidate for each request.
+Before each request, run the prompt check of [prompt consistency](references/prompt-consistency.md).
+The check must pass for the whole package, and each request must use `--brief`.
+A request that did not pass the check is not approved, also when the user approved corrections.
 Use a new output directory for each request.
 Do not send a request again when it does not have a recorded result.
 When you use all the permitted requests, stop.
+When a candidate has a necessary prop outside the runtime window, reject it before the product owner sees it.
+Do not use the approval of the user for corrections to pay for a defect that the prompt check finds.
 
 ## Make each continuation idempotent
 

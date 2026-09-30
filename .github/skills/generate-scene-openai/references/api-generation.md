@@ -80,6 +80,10 @@ node .github/skills/generate-scene-openai/scripts/scene-image.ts generate `
   --out tmp/character-generation/run --size 2048x2048 --background transparent --dry-run
 ```
 
+For a 2048-square transparent character request in `tmp/character-generation/`, add `--brief <brief.json>`.
+The helper requires it and stops the request when the brief and the prompt do not agree.
+Read [prompt consistency](../../generate-character-openai/references/prompt-consistency.md) before you write the brief.
+
 Use the target file as a reference only when the edit instruction and the asset contract let you do that.
 For a text-only 4K scene, do not use references:
 

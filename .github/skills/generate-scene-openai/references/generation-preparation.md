@@ -27,6 +27,7 @@ An inspection does not give approval to upload a raster from the repository as a
 ## Prepare the private prompt
 
 Run the private-prompt color guard before generation.
+For a character prompt, also run the prompt check of [prompt consistency](../../generate-character-openai/references/prompt-consistency.md).
 
 Keep the approved art direction and the neutral color controls of the selected asset.
 Use native transparency for character portraits and scene foreground layers.

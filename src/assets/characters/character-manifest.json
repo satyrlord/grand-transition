@@ -1019,8 +1019,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2675123,
-        "sha256": "d408d793d78960e18c4bed3103712dc1a572cc540cb9de3698e09f27004d0381"
+        "bytes": 4347512,
+        "sha256": "fabcd5681e47d19bb706c167992503f0d71654463bcb1eb1659eab489038025b"
       },
       "focalPoint": {
         "x": 0.5,
@@ -1039,9 +1039,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 4846,
-          "sha256": "f1fa137214cf01b42364e9f95e7c933b12ce5e703d1e46cda9c4b01e7eeb448f"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 21306,
+          "sha256": "2c6d2de2dd12817b79aa4893d5bf982550508138a34dab49a80f88f5546047e6"
         },
         {
           "path": "variants/football-tycoon-128x128.webp",
@@ -1049,17 +1050,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 5782,
-          "sha256": "7368674ef10e8cf42f06e3c274627f11d182092e5c1179e02adff9a0f71a012a"
+          "bytes": 5582,
+          "sha256": "d19893d23efa11f5bf8d703c039e75c9484644debc3d7b15ab58f78a89b4bcb5"
         },
         {
           "path": "variants/football-tycoon-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 11241,
-          "sha256": "93905674e72be6b901cbefa6a2b62b73ddb77f9998c88ea7516b9649467fcb75"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 63808,
+          "sha256": "6a791b3b00d70747382baa8b7326839b623a5505778fe2de0c1c3505862ae3d4"
         },
         {
           "path": "variants/football-tycoon-256x256.webp",
@@ -1067,8 +1069,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 13944,
-          "sha256": "f005c898ccee380c35c541fa749f42af704db98163c62f2c85bfa3171d9fdc83"
+          "bytes": 14252,
+          "sha256": "c5118e788234165e41dc27ad35e2b4f0693ffa4f28fade8a7b4c6a28a454a0bc"
         },
         {
           "path": "variants/football-tycoon-320x320.avif",
@@ -1076,8 +1078,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 14693,
-          "sha256": "e65604c00ade59130a0fff013cb99c9f5a588b39b0470694b310e143363ddfab"
+          "bytes": 14988,
+          "sha256": "2f952742295c876f67daba30b8ed8bd189090a5d9a28d06c234a9bfeaeabf181"
         },
         {
           "path": "variants/football-tycoon-320x320.webp",
@@ -1085,8 +1087,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 18582,
-          "sha256": "529c5bb77ee17169619968deb099ba38e90703be60e734d0834101e761efcb26"
+          "bytes": 19584,
+          "sha256": "b79da1d75eaf73197a0aed4e0b841d574ae88617d731a730851d0bdb9fb714a1"
         },
         {
           "path": "variants/football-tycoon-640x640.avif",
@@ -1094,8 +1096,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 36172,
-          "sha256": "32dbdff873e6a1bb915411ea027dfc97be312cad02f1e20d95ef99744939d347"
+          "bytes": 36699,
+          "sha256": "e80048f06925418fd94458f1f917368b92c6f46bf2ddb6d76bf0b6505cdf82f1"
         },
         {
           "path": "variants/football-tycoon-640x640.webp",
@@ -1103,8 +1105,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 46360,
-          "sha256": "2a47ab2b8392a96a98a7756bc5ad4da745771acfa551ba99c910e85c7e7fc084"
+          "bytes": 48448,
+          "sha256": "a8521cfbdf300a658ed59c87de0316b10aa86f8b465ead96508060c3763d0045"
         },
         {
           "path": "variants/football-tycoon-960x960.avif",
@@ -1112,8 +1114,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 60262,
-          "sha256": "de1b97e5ab57a901deb7a3eb5d764c37c291725028ed072f323529b6b584f485"
+          "bytes": 60884,
+          "sha256": "7b1daae4dd74fd2ebfe50e2e334429547d0e41eb5cc9d58d66e551f0bfe3929b"
         },
         {
           "path": "variants/football-tycoon-960x960.webp",
@@ -1121,8 +1123,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 77304,
-          "sha256": "42fc83edc8aea4fb9e74c71b601eb426102a65fefd51142c0c85955a05bb9b7d"
+          "bytes": 81034,
+          "sha256": "9c00ed569c8622dfbeb0084288882fbd22ab2dae0d0756c8b5324dc8bcf4f51a"
         }
       ]
     },

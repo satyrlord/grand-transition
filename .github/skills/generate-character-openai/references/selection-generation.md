@@ -131,7 +131,9 @@ Use the approved figure height and the safe margins.
 Use the background method in the cycle record.
 Tell the model not to add text, logos, more subjects, or more props.
 
-Do a dry run before a paid request.
+Write the prop table in the private study and the brief for the request.
+Run the prompt check of [prompt consistency](prompt-consistency.md).
+Do a dry run with `--brief` before a paid request.
 Do a check of the model, the quality, the dimensions, the background, the reference sequence, and the hashes.
 After the dry run passes, send one request.
 Write the request result to the cycle record.
@@ -150,6 +152,8 @@ Do not accept a candidate with one of these defects:
 - The subject has matte color that is not permitted.
 
 Examine the raw candidate before preparation.
+After the alpha check passes, run the runtime-window overlay of [prompt consistency](prompt-consistency.md).
+Reject the candidate when a necessary prop is in a hidden area.
 Apply only the approved background preparation.
 Examine the prepared result on light and dark backgrounds.
 Examine the face or the display at source dimensions.
@@ -160,7 +164,7 @@ Compare the candidate with the style source at equal figure height.
 
 Record all seven candidate-review checks.
 Connect the review to the hash of the prepared file.
-Show the prepared candidate to the product owner.
+Show the prepared candidate and its runtime-window overlay to the product owner.
 
 ## Lock the accepted selection
 

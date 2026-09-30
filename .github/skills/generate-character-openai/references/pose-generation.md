@@ -41,8 +41,11 @@ Use Portable Network Graphics (PNG) output of 2048 by 2048 pixels.
 Use the background method in the cycle record.
 
 Write one prompt for each state.
+Build all the pose prompts from one shared text file, and add only the header and the action.
 Give all the identity and style invariants again in each prompt.
 Get the action from the private study of the character.
+Get the hand and the zone of each prop from the prop table of the study.
+Write one brief for each state, and run the set check of [prompt consistency](prompt-consistency.md) for all five briefs before the first request.
 
 Give one body action that is different from the other states.
 Give one expression that is different from the other states.
@@ -63,10 +66,11 @@ Make all five poses different from each other.
 
 ## Examine one state before the next request
 
-Do a dry run.
+Do a dry run with `--brief`.
 Make sure that the locked selection is the only reference.
 After the dry run passes, send one request.
 Examine the raw output before preparation.
+Run the runtime-window overlay after the alpha check, and reject the pose when a necessary prop is in a hidden area.
 
 Apply only the approved background preparation.
 Examine the prepared output at source dimensions.
@@ -88,7 +92,7 @@ Make sure that all these conditions are correct:
 - The office clip-art style agrees.
 - The action and the expression of the state are different from the other states.
 - The anatomy that you can see is correct.
-- The image has all the necessary props.
+- The image has all the necessary props, in the correct hand, and inside the runtime window.
 - The image has no crop and no shadow.
 - The image has no matte damage and no warm wash.
 

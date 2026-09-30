@@ -4498,8 +4498,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2364120,
-        "sha256": "4033112a8030115753ff5389e8153a504d4ed83e8aa60b815df043fda43da50f"
+        "bytes": 4247239,
+        "sha256": "c2f4f7383b015f2661199913865a47eec7cfaed006d8e294c7886d9428731f07"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4518,48 +4518,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 12928,
-          "sha256": "9eaa124dd6425a6ced5005af7fb3f4a83614bbf1f506fa7e3c3dd4ccf2a5e282"
+          "bytes": 14285,
+          "sha256": "955b9ca052f3de120076a49b9b014de61f0db6c49e71f2288e96701a59e6b14a"
         },
         {
           "path": "states/variants/football-tycoon--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 16654,
-          "sha256": "713db2da2994a40af658dd8a8f777b1d6c73c0e472ca6cc46a7e81e85ed326e6"
+          "bytes": 19082,
+          "sha256": "493f6dc035d1a90c9e476f6eebef496e58338193747d30213de1380954bc09fe"
         },
         {
           "path": "states/variants/football-tycoon--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 33306,
-          "sha256": "5ccabd709e13694fba02025fa8a237dbbd54f4580d41d5b88e9c00994aeb1c94"
+          "bytes": 35116,
+          "sha256": "6650870f36b71202dcd518e34f1fb2dbef972ae2c1991cd880cca5f4340bbb93"
         },
         {
           "path": "states/variants/football-tycoon--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 42110,
-          "sha256": "dade0c875cbbf7d9c2ac70d01aea130bfa0a780014a339017d789796066c27f3"
+          "bytes": 47518,
+          "sha256": "5d6e742d663e1bc62144f25fdb06ccf7e23d01b4b33d2a61098619c8df7e7e4f"
         },
         {
           "path": "states/variants/football-tycoon--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 55060,
-          "sha256": "de7e892f8a3e3cbb579aa59d5f15f90df69ff3ca7d840772279df1b7d12d76a4"
+          "bytes": 58582,
+          "sha256": "55d77a1909aa196fc074adb3cf01712309c6b62d72506a335cf9ff5db31238e1"
         },
         {
           "path": "states/variants/football-tycoon--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 70962,
-          "sha256": "9f96263ffdbaf5b5b87de992910ea63be2d08348b0117ea998c70dec18a52de1"
+          "bytes": 80402,
+          "sha256": "28a3b3a8a6e938bd15b16a534ee3cf9988af07e20b173a723080be2542371368"
         }
       ]
     },
@@ -4578,8 +4578,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2763943,
-        "sha256": "7353183e9004031fb11a6608c09d0b879f4a1c297406f7cfe5d96174836141b8"
+        "bytes": 4787460,
+        "sha256": "3006efef637c4558b49c4954a980a11e34f5fee336cafa93dcb65d68674a7528"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4598,48 +4598,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 16531,
-          "sha256": "06539e7e71a7e159442c9c411fd574b37cc6661837a684848e516316009cde38"
+          "bytes": 101568,
+          "sha256": "5735ff84b89001ffb1602e4dd4b4e3996d989a472f20b804cc40e91e8a4bed9d"
         },
         {
           "path": "states/variants/football-tycoon--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 20932,
-          "sha256": "e4d66709dfa5a0eed8fa0b74f3059062777f3e2e48075a5d89bff620047a1534"
+          "bytes": 23936,
+          "sha256": "20aa5926d7623553ba736cc9ec4ddf755fdb65dbd9e70501810b73302c3a487d"
         },
         {
           "path": "states/variants/football-tycoon--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 41360,
-          "sha256": "f89929bf291d62a5a1daf24b389ddba85cf64b21b2514fb20a34f3610fc8a5b0"
+          "bytes": 41072,
+          "sha256": "4793081b783e6e1aa72aaf9f540bc3061a6edb2814cc427257fc06fcdb465a60"
         },
         {
           "path": "states/variants/football-tycoon--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 52828,
-          "sha256": "9b2819ee990fd17c61a66f4955db042947f27b898eb16a38581e8fbf53142b1d"
+          "bytes": 58792,
+          "sha256": "af17b02b1ad2231bfca23c1aa61708e6d115cc04b1f9d5c849c07a76fb796cdd"
         },
         {
           "path": "states/variants/football-tycoon--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 68280,
-          "sha256": "da77e3c56d3804a56ae99dbba34276871a1f62cd55049f2128a5d0d6081aaf81"
+          "bytes": 67321,
+          "sha256": "fec5252f64cf98897738d64d9bf24cd006983294f759d19f4ec2f59165b23e3f"
         },
         {
           "path": "states/variants/football-tycoon--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 87282,
-          "sha256": "20d9b67433b8b063c2dc838b5da2d643210def8d7474fa821e3994563562e254"
+          "bytes": 98190,
+          "sha256": "f3d851288ca3f2c0ed6933461951fe547c0e0cf221f70dab2c2f4f892222bebe"
         }
       ]
     },
@@ -4658,8 +4658,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2711211,
-        "sha256": "0254f961955824a98ebc853d5fe6a4d0e6dd72ee48b843b30c59e687d741c138"
+        "bytes": 4231972,
+        "sha256": "f5d3c3c0fde652c64a66b483b40dde3476a5c56ff1f2f211de88210e8c8952b2"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4678,48 +4678,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 15962,
-          "sha256": "7a468d07bbd6a574f00e5f510a19aab5cde515557e521c15478da57a82fbb53c"
+          "bytes": 14661,
+          "sha256": "a55eecbfb9e2d73a0f069f6498a918d8da0723d0cb592440112fb282b15240a7"
         },
         {
           "path": "states/variants/football-tycoon--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 20284,
-          "sha256": "cc7536f3d789fbfaffba3216e7d3d1508be83a296283f8dd9001e3e502ab8463"
+          "bytes": 20230,
+          "sha256": "d5647775c0a7815a24c20149df92716dea9a4e30903daa52b78c26ae65fa7e52"
         },
         {
           "path": "states/variants/football-tycoon--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 40046,
-          "sha256": "98b8f0fa7c6d39c613e5911643d069381221b41d1e7ef23dee4716571df347b2"
+          "bytes": 36043,
+          "sha256": "dcc8b7b5d3b8eb610e6e09ade16353481c27256c225ed6ce2a11b6dd8b94f22b"
         },
         {
           "path": "states/variants/football-tycoon--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 51494,
-          "sha256": "4d4bedf2724827bd4ed14d73226867f3efe944eb9d303a9c829c1f2cbbdb920a"
+          "bytes": 50272,
+          "sha256": "7c8b11409b0b214623b0d49954d9b06b6bd4ed548244308a67cf7843c6267954"
         },
         {
           "path": "states/variants/football-tycoon--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 67530,
-          "sha256": "2fcefa4224926c739ed147dd784bac560e9bf3a1b522b4df6c7c2f14617dcd6c"
+          "bytes": 59832,
+          "sha256": "b394d92f6787ad21a9bcd286a8289939a4fce7218f48e828e1d68362a650f6f5"
         },
         {
           "path": "states/variants/football-tycoon--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 85366,
-          "sha256": "5d81fa22d8c74e3fdb1dfba9eec7a46d627a2542e057e90c4fd8304b3bdcdb0f"
+          "bytes": 84108,
+          "sha256": "16d744a673aa4ca2916b6ed59cb80e9886b7f03b2382b96dfe1886ff9aade6f0"
         }
       ]
     },
@@ -4738,8 +4738,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2653132,
-        "sha256": "60abe99270c3ce43670aa93c7a405f6ea51c59d47a45bafdab7aa8b345c97b45"
+        "bytes": 4457350,
+        "sha256": "379424af281b9fb67640f5a8558af149706cd69b2497c4683138c9afd0f851f3"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4758,48 +4758,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 14361,
-          "sha256": "64a8783d0930910de5bbb5f1487b5cae73494d033e51137827d7fd918fa7b622"
+          "bytes": 89554,
+          "sha256": "480dcb8572003b894699eda247ec2826b4ccf6bdcdbb28ef8a614fb552b21228"
         },
         {
           "path": "states/variants/football-tycoon--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 18114,
-          "sha256": "3145232dd9e4d24b11c923ce5c18f4defa99ce257598004aba7ebc7d951e3300"
+          "bytes": 21350,
+          "sha256": "b12b289580e86c0ba64c6382681f4339c57a74b2a0859852327ddb054efd3087"
         },
         {
           "path": "states/variants/football-tycoon--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 38042,
-          "sha256": "4ce9a33aa7de6729523423f73f934c05fac568575772a7fa1030af0320b54fc0"
+          "bytes": 36501,
+          "sha256": "8ad1cada03ad28dc7847142e54eae40e815b963aa2396dfdeebadfd6b63a9f5b"
         },
         {
           "path": "states/variants/football-tycoon--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 46296,
-          "sha256": "9d8440b5024ee1946cede0dbbf6a28b7fb864f6394d43e0d8a2d49408ca2f286"
+          "bytes": 51654,
+          "sha256": "ca8b945363bd5e26c8ec76a19dbf68684d1ae80aad59a3481fa9c582de927750"
         },
         {
           "path": "states/variants/football-tycoon--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 63315,
-          "sha256": "d80a4a24c94cfa0efd9475939eb307d181236e0c6895943db791f5518cbeced7"
+          "bytes": 60271,
+          "sha256": "3263204cbd5bce98c0edbccd5c83e651c453d9f44e558fa6ab8df98779e0cae4"
         },
         {
           "path": "states/variants/football-tycoon--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 77480,
-          "sha256": "90951599bd501dbce6fd132bb55a28a24c4a8fba1495de4a6ea4f384277c891b"
+          "bytes": 87492,
+          "sha256": "47d483d062170878dc014bd0c70deb96650e8875d2f675a16ab29d54c603e59a"
         }
       ]
     },
@@ -4818,8 +4818,8 @@
         "width": 2048,
         "height": 2048,
         "format": "png",
-        "bytes": 2368193,
-        "sha256": "e101ee47a5ddc53a36e99dc67465be6941134f0fc4a1f79c2b9716368a1cc501"
+        "bytes": 4318673,
+        "sha256": "c690944eeced944399c478ac774f91f6d79510eaddf129300a95b3bc9c9273d3"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4838,48 +4838,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 12641,
-          "sha256": "2f615c5b7387c79480e24e0758b495a4d33b8debaf6538da3111399d13895b70"
+          "bytes": 14225,
+          "sha256": "01f00d50638375089335449b3342f9bde58775a2596bbd2dee25109194471426"
         },
         {
           "path": "states/variants/football-tycoon--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 16022,
-          "sha256": "826a62ac2ec7a43fc2dcfc6b58562eec6e02da835e40cd9ab3822f2ce843f832"
+          "bytes": 19822,
+          "sha256": "5fc95f3d52adf13f35a95c65f64248ee9b0ea69168e7dd4ac46ec91d49406738"
         },
         {
           "path": "states/variants/football-tycoon--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 32860,
-          "sha256": "04b0a79d49183c893e7402ac373ce626184b9e126edc7354c54ce411297d7545"
+          "bytes": 35405,
+          "sha256": "d3c848ea90962431ce9499a00d7c4e490cac8309119e635164235a92b9b0bbe1"
         },
         {
           "path": "states/variants/football-tycoon--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 41346,
-          "sha256": "e1c040cbb961e295b442439ce6bf3897be9e481637fe0d82db62fcc912c18c68"
+          "bytes": 48904,
+          "sha256": "e2dbd6cfde7488d7f4441c187a64cd20ba8a8c28cf1957d120613c4daf3c8ed0"
         },
         {
           "path": "states/variants/football-tycoon--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 54609,
-          "sha256": "f22203d47773ebba3d62de6030eb7b971baa2dfa330a72d17431dfc45a15ab74"
+          "bytes": 58886,
+          "sha256": "6d53937cc4783862aa248f91748b173dba861ebe5e4b046008d7bcd4adccae3d"
         },
         {
           "path": "states/variants/football-tycoon--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 69408,
-          "sha256": "788934f53ef4f6da700acfb389826eedc224813156463043558ff18040632886"
+          "bytes": 82888,
+          "sha256": "61e3076fd5f7238f39d70f2c890430454ccf7298dfc825eca873dc3f449d5e39"
         }
       ]
     },

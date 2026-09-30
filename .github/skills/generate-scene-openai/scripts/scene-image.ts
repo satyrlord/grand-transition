@@ -8,6 +8,7 @@ import sharp from 'sharp';
 import { SCENE_MASTER_NAMES } from '../../../../tools/build-scene-assets.ts';
 import { sceneMasterSize } from '../../../../tools/scene-resolution.ts';
 import { assertColorControlledPrompt } from '../../../../tools/validate-generation-prompt.ts';
+import { assertCharacterBrief, parseBrief } from '../../../../tools/validate-character-prompt.ts';
 import {
   MODEL,
   buildFlareRequest,
@@ -277,6 +278,37 @@ export async function prepareImage(
   };
 }
 
+// A character master is a 2048-square transparent run in `tmp/character-generation/`.
+// Each of those requests needs a brief that the prompt check accepts before any paid request.
+export async function checkCharacterBrief(
+  values: { brief?: string; prompt?: string; size?: string; background?: string },
+  out: string,
+  promptText: string,
+  references: { sha256: string }[],
+) {
+  const characterRoot = path.join(await realpath(REPO), 'tmp', 'character-generation') + path.sep;
+  const isCharacterMaster =
+    values.size === '2048x2048' &&
+    values.background === 'transparent' &&
+    `${out}${path.sep}`.startsWith(characterRoot);
+  if (!values.brief) {
+    if (isCharacterMaster)
+      throw new Error(
+        'A character master request needs --brief <brief.json>. Read the prompt consistency reference of generate-character-openai. Send no request.',
+      );
+    return;
+  }
+  const briefPath = path.resolve(values.brief);
+  const brief = parseBrief(JSON.parse(await readFile(briefPath, 'utf8')));
+  if (path.resolve(path.dirname(briefPath), brief.promptFile) !== path.resolve(values.prompt ?? ''))
+    throw new Error('The brief names a different prompt file than --prompt. Send no request.');
+  assertCharacterBrief(values.brief, brief, {
+    prompt: promptText,
+    study: await readFile(path.resolve(brief.studyFile), 'utf8'),
+    referenceHashes: references.map((reference) => reference.sha256),
+  });
+}
+
 async function main() {
   const [command, ...args] = process.argv.slice(2);
   const { values } = parseArgs({
@@ -287,6 +319,7 @@ async function main() {
       out: { type: 'string' },
       input: { type: 'string' },
       review: { type: 'string' },
+      brief: { type: 'string' },
       scene: { type: 'string' },
       size: { type: 'string' },
       background: { type: 'string' },
@@ -296,7 +329,16 @@ async function main() {
   });
   const allowed = {
     plan: ['size', 'background', 'exact-size'],
-    generate: ['prompt', 'reference', 'out', 'size', 'background', 'exact-size', 'dry-run'],
+    generate: [
+      'prompt',
+      'reference',
+      'out',
+      'brief',
+      'size',
+      'background',
+      'exact-size',
+      'dry-run',
+    ],
     inspect: ['input', 'size', 'background'],
     prepare: ['input', 'review', 'scene', 'out', 'size'],
     'prepare-native': ['input', 'out'],
@@ -330,6 +372,7 @@ async function main() {
       values.prompt,
       values.reference,
     );
+    await checkCharacterBrief(values, out, promptText, inputs.references);
     const request = buildFlareRequest({
       promptText,
       referenceImages,
