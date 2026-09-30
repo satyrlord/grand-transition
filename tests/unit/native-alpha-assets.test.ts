@@ -73,11 +73,24 @@ test('native Prophet AVIF encoding prevents compression from restoring border ha
   expect(hasNativeAlphaProvenance(input)).toBe(true);
   const encoded = await encodeVariantWithMetadata(input, 320, 'avif');
   // The AVIF encoder output depends on the platform and the CPU. Where the
-  // lossy encoding restores border haze, the builder falls back to lossless.
-  expect(encoded.quality).toBe(encoded.lossless ? 100 : 70);
+  // lossy encoding restores border haze, the builder tries quality 90 before lossless.
+  expect(encoded.lossless ? [100] : [70, 90]).toContain(encoded.quality);
   expect(encoded.output.length).toBeLessThanOrEqual(250 * 1024);
   await expect(
     inspectCharacter(encoded.output, '320px Prophet AVIF', { nativeAlpha: true }),
+  ).resolves.toBeUndefined();
+}, 30_000);
+
+test('native thinking pose fits the AVIF byte budget without border haze', async () => {
+  const input = await readFile(
+    path.resolve('src/assets/characters/states/luxury-minister/thinking.png'),
+  );
+  expect(hasNativeAlphaProvenance(input)).toBe(true);
+  const encoded = await encodeVariantWithMetadata(input, 960, 'avif');
+  expect(encoded.output.length).toBeLessThanOrEqual(250 * 1024);
+  expect(encoded.lossless ? [100] : [70, 90]).toContain(encoded.quality);
+  await expect(
+    inspectCharacter(encoded.output, '960px thinking AVIF', { nativeAlpha: true }),
   ).resolves.toBeUndefined();
 }, 30_000);
 

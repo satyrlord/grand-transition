@@ -6,14 +6,15 @@
 **Owns:** Art direction, runtime asset pipeline, tokens, and slice motion  
 **Production-file budget:** 10
 
-The rendering direction and the earlier revised Luxury Minister identity are accepted.
-The generation pipeline refactor passes the quick quality gate.
-Fresh selection candidates for all three pilots use the expanded five-photo
-research workflow. Their visual acceptance, complete pose packages, roster
-rollout, and seven scene-background replacements remain pending.
-The [style trial record](../assets/flat-editorial-style.md) and
-[current candidate comparison](../assets/researched-pilots/review.html)
-separate the visual evidence from the remaining work.
+The rendering direction, the three researched pilot selections, and all fifteen
+matching poses have product-owner approval. The complete pilot packages are in
+local integration; final runtime verification remains pending.
+The Red-Folded Chairman selection master is also approved and retained outside
+the game until its five matching poses are complete and checked.
+The remaining human-roster rollout and seven scene-background replacements
+remain pending.
+The three approved pilot packages use their canonical source paths under
+`src/assets/characters/`. Private research and review material do not ship.
 
 ## Terms
 
@@ -97,9 +98,10 @@ that compression cannot put border haze back.
 
 Record the lossless setting in the selection manifest.
 Keep all the byte budgets and the encoding settings for larger images.
-Decode larger native AVIF variants after encoding. If lossy compression puts
-border pixels that are not transparent back, encode that variant losslessly.
-Then record quality 100 and `lossless: true` in the manifest. Keep the same
+Decode larger native AVIF variants after encoding. If quality 70 puts pixels
+that are not transparent on the border, retry at quality 90 and decode again.
+If that border still fails, encode the variant losslessly. Record the actual
+quality and, for lossless output, `lossless: true` in the selection manifest. Keep the same
 byte budget, and reject each variant that continues to fail alpha validation.
 
 Build the five AVIF/WebP sizes, and record the reviewed left-facing direction
@@ -468,19 +470,20 @@ Use researched identity briefs and authorized identity references. Do not impose
 portrait as its visual style reference. Show the actual trial artwork to the
 product owner at source, roster, setup, and match scales. Obtain acceptance of
 the artwork before bulk regeneration. The accepted triplet then becomes the
-shared style reference. The product owner accepted the trial
-rendering style. Identity and individual selection acceptance remain separate;
-complete researched resemblance checks before roster expansion.
-The revised Luxury Minister selection has product-owner identity acceptance.
-Web research found identity differences in Football Tycoon and EU-Funds Alchemist.
-All three trial selections were generated again with the expanded research
-workflow. Keep their prior style acceptance separate from acceptance of these
-new candidates, which remains pending. Correct the researched identity differences
-before matching pose generation.
-The [three style examples](../assets/flat-editorial-style.md) record accepted
-rendering and scoped production-preview evidence. Use their different shapes
-together for style comparison, not as identity sources. Complete matching pose
-packages and their runtime checks remain necessary.
+shared style reference. The product owner accepted the trial rendering style,
+all three researched replacement selections, and their fifteen matching poses.
+The replacements use the expanded five-photo research workflow and correct the
+earlier identity differences. Each pose uses its accepted selection as the only
+image reference. Complete package integration and runtime checks before treating
+the pilot work as verified in the game.
+Use the approved [Football Tycoon](../../src/assets/characters/football-tycoon.png),
+[EU-Funds Alchemist](../../src/assets/characters/eu-funds-alchemist.png), and
+[Luxury Minister](../../src/assets/characters/luxury-minister.png) selections
+together for style comparison, not as identity sources for another character.
+The approved Red-Folded Chairman master remains private until the matching
+package is complete. Use only that master as the image reference for its five future poses. Its
+existing shipping package stays in place until the replacement is complete and
+checked. This approval does not complete the remaining human roster.
 
 Generate selections and poses with the built-in chat image generator using
 native transparency. Use a square source of at least 1024 pixels per edge.

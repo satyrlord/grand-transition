@@ -209,7 +209,8 @@ Keep props inside the visible runtime window.
 Avoid realistic skin detail, photographic portrait shading, and one repeated head template.
 
 Test Football Tycoon, EU-Funds Alchemist, and Luxury Minister before roster expansion.
-The rendering style is accepted; individual resemblance and selection acceptance remain separate.
+The rendering style, the three researched pilot selections, and all fifteen matching poses are accepted.
+See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.
 Do not count duplicates or resized copies. Correct conflicting private notes.

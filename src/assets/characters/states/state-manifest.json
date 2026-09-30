@@ -4095,11 +4095,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/eu-funds-alchemist/thinking.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 2011652,
-        "sha256": "5b031fd444ff662651662bfe99dc63c41b39a31b862fd6e2f6998ea67687eb17"
+        "bytes": 724888,
+        "sha256": "56d12d1021bfb7c237bca87526c2ca6206434e96b4729dbbeb534d6b71772a30"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4118,48 +4118,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 53343,
-          "sha256": "d97d313ea3dc7b8e124163bfb7b2b1d589cef41550ad58647437ae97abf6e3cc"
+          "bytes": 9121,
+          "sha256": "b208ad112192ab064cb16ee16d2fe9ede64787ea2eef3c708e827e3b43301f05"
         },
         {
           "path": "states/variants/eu-funds-alchemist--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 14330,
-          "sha256": "9c0e4db3e1e48ee14f1a00e5cec59b4ce1554eb68403a7a8ce9815a14e0f2bfc"
+          "bytes": 13438,
+          "sha256": "5ebd089fe853781815817ccedf7b2f6ef40f0919af77f9097d6991fd05d1de42"
         },
         {
           "path": "states/variants/eu-funds-alchemist--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 21518,
-          "sha256": "1c72533cc63b0eb3dc28080e40325eeecf8333f76e8da22b64a5a6b9c3cc40a1"
+          "bytes": 21685,
+          "sha256": "4d1907fbe1f968fafa88c9c537a27709ecb0c0d00942f0c0ee11d059c0d07ec0"
         },
         {
           "path": "states/variants/eu-funds-alchemist--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 34710,
-          "sha256": "09cded77dbadb2fe140c6f6d161d0a09eb3240559b515c1e1657fe3b9a26451b"
+          "bytes": 32918,
+          "sha256": "e757637e5fb7cea2f9bbf131a95eac8b6144b4e9d0bf87e36387a97301eccf92"
         },
         {
           "path": "states/variants/eu-funds-alchemist--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 36926,
-          "sha256": "247f406df06de2ea18b960f9c3ca150dd78a98c04ec46a47978e2bb80b947cd9"
+          "bytes": 36587,
+          "sha256": "4c9e34416547c0de91be9945d395f8c2ee98bdae22e85d9d4ba15e7fd9481cf4"
         },
         {
           "path": "states/variants/eu-funds-alchemist--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 59276,
-          "sha256": "e255c4991d8a3d19f5007e440143469ea43d3104a396ec2a0f78a297f4002224"
+          "bytes": 58970,
+          "sha256": "391f0b3025dd6a497679c9dde95b4320305d8d012a6d85754356b83f5c05e478"
         }
       ]
     },
@@ -4175,11 +4175,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/eu-funds-alchemist/delivery.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 2086490,
-        "sha256": "df543cefcb536b0759b4cec7b8be41bc9ce5ab81aa428e2a7f02e465d454e77c"
+        "bytes": 752471,
+        "sha256": "b24e0a4ecbb07c1ba65dac6a46c1a39183ef34b78e06bde7a5248df45a73db70"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4198,48 +4198,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 57443,
-          "sha256": "7da7380852d01afbb4f35d20f51876913d70cc52bc4926d899f6b086c539eba4"
+          "bytes": 9750,
+          "sha256": "f9a6faf19e3e0f2eab970c28edcc593c239315949f0fc3f09659a39d2a44f950"
         },
         {
           "path": "states/variants/eu-funds-alchemist--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 16146,
-          "sha256": "bc1ba949235625f26d575e18291783d732729bda6d380ef24fbb9ac7427a84b7"
+          "bytes": 14628,
+          "sha256": "1d6e06f90eb700a6f6e13e1c4cd21d8c17094d665f9a9a86fccdf25908ed9a10"
         },
         {
           "path": "states/variants/eu-funds-alchemist--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 23518,
-          "sha256": "6f4b174562c091b45ca0c744fdedb0e7028af70ab8a5dc93243118d2f7a74aa0"
+          "bytes": 23253,
+          "sha256": "dee06ee68bcf4313411ce2bd2e62b074d1a9c239a6cca82f1534acf9516716e7"
         },
         {
           "path": "states/variants/eu-funds-alchemist--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 38170,
-          "sha256": "199804ff530da28425334185cf4424e4c39d814555a153f1abf69458b4c4106b"
+          "bytes": 35678,
+          "sha256": "802d740d7c0b59035baa0d9c50cf7b7f68dd290df37a2ac137f0ea8d6d50bd64"
         },
         {
           "path": "states/variants/eu-funds-alchemist--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 39920,
-          "sha256": "efa802f323d6099e582dc1f0ef450b9c83f7ee4ec0fa0626941306153ececb33"
+          "bytes": 39557,
+          "sha256": "86dc9cf4c6a24ed79f2b52f39e35517e709e1ae6acb3b7ab732fe57fd5b3a044"
         },
         {
           "path": "states/variants/eu-funds-alchemist--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 64958,
-          "sha256": "9083f97ac92b0a63a8f4c7081b5a5b454fd969a4d5afabf16df974e498e8ca9a"
+          "bytes": 63028,
+          "sha256": "141cc57e54114d6425790d8d535d4ce8c5e6844613bb5a2f23bc82f7b7c0d957"
         }
       ]
     },
@@ -4255,11 +4255,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/eu-funds-alchemist/light-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1903941,
-        "sha256": "df04442b7d70951175003a9bb12e0afb98ff203983915bf232192e44c50c9507"
+        "bytes": 716881,
+        "sha256": "68a3713baf7dbc5ba3a13061446b03b19fca20a4eb3eed20cf880a6760a5a065"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4278,48 +4278,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 56362,
-          "sha256": "fa597fa3ebc0ebbf6e9cf038e541c2b42075f828499ee1bab2851cfe2ce793ed"
+          "bytes": 8830,
+          "sha256": "98ab83ed2220eb667eaaf7491ab4d2a22dfcfb69d389576e81d40b6de8aadfdd"
         },
         {
           "path": "states/variants/eu-funds-alchemist--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 14326,
-          "sha256": "d5c9f13df2fdfdbaa38ad19a71e25bab6131a626605e89e1fe5fbe2b2569b105"
+          "bytes": 12630,
+          "sha256": "1e54e9941a37e30c262edd7c257194e0971849e03e853e63feb219fddea12912"
         },
         {
           "path": "states/variants/eu-funds-alchemist--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 23116,
-          "sha256": "f239a41855ce009f5db39aca720989fd00758a58666be7144da3b286bb116443"
+          "bytes": 20691,
+          "sha256": "7cda4ef79abd8665e7557c41fc9cd30f16534520252f4b90de28316a40b9a7bf"
         },
         {
           "path": "states/variants/eu-funds-alchemist--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 34358,
-          "sha256": "f1902638072fbfe6274b513ef9fba8c22b0fdee1f2be821207409b731220e59c"
+          "bytes": 31234,
+          "sha256": "91841010bdf01d0b034f4527ca5642a2c1db8c077abd301b1f5e8044399cdff5"
         },
         {
           "path": "states/variants/eu-funds-alchemist--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 38444,
-          "sha256": "0e29095acb2cda7ec3336e03aed00c31001cf628c16ac740880edf7ce8be9b06"
+          "bytes": 34835,
+          "sha256": "44dad856ba4143e20f80ea5b6bc3318c2bbe6cb7de3cb82d6e5ef3391f4ac26c"
         },
         {
           "path": "states/variants/eu-funds-alchemist--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 59074,
-          "sha256": "b923a13cfcc9c9da6f3dc5b3f51503a45671f7e71a2d29a375bd306516b9165e"
+          "bytes": 55132,
+          "sha256": "7391eecf420371b47255d5e0d9e0e7d077c12e9224819943c6b19d7d9fdf5048"
         }
       ]
     },
@@ -4335,11 +4335,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/eu-funds-alchemist/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 2029854,
-        "sha256": "30e379ef6e730ae26d2d7e059277b1db02dce9602125ff69255557c77894a6a4"
+        "bytes": 772384,
+        "sha256": "12ee2df63d226d6a3c3e4a1026f6bdebeab51138b2e272c41f739905ba88f76a"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4358,48 +4358,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 56809,
-          "sha256": "cca73a35f296afa6801d5c16930b6fd716c5f0923586e644b1a9bca99e57cc04"
+          "bytes": 9887,
+          "sha256": "9ca7fdef8a98b84793568906dbc78b8869d9197de6f272d2f1b91a1a9dca63fc"
         },
         {
           "path": "states/variants/eu-funds-alchemist--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 14742,
-          "sha256": "bf660c7a86442ce9d24cb6f2cf4f7fb2d97903250a4a75ec0de7910d09c04ca3"
+          "bytes": 14084,
+          "sha256": "c446c891421e88bd9c7390ce0b913beba7d2df1cbebe7d92293fa2d550ea4e12"
         },
         {
           "path": "states/variants/eu-funds-alchemist--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 23469,
-          "sha256": "965ebfb9cdeeddb9156d38268d83b1cc61edd106b20fa77e1a0c54b9e0fb5cfd"
+          "bytes": 22702,
+          "sha256": "0d7999bc16684bb2f33100e1dfaf659dce6db9ec1cc662b160985169864553fd"
         },
         {
           "path": "states/variants/eu-funds-alchemist--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 35442,
-          "sha256": "307ff336116473ea3f0456610ebfbc66ea18128d63890962c31a1e4e279f4bf1"
+          "bytes": 34172,
+          "sha256": "d4100da36732d54e064df0565c7ff97389a6c083179c34f33c9fde16f72767d8"
         },
         {
           "path": "states/variants/eu-funds-alchemist--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 39591,
-          "sha256": "30be2f2a44f5058272fa05323edd7518145f7c4e6c94a2fb15ce3bbc0eb0e7d7"
+          "bytes": 38251,
+          "sha256": "848a663668aaab0b7c134547c420ccc1e9ab6f237308eca9d1f0f2f11eabc41b"
         },
         {
           "path": "states/variants/eu-funds-alchemist--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 60082,
-          "sha256": "f56904a3ebc92f191659f6d172b54b1f0de8b54dc709e143c8c655b87ac8d60a"
+          "bytes": 61014,
+          "sha256": "2af1b94dfcbab970e88f1d225bf555c95be73e6e890b07ee7c1ebd65e2abb280"
         }
       ]
     },
@@ -4415,11 +4415,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/eu-funds-alchemist/weakness.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1835661,
-        "sha256": "430dd59f45218d24f39d9dd47968244bb31bae385fd6ea6788ab63ecd68b0c84"
+        "bytes": 698077,
+        "sha256": "3fecbdfe9a6f763d7e6b7b81a4b79951cb1fcaa4ec2ea83997459c25d506a860"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4438,48 +4438,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 50351,
-          "sha256": "71158c9c7a8de5a0fbf864f6c16f29208452f4f53c4dcc8080eba6e259dfe324"
+          "bytes": 7949,
+          "sha256": "2f58363d87038ec3ecb51e0c4f3f61bff82fb9c4876b2929eec667df8a96df2a"
         },
         {
           "path": "states/variants/eu-funds-alchemist--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 13062,
-          "sha256": "f4ece95e4a147e048bf3b594bcb808aabd9512e295c82e774e62768fea2a27cd"
+          "bytes": 11198,
+          "sha256": "700d207b3c61eda750c7a84674763fb150d7dc6ec8bf721fd3a63729c51ebcc7"
         },
         {
           "path": "states/variants/eu-funds-alchemist--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 20260,
-          "sha256": "568249f6acfb5a57f1442f285ec073eab67b90f985fa24f749dd92ea00617b72"
+          "bytes": 18630,
+          "sha256": "f3fe9de12f3a4318c9d3727d6eecc1b76a70e3e522a794c0fc23c90f5c7382de"
         },
         {
           "path": "states/variants/eu-funds-alchemist--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 31372,
-          "sha256": "9f11d1e06b69f3fe4034516daf97ad049072630a8eaa2fd31a54a7f5fca56ad8"
+          "bytes": 27158,
+          "sha256": "330bb3e0b58cde8a02520cb3135d4ba7850a4e5a5b81e319aa64c100022a718b"
         },
         {
           "path": "states/variants/eu-funds-alchemist--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 34469,
-          "sha256": "150ffdd5d33923ae0e88192fa9bc1831e032bfb4faef7e6c59f6acb98fe6a086"
+          "bytes": 31773,
+          "sha256": "4a16edb783f66f3b6840ad57ce4103377c3e3dc729f6662c8b3bfff7e858a7ed"
         },
         {
           "path": "states/variants/eu-funds-alchemist--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 54056,
-          "sha256": "c4508ea63371c8fdc4ab109b59258b2c1706fa4d4262add2487719ea6bcb9f41"
+          "bytes": 48562,
+          "sha256": "02512e57422cb0f0216f1f0bf13498c7b36178470eeaf993280a332a60f3d716"
         }
       ]
     },
@@ -4495,11 +4495,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/football-tycoon/thinking.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 4247239,
-        "sha256": "c2f4f7383b015f2661199913865a47eec7cfaed006d8e294c7886d9428731f07"
+        "bytes": 1207789,
+        "sha256": "8be79e7066f24b3258d40a96f22487e722612a501a483ec3835ab2b8060bedc9"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4518,48 +4518,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 14285,
-          "sha256": "955b9ca052f3de120076a49b9b014de61f0db6c49e71f2288e96701a59e6b14a"
+          "bytes": 22953,
+          "sha256": "38c1b0268d9287d84e67964016e8740fb380a8e3f4808c0ef0d6f16750fd6cab"
         },
         {
           "path": "states/variants/football-tycoon--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 19082,
-          "sha256": "493f6dc035d1a90c9e476f6eebef496e58338193747d30213de1380954bc09fe"
+          "bytes": 20156,
+          "sha256": "8db0869ce85b8db5dc7e0407393008f3982af594ba88a28ec67e31539667d71b"
         },
         {
           "path": "states/variants/football-tycoon--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 35116,
-          "sha256": "6650870f36b71202dcd518e34f1fb2dbef972ae2c1991cd880cca5f4340bbb93"
+          "bytes": 33292,
+          "sha256": "21908dfe874fd5473553d4c6414f4aa83d14e01f404fed62a8ce96a93bf9f3b5"
         },
         {
           "path": "states/variants/football-tycoon--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 47518,
-          "sha256": "5d6e742d663e1bc62144f25fdb06ccf7e23d01b4b33d2a61098619c8df7e7e4f"
+          "bytes": 49084,
+          "sha256": "f625d0bcaccf3427d1dacb097721ba1dcf510f67dbba81c541bb36816685256b"
         },
         {
           "path": "states/variants/football-tycoon--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 58582,
-          "sha256": "55d77a1909aa196fc074adb3cf01712309c6b62d72506a335cf9ff5db31238e1"
+          "bytes": 55838,
+          "sha256": "53f07770b0a386d767cd8699aa179bc3b486834031e582f42003520ba7cb0c0e"
         },
         {
           "path": "states/variants/football-tycoon--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 80402,
-          "sha256": "28a3b3a8a6e938bd15b16a534ee3cf9988af07e20b173a723080be2542371368"
+          "bytes": 86314,
+          "sha256": "1acd32466ea23866dac51e5c5b51dfdf8084b2cfd9e4eb4439316b6a990a5593"
         }
       ]
     },
@@ -4575,11 +4575,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/football-tycoon/delivery.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 4787460,
-        "sha256": "3006efef637c4558b49c4954a980a11e34f5fee336cafa93dcb65d68674a7528"
+        "bytes": 1326910,
+        "sha256": "2b2073d301d965c3be7594267f0472ad231100e5364a7cfe57560e33eb770856"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4598,48 +4598,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 101568,
-          "sha256": "5735ff84b89001ffb1602e4dd4b4e3996d989a472f20b804cc40e91e8a4bed9d"
+          "bytes": 16267,
+          "sha256": "3f3562c5437ee3ebec5a3839f3782907f73895b6d193a950c6077e8f28efe62b"
         },
         {
           "path": "states/variants/football-tycoon--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 23936,
-          "sha256": "20aa5926d7623553ba736cc9ec4ddf755fdb65dbd9e70501810b73302c3a487d"
+          "bytes": 23012,
+          "sha256": "2323b9cb4981ff28d2d3dfa7bf6060418b8b73193fe8c8179eaaf75c93226c29"
         },
         {
           "path": "states/variants/football-tycoon--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 41072,
-          "sha256": "4793081b783e6e1aa72aaf9f540bc3061a6edb2814cc427257fc06fcdb465a60"
+          "bytes": 39174,
+          "sha256": "959b065d46fd86d52a37cc460f06c8f597014a3c7b8cc3cee1c61411a371dcb7"
         },
         {
           "path": "states/variants/football-tycoon--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 58792,
-          "sha256": "af17b02b1ad2231bfca23c1aa61708e6d115cc04b1f9d5c849c07a76fb796cdd"
+          "bytes": 57566,
+          "sha256": "d86221dd216bea454f3a025480d5d3c6d21362b39760efef628e323aebe93032"
         },
         {
           "path": "states/variants/football-tycoon--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 67321,
-          "sha256": "fec5252f64cf98897738d64d9bf24cd006983294f759d19f4ec2f59165b23e3f"
+          "bytes": 66548,
+          "sha256": "223ef73db4d04ca5c4d16af1631ecc1da2f6b6de6d012871d19fd81ebbdb7c2f"
         },
         {
           "path": "states/variants/football-tycoon--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 98190,
-          "sha256": "f3d851288ca3f2c0ed6933461951fe547c0e0cf221f70dab2c2f4f892222bebe"
+          "bytes": 101080,
+          "sha256": "8b41e4767b9441cfc60f2f94b6c0c107988aa461251a68b770a7d967bcfde7d3"
         }
       ]
     },
@@ -4655,11 +4655,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/football-tycoon/light-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 4231972,
-        "sha256": "f5d3c3c0fde652c64a66b483b40dde3476a5c56ff1f2f211de88210e8c8952b2"
+        "bytes": 1272966,
+        "sha256": "9681d5c3a3e8568f3a22e75dbde605412356bda57970664659688bfb0c27130c"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4678,48 +4678,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 14661,
-          "sha256": "a55eecbfb9e2d73a0f069f6498a918d8da0723d0cb592440112fb282b15240a7"
+          "bytes": 15053,
+          "sha256": "a4913602adce82a59e25d4a0d7b356c0ffbf58f503e1919d4052d25b81f9a2b0"
         },
         {
           "path": "states/variants/football-tycoon--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 20230,
-          "sha256": "d5647775c0a7815a24c20149df92716dea9a4e30903daa52b78c26ae65fa7e52"
+          "bytes": 21096,
+          "sha256": "6b580951f8bcf898220264458a1a964809f1b2c157bdf217a5798733259ebab5"
         },
         {
           "path": "states/variants/football-tycoon--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 36043,
-          "sha256": "dcc8b7b5d3b8eb610e6e09ade16353481c27256c225ed6ce2a11b6dd8b94f22b"
+          "bytes": 36568,
+          "sha256": "24a9a201989db61e65267f3a304c6d9c6f80874b515f8f11fff87da42ddc1373"
         },
         {
           "path": "states/variants/football-tycoon--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 50272,
-          "sha256": "7c8b11409b0b214623b0d49954d9b06b6bd4ed548244308a67cf7843c6267954"
+          "bytes": 52566,
+          "sha256": "caba5409da765a48170a930a3e1cd913c1d3797b880e2309b9a325021dad8d92"
         },
         {
           "path": "states/variants/football-tycoon--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 59832,
-          "sha256": "b394d92f6787ad21a9bcd286a8289939a4fce7218f48e828e1d68362a650f6f5"
+          "bytes": 60762,
+          "sha256": "2eba3e0e369c6c5b50abae2490d8c79bd0b4171cd64b0462240701ca736fad1c"
         },
         {
           "path": "states/variants/football-tycoon--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 84108,
-          "sha256": "16d744a673aa4ca2916b6ed59cb80e9886b7f03b2382b96dfe1886ff9aade6f0"
+          "bytes": 91030,
+          "sha256": "c36fc72beae9e54dfef4d5e32d6115897a4f44192a9bae7466937649ffada0b5"
         }
       ]
     },
@@ -4735,11 +4735,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/football-tycoon/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 4457350,
-        "sha256": "379424af281b9fb67640f5a8558af149706cd69b2497c4683138c9afd0f851f3"
+        "bytes": 1038177,
+        "sha256": "b14e54ad4a1a730e80445005b2a3b3621361e7492974e9394bc887fa9a65ab8d"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4758,48 +4758,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 89554,
-          "sha256": "480dcb8572003b894699eda247ec2826b4ccf6bdcdbb28ef8a614fb552b21228"
+          "bytes": 15125,
+          "sha256": "276063a80b0706016f493eff222df420a6e2f4be2e8a137777cb4ff2e04e0940"
         },
         {
           "path": "states/variants/football-tycoon--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 21350,
-          "sha256": "b12b289580e86c0ba64c6382681f4339c57a74b2a0859852327ddb054efd3087"
+          "bytes": 21034,
+          "sha256": "4c96e0590f920979060862fa9d0f07c2aa8058cacd5441d39cbf435e722959b2"
         },
         {
           "path": "states/variants/football-tycoon--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 36501,
-          "sha256": "8ad1cada03ad28dc7847142e54eae40e815b963aa2396dfdeebadfd6b63a9f5b"
+          "bytes": 36251,
+          "sha256": "7fc1bd926f5532cd0fded99ce91d5258ba5a2fc2d4f997445264821d9557817d"
         },
         {
           "path": "states/variants/football-tycoon--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 51654,
-          "sha256": "ca8b945363bd5e26c8ec76a19dbf68684d1ae80aad59a3481fa9c582de927750"
+          "bytes": 51672,
+          "sha256": "b16dbf3b451cf4931242b6f0e43feba16f681f29d80b20688a44b8344095fc7b"
         },
         {
           "path": "states/variants/football-tycoon--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 60271,
-          "sha256": "3263204cbd5bce98c0edbccd5c83e651c453d9f44e558fa6ab8df98779e0cae4"
+          "bytes": 61425,
+          "sha256": "328e34ccf83f168d74fc2d593c998f122e4646ae7f001ee5ac73c68f79e9cad5"
         },
         {
           "path": "states/variants/football-tycoon--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 87492,
-          "sha256": "47d483d062170878dc014bd0c70deb96650e8875d2f675a16ab29d54c603e59a"
+          "bytes": 90822,
+          "sha256": "2eca70ee26831043971522ba29adb1e8a66fba2634e4f9598a8e2d2799b38bc4"
         }
       ]
     },
@@ -4815,11 +4815,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/football-tycoon/weakness.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 4318673,
-        "sha256": "c690944eeced944399c478ac774f91f6d79510eaddf129300a95b3bc9c9273d3"
+        "bytes": 1109002,
+        "sha256": "545ea4e25916c946dd5afb69a8d8575d727f7674bf0265e09018bd9a3617fb25"
       },
       "focalPoint": {
         "x": 0.5,
@@ -4838,48 +4838,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 14225,
-          "sha256": "01f00d50638375089335449b3342f9bde58775a2596bbd2dee25109194471426"
+          "bytes": 12313,
+          "sha256": "648795db5c6d189f633dddff6a5a5f9412107f69eb18e1b22501f9f3e4cb2957"
         },
         {
           "path": "states/variants/football-tycoon--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 19822,
-          "sha256": "5fc95f3d52adf13f35a95c65f64248ee9b0ea69168e7dd4ac46ec91d49406738"
+          "bytes": 16336,
+          "sha256": "0804c600baa214a691a98b060d036b52034fdce01fe7f0343d1d81c01f65bca4"
         },
         {
           "path": "states/variants/football-tycoon--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 35405,
-          "sha256": "d3c848ea90962431ce9499a00d7c4e490cac8309119e635164235a92b9b0bbe1"
+          "bytes": 29904,
+          "sha256": "ddc62b2e65ba86f19b74720e57dc6e2952c69e1aa7d9930ef7f0b696dad1a44b"
         },
         {
           "path": "states/variants/football-tycoon--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 48904,
-          "sha256": "e2dbd6cfde7488d7f4441c187a64cd20ba8a8c28cf1957d120613c4daf3c8ed0"
+          "bytes": 40962,
+          "sha256": "0b515d2f212d9bddfd0ae8c4d2ec9e7ce431f22475d136925334461965c41646"
         },
         {
           "path": "states/variants/football-tycoon--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 58886,
-          "sha256": "6d53937cc4783862aa248f91748b173dba861ebe5e4b046008d7bcd4adccae3d"
+          "bytes": 50588,
+          "sha256": "a20f33bf763e66bb81004349ce6b95116a700116672ca78b1a902dd5dbe44a0d"
         },
         {
           "path": "states/variants/football-tycoon--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 82888,
-          "sha256": "61e3076fd5f7238f39d70f2c890430454ccf7298dfc825eca873dc3f449d5e39"
+          "bytes": 71308,
+          "sha256": "904e078be1579a7783887e55a667eac3f79e5d84c42ea2ab6e680277016d7c5f"
         }
       ]
     },
@@ -6095,11 +6095,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/luxury-minister/thinking.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1638460,
-        "sha256": "58a8c2bedc29d88f9ad42aff4f6e36ac5b9479376292e4affd7eae325cf92a91"
+        "bytes": 751993,
+        "sha256": "66a5757bbcd64734bad5a71f0a8180999b6b337e10863683e1e15ccd0b388cd1"
       },
       "focalPoint": {
         "x": 0.5,
@@ -6118,48 +6118,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 11383,
-          "sha256": "d8569fd800c4c05a071c9684bd71282da4131c146717087dead414eb56a90218"
+          "bytes": 9461,
+          "sha256": "8d8e3576cf7ab210072449dd61bcabb8bfcdb401402d3bada1e71bec3739dc5e"
         },
         {
           "path": "states/variants/luxury-minister--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 14252,
-          "sha256": "263debe9d7fb62406f47e0188e1dfd325f5e2da744550f4d4fe63aaad94c4b8e"
+          "bytes": 14206,
+          "sha256": "7b15e37d2b89b2e434fd7ddd1c9a1e707d252c679cfa3dfcd26274fb319cc327"
         },
         {
           "path": "states/variants/luxury-minister--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 27764,
-          "sha256": "ccb5de630751f02f69717e77ce49592db31958ce8b1d19e8f0433f89ced70902"
+          "bytes": 23273,
+          "sha256": "303e70fa44edc6cfb4f66c297c699c4431fa45e66d65a172ffd726ac316887e9"
         },
         {
           "path": "states/variants/luxury-minister--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 34798,
-          "sha256": "dbff9e7dcbdadf33ac6792ef70f9f88e49b8c24b4350482a3048ee1043cf4d76"
+          "bytes": 34630,
+          "sha256": "bfe7d9afbbcbf7ac2f743f986eb1895d347e2a6e19fff4792c4fad6060d4121e"
         },
         {
           "path": "states/variants/luxury-minister--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 44433,
-          "sha256": "0139aa5d0c4dcba8736279e3b63bc8d15a50fa0e3f7ea8d7465949c495143836"
+          "bytes": 70028,
+          "sha256": "a85e1ee0e8f63edae7525755e6717a8cc6ba423f47479c0c295c337b9cf25d9a"
         },
         {
           "path": "states/variants/luxury-minister--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 56822,
-          "sha256": "04412c5c0949d80088f45dc624faaee659a83a7db1094c40bcdb75b70ab9596d"
+          "bytes": 61876,
+          "sha256": "87a7e82abb9fcbd50bd196809ca6304c8d967e40113507d551930338387becc4"
         }
       ]
     },
@@ -6175,11 +6175,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/luxury-minister/delivery.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1808097,
-        "sha256": "04a856cfe74270efd33977572f4974155a546766875ecd952f2d3715250a5b3c"
+        "bytes": 846301,
+        "sha256": "71d0576bc336436fdb4e012422f8719df709f9f27cd427903bb1559b18639257"
       },
       "focalPoint": {
         "x": 0.5,
@@ -6198,48 +6198,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 12303,
-          "sha256": "06f7cfe8917ef531a43de6433770fa1b2cbea93f308b1df871ba52d99288c8c1"
+          "bytes": 18594,
+          "sha256": "d790729e11d9c35d5f4ba90ef0d73227035883883361946d73058a6609cb8490"
         },
         {
           "path": "states/variants/luxury-minister--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 15326,
-          "sha256": "949dc25a8433732cb51f41849eb83a48ce7fd2acc27368ddd39fb9c1efc072f8"
+          "bytes": 17042,
+          "sha256": "11ea594a232c510a71e21233512af5fb03ce978888c2c4224070b3a200ab6311"
         },
         {
           "path": "states/variants/luxury-minister--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 30607,
-          "sha256": "dae79739bf4c38d6f653695eaaf097a0623a598fe6b3a19c6229916b2522bdf2"
+          "bytes": 28360,
+          "sha256": "7a35ba91b98ad58b8cb5ef46153a806ddcc2849cda235e54f8691e9c0bd0ca43"
         },
         {
           "path": "states/variants/luxury-minister--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 37186,
-          "sha256": "a5728ec38789820d043ddc6e15da8a697c41dbe865f9579bec07effe99171afc"
+          "bytes": 40514,
+          "sha256": "941c85542ffc0d7f4456bfb8f842845a629cd79bbdc2e045a136e4da3b3e8316"
         },
         {
           "path": "states/variants/luxury-minister--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 48683,
-          "sha256": "50e3e45e77d1edf6f0a44bcc4a433d95da1a0e6d37a18dfb02d9845d8fe90338"
+          "bytes": 49359,
+          "sha256": "b963e5e2fcb8f35fbfa32f4c18259659f5f7b78988feb00fd12c3d3fa0a25e8e"
         },
         {
           "path": "states/variants/luxury-minister--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 61688,
-          "sha256": "21ac364c986be0ee9e170e9b6d518b9bdca4f118dcc29893af58d62a6b636e01"
+          "bytes": 72460,
+          "sha256": "4fd4fd4669363312ffe2134d80dcbd4e26c01c9a6e2ef52eb88d684c32704876"
         }
       ]
     },
@@ -6255,11 +6255,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/luxury-minister/light-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1756888,
-        "sha256": "1d5ec4a45df3345d701183f5a57c54dd19bbe0d84f9278e1efd28260f5478b08"
+        "bytes": 792624,
+        "sha256": "90474996559d6519305fafc7e2b626a7558d15f5fcd24c5360f1ec0fe05a575d"
       },
       "focalPoint": {
         "x": 0.5,
@@ -6278,48 +6278,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 13026,
-          "sha256": "eba2b0914a6d0f39ca2edf0fb10173bfecfaf5f5a73cae8cd250d93e520ed1e5"
+          "bytes": 9840,
+          "sha256": "811c5f0f1245d7dcb487932b785ff70d008cdf8860bbae6fba7d7669ccbf5631"
         },
         {
           "path": "states/variants/luxury-minister--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 15958,
-          "sha256": "7d7f053917541342afb659cefa8d9a5a9773c295a3de75e02e07061d7fab39e5"
+          "bytes": 15078,
+          "sha256": "be45312e723cd5536fd2231201c145130041d4d5996ee10195805af9b1834145"
         },
         {
           "path": "states/variants/luxury-minister--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 32130,
-          "sha256": "f0160819da871b2446575afc687bf0280721aa685ada6d770e8f5251110b2adb"
+          "bytes": 24441,
+          "sha256": "ca195dd5b97408f7b6d9faf98bf97f87d57f38fb8fefa7128e278303edd51847"
         },
         {
           "path": "states/variants/luxury-minister--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 38268,
-          "sha256": "6b3549199ef602bb6aa3abd481b222368cd08fd940690e1a2677d32bdae6b5c7"
+          "bytes": 37052,
+          "sha256": "92d8136da18c919e33b6e2af7571fb7171f4d64b9a2fd5fa3b45446def5b38db"
         },
         {
           "path": "states/variants/luxury-minister--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 51670,
-          "sha256": "b9dc7d89cd1c69796b2fd19f020946766d1a874964c48d4a8e63921e9f965790"
+          "bytes": 42942,
+          "sha256": "d7b8fb6d337d6d35aefffb6fc55fc2ee0a5e46ef9b948563ec64b731a5da3da0"
         },
         {
           "path": "states/variants/luxury-minister--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 63496,
-          "sha256": "36a3f70c13893cf65741bbd16d24f66a90c6fc259a1becf150a35d77c9166d4a"
+          "bytes": 65892,
+          "sha256": "4de169c58250d10eea74411dcc3dcb6c103797d124d910de45bf99974e90dc23"
         }
       ]
     },
@@ -6335,11 +6335,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/luxury-minister/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1917286,
-        "sha256": "973f7731dc7b3ad7b95b6c68cf111b4957d5fac59d102718a4dc19365f2edd6e"
+        "bytes": 804060,
+        "sha256": "1232d958ef49e1f818f6ed8ba34f8a06ae43f2c8faf41c7f0279a39dc66a6524"
       },
       "focalPoint": {
         "x": 0.5,
@@ -6358,48 +6358,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 12871,
-          "sha256": "b120aac9243bc28065adad1dacc8dfc7e22f2d53d03625576740e72f45464e84"
+          "bytes": 15957,
+          "sha256": "c8c12eebb5c617012553e83f671d31f9ae80d861eedbe5fd0bce78d4a02990a3"
         },
         {
           "path": "states/variants/luxury-minister--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 15304,
-          "sha256": "9f450585beb89a8b28ff518975010798bd5a93c6f713c5ce6c035a7f93bf6fde"
+          "bytes": 14714,
+          "sha256": "be42774ef005fb75a5ab8665031e9322771dda1fbe9e1767ed9d5168ecc6ef93"
         },
         {
           "path": "states/variants/luxury-minister--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 31910,
-          "sha256": "d5c955f9aa6d971b0aebd9801cc750b9e4a6c86dd699f9ae2b6a34387375b4d4"
+          "bytes": 25107,
+          "sha256": "a8164668796b6aeeceaea49ae71f349e7bccf023cf5391042571a3fd771f25d5"
         },
         {
           "path": "states/variants/luxury-minister--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 37948,
-          "sha256": "8872207ef8d9ef1ff31d5b3e9aacd90dc7864abc5444a7d213c8fe6f257e57b2"
+          "bytes": 36544,
+          "sha256": "0aa56ce02aba8ec1542ab48ba01c303bbf6f01c91e91323a932ca6431b64d183"
         },
         {
           "path": "states/variants/luxury-minister--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 51462,
-          "sha256": "c26196fd7cf9e040b2de0820066306c5b7a638552c42be33c0906ee8ce030194"
+          "bytes": 44402,
+          "sha256": "f6d3b001b400daf46dbff89b03e709c58c79308adfa3dde21c4acd6c4512faf9"
         },
         {
           "path": "states/variants/luxury-minister--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 62904,
-          "sha256": "a2b474277d77fc653fa5c58c092ba8ea73cebe6079e289a692aadb40338d208a"
+          "bytes": 65078,
+          "sha256": "a1d32ede5548b1d71c9d3c3f5cfd5abde7455d2e5af646707ed28c835b6089b0"
         }
       ]
     },
@@ -6415,11 +6415,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/luxury-minister/weakness.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1745398,
-        "sha256": "95f813c4c470a78846141c6fc01e2d3156440ea5bd4c3c3ff524b78cd5c3ec17"
+        "bytes": 609827,
+        "sha256": "e22b3e38ac4aaacbb793ec2bdbd1ae3bbff0487a63c3082f046f0b08b41da77b"
       },
       "focalPoint": {
         "x": 0.5,
@@ -6438,48 +6438,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 11528,
-          "sha256": "d58e7279997ecaba567e5a59bdf72a4417fb375ea70c9cfaa8793315072b793d"
+          "bytes": 51485,
+          "sha256": "d1b4b223887c88843dde7ee06491bc2afa2e7c029184a168a678b0702a131655"
         },
         {
           "path": "states/variants/luxury-minister--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 13828,
-          "sha256": "cbf7578e89415543a750d4e097f3dfb1a9785ec6029a8da1e5c73efc02f59793"
+          "bytes": 12302,
+          "sha256": "356ec7f213f37684aa4cc1254277ab8938ebb3bd63c1ffffff7e89313fe660d8"
         },
         {
           "path": "states/variants/luxury-minister--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 27933,
-          "sha256": "388cd76158139c963f306485d7bd82c4b7e089b94f862fbbe2ff8d1e67552214"
+          "bytes": 21179,
+          "sha256": "adbbac149804c92ad644fa948f61b8b297cbe215da2715fe40d0b74e1111e95d"
         },
         {
           "path": "states/variants/luxury-minister--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 33854,
-          "sha256": "15d10b27ea987ea94539c5fa8aa5ab24fb54f21f589fd1706c7a92636d4c0cbf"
+          "bytes": 31116,
+          "sha256": "187d6b0e8757f42957629bf80c083317b1d40d5ce8aa3be6e1d857ad4c14e790"
         },
         {
           "path": "states/variants/luxury-minister--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 45468,
-          "sha256": "b09e34ea1c03ddcd10f339afcca061b3ad6d047f5ab23eca0ace4b6702ff78c9"
+          "bytes": 37103,
+          "sha256": "04d5b15ea91ef7b85d4843b9eca897882cd0cbdd02e471dd5a117b0924004c28"
         },
         {
           "path": "states/variants/luxury-minister--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 56838,
-          "sha256": "34a5a3442701fa074b790057405b7aaa64b082e1655c1d69d6433ee22423512b"
+          "bytes": 55784,
+          "sha256": "5b32a833fc7e4f6896b040c7754fb4c9a031709e802be1d09e03ccb68632708b"
         }
       ]
     },

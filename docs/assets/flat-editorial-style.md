@@ -1,51 +1,28 @@
-# Flat editorial-cartoon style trial
+# Flat editorial-cartoon style
 
-Use the [fresh researched candidates](researched-pilots/review.html) for the
-current review. The earlier examples below record the accepted rendering
-direction only. Their original identity descriptions do not control new art.
+[Specification 023](../specs/spec-023-assets-visual-system.md) controls the art
+direction. The product owner approved the three pilot selections and all
+fifteen matching poses. Use these distinct adult silhouettes together to
+compare rendering. Do not copy one character's identity into another.
 
-Specification 023 controls the art direction. These three original drawings
-record the style that the product owner accepted. They are style examples,
-not installed character packages. Use the different silhouettes together
-to compare rendering. Do not copy one character's identity into another.
-
-| Example | Style | Identity |
+| Character | Canonical selection | Matching poses |
 | --- | --- | --- |
-| [Football Tycoon](flat-editorial-style/football-tycoon.png) | Accepted | Correction required after web comparison |
-| [EU-Funds Alchemist](flat-editorial-style/eu-funds-alchemist.png) | Accepted | Correction required after web comparison |
-| [Luxury Minister](flat-editorial-style/luxury-minister.png) | Accepted | Revised identity accepted |
+| Football Tycoon | [Selection](../../src/assets/characters/football-tycoon.png) | [Five poses](../../src/assets/characters/states/football-tycoon/) |
+| EU-Funds Alchemist | [Selection](../../src/assets/characters/eu-funds-alchemist.png) | [Five poses](../../src/assets/characters/states/eu-funds-alchemist/) |
+| Luxury Minister | [Selection](../../src/assets/characters/luxury-minister.png) | [Five poses](../../src/assets/characters/states/luxury-minister/) |
 
-A fresh trial of all three characters used the expanded web-research workflow.
-This includes Luxury Minister, although its earlier revised identity was accepted.
-Acceptance of those fresh candidates remains pending.
+Use clearly drawn faces, varied adult body and head shapes, moderate head
+exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
+Keep face and body rendering consistent. Keep signature props visible at
+runtime scale. Avoid photographic skin detail, realistic portrait shading,
+and one repeated head template.
 
-Each existing source is a native 1254-square transparent PNG from the built-in Codex
-image tool. The backend model was not exposed. No Flare request was used.
-Keep the native resolution. Do not enlarge a master to match an old 2048-pixel
-requirement.
+Each pose uses its own accepted selection as the only image reference. Keep
+native transparency and source dimensions. Do not enlarge or sharpen a source
+to simulate missing detail. Use the built-in chat image generator for
+characters, poses, desks, props, and foregrounds. Preserve approved robot art.
 
-The first two drawings and the revised Luxury Minister passed native-alpha,
-silhouette, and byte-budget checks. Local encoding produced AVIF and WebP at
-128, 256, 320, 640, and 960 pixels for each drawing. Conditional preparation
-cleared only detached alpha-1 pixels. It kept the subject colors and contours.
-
-The production-build preview substituted those variants in the browser only.
-Chrome 154.0.8037.93 on Windows rendered the three selections at 640 by 320,
-1024 by 768, and 1920 by 1080, with device pixel ratio 1. The nine captures
-reported no page errors. The phone, beads, stamp, and upper dossier remain
-readable in the standing-desk composition. The desk covers the lower dossier.
-This is selection-art evidence, not pose, high-density-screen, or full-roster
-acceptance. Temporary measurements and screenshots are in
-`tmp/art-style-trial/`.
-
-Before a new master, complete the web identity research in the character
-skill. Visually inspect at least three distinct usable web photographs, target
-five, and use more when likeness remains unclear. Duplicate or resized copies
-do not count. Use varied angles and expressions from a coherent chosen era. Verified web evidence overrides conflicting private descriptions.
-Keep source-person mappings and photo research in the ignored research
-folder. Preserve the accepted rendering style while correcting identity.
-
-Keep the installed character assets and robot packages until each replacement
-selection and its five poses pass integration. All seven scene backgrounds
-remain scheduled for the same style through the 4K Flare route. Separate
-foreground layers, desks, props, and characters use the built-in tool.
+Artwork approval and integration verification are separate. Specification 023
+records the current package status. The remaining human-roster rollout and
+seven scene backgrounds are unfinished. Opaque scene backgrounds use the
+approved 4K Flare route.

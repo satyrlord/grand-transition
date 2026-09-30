@@ -125,6 +125,20 @@ export async function encodeVariant(
   return (await encodeVariantWithMetadata(input, width, format)).output;
 }
 
+async function hasNontransparentBorder(input: Buffer): Promise<boolean> {
+  const { data, info } = await sharp(input)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  return data.some((alpha, index) => {
+    if (index % 4 !== 3 || alpha === 0) return false;
+    const pixel = (index - 3) / 4;
+    const x = pixel % info.width;
+    const y = Math.floor(pixel / info.width);
+    return x === 0 || y === 0 || x === info.width - 1 || y === info.height - 1;
+  });
+}
+
 export async function encodeVariantWithMetadata(
   input: Buffer,
   width: number,
@@ -152,35 +166,27 @@ export async function encodeVariantWithMetadata(
     pipeline = sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } });
   }
   let lossless = format === 'avif' && nativeAlpha && width <= 256;
+  let quality = lossless ? 100 : QUALITY[format];
   let output =
     format === 'avif'
-      ? await pipeline
-          .clone()
-          .avif({ effort: 8, quality: lossless ? 100 : QUALITY.avif, lossless })
-          .toBuffer()
+      ? await pipeline.clone().avif({ effort: 8, quality, lossless }).toBuffer()
       : await pipeline
           .webp({ alphaQuality: 100, effort: 6, quality: QUALITY.webp, smartSubsample: true })
           .toBuffer();
-  if (format === 'avif' && nativeAlpha && !lossless) {
-    const { data, info } = await sharp(output)
-      .ensureAlpha()
-      .raw()
-      .toBuffer({ resolveWithObject: true });
-    const borderChanged = data.some((alpha, index) => {
-      if (index % 4 !== 3 || alpha === 0) return false;
-      const pixel = (index - 3) / 4;
-      const x = pixel % info.width;
-      const y = Math.floor(pixel / info.width);
-      return x === 0 || y === 0 || x === info.width - 1 || y === info.height - 1;
-    });
-    if (borderChanged) {
+  if (format === 'avif' && nativeAlpha && !lossless && (await hasNontransparentBorder(output))) {
+    // A higher lossy quality can preserve zero border alpha without the much
+    // larger lossless output. Decode it too; never trade alpha for byte size.
+    quality = 90;
+    output = await pipeline.clone().avif({ effort: 8, quality, lossless: false }).toBuffer();
+    if (await hasNontransparentBorder(output)) {
       lossless = true;
+      quality = 100;
       output = await pipeline.avif({ effort: 8, quality: 100, lossless: true }).toBuffer();
     }
   }
   return {
     output,
-    quality: lossless ? 100 : QUALITY[format],
+    quality,
     ...(lossless ? { lossless: true } : {}),
   };
 }
