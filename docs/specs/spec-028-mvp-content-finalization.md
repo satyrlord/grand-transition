@@ -155,7 +155,10 @@ Warm color is local to authored materials and light, not a color grade for the f
   Its phrase themes are polling, fact checks, campaign strategy, swing voters, media training, and closing statements.
 - **County Council Ballroom:** The scene contains municipal ornament, plastic flowers, fake marble, ribbon banners, catering, and new equipment that looks suspicious.
   Its phrase themes are procurement, relatives, contracts, infrastructure, and development funds.
-- **Midnight Call-In Studio:** The scene contains a neon ticker, a chroma-key skyline, telephones, breaking-news banners, a Short Message Service (SMS) crawl, and an advertisement clock.
+- **Midnight Call-In Studio:** The approved scene is a modest Romanian cable studio with pale modular panels, burgundy curtains and practical lamps.
+  It contains older televisions, a wooden radio, telephone and paper props, ticker accents, and an advertisement clock.
+  Its scenic panel contains layered low-rise and mid-rise city silhouettes, pitched roofs and restrained Romanian tower shapes. Do not replace the skyline with a detailed landmark facade.
+  Keep the approved source's tonal variation under Specification 023 and the existing separate telephone foreground.
   Its phrase themes are ratings, sources, callers, footage, commercials, and hidden tapes.
 - **Palace Press Hall:** The scene contains a very large room, tall doors, a small number of podiums, a polished floor, photographers, and empty space.
   Its phrase themes are statements, silence, coalition, protocol, mandate, and national interest.

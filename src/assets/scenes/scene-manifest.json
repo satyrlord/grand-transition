@@ -544,14 +544,14 @@
       "ownerType": "scene",
       "ownerId": "midnight-call-in-studio",
       "layerRole": "back",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. Text-only composite followed by reference edits for the deskless background. No upscaling.",
+      "sourceDescription": "Original Romanian local call-in studio background with layered city silhouettes, generated through the OpenAI API using gpt-image-2.5-flare at native 3840x2160, high quality. Original text generation followed by reference edits for flat editorial-cartoon rendering and the skyline. Owner-approved generated pixels retained. Metadata-only provenance registration; no post-generation pixel changes, resizing, upscaling, recoloring, or compositing.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "midnight-call-in-studio.png",
-        "sha256": "720cc66051b8a2f166cb1dfaacd0af1249552a259d28437ae5a397a84528ed9f",
+        "sha256": "d2128c2fc1758a7a6fa8f1960036ae43aa6c44165c70d25c8e1f95733d7a456f",
         "width": 3840,
         "height": 2160,
-        "bytes": 5301854,
+        "bytes": 6196430,
         "format": "png"
       },
       "focalPoint": {
@@ -627,91 +627,91 @@
           "path": "variants/midnight-call-in-studio-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 11986,
+          "bytes": 15153,
           "format": "avif",
           "quality": 70,
-          "sha256": "26683ec524b0692b8d2f1600daf6538604604c4a15d08c72ea566add70fea779"
+          "sha256": "e422159dcdc82a2f8a563a839644d316c500532903918dfe1f060246a7efd304"
         },
         {
           "path": "variants/midnight-call-in-studio-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 15440,
+          "bytes": 17400,
           "format": "webp",
           "quality": 86,
-          "sha256": "0040502f6f0db0380ea0788a0c54f30c77a765fa6dcefdc030115536366ddd22"
+          "sha256": "d640b16a33b62878b2bf4ffe2d16332b0a65875236e1984e9b7acc4dde87d137"
         },
         {
           "path": "variants/midnight-call-in-studio-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 33934,
+          "bytes": 39589,
           "format": "avif",
           "quality": 70,
-          "sha256": "43e437b80a64c1761290dafb4f57a9699871315ab3dc7b354dddd2e3f8a28d33"
+          "sha256": "526b42603a36511ba15bb8cce8214b672f0ba605ca0e013842b6e7a2057d2cd8"
         },
         {
           "path": "variants/midnight-call-in-studio-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 46802,
+          "bytes": 50114,
           "format": "webp",
           "quality": 86,
-          "sha256": "7017ea0926dcab2c0a6e1f523db82e8780221682dda1d0104bae585e175c05a2"
+          "sha256": "6f4fce4236819cc5b7cbb60e9a8bca617570155e80bcad598435b0839db47354"
         },
         {
           "path": "variants/midnight-call-in-studio-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 60439,
+          "bytes": 68895,
           "format": "avif",
           "quality": 70,
-          "sha256": "42715f41f27f9ccf6bdef5efdaba15a410ceaa5044a26693c501570b41c4a9ca"
+          "sha256": "c658ab6a9e51bf576e4f5174ed4b1b78a2eddb5716959c5cbeb4794628ff5c91"
         },
         {
           "path": "variants/midnight-call-in-studio-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 85334,
+          "bytes": 89770,
           "format": "webp",
           "quality": 86,
-          "sha256": "adaa5a851d3d6cd527afbcbe04c837834b7f2d33da15abc2227f3ce022a86b1f"
+          "sha256": "e8292f5325dd29da3f99cc6fc700e0e1c3543abd973e75a99c7c1a43f7f4b931"
         },
         {
           "path": "variants/midnight-call-in-studio-2560x1440.avif",
           "width": 2560,
           "height": 1440,
-          "bytes": 90079,
+          "bytes": 102037,
           "format": "avif",
           "quality": 70,
-          "sha256": "22e74dd6fd5d54d7216d685393360442a628d986f5fcdca705cc4f261ff72d6e"
+          "sha256": "4fdd0cfeb06661316a2c63ff79c2937bf9f718d60e67e405018742041c28924e"
         },
         {
           "path": "variants/midnight-call-in-studio-2560x1440.webp",
           "width": 2560,
           "height": 1440,
-          "bytes": 130392,
+          "bytes": 133998,
           "format": "webp",
           "quality": 86,
-          "sha256": "d5cd3cc2ebb515d3a98e3b57dfd63bc855121561e4139310f3ab96d504253338"
+          "sha256": "3ca992a7d1f39037d19a5007e74c7091ff79ace7b3dc8230930e881e8e5141b2"
         },
         {
           "path": "variants/midnight-call-in-studio-3840x2160.avif",
           "width": 3840,
           "height": 2160,
-          "bytes": 163957,
+          "bytes": 178450,
           "format": "avif",
           "quality": 70,
-          "sha256": "887f4f2d29bdf9a8094dc7a4ac419fe36df7118e88e816ab4b438782ba5c7ccd"
+          "sha256": "e2778af2caf0b99c403625a069f16ff5e76df9de274b1de8c97eea1556b75885"
         },
         {
           "path": "variants/midnight-call-in-studio-3840x2160.webp",
           "width": 3840,
           "height": 2160,
-          "bytes": 224836,
+          "bytes": 232706,
           "format": "webp",
           "quality": 86,
-          "sha256": "c1a94401fc58c9a7fc260b1eef9ee7e9fe61698735031deb7937d7d28c4e497c"
+          "sha256": "bc259b5e46f1565553d9fa28f38c552b89ddea5019765c40a3409b1d4b37fc1a"
         }
       ]
     },

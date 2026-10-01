@@ -35,6 +35,19 @@ and five matching poses are installed at their native 1254-square dimensions.
 Delivery and comeback use the approved angry delivery pose. Each pose used
 only the approved selection as its image reference. Registration preserves
 the reviewed pixels; the existing nine-state mappings remain unchanged.
+The owner-approved Thunder Tribune alternate selection is installed with five
+reviewed matching poses under the authorized package integration. Each pose
+used only that selection as its image reference. All six sources are native
+1254-square images. Keep the accepted selection's tonal modeling as a
+source-specific decision. Angry delivery also supplies comeback; the existing
+nine-state mappings are unchanged. Native pixels remain unchanged after
+inspection, bounded alpha-1 cleanup where needed, and metadata registration.
+The approved Midnight Call-In Studio background is installed at native
+3840 by 2160 with derived variants and its existing foreground. It uses a
+modest Romanian cable studio, older broadcast props, and a layered city
+skyline with restrained Romanian roof silhouettes. Preserve the approved
+source's tonal variation. This acceptance is specific to this source and does
+not change the flat-shading direction for future artwork.
 The three approved pilot packages use their canonical source paths under
 `src/assets/characters/`. Private research and review material do not ship.
 
@@ -559,12 +572,13 @@ generic provenance. They do not publish private prompts or reference identities.
 ### Scene art direction
 
 Opaque scene backgrounds use Flare at native 3840 by 2160.
-The approved Transition-Era Television Studio, Modern Debate Studio, and
-County Council Ballroom artwork is installed with derived runtime variants. The owner accepted the
+The approved Transition-Era Television Studio, Modern Debate Studio,
+County Council Ballroom, and Midnight Call-In Studio artwork is installed with derived runtime variants. The owner accepted the
 first studio's moderator/speech clearance after testing in the game.
 Keep these approved sources and the existing interface geometry. The Modern
 Debate Studio and County Council Ballroom retain their accepted wall and floor
-tonal variation. The four other background replacements remain open.
+tonal variation. Midnight Call-In Studio also retains its approved source's
+tonal variation and Romanian city silhouettes. The three other background replacements remain open.
 Use the accepted flat editorial cartoon rendering of
 the character trial: broad clean shapes, controlled contours, one base tone,
 and one hard-edged shadow tone. Use a sparse highlight only for readability.
