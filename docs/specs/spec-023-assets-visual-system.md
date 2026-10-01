@@ -26,6 +26,15 @@ five matching poses are also installed. Its six native 1254-square sources
 retain the approved pixels after the bounded alpha-1 cleanup and metadata
 registration. Each pose used only the accepted alternate selection as its
 image reference.
+The owner-approved County Council Ballroom background is installed with its
+derived runtime variants and existing foreground. Its accepted composition
+has a wall/carpet join near 70.6 percent and a carpet/tile join near 78.8 percent.
+Retain its accepted soft tonal variation without changing the flat-shading
+direction for future generations. The approved Thunder Tribune default selection
+and five matching poses are installed at their native 1254-square dimensions.
+Delivery and comeback use the approved angry delivery pose. Each pose used
+only the approved selection as its image reference. Registration preserves
+the reviewed pixels; the existing nine-state mappings remain unchanged.
 The three approved pilot packages use their canonical source paths under
 `src/assets/characters/`. Private research and review material do not ship.
 
@@ -550,12 +559,12 @@ generic provenance. They do not publish private prompts or reference identities.
 ### Scene art direction
 
 Opaque scene backgrounds use Flare at native 3840 by 2160.
-The approved Transition-Era Television Studio and Modern Debate Studio
-artwork is installed with derived runtime variants. The owner accepted the
+The approved Transition-Era Television Studio, Modern Debate Studio, and
+County Council Ballroom artwork is installed with derived runtime variants. The owner accepted the
 first studio's moderator/speech clearance after testing in the game.
-Keep both approved sources and the existing interface geometry. The Modern
-Debate Studio retains its accepted wall and floor tonal variation. The five
-other background replacements remain open.
+Keep these approved sources and the existing interface geometry. The Modern
+Debate Studio and County Council Ballroom retain their accepted wall and floor
+tonal variation. The four other background replacements remain open.
 Use the accepted flat editorial cartoon rendering of
 the character trial: broad clean shapes, controlled contours, one base tone,
 and one hard-edged shadow tone. Use a sparse highlight only for readability.

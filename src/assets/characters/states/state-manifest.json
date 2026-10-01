@@ -10895,11 +10895,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/thunder-tribune/thinking.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1772305,
-        "sha256": "e9a813fabadb4f32eb12c8f30b061a64fe2aabc9658ab785530dde6db4e9ac38"
+        "bytes": 957854,
+        "sha256": "e70a5985ca10a906f2de139fca7a31a66dbcb1f838b8f4d29d4a2c38a1077a0d"
       },
       "focalPoint": {
         "x": 0.5,
@@ -10918,48 +10918,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7456,
-          "sha256": "66abca6e72102939f9a7bf5cf56b5cf392c8be01a670ef5d88eb1fbe689dc7fc"
+          "bytes": 61749,
+          "sha256": "8dc54c2ab4f0f4e56acfe7dc3d942b464167be70ded2925cf3b2119d49770aa7"
         },
         {
           "path": "states/variants/thunder-tribune--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9300,
-          "sha256": "22b2c68e0e73f1a60f2107ee900a9df260d4072b0168cd65ecf6fe9381015a9a"
+          "bytes": 12888,
+          "sha256": "7b5b27f2a4b527316603dab92a513a1630b9f4f52640f1fe45697ec99eb12088"
         },
         {
           "path": "states/variants/thunder-tribune--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 20218,
-          "sha256": "35230447f0b5db4af98dc21ce573b8c1a1f4d5301cf176f7234b4853d9ecdbf4"
+          "bytes": 22978,
+          "sha256": "6c27f3a4e278108687709528a8156b7ef5ad87cdf5bcc973a2bb1c4f03e7b99a"
         },
         {
           "path": "states/variants/thunder-tribune--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 23256,
-          "sha256": "72d306bdab8d392beec72454d0c37977b99ff71c6c3d8563291f21f7f989f070"
+          "bytes": 30868,
+          "sha256": "5ffeb13e243686e41b34b3ffeb99fb1e3cbb6b7b43516cb060bb3e972d313650"
         },
         {
           "path": "states/variants/thunder-tribune--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 33330,
-          "sha256": "e237d827354556fa86c2bdd4e5c3356b8237c5031452e917b61e4ea97a27c8fc"
+          "bytes": 38819,
+          "sha256": "15e45582ecc1165c83fdc0aec46e69d251ee6e1f23466141b0122f119e3438ee"
         },
         {
           "path": "states/variants/thunder-tribune--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 38644,
-          "sha256": "0cde535e8631d9e87fb6b91e21e7e0e11610c1e584d3a2caea6162ad26d9e6ea"
+          "bytes": 53776,
+          "sha256": "4ae0a605d70f12cd4fcebc46dafff193553c545fc371e6e24a9dfee87b218045"
         }
       ]
     },
@@ -10975,11 +10975,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/thunder-tribune/delivery.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 2046067,
-        "sha256": "d2009bf57184697dedf19dba3614e50da1614d4e33c36b895db2720509b2acdb"
+        "bytes": 1045392,
+        "sha256": "a3342f26d82e38ddd48adb2bd20ef3e012e7393387c79132f114234f83a9e46d"
       },
       "focalPoint": {
         "x": 0.5,
@@ -10998,48 +10998,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8427,
-          "sha256": "f2c1e741677cc9fd2a05d62b9126239d4d36b9ac1a6f1b6ada89c8c7187ba528"
+          "bytes": 17379,
+          "sha256": "9a57b390e3bcc35eb0193afa970beaf66cd2204ef4510240469b68d0bac133c8"
         },
         {
           "path": "states/variants/thunder-tribune--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10510,
-          "sha256": "0afc3c66a7b72d4f0ee612712acea216dd06497db7ad7f51391bf2174cad279e"
+          "bytes": 14070,
+          "sha256": "4cf5281928f4b53f0a7dc16e00d824ba2c1f65e9e02c4b80d9c47314e03c6691"
         },
         {
           "path": "states/variants/thunder-tribune--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 22740,
-          "sha256": "1b9040e40063f0bfe807a146c50c591685d05cdd6b1baa8984dce3c98e7ad20e"
+          "bytes": 25220,
+          "sha256": "3484b2e77fa47573dea7d2ffece599a2a4c527d6a16df225d8c09657f465034b"
         },
         {
           "path": "states/variants/thunder-tribune--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 26304,
-          "sha256": "ab8f0b4db86c4c916973003c3a5aee15b18fa2701595721e2c8e97282853a2cd"
+          "bytes": 34002,
+          "sha256": "5741def6167b38a5cf1ed8ad57b382ebd0133fe8db69da97dcbb0765a59b2d32"
         },
         {
           "path": "states/variants/thunder-tribune--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 37166,
-          "sha256": "51eff238804f5fdbc7135a8943ea9717516ee87239f70c5f4834a91d6dc78285"
+          "bytes": 42827,
+          "sha256": "f28b14defd09d3f522efee95567a93433b6a5648c2eceb317ab39e51fb4b119c"
         },
         {
           "path": "states/variants/thunder-tribune--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 43490,
-          "sha256": "92ae22a5742a5f5d594bfd8de754241df21f80b006468ec7ba66d7fe31e2c48c"
+          "bytes": 59718,
+          "sha256": "dd9b633abed66f514fea7d864e5c93848b4ed6e6f2701b6c619297af3378ca26"
         }
       ]
     },
@@ -11055,11 +11055,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/thunder-tribune/light-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1972353,
-        "sha256": "2e9fdf4d1e5c06d7ae5f9c6ecd900c77cf7025f7bb27d924eb896d432ea2a786"
+        "bytes": 861981,
+        "sha256": "66b00694a8d09da3cf58dd7366bfe7d7aa423f1a00da60d1a36d822475dd8242"
       },
       "focalPoint": {
         "x": 0.5,
@@ -11078,48 +11078,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7997,
-          "sha256": "093695667c38c470efdf94f282ba59014b0451a80417edab6d0186e2900c056d"
+          "bytes": 10052,
+          "sha256": "86030aaa9b218b6bfaf34e5dd5396dbc381dce2f15cd8d43519faa5257592b5b"
         },
         {
           "path": "states/variants/thunder-tribune--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9936,
-          "sha256": "9d03303b149d1f4d7ee7afa441e6a052100948a8401cdd48efafcebbf016a577"
+          "bytes": 13652,
+          "sha256": "43a5369581dbff9679154a5a46669492ddc3ec397f3433a1f86e74972ab97430"
         },
         {
           "path": "states/variants/thunder-tribune--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 21358,
-          "sha256": "136150c0c972dae09931be1b50f1afb9dd7881666ebc0ef256fdb0c37b8d51ee"
+          "bytes": 23915,
+          "sha256": "4f46483995ef137e1eae4dabf26463f6c2a93b954cded7f35e7ab1e01a86f931"
         },
         {
           "path": "states/variants/thunder-tribune--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 25040,
-          "sha256": "5e000145fd896a5e2e584d68718eee309f81c550dd8867e435c11f629a9f6ebe"
+          "bytes": 33112,
+          "sha256": "2dc771e4d442181ea75ea0e0baff3687cc989586c6e64e17d2a21426a660f24e"
         },
         {
           "path": "states/variants/thunder-tribune--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 35689,
-          "sha256": "23ad4e817bd178128f27aa1157311e78485756b1438323d6df52aad7d6b40d19"
+          "bytes": 39492,
+          "sha256": "71352285f173bd206f6548a1896573078616985f93384b64c920f2a41b97c14d"
         },
         {
           "path": "states/variants/thunder-tribune--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 41436,
-          "sha256": "5434f84ba1f042af68c8209a2a126e2b9b43ce772696918bf164be3e688ee5f4"
+          "bytes": 57970,
+          "sha256": "42f90fec3cc1c524a87dc4121818145b97809e4374bfe101710755d284499c00"
         }
       ]
     },
@@ -11135,11 +11135,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/thunder-tribune/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 2043036,
-        "sha256": "428e385064cbca1db4560cf419b532e7924e66442966a5270aca994e0057f409"
+        "bytes": 1043747,
+        "sha256": "4496087ae6e0944eb8f9a36c73947c8d67ddb156304c09615c2732d66ef0597d"
       },
       "focalPoint": {
         "x": 0.5,
@@ -11158,48 +11158,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8316,
-          "sha256": "8c01969410948bb19ed76e5b15348ca137e01a0fcc2da7addfc0a04dcf3ef864"
+          "bytes": 10809,
+          "sha256": "2d3e23932116bf096c0546e48b22da4041481d4d2cfe32afc62dd146cae47d8f"
         },
         {
           "path": "states/variants/thunder-tribune--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10176,
-          "sha256": "c6efaf01aca831cef5825bf4eb78a3304ebfec27bed16bdb39ad67efab4e6cce"
+          "bytes": 14954,
+          "sha256": "d4d36ad24ceced60c4eb4f5cd0bd03215424d7c4158cddc145f8fef5b20bece2"
         },
         {
           "path": "states/variants/thunder-tribune--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 22470,
-          "sha256": "9aeb329fe3a91f6adac7622d60072bdb71a49c953cee703cbfcffed232284783"
+          "bytes": 25835,
+          "sha256": "4b6a1bca242166e29c4921239ac7ad9687e37a43f04ba5b304203c176ca71d4d"
         },
         {
           "path": "states/variants/thunder-tribune--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 26020,
-          "sha256": "2d61aea9dc8deaf68a2e0647b518f8646c5700fbe71af6efa7126531ee1f4a10"
+          "bytes": 36504,
+          "sha256": "b3eb926664b15eaf37678f855d5700e54dfe8e6ca9460e73923fcebfda51583b"
         },
         {
           "path": "states/variants/thunder-tribune--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 36822,
-          "sha256": "9fc1629012e683d8bb1325d66610582e6fb91b8db06641283c28fc97c88f2aae"
+          "bytes": 43309,
+          "sha256": "aa020c11954650ce07d16dd1ca43516f94ea888026691381485477422efd47f3"
         },
         {
           "path": "states/variants/thunder-tribune--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 43148,
-          "sha256": "ad01cad4453f03b51d6f4b77e7e0906ef31fb9524c94e4ab932e8c71edf43930"
+          "bytes": 64000,
+          "sha256": "983e9a467fe54fa1fb89808935315b949de15f781708581634974d41f7874ca1"
         }
       ]
     },
@@ -11215,11 +11215,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/thunder-tribune/weakness.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1947151,
-        "sha256": "9c94df860674dd7b222900a85f70c9f4a433902f606c765c52a216fcb39af248"
+        "bytes": 827223,
+        "sha256": "00db43359162960c792e4868e878b1f240afe8d76b85830f709b18a74f67d374"
       },
       "focalPoint": {
         "x": 0.5,
@@ -11238,48 +11238,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7572,
-          "sha256": "ec7092ac4cc647e682abdf6b2be2b60b204a4a9f5f86a74f17a76c647c73fe3f"
+          "bytes": 9536,
+          "sha256": "3c0b224cf2f235ab575406f7ea34556416f6587b4f1cdcdfd61f848d6c21b648"
         },
         {
           "path": "states/variants/thunder-tribune--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9464,
-          "sha256": "200a4d198c503e55613c0e9a9f30ee5d596b636ab5d2983b9f2af5db528606df"
+          "bytes": 12376,
+          "sha256": "42dc66c0924dc6e49947ef3b6870ed9894bdee359d4740d7c1f2aa904cff5f0a"
         },
         {
           "path": "states/variants/thunder-tribune--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 20271,
-          "sha256": "8e7a9e8cdf3a228b00b5603060e37fbe85724d2066f932a0e39f1f1347ba10be"
+          "bytes": 22622,
+          "sha256": "950ef8dc5e32aacd667dcacfad4b8a7867989ca4af5dddab99cfac548447391d"
         },
         {
           "path": "states/variants/thunder-tribune--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 23958,
-          "sha256": "5221f7ef7da03c1280e78e9258ecb64991422ba0850e639117b96fa7ba22e610"
+          "bytes": 29982,
+          "sha256": "06dba854308cbb457e663614d853d2e2addedab5d2555b7accabce0eb5eabab8"
         },
         {
           "path": "states/variants/thunder-tribune--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 33941,
-          "sha256": "7b04a9eff1631a4047843ced5770f3787cbaaee0236f9cb00de75504156e05f8"
+          "bytes": 37821,
+          "sha256": "fb98488a9a358fcb14e56073782a03252c273d09841b6aef1abd90beadd703ab"
         },
         {
           "path": "states/variants/thunder-tribune--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 39730,
-          "sha256": "cd70128231c579f5c1c03f0efedec9d6423884e69297ee34da17d7f879be661c"
+          "bytes": 52170,
+          "sha256": "5de8a461d10505125c5bc667ea56e0fb82731297881c32e4c7da7ee49527c751"
         }
       ]
     },

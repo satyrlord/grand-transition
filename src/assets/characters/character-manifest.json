@@ -3121,11 +3121,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "thunder-tribune.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1810965,
-        "sha256": "ec0eb76174c3ca9264065a6340f4f8e70796ebd61a5dcf76e4796eab5a450463"
+        "bytes": 1072358,
+        "sha256": "cc326d684ee5ec6d8bc38c911454d55295018150a79430b15aa7418d40fbf258"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3144,9 +3144,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 3017,
-          "sha256": "df9f59a456c826cdbd379fdfbc966b6aabca5727d3d3baa07f521f6a98efa7eb"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 15027,
+          "sha256": "4f8723b174250045fcb618a87760055756a54911bdee5f860d4d1f838a5d6cb1"
         },
         {
           "path": "variants/thunder-tribune-128x128.webp",
@@ -3154,17 +3155,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 3474,
-          "sha256": "8a2baa03c1e326ae6cd53cba52a63609af05bc0749931f259cd84b4a810d1f94"
+          "bytes": 4564,
+          "sha256": "a163cdbbaf680f742d50f23302fc62fee8dab88d20b6849f95761c08810cab6d"
         },
         {
           "path": "variants/thunder-tribune-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 6340,
-          "sha256": "beb9067feda57d24d849f0bb9578718b84d2369b082b3bddeaaeea205bfa1242"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 45370,
+          "sha256": "7de371bea75325f98753a7bbf33589949603ce08e7e90fc46362490790e221a4"
         },
         {
           "path": "variants/thunder-tribune-256x256.webp",
@@ -3172,17 +3174,17 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 7840,
-          "sha256": "64c93c9a0c90aa8015c190fedf084f27732337dd0d01e74dc7e727735a15533e"
+          "bytes": 10372,
+          "sha256": "0a6daa13339916623275331c59be31beb52bd964151f5dac0cc9e036ee6a8ab6"
         },
         {
           "path": "variants/thunder-tribune-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "quality": 70,
-          "bytes": 8289,
-          "sha256": "16a666cdc7f2d3b6fe926eef46761b33eb86917d60b178c93a5e157f61aeca5d"
+          "quality": 90,
+          "bytes": 17199,
+          "sha256": "c972a3608160cb0aff941b9554d9e09a01e2a5e82521e3358fb8809a4ad32361"
         },
         {
           "path": "variants/thunder-tribune-320x320.webp",
@@ -3190,8 +3192,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 10152,
-          "sha256": "abaf96fd67a5384e877df5dc697e9610e0fa3c13e821d3767dc712e0dfe94756"
+          "bytes": 14038,
+          "sha256": "44cf8418308c18d45ba4307d7804c79e6ecb2a313ac5ecb98c76dc2a9d454e65"
         },
         {
           "path": "variants/thunder-tribune-640x640.avif",
@@ -3199,8 +3201,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 21321,
-          "sha256": "b74bdd16daee345bb579f14635787fe1feaec735d30fbc8371a668e3e7d81a70"
+          "bytes": 25272,
+          "sha256": "56295765611c2df85ade5db2a80de83964fff5df10d0f4455c0e763a5978c0bb"
         },
         {
           "path": "variants/thunder-tribune-640x640.webp",
@@ -3208,8 +3210,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 25122,
-          "sha256": "48d107e4e1c3304d1d8e63025185cbc987b0d02c98f13cac38769da2e55ae5d6"
+          "bytes": 34402,
+          "sha256": "97ba3ad7a3cc0b46ad873ddd5048b6ae17e574a5c95444b234a281e61d1413df"
         },
         {
           "path": "variants/thunder-tribune-960x960.avif",
@@ -3217,8 +3219,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 35150,
-          "sha256": "0e055102ea25f3314240e3974d125bf4f6b4adc5d7edeea8824d2b4da0e10c22"
+          "bytes": 43451,
+          "sha256": "1302c3ed57f468c3ab475dc45b4c30d4b19d045b0e789db6477b4917d837a1ae"
         },
         {
           "path": "variants/thunder-tribune-960x960.webp",
@@ -3226,8 +3228,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 41184,
-          "sha256": "d912b7461a80c55560aeb1f1d029ff670b4826d27ef6be27d9f779b5b95327dc"
+          "bytes": 60822,
+          "sha256": "7a0225203828dedbeaabf05a04e388c1cc58ff333235f9ed11243d987c22f983"
         }
       ]
     },

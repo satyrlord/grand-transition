@@ -182,14 +182,14 @@
       "ownerType": "scene",
       "ownerId": "county-council-ballroom",
       "layerRole": "back",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. Text-only composite followed by reference edits for the deskless background. No upscaling.",
+      "sourceDescription": "OpenAI gpt-image-2.5-flare via Flare API; native 3840x2160 opaque PNG; original generation and corrective edit; approved flat editorial cartoon; metadata registration only, no resizing or pixel edits.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "county-council-ballroom.png",
-        "sha256": "622f5ea6b35ad97b36f41cc12aebac29470c30caf8412fed7099aee7a685242f",
+        "sha256": "4b40e8899c80d5cc30c78b8ffa5fe65400ba18e4bfb3df637f35e77a3519deec",
         "width": 3840,
         "height": 2160,
-        "bytes": 6078642,
+        "bytes": 5586272,
         "format": "png"
       },
       "focalPoint": {
@@ -265,91 +265,91 @@
           "path": "variants/county-council-ballroom-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 15441,
+          "bytes": 15856,
           "format": "avif",
           "quality": 70,
-          "sha256": "71715a7e7d762f9fc04fc8022f49eedce116a38efdf5db7cf4bd180fa1e6a627"
+          "sha256": "8070fc2446e776d452a56a91edd8e722d8e941537dc1f2182432135d8c80810a"
         },
         {
           "path": "variants/county-council-ballroom-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 19434,
+          "bytes": 20146,
           "format": "webp",
           "quality": 86,
-          "sha256": "70e76524f2f429e2c05c4c2990f0cf4a81c8f07cb952164bd215e9d8b1178d89"
+          "sha256": "91f21068fb9dd3941e6e62811e2c4761d33820d5c9974c73b2202b7626cd0cb0"
         },
         {
           "path": "variants/county-council-ballroom-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 44528,
+          "bytes": 44287,
           "format": "avif",
           "quality": 70,
-          "sha256": "f3f452c497c485e9f8467fc651417d22e6fbd422e35af9211dad7e963cbcebc6"
+          "sha256": "da0f2ef50bb404191aeba288bf2a3cc228cf26203af2252905aca168e22b6bd8"
         },
         {
           "path": "variants/county-council-ballroom-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 60228,
+          "bytes": 57742,
           "format": "webp",
           "quality": 86,
-          "sha256": "12e8b1328a92c16ae33e2fd9a084033fbe18054c74baa2aab446d493739d8bc4"
+          "sha256": "a68fdc1d985ffe26d8799bd6a604665fae31d2b92ef106a4fcdb7a4042f60e32"
         },
         {
           "path": "variants/county-council-ballroom-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 83081,
+          "bytes": 78740,
           "format": "avif",
           "quality": 70,
-          "sha256": "67d95820f99527efdca877ee6aa161c86df44e35eb40f7f90c045d07976b17d6"
+          "sha256": "126bf6aefea2e5d3144a5685c0ad5f4c559be46cbfa187ee9b79c4028bb56a17"
         },
         {
           "path": "variants/county-council-ballroom-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 110420,
+          "bytes": 103812,
           "format": "webp",
           "quality": 86,
-          "sha256": "efe10d6bbcf4a3fb46bf0cf800e8a02656719865a43f4390bb3226eddcfab758"
+          "sha256": "15b6131f4e6a04200ba7e3d5bb81a49719954e85c0639f5596f03ebb0dd2b079"
         },
         {
           "path": "variants/county-council-ballroom-2560x1440.avif",
           "width": 2560,
           "height": 1440,
-          "bytes": 127544,
+          "bytes": 116801,
           "format": "avif",
           "quality": 70,
-          "sha256": "b9f4144f340ba396e2932069fbf26f4c82f52482e2495acfc7180fe975f0368f"
+          "sha256": "e5db56c67e1ad79497c574c8a7c391951519846b430eb5453da41c12a2cae4b4"
         },
         {
           "path": "variants/county-council-ballroom-2560x1440.webp",
           "width": 2560,
           "height": 1440,
-          "bytes": 165820,
+          "bytes": 155618,
           "format": "webp",
           "quality": 86,
-          "sha256": "367bcdfc8ff6017c6fd0555a2e53e53552aa9840bb869dda06ac19a5226cbe70"
+          "sha256": "751f053f4b7e4fb636bb5eb0df10d9d94871194b11edc6b3fd1b2285aa4b413d"
         },
         {
           "path": "variants/county-council-ballroom-3840x2160.avif",
           "width": 3840,
           "height": 2160,
-          "bytes": 225398,
+          "bytes": 202455,
           "format": "avif",
           "quality": 70,
-          "sha256": "174639c91b03abe0bc910efc7da353fbdeffdf485d44591f1fd2d13eee10a4dc"
+          "sha256": "b659af1db1ecc01668b2f29834763193688774942914380e72dbc16cfdc7dfb3"
         },
         {
           "path": "variants/county-council-ballroom-3840x2160.webp",
           "width": 3840,
           "height": 2160,
-          "bytes": 288706,
+          "bytes": 265430,
           "format": "webp",
           "quality": 86,
-          "sha256": "5a842c10bb704420202382335a19fdfbe6c83762897f82e5db175732ea07e630"
+          "sha256": "68610f2e3635bcdac542ae856289c7902af2c7595c82ba7c783100f99fed9661"
         }
       ]
     },
