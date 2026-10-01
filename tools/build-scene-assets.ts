@@ -6,12 +6,13 @@ import sharp from 'sharp';
 import replacementBaseline from './scene-replacement-baseline.json' with { type: 'json' };
 import { hasNativeAlphaProvenance, readGenerationSource } from './asset-pixels.ts';
 import { mapWithConcurrency } from './build-character-assets.ts';
-import { inspectAlpha, REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES } from './validate-scene-assets.ts';
+import { inspectAlpha } from './validate-scene-assets.ts';
 
 export const SCENE_MASTER_NAMES = Object.freeze([
   'civic-cypher-boxing-ring.png',
   'county-council-ballroom.png',
   'county-council-ballroom-foreground.png',
+  'grand-hotel-romania.png',
   'midnight-call-in-studio.png',
   'midnight-call-in-studio-foreground.png',
   'palace-press-hall.png',
@@ -207,7 +208,6 @@ async function validForegroundAlpha(input: Buffer, nativeAlpha: boolean): Promis
       transparentRectangles: [
         { name: 'centralInteraction', rectangle: SHARED_SAFE_RECTANGLES.centralInteraction },
       ],
-      occlusionRectangles: REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES,
     });
     return true;
   } catch {
@@ -359,11 +359,11 @@ async function verifiedCachedVariants(
   if (
     manifest.schemaVersion !== 1 ||
     !Array.isArray(manifest.assets) ||
-    manifest.assets.length !== expectedIds.length ||
-    new Set(manifest.assets.map((asset) => asset?.id)).size !== expectedIds.length ||
-    manifest.assets.some((asset) => !expectedIds.includes(asset?.id))
+    new Set(manifest.assets.map((asset) => asset?.id)).size !== manifest.assets.length ||
+    manifest.assets.some((asset) => !expectedIds.includes(asset?.id)) ||
+    expectedIds.some((id) => !selected.has(id) && !manifest.assets.some((asset) => asset.id === id))
   ) {
-    throw new Error('Selective scene builds require a complete existing scene manifest.');
+    throw new Error('Selective scene builds require a manifest for every unselected scene.');
   }
   const cache = new Map<string, CachedVariant[]>();
   for (const master of masters) {

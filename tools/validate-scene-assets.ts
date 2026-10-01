@@ -18,6 +18,7 @@ export const SCENE_MASTER_NAMES = Object.freeze([
   'civic-cypher-boxing-ring.png',
   'county-council-ballroom.png',
   'county-council-ballroom-foreground.png',
+  'grand-hotel-romania.png',
   'midnight-call-in-studio.png',
   'midnight-call-in-studio-foreground.png',
   'palace-press-hall.png',
@@ -36,7 +37,6 @@ type NormalizedRect = Readonly<{ x: number; y: number; width: number; height: nu
 type AlphaOptions = Readonly<{
   nativeAlpha?: boolean;
   transparentRectangles?: readonly Readonly<{ name: string; rectangle: NormalizedRect }>[];
-  occlusionRectangles?: readonly (NormalizedRect & Readonly<{ name: string }>)[];
 }>;
 type AssetRecord = ReturnType<typeof validateAssetShape> & {
   manifestAsset: { source: { width: number; height: number; bytes: number; sha256: string } };
@@ -63,10 +63,6 @@ const REQUIRED_FOREGROUND_CLEAR_RECTANGLES = Object.freeze(
     Object.freeze({ name, rectangle: REQUIRED_SAFE_RECTANGLES[name] }),
   ),
 );
-export const REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES = Object.freeze([
-  Object.freeze({ name: 'leftDeskFront', x: 0.18, y: 0.74, width: 0.04, height: 0.18 }),
-  Object.freeze({ name: 'rightDeskFront', x: 0.78, y: 0.74, width: 0.04, height: 0.18 }),
-]);
 const REQUIRED_CROP_CORE = Object.freeze({ x: 0.125, y: 0, width: 0.75, height: 1 });
 const LEFT_DESK_FOCAL_RECTANGLE = Object.freeze({
   x: 0.26,
@@ -281,7 +277,7 @@ export async function inspectAlpha(
   input: Buffer,
   isForeground: boolean,
   context: string,
-  { nativeAlpha = false, transparentRectangles = [], occlusionRectangles = [] }: AlphaOptions = {},
+  { nativeAlpha = false, transparentRectangles = [] }: AlphaOptions = {},
 ): Promise<void> {
   let decoded;
   try {
@@ -372,23 +368,6 @@ export async function inspectAlpha(
               `found visible alpha at ${x},${y}.`,
           );
         }
-      }
-    }
-  }
-  for (const rectangle of occlusionRectangles) {
-    const left = Math.ceil(rectangle.x * width - 0.5);
-    const right = Math.ceil((rectangle.x + rectangle.width) * width - 0.5);
-    const top = Math.ceil(rectangle.y * height - 0.5);
-    const bottom = Math.ceil((rectangle.y + rectangle.height) * height - 0.5);
-    for (let y = top; y < bottom; y += 1) {
-      let covered = 0;
-      for (let x = left; x < right; x += 1) {
-        if (decoded.data[(y * width + x) * 4 + 3] >= NATIVE_ALPHA_MIN_OPACITY) covered += 1;
-      }
-      if (covered / (right - left) < 0.9) {
-        throw new Error(
-          `${context} must cover at least 90% of each ${rectangle.name} row with near-opaque pixels; row ${y} is incomplete.`,
-        );
       }
     }
   }
@@ -547,9 +526,6 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
   }
   for (const name of ['leftDeskTopAndProps', 'rightDeskTopAndProps']) {
     const value = focalRectangles[name];
-    if (identity.isForeground && value === null) {
-      throw new Error(`Scene asset "${id}" foreground ${name} is required.`);
-    }
     if (!identity.isForeground && value !== null) {
       throw new Error(`Scene asset "${id}" back ${name} must be null.`);
     }
@@ -570,6 +546,9 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
   }
 
   const geometry = expectedGeometry(identity);
+  for (const name of ['leftDeskTopAndProps', 'rightDeskTopAndProps'] as const) {
+    if (focalRectangles[name] === null) geometry.focalRectangles[name] = null;
+  }
   assertExactGeometry(asset.focalPoint, geometry.focalPoint, `Scene asset "${id}" focalPoint`);
   assertExactGeometry(
     asset.focalRectangles,
@@ -713,9 +692,6 @@ async function validateAssetFiles(
       nativeAlpha: hasNativeAlphaProvenance(source.input),
       transparentRectangles: asset.id.endsWith('-foreground')
         ? REQUIRED_FOREGROUND_CLEAR_RECTANGLES
-        : [],
-      occlusionRectangles: asset.id.endsWith('-foreground')
-        ? REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES
         : [],
     };
     await inspectAlpha(

@@ -44,11 +44,16 @@ async function writeMaster(root: string, fileName: string): Promise<void> {
 
   const pixels = Buffer.alloc(width * height * 4);
   const finalForeground = fileName.includes('-foreground');
+  const sparseForeground = fileName === 'county-council-ballroom-foreground.png';
   const left = Math.ceil(width * (finalForeground ? 0.13 : 0.26));
   const right = Math.ceil(width * (finalForeground ? 0.7 : 0.68));
-  const top = Math.floor(height * (finalForeground ? 0.54 : 0.56));
-  const bottom = finalForeground ? Math.floor(height * 0.98) : height;
-  const objectWidth = Math.floor(width * (finalForeground ? 0.17 : 0.06));
+  const top = Math.floor(height * (sparseForeground ? 0.24 : finalForeground ? 0.54 : 0.56));
+  const bottom = sparseForeground
+    ? Math.floor(height * 0.3)
+    : finalForeground
+      ? Math.floor(height * 0.98)
+      : height;
+  const objectWidth = Math.floor(width * (sparseForeground ? 0.01 : finalForeground ? 0.17 : 0.06));
   for (let y = top; y < bottom; y += 1) {
     for (const start of [left, right]) {
       for (let x = start; x < Math.min(width, start + objectWidth); x += 1) {
@@ -121,12 +126,40 @@ describe.sequential('scene asset manifest validator', () => {
     // processor with that work and with the other parallel test files.
   }, 120_000);
 
+  test('accepts a sparse foreground without desk coverage or desk focal regions', async () => {
+    const manifest = await readManifest();
+    const assets = manifest.assets as Array<{
+      id: string;
+      focalRectangles: Record<string, unknown>;
+    }>;
+    const foreground = assets.find(({ id }) => id === 'county-council-ballroom-foreground')!;
+    foreground.focalRectangles.leftDeskTopAndProps = null;
+    foreground.focalRectangles.rightDeskTopAndProps = null;
+    await writeFile(path.join(fixture, 'scene-manifest.json'), JSON.stringify(manifest));
+    await expect(validateSceneAssets({ sceneRoot: fixture })).resolves.toBeTruthy();
+  }, 120_000);
+
+  test('still checks desk focal geometry when it is declared', async () => {
+    const manifest = await readManifest();
+    const assets = manifest.assets as Array<{
+      id: string;
+      focalRectangles: Record<string, unknown>;
+    }>;
+    const foreground = assets.find(({ id }) => id === 'county-council-ballroom-foreground')!;
+    foreground.focalRectangles.leftDeskTopAndProps = { x: 0.3, y: 0.56, width: 0.06, height: 0.16 };
+    await writeFile(path.join(fixture, 'scene-manifest.json'), JSON.stringify(manifest));
+    await expect(validateSceneAssets({ sceneRoot: fixture })).rejects.toThrow(
+      /focalRectangles must match the approved scene geometry/iu,
+    );
+  });
+
   test.each([
     'modern-debate-studio',
     'county-council-ballroom',
     'midnight-call-in-studio',
     'palace-press-hall',
     'influencer-campaign-livestream',
+    'grand-hotel-romania',
   ])('rejects a %s package without its 4K variant', async (sceneId) => {
     const manifest = await readManifest();
     const assets = manifest.assets as Array<{
@@ -313,79 +346,61 @@ describe.sequential('scene asset manifest validator', () => {
     );
   });
 
-  test.each(
-    (['source', 'variant'] as const).flatMap((target) =>
-      (['central obstruction', 'truncated desks', 'left desk gap', 'right desk gap'] as const).map(
-        (defect) => ({ target, defect }),
-      ),
-    ),
-  )('rejects $defect in a final foreground $target', async ({ target, defect }) => {
-    const manifest = await readManifest();
-    const assets = manifest.assets as Array<{
-      id: string;
-      source: { path: string; bytes: number; sha256: string };
-      variants: Array<{
-        path: string;
-        format: string;
-        width: number;
-        height: number;
-        bytes: number;
-        sha256: string;
+  test.each(['source', 'variant'] as const)(
+    'rejects a central obstruction in a final foreground %s',
+    async (target) => {
+      const manifest = await readManifest();
+      const assets = manifest.assets as Array<{
+        id: string;
+        source: { path: string; bytes: number; sha256: string };
+        variants: Array<{
+          path: string;
+          format: string;
+          width: number;
+          height: number;
+          bytes: number;
+          sha256: string;
+        }>;
       }>;
-    }>;
-    const asset = assets.find(({ id }) => id === 'county-council-ballroom-foreground')!;
-    // Check the corrupted foreground before decoding unrelated scene packages.
-    // Manifest order does not change validation requirements or the asset set.
-    manifest.assets = [asset, ...assets.filter((candidate) => candidate !== asset)];
-    const record =
-      target === 'source'
-        ? asset.source
-        : asset.variants.find(({ format, width }) => format === 'webp' && width === 640)!;
-    const filePath = path.join(fixture, record.path);
-    const originalBytes = await readFile(filePath);
-    try {
-      const decoded = await sharp(originalBytes)
-        .ensureAlpha()
-        .raw()
-        .toBuffer({ resolveWithObject: true });
-      const { width, height } = decoded.info;
-      if (defect === 'central obstruction') {
+      const asset = assets.find(({ id }) => id === 'county-council-ballroom-foreground')!;
+      // Check the corrupted foreground before decoding unrelated scene packages.
+      // Manifest order does not change validation requirements or the asset set.
+      manifest.assets = [asset, ...assets.filter((candidate) => candidate !== asset)];
+      const record =
+        target === 'source'
+          ? asset.source
+          : asset.variants.find(({ format, width }) => format === 'webp' && width === 640)!;
+      const filePath = path.join(fixture, record.path);
+      const originalBytes = await readFile(filePath);
+      try {
+        const decoded = await sharp(originalBytes)
+          .ensureAlpha()
+          .raw()
+          .toBuffer({ resolveWithObject: true });
+        const { width, height } = decoded.info;
         const offset = (Math.floor(height * 0.5) * width + Math.floor(width * 0.5)) * 4;
         decoded.data[offset] = 120;
         decoded.data[offset + 1] = 52;
         decoded.data[offset + 2] = 28;
         decoded.data[offset + 3] = 255;
-      } else {
-        const left = defect === 'right desk gap' ? Math.floor(width * 0.77) : 0;
-        const right = defect === 'left desk gap' ? Math.ceil(width * 0.23) : width;
-        const top = Math.floor(height * (defect === 'truncated desks' ? 0.64 : 0.82));
-        const bottom = defect === 'truncated desks' ? height : Math.ceil(height * 0.84);
-        for (let y = top; y < bottom; y += 1) {
-          for (let x = left; x < right; x += 1) decoded.data[(y * width + x) * 4 + 3] = 0;
-        }
+        let image = sharp(decoded.data, { raw: decoded.info });
+        image = target === 'source' ? image.png() : image.webp({ quality: 86, alphaQuality: 100 });
+        const bytes = await image.toBuffer();
+        await writeFile(filePath, bytes);
+        record.bytes = bytes.length;
+        record.sha256 = createHash('sha256').update(bytes).digest('hex');
+        await writeFile(
+          path.join(fixture, 'scene-manifest.json'),
+          `${JSON.stringify(manifest, null, 2)}\n`,
+        );
+        await expect(validateSceneAssets({ sceneRoot: fixture })).rejects.toThrow(
+          /centralInteraction.*visible alpha/iu,
+        );
+      } finally {
+        if (target === 'source') await writeFile(filePath, originalBytes);
       }
-      let image = sharp(decoded.data, { raw: decoded.info });
-      image = target === 'source' ? image.png() : image.webp({ quality: 86, alphaQuality: 100 });
-      const bytes = await image.toBuffer();
-      await writeFile(filePath, bytes);
-      record.bytes = bytes.length;
-      record.sha256 = createHash('sha256').update(bytes).digest('hex');
-      await writeFile(
-        path.join(fixture, 'scene-manifest.json'),
-        `${JSON.stringify(manifest, null, 2)}\n`,
-      );
-      await expect(validateSceneAssets({ sceneRoot: fixture })).rejects.toThrow(
-        defect === 'central obstruction'
-          ? /centralInteraction.*visible alpha/iu
-          : new RegExp(
-              `${defect === 'right desk gap' ? 'right' : 'left'}DeskFront.*incomplete`,
-              'iu',
-            ),
-      );
-    } finally {
-      if (target === 'source') await writeFile(filePath, originalBytes);
-    }
-  });
+    },
+  );
 
   test('rejects duplicate declared asset paths', async () => {
     const manifest = await readManifest();

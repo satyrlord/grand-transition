@@ -572,7 +572,7 @@ Low-contrast masks keep text easy to read, and they do not change the scene into
 Short dark shadows lift signs, phrase records, actions, roster tiles, and dialogs.
 Inset brass and navy rules make the arena look like a built structure.
 
-The build uses three brand rasters, seven scene backgrounds, and six transparent foreground plates.
+The build uses three brand rasters, eight scene backgrounds, and six transparent foreground plates.
 It also uses 30 transparent character portraits: 19 default portraits and 11 alternate portraits.
 Twenty-eight skins have full nine-state packages that the build makes from the selection and five state masters, and no more.
 Idle uses the selection again, Comeback uses delivery again, and grammar mistake uses weakness again.
@@ -696,9 +696,10 @@ They control the delivered text, the public response, and the damage, and they d
 
 ### Sentence construction tower
 
-All seven scenes use their own manifest backgrounds.
+All eight scenes use their own manifest backgrounds.
 Six scenes use transparent foreground plates.
-The Civic Cypher Boxing Ring has no desks and no moderator, and it uses one back layer with no foreground layer.
+The Civic Cypher Boxing Ring and Grand Hotel Romania have no playable desks or moderator.
+Each uses one back layer with no foreground layer.
 
 The County Council Ballroom, Midnight Call-In Studio, Palace Press Hall, and Influencer Campaign Livestream have no fixed moderator.
 Their foreground desks keep the shared central interaction rectangle clear.

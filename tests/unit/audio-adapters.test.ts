@@ -184,7 +184,7 @@ describe('audio adapters', () => {
     audio.dispose();
   });
 
-  test('routes every final scene to its distinct music buffer and rejects unknown scene IDs', async () => {
+  test('routes every final scene to its assigned music buffer and rejects unknown scene IDs', async () => {
     const { audio, context, nodes } = audioHarness();
     await audio.enable();
     expect(nodes[0]!.buffer?.id).toBe('menu-theme');

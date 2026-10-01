@@ -263,11 +263,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "black-sea-captain.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 3367908,
-        "sha256": "50f47096ae0d1eb5d1709bd66bbc9b72252bb5b8da974bfe89aa3aa5ef75f413"
+        "bytes": 775417,
+        "sha256": "56fcaae0439e5aee73d839d056a02f0e9206746111d0cd2c5045025b59c25b89"
       },
       "focalPoint": {
         "x": 0.5,
@@ -288,8 +288,8 @@
           "format": "avif",
           "quality": 100,
           "lossless": true,
-          "bytes": 15438,
-          "sha256": "de7d82d334dde873d09be5206e3c7d34210d52f000304ba8c912f6f7ae18f5f2"
+          "bytes": 15361,
+          "sha256": "458d2d3f353bdb4e9f751834f46ba0e550a375225b2096a8d6d74c0710fb267f"
         },
         {
           "path": "variants/black-sea-captain-128x128.webp",
@@ -297,8 +297,8 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 4704,
-          "sha256": "57749a7d3f4826899761857c73d9783db735cb207661d0f48e63d9c9ce1bc4d1"
+          "bytes": 4982,
+          "sha256": "9813b31cbbe88fe2612f84b3516b2b7974754b5753f6963b0486cebee85da75f"
         },
         {
           "path": "variants/black-sea-captain-256x256.avif",
@@ -307,8 +307,8 @@
           "format": "avif",
           "quality": 100,
           "lossless": true,
-          "bytes": 37761,
-          "sha256": "0d2bb557abf82c64971ed9f628e8dd143316ecbebf2692079765463ef27ccf2f"
+          "bytes": 43815,
+          "sha256": "5137112ab1e4611b53009dd299de8a36698ca581de09cee4f94e6d0a432da316"
         },
         {
           "path": "variants/black-sea-captain-256x256.webp",
@@ -316,17 +316,18 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 10556,
-          "sha256": "bef91bb06c47b21bb057383de7a0c120b07a07d3bce505c2df2bd9bc10169670"
+          "bytes": 11502,
+          "sha256": "bdb27802572a8c9659cc68653d80c946803c7decfd1aba6e3016629578baf463"
         },
         {
           "path": "variants/black-sea-captain-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "quality": 70,
-          "bytes": 9328,
-          "sha256": "dfe6941fd2ce456d72f0997a86d61489ce8d1eeeb48ee7eec372e6478e594c93"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 59807,
+          "sha256": "d01debf53b3b745e22784396e9a55db23e1a05da176f7176bee31a1c5aa26daf"
         },
         {
           "path": "variants/black-sea-captain-320x320.webp",
@@ -334,18 +335,17 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 13884,
-          "sha256": "8d8e3657ab8b008180913db84ff8d0caee69b3877492694c521ad79d51902fc4"
+          "bytes": 15212,
+          "sha256": "3e24d2ddeec7c9dae02d66c59bcbaff5896ef3cb91c0a7698abe13310adf51f5"
         },
         {
           "path": "variants/black-sea-captain-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "quality": 100,
-          "lossless": true,
-          "bytes": 157343,
-          "sha256": "e630b8a20947695364864d1e3f9a8a091bf2709f4af1a549755318d6e2aee692"
+          "quality": 90,
+          "bytes": 42396,
+          "sha256": "991aaab4a2376e97f0e3e3b241f7cfdc54a2b31d28f5c5e7b0c60ea5ba45d63b"
         },
         {
           "path": "variants/black-sea-captain-640x640.webp",
@@ -353,8 +353,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 33214,
-          "sha256": "e2e8dbe55aa057f0af5c26d9c34626fa93e3b301a681b3faf0dd5713274eeba3"
+          "bytes": 37504,
+          "sha256": "89c898d8a260e99feb4dd55076db756b46977a8baba29ca1a95f99fa403493d3"
         },
         {
           "path": "variants/black-sea-captain-960x960.avif",
@@ -362,8 +362,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 36259,
-          "sha256": "3b943d2a725315e4d561078d135e88d383a2c5ab531bb867ed8ff9125b339758"
+          "bytes": 43303,
+          "sha256": "37daf1d3fa800efb0d5366b918cccee880c3ba3e641691352dfb040054993e4e"
         },
         {
           "path": "variants/black-sea-captain-960x960.webp",
@@ -371,8 +371,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 55408,
-          "sha256": "4e985b9fc4fa959a043127f68c208bfaebdf1ce670943e189d58813c8109a04d"
+          "bytes": 66530,
+          "sha256": "42948f9db2db211cd6d0e45cf386cb9bcb6adf26e311e3139070330b8172756b"
         }
       ]
     },

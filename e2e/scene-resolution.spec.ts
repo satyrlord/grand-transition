@@ -1,5 +1,22 @@
+import sceneManifest from '../src/assets/scenes/scene-manifest.json' with { type: 'json' };
 import { lockInSetup } from './helpers/setup.ts';
 import { expect, test } from './helpers/fixtures.ts';
+
+// A layer with a native source below 4K stops its variants at the source width,
+// so the browser picks the smallest declared width that covers the request, or
+// the largest one when none does.
+const sceneLayers = new Map(
+  sceneManifest.assets.map((asset) => [
+    asset.id,
+    {
+      width: asset.source.width,
+      height: asset.source.height,
+      variantWidths: [...new Set(asset.variants.map(({ width }) => width))].sort(
+        (left, right) => left - right,
+      ),
+    },
+  ]),
+);
 
 for (const scene of [
   'modern-debate-studio',
@@ -43,6 +60,7 @@ for (const scene of [
               bitmap.close();
               const box = image.getBoundingClientRect();
               return {
+                assetId: image.dataset.sceneAsset!,
                 sourceWidth,
                 masterWidth: image.getAttribute('width'),
                 masterHeight: image.getAttribute('height'),
@@ -57,9 +75,13 @@ for (const scene of [
           ),
         );
         for (const fact of facts) {
-          expect(fact.sourceWidth).toBe(sample.sourceWidth);
-          expect(fact.masterWidth).toBe('3840');
-          expect(fact.masterHeight).toBe('2160');
+          const layer = sceneLayers.get(fact.assetId)!;
+          expect(fact.sourceWidth).toBe(
+            layer.variantWidths.find((width) => width >= sample.sourceWidth) ??
+              layer.variantWidths.at(-1),
+          );
+          expect(fact.masterWidth).toBe(String(layer.width));
+          expect(fact.masterHeight).toBe(String(layer.height));
           expect(fact.covers).toBe(true);
           expect(fact.aspectRatio).toBeCloseTo(16 / 9, 3);
         }

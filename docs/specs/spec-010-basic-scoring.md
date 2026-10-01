@@ -97,7 +97,7 @@ Tagged phrases in the same clause can continue to activate that multiplier.
   Modifier points also apply after a custom matrix value.
   Incomplete constructions and continued constructions get no modifier points.
 - **AC-010-07:** A deterministic 500-match calibration from seed `20260830` completes with an average of 3 through 11 resolved rounds for each match.
-  The Milestone 026 playable catalog of this time gives all 19 characters, seven scenes, and their phrases.
+  The playable catalog of Milestones 026, 032, and 036 gives all 19 characters, eight scenes, and their phrases.
   The setup selects `red-folded-chairman` against `thunder-tribune` in `transition-era-television-studio`, with the default simulation policy.
   This check of the match length does not measure each character pair or each scene.
   Milestones 027 and 028 control the evidence for balance and variety across the full catalog.

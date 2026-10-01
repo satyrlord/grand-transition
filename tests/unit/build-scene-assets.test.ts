@@ -92,7 +92,7 @@ async function writeMasterSet(root: string) {
 }
 
 describe('scene asset build', () => {
-  test('builds a complete package and selectively rebuilds with a verified cache', async () => {
+  test('adds selected assets while preserving verified cache bytes', async () => {
     const root = path.join(await fixtureRoot(), 'scenes');
     await writeMasterSet(root);
     const stampedSource = 'Synthetic stamped source. Native 3840x2160. No pixel preparation.';
@@ -142,6 +142,7 @@ describe('scene asset build', () => {
       'variant quality',
       'lossless metadata',
       'missing variant',
+      'missing unselected asset',
       'duplicate asset',
     ]) {
       const changed = JSON.parse(firstManifestText);
@@ -153,6 +154,9 @@ describe('scene asset build', () => {
       if (defect === 'variant quality') cached.variants[0].quality = 1;
       if (defect === 'lossless metadata') cached.variants[0].lossless = false;
       if (defect === 'missing variant') cached.variants.pop();
+      if (defect === 'missing unselected asset') {
+        changed.assets = changed.assets.filter((asset: { id: string }) => asset.id !== cachedId);
+      }
       if (defect === 'duplicate asset') changed.assets[0] = changed.assets[1];
       const changedText = JSON.stringify(changed);
       await writeFile(manifestPath, changedText);
@@ -173,6 +177,11 @@ describe('scene asset build', () => {
     const selectedAsset = first.assets.find((asset: { id: string }) => asset.id === only[0])!;
     const selectedPath = path.join(root, selectedAsset.variants[0].path);
     await writeFile(selectedPath, Buffer.from('replace this selected cache'));
+    const withoutSelectedAsset = JSON.parse(firstManifestText);
+    withoutSelectedAsset.assets = withoutSelectedAsset.assets.filter(
+      (asset: { id: string }) => asset.id !== only[0],
+    );
+    await writeFile(manifestPath, JSON.stringify(withoutSelectedAsset));
     const second = await buildSceneAssets({ sceneRoot: root, only });
     const secondManifestText = await readFile(path.join(root, 'scene-manifest.json'), 'utf8');
     const secondVariants = await readdir(path.join(root, 'variants'));
@@ -185,8 +194,8 @@ describe('scene asset build', () => {
     expect(secondVariants).toEqual(firstVariants);
     expect(secondBytes).toEqual(firstBytes);
     expect(first.schemaVersion).toBe(1);
-    expect(first.assets).toHaveLength(13);
-    expect(firstVariants).toHaveLength(120);
+    expect(first.assets).toHaveLength(14);
+    expect(firstVariants).toHaveLength(130);
     expect(
       first.assets.find(({ id }) => id === 'county-council-ballroom-foreground')!.source,
     ).toMatchObject({ width: 1280, height: 720 });
@@ -253,7 +262,7 @@ describe('scene asset build', () => {
     ]);
     expect(
       first.assets.filter((asset: { layerRole: string }) => asset.layerRole === 'back'),
-    ).toHaveLength(7);
+    ).toHaveLength(8);
 
     for (const asset of first.assets) {
       expect(asset.ownerType).toBe('scene');

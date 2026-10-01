@@ -1,4 +1,4 @@
-import { LitElement, html, svg } from 'lit';
+import { LitElement, html, nothing, svg } from 'lit';
 
 /** Pointer-inert lighting and signal motion for each final authored scene. */
 export class GrandTransitionSceneAmbience extends LitElement {
@@ -81,6 +81,8 @@ export class GrandTransitionSceneAmbience extends LitElement {
           <path d="M180 390l24-30 24 30-24 30zM310 330l20-26 20 26-20 26z" />
           <path d="M1692 390l24-30 24 30-24 30zM1570 330l20-26 20 26-20 26z" />
         </g>`;
+      case 'grand-hotel-romania':
+        return nothing;
       default:
         return svg`
           <g class="scene-motion scene-ambience-light">

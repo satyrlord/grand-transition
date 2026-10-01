@@ -540,6 +540,182 @@
       ]
     },
     {
+      "id": "grand-hotel-romania",
+      "ownerType": "scene",
+      "ownerId": "grand-hotel-romania",
+      "layerRole": "back",
+      "sourceDescription": "OpenAI Images API gpt-image-2.5-flare, high quality, native 3840x2160 opaque PNG; metadata registration only.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "grand-hotel-romania.png",
+        "sha256": "71c759658e616c10caf70fd61461ae199acb798a3552bb07f5622a6763211083",
+        "width": 3840,
+        "height": 2160,
+        "bytes": 7300919,
+        "format": "png"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "focalRectangles": {
+        "leftGesture": {
+          "x": 0.22,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "rightGesture": {
+          "x": 0.68,
+          "y": 0.18,
+          "width": 0.1,
+          "height": 0.18
+        },
+        "leftTorsoAndProp": {
+          "x": 0.14,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "rightTorsoAndProp": {
+          "x": 0.74,
+          "y": 0.46,
+          "width": 0.12,
+          "height": 0.2
+        },
+        "moderatorFace": null,
+        "leftDeskTopAndProps": null,
+        "rightDeskTopAndProps": null
+      },
+      "sharedSafeRectangles": {
+        "protectedTopBand": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 0.18
+        },
+        "centralInteraction": {
+          "x": 0.32,
+          "y": 0.18,
+          "width": 0.36,
+          "height": 0.76
+        },
+        "lowerLeftAction": {
+          "x": 0.125,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        },
+        "lowerRightAction": {
+          "x": 0.76,
+          "y": 0.66,
+          "width": 0.115,
+          "height": 0.28
+        }
+      },
+      "crop": {
+        "core": {
+          "x": 0.125,
+          "y": 0,
+          "width": 0.75,
+          "height": 1
+        },
+        "strategy": "symmetric-horizontal-bleed-to-four-by-three-core"
+      },
+      "variants": [
+        {
+          "path": "variants/grand-hotel-romania-640x360.avif",
+          "width": 640,
+          "height": 360,
+          "bytes": 31320,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "188de4a65c257938c8c5ee266a48665413662331e80c7f5c980e17f8d21bd2e1"
+        },
+        {
+          "path": "variants/grand-hotel-romania-640x360.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 38418,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "3f0b4717310f26557a323fa0e3986de3f53c0be884b8ae22d5c4d94b50efce7d"
+        },
+        {
+          "path": "variants/grand-hotel-romania-1280x720.avif",
+          "width": 1280,
+          "height": 720,
+          "bytes": 94869,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "c42e3d06397fbf483104ab8bc54e9f2f0cf1a10bfcba1c8a2103d5a14e0ae20f"
+        },
+        {
+          "path": "variants/grand-hotel-romania-1280x720.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 120494,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "2beeecb446c4058317b2607d45342814dbe9632a18b8a7f6a2bd64b959ffaf8a"
+        },
+        {
+          "path": "variants/grand-hotel-romania-1920x1080.avif",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 169468,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "09cf2362b6f2473b5d8ba6faa5b99bd10d36604f0b47baa38512711a429d978a"
+        },
+        {
+          "path": "variants/grand-hotel-romania-1920x1080.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 219834,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "0a32bf6fb8faf44d51b1943bc17b93815b6ce57835cff62ecc726724829058b5"
+        },
+        {
+          "path": "variants/grand-hotel-romania-2560x1440.avif",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 250055,
+          "format": "avif",
+          "quality": 70,
+          "sha256": "f92d4d67b9553b1d2a9f906dedf4a69860a0b967bd22920cde9fe0292bb758c4"
+        },
+        {
+          "path": "variants/grand-hotel-romania-2560x1440.webp",
+          "width": 2560,
+          "height": 1440,
+          "bytes": 334556,
+          "format": "webp",
+          "quality": 86,
+          "sha256": "6ca8b6e5cf35e02b3c814ab0bb57e2d8cbbeb68597786f479838f3980d43e2cb"
+        },
+        {
+          "path": "variants/grand-hotel-romania-3840x2160.avif",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 335334,
+          "format": "avif",
+          "quality": 62,
+          "sha256": "0e0b13ecee816925d14a21e3d565e6e9f11af6bf50bd9931df0d234741a48efa"
+        },
+        {
+          "path": "variants/grand-hotel-romania-3840x2160.webp",
+          "width": 3840,
+          "height": 2160,
+          "bytes": 495120,
+          "format": "webp",
+          "quality": 82,
+          "sha256": "0832ac34df10de1c6bd740470880d8f51c5078b260aa3dce5dca8ac43cc2c9f2"
+        }
+      ]
+    },
+    {
       "id": "midnight-call-in-studio",
       "ownerType": "scene",
       "ownerId": "midnight-call-in-studio",

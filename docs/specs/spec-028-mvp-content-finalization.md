@@ -36,6 +36,7 @@ Do not change the limit.
 ## Deliver
 
 Complete all 19 playable fictional archetypes and 6 playable scenes from Milestone 026.
+Specifications 032 and 036 add two scenes to this foundation and control the eight-scene total.
 Complete their English phrase volume, art, scene audio treatment, and variety requirements.
 Use the schemas, pipelines, and presentation contracts of the repository.
 
@@ -45,6 +46,7 @@ Each predicate, modifier, and ending has a real quote that a person can examine 
 The only continuation is the visible cue `[...]`.
 
 Each of the six scenes owns 34 scene-restricted cards, for 204 scene-restricted cards in total.
+Specification 036 extends this total to 272 scene-restricted cards across eight scenes.
 Its eligible scene pool contains those 34 cards and the single common continuation that all scenes can use, for 35 phrase-pool IDs.
 The continuation is global, and no scene owns it.
 
@@ -197,6 +199,8 @@ They also show the necessary motion states and suspension states.
 
 The six scene music IDs are `<scene-id>-theme`.
 Each ID resolves to a different local WAV master and to different Ogg Vorbis and MP3 runtime variants.
+Specification 036 intentionally uses the existing Midnight Call-In Studio jazz asset for Grand Hotel Romania.
+This is the only shared scene-music treatment in the eight-scene catalog.
 The audio manifest records its source, license, edit, hashes, and measured levels.
 When a scene starts, the game sends the selected scene ID to the related music treatment.
 No scene uses a shared placeholder track, and scenes add no room-tone audio.

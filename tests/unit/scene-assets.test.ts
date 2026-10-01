@@ -136,13 +136,35 @@ describe('scene asset resolver', () => {
     ).toBe(false);
   });
 
+  test('ships Grand Hotel Romania as a native 4K background with no foreground or moderator', async () => {
+    const bytes = await readFile(path.resolve('src/assets/scenes/grand-hotel-romania.png'));
+    const hash = createHash('sha256').update(bytes).digest('hex');
+    const layers = manifest.assets.filter(({ ownerId }) => ownerId === 'grand-hotel-romania');
+    expect(layers).toHaveLength(1);
+    expect(layers[0]).toMatchObject({
+      id: 'grand-hotel-romania',
+      layerRole: 'back',
+      source: { sha256: hash, width: 3840, height: 2160 },
+      focalRectangles: {
+        moderatorFace: null,
+        leftDeskTopAndProps: null,
+        rightDeskTopAndProps: null,
+      },
+    });
+    expect(layers[0]!.sourceDescription).toBe(
+      'OpenAI Images API gpt-image-2.5-flare, high quality, native 3840x2160 opaque PNG; metadata registration only.',
+    );
+    expect(layers[0]!.variants).toHaveLength(10);
+    expect(resolveSceneAsset('grand-hotel-romania').layerRole).toBe('back');
+  });
+
   test('maps every manifest layer to AVIF-first and WebP fallback srcsets', () => {
-    expect(sceneAssetManifest).toHaveLength(13);
+    expect(sceneAssetManifest).toHaveLength(14);
     const variants = sceneAssetManifest.flatMap((asset) => [
       ...asset.avif.variants,
       ...asset.webp.variants,
     ]);
-    expect(variants).toHaveLength(126);
+    expect(variants).toHaveLength(136);
 
     for (const asset of sceneAssetManifest) {
       expect(asset.width).toBe(
@@ -269,6 +291,11 @@ describe('scene asset resolver', () => {
         animationId: 'civic-cypher-crowd-bounce',
         effectIds: ['crowd-bounce', 'microphone-swing'],
       },
+      'grand-hotel-romania': {
+        layers: ['grand-hotel-romania'],
+        animationId: 'grand-hotel-lobby-still',
+        effectIds: [],
+      },
     } as const;
 
     for (const scene of gameCatalog.scenes) {
@@ -278,7 +305,7 @@ describe('scene asset resolver', () => {
       expect(scene.animationId).toBe(expected[scene.id as keyof typeof expected].animationId);
       expect(scene.effectIds).toEqual(expected[scene.id as keyof typeof expected].effectIds);
     }
-    expect(new Set(gameCatalog.scenes.map(({ animationId }) => animationId)).size).toBe(7);
+    expect(new Set(gameCatalog.scenes.map(({ animationId }) => animationId)).size).toBe(8);
     expect(new Set(gameCatalog.scenes.flatMap(({ effectIds }) => effectIds)).size).toBe(14);
   });
 });

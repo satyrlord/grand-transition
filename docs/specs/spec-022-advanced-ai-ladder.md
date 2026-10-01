@@ -77,7 +77,7 @@ This does not change the selected command, the evaluated-node count, or the prin
 
 A ladder has one rung for each playable scene in the catalog when the ladder starts.
 Each rung plays one match on its own scene.
-The shipped catalog has seven scenes, so a new ladder has seven rungs.
+Specification 036 extends the shipped catalog to eight scenes, so a new ladder has eight rungs.
 When a person adds a scene to the catalog, the next new ladder has one more rung.
 No code change or constant controls the rung count.
 

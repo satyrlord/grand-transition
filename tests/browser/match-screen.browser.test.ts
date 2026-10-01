@@ -8,6 +8,7 @@ import titleScreenStyles from '../../src/styles/title-screen.css?raw';
 import '../../src/styles/fonts.css';
 import { GrandTransitionApp } from '../../src/app/app-shell.ts';
 import { resolveCharacterAsset } from '../../src/app/character-assets.ts';
+import { resolveSceneAsset } from '../../src/app/scene-assets.ts';
 import type { RoundPresentationFrame } from '../../src/app/round-presentation.ts';
 import type { MatchPlayerView } from '../../src/app/match-screen-snapshot.ts';
 import type { GrandTransitionCharacter } from '../../src/components/character-presenter.ts';
@@ -931,8 +932,13 @@ test.each([
       'image/avif',
       'image/webp',
     ]);
+    // A layer with a native source below 4K caps its variants at the source width.
+    const asset = resolveSceneAsset(picture.dataset.sceneAsset!);
     for (const source of picture.querySelectorAll('source')) {
-      expect(source.srcset).toMatch(/640w.*1280w.*1920w/u);
+      const declared = source.type === 'image/avif' ? asset.avif : asset.webp;
+      const widths = [...source.srcset.matchAll(/ (\d+)w/gu)].map(([, width]) => Number(width));
+      expect(widths).toEqual(declared.variants.map(({ width }) => width));
+      expect(widths.slice(0, 2)).toEqual([640, 1280]);
       expect(source.srcset).toContain(picture.dataset.sceneAsset!);
     }
     expect(picture.dataset.sceneCropCore).toBe(

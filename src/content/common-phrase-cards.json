@@ -5074,7 +5074,8 @@
     "text": "a source protected from its own quotation",
     "tags": [
       "evidence",
-      "credibility"
+      "credibility",
+      "sources"
     ],
     "scoreGroups": {
       "substance": [
@@ -14461,7 +14462,8 @@
     "role": "noun",
     "text": "a source on the payroll",
     "tags": [
-      "evidence"
+      "evidence",
+      "sources"
     ],
     "scoreGroups": {
       "substance": [
@@ -19176,6 +19178,784 @@
     "rarity": "rare",
     "sceneIds": [
       "civic-cypher-boxing-ring"
+    ]
+  },
+  {
+    "id": "common-noun-371",
+    "role": "noun",
+    "text": "the comfort of every hotel guest",
+    "tags": [],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-noun-372",
+    "role": "noun",
+    "text": "a marble lobby for the classless elite",
+    "tags": [
+      "luxury",
+      "elitism"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "wealth"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-noun-373",
+    "role": "noun",
+    "text": "the velvet rope around public property",
+    "tags": [
+      "wealth",
+      "elitism"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "wealth"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-noun-374",
+    "role": "noun",
+    "text": "a personal welcome at reception",
+    "tags": [],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "ceremony"
+      ]
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-noun-375",
+    "role": "noun",
+    "text": "the minibar listed as national infrastructure",
+    "tags": [
+      "spending",
+      "infrastructure"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-noun-376",
+    "role": "noun",
+    "text": "a welcome with your name remembered",
+    "tags": [],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "ceremony"
+      ]
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-noun-377",
+    "role": "noun",
+    "text": "a stay built around the guest's needs",
+    "tags": [],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-noun-378",
+    "role": "noun",
+    "text": "equal rights beneath the chandeliers",
+    "tags": [],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "grammaticalNumber": "plural",
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-noun-379",
+    "role": "noun",
+    "text": "the same dignity beyond the revolving door",
+    "tags": [],
+    "scoreGroups": {
+      "substance": [
+        "personal"
+      ],
+      "flavour": [
+        "society"
+      ]
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-noun-380",
+    "role": "noun",
+    "text": "a brass globe funded before the plumbing",
+    "tags": [
+      "procurement",
+      "maintenance"
+    ],
+    "scoreGroups": {
+      "substance": [
+        "bureaucracy"
+      ],
+      "flavour": [
+        "politics"
+      ]
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-verb-072-past",
+    "role": "verb",
+    "text": "attended to",
+    "singularText": "attended to",
+    "pluralText": "attended to",
+    "personalSingularText": "attended to",
+    "secondPersonText": "attended to",
+    "tense": "past",
+    "tenseFamily": "common-verb-072",
+    "tags": [],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "personal",
+            "politics",
+            "wealth"
+          ],
+          "right": [
+            "personal",
+            "politics",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-verb-072-present",
+    "role": "verb",
+    "text": "attends to",
+    "singularText": "attends to",
+    "pluralText": "attend to",
+    "personalSingularText": "attends to",
+    "secondPersonText": "attend to",
+    "tense": "present",
+    "tenseFamily": "common-verb-072",
+    "tags": [],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "personal",
+            "politics",
+            "wealth"
+          ],
+          "right": [
+            "personal",
+            "politics",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-verb-072-future",
+    "role": "verb",
+    "text": "will attend to",
+    "singularText": "will attend to",
+    "pluralText": "will attend to",
+    "personalSingularText": "will attend to",
+    "secondPersonText": "will attend to",
+    "tense": "future",
+    "tenseFamily": "common-verb-072",
+    "tags": [],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "personal",
+            "politics",
+            "wealth"
+          ],
+          "right": [
+            "personal",
+            "politics",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-verb-073-past",
+    "role": "verb",
+    "text": "arranged a warm welcome for",
+    "singularText": "arranged a warm welcome for",
+    "pluralText": "arranged a warm welcome for",
+    "personalSingularText": "arranged a warm welcome for",
+    "secondPersonText": "arranged a warm welcome for",
+    "tense": "past",
+    "tenseFamily": "common-verb-073",
+    "tags": [],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "personal",
+            "politics",
+            "wealth"
+          ],
+          "right": [
+            "personal",
+            "politics",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-verb-073-present",
+    "role": "verb",
+    "text": "arranges a warm welcome for",
+    "singularText": "arranges a warm welcome for",
+    "pluralText": "arrange a warm welcome for",
+    "personalSingularText": "arranges a warm welcome for",
+    "secondPersonText": "arrange a warm welcome for",
+    "tense": "present",
+    "tenseFamily": "common-verb-073",
+    "tags": [],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "personal",
+            "politics",
+            "wealth"
+          ],
+          "right": [
+            "personal",
+            "politics",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-verb-073-future",
+    "role": "verb",
+    "text": "will arrange a warm welcome for",
+    "singularText": "will arrange a warm welcome for",
+    "pluralText": "will arrange a warm welcome for",
+    "personalSingularText": "will arrange a warm welcome for",
+    "secondPersonText": "will arrange a warm welcome for",
+    "tense": "future",
+    "tenseFamily": "common-verb-073",
+    "tags": [],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "personal",
+            "politics",
+            "wealth"
+          ],
+          "right": [
+            "personal",
+            "politics",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-verb-074-past",
+    "role": "verb",
+    "text": "placed a velvet rope beside",
+    "singularText": "placed a velvet rope beside",
+    "pluralText": "placed a velvet rope beside",
+    "personalSingularText": "placed a velvet rope beside",
+    "secondPersonText": "placed a velvet rope beside",
+    "tense": "past",
+    "tenseFamily": "common-verb-074",
+    "tags": [
+      "elitism"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "bureaucracy",
+            "wealth"
+          ],
+          "right": [
+            "politics",
+            "bureaucracy",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-verb-074-present",
+    "role": "verb",
+    "text": "places a velvet rope beside",
+    "singularText": "places a velvet rope beside",
+    "pluralText": "place a velvet rope beside",
+    "personalSingularText": "places a velvet rope beside",
+    "secondPersonText": "place a velvet rope beside",
+    "tense": "present",
+    "tenseFamily": "common-verb-074",
+    "tags": [
+      "elitism"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "bureaucracy",
+            "wealth"
+          ],
+          "right": [
+            "politics",
+            "bureaucracy",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-verb-074-future",
+    "role": "verb",
+    "text": "will place a velvet rope beside",
+    "singularText": "will place a velvet rope beside",
+    "pluralText": "will place a velvet rope beside",
+    "personalSingularText": "will place a velvet rope beside",
+    "secondPersonText": "will place a velvet rope beside",
+    "tense": "future",
+    "tenseFamily": "common-verb-074",
+    "tags": [
+      "elitism"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "bureaucracy",
+            "wealth"
+          ],
+          "right": [
+            "politics",
+            "bureaucracy",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-predicate-048-past",
+    "role": "predicate",
+    "text": "had equal dignity and rights",
+    "singularText": "had equal dignity and rights",
+    "pluralText": "had equal dignity and rights",
+    "personalSingularText": "had equal dignity and rights",
+    "secondPersonText": "had equal dignity and rights",
+    "tense": "past",
+    "tenseFamily": "common-predicate-048",
+    "tags": [],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "personal",
+            "politics",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-predicate-048-present",
+    "role": "predicate",
+    "text": "has equal dignity and rights",
+    "singularText": "has equal dignity and rights",
+    "pluralText": "have equal dignity and rights",
+    "personalSingularText": "has equal dignity and rights",
+    "secondPersonText": "have equal dignity and rights",
+    "tense": "present",
+    "tenseFamily": "common-predicate-048",
+    "tags": [],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "personal",
+            "politics",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-predicate-048-future",
+    "role": "predicate",
+    "text": "will have equal dignity and rights",
+    "singularText": "will have equal dignity and rights",
+    "pluralText": "will have equal dignity and rights",
+    "personalSingularText": "will have equal dignity and rights",
+    "secondPersonText": "will have equal dignity and rights",
+    "tense": "future",
+    "tenseFamily": "common-predicate-048",
+    "tags": [],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "personal",
+            "politics",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-predicate-049-past",
+    "role": "predicate",
+    "text": "served every whim of the penthouse",
+    "singularText": "served every whim of the penthouse",
+    "pluralText": "served every whim of the penthouse",
+    "personalSingularText": "served every whim of the penthouse",
+    "secondPersonText": "served every whim of the penthouse",
+    "tense": "past",
+    "tenseFamily": "common-predicate-049",
+    "tags": [
+      "luxury",
+      "elitism"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "bureaucracy",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-predicate-049-present",
+    "role": "predicate",
+    "text": "serves every whim of the penthouse",
+    "singularText": "serves every whim of the penthouse",
+    "pluralText": "serve every whim of the penthouse",
+    "personalSingularText": "serves every whim of the penthouse",
+    "secondPersonText": "serve every whim of the penthouse",
+    "tense": "present",
+    "tenseFamily": "common-predicate-049",
+    "tags": [
+      "luxury",
+      "elitism"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "bureaucracy",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "uncommon",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-predicate-049-future",
+    "role": "predicate",
+    "text": "will serve every whim of the penthouse",
+    "singularText": "will serve every whim of the penthouse",
+    "pluralText": "will serve every whim of the penthouse",
+    "personalSingularText": "will serve every whim of the penthouse",
+    "secondPersonText": "will serve every whim of the penthouse",
+    "tense": "future",
+    "tenseFamily": "common-predicate-049",
+    "tags": [
+      "luxury",
+      "elitism"
+    ],
+    "scorePreferences": {
+      "substance": [
+        {
+          "left": [
+            "politics",
+            "bureaucracy",
+            "wealth"
+          ]
+        }
+      ],
+      "flavour": []
+    },
+    "rarity": "rare",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-modifier-072",
+    "role": "modifier",
+    "text": "with the same dignity as every guest",
+    "tags": [],
+    "rarity": "uncommon",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-modifier-073",
+    "role": "modifier",
+    "text": "with a warm welcome and a cold invoice",
+    "tags": [
+      "wealth",
+      "authenticity"
+    ],
+    "rarity": "uncommon",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-modifier-074",
+    "role": "modifier",
+    "text": "while the staff anticipated another ministerial whim",
+    "tags": [
+      "luxury",
+      "elitism"
+    ],
+    "rarity": "uncommon",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-ending-072",
+    "role": "ending",
+    "text": "and every guest had the same rights.",
+    "tags": [],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-ending-073",
+    "role": "ending",
+    "text": "and the welcome included everyone's name.",
+    "tags": [],
+    "rarity": "rare",
+    "finisherBonus": 3,
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-ending-074",
+    "role": "ending",
+    "text": "and the concierge anticipated everything except the audit.",
+    "tags": [
+      "accountability",
+      "corruption"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 4,
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-conjunction-027",
+    "role": "conjunction",
+    "text": "but, behind the reception desk,",
+    "connectorKind": "but",
+    "tags": [],
+    "rarity": "common",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-conjunction-028",
+    "role": "conjunction",
+    "text": "yet, beyond the velvet rope,",
+    "connectorKind": "yet",
+    "tags": [],
+    "rarity": "uncommon",
+    "sceneIds": [
+      "grand-hotel-romania"
+    ]
+  },
+  {
+    "id": "common-conjunction-029",
+    "role": "conjunction",
+    "text": "so, after the room upgrade,",
+    "connectorKind": "so",
+    "tags": [],
+    "rarity": "rare",
+    "sceneIds": [
+      "grand-hotel-romania"
     ]
   }
 ]

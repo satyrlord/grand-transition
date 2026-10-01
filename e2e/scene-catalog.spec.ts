@@ -14,6 +14,7 @@ const scenes = [
   'palace-press-hall',
   'influencer-campaign-livestream',
   'civic-cypher-boxing-ring',
+  'grand-hotel-romania',
 ] as const;
 
 const viewports = [
@@ -109,7 +110,7 @@ for (const scene of scenes) {
     await expect(page.locator('.broadcast-stage-art')).toHaveAttribute('data-scene-asset', scene);
     await expect(page.locator('.broadcast-stage-props')).toHaveCount(0);
     const foreground = page.locator('.broadcast-stage-foreground');
-    if (scene === 'civic-cypher-boxing-ring') {
+    if (scene === 'civic-cypher-boxing-ring' || scene === 'grand-hotel-romania') {
       await expect(foreground).toHaveCount(0);
     } else {
       await expect(foreground).toHaveCount(1);
@@ -122,6 +123,9 @@ for (const scene of scenes) {
           pointerInert: getComputedStyle(image).pointerEvents === 'none',
         })),
       ).toEqual({ clipPath: 'none', abovePortraits: true, pointerInert: true });
+    }
+    if (scene === 'grand-hotel-romania') {
+      await expect(page.locator('.scene-motion')).toHaveCount(0);
     }
 
     for (const viewport of viewports) {

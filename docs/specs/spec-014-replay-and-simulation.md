@@ -173,6 +173,7 @@ The global limit of Milestone 002 stays 70 percent.
   Milestone 026 adds a Node catalog workload with a fixed seed for each ordered setup of a character pair and a scene.
   This includes mirror matches and AI presentation time.
   Specification 032 extends the workload to 2,527 setups across seven scenes.
+  Specification 036 extends it to 2,888 setups across eight scenes.
 - **AC-014-06:** Each named pure file agrees with its limit.
   The production source, the bundle, and the DOM contain no development logger, endpoint, debug UI, audit UI, simulation UI, or development-tool label.
 - **AC-014-07:** One match that a player plays with the usual development command writes one `.log` file in JSON Lines format, and no more.

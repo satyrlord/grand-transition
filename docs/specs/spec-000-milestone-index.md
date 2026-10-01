@@ -95,6 +95,7 @@ A statement in a file that is not in `docs/specs/` does not replace, change, or 
   Servers, live-service systems, public content sharing, blockchain, tokens, and real-money purchases are also not in the scope.
 - Milestone 029 gives approval for the post-MVP Romanian localization and local speech.
   Specification 032 gives approval for the first post-MVP scene extension.
+  Specification 036 adds Grand Hotel Romania as the eighth playable scene.
   Other post-MVP candidates include more content, controller support, local content packs, recorded voice, replays, and local simulation tools.
   Milestone 019 gives approval for the local match history.
   Do not add a different candidate without a new approved specification.
@@ -330,6 +331,11 @@ A review that uses only the source code does not satisfy them.
     Draft, not approved. A host screen runs the game, and each player uses a phone
     as a controller with a private hand. A Cloudflare relay joins them through a
     room code. It changes the online-play scope rule of this index.
+36. [Grand Hotel Romania](spec-036-grand-hotel-romania.md). Budget: 24 source
+    and authoring files, with a separate generated-media package. An eighth
+    bilingual scene adds a communist futurist hotel lobby with an engraved
+    brass globe, background guests and staff, 34 phrases, and existing local jazz.
+    Its source and production-stage visual evidence remain open.
 
 Each milestone obeys its **Depends on** field.
 Milestone file names, headings, acceptance IDs, and references use the same numeric identifier.
@@ -355,5 +361,5 @@ This sequence limits the context and the files that each implementation session 
 | Visual assets and presentation       | 023, 025-026, 028  |
 | Audio and speech                     | 024, 028-029       |
 | Full content, safety, and balance    | 026-028            |
-| Post-MVP scene extension             | 032                |
+| Post-MVP scene extension             | 032, 036           |
 | Release quality and deployment       | 030-031            |

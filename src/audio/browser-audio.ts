@@ -17,6 +17,7 @@ const tracks: Readonly<Record<Exclude<AudioScene, null>, readonly string[]>> = {
   'palace-press-hall': [sceneMusicTrackIds['palace-press-hall']],
   'influencer-campaign-livestream': [sceneMusicTrackIds['influencer-campaign-livestream']],
   'civic-cypher-boxing-ring': [sceneMusicTrackIds['civic-cypher-boxing-ring']],
+  'grand-hotel-romania': [sceneMusicTrackIds['grand-hotel-romania']],
 };
 const fadeSeconds = 0.3;
 type Format = 'ogg' | 'mp3';

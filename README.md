@@ -41,11 +41,14 @@ It also gives a secured production shell and the full quality gate in the config
 Milestones 024, 025, 030, and 031 are not completed.
 Milestone 023 is completed.
 The checkout also contains the Civic Cypher Boxing Ring scene of Milestone 032.
+Milestone 036 adds Grand Hotel Romania, a communist futurist hotel lobby with
+a suspended brass Earth globe, wealthy fictional guests, and hotel staff.
+Its source and production-stage visual review remain open.
 
 Milestones 027 and 028 keep historical evidence that they were completed for the previous catalog target.
 The checkout contains their changed content, and it passes the related content gate.
-The checkout contains 1,653 phrase cards.
-The shared common file has 893 cards: 655 cards that all scenes can use and 238 scene-restricted cards.
+The checkout contains 1,687 phrase cards.
+The shared common file has 927 cards: 655 cards that all scenes can use and 272 scene-restricted cards.
 The characters own 760 cards.
 
 The changed target for the common catalog is 655 cards:
@@ -62,7 +65,7 @@ Each common predicate, modifier, and ending must have a real quote as its source
 A person must be able to examine that quote.
 Balance and variety verification use deterministic continuous integration (CI), bounded scoring, text uniqueness, grammar fixtures, and private provenance review.
 
-Each of the seven scenes has a target of 34 scene-restricted cards:
+Each of the eight scenes has a target of 34 scene-restricted cards:
 
 - 10 nouns.
 - 9 verbs, with three for each tense.
@@ -97,10 +100,10 @@ Each character has owned phrases and a default local portrait.
 Eight archetypes have eleven alternate skins in total.
 Skins are visual-only variations. They do not change the game identity or the character text.
 
-The content includes seven fictional scenes.
+The content includes eight fictional scenes.
 Each scene has a different local cartoon background.
 Six scenes use transparent foreground plates.
-The Civic Cypher Boxing Ring has no desks, and it uses one back layer with no foreground layer.
+The Civic Cypher Boxing Ring and Grand Hotel Romania each use one back layer with no foreground layer.
 Two debate studios include fictional moderators that are part of the scene.
 
 The interface has English and Romanian message catalogs.
@@ -170,7 +173,8 @@ The local ladder plays one rung for each playable scene. It keeps its opponents,
 
 Sound starts after a user interaction.
 Settings controls Master, Music, Effects, and Speech.
-The menu and each of the seven playable scenes use a different local music edit.
+The menu and the first seven playable scenes use different local music edits.
+Grand Hotel Romania uses the existing Midnight Call-In Studio jazz edit.
 The ten effects stay shared, and scenes add no room tone.
 All music uses CC0 or CC BY 4.0 sources.
 The shipped edits use the same normalized background-music target.
@@ -185,6 +189,7 @@ The shipped edits use the same normalized background-music target.
 | Palace Press Hall | [_Intro Music_ by RonyDkid](https://opengameart.org/content/intro-music-0) | 82.286-second pizzicato phrase | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Influencer Campaign Livestream | [_Try me!_ by iamoneabe](https://opengameart.org/content/try-me) | 132.414-second trap arrangement with a filtered breakdown | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Civic Cypher Boxing Ring | [_Boom Bap Old School Hip-Hop Beat_ by Alex Morgan](https://freemusicarchive.org/music/alex-morgan/trap-hip-hop-beats/boom-bap-old-school-hip-hop-beat/) | Complete 129.480-second classic boom-bap instrumental with a corrected loop seam | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
+| Grand Hotel Romania | [_jazz improvisation looped_ by Alex McCulloch (Pro Sensory)](https://opengameart.org/content/jazz-improvisation-looped) | Existing 60-second quiet jazz edit, shared with Midnight Call-In Studio | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 
 For the source details and the edit details, read [CREDITS.md](CREDITS.md).
 

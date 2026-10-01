@@ -10,10 +10,10 @@ import {
 // bounds the unit phase. See the shared helper for why the cases are not run
 // concurrently inside one file.
 describe('Milestone 026 deterministic catalog foundation workload, shard 1 of 5', () => {
-  test('covers all 2,527 ordered character and scene setups, including mirrors', () => {
+  test('covers all 2,888 ordered character and scene setups, including mirrors', () => {
     expect(catalogFoundationCounts.characters).toBe(19);
-    expect(catalogFoundationCounts.scenes).toBe(7);
-    expect(catalogFoundationCounts.setups).toBe(2_527);
+    expect(catalogFoundationCounts.scenes).toBe(8);
+    expect(catalogFoundationCounts.setups).toBe(2_888);
   });
 
   test.each(catalogFoundationShard(0))(

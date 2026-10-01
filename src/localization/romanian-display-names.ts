@@ -39,6 +39,7 @@ export const romanianSceneNames: Readonly<Record<string, string>> = Object.freez
   'palace-press-hall': 'Sala de presă a Palatului',
   'influencer-campaign-livestream': 'Live pe stream',
   'civic-cypher-boxing-ring': 'Ringul civic',
+  'grand-hotel-romania': 'Grand Hotel România',
 });
 
 // A weakness keeps its stable tag for scoring, content, and stored state. Only

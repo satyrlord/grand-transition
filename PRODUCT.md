@@ -67,9 +67,10 @@ The minimum viable product (MVP) includes local single-player play and local hot
   This direction applies to characters, moderators, scenes, furniture, fixtures, and props.
   New human character art follows the flat editorial cartoon direction and researched identity workflow in Specification 023.
   Approved robot art stays unchanged.
-  All seven playable scenes use different local cartoon backgrounds through the same responsive scene asset pipeline.
+  All eight playable scenes use different local cartoon backgrounds through the same responsive scene asset pipeline.
   Six scenes use transparent foreground plates.
-  The Civic Cypher Boxing Ring has no desks and no moderator, and it uses one back layer with no foreground layer.
+  The Civic Cypher Boxing Ring and Grand Hotel Romania have no playable desks or moderator.
+  Each uses one back layer with no foreground layer.
   Two debate studios include fictional moderators that are part of the scene, and standing desks in the foreground.
 - The rules in the code include the Hollywood Roast grammar, compound subjects, endings, and incomplete states.
   They also include the grammar mistakes that the game shows immediately.
@@ -110,10 +111,13 @@ The approved specifications in `docs/specs/` are the only authority for the prod
 Two untracked screenshots of the initial game in the temporary folder are only references for composition and interaction.
 They are not product assets or layout specifications.
 
-The 30 character skins and 13 scene layers have manifests and runtime variants.
+The 30 character skins and 14 scene layers have manifests and runtime variants.
 The code contains 28 full character state packages, two fallbacks to selection art, seven different scene music treatments, and ten effects.
 Milestone 028 controls their MVP acceptance.
 Specification 032 controls the seventh scene package.
+Specification 036 controls the eighth scene, Grand Hotel Romania, with its
+engraved brass globe and background hotel guests and staff. It shares the
+existing quiet jazz with Midnight Call-In Studio. Its visual review remains open.
 This file records no testimonial and no customer quotation.
 
 ## Product Principles

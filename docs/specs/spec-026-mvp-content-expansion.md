@@ -17,6 +17,7 @@ single-player ladder uses
 
 Add all the character identities and scene identities of the minimum viable product (MVP) before the advanced artificial intelligence (AI) ladder.
 The catalog contains 19 playable fictional archetypes and 6 playable scenes.
+Specifications 032 and 036 extend this six-scene foundation to eight scenes.
 It gives sufficient validated English grammar content, so that each character and each scene can complete a deterministic match.
 The last phrase volume, the last art, the alternate skins, the audio, the presentation states, and the variety evidence stay in Milestone 028.
 

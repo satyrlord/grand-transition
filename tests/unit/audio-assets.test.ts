@@ -157,7 +157,7 @@ describe('audio asset inventory', () => {
     await writeFile(path.join(root, 'audio-manifest.json'), JSON.stringify(manifest));
     await expect(tools.validateAudio(root)).rejects.toThrow('inventory is incomplete');
   });
-  test('ships one distinct manifest-backed treatment per scene and ten effects, with no room tone', () => {
+  test('ships licensed scene music and ten effects, with the hotel sharing the existing jazz', () => {
     const manifest = JSON.parse(original);
     const music = manifest.assets.filter((asset: { kind: string }) => asset.kind === 'music');
     expect(music).toHaveLength(8);
@@ -174,7 +174,8 @@ describe('audio asset inventory', () => {
     );
     expect(sceneMusic.get('menu')).toBe('menu-theme');
     for (const scene of gameCatalog.scenes) {
-      expect(sceneMusic.get(scene.id), scene.id).toBe(scene.music.assetId);
+      const musicOwner = scene.id === 'grand-hotel-romania' ? 'midnight-call-in-studio' : scene.id;
+      expect(sceneMusic.get(musicOwner), scene.id).toBe(scene.music.assetId);
     }
     const playableMusic = music.filter((asset: { sceneId: string }) => asset.sceneId !== 'menu');
     expect(

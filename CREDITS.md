@@ -17,6 +17,7 @@ The sources use CC0 or CC BY 4.0, and this project gives credit to each creator 
 | Palace Press Hall | _Intro Music_ | RonyDkid | [OpenGameArt source](https://opengameart.org/content/intro-music-0); [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | Complete 82.286-second pizzicato phrase |
 | Influencer Campaign Livestream | _Try me!_ | iamoneabe | [OpenGameArt source](https://opengameart.org/content/try-me); [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | 132.414-second trap arrangement; two complete 32-bar phrases with an eight-bar filtered breakdown |
 | Civic Cypher Boxing Ring | _Boom Bap Old School Hip-Hop Beat_ | Alex Morgan | [Free Music Archive source](https://freemusicarchive.org/music/alex-morgan/trap-hip-hop-beats/boom-bap-old-school-hip-hop-beat/); [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | Complete 129.480-second classic boom-bap instrumental with a corrected loop seam |
+| Grand Hotel Romania | _jazz improvisation looped_ | Alex McCulloch (Pro Sensory) | [OpenGameArt source](https://opengameart.org/content/jazz-improvisation-looped); [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | Existing opening 60.0-second edit, shared with Midnight Call-In Studio; audio bytes unchanged |
 
 The source pages identify the creators and their CC0 or CC BY 4.0 license.
 The local `src/assets/audio/audio-manifest.json` records the SHA-256 hashes of each source and each derivative.

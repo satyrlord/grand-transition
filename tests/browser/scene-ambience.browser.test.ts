@@ -26,6 +26,14 @@ async function mount(sceneId = 'transition-era-television-studio') {
   return ambience;
 }
 
+test('keeps Grand Hotel Romania static without the default studio-light shapes', async () => {
+  const ambience = await mount('grand-hotel-romania');
+  expect(ambience.querySelector('svg')?.getAttribute('data-scene-id')).toBe('grand-hotel-romania');
+  expect(ambience.querySelector('.scene-motion')).toBeNull();
+  expect(ambience.querySelector('svg')?.children).toHaveLength(0);
+  expect(getComputedStyle(ambience).pointerEvents).toBe('none');
+});
+
 test.each([
   ['transition-era-television-studio', '.scene-ambience-light', 'studio-lamp-breathe'],
   ['modern-debate-studio', '.scene-motion--modern', 'modern-panel-scan'],

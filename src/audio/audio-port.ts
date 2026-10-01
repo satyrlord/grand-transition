@@ -21,6 +21,7 @@ export const sceneMusicTrackIds = {
   'palace-press-hall': 'palace-press-hall-theme',
   'influencer-campaign-livestream': 'influencer-campaign-livestream-theme',
   'civic-cypher-boxing-ring': 'civic-cypher-boxing-ring-theme',
+  'grand-hotel-romania': 'midnight-call-in-studio-theme',
 } as const;
 export type SceneAudioId = keyof typeof sceneMusicTrackIds;
 export type AudioScene = 'menu' | SceneAudioId | null;

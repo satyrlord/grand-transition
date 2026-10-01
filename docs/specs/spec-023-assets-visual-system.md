@@ -70,6 +70,14 @@ default, Boardroom Patriarch and Silk Diplomat face right; Velvet Statesman
 faces left. Each pose used only its own accepted selection as the image
 reference. Metadata registration preserves the reviewed pixels and the
 existing nine-state mappings, skin identifiers and gameplay content.
+The approved revised Black Sea Captain selection and five matching poses are
+installed under the authorized package integration. Each pose used only that
+selection as its image reference. All six sources retain native 1254-square
+canvases, right-facing composition, cream uniform, cap, and one cigar. Preserve
+the approved facial structure and visible gestures. Registration preserves
+the reviewed pixels and existing nine-state mappings. Focused asset checks,
+the production build, the nine-state browser test, and installed two-sided
+runtime checks passed. These checks do not establish full rollout acceptance.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted
@@ -603,6 +611,10 @@ generic provenance. They do not publish private prompts or reference identities.
 ### Scene art direction
 
 Opaque scene backgrounds use Flare at native 3840 by 2160.
+Desks and props are recommended when they support the setting, but are not
+mandatory for a scene. A foreground can contain only small props. Do not
+require desk coverage or non-null desk focal regions during asset validation.
+Validate the geometry of any focal region that the manifest declares.
 The approved Transition-Era Television Studio, Modern Debate Studio,
 County Council Ballroom, Midnight Call-In Studio, Palace Press Hall, and
 Influencer Campaign Livestream artwork is installed with derived runtime variants. The owner accepted the
@@ -614,7 +626,8 @@ tonal variation and Romanian city silhouettes. Palace Press Hall retains its
 approved ceremonial architecture, slight tonal variation and separate podiums.
 Influencer Campaign Livestream retains its approved nighttime palette,
 recording equipment, tonal variation and matching separate streamer desks.
-The Civic Cypher Boxing Ring background replacement remains open.
+The Civic Cypher Boxing Ring evening background and separate microphone
+foreground replacements remain open under Milestone 032.
 Use the accepted flat editorial cartoon rendering of
 the character trial: broad clean shapes, controlled contours, one base tone,
 and one hard-edged shadow tone. Use a sparse highlight only for readability.
@@ -838,22 +851,12 @@ region only as a plain flat surface without a prop or important ornament.
 Scene 3 through Scene 6 use full foreground plates above the portraits,
 without horizontal CSS clipping. Their central interaction rectangle must be
 fully transparent in the source and in each runtime variant. Transparency is
-not necessary in the lower action rectangles. Plain desk
-fronts must continue behind the HTML controls and cover the lower bodies of the
-candidates. Do not erase these
-surfaces to clear an action rectangle.
-
-For each of these four foreground plates, validate the two lower-body strips,
-in source-canvas percentages:
-
-- Left: `x=18, y=74, width=4, height=18`.
-- Right: `x=78, y=74, width=4, height=18`.
-
-In each row, 90 percent or more of the pixels must be near-opaque, with the
-shared native-alpha opacity threshold. This check rejects fronts that are cut,
-missing, or moved, in sources and variants. It does not replace the visual
-checks of the desk height, perspective, contours, or last portrait occlusion at
-each viewport.
+not necessary in the lower action rectangles. When a foreground includes
+standing desks, review their height, perspective, contours, and portrait
+occlusion at each viewport. Do not erase a desk surface merely to clear an
+action rectangle. Do not require opaque lower-body strips in the source or
+variants; props and furniture are optional. Keep native-alpha quality and
+central interaction transparency checks.
 
 The central 75 percent of the master width is the protected four-by-three crop
 core. All moderators, standing desks, attached props, focal regions, and
@@ -1233,7 +1236,10 @@ exception for transparent canvas padding: its native 1672-by-941 artwork is
 preserved inside a 1680-by-945 master. Use the repaired master width for its
 runtime variants. Do not describe the padded canvas as native generator output.
 Milestone 026 controls the foundation scenes. Milestone 032 controls the
-seventh scene, which has no foreground plate.
+seventh scene, which uses a separate native-transparent microphone foreground
+generated in chat. Its opaque background contains no microphones or their
+suspension cords. The microphone plate uses the shared crop and clearance
+rules. Furniture and opaque lower-body coverage are not required.
 
 The approved Transition-Era Television Studio background uses native
 3840 by 2160 `gpt-image-2.5-flare` output with inspected reference inputs and
@@ -1283,15 +1289,17 @@ again only when its master hash and source metadata agree with the manifest.
 Before encoding, do checks of the expected path, the declared quality, the
 byte size, and the hash of each variant that the build uses again. Also do
 checks of its decoded dimensions, format, and byte budget of this time. Reject
-an unknown ID, an incomplete manifest, a changed source, or an incorrect cached
-variant.
+an unknown ID, a manifest missing an unselected layer, a changed source, or an
+incorrect cached variant. A selected new asset ID can be absent from the
+previous manifest. Encode that asset from its master and preserve each checked
+unselected layer.
 
 For foundation foreground variants, the central interaction rectangle must
 remain fully transparent. Reject any source coverage in this rectangle.
 After resizing, clear only alpha values of 8 or less introduced inside it;
 reject stronger coverage. Preserve the source raster and all other pixels.
 Decode the encoded result and verify the same zero-alpha region, contour and
-border requirements, and lower-body occlusion strips. Try the
+border requirements. Try the
 supported lossy quality levels within the existing byte budget. If none gives
 valid AVIF transparency, use verified lossless AVIF within that budget.
 Record `quality: 100` and `lossless: true` for that output and preserve

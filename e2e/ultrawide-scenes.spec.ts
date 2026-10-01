@@ -9,6 +9,7 @@ for (const scene of [
   'influencer-campaign-livestream',
   'modern-debate-studio',
   'transition-era-television-studio',
+  'grand-hotel-romania',
 ]) {
   test(`${scene} fills ultrawide viewports without distorting scene layers`, async ({
     page,

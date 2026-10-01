@@ -9,7 +9,9 @@ Thunder Tribune selection and authorized its complete package integration.
 Both Midnight Sensationalist masters also have owner approval, with generation
 and integration of their five-pose packages authorized. The four Velvet Mogul
 masters and their twenty matching poses also have owner approval for integration.
-All thirteen packages are installed with their reviewed matching poses. Use these
+The revised Black Sea Captain selection also has owner approval, with generation
+and integration of its five-pose package authorized. All fourteen packages are
+installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
 
@@ -28,6 +30,7 @@ character's identity into another.
 | Velvet Mogul Boardroom Patriarch | [Selection](../../src/assets/characters/velvet-mogul--boardroom-patriarch.png) | [Five poses](../../src/assets/characters/states/velvet-mogul--boardroom-patriarch/) |
 | Velvet Mogul Silk Diplomat | [Selection](../../src/assets/characters/velvet-mogul--silk-diplomat.png) | [Five poses](../../src/assets/characters/states/velvet-mogul--silk-diplomat/) |
 | Velvet Mogul Velvet Statesman | [Selection](../../src/assets/characters/velvet-mogul--velvet-statesman.png) | [Five poses](../../src/assets/characters/states/velvet-mogul--velvet-statesman/) |
+| Black Sea Captain | [Selection](../../src/assets/characters/black-sea-captain.png) | [Five poses](../../src/assets/characters/states/black-sea-captain/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -40,9 +43,15 @@ native transparency and source dimensions. Do not enlarge or sharpen a source
 to simulate missing detail. Use the built-in chat image generator for
 characters, poses, desks, props, and foregrounds. Preserve approved robot art.
 
+Black Sea Captain retains the approved selection's revised facial structure,
+cream captain uniform, cap and single cigar. All six sources use native
+1254-square canvases and face right. Keep the cigar and each gesture within
+the visible match window.
+
 Artwork approval and integration verification are separate. Specification 023
 records the current package status. The remaining human-roster rollout and
-Civic Cypher Boxing Ring background are unfinished. The approved Transition-Era
+Civic Cypher Boxing Ring evening background and separate microphone foreground
+are unfinished. The approved Transition-Era
 Television Studio, Modern Debate Studio, County Council Ballroom, Midnight Call-In
 Studio, Palace Press Hall, and Influencer Campaign Livestream replacements are
 installed. The owner also accepted the first studio's clearance in the game. Opaque scene backgrounds

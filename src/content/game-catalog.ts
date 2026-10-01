@@ -95,6 +95,17 @@ export function createGameCatalog(
         phrasePool: [...scenePhraseIds('civic-cypher-boxing-ring')],
         effectIds: ['crowd-bounce', 'microphone-swing'],
       },
+      {
+        id: 'grand-hotel-romania',
+        openingPlayerIndex: 0,
+        nameKey: 'scene.grand-hotel-romania.name',
+        descriptionKey: 'scene.grand-hotel-romania.description',
+        backgroundLayers: [{ media: media('grand-hotel-romania'), depth: 0 }],
+        animationId: 'grand-hotel-lobby-still',
+        music: media('midnight-call-in-studio-theme'),
+        phrasePool: [...scenePhraseIds('grand-hotel-romania')],
+        effectIds: [],
+      },
     ],
     locales: [...gameLocaleBundles],
   };

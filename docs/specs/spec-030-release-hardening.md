@@ -150,7 +150,7 @@ A security failure, a privacy failure, a data-loss failure, or a runtime-network
 
 The minimum viable product (MVP) has a full flow from the title to the end of the match, and this flow operates correctly.
 It has all 19 characters, 6 different scenes, and 3 artificial intelligence (AI) difficulty levels with the different policies in Milestones 021 and 022.
-Specification 032 extends the shipped catalog to seven scenes; the six-scene MVP baseline stays complete.
+Specifications 032 and 036 extend the shipped catalog to eight scenes; the six-scene MVP baseline stays complete.
 It has private hotseat play, and grammar and combat rules without errors.
 It shows each exchange that is not terminal through the Milestone 025 narrated inline sequence.
 
