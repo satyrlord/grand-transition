@@ -63,7 +63,7 @@ const REQUIRED_FOREGROUND_CLEAR_RECTANGLES = Object.freeze(
     Object.freeze({ name, rectangle: REQUIRED_SAFE_RECTANGLES[name] }),
   ),
 );
-const REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES = Object.freeze([
+export const REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES = Object.freeze([
   Object.freeze({ name: 'leftDeskFront', x: 0.18, y: 0.74, width: 0.04, height: 0.18 }),
   Object.freeze({ name: 'rightDeskFront', x: 0.78, y: 0.74, width: 0.04, height: 0.18 }),
 ]);
@@ -640,6 +640,15 @@ function validateAssetShape(asset: unknown, index: number, declaredPaths: Set<st
     const quality = requiredNumber(rawVariant.quality, `${context}.quality`);
     if (quality < 1 || quality > 100) {
       throw new Error(`${context}.quality must be between 1 and 100.`);
+    }
+    if (
+      rawVariant.lossless !== undefined &&
+      (rawVariant.lossless !== true ||
+        format !== 'avif' ||
+        quality !== 100 ||
+        !id.endsWith('-foreground'))
+    ) {
+      throw new Error(`${context}.lossless requires an AVIF foreground variant at quality 100.`);
     }
     variants.push({
       context,

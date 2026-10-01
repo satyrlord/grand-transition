@@ -11295,11 +11295,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--boardroom-patriarch/thinking.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1868338,
-        "sha256": "e4b3d523f91b003e203aa07c174663a580f68b91ac05babf8163df1cae02721b"
+        "bytes": 984253,
+        "sha256": "db35112b105ebe2f70a599585eabade2ebf8105b0691c6ade3df6870a4c3295e"
       },
       "focalPoint": {
         "x": 0.5,
@@ -11318,48 +11318,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7874,
-          "sha256": "f449de24af50a96ec5404f1b8810f025dde235a75b22d6b1c1f6facbf4d02518"
+          "bytes": 10358,
+          "sha256": "1cf15f6f10648d276f2455f8dff948b811ebd93ef6c5a6eee94cc9bf953847d7"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9416,
-          "sha256": "7bb826224da4ee03856e4618125005f1b872f0dfb5beabae9bfdc5ff9b903d99"
+          "bytes": 13634,
+          "sha256": "6ab188d3ac9887e51567eb75bca9cb5a60caa946ef249a1d850f2a338121769a"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 20655,
-          "sha256": "cc9f616a693a342dca90d08fd04a39d3ac4ca7ff69f48873964911955e6ff032"
+          "bytes": 26320,
+          "sha256": "a62ed40a13c24da52b56d717594aa89810fb22328bf530c4228bee8778ddf91c"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 23566,
-          "sha256": "9038405182bdfc3c6183af29eb19b3bd55a416dfb26c993a03ff93c5c8615609"
+          "bytes": 34928,
+          "sha256": "3f70d881b00e7a5cf8a1a2d1a4ca15ccf7f3de0b0f008dba40e0ab4796438bc7"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 36501,
-          "sha256": "86be3108ee0efee611bcbecf031b57f412d508eae2d6840a8535c911684443a4"
+          "bytes": 44319,
+          "sha256": "1d16cdbd2e01d85790201b5eaf911bbff7e73690f72c74bc5782ba8177f805a1"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 40772,
-          "sha256": "04342d7c146e4ef171a28b86aa10a5be9ff990770ccb6d2278929483042160bd"
+          "bytes": 61872,
+          "sha256": "e86f73fdcb79197aa2db7d8fccd8597ddab5b913a6d6aaf837c94016e0017161"
         }
       ]
     },
@@ -11375,11 +11375,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--boardroom-patriarch/delivery.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1972362,
-        "sha256": "90e953561392b3b877e141338c373d50949ab00a963bbab2f7d8dabd7d7f0340"
+        "bytes": 1123701,
+        "sha256": "773d8ee680f4812e4dad7b046603bffd316220161082464e064df97dc6774d48"
       },
       "focalPoint": {
         "x": 0.5,
@@ -11398,48 +11398,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9590,
-          "sha256": "4c7a0db20b4717c2769d3e8e58266e55fc02346e0ddb16ebdc8708340f7de128"
+          "bytes": 12606,
+          "sha256": "db8afdd73727eb0fdbc323c1842865efbb687ae02fc73dc02e39cbd5a9aa7a00"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11748,
-          "sha256": "857818f6ea124747fb4656c0d9fcb503fa50b1ab9380569885cffc483c57c850"
+          "bytes": 16260,
+          "sha256": "5b0467b3f924cd779eea95aa7fc528c500dbc61284aa4b8f252b9491bbfb242e"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 25723,
-          "sha256": "1289dcd8a9dfec33fe1b1498d2754a5a188dbb076b92deeceaf03a5569013ab0"
+          "bytes": 31416,
+          "sha256": "e5e48e675e58f8b85c4cc8a1596909213ff326f649909aa166c86eda320a3857"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 29812,
-          "sha256": "e4b596bfea04e752e7f0297ce8df4939d352523f4b1bb8b47fbd560e7317cd28"
+          "bytes": 41106,
+          "sha256": "00f25cca527087060512779e61541308d9e3c5beb8b8bacf7ee9ca3d9b9d03fd"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 43127,
-          "sha256": "5b6bac30ca69c5ac5a41435b48bc9c9e03bd2e3243d80c194b49c0e460cff34c"
+          "bytes": 52201,
+          "sha256": "e21f21d988c3c1aa0b71d2c6376b8ad99a4a1281ad71875048177a27f1613f4a"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 49826,
-          "sha256": "656f4314354daa30d874895b4b34ce37b7297aaf46ea16caf7a052bbce8505d3"
+          "bytes": 72660,
+          "sha256": "f7d0694584aa4a987dc0b3a5ab706ffeaab834196a05f13f35cb3d2ab85a6a5e"
         }
       ]
     },
@@ -11455,11 +11455,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--boardroom-patriarch/light-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1908154,
-        "sha256": "c27a83c0c638d5ff2e66d5acfa368f8e44d2cb51ef37821c0a8c3ad951a4ea7a"
+        "bytes": 1070819,
+        "sha256": "ecb30f31782976141ee9378587d88e18e38020e0eb57786c220704f55f9a3909"
       },
       "focalPoint": {
         "x": 0.5,
@@ -11478,48 +11478,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9214,
-          "sha256": "0fe6fc02ac9f35c4733d07dbc1f78e8597715d418acc33b2b7ed2488c9df572c"
+          "bytes": 11555,
+          "sha256": "01216a7770900b612563383151d0065873fdc4008205b39fe1cbd4bf718a3658"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10944,
-          "sha256": "cb24867f6b885962ab4be736971442bf404287ec4c4ef5d586d57a1c6f8951a4"
+          "bytes": 15044,
+          "sha256": "e63a81d51b2ccce616ed89e22ce7de05dde6e1d9934afe1f54f82895d1038069"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 24175,
-          "sha256": "9fce8fe0a6e656c3ded09bbb22b4de7ca0c091ef52db3464533f3eba89389630"
+          "bytes": 28454,
+          "sha256": "866231e08367872943bd90c0378521a0f1ea45297a12b4444205f946368b8f27"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 27648,
-          "sha256": "81a8ec5fdaf48d6d3364b94745b2fc6e4baf0a9b04e1cbb02eadf1e05a31f852"
+          "bytes": 37850,
+          "sha256": "eb666a947cda3d8f999533e664b61697c1e5116c9f70363b8fda8fafb7d33676"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 40691,
-          "sha256": "7927f2f885fd6fc10331aa12a00a361b7ccc58fb9252b9f35be1df33ae37618e"
+          "bytes": 46995,
+          "sha256": "7d461d891e82d1ebbdda51ee6af11f2067a61fbfdb36d4c09c6263ffee75532a"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 47892,
-          "sha256": "bc2889e71e799fe14384d60a9c93bfee40a7cd9f5f5067d0507a9c728849ac97"
+          "bytes": 65780,
+          "sha256": "f29d1b0f7e1c72ee35416675feb2ba8bade18636f5ec83253ee53712d79cd2b7"
         }
       ]
     },
@@ -11535,11 +11535,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--boardroom-patriarch/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 2521438,
-        "sha256": "77c7271043f80d6ebb738d8db64d90cdb93b1a86db22c6e1f04d2507443e5208"
+        "bytes": 1145488,
+        "sha256": "7e013c8878a1ac0942e429df306a02292601855a5feea7ae349f3ca265e269d0"
       },
       "focalPoint": {
         "x": 0.5,
@@ -11558,48 +11558,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 12266,
-          "sha256": "1be42689c9180e435bb32c6d6cd387f97503f6b8259801394063e70513aed7a2"
+          "bytes": 13235,
+          "sha256": "287c775a349b0a6403659be2549c6e21f7bb69e8298702e463bae1d55b068fa8"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 14326,
-          "sha256": "54dd5dac207120f59f8d71e80f0012e3f6415f97621d22ad7cc8fe957551a2cf"
+          "bytes": 16926,
+          "sha256": "8be12b2af2a6282f3fcbef144be984f2833d478a447006f76c1c0df013a480bc"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 32533,
-          "sha256": "2b5f263b74dba1891e29e2ac103595039b31ea797bb741a8d784c12b4bdfbe02"
+          "bytes": 32495,
+          "sha256": "3556e8134e2e8ced1902314431f18bbd4739af68d250eea2580fe8834572c646"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 36648,
-          "sha256": "1769645750a652a19809c875d71949646c4455917c4fec3ddc539c384b0ca446"
+          "bytes": 42526,
+          "sha256": "7f1dda892934e9aef7c7f43f8cc69224670f184c314953bde1da266c39301bd4"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 54995,
-          "sha256": "44297dff3549795520d1a2839c7a0ceb5cb1150fd052aee8b48ba73d2560d5d4"
+          "bytes": 54529,
+          "sha256": "31fea0e09da96cfb4ad326ef5aa81ad2cdc5f672a15e79f4ec2e472c55f4c247"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 62622,
-          "sha256": "47d59d128a8d39ecb0700badf9a97aaa3ecd9f4314ba0b5c11929b685e989a50"
+          "bytes": 74770,
+          "sha256": "c3b896d4b91a822c23619dcdc3e8a324571741ae1512ace666ef22563afb4b10"
         }
       ]
     },
@@ -11615,11 +11615,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--boardroom-patriarch/weakness.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1774038,
-        "sha256": "d2c1e539f9399b74726b0efa2d10a47b4922a80eecfcd771bf5f4dedfc5aef77"
+        "bytes": 1077076,
+        "sha256": "f713b1782820b7ffca532503b73f6872e625a32ab9721afbe708e0b28def35f4"
       },
       "focalPoint": {
         "x": 0.5,
@@ -11638,48 +11638,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8330,
-          "sha256": "2c62835e290663d793f4d1ad0b218803470d605bb2983836529769aee6c4d0de"
+          "bytes": 11357,
+          "sha256": "7e775c67c0af5a541509f441218516fb195c50302c30bd8ef4ce144e99e5b349"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10400,
-          "sha256": "7a2629be87ac7773a9b60f9ff0b4788521c40705a944624bcab5a7d0c7c1f052"
+          "bytes": 14260,
+          "sha256": "482fbc764a37e3bb066a3bec20743103c9e458826eac3e5e16fdff0a7f40328b"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 22158,
-          "sha256": "ff1c04a5645eb281c84177d936c8b30238d3e9d08c56aaa6cb5e541e5c6f565f"
+          "bytes": 28455,
+          "sha256": "1bd523e95f84ab811b8fe1b375fb1629080d910a96fb58f09ff07f80372d334a"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 26088,
-          "sha256": "b1c90364e0d54a5a1ba881c398b73a14ae3f53669f092e153639a832cd099659"
+          "bytes": 37026,
+          "sha256": "425a6f117eae3a8e3c868508a996b113be194302f6f6d11101fe4438c66df025"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 38765,
-          "sha256": "98e24b0c5bd66b5f028470da7335367082c93662d2642c566beeed0a25dd9b08"
+          "bytes": 46932,
+          "sha256": "f2f43f421784cac4934f1fcad29b4d06ca1e913cdb8d57464927cc3b56f25446"
         },
         {
           "path": "states/variants/velvet-mogul--boardroom-patriarch--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 44192,
-          "sha256": "82e9c2f97073db32e4cec1e23097a07316a6ecd3ab4699c9a52576f2516a23f7"
+          "bytes": 63884,
+          "sha256": "4a9ea5e210f1d793bc556e64c7422798ebfeae4cff3f52a62d0f460ab7416207"
         }
       ]
     },
@@ -11695,11 +11695,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--silk-diplomat/thinking.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1065855,
-        "sha256": "89f9a7e96342939a0b68b7704c3782f5b9e57bcba72602d288ca87f5052ef061"
+        "bytes": 727025,
+        "sha256": "01100f7380ea127c9edc6680577478f429529e7f48732e594ad86b772a5441be"
       },
       "focalPoint": {
         "x": 0.5,
@@ -11718,48 +11718,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 6186,
-          "sha256": "03082d116d8c722772a49dd435ff56377a8d2269dec571c092465e7087cba221"
+          "bytes": 8145,
+          "sha256": "1120640a9aab5eb8600f6c04be461c60edda78d213ddc7c216f77bf928bdcf64"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 8282,
-          "sha256": "ec51be27958d8f20e318c3f520d059709e58f201be8fc1aa7496ddc666dd6827"
+          "bytes": 11268,
+          "sha256": "add8625401410f80205205ffd7a0db6c99abec5bbf7415bb1c2d3d22706d611c"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 13882,
-          "sha256": "20316fef311332c19692df99be82084e4812b1b6512b5b371a1b6a4935334610"
+          "bytes": 20679,
+          "sha256": "285dff579d45e2012dbde57ee2bee9b39ba8f5766c4c65be418fa824ed413917"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 18492,
-          "sha256": "0ad61c366c26192d84a86c8a88e821b3b7e0a6f9937d0333705b4adc5dd06411"
+          "bytes": 29494,
+          "sha256": "2803559a76a08c84f5a68c83b81d7d10fa97cf7f68f6ac03decee27746c3d83d"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 23981,
-          "sha256": "122c8ee378cb98bd4f44370db318014232d3f59beb3630873b5ce63c3309af5a"
+          "bytes": 35052,
+          "sha256": "d8c73397d02f0f696577f0ab81cfb323f2ceb7119970ab9893ee3aea5f571bf9"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 30832,
-          "sha256": "ecf5784f8fa0a4ce2482bba9ed9b2e71aa4ab905218131a1bf453a4e156ed725"
+          "bytes": 51358,
+          "sha256": "b79ba7fd85092e904055dcf14ce849dc8fad788752d93972797af3fabfc83dfc"
         }
       ]
     },
@@ -11775,11 +11775,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--silk-diplomat/delivery.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1156337,
-        "sha256": "a281efef9ced3ba2415a2b6f97b75727a94fa38df4701da1bfffd4abddbbbf5e"
+        "bytes": 767021,
+        "sha256": "b19ec7dd948fc97c8ae2b7b8ab43f6997573804e88b2c35884a0bbc73efa9989"
       },
       "focalPoint": {
         "x": 0.5,
@@ -11798,48 +11798,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7385,
-          "sha256": "4900f5fe849bd244dcfa140ce16dd549c681c95dab61af8622dc53551b2be7c4"
+          "bytes": 8677,
+          "sha256": "4e267bf7c66e985b390030308694ebd8a1db857aebbd93462c4a842c6b9dc21a"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9786,
-          "sha256": "22e82553e8f4e76ee3e71384bd980de27c33227ec07c11cb0fd423f4f1b9a0bb"
+          "bytes": 12394,
+          "sha256": "5a574316362b738432e65f004af0ce17f2f28fb9cf5a6b376530e066bedca020"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 16945,
-          "sha256": "559f1e1969ab050e63926cc1a4673329bdf4a80330e74c8015144e7354bc181d"
+          "bytes": 22380,
+          "sha256": "c6b9bcd1a45f7dcc8479fa6c895b174312c367507d86a9346706446040d7e9aa"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 22158,
-          "sha256": "81877d06ecd2e3e42cb7ac7ffe7385855bd2b1cc7b1bd8c42b31cf74c403c6a8"
+          "bytes": 31848,
+          "sha256": "395482537e7a13ea62502a51a30a9b542d9b7085a6bc31322bd0d41dd7a13d49"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 28456,
-          "sha256": "e9fd58400b048da542c06979f591a8836703b416abfc8d2c6239bcd34131e5a4"
+          "bytes": 38091,
+          "sha256": "f35851c793d449b5607ac99636fb564f8ae3dc3656dbcbccf400806ee1b516a2"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 36558,
-          "sha256": "87475625583dad5631c56169c2494f2854422477d47a6d4432817450d9bf708f"
+          "bytes": 55742,
+          "sha256": "411470fd1767484f50b466be9af957f463456ae2d993023a5d3cf76c639dd22b"
         }
       ]
     },
@@ -11855,11 +11855,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--silk-diplomat/light-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1249287,
-        "sha256": "7dc9784f6baa542cd613cd21551acfb9fce4e4202b1869544667148da97de182"
+        "bytes": 765565,
+        "sha256": "7969715294043a3548ae6572c17522ad67c7cfdd9649e1a4c76334128835ce26"
       },
       "focalPoint": {
         "x": 0.5,
@@ -11878,48 +11878,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7544,
-          "sha256": "687295d5496586d1a819822336ae2a980a3eb6437666121f10a8cf88a38f71c8"
+          "bytes": 8651,
+          "sha256": "894f2db561cb29f5a0c915c7c7089e30e5f8aa110ead58054a772e58b1504df9"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9792,
-          "sha256": "12c0b88de996e05fe047a4eebf58b8d05c4c828cd644feeab90cf868fa5df71c"
+          "bytes": 11914,
+          "sha256": "1adffa0a9f53510b4886b1cfd727e94fa3ec92dafdfa7df6a7655271f925c7ad"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 16919,
-          "sha256": "3c23e729e2864092aaea4acd4677d8c9991fde643789f3cb1898fa9319898de5"
+          "bytes": 22334,
+          "sha256": "57a26b638467d0d7a077ad1a5b0cd874783a8c175a01a0c57a31e24efdfab58e"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 22328,
-          "sha256": "9da410df444acc59f3d8533bb28b504c9b1de286e6a5e28a7ad8f2b595950e08"
+          "bytes": 30958,
+          "sha256": "a9e7513ee0dbe64eacd76342ce7b539da02e2dcaf804019e00f528663212ac43"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 28903,
-          "sha256": "a943944d00021167429451e22203eeadb2c530740f064394128ba9a03089c710"
+          "bytes": 37952,
+          "sha256": "0d0f2c770e9415b331413cd64703a44723554ef1d4e1564c98c7f41bc9fafa85"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 37336,
-          "sha256": "8144a6a2e5839b554e1b4cda504cadd6f5139b297b8456349d4fd6961e693b79"
+          "bytes": 54408,
+          "sha256": "73f53bf06f5eaa012357641dbba644fcfb753da930c5fd73f80467c82b885724"
         }
       ]
     },
@@ -11935,11 +11935,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--silk-diplomat/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1502908,
-        "sha256": "c101f4ef6a328c0e98070b974e53e90f4b6e5aff8f6a4c4f08522d8b1994db18"
+        "bytes": 843343,
+        "sha256": "66458956fa51b1fa0353522e7ea8e65e052f267fa6f85d5f3fc04698b877e797"
       },
       "focalPoint": {
         "x": 0.5,
@@ -11958,48 +11958,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9363,
-          "sha256": "28320d1959f9ef91045e209ae8a89d74502cd64697ac598d41070242c31589c1"
+          "bytes": 9901,
+          "sha256": "d1c11abad910fd1a3c36361398fed7f09cf20c86db7934b7c80b3b7ae4ceab40"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11730,
-          "sha256": "e26ac96a41fce077286f0aee40283a049b0425a9ac5ee03f1be80873171d2b4b"
+          "bytes": 13898,
+          "sha256": "9ab418139b928b7e670e904ffb268057fbb7546ba4cc2fce46bc29194e3742e3"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 22438,
-          "sha256": "0124c7886672f1629243540bba39256be1e866f6f31bf9aeefd9974f51b8ceea"
+          "bytes": 25536,
+          "sha256": "f95500306936caef0654a3b98b3d9d54f3c31b1be950fc67e9eee1870dde49dd"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 28060,
-          "sha256": "1c5685bc8e4610e62411bdf59a5193e04d5df222f20f17d1435ebd9bbb262809"
+          "bytes": 35784,
+          "sha256": "b7b3a65cb80f44b6f0113cd68aec87c0fe683a7fb75de603d9850408fd2ad87c"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 36303,
-          "sha256": "083deb7b4dcf553e6e9b308b67a1e68fd30a29be7f6770051c1b72bb868745d2"
+          "bytes": 42886,
+          "sha256": "433e15ce984758e9a4713560955ddc742dcb6be4364fa219f6cfaf7474cae400"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 45502,
-          "sha256": "6a96f546dc90ba79bf95dea313914f079e1061ee0191ce350b29200e0853e15c"
+          "bytes": 62936,
+          "sha256": "3f6bc9bdbdcb22c4f48ce9df7e62067310efec125efa46d123c31c14f8c8b33b"
         }
       ]
     },
@@ -12015,11 +12015,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--silk-diplomat/weakness.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1182165,
-        "sha256": "a09fc72768f5773f7d643a954137dff19b6e11744d27624c150d635326af9d3c"
+        "bytes": 725388,
+        "sha256": "46229e7d54fd64165e3b20057807c7c9503dc81a9f09102879c509de22760948"
       },
       "focalPoint": {
         "x": 0.5,
@@ -12038,48 +12038,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 6847,
-          "sha256": "4d6f5df37ba6e3e9e2a484994976428d1e922ca980cbe1f9897f93bf73b79276"
+          "bytes": 8001,
+          "sha256": "3d6bb1747d5375d62bbe736b53c0d6cf3166380fffae33e0cdd9f2ecc1720f3b"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 8854,
-          "sha256": "f61afe57754781d0ed12e94166326496b21f3f69db3b0fe6f3ce15a5485d729c"
+          "bytes": 11212,
+          "sha256": "6c9799823e9f7473e27dd88c0f08a265824a77dd44970f5da788f10e55a6d540"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 16108,
-          "sha256": "327088a4c08d46bf17f41000d7365a679373f4322dab9b76e41c79e46aa63777"
+          "bytes": 20993,
+          "sha256": "5a1e8986ed9ea5c39dd466d311732c25ed8d356ed8b1cdc8fbf6579f93578c4d"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 20290,
-          "sha256": "c6d231beb8d818090101bff2a53e18156b37522a0044262d6903421097557f9a"
+          "bytes": 29774,
+          "sha256": "1f323a02f52324d6578af50b06a5b60cd0993e117f0d235a0af817c31517d7a1"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 27054,
-          "sha256": "6d9753830909e22ab6407b65679e7037e16ba8441a42cb54b6c9ec9b100fe57b"
+          "bytes": 35746,
+          "sha256": "644c369a85b9d1f85733a7cd57dfd9d2b21591a7cc8d8caf90b56dfc22ee1afc"
         },
         {
           "path": "states/variants/velvet-mogul--silk-diplomat--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 33910,
-          "sha256": "f47eceb9b09b400928de99a68276630f9c5104b8d5c37b46e1ff067d3b887124"
+          "bytes": 51704,
+          "sha256": "2a9d273d05c5912341a46d588f130dc2622294b9af5ab1363b875bdc401bf214"
         }
       ]
     },
@@ -12095,11 +12095,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--velvet-statesman/thinking.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1454955,
-        "sha256": "b12f83cbad943e850547d01bbe9b1fa23420aed7b3f13d515fa2b771c556abf6"
+        "bytes": 656803,
+        "sha256": "5eec2b1cc5067d33259035bfbe169f2228d8b8f1a67720495e4497ee488594dc"
       },
       "focalPoint": {
         "x": 0.5,
@@ -12118,48 +12118,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 6939,
-          "sha256": "267e5defbe334374f87c460178d5418a54ae254d6a139ded6fe88675eb5f42d6"
+          "bytes": 9627,
+          "sha256": "8f9e065ab177b4fbdc53c380cb5d6959046eacfb65d283b876442f54e2f7837d"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 8968,
-          "sha256": "67fd37c5b6b13fa1043aaab02ded66c6a568d72bea92a2ed66da30a11859fe72"
+          "bytes": 12310,
+          "sha256": "fc680d95de33d830aae03ffefc2ce3f023d0baead0c90be8e5ff9f58fa8d9016"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 16959,
-          "sha256": "0e1fc431a8c55537ea87a83916fbdd96b27950bf549a93d95b0a86dc988305bf"
+          "bytes": 22402,
+          "sha256": "b15b7d265d19b5939a7bd7aa8e75c58e55029e80fd2c804208dcd9e3a78d9e7d"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 21534,
-          "sha256": "70fbfaf57435a9cb31f70257ee4cc5317e54b9aa9b1823f2c046c1d1278ff833"
+          "bytes": 30442,
+          "sha256": "fe9d5e292f47f244d98f35ec960d4f131c5e65b62dc37b392c5db0cdd712b4d2"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 27176,
-          "sha256": "99646e1d95f48407c59d324b64e79717482adb07943420b7957bdc2533f301b1"
+          "bytes": 36502,
+          "sha256": "d3546faba57293e4d7b1e45e5955ae8bae8eb40c9c5000ebca4b308f737a449c"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 34152,
-          "sha256": "d009e65885e296f73bbe43645cdfabd99754c29173cdc2fc90569210bb1d157c"
+          "bytes": 53718,
+          "sha256": "c07aef90e387ba694886dc60a8e51d3ce1b97b9688063486dc2b034dba611f61"
         }
       ]
     },
@@ -12175,11 +12175,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--velvet-statesman/delivery.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1556022,
-        "sha256": "3a972aec2fc8646ff9a70ddc49ed8e62dc80a519cc2897b1062d6efab4a27a73"
+        "bytes": 802331,
+        "sha256": "2a53bc0bb35b25b0c37cc292c8eac1317e0d19c3f9675893bbbb6dc64f713350"
       },
       "focalPoint": {
         "x": 0.5,
@@ -12198,48 +12198,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8100,
-          "sha256": "f8104ed1f212e88138498cecfd52be3d1f259358d36719db5e248876b0d9a4d8"
+          "bytes": 9808,
+          "sha256": "e69bafa868145ead56bb6e7da837f385ca40eb8309521e2f6adf350fcc670291"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10366,
-          "sha256": "f6097bdf7890f74c581544df5e9a922803b5121188cc7a26e588ed3a5ff40dae"
+          "bytes": 12730,
+          "sha256": "ff154d176189ef9856ad2d858944515d1b7a68a393bdafb521e798eeee789347"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 19082,
-          "sha256": "970026049c33258c7ecef24dc4198ea1ed26f2b56c0231ea43c307cc383bbad9"
+          "bytes": 22934,
+          "sha256": "41fbb2885789202a7d62f64474da007df62d27c94174fa6019d9bb83ae7162d2"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 23984,
-          "sha256": "eb3e96c9d34fd08859ce30e2257a444c63e906d4820ddab0ab61c67331381e84"
+          "bytes": 30840,
+          "sha256": "5953e6cbe83fc8b75ec8399885d973f857854ba0eb2197857aec383262ea0563"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 30922,
-          "sha256": "264ebf5553d6bb5729c589dd2b5d79129640cd5eaef88b67b86e64413e8c9fab"
+          "bytes": 37689,
+          "sha256": "4f8e116e4edd8a8fa9a68250bcaba7cafa8e79f94713d76f9991692b597a0982"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 39240,
-          "sha256": "a0f0a9856ca02759df39be1c31cfd826e3f19f48fa6afcbe8253f97115101f7c"
+          "bytes": 53922,
+          "sha256": "ecc7f208b03719b82fbbaa7d4662444f52d51f80409885de3027f9ef3c317af2"
         }
       ]
     },
@@ -12255,11 +12255,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--velvet-statesman/light-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1685076,
-        "sha256": "6ecb8d5aae048332d3ea62cc7d925dbbe43e4d7d54cee79e03d81fe566e13a3b"
+        "bytes": 781026,
+        "sha256": "303014ce18231fe40b08e302b4294e9d316f5e1ce63ff6db4269f509eeddeaf3"
       },
       "focalPoint": {
         "x": 0.5,
@@ -12278,48 +12278,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8566,
-          "sha256": "69bae04627fc8a27f16b69522f2727d0d4f25652977ef8933d9ef34c6c6483c7"
+          "bytes": 9649,
+          "sha256": "f4be5006b5a632c67ab86faac045b33925d513cacc47de39f1b9049d35adb2e8"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10544,
-          "sha256": "3240635c25f38af5dca6928fd7f35d7d71911a0ef49e8ea8b2f1da3a65092c28"
+          "bytes": 12214,
+          "sha256": "ed85458b43db3882710fea9a47126bcc7161f8c29206f2df4444615af1647ed5"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 19991,
-          "sha256": "7ce397aa31efe74c3bbcdfa9f975375ff116276496b01cbff14a98ea371c14bd"
+          "bytes": 22267,
+          "sha256": "20547f79334cb6739d9083cbc8355dd917240b2d63fbec9541779c6c2f065fa9"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 24794,
-          "sha256": "082b4c077b24495e29d529d14d14c02944255efd0d5a29cf1928be314fbdbef9"
+          "bytes": 30072,
+          "sha256": "b253087d69267684777a3d370e7ef580e12695c3e346fd5411e3f471dab5e74d"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 33712,
-          "sha256": "55f5bf38a51d31d6e09faed00508631e144ba0b3c85185cf2c81324b74e3281f"
+          "bytes": 36595,
+          "sha256": "7e2db311bbda0bd42253a7cf53c0de2d7e902236f76298cb54d53be81af2fbaa"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 40884,
-          "sha256": "a373c3118df6b6d31de75c92331847954b276bc88d530911f119067a7f044a9c"
+          "bytes": 52656,
+          "sha256": "003c0974f8949d358e993910705b0698af143fc6a9f44a1dbda3caf355b07a85"
         }
       ]
     },
@@ -12335,11 +12335,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--velvet-statesman/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1865117,
-        "sha256": "df8038b855067fb2c8df0d7fbd4e413563f725b6a173b0c28a122ff46e86aecc"
+        "bytes": 844334,
+        "sha256": "46e297119b34b76b017edf917ab47f6eae77de4cdc47d149cfd96de121e6de6f"
       },
       "focalPoint": {
         "x": 0.5,
@@ -12358,48 +12358,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9970,
-          "sha256": "9a0cd9d941e9fe03f51d3f17b66c15a9c9c1406c0830851c99db9cc33d1a2293"
+          "bytes": 10239,
+          "sha256": "95979eb0dca2db8a86eaea383691065dc8e200892eb56fe4877a03c99aad5a5f"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12198,
-          "sha256": "b05d964e58d396850292f1bf9629853af54bf1f52feb35f852c9a182ae3a87f2"
+          "bytes": 13316,
+          "sha256": "f1e5c8249136f3dca9e18817880e7fb584e6e51761ee3d9bd2212ae479e361f1"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 23810,
-          "sha256": "69882a59db4444052620983598e8daf5623ef5b76d4a61fb61380df4cdbcaf89"
+          "bytes": 24943,
+          "sha256": "7862664d26364fb28fd2a52bc2655a1b3d2de56ab7394a51faa5139f5dacbbb2"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 29674,
-          "sha256": "5ce725dcab3936e41646d7a81be048c579dcee525b239e3a090eda1200e70b98"
+          "bytes": 33424,
+          "sha256": "3c8293df073c72d91e782f460979203a04b5901e797f397c86ee376009c8c720"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 38817,
-          "sha256": "3f146d20de0e10f08a3c5e5748134e4a16cc602862624c448dc0ce09e5e3e6b8"
+          "bytes": 41651,
+          "sha256": "613a36ebbe4a27ff7a4147f8c492fbbde9a94ea1e8ca9fc6e28a821fdd7f7e12"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 47730,
-          "sha256": "d7909c3bbcacb36ae1e9f054881f174fb40cc278e150a0341188de99d2664f95"
+          "bytes": 60238,
+          "sha256": "267b2c07239f900b6d3ec265ff8a8388a943b1a913ea27d42e66b0d780e5a23f"
         }
       ]
     },
@@ -12415,11 +12415,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul--velvet-statesman/weakness.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1555745,
-        "sha256": "320e4545148d8942016133687e3d79af0798463708e535d6570062867b9e80a8"
+        "bytes": 779674,
+        "sha256": "594168296a088d593a62ccdc7580a6661f0909cc27fa8e41808998ff9356e79a"
       },
       "focalPoint": {
         "x": 0.5,
@@ -12438,48 +12438,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7282,
-          "sha256": "59fe7909c866df0e50a16fef93c781cddaea761f312bb604951dbad765105fc6"
+          "bytes": 9617,
+          "sha256": "3600d763392ee8668f5f77f150c3ff95c71138afa26668ddb5008730a5c116cb"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9294,
-          "sha256": "9feb98ee8477a76ba1443813a53d42012422adc109d3e4b2c55477fa4b3c50fa"
+          "bytes": 12208,
+          "sha256": "729886fa5d81c76108cd6d3d3f8dc0c44308efa34924d0d10d286cc039b6e08f"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 18337,
-          "sha256": "0142fd15d23f0d7bf9502d3da3a255e5baec9a82831acd56b58684fe52a9bd8a"
+          "bytes": 22007,
+          "sha256": "615f10a534ad456dfbd3409b3c29350321cd06876d28d6d9499984d9e0179378"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 22382,
-          "sha256": "e17aed6d44380b45d8f740957757b918dfb54c7cbfaa25f236f477cf62c8e95d"
+          "bytes": 29904,
+          "sha256": "a62ad3f60fe2f5565494c1853ba8c857c22b19393d8b07550b1b5bc9fd5c28e6"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 30023,
-          "sha256": "074b24b8c5a3cda8feeaef214266b5c4273772f34c795be842fc8fbde83b95eb"
+          "bytes": 35624,
+          "sha256": "a4e10a71850d893e41ec0e6a373e4343b90233003d90c49ee33e3cb93fc15a57"
         },
         {
           "path": "states/variants/velvet-mogul--velvet-statesman--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 36676,
-          "sha256": "674f2cece40987826bd92d8714c55cc5bf371ffecec9424ac3af46e3c77f0a24"
+          "bytes": 52474,
+          "sha256": "6914ac90de20ad91f4f0175ac90b287bf122dc354737b4b5274081bc3de1194b"
         }
       ]
     },
@@ -12495,11 +12495,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul/thinking.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1747158,
-        "sha256": "48111a305cdfe954c86532d9f0880c66d7c55db673cf6bd8531be8b4133cbbac"
+        "bytes": 978648,
+        "sha256": "3dde973fe6dfe2fab3084a38a26d454a61cfe1ab589d49a43cbdcde4c84f1c77"
       },
       "focalPoint": {
         "x": 0.5,
@@ -12518,48 +12518,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7695,
-          "sha256": "810998e9f94caa0cd366a02d371f56c866ccbb47cd4b3db9f78b684b8df09250"
+          "bytes": 11610,
+          "sha256": "6d2a62afd415b22174e1fe13af51432fcceba49012e751a939a844de09039cb6"
         },
         {
           "path": "states/variants/velvet-mogul--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9882,
-          "sha256": "0e2293b81d295244d6f9454735f9d04e9b59102306416234f5c428877d1887bd"
+          "bytes": 16442,
+          "sha256": "43d17228295cd93e41e7e6d10576a26de448a199a18816c0702a46ca589c6801"
         },
         {
           "path": "states/variants/velvet-mogul--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 19862,
-          "sha256": "01edca236ed38207973d2f69da8e279af376acf348ebc095c8ab9c8c49c12b10"
+          "bytes": 27109,
+          "sha256": "1375dae9630f10a1e98330fed6c562f3ce94ddba0c8168bbe13def79bbd15836"
         },
         {
           "path": "states/variants/velvet-mogul--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 24484,
-          "sha256": "65a7add89335e08c1b333a4d5f9844108c80ae5c22546a953cc9391efdfa78ad"
+          "bytes": 39624,
+          "sha256": "0d39e63ce530c41106904aed3cdf11c4cf4465b798ef0c3c110796a4d365bb04"
         },
         {
           "path": "states/variants/velvet-mogul--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 34670,
-          "sha256": "f07288d95702968b389a071fb8bf8d5e167c370e1a83a28aea1dca59e264fd33"
+          "bytes": 45127,
+          "sha256": "637669439bc82a93c9552590f8dceb7e9c96a288415a5a48d03fe8df4539c7b6"
         },
         {
           "path": "states/variants/velvet-mogul--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 41376,
-          "sha256": "ca4dcbcd06d09adab704836661390f79569b3a6be61bfe3d597dc4e1a0e86506"
+          "bytes": 69554,
+          "sha256": "47f1254756aa4e72aff127d60a6dab76ac539c535a59d78bd2766c355ebaecaf"
         }
       ]
     },
@@ -12575,11 +12575,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul/delivery.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1903303,
-        "sha256": "3be31406b43226da6035954daa8f8eab7619ab677288fa590c0e6adb75c8c3cf"
+        "bytes": 966552,
+        "sha256": "dce229ef9b393ffbe1325fc7533044bfa0633095e33811c05ee7f9859b9e3343"
       },
       "focalPoint": {
         "x": 0.5,
@@ -12598,48 +12598,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9037,
-          "sha256": "670a8dc2874306543c0c796d0600a7d1c415b3f27faf99a4832bd57fd3e30550"
+          "bytes": 11655,
+          "sha256": "e8fc0e717c58f45342fa3b380ba72e222ea08cebd71466ee49cef967954f649e"
         },
         {
           "path": "states/variants/velvet-mogul--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11338,
-          "sha256": "32b46ef57ec89bfcf05119ab01c032ce45b61b25c40d1c85cd277d76b8391a76"
+          "bytes": 16372,
+          "sha256": "a25d148849fb3277fcf6fd5120db86ecc596b98b1b363cc7f5459e9da6b2c71d"
         },
         {
           "path": "states/variants/velvet-mogul--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 23038,
-          "sha256": "5decead0fb64f7be93091441e54d67a423d687211addb572ceb2c7176d815c3b"
+          "bytes": 27270,
+          "sha256": "278702c384ddd9c5a4d4820a937302e2d66d91394d8719984551d1acb104ae5c"
         },
         {
           "path": "states/variants/velvet-mogul--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 28192,
-          "sha256": "8ac9e06620a730f65bfb6b2e14c6af1b0085a6b016d9dcb1f0d5536a8df6f6b6"
+          "bytes": 39294,
+          "sha256": "2d9c0aff287eb9a3ada17bcc48416f395dc60288a0dcf7559d7e8c0c7211aedc"
         },
         {
           "path": "states/variants/velvet-mogul--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 39009,
-          "sha256": "c4ed45ad0ff278c06b224c502cb11d909c4b1ee1d6c7b123893a15eecea70804"
+          "bytes": 44910,
+          "sha256": "9ded9892ba4ccc8d34e9369242165500c062db8933ba9093bdeeb5b719c7d524"
         },
         {
           "path": "states/variants/velvet-mogul--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 47814,
-          "sha256": "58f112905f9455dc31e6e3b19fe0696892d7a1331b578fbdd80def8b0fa22e4b"
+          "bytes": 68430,
+          "sha256": "155d72b0c5fe3f17a288ef87536e2511044fe0d0a76a4f12496f8ebab19c44df"
         }
       ]
     },
@@ -12655,11 +12655,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul/light-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1885628,
-        "sha256": "086f899edaf028f1e5e7dea243a1d409a5874701c7c6a68f3d5410d55feaac1c"
+        "bytes": 978878,
+        "sha256": "79993f354e5aeb17c4a8c8ab61138389e62988e77781175315c461a11505378b"
       },
       "focalPoint": {
         "x": 0.5,
@@ -12678,48 +12678,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8625,
-          "sha256": "fba3d97b97a3c0a391251d6a5adb2d985187d4d3386ba48f1aa7c799acf1baf5"
+          "bytes": 11487,
+          "sha256": "85fbd9da5d6bb41a94b15e1809fc8e1039e12375bd1a8e61627094b038271c8e"
         },
         {
           "path": "states/variants/velvet-mogul--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10498,
-          "sha256": "322f107209f1856f15c8be1d2e77a6afd85d9422459c1e9449aa5fb66790eb02"
+          "bytes": 15876,
+          "sha256": "7b34076788bbc24080b8d9107f3175c7c3fe951a32889b246ae39e72cda42cb7"
         },
         {
           "path": "states/variants/velvet-mogul--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 22277,
-          "sha256": "cbe8fab9e26643140017ca6fe4bb7465cb3d99b32048cc6a34897710e2de21bc"
+          "bytes": 27139,
+          "sha256": "d2097c38e8ccaad017a53fb974410882b01a37e98066acd2119b146dc256c598"
         },
         {
           "path": "states/variants/velvet-mogul--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 25898,
-          "sha256": "220aefa3429f7eb9489a1cbc671b0beb02646f0269b8bbe152450567d8db9feb"
+          "bytes": 38406,
+          "sha256": "7201436ca8ea801a8d114b97f592d1b54efa4902b0328c0daa349d6b2cb58787"
         },
         {
           "path": "states/variants/velvet-mogul--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 38659,
-          "sha256": "e94b92e45ac9143a15d0fcff376e8b99b64ac88a83bbc3433ef9f3ede4024958"
+          "bytes": 44914,
+          "sha256": "61ab4a3924a19392e877d8d392e76c3b6927c3521f98112806895107c07e9ce2"
         },
         {
           "path": "states/variants/velvet-mogul--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 44638,
-          "sha256": "94833d4036f197bf4a4ea5db77b4398d5a625cc3610f8f2f92e948ad3c0c3ab8"
+          "bytes": 67740,
+          "sha256": "0cc60b6f70254520dd70372225994876c7dddff14ae51947c60cb3edb4c17313"
         }
       ]
     },
@@ -12735,11 +12735,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 2371505,
-        "sha256": "1be75d20604ec4ae03198b297c5822d680761b80c9a95441684fbc3115b6ed8e"
+        "bytes": 1017406,
+        "sha256": "729dce6e975e60645de41451e87551893627b46db36041532bb8442ad9307bb0"
       },
       "focalPoint": {
         "x": 0.5,
@@ -12758,48 +12758,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 11095,
-          "sha256": "83898e6a7d484084a0d3d3a92203eb644ffd1de57a038552398e1b5af6d4e098"
+          "bytes": 12120,
+          "sha256": "cfc23165c2c84a09481548a393395aea4506e53a65a534aded3807cf1d45632a"
         },
         {
           "path": "states/variants/velvet-mogul--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 13220,
-          "sha256": "af0cff871084304a88610a6f2518b415ae7abf3282c33edefee268a156bdc2ed"
+          "bytes": 16568,
+          "sha256": "2be0d496e28bf194d6259caa07718c37655e2f84fbaf3808267cb2f7901a0229"
         },
         {
           "path": "states/variants/velvet-mogul--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 29605,
-          "sha256": "bdf8580af3463525910a6310e02a293941e27028e2d7f2b23ee3b0144d009ca2"
+          "bytes": 28675,
+          "sha256": "01b391c7c2a175285341aaa8063f093ec78ec5cd543463f3de83a5f8f529845b"
         },
         {
           "path": "states/variants/velvet-mogul--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 34006,
-          "sha256": "89c6a630174d881d731839a213a189eb4826caadbd6046a227d6994154751fe2"
+          "bytes": 40968,
+          "sha256": "0d86884aee33f8e665bda8db9d8f03fd5d977e908a1d3058ee50b0a00659b98a"
         },
         {
           "path": "states/variants/velvet-mogul--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 50452,
-          "sha256": "20f85756be2b38ea0c6d254ed3cc4c09c5162f990f938fa33b0ae99e1c72e18c"
+          "bytes": 47691,
+          "sha256": "dff05768b9407cb1e2fa4631691a55b32b006453147beb2b99041675255d049d"
         },
         {
           "path": "states/variants/velvet-mogul--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 58578,
-          "sha256": "d16a967701309302d4976d8463ec0bd5065e026b375f8bfbfb4d15eecb521f08"
+          "bytes": 71882,
+          "sha256": "c434bfbf26d5e19f7437c62a26634b4db83485e3ea348e6a3d7e6ea0be9bb14f"
         }
       ]
     },
@@ -12815,11 +12815,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/velvet-mogul/weakness.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1750143,
-        "sha256": "8d078d7378feb3a7163036e99e12f61526211a82cd1723135f68bbec054e8fed"
+        "bytes": 974181,
+        "sha256": "b045d1d836c07890fa7da5581377d9b24be5fd1edcf51cbb57f8389081a51764"
       },
       "focalPoint": {
         "x": 0.5,
@@ -12838,48 +12838,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7407,
-          "sha256": "e758f5369d97623a712335868fea48fe762c89c2a2797e57d1c285e0e6457e9f"
+          "bytes": 11216,
+          "sha256": "8385c2c96c437d2db9d79ddcf1567fc09d860e0e1416b8442891c8b08b3589b2"
         },
         {
           "path": "states/variants/velvet-mogul--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9664,
-          "sha256": "c5f38722cf7ec764b59c0447c9e8fe1f663310f08c034817b09b015bba48ed09"
+          "bytes": 15480,
+          "sha256": "12e6b7650abd15dd4e38c772e92feb6581b0c1b9f0847a05ac97cb35f3890cb5"
         },
         {
           "path": "states/variants/velvet-mogul--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 20652,
-          "sha256": "9e5a19e8f303ee12dfe65c49a36aff9c30c32bb832d3806bd03a3afb1ae1699a"
+          "bytes": 26569,
+          "sha256": "c7e52788f2d1285e46bab73a1fdec2c9f5e8b3b9451e3ea84b4926057ffa93ad"
         },
         {
           "path": "states/variants/velvet-mogul--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 24512,
-          "sha256": "390ddce438502a2c20453cf8e2b07c61ead10899394cc69e8d935a1a7de09e94"
+          "bytes": 38512,
+          "sha256": "a6d18c57ed22773d0ef75bfc5363fe3581dfd17b58ef2727eaab43d5dae799ed"
         },
         {
           "path": "states/variants/velvet-mogul--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 35095,
-          "sha256": "a98c2f40359f10e0de42892b9917b206cff809f2fd9a775c80ba7f9bac800e9e"
+          "bytes": 44126,
+          "sha256": "b17e72c976901969d58fdb8f9bdb2b8393d0a9e10dd804fb36746dc0e65bdf27"
         },
         {
           "path": "states/variants/velvet-mogul--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 41762,
-          "sha256": "22eefd0419a2a07bea9113be2cee67d02d034b2feb2219d19e940da298a0a82a"
+          "bytes": 67622,
+          "sha256": "e8b08fa5e8f4dfc8c14d024d660bd7004baba5acb62dbe39491b7cd7ee087f2b"
         }
       ]
     }

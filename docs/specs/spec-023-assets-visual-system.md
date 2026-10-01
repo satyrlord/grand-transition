@@ -64,6 +64,21 @@ The alternate retains its accepted master's slight facial tonal modeling as a
 source-specific decision, without changing the direction for future artwork.
 Metadata registration preserves the reviewed pixels; the existing nine-state
 mappings, skin identifiers and complete asset inventory remain unchanged.
+The four approved Velvet Mogul selections and their twenty matching poses are
+installed. All twenty-four sources retain native 1254-square canvases. The
+default, Boardroom Patriarch and Silk Diplomat face right; Velvet Statesman
+faces left. Each pose used only its own accepted selection as the image
+reference. Metadata registration preserves the reviewed pixels and the
+existing nine-state mappings, skin identifiers and gameplay content.
+The approved Influencer Campaign Livestream background is installed at native
+3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
+nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted
+tonal variation and wall/floor join near 67 percent. The owner authorized an
+exact-16:9 canvas repair of the foreground: four transparent columns on each
+side and two rows above and below the native 1672-by-941 source produce
+1680 by 945. Every original RGBA pixel is unchanged; no artwork is scaled.
+This source-specific repair does not change the generation direction or the
+shared scene geometry.
 The three approved pilot packages use their canonical source paths under
 `src/assets/characters/`. Private research and review material do not ship.
 
@@ -589,14 +604,17 @@ generic provenance. They do not publish private prompts or reference identities.
 
 Opaque scene backgrounds use Flare at native 3840 by 2160.
 The approved Transition-Era Television Studio, Modern Debate Studio,
-County Council Ballroom, Midnight Call-In Studio, and Palace Press Hall artwork is installed with derived runtime variants. The owner accepted the
+County Council Ballroom, Midnight Call-In Studio, Palace Press Hall, and
+Influencer Campaign Livestream artwork is installed with derived runtime variants. The owner accepted the
 first studio's moderator/speech clearance after testing in the game.
 Keep these approved sources and the existing interface geometry. The Modern
 Debate Studio and County Council Ballroom retain their accepted wall and floor
 tonal variation. Midnight Call-In Studio also retains its approved source's
 tonal variation and Romanian city silhouettes. Palace Press Hall retains its
 approved ceremonial architecture, slight tonal variation and separate podiums.
-The two other background replacements remain open.
+Influencer Campaign Livestream retains its approved nighttime palette,
+recording equipment, tonal variation and matching separate streamer desks.
+The Civic Cypher Boxing Ring background replacement remains open.
 Use the accepted flat editorial cartoon rendering of
 the character trial: broad clean shapes, controlled contours, one base tone,
 and one hard-edged shadow tone. Use a sparse highlight only for readability.
@@ -1210,6 +1228,10 @@ A desk or foreground plate uses a native 16:9 transparent master from
 1280 by 720 through 3840 by 2160. Its pixel dimensions can differ from the background. Keep the
 layers aligned through the same normalized camera, geometry, and crop.
 Keep accepted 4K foreground sources. Do not enlarge new foregrounds to 4K.
+The approved Influencer Campaign Livestream foreground is the recorded
+exception for transparent canvas padding: its native 1672-by-941 artwork is
+preserved inside a 1680-by-945 master. Use the repaired master width for its
+runtime variants. Do not describe the padded canvas as native generator output.
 Milestone 026 controls the foundation scenes. Milestone 032 controls the
 seventh scene, which has no foreground plate.
 
@@ -1223,7 +1245,7 @@ background uses native 3840 by 2160 `gpt-image-2.5-flare` output from a research
 text-only design followed by reference edits for composition and floor placement.
 Its generated pixels are installed without resizing or post-generation pixel
 preparation. The foundation backgrounds retain their recorded native
-`gpt-image-2.5-flare` provenance. Existing
+`gpt-image-2.5-flare` provenance. Unchanged
 studio and foundation foregrounds retain their recorded Flare composition,
 extraction, fitting, and green-matte conversion provenance. These are facts
 about installed sources. New generations use the role-based routes above.
@@ -1263,6 +1285,18 @@ byte size, and the hash of each variant that the build uses again. Also do
 checks of its decoded dimensions, format, and byte budget of this time. Reject
 an unknown ID, an incomplete manifest, a changed source, or an incorrect cached
 variant.
+
+For foundation foreground variants, the central interaction rectangle must
+remain fully transparent. Reject any source coverage in this rectangle.
+After resizing, clear only alpha values of 8 or less introduced inside it;
+reject stronger coverage. Preserve the source raster and all other pixels.
+Decode the encoded result and verify the same zero-alpha region, contour and
+border requirements, and lower-body occlusion strips. Try the
+supported lossy quality levels within the existing byte budget. If none gives
+valid AVIF transparency, use verified lossless AVIF within that budget.
+Record `quality: 100` and `lossless: true` for that output and preserve
+these fields when a later selective build reuses it. A failed encoded check
+must not pass by weakening the transparent-region validator.
 
 Build the full manifest again from the contracts of this time, and install the
 full package together. Do checks of this with

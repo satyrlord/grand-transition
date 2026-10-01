@@ -1268,14 +1268,14 @@
       "ownerType": "scene",
       "ownerId": "influencer-campaign-livestream",
       "layerRole": "back",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. Text-only composite followed by reference edits for the deskless background. No upscaling.",
+      "sourceDescription": "OpenAI API, gpt-image-2.5-flare; original flat editorial-cartoon nighttime creator studio; native 3840x2160; no pixel preparation, resizing or upscaling.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "influencer-campaign-livestream.png",
-        "sha256": "d2a82b122cc21181f05964fa92b32a42fcf16fddbf0691497a3c0c06f3fa96bc",
+        "sha256": "493eb20a0fe2192db94277004e72f851649ce8f5eaf354dc050c50c12d1d71c5",
         "width": 3840,
         "height": 2160,
-        "bytes": 5698713,
+        "bytes": 5414457,
         "format": "png"
       },
       "focalPoint": {
@@ -1351,91 +1351,91 @@
           "path": "variants/influencer-campaign-livestream-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 10460,
+          "bytes": 12209,
           "format": "avif",
           "quality": 70,
-          "sha256": "00b9e8a9f8904181c7ac6ccd816e9854e035a3fab380451af2790206f07e63ac"
+          "sha256": "f2ce59528a141a744f55add72ce0bc0be5bfac995d2a895b9d49cec70fcf873f"
         },
         {
           "path": "variants/influencer-campaign-livestream-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 12416,
+          "bytes": 13660,
           "format": "webp",
           "quality": 86,
-          "sha256": "b86da1216a8ed54db35d4da8532ecaff1feda9aa9336793a5b7afdd03677ccc7"
+          "sha256": "9a884225a2bf1a1f0508c513a86f328d68e3893ff7c42567272e3f02cb555df7"
         },
         {
           "path": "variants/influencer-campaign-livestream-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 29363,
+          "bytes": 33453,
           "format": "avif",
           "quality": 70,
-          "sha256": "4396c1b72b00c614e22af5bd1b85c459c826c39bf794bff99156351505448323"
+          "sha256": "cf35259d95385081e5c62dba215ba2c36919d53c4bcb8057aa39e10ae43ddd0f"
         },
         {
           "path": "variants/influencer-campaign-livestream-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 35996,
+          "bytes": 38814,
           "format": "webp",
           "quality": 86,
-          "sha256": "b6270a0b4932c4573560964a7c633de2af75e31f07763b9f0fdd739e17b7ffb5"
+          "sha256": "c556fc041e92bd612989673ebacc8a9844a1de56eb2d2e5b9db03a859e3baf80"
         },
         {
           "path": "variants/influencer-campaign-livestream-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 52512,
+          "bytes": 57817,
           "format": "avif",
           "quality": 70,
-          "sha256": "9a3da2f46358eb768e131006026a54ba857e9335ec06db94047ece4fc48e0975"
+          "sha256": "f98c998394d03fae3b0b0818629d9a9c191b1a1e10a557387908aee4948df898"
         },
         {
           "path": "variants/influencer-campaign-livestream-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 67170,
+          "bytes": 69908,
           "format": "webp",
           "quality": 86,
-          "sha256": "7d40761ab0a6716e44dae0942cb62e210f7af72b8a973e736b05577af3ee5285"
+          "sha256": "d1524e5d8933385f64b043521492f7299e49369c4e34a5458aa9a55afbe3012c"
         },
         {
           "path": "variants/influencer-campaign-livestream-2560x1440.avif",
           "width": 2560,
           "height": 1440,
-          "bytes": 78433,
+          "bytes": 84319,
           "format": "avif",
           "quality": 70,
-          "sha256": "5bf6eedcaf7312eb5b04e045f74a84c182cc9154315e1e111aa85ca5bcf00282"
+          "sha256": "e1e54695ba7f8c97314396068f21fd74c63bf01f7f2b659f9684034183de4d9f"
         },
         {
           "path": "variants/influencer-campaign-livestream-2560x1440.webp",
           "width": 2560,
           "height": 1440,
-          "bytes": 99776,
+          "bytes": 100840,
           "format": "webp",
           "quality": 86,
-          "sha256": "598cb8f6a22ff18284bd8ca178fe15f1099574d849654572b5aad0de001e1f5f"
+          "sha256": "def82f8e3a53411f31735d5c446a08db00ed574d6d23f0977c3b5d2024bbbde3"
         },
         {
           "path": "variants/influencer-campaign-livestream-3840x2160.avif",
           "width": 3840,
           "height": 2160,
-          "bytes": 139739,
+          "bytes": 146078,
           "format": "avif",
           "quality": 70,
-          "sha256": "7942b621d8e9b88f9eafbe74a765d9bc34c51e453734ca61a62ebe2189af08ad"
+          "sha256": "bff6aef285c58aee5057863fd8a47164c161efe9474a9020a7abb28c571be41b"
         },
         {
           "path": "variants/influencer-campaign-livestream-3840x2160.webp",
           "width": 3840,
           "height": 2160,
-          "bytes": 176248,
+          "bytes": 173462,
           "format": "webp",
           "quality": 86,
-          "sha256": "7166c2148e4aa9ccc2dc3756fcfb42a2608e6464f534e080aa80481dddd7abfe"
+          "sha256": "3f37331d8df1fcca9fbb947c488c8aa543708a19389a28535c6a072b9cf82857"
         }
       ]
     },
@@ -1444,14 +1444,14 @@
       "ownerType": "scene",
       "ownerId": "influencer-campaign-livestream",
       "layerRole": "foreground",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon desks from the same OpenAI gpt-image-2.5-flare native 3840x2160 opaque composite. Contour masks extract both desk groups, fitted to shared standing-desk coordinates; repository green-matte conversion supplies antialiased alpha. Native-alpha candidates were not used.",
+      "sourceDescription": "Built-in chat image generator; original editorial-cartoon creator desks; generated native 1672x941; bounded detached-alpha-1 cleanup of 2220 pixels; owner-authorized transparent padding of 4 pixels left/right and 2 pixels top/bottom to 1680x945. Original content pixels retained; no scaling or interpolation.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "influencer-campaign-livestream-foreground.png",
-        "sha256": "96f483d1265caf4451701f737a3216560a2e31ba9c0eb098941ca702b7a21271",
-        "width": 3840,
-        "height": 2160,
-        "bytes": 1258452,
+        "sha256": "bfde6e7d4b8bd4859b078582c2b5a95a572fb7045b8f949ec7ab18e7aa97b8fc",
+        "width": 1680,
+        "height": 945,
+        "bytes": 361416,
         "format": "png"
       },
       "focalPoint": {
@@ -1537,91 +1537,56 @@
           "path": "variants/influencer-campaign-livestream-foreground-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 2267,
+          "bytes": 4457,
           "format": "avif",
           "quality": 70,
-          "sha256": "2c0b795787a7187a85aac5a7063c45faa776f046cc917f050382116665ae4ff9"
+          "sha256": "7993953f55ae0af2d1e17956484ea3963fa2a267c9736cc0e58df330e616b9b8"
         },
         {
           "path": "variants/influencer-campaign-livestream-foreground-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 2798,
+          "bytes": 8828,
           "format": "webp",
           "quality": 86,
-          "sha256": "0865e42e8d2b3e1796e11868e3cc9ffe191c039907de8a76652bd14a40bb3b3a"
+          "sha256": "a3f755af9d9cb692ad98d36870c0ee0c0da61438fc0b3b315fd94a99723cfc9a"
         },
         {
           "path": "variants/influencer-campaign-livestream-foreground-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 3328,
+          "bytes": 11345,
           "format": "avif",
           "quality": 70,
-          "sha256": "a542bedbce87b7234c9e5bdfe5c742e42653e849d4188162221116175b37b061"
+          "sha256": "fb6e7064fe6c873ee828385b07d8005a6b506b17568b53b86b6c10e76708af5f"
         },
         {
           "path": "variants/influencer-campaign-livestream-foreground-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 5612,
+          "bytes": 23530,
           "format": "webp",
           "quality": 86,
-          "sha256": "5033974816d1894a399127a31b9ca2d39a8fcafd170f84e73e2f814139af9cd4"
+          "sha256": "82f63d9791785c22392fc2699b3aba8b3a77bc2075d2ed829c9faa22e8e0e0b4"
         },
         {
-          "path": "variants/influencer-campaign-livestream-foreground-1920x1080.avif",
-          "width": 1920,
-          "height": 1080,
-          "bytes": 4691,
+          "path": "variants/influencer-campaign-livestream-foreground-1680x945.avif",
+          "width": 1680,
+          "height": 945,
+          "bytes": 190231,
           "format": "avif",
-          "quality": 70,
-          "sha256": "8f84be8a59e050d30f9e201aa6e94f7135d6b5637b14472893d4ab8a726fc370"
+          "quality": 100,
+          "lossless": true,
+          "sha256": "e14fb25ead97c332b12e2f7f134bfd9f946e4918aeaf27508d910848232120a4"
         },
         {
-          "path": "variants/influencer-campaign-livestream-foreground-1920x1080.webp",
-          "width": 1920,
-          "height": 1080,
-          "bytes": 10304,
+          "path": "variants/influencer-campaign-livestream-foreground-1680x945.webp",
+          "width": 1680,
+          "height": 945,
+          "bytes": 34136,
           "format": "webp",
           "quality": 86,
-          "sha256": "a73322cd07409b19a608b9ddefc78d1cfe1b6e88f9a8c088219dd7e44c4bb5a7"
-        },
-        {
-          "path": "variants/influencer-campaign-livestream-foreground-2560x1440.avif",
-          "width": 2560,
-          "height": 1440,
-          "bytes": 6488,
-          "format": "avif",
-          "quality": 70,
-          "sha256": "f5b9058a0f28c0483716f61fd1966f165ee866ccf6288b52e23500df42e60c90"
-        },
-        {
-          "path": "variants/influencer-campaign-livestream-foreground-2560x1440.webp",
-          "width": 2560,
-          "height": 1440,
-          "bytes": 15288,
-          "format": "webp",
-          "quality": 86,
-          "sha256": "4fce0f6e8aca9b7d8a4ca5a37ad6f68282169b5f56fd75d48928f12c1d800f24"
-        },
-        {
-          "path": "variants/influencer-campaign-livestream-foreground-3840x2160.avif",
-          "width": 3840,
-          "height": 2160,
-          "bytes": 10723,
-          "format": "avif",
-          "quality": 70,
-          "sha256": "12d1cb8aa35db2ac6852edd6d2fa56fc1d0e21c5298a176d221d868cc996e953"
-        },
-        {
-          "path": "variants/influencer-campaign-livestream-foreground-3840x2160.webp",
-          "width": 3840,
-          "height": 2160,
-          "bytes": 30132,
-          "format": "webp",
-          "quality": 86,
-          "sha256": "ec0c077d43707c804a6f32dfe6b8ac1e4b1159c690b25ce6f776f91f9a293f44"
+          "sha256": "e5a73c3ac666210b7303de9e49afe9ae40902cc37e8b80a74b1f256f42fa626e"
         }
       ]
     },

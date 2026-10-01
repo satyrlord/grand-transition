@@ -95,19 +95,19 @@
     },
     "velvet-mogul--boardroom-patriarch": {
       "facing": "right",
-      "sourceSha256": "dc0b1774fc35c4946720ff66d67f212bdb1b002c67524d14f793b126fa7988ec"
+      "sourceSha256": "1caf1dec09a17574589bb6be3bff24090ed496bbd35572190198c5f79a6ecd7d"
     },
     "velvet-mogul--silk-diplomat": {
       "facing": "right",
-      "sourceSha256": "fb5668db8d45a3b24ed92a36ac16a97dbb5ee647f5f876879a828fc50d01ba02"
+      "sourceSha256": "717dc1efa6b37bcf595c57ba87898f55195ad0519a6d5a173ffe7d7653e28385"
     },
     "velvet-mogul--velvet-statesman": {
       "facing": "left",
-      "sourceSha256": "0cbdfbed4f0353fa7cd802ae7eed769126a613db9eab20637fa1e53e64e5b517"
+      "sourceSha256": "f6fcfb10454fb0ba12f4d5535920912919412693159f19693cf6178003b514cd"
     },
     "velvet-mogul": {
       "facing": "right",
-      "sourceSha256": "1a1967994cfffc65876efd46376f66ec8ce97faf7aa64b25f059990ab4c6371a"
+      "sourceSha256": "fd9d730cf30c45e76aef525e8100a327810da520f7ea1a9d35b68af8f6e5bcd2"
     },
     "government-ai--schoolteacher": {
       "facing": "left",

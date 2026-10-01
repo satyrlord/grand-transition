@@ -7,8 +7,9 @@ Chairman selections and their five-pose packages, then Thunder Tribune's
 default selection and five poses. The owner also approved the alternate
 Thunder Tribune selection and authorized its complete package integration.
 Both Midnight Sensationalist masters also have owner approval, with generation
-and integration of their five-pose packages authorized. All nine packages are
-installed with their reviewed matching poses. Use these
+and integration of their five-pose packages authorized. The four Velvet Mogul
+masters and their twenty matching poses also have owner approval for integration.
+All thirteen packages are installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
 
@@ -23,6 +24,10 @@ character's identity into another.
 | Thunder Tribune alternate | [Selection](../../src/assets/characters/thunder-tribune--alternate.png) | [Five poses](../../src/assets/characters/states/thunder-tribune--alternate/) |
 | Midnight Sensationalist | [Selection](../../src/assets/characters/midnight-sensationalist.png) | [Five poses](../../src/assets/characters/states/midnight-sensationalist/) |
 | Midnight Sensationalist alternate | [Selection](../../src/assets/characters/midnight-sensationalist--alternate.png) | [Five poses](../../src/assets/characters/states/midnight-sensationalist--alternate/) |
+| Velvet Mogul | [Selection](../../src/assets/characters/velvet-mogul.png) | [Five poses](../../src/assets/characters/states/velvet-mogul/) |
+| Velvet Mogul Boardroom Patriarch | [Selection](../../src/assets/characters/velvet-mogul--boardroom-patriarch.png) | [Five poses](../../src/assets/characters/states/velvet-mogul--boardroom-patriarch/) |
+| Velvet Mogul Silk Diplomat | [Selection](../../src/assets/characters/velvet-mogul--silk-diplomat.png) | [Five poses](../../src/assets/characters/states/velvet-mogul--silk-diplomat/) |
+| Velvet Mogul Velvet Statesman | [Selection](../../src/assets/characters/velvet-mogul--velvet-statesman.png) | [Five poses](../../src/assets/characters/states/velvet-mogul--velvet-statesman/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -37,8 +42,9 @@ characters, poses, desks, props, and foregrounds. Preserve approved robot art.
 
 Artwork approval and integration verification are separate. Specification 023
 records the current package status. The remaining human-roster rollout and
-two scene backgrounds are unfinished. The approved Transition-Era Television
-Studio, Modern Debate Studio, County Council Ballroom, Midnight Call-In Studio, and Palace Press Hall replacements are
+Civic Cypher Boxing Ring background are unfinished. The approved Transition-Era
+Television Studio, Modern Debate Studio, County Council Ballroom, Midnight Call-In
+Studio, Palace Press Hall, and Influencer Campaign Livestream replacements are
 installed. The owner also accepted the first studio's clearance in the game. Opaque scene backgrounds
 use the approved 4K Flare route.
 
@@ -51,6 +57,13 @@ Palace Press Hall uses pale carved stone, shallow arcades, tall paneled doors,
 a coffered ceiling and a geometric floor. Keep its approved source, slight
 tonal variation, and existing separate podium foreground.
 
+Influencer Campaign Livestream uses a nighttime creator room with charcoal and
+muted teal surfaces, acoustic panels, ring lights, vertical reaction screens,
+merchandise and wellness props. Its separate streamer desks use matching
+materials, a sound-control pad, microphone, phone and tumbler. The approved
+foreground retains its generated pixels inside an exact 1680-by-945 canvas
+with transparent padding; Specification 023 records this source-specific repair.
+
 Both Thunder Tribune packages use their angry delivery pose for delivery
 and comeback. Their native 1254-square sources retain their reviewed pixels.
 The alternate keeps the accepted selection's source-specific tonal modeling;
@@ -61,3 +74,9 @@ Their paper stacks and hand gestures stay inside the visible match window.
 The default selection includes a reviewed chat margin correction for its
 smallest runtime variant. Each pose used its original accepted selection as
 the only image reference; all sources retain their native 1254-square canvas.
+
+All four Velvet Mogul packages retain native 1254-square sources. The default,
+Boardroom Patriarch and Silk Diplomat face right; Velvet Statesman faces left.
+Each pose uses only its own approved selection as the image reference. Preserve
+the default's single pipe, Silk Diplomat's glasses and watch, Velvet Statesman's
+short attached watch chain, and each skin's approved costume and proportions.

@@ -4,8 +4,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import replacementBaseline from './scene-replacement-baseline.json' with { type: 'json' };
-import { readGenerationSource } from './asset-pixels.ts';
+import { hasNativeAlphaProvenance, readGenerationSource } from './asset-pixels.ts';
 import { mapWithConcurrency } from './build-character-assets.ts';
+import { inspectAlpha, REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES } from './validate-scene-assets.ts';
 
 export const SCENE_MASTER_NAMES = Object.freeze([
   'civic-cypher-boxing-ring.png',
@@ -59,6 +60,7 @@ export type SceneVariant = {
   bytes: number;
   format: SceneFormat;
   quality: number;
+  lossless?: true;
   sha256: string;
 };
 type SceneMaster = {
@@ -177,30 +179,105 @@ const FORMAT_SETTINGS = Object.freeze({
   webp: Object.freeze({ qualities: [86, 82, 78, 74, 70, 66], effort: 6 }),
 });
 
-async function encodeWithinBudget(input: Buffer, size: SceneSize, format: SceneFormat) {
+function centralAlphaOffsets(width: number, height: number): number[] {
+  const rectangle = SHARED_SAFE_RECTANGLES.centralInteraction;
+  const left = Math.ceil(rectangle.x * width - 0.5);
+  const right = Math.ceil((rectangle.x + rectangle.width) * width - 0.5);
+  const top = Math.ceil(rectangle.y * height - 0.5);
+  const bottom = Math.ceil((rectangle.y + rectangle.height) * height - 0.5);
+  const offsets: number[] = [];
+  for (let y = top; y < bottom; y += 1) {
+    for (let x = left; x < right; x += 1) offsets.push((y * width + x) * 4 + 3);
+  }
+  return offsets;
+}
+
+async function hasCentralAlpha(input: Buffer): Promise<boolean> {
+  const { data, info } = await sharp(input)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  return centralAlphaOffsets(info.width, info.height).some((offset) => data[offset] !== 0);
+}
+
+async function validForegroundAlpha(input: Buffer, nativeAlpha: boolean): Promise<boolean> {
+  try {
+    await inspectAlpha(input, true, 'Encoded foreground', {
+      nativeAlpha,
+      transparentRectangles: [
+        { name: 'centralInteraction', rectangle: SHARED_SAFE_RECTANGLES.centralInteraction },
+      ],
+      occlusionRectangles: REQUIRED_FOREGROUND_OCCLUSION_RECTANGLES,
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function encodeSceneVariant(
+  input: Buffer,
+  size: SceneSize,
+  format: SceneFormat,
+  id: string,
+): Promise<{ output: Buffer; quality: number; lossless?: true }> {
+  const clearCenter = id.endsWith('-foreground');
+  const nativeAlpha = hasNativeAlphaProvenance(input);
+  let pipeline = sharp(input).resize({
+    width: size.width,
+    height: size.height,
+    fit: 'fill',
+    kernel: sharp.kernel.lanczos3,
+    withoutEnlargement: true,
+  });
+  if (clearCenter) {
+    if (await hasCentralAlpha(input)) {
+      throw new Error(`${id}: source central interaction rectangle must be fully transparent.`);
+    }
+    const { data, info } = await pipeline.ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+    // Lanczos can leave faint ringing inside an originally empty safe region.
+    // Clear only that resize residue; never erase source content or a visible intrusion.
+    for (const offset of centralAlphaOffsets(info.width, info.height)) {
+      if (data[offset] > 8) {
+        throw new Error(
+          `${id}: resize reaches the central interaction rectangle. Increase source clearance.`,
+        );
+      }
+      data[offset] = 0;
+    }
+    pipeline = sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } });
+  }
   const settings = FORMAT_SETTINGS[format];
   for (const quality of settings.qualities) {
-    let image = sharp(input).resize({
-      width: size.width,
-      height: size.height,
-      fit: 'fill',
-      kernel: sharp.kernel.lanczos3,
-      withoutEnlargement: true,
-    });
-    image =
+    const image =
       format === 'avif'
-        ? image.avif({ quality, effort: settings.effort, chromaSubsampling: '4:4:4' })
-        : image.webp({
+        ? pipeline.clone().avif({ quality, effort: settings.effort, chromaSubsampling: '4:4:4' })
+        : pipeline.clone().webp({
             quality,
             effort: settings.effort,
             alphaQuality: 100,
             smartSubsample: false,
           });
     const output = await image.toBuffer();
-    if (output.length <= SCENE_BYTE_BUDGETS[format]) return { output, quality };
+    if (
+      output.length <= SCENE_BYTE_BUDGETS[format] &&
+      (!clearCenter || (await validForegroundAlpha(output, nativeAlpha)))
+    )
+      return { output, quality };
+  }
+  if (clearCenter && format === 'avif') {
+    const output = await pipeline
+      .avif({ quality: 100, effort: settings.effort, lossless: true, chromaSubsampling: '4:4:4' })
+      .toBuffer();
+    if (
+      output.length <= SCENE_BYTE_BUDGETS.avif &&
+      (await validForegroundAlpha(output, nativeAlpha))
+    ) {
+      return { output, quality: 100, lossless: true };
+    }
   }
   throw new Error(
-    `${format.toUpperCase()} ${size.width}x${size.height} exceeds its ${SCENE_BYTE_BUDGETS[format]}-byte budget at all approved quality levels.`,
+    `${format.toUpperCase()} ${size.width}x${size.height} cannot meet its ${SCENE_BYTE_BUDGETS[format]}-byte budget${clearCenter ? ' and fully transparent central interaction rectangle' : ''} at approved settings.`,
   );
 }
 
@@ -328,7 +405,10 @@ async function verifiedCachedVariants(
         variant.width !== requirement.width ||
         variant.height !== requirement.height ||
         variant.format !== requirement.format ||
-        !FORMAT_SETTINGS[requirement.format].qualities.includes(variant.quality)
+        (variant.lossless !== undefined && variant.lossless !== true) ||
+        (variant.lossless === true
+          ? requirement.format !== 'avif' || variant.quality !== 100 || !id.endsWith('-foreground')
+          : !FORMAT_SETTINGS[requirement.format].qualities.includes(variant.quality))
       ) {
         throw new Error(`Cached scene variant "${requirement.path}" has invalid metadata.`);
       }
@@ -350,10 +430,16 @@ async function verifiedCachedVariants(
           `Cached scene variant "${requirement.path}" failed byte, hash, dimension, or format validation.`,
         );
       }
+      if (id.endsWith('-foreground') && (await hasCentralAlpha(output))) {
+        throw new Error(
+          `Cached scene variant "${requirement.path}" has alpha in its central interaction rectangle.`,
+        );
+      }
       variants.push({
         ...requirement,
         bytes: output.length,
         quality: variant.quality,
+        ...(variant.lossless ? { lossless: true as const } : {}),
         sha256: sha256(output),
         output,
       });
@@ -419,8 +505,8 @@ export async function buildSceneAssets({
         const reused = cached
           .get(master.identity.id)
           ?.find((variant) => variant.width === size.width && variant.format === format);
-        const { output, quality } =
-          reused ?? (await encodeWithinBudget(master.input, size, format));
+        const { output, quality, lossless } =
+          reused ?? (await encodeSceneVariant(master.input, size, format, master.identity.id));
         const outputName = `${master.identity.id}-${size.width}x${size.height}.${format}`;
         await writeFile(path.join(variantsRoot, outputName), output);
         return {
@@ -430,6 +516,7 @@ export async function buildSceneAssets({
           bytes: output.length,
           format,
           quality,
+          ...(lossless ? { lossless: true as const } : {}),
           sha256: sha256(output),
         };
       },

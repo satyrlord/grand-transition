@@ -142,18 +142,20 @@ describe('scene asset resolver', () => {
       ...asset.avif.variants,
       ...asset.webp.variants,
     ]);
-    expect(variants).toHaveLength(130);
+    expect(variants).toHaveLength(126);
 
     for (const asset of sceneAssetManifest) {
-      expect(asset.width).toBe(3840);
+      expect(asset.width).toBe(
+        asset.id === 'influencer-campaign-livestream-foreground' ? 1680 : 3840,
+      );
       expect(asset.height).toBe((asset.width * 9) / 16);
       expect(asset.url).toBe(asset.webp.fallbackUrl);
       expect(asset.avif.srcSet).toMatch(/640w/u);
       expect(asset.avif.srcSet).toMatch(/1280w/u);
-      expect(asset.avif.srcSet).toMatch(/1920w/u);
+      expect(asset.avif.srcSet).toContain(asset.width === 1680 ? '1680w' : '1920w');
       expect(asset.webp.srcSet).toMatch(/640w/u);
       expect(asset.webp.srcSet).toMatch(/1280w/u);
-      expect(asset.webp.srcSet).toMatch(/1920w/u);
+      expect(asset.webp.srcSet).toContain(asset.width === 1680 ? '1680w' : '1920w');
       expect(asset.avif.srcSet).not.toMatch(/\.png/u);
       expect(asset.webp.srcSet).not.toMatch(/\.png/u);
       expect(asset.crop.core).toEqual({
@@ -174,13 +176,13 @@ describe('scene asset resolver', () => {
     }
   });
 
-  test('serves every scene layer at every size through 4K', () => {
+  test('serves every scene layer through its native source size without upscaling', () => {
     for (const asset of sceneAssetManifest) {
       for (const source of [asset.avif, asset.webp]) {
-        expect(source.variants.map((variant) => variant.width)).toEqual([
-          640, 1280, 1920, 2560, 3840,
-        ]);
-        expect(source.fallbackUrl).toContain('3840x2160');
+        expect(source.variants.map((variant) => variant.width)).toEqual(
+          asset.width === 1680 ? [640, 1280, 1680] : [640, 1280, 1920, 2560, 3840],
+        );
+        expect(source.fallbackUrl).toContain(`${asset.width}x${asset.height}`);
       }
     }
   });
@@ -219,8 +221,8 @@ describe('scene asset resolver', () => {
         expect(asset.ownerId).toBe(id);
         expect(asset.kind).toBe('manifest');
         expect(asset.focalRectangles.moderatorFace).toBeNull();
-        expect(asset.avif.variants).toHaveLength(5);
-        expect(asset.webp.variants).toHaveLength(5);
+        expect(asset.avif.variants).toHaveLength(asset.width === 1680 ? 3 : 5);
+        expect(asset.webp.variants).toHaveLength(asset.width === 1680 ? 3 : 5);
         expect(asset.url).toContain(id);
         expect(asset.url).not.toContain('title-proscenium');
       }

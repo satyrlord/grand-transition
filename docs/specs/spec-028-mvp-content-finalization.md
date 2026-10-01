@@ -164,15 +164,19 @@ Warm color is local to authored materials and light, not a color grade for the f
   Its quiet geometric floor and central space support the interface. Keep the approved slight tonal variation and wall/floor join near 66 percent under Specification 023.
   The two podiums remain in the existing separate foreground.
   Its phrase themes are statements, silence, coalition, protocol, mandate, and national interest.
-- **Influencer Campaign Livestream:** The scene contains ring lights, vertical screens, donation alerts, wellness props, merchandise, and floating reactions.
+- **Influencer Campaign Livestream:** The approved nighttime creator room uses charcoal and muted teal walls, acoustic panels, local cyan/violet lights, and a small dark window.
+  It contains ring lights, vertical reaction and donation screens, wellness props and merchandise. Floating reactions remain decorative motion.
+  Two separate streamer desks use matching materials and hold a sound-control pad, short microphone, phone and tumbler.
+  Keep the accepted tonal variation and wall/floor join near 67 percent under Specification 023.
   Its phrase themes are algorithms, sovereignty, podcast evidence, ancient energy, clips, and shadow bans.
 
 Each scene has a layered master, landscape crops, light, motion, and a music treatment.
 It also has 35 eligible phrase-pool IDs: 34 scene-restricted cards and the global continuation.
 All six packages use opaque back masters of 3840x2160.
 Foregrounds use native transparent 16:9 masters of at least 1280x720; existing 4K foregrounds remain valid.
+The approved Influencer foreground uses the source-specific transparent canvas repair in Specification 023: native 1672x941 artwork inside a 1680x945 master, with no artwork scaling.
 Background runtime widths are 640, 1280, 1920, 2560, and 3840 pixels in the two formats.
-Foreground widths use those targets only up to the source width and include the native width.
+Foreground widths use those targets only up to the registered source width and include that width.
 Use the built-in chat generator for foregrounds and Flare only for opaque 4K backgrounds.
 The four foundation foreground IDs are `county-council-ballroom-foreground`, `midnight-call-in-studio-foreground`, `palace-press-hall-foreground`, and `influencer-campaign-livestream-foreground`.
 Each transparent foreground stays in the shared scene plane, and it keeps the central interaction rectangle clear.
