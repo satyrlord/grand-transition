@@ -1764,11 +1764,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "midnight-sensationalist--alternate.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1676749,
-        "sha256": "68057a8d77f2dc94a11887bbbee8a67d3fbfc7b92c4ef4da42b90d50101088c6"
+        "bytes": 573622,
+        "sha256": "2cac3d15c9cd240a912c87dc6536ac6636161377a92271bca359abaa3d485b86"
       },
       "focalPoint": {
         "x": 0.5,
@@ -1787,9 +1787,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 3617,
-          "sha256": "d8996a3e0163ffb9415a30f70b4a1572622bec1e1cdd4b426ef3651518b9c8f4"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 14076,
+          "sha256": "5137e8ea8eb0c56178fcdc8be96e70a67fb565174764801c48d2cb2c4106d4c3"
         },
         {
           "path": "variants/midnight-sensationalist--alternate-128x128.webp",
@@ -1797,17 +1798,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 4398,
-          "sha256": "244cfab06f135510bddf64b94dd7849cf6de0680ba9de073cf37bc86e0319a07"
+          "bytes": 4470,
+          "sha256": "a33702b5848913ae1ed96f611a1ce05956115feeae51e7b676bea7a4c2f9cd38"
         },
         {
           "path": "variants/midnight-sensationalist--alternate-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 7372,
-          "sha256": "a34c933944fd84e1a4211433a0f8fc13144eb5386e1279ec315fc0a73c033cbf"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 33414,
+          "sha256": "7b2a22c5113cf56b38435e1b58a3e16bf13465bbf9d63dda14d4e9dcb507c169"
         },
         {
           "path": "variants/midnight-sensationalist--alternate-256x256.webp",
@@ -1815,17 +1817,17 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 9792,
-          "sha256": "8583563aa4fb53060531da24a637a54c9264bc6533e1f96190dbcc9bf5ccae28"
+          "bytes": 9418,
+          "sha256": "9d0f49d0d137744b1470222f1123053172c9ec9d296f13342f12d32a3e170fdf"
         },
         {
           "path": "variants/midnight-sensationalist--alternate-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "quality": 70,
-          "bytes": 9261,
-          "sha256": "e87c62e4a96cf6fe909fd7086f1b8b3cbf7a5f69ce9df1942914eb3db2804086"
+          "quality": 90,
+          "bytes": 13539,
+          "sha256": "8b05cc9483cf88ee9bf350973f959fb797b9d16c5e6ad3f0cf36b5829b614931"
         },
         {
           "path": "variants/midnight-sensationalist--alternate-320x320.webp",
@@ -1833,8 +1835,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 12622,
-          "sha256": "27d22e0a2e3bf8167991f3d558b1466f5dc071c44eb52b9efab4d15bcee7376c"
+          "bytes": 12336,
+          "sha256": "88886add264b12f68666223f9d3ecd377b9d73651a867408d23ec1062c1b4e5d"
         },
         {
           "path": "variants/midnight-sensationalist--alternate-640x640.avif",
@@ -1842,8 +1844,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 24249,
-          "sha256": "68678bdb17e88b7077fb73df9248d56a8570cedcd68e99b76ca7593a15507682"
+          "bytes": 20103,
+          "sha256": "77033b50889177ded0e77e627fb37070bd3b8b583438864ba22d7e2f28567b36"
         },
         {
           "path": "variants/midnight-sensationalist--alternate-640x640.webp",
@@ -1851,8 +1853,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 31452,
-          "sha256": "c42648786e6e1027465b2c3030334f2676369ae18bab74d19f75710e50f617cf"
+          "bytes": 30506,
+          "sha256": "8081148db8d4de56d07729bd690612e7b85814ed467998ad251f79905ed20b7b"
         },
         {
           "path": "variants/midnight-sensationalist--alternate-960x960.avif",
@@ -1860,8 +1862,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 40002,
-          "sha256": "1d852e9e18241cf2240680546eab238b1f557c3dfe022924b5f2968cb34227cc"
+          "bytes": 34886,
+          "sha256": "b834a122703abba1104d2341ff2000a4cc17399dbe66b556125681f47e1d4b50"
         },
         {
           "path": "variants/midnight-sensationalist--alternate-960x960.webp",
@@ -1869,8 +1871,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 52370,
-          "sha256": "536d6390c1ae8545bb474ed9f02bfd587dc81f2f28ee34a3109afece5aa56e38"
+          "bytes": 54606,
+          "sha256": "4cb1c0a082d7706a891c4fbbc0c7da398f3aaf697b27433c093280de3320427d"
         }
       ]
     },
@@ -1887,11 +1889,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "midnight-sensationalist.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1736779,
-        "sha256": "33b43f56a61ac9ac220561d11a74573e813772ec498e523d50d22a469885bc9e"
+        "bytes": 761511,
+        "sha256": "9d9461d5ffa1edaaaa1343ee5e65c8ec5efae99f528e4a8c2c4426b5362c89e0"
       },
       "focalPoint": {
         "x": 0.5,
@@ -1910,9 +1912,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 2990,
-          "sha256": "4ba4ad35b9959029d4c9571d78efea2d24f247ca0c61f6de18f16291fd332aa1"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 14962,
+          "sha256": "a693cc03580ff3555890fafc79dc4fc5114848bf7bf54774067e8ae1fdb8610f"
         },
         {
           "path": "variants/midnight-sensationalist-128x128.webp",
@@ -1920,17 +1923,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 3616,
-          "sha256": "899ea7142de32283af32e1e053eb32bed123a17fff2f0f695db007ae5828e9f7"
+          "bytes": 4812,
+          "sha256": "a8dce5041508766abc80e32d6018789752c07d8b7918930566f066469b772350"
         },
         {
           "path": "variants/midnight-sensationalist-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 5985,
-          "sha256": "790d123ed88bb981cfb7ae44ccb3b046c0a3f7d2e542f5ed7ba6fb1beada2ece"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 36291,
+          "sha256": "1a2349f7a53d8c4192b82bd201e086b1c9a4f010617337f5db8ed9459b8eee63"
         },
         {
           "path": "variants/midnight-sensationalist-256x256.webp",
@@ -1938,8 +1942,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 7842,
-          "sha256": "6e66769a5d86922a64c1067b3281ca604c974ce42ca82ebadcdc2f28d99e4636"
+          "bytes": 10676,
+          "sha256": "abde7f57c567d14136a17ff3b3c4bbb2365c081514e3efb7e65955ba2355d24c"
         },
         {
           "path": "variants/midnight-sensationalist-320x320.avif",
@@ -1947,8 +1951,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 8131,
-          "sha256": "29c2cf85ff2f47c672e129feaa554b7ba978baa44fec9897a2313ca05db06154"
+          "bytes": 9614,
+          "sha256": "ffb6286a120914b7a662b942d74e53fb92fd8c7ca89b377f30c458ef3c290332"
         },
         {
           "path": "variants/midnight-sensationalist-320x320.webp",
@@ -1956,8 +1960,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 10218,
-          "sha256": "f4fcaa339bee171449744b3e16edd2ab805b213219d25dddc41d053f457cba83"
+          "bytes": 14404,
+          "sha256": "cc1d2e28160febd9d36ef79c123875357367211244a0130ddd24a35c928dfb0f"
         },
         {
           "path": "variants/midnight-sensationalist-640x640.avif",
@@ -1965,8 +1969,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 21104,
-          "sha256": "be766f33c4cc124a88437082ab1bde62e69f3409f96e620d0522515ceda0fcc0"
+          "bytes": 23222,
+          "sha256": "7855254fe8b7dcba81da07e1fb0dfdc040c689e15b737453c73814e49d84b737"
         },
         {
           "path": "variants/midnight-sensationalist-640x640.webp",
@@ -1974,8 +1978,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 26186,
-          "sha256": "7d81a819de6578507ac8a82f4ab637f283d16dd87addfe5bea54b95d9c009dc6"
+          "bytes": 35298,
+          "sha256": "bdb0a1eadeb3501b384b2231ef4132ffbc0a66f44d167609b704d78e0a0dda08"
         },
         {
           "path": "variants/midnight-sensationalist-960x960.avif",
@@ -1983,8 +1987,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 34865,
-          "sha256": "50ec844d7b755b52123dd762836c5272028563209ef074a3f6af60d301b0d212"
+          "bytes": 39441,
+          "sha256": "2c1daa53e8d01f4908a24987c740ee9e5be62e75ef9bdc1ecd3455de0730cbbd"
         },
         {
           "path": "variants/midnight-sensationalist-960x960.webp",
@@ -1992,8 +1996,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 43456,
-          "sha256": "11e9a1f383ba219046370eb5d53c5902a87805188d0e30cf6beb20c78925a2b3"
+          "bytes": 63058,
+          "sha256": "f66a052314df12d90a182693fd3f7770303eccbf1ff5d3ae78e9e63acae9f7a5"
         }
       ]
     },

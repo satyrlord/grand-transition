@@ -48,6 +48,22 @@ modest Romanian cable studio, older broadcast props, and a layered city
 skyline with restrained Romanian roof silhouettes. Preserve the approved
 source's tonal variation. This acceptance is specific to this source and does
 not change the flat-shading direction for future artwork.
+The owner-approved Palace Press Hall background is installed at native
+3840 by 2160 with derived variants and its existing podium foreground.
+Its Romanian ceremonial architecture includes pale carved piers, shallow
+arcades, paneled doors and a coffered ceiling. Retain the accepted slight
+tonal variation and wall/floor join near 66 percent as source-specific
+decisions. The manifest geometry and interface placement remain unchanged.
+The Midnight Sensationalist default and alternate selections and their five
+reviewed matching poses are installed under the authorized package integration.
+All twelve sources use native 1254-square canvases and face left. The default
+selection includes a reviewed chat margin correction for the 128-pixel runtime
+variant. Each pose used only its original accepted selection as the image
+reference. Keep the reviewed identity, paper-hand continuity and prop clearance.
+The alternate retains its accepted master's slight facial tonal modeling as a
+source-specific decision, without changing the direction for future artwork.
+Metadata registration preserves the reviewed pixels; the existing nine-state
+mappings, skin identifiers and complete asset inventory remain unchanged.
 The three approved pilot packages use their canonical source paths under
 `src/assets/characters/`. Private research and review material do not ship.
 
@@ -573,12 +589,14 @@ generic provenance. They do not publish private prompts or reference identities.
 
 Opaque scene backgrounds use Flare at native 3840 by 2160.
 The approved Transition-Era Television Studio, Modern Debate Studio,
-County Council Ballroom, and Midnight Call-In Studio artwork is installed with derived runtime variants. The owner accepted the
+County Council Ballroom, Midnight Call-In Studio, and Palace Press Hall artwork is installed with derived runtime variants. The owner accepted the
 first studio's moderator/speech clearance after testing in the game.
 Keep these approved sources and the existing interface geometry. The Modern
 Debate Studio and County Council Ballroom retain their accepted wall and floor
 tonal variation. Midnight Call-In Studio also retains its approved source's
-tonal variation and Romanian city silhouettes. The three other background replacements remain open.
+tonal variation and Romanian city silhouettes. Palace Press Hall retains its
+approved ceremonial architecture, slight tonal variation and separate podiums.
+The two other background replacements remain open.
 Use the accepted flat editorial cartoon rendering of
 the character trial: broad clean shapes, controlled contours, one base tone,
 and one hard-edged shadow tone. Use a sparse highlight only for readability.

@@ -9,8 +9,7 @@ description: Generate, review, or integrate Grand Transition character selection
 
 Read `AGENTS.md`, `DESIGN.md`, Specification 023, the selected character studies, and the relevant asset inventory.
 Use the character and skin identifiers in the authorized task.
-Keep unrelated assets and approved robot art unchanged.
-Apply the user's limits on edits, generation, and tests.
+Keep unrelated assets and approved art unchanged.
 
 - **Review:** Examine the selected files without generation or shipping edits.
 - **Selection:** Generate and review the selected portraits.
@@ -20,12 +19,11 @@ An instruction to generate artwork authorizes the necessary chat requests in tha
 Do not add a numeric approval form or an API stage.
 Honor a request limit when the user gives one.
 Generate one candidate at a time.
-After a visible defect, make at most one corrective request unless the user gives a different limit.
-Do not repeat a request whose result is unknown.
+After a visible defect, make how many corrective request you need unless the user gives a specific limit.
 
 ## Use the approved direction and route
 
-Use the built-in chat image generator for all character selections and poses.
+Use the built-in chat image generator for all character selections, props and poses.
 Request one transparent Portable Network Graphics (PNG) image as the shipping candidate.
 Use a native square source of at least 1024 pixels per edge.
 Keep a larger native source when it is available.
@@ -41,8 +39,6 @@ Use large props that stay visible in the game.
 Keep face and body rendering consistent.
 Do not use photographic skin detail, realistic portrait shading, or one repeated head template.
 
-Complete the three-character style trial before roster expansion.
-Use Football Tycoon, EU-Funds Alchemist, and Luxury Minister unless the user changes the trial scope.
 Show the actual artwork at source, roster, setup, and match scales.
 Get the product owner's acceptance of that artwork before bulk regeneration.
 The product owner accepted the flat editorial cartoon rendering direction from the trial.

@@ -160,7 +160,9 @@ Warm color is local to authored materials and light, not a color grade for the f
   Its scenic panel contains layered low-rise and mid-rise city silhouettes, pitched roofs and restrained Romanian tower shapes. Do not replace the skyline with a detailed landmark facade.
   Keep the approved source's tonal variation under Specification 023 and the existing separate telephone foreground.
   Its phrase themes are ratings, sources, callers, footage, commercials, and hidden tapes.
-- **Palace Press Hall:** The scene contains a very large room, tall doors, a small number of podiums, a polished floor, photographers, and empty space.
+- **Palace Press Hall:** The approved Romanian ceremonial hall contains pale carved piers, shallow arcades, tall paneled doors, a coffered ceiling, and two small peripheral photographers.
+  Its quiet geometric floor and central space support the interface. Keep the approved slight tonal variation and wall/floor join near 66 percent under Specification 023.
+  The two podiums remain in the existing separate foreground.
   Its phrase themes are statements, silence, coalition, protocol, mandate, and national interest.
 - **Influencer Campaign Livestream:** The scene contains ring lights, vertical screens, donation alerts, wellness props, merchandise, and floating reactions.
   Its phrase themes are algorithms, sovereignty, podcast evidence, ancient energy, clips, and shadow bans.

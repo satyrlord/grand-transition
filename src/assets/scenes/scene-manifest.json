@@ -906,14 +906,14 @@
       "ownerType": "scene",
       "ownerId": "palace-press-hall",
       "layerRole": "back",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. Text-only composite followed by reference edits for the deskless background. No upscaling.",
+      "sourceDescription": "Original flat editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. Text-only generation followed by one reference edit to flatten material shading. Approved source pixels retained without resizing or pixel changes.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "palace-press-hall.png",
-        "sha256": "972328dc483ce1d0bd4f0fe782b86f743bf62754f1f34e56f1ccdc0fa854dd38",
+        "sha256": "0893ca486ff4c400c59e1216529704e76a4dd85215170fd50e5712c904f704b3",
         "width": 3840,
         "height": 2160,
-        "bytes": 5404484,
+        "bytes": 6739966,
         "format": "png"
       },
       "focalPoint": {
@@ -989,91 +989,91 @@
           "path": "variants/palace-press-hall-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 8736,
+          "bytes": 22917,
           "format": "avif",
           "quality": 70,
-          "sha256": "8eeeb8f12c1ca390bc7d7f069d110ad61ad49e83abea521eaaa9be02569a72be"
+          "sha256": "75e11b82f793930d122a665f2b4a6b0d2c8b605fc6c83579e91eeba3b5a9a1df"
         },
         {
           "path": "variants/palace-press-hall-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 10890,
+          "bytes": 29682,
           "format": "webp",
           "quality": 86,
-          "sha256": "71216c387341ee3f7e963fa142cebb958692e20eebac0238c0372ce49ef2363f"
+          "sha256": "6162830b6fa8111c6716c4fa54108093df1ff65aa057f242426d888a728162a6"
         },
         {
           "path": "variants/palace-press-hall-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 26600,
+          "bytes": 69518,
           "format": "avif",
           "quality": 70,
-          "sha256": "30e68e81095a49d1c668cad82a3be7d14ad02117883c6fc1619a18e2374b3e08"
+          "sha256": "9f077c452021a7ef199da27b36c8035ff9d0e470a80237b1f04ef117b1c0778f"
         },
         {
           "path": "variants/palace-press-hall-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 34758,
+          "bytes": 92784,
           "format": "webp",
           "quality": 86,
-          "sha256": "a69fee2c4d7895883f9ce4f10b3ac20b68886b9ec617613e0546d0486434874f"
+          "sha256": "5bd16ce4a61fb4b613977e77fc56eb383158c627696bb83c38bdf657b9530c59"
         },
         {
           "path": "variants/palace-press-hall-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 51363,
+          "bytes": 125784,
           "format": "avif",
           "quality": 70,
-          "sha256": "bb5fc49993a59277751982cc52d6f59ccb8a1acf2f611d02ceaadd45e08d902f"
+          "sha256": "9656a946109fa92c2f19149c2f83883a8d6eed53281a87ae5915f3bda7f82d8d"
         },
         {
           "path": "variants/palace-press-hall-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 66644,
+          "bytes": 172504,
           "format": "webp",
           "quality": 86,
-          "sha256": "b5515a01536de1f57f63a176131d92c633fc3d8a5cc0a861ff04914233ce4c4b"
+          "sha256": "b822c61162aca8cdceff87c8853fabc5deab2e3ff36fbe13b406635a433dfb5a"
         },
         {
           "path": "variants/palace-press-hall-2560x1440.avif",
           "width": 2560,
           "height": 1440,
-          "bytes": 79705,
+          "bytes": 190600,
           "format": "avif",
           "quality": 70,
-          "sha256": "0c07271644b8f903d12507cf789fcdb87a5bd9f1a52a5ef3924bfceeaaf30207"
+          "sha256": "625f81ac8809454f331d2323e32d724dc18483c18ee20c04c4e4f432515bc98c"
         },
         {
           "path": "variants/palace-press-hall-2560x1440.webp",
           "width": 2560,
           "height": 1440,
-          "bytes": 103902,
+          "bytes": 258106,
           "format": "webp",
           "quality": 86,
-          "sha256": "6ef714650bd95eaca6504649f5443b8eeebff5b3bf5a3120b6807fd9074d0c2e"
+          "sha256": "88347c6e4eab500ac1f2a0dbb4213b888377962867d82c25aff22264e5336553"
         },
         {
           "path": "variants/palace-press-hall-3840x2160.avif",
           "width": 3840,
           "height": 2160,
-          "bytes": 148725,
+          "bytes": 324733,
           "format": "avif",
           "quality": 70,
-          "sha256": "38c0b17cafe488f98a2a15950b25b88abe9d0c54b209a7323ee42b85937b678c"
+          "sha256": "f0aabfe28aeabc08e36f26009f5301e64f8eb7579f26479d389b26e76f11c6a3"
         },
         {
           "path": "variants/palace-press-hall-3840x2160.webp",
           "width": 3840,
           "height": 2160,
-          "bytes": 191436,
+          "bytes": 452150,
           "format": "webp",
           "quality": 86,
-          "sha256": "6b2d037791e697e4a9d992e8a8f5196858cbdaa8ce23fb0bdf5f1bc1ecc5a60f"
+          "sha256": "7c525d0c4b99d718b72fb96c58c5a7cf43a4be52da2b5a1fd6d9afb3810f35e5"
         }
       ]
     },
