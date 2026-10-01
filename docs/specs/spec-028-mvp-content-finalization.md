@@ -138,8 +138,9 @@ Warm color is local to authored materials and light, not a color grade for the f
 
   The playable characters stay different portrait layers.
   Its phrase themes are transition, public television, revolution, archive, emergency broadcast, and national salvation.
-- **Modern Debate Studio:** A presidential-style television set of this time uses broad blue video panels and red and blue vertical accents.
-  It has overhead softboxes, a practical broadcast truss, and a dark stage floor with a small number of flat reflection shapes with hard edges.
+- **Modern Debate Studio:** The approved presidential-style television set uses pale silver player backdrops, cyan light rails, oxblood accents, and a dark central screen.
+  It has overhead softboxes, a practical broadcast truss, cameras, control-room windows, vents, and equipment racks.
+  Its charcoal floor starts at 72 percent of the source height. Preserve the approved source's tonal variation under Specification 023.
   It has two angular standing desks.
   Each desk has one plain tap-water bottle and one different sparkling-water bottle.
   The scene has no microphones.

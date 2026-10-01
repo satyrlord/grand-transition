@@ -1630,14 +1630,14 @@
       "ownerType": "scene",
       "ownerId": "modern-debate-studio",
       "layerRole": "back",
-      "sourceDescription": "Original flat cel-shaded editorial-cartoon scene generated with OpenAI gpt-image-2.5-flare at native 3840x2160. A text-only composite was reference-edited to remove the standing desks and correct fictional moderator details while preserving the camera and set. The background was translated down 96 pixels without resampling, with top-edge continuation and lower-floor crop for moderator clearance. No upscaling.",
+      "sourceDescription": "Original flat editorial-cartoon Modern Debate Studio background generated through OpenAI API, gpt-image-2.5-flare, native 3840x2160, high quality. Text-only original studio design informed by inspected research, followed by reference edits for composition and the 72-percent floor join. Approved generated pixels retained; metadata registration only. No upscaling, resizing, recoloring, or post-generation pixel preparation.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "modern-debate-studio.png",
-        "sha256": "6ec7559a6d9be4418666ed4e7367f4f3d7206af4ceb89f709834d9822c830c20",
+        "sha256": "a8fee11bc16cde5e6ab321d66fc317aa1df2297022132be7d2952d9c7045d667",
         "width": 3840,
         "height": 2160,
-        "bytes": 7070800,
+        "bytes": 6739632,
         "format": "png"
       },
       "focalPoint": {
@@ -1718,91 +1718,91 @@
           "path": "variants/modern-debate-studio-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 16188,
+          "bytes": 22171,
           "format": "avif",
           "quality": 70,
-          "sha256": "ed5cc93143acd7a32d5e5988dde9eda999049257d2c48dc94c44d374559f1b01"
+          "sha256": "75d30d12a88fb71325e65080f4a4ec363bcaa322ffcb6d8f98ad5b9dee3ddd27"
         },
         {
           "path": "variants/modern-debate-studio-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 17564,
+          "bytes": 27526,
           "format": "webp",
           "quality": 86,
-          "sha256": "2c14c6d6ab493d8723e5e62dd2faed7d6f9a77202ec3ff2c94126a360edc01eb"
+          "sha256": "1db70d5f5e0949a692808dcd8a857be3f260a06c2970d0223ac82904dd2f87f9"
         },
         {
           "path": "variants/modern-debate-studio-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 47545,
+          "bytes": 66821,
           "format": "avif",
           "quality": 70,
-          "sha256": "a25ba2f2c0eddeaf7b8bccb364d84311f69c12fe244bebf0bc5031fe4ba1481d"
+          "sha256": "cc64d57d9a5ebc6540f9de4fec5c33b75e4c455af9ff12281547a75ce86d33e6"
         },
         {
           "path": "variants/modern-debate-studio-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 53846,
+          "bytes": 85142,
           "format": "webp",
           "quality": 86,
-          "sha256": "20b36149bf35870b0c873f459aa4af7cb846e30177206480756a13838092df46"
+          "sha256": "3649870581b287e17d86fbcece9f45c73105ac7cad6cfb4fb5e9c38279886e0a"
         },
         {
           "path": "variants/modern-debate-studio-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 85373,
+          "bytes": 120205,
           "format": "avif",
           "quality": 70,
-          "sha256": "7fc4a4a600f097e71aa057adc910fe01f190f679a8ae4cad658026a7b108835e"
+          "sha256": "9004a68f3a0137d3b157acbf1900d0219cffb1cb2fd3e2f3a243ea7ae86bca92"
         },
         {
           "path": "variants/modern-debate-studio-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 105218,
+          "bytes": 158608,
           "format": "webp",
           "quality": 86,
-          "sha256": "dd3d82c6813cd788439a158363aba0788cba72ed1000d05290de810972399a4a"
+          "sha256": "81d33d48233554d8cc72358b144072ba11e1185e5a847de5bf74e3d2719f1b4a"
         },
         {
           "path": "variants/modern-debate-studio-2560x1440.avif",
           "width": 2560,
           "height": 1440,
-          "bytes": 125897,
+          "bytes": 176754,
           "format": "avif",
           "quality": 70,
-          "sha256": "65dc78c062e45658591c2b9c405cd7e6f7b2690a1eccd4d9b43459ab5d958f13"
+          "sha256": "69e87541f499c8314c2c82c9b801015a9a79860357119384312801d8d68f6062"
         },
         {
           "path": "variants/modern-debate-studio-2560x1440.webp",
           "width": 2560,
           "height": 1440,
-          "bytes": 160918,
+          "bytes": 238400,
           "format": "webp",
           "quality": 86,
-          "sha256": "46bdebf1447ce49f21e633436dd7c7ee87dc018c49b32f278c3bdb1e9a528cae"
+          "sha256": "e14f570b3c90a84e74646fb3a6dc349d239b06604140b3e77874558b5d741fec"
         },
         {
           "path": "variants/modern-debate-studio-3840x2160.avif",
           "width": 3840,
           "height": 2160,
-          "bytes": 220870,
+          "bytes": 307896,
           "format": "avif",
           "quality": 70,
-          "sha256": "240aed5de8b1733763ef17d2b4dccd6e822fcce6215409f20b5866245babd97c"
+          "sha256": "78d27609d786d0703ebc65205426d0a1964b325d95b1ae140ce69611f57cbf52"
         },
         {
           "path": "variants/modern-debate-studio-3840x2160.webp",
           "width": 3840,
           "height": 2160,
-          "bytes": 282828,
+          "bytes": 411858,
           "format": "webp",
           "quality": 86,
-          "sha256": "4d56b10abe1bb05b263bec75117ea90b92f6fbb2b746fce109cd974e4850d873"
+          "sha256": "818224f17820155266ca5110edc55738a60a20558b3f0b5fd691f072148ade57"
         }
       ]
     },

@@ -9,7 +9,7 @@
 The rendering direction, the three researched pilot selections, and all fifteen
 matching poses have product-owner approval. The complete pilot packages are
 installed; final runtime verification remains pending.
-The approved Red-Folded Chairman selection and five matching poses are installed,
+The approved default Red-Folded Chairman selection and five matching poses are installed,
 together with the new Transition-Era Television Studio background. Focused asset
 checks and production-browser checks passed for all nine Chairman states on both
 player sides at 1024 by 768 and 1280 by 720.
@@ -17,6 +17,15 @@ The owner tested that background in the game and accepted its moderator/speech
 clearance. There is no outstanding moderator-clearance concern for this
 background. Other scenes' clearance requirements stay unchanged. The remaining
 human-roster and scene replacements remain open.
+The owner-approved Modern Debate Studio replacement is installed with its
+corrected 72-percent floor join and detailed broadcast equipment. Its accepted
+pixels include soft tonal variation on the walls and floor. Retain this
+source-specific acceptance; it does not change the flat-shading direction for
+future generations. The approved Red-Folded Chairman alternate selection and
+five matching poses are also installed. Its six native 1254-square sources
+retain the approved pixels after the bounded alpha-1 cleanup and metadata
+registration. Each pose used only the accepted alternate selection as its
+image reference.
 The three approved pilot packages use their canonical source paths under
 `src/assets/characters/`. Private research and review material do not ship.
 
@@ -485,9 +494,9 @@ Use the approved [Football Tycoon](../../src/assets/characters/football-tycoon.p
 [EU-Funds Alchemist](../../src/assets/characters/eu-funds-alchemist.png), and
 [Luxury Minister](../../src/assets/characters/luxury-minister.png) selections
 together for style comparison, not as identity sources for another character.
-The approved Red-Folded Chairman selection and five matching poses are installed
-at their canonical source paths. Each pose used only its approved selection as
-the image reference. Focused integration checks passed. This approval does not
+The approved default and alternate Red-Folded Chairman selections and their
+five-pose packages are installed at their canonical source paths. Each pose
+used only its own approved selection as the image reference. This approval does not
 complete the remaining human roster.
 
 Generate selections and poses with the built-in chat image generator using
@@ -541,10 +550,12 @@ generic provenance. They do not publish private prompts or reference identities.
 ### Scene art direction
 
 Opaque scene backgrounds use Flare at native 3840 by 2160.
-The first studio's approved new artwork is installed with derived runtime variants.
-The owner accepted its moderator/speech clearance after testing in the game.
-Keep the approved pixels and the existing interface geometry. Other background
-replacements remain open.
+The approved Transition-Era Television Studio and Modern Debate Studio
+artwork is installed with derived runtime variants. The owner accepted the
+first studio's moderator/speech clearance after testing in the game.
+Keep both approved sources and the existing interface geometry. The Modern
+Debate Studio retains its accepted wall and floor tonal variation. The five
+other background replacements remain open.
 Use the accepted flat editorial cartoon rendering of
 the character trial: broad clean shapes, controlled contours, one base tone,
 and one hard-edged shadow tone. Use a sparse highlight only for readability.
@@ -1166,8 +1177,12 @@ The approved Transition-Era Television Studio background uses native
 a focused composition edit. It uses ivory and terracotta architecture,
 wood and metal furniture, and detailed broadcast equipment. It replaces the
 previous background without moving its approved pixels. The owner accepted
-its moderator/speech clearance in the game. The Modern Debate Studio and
-foundation backgrounds have native `gpt-image-2.5-flare` provenance. Existing
+its moderator/speech clearance in the game. The approved Modern Debate Studio
+background uses native 3840 by 2160 `gpt-image-2.5-flare` output from a researched
+text-only design followed by reference edits for composition and floor placement.
+Its generated pixels are installed without resizing or post-generation pixel
+preparation. The foundation backgrounds retain their recorded native
+`gpt-image-2.5-flare` provenance. Existing
 studio and foundation foregrounds retain their recorded Flare composition,
 extraction, fitting, and green-matte conversion provenance. These are facts
 about installed sources. New generations use the role-based routes above.

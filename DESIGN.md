@@ -210,6 +210,8 @@ Avoid realistic skin detail, photographic portrait shading, and one repeated hea
 
 Test Football Tycoon, EU-Funds Alchemist, and Luxury Minister before roster expansion.
 The rendering style, the three researched pilot selections, and all fifteen matching poses are accepted.
+The default and alternate Red-Folded Chairman selections and their five-pose
+packages are also accepted and installed.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.
@@ -231,9 +233,10 @@ Research any source-inspired moderator separately; preserve recognizable drawn l
 Use the built-in chat image generator for transparent characters, poses, desks, props, and foregrounds.
 Keep native source dimensions and clean alpha.
 Use Flare only for opaque 4K scene backgrounds.
-The first studio's approved replacement is installed. The owner tested it in
-the game and accepted its moderator/speech clearance. Other backgrounds still
-need regeneration.
+The approved Transition-Era Television Studio and Modern Debate Studio
+replacements are installed. The owner tested the first studio in the game
+and accepted its moderator/speech clearance. Five backgrounds still need
+regeneration.
 Preserve their scene identities, geometry, and interface clearance.
 Build smaller runtime variants locally without enlargement or artificial sharpening.
 
@@ -650,8 +653,11 @@ A decorative back image that fills the viewport shows the selected debate studio
 The Transition-Era Television Studio uses a blonde moderator at a physical desk on a raised platform in the center.
 Four full-height faux-marble columns, and no more, frame that studio.
 
-The Modern Debate Studio uses broad blue video panels, red and blue vertical accents, visible softboxes, and a practical truss.
-Its dark stage floor has a small number of flat reflection shapes with hard edges.
+The Modern Debate Studio uses pale silver wall panels behind the players,
+cyan light rails, oxblood accents, a dark central screen, visible softboxes,
+and a practical truss. Cameras, control-room windows, vents, and equipment
+racks add broadcast detail. Its charcoal floor starts at 72 percent of the
+source height. Preserve the tonal variation in this owner-approved source.
 Its male moderator wears glasses and is in a beige studio chair at the stage center, with crossed legs, and he faces the camera.
 His usual human head has a tall forehead, and small facial features that are funny.
 No back image contains a playable character.

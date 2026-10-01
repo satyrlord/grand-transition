@@ -53,7 +53,7 @@ describe('scene asset resolver', () => {
   test('ships regenerated studio layers from native 4K Flare sources without upscaling', async () => {
     const root = path.resolve('src/assets/scenes');
     const expected = [
-      ['modern-debate-studio', '6ec7559a6d9be4418666ed4e7367f4f3d7206af4ceb89f709834d9822c830c20'],
+      ['modern-debate-studio', 'a8fee11bc16cde5e6ab321d66fc317aa1df2297022132be7d2952d9c7045d667'],
       [
         'modern-debate-studio-desks',
         'bc6e11b259d99fe763e362c1c956fc3cb79fe5a6583a68892155822e7d599901',
