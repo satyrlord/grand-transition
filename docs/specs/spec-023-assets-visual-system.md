@@ -158,6 +158,30 @@ cover all nine logical states at 1024 by 768, 1280 by 1024, and near-square
 high-density and landscape touch emulation. These checks do not establish
 full rollout acceptance. The aggregate quality gate remains deferred. Owner
 in-game evaluation is separate from technical verification.
+The approved Local Baron default selection is installed with five reviewed
+matching poses under the authorized package integration. All six sources
+retain native 1254-square canvases, left-facing composition, the accepted
+mature drawn face, silver-gray side-parted hair, gray mustache, adult silhouette,
+navy suit, open white collar, dark shoes, and one blank ochre folder with a
+small oxblood corner. Keep the full face, holding fingers, folder and important
+gestures inside the visible match window above desk occlusion.
+Each pose used only the approved selection as its image reference. Selection,
+thinking, light-hit and weakness use only the reviewed bounded removal of
+detached alpha-1 pixels. Delivery and heavy-hit retain their generated pixels
+and native alpha. Metadata registration preserves all reviewed pixels.
+Thinking uses a calculating lapel gesture, delivery a persuasive handshake,
+light-hit and heavy-hit distinct recoil, and weakness a guarded folder hold.
+The existing nine-state mappings, skin identifiers, voices, phrases and gameplay
+content remain unchanged. The municipal-patron alternate remains unchanged.
+Focused asset checks, 45 unit tests, the production build and the selected
+state-transition browser test passed. Installed two-sided checks cover all
+nine logical states at 1024 by 768, 1280 by 1024 and 1024 by 1023, plus six
+representative setup and idle samples including high-density and landscape
+touch emulation. Exact installed variant hashes, decoded dimensions, facing
+and stable interface geometry passed without browser errors. Independent
+source, encoded-asset and runtime review found no blocking defect.
+The aggregate quality gate remains deferred; owner in-game evaluation is
+separate from technical verification.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted

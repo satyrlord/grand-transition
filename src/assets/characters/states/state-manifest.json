@@ -3295,11 +3295,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/county-baron/thinking.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 3345823,
-        "sha256": "43015a0f55097c07ec751557201b373417c1cefc6c669fce884c861a90ecd9b9"
+        "bytes": 688148,
+        "sha256": "ed0dc63d5439500ca7551416135f9e0ebad128780588c39589eca71bb8ea5c91"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3318,48 +3318,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8060,
-          "sha256": "20dec0285a63fc58e8d12f0e6d5fe17f0d0cf9a5d7d06a262bfdebaed0f26f54"
+          "bytes": 8219,
+          "sha256": "f36151f179e98d140db9e7fbe39c42a2e016940e5d70587da75d54964e2d3104"
         },
         {
           "path": "states/variants/county-baron--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12482,
-          "sha256": "114f1443f561a78f1cab5e511119f03cd3fb46fa71ad0ae936c2cdc41a58382e"
+          "bytes": 11944,
+          "sha256": "1a79285ba06da777f3b207dc53ef4558e16aeda5fcb19fd3209eb4d004b50534"
         },
         {
           "path": "states/variants/county-baron--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 19720,
-          "sha256": "b1576f4990820d39f6b1b27c5d5eb6d8d7c8bb2f6d901d6ac81aba8418d1daa1"
+          "bytes": 18937,
+          "sha256": "a5e986561c8a9eab1509d03115cc2ec377a492d24e0458d2d8ac41bbd8930fc6"
         },
         {
           "path": "states/variants/county-baron--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 29924,
-          "sha256": "20b59ddb984898d42f594ac4696c8946ae5bf9814546e10563476ba80c05737a"
+          "bytes": 28872,
+          "sha256": "cc712dc8a3d66e8aa361d6e5b6212bb9ef4b1f6690ba4b48d53779e3f3b65263"
         },
         {
           "path": "states/variants/county-baron--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 31766,
-          "sha256": "9abada53c6b0e89961da09bdbf4772be31d03cb498f99c7bba2b243fb029a399"
+          "bytes": 32072,
+          "sha256": "462c002d0a147cb1815b00e4eb4031fd4438f9e6d1b0fc0b251c5593ec7504cb"
         },
         {
           "path": "states/variants/county-baron--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 49374,
-          "sha256": "0c29f2486af37774721633e331505f48b1f925d965ff137738e442011665f1f5"
+          "bytes": 50872,
+          "sha256": "de4636307d1176f4f76606ca510729c7d04ee8e90783ac7de7db9f988628d723"
         }
       ]
     },
@@ -3375,11 +3375,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/county-baron/delivery.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 3354991,
-        "sha256": "3e04cc7a6add0220f89c4d456b389a4151fba4a1bba845de9b3922f788f40c69"
+        "bytes": 572574,
+        "sha256": "2e6cb8a4053db0fcf57b66af11db9e1f853d6e58d602c62eb4430e8eafcfe024"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3398,48 +3398,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8631,
-          "sha256": "42365da881b357af4add635e844a1ae6a30baac659f0eb64c5cbcb5802a94dc4"
+          "bytes": 8621,
+          "sha256": "74ce739a1a651b7dac35a84a3dd14a0186d14770b85f15e5194c7a9113201802"
         },
         {
           "path": "states/variants/county-baron--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 13150,
-          "sha256": "34706a53b0e5d498662a727e605bcce83d2ea51234bc18b1100a18dd9ed661b5"
+          "bytes": 12494,
+          "sha256": "7efc97f06a5dfa8ffb16eb0e4e6b4840861ffc03dc19c61cdd5c3614c635764f"
         },
         {
           "path": "states/variants/county-baron--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 20855,
-          "sha256": "9d97e013e685f371d50ce260392325bb4553ce9802d14cde41ce532c88f3a8d0"
+          "bytes": 19567,
+          "sha256": "ad2ea3d90a3155cec355e7e82102d6773a20e2daf58ee1267f4f980b3e0127f3"
         },
         {
           "path": "states/variants/county-baron--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 31208,
-          "sha256": "19861d6f07ed8afc713535efc3c7c79d684a723a462b5d7f20f4b57fbce3889c"
+          "bytes": 29838,
+          "sha256": "b5c994661941437cf06d7004e987b452100cde334a482d2ade64ec4b60b62033"
         },
         {
           "path": "states/variants/county-baron--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 34156,
-          "sha256": "149ad012f5a0857f3df21096f540ac7124486c8bb658be28dda165d12784cd4b"
+          "bytes": 32982,
+          "sha256": "fbe5734684b323c73678db1a9ecd1d58864538cb0e305c1e745a3446a8572585"
         },
         {
           "path": "states/variants/county-baron--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 52630,
-          "sha256": "0938fc54af40411e930dcf621f470e8cafea0119f18537a7a75e5d3dc2a9860b"
+          "bytes": 53264,
+          "sha256": "817ce2d3c35dc994d75c7e103c6b01a0109c67d8f1beab0336f2a6dae73cccb5"
         }
       ]
     },
@@ -3455,11 +3455,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/county-baron/light-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 3383550,
-        "sha256": "be6f95bb04da7bdd068d2cb80b254de0aca964e82ed1fc71fc85eaee69100b50"
+        "bytes": 681038,
+        "sha256": "945a8d91bab14099ecad01d81e95f05c3bfe98b082a14c4db2fb655de2ef772a"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3478,48 +3478,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7824,
-          "sha256": "d534b2594e5cdb4f41bb0ba603300382b0d0d4528b6ceba325975064d885836a"
+          "bytes": 8493,
+          "sha256": "a6acc1bbbbec92535e51b26449f10018006d3608a2a350d0a7ac13ec1ade8f59"
         },
         {
           "path": "states/variants/county-baron--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12230,
-          "sha256": "5201c737376532b0b9e96b87c67612db6074b3eb0d7eadccb690b9f417761897"
+          "bytes": 11822,
+          "sha256": "fa63de8c7e0d4fb2a404087301be7c33ac6645b0b64e6236b1a81bce98fccdcd"
         },
         {
           "path": "states/variants/county-baron--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 148190,
-          "sha256": "3efe7a2a2cf301854c05a337ad2ee2378691c4d0bb434d00f48b2442edc989e5"
+          "bytes": 19440,
+          "sha256": "d3a5642c81fe43c5ee08b81d02ece5062c3f09817dc4207a9c46a94c404ef990"
         },
         {
           "path": "states/variants/county-baron--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 29828,
-          "sha256": "d6181da36a3336aa2184c99baa7a5a9033246a02151847f21104241d569ae5f9"
+          "bytes": 28766,
+          "sha256": "41e86cc56239874bffacc39ae291fc57734d28efd478797e832d7df799e03743"
         },
         {
           "path": "states/variants/county-baron--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 31681,
-          "sha256": "8b23be037c1af4609c7a248851d5552a11e670545e43d995bd1ba9d6a42dd3d2"
+          "bytes": 32225,
+          "sha256": "92d975128e5723258b26e7c62a1f34e661a141c2598e8d1655e83ce2a955ac12"
         },
         {
           "path": "states/variants/county-baron--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 49652,
-          "sha256": "20e500ee725f85c129a962482b3a1a1127a42475c28ddc53e26a9594c8ce30f4"
+          "bytes": 51318,
+          "sha256": "ad0f50d9cb729f80d766e572605c70bd35b261276a3b41e0439ef09ce1fb10c9"
         }
       ]
     },
@@ -3535,11 +3535,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/county-baron/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 3452582,
-        "sha256": "2d516d4ef4ddb2270a6bbcc1496730d66792506d584a3c25ffd3012753ae8ca1"
+        "bytes": 610712,
+        "sha256": "a7c7f25979153a01e603720826d924fdcc5cf6d6c70c9e3c27002f96bbda46bd"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3558,48 +3558,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8953,
-          "sha256": "a0a52b75b001d84c3d0ce1888f6970b3a1bfb757874d2d78f4c9d7041bff1aea"
+          "bytes": 9152,
+          "sha256": "7665d63ddfe72a3f5735fcd7b23b578a505daa79e88161a4b26f349e3e2f632a"
         },
         {
           "path": "states/variants/county-baron--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 13138,
-          "sha256": "2b00403a9cd7fd0ed8eb55481b165a0244c1a4f5adb3628cb934f3e6140a1173"
+          "bytes": 12510,
+          "sha256": "77c6a51cf787d32cee4881a0efb50e955ea3f5b90854f974929de5fd93255780"
         },
         {
           "path": "states/variants/county-baron--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 159837,
-          "sha256": "fcae403d867b457e373bcd861149a2ad9006f0a5e849fa4fb0ab995eb4ea7d7b"
+          "bytes": 20845,
+          "sha256": "eb962eb25d87ddc5a27641d88eaf0cadf48ae477e2f82a6de5935ac736118dc2"
         },
         {
           "path": "states/variants/county-baron--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 31210,
-          "sha256": "eb11ad6a3592a264e2e2dc5c35d5765305fa8d9c712c05a7d938cd95fba40f38"
+          "bytes": 30356,
+          "sha256": "826105103e7fc2b3d8e5c0620c9f1426232147b03610dde8d2e285d33237a133"
         },
         {
           "path": "states/variants/county-baron--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 36340,
-          "sha256": "c258149521c591c1b7237186d250d8a3f8ba37748a59118189e2b8c638394d0a"
+          "bytes": 34489,
+          "sha256": "a3425220b57aea79f8e2579412f1300baf7adbdb7cca13fec96883730b5724b0"
         },
         {
           "path": "states/variants/county-baron--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 52954,
-          "sha256": "f3f6c695e0b1f592cfd011c7ae51883bd1d09283d8598636decf6b07a5f850d7"
+          "bytes": 54478,
+          "sha256": "df07db6baaaea22c3c3dbc57e8354fffb06c5c3ab0ddc1a1c9deab55967565c3"
         }
       ]
     },
@@ -3615,11 +3615,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/county-baron/weakness.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 3341697,
-        "sha256": "8f110f6f3755c9d98e7c2c2c1ccf8f2000ff100123b9c855dd7f85676a4085c5"
+        "bytes": 679063,
+        "sha256": "d5ca96f3ff1408685219ab50170354515c035689b78d472cbea7f495aa618517"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3638,48 +3638,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7702,
-          "sha256": "fea1e78e2e7d21cddbec46c8d7cc9753c512ecdbb22821dfb6c28b88262f4720"
+          "bytes": 7905,
+          "sha256": "b8ebe8b8c82b17013da80a7607188ffc64868288861c0dcba50bed112acf6cb5"
         },
         {
           "path": "states/variants/county-baron--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11806,
-          "sha256": "90be30ec598b36d43408b50cbcab380ee2d14dcafb293a858cb7d0ab6985d9e0"
+          "bytes": 11454,
+          "sha256": "27ec255208bb28d0d7407b067b94d1e8cbbca90cb8babd2660f8adef321f26a7"
         },
         {
           "path": "states/variants/county-baron--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 18653,
-          "sha256": "95baeddd42535ce9edca1e523c7a0365b3ff11844553d237a95c091cc6b51d52"
+          "bytes": 17947,
+          "sha256": "cfead4045d20c2d48a84705bd3e02cdb784b90a3830bddb755d40d9715680f9f"
         },
         {
           "path": "states/variants/county-baron--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 28218,
-          "sha256": "8935f57852e02bafe2bdd427939f206fdd847f6477dbf21c98fa2a6f3fd261c2"
+          "bytes": 27846,
+          "sha256": "c9358abc865e0b5a725e6a791dee9b430173a4fad37d2003c8bb39476cf52864"
         },
         {
           "path": "states/variants/county-baron--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 31043,
-          "sha256": "5c4e39d27dad3e94c050836c2a36b9454173b5cb4e189c4c6ed40c1b886021a7"
+          "bytes": 30715,
+          "sha256": "2313224ba20feb33e0281bfe4fa4fe4d3e4b728e2a4dd2dcca671befed4a6d29"
         },
         {
           "path": "states/variants/county-baron--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 48096,
-          "sha256": "a216a9bf738029ec3196eb20206522772ab7e8d06e4b5cd3e2f3549fc648ac61"
+          "bytes": 49612,
+          "sha256": "d46c9dd8815e6429ffba69cb5b0dff5badd57c03e780b18775d1d8c614e6d562"
         }
       ]
     },

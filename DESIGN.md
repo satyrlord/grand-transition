@@ -229,6 +229,11 @@ The approved Marble Diplomat selection and five reviewed matching poses are
 also installed. Keep its mature drawn face, short swept gray hair, tall adult
 silhouette, charcoal suit, cream-white shirt, black tie, and single blank gold
 folder held above desk occlusion on the inner side.
+The approved Local Baron default selection and five reviewed matching poses
+are also installed. Keep its mature drawn face, silver-gray side-parted hair,
+gray mustache, adult silhouette, navy suit, open white collar, and single blank
+ochre folder. Its source faces left. Keep the face, folder, holding fingers,
+and important gestures above desk occlusion in the visible match window.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.

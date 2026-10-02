@@ -20,7 +20,9 @@ The approved Oat-Milk Reformist alternate selection and five reviewed matching
 poses are also installed under the owner-authorized package integration.
 The approved Marble Diplomat selection and five reviewed matching poses are
 also installed under the owner-authorized package integration.
-All nineteen packages are
+The approved Local Baron default selection and five reviewed matching poses are
+also installed under the owner-authorized package integration.
+All twenty packages are
 installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
@@ -46,6 +48,7 @@ character's identity into another.
 | Oat-Milk Reformist | [Selection](../../src/assets/characters/oat-milk-reformist.png) | [Five poses](../../src/assets/characters/states/oat-milk-reformist/) |
 | Oat-Milk Reformist alternate | [Selection](../../src/assets/characters/oat-milk-reformist--alternate.png) | [Five poses](../../src/assets/characters/states/oat-milk-reformist--alternate/) |
 | Marble Diplomat | [Selection](../../src/assets/characters/marble-diplomat.png) | [Five poses](../../src/assets/characters/states/marble-diplomat/) |
+| Local Baron | [Selection](../../src/assets/characters/county-baron.png) | [Five poses](../../src/assets/characters/states/county-baron/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -100,6 +103,18 @@ face, important hand gestures, and folder above desk occlusion on the inner
 side. Thinking, light-hit, and heavy-hit use only the reviewed bounded removal
 of detached alpha-1 pixels. The selection, delivery, and weakness retain their
 generated pixels. Metadata registration preserves all reviewed pixels.
+
+Local Baron's installed default package retains six native 1254-square
+sources. Its source faces left; runtime mirrors it for the left player.
+Preserve its mature drawn face, silver-gray side-parted hair, gray mustache,
+navy suit, open white collar, dark shoes, and one blank ochre folder with a
+small oxblood corner. Keep the calculating lapel gesture, persuasive handshake,
+distinct recoil strengths, and guarded folder hold visible above desk occlusion.
+Each pose used only the accepted selection. Selection, thinking, light-hit,
+and weakness use only the reviewed bounded removal of detached alpha-1 pixels.
+Delivery and heavy-hit retain their generated pixels and native alpha.
+Metadata registration preserves all reviewed pixels. The municipal-patron
+alternate remains unchanged.
 
 Artwork approval and integration verification are separate. Specification 023
 records the current package status. The remaining human-roster rollout is
