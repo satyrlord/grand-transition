@@ -57,8 +57,8 @@ standing area.
 
 Milestone 023 controls the flat cel-shaded editorial-cartoon style, neutral
 sRGB white balance, crop core, safe rectangles, source provenance, and byte
-budgets. The source and its authorized globe edit use Flare for the opaque 4K
-background. Use no upscaling. The requested architectural detail does not
+budgets. The source, its authorized globe edit, and its guest-placement edit use
+Flare for the opaque 4K background. Use no upscaling. The requested architectural detail does not
 authorize realistic glossy modeling or an exception to the protected face
 regions. Keep visual evidence open when those requirements are not met.
 
@@ -139,8 +139,8 @@ ordered character-pair and scene setups, including mirrors, for a future
 authorized broad workload. Its base seed, seed formula, and rule assertions
 remain unchanged.
 
-The quick and full quality gates are deferred until the user authorizes them.
-Do not run the guarded balance workload directly. Do not infer visual approval,
+The user authorized the full quality gate on 2026-10-01, and its record is
+below. Do not run the guarded balance workload directly. Do not infer visual approval,
 complete catalog balance, physical speaker quality, or release readiness from
 topical checks. Keep the source and stage visual findings separate from passed
 automated content checks.
@@ -161,12 +161,58 @@ separate character layers, phrase and action geometry, no page scroll, and no
 fallback motion shapes. The screenshots were also inspected visually.
 These results close AC-036-02 and AC-036-05, not the visual acceptance criterion.
 
-AC-036-03 remains open. A small upper-right gallery guest is inside the shared
-central protected region, and an upper-left gallery face touches the character
-face region. The globe is partly covered by the speech record and is heavily
-cropped at the widest tested viewport under the shared cover layout. The floor
-reflection and material-modeling defects of the earlier candidate were corrected.
+AC-036-03 remains open. The first installed master had a small upper-right
+gallery guest inside the shared central protected region and an upper-left
+gallery face touching the character face region. The guest-placement repair
+below moves those faces and three more out of the protected rectangles. The
+globe is partly covered by the speech record and is heavily cropped at the
+widest tested viewport under the shared cover layout. The floor reflection and
+material-modeling defects of the earlier candidate were corrected.
 Product-owner visual acceptance, a phone-specific scene review, and a listening
 review are not established by this evidence. The kept screenshots show the
 opening red-speaker state; hotel-specific blue delivery and long-sentence
-compositions still need inspection. The quick gate remains deferred.
+compositions still need inspection.
+
+### Guest placement repair, 2026-10-01
+
+An overlay of the manifest rectangles on the installed master showed five
+background guest groups with faces inside a protected rectangle: the upper-left
+gallery couple, the upper-right gallery guest, the seated lounge pair, the man
+beside the elevator, and the bellhop. One reference edit through the Flare
+route (`gpt-image-2.5-flare`, edit mode, one reference, no retry, no corrective
+request) removed them. It drew a seated couple on the far-left banquette, a
+standing couple at the reception counter, and a bellhop at the far right.
+The result is a native opaque 3840-by-2160 PNG that replaces the master.
+
+The manifest geometry, focal points, safe rectangles, and the other 13 layers
+are unchanged. Staged checks passed for 14 layers, 136 variants, alpha
+provenance, and 150 raster color checks. The 4K hotel AVIF is now 324,560
+bytes, and the WebP is 461,958 bytes. A grid difference between the old and new
+masters shows changes only at the edited guest areas. The seated woman's face
+is about 10 pixels outside the left torso rectangle at 4K, and her hair bun
+overlaps it by about 15 pixels. The new guests stand outside the protected
+crop core, so the 1400 by 1050 crop shows only one small guest.
+
+The scene-catalog and ultrawide hotel checks passed again with the new art.
+Screenshots at 1920 by 1080, 1400 by 1050, and 5120 by 1440 were inspected
+visually. This repair does not establish product-owner acceptance.
+
+### Full quality gate, 2026-10-01
+
+The first `npm run quality:full` run passed `validate` and failed
+`balance:validate`. The `black-sea-captain` win rate was 0.5513, above the 0.55
+ceiling, and no scene failed. The run also showed two stale assertions about
+the influencer foreground. Its native source is 1680 by 945 pixels, so its
+variants stop at 1680 pixels. The browser match-screen test and
+`e2e/scene-resolution.spec.ts` now read each layer width from the scene
+manifest.
+
+The balance repair adds the `sources` weakness tag to `common-noun-070` and
+`common-noun-305`, whose text states a source. It changes no text, score, or
+rarity. The second run then passed `validate`, `balance:validate`,
+`test:full` (92 files, 1,326 tests), `test:coverage:full` (42 files, 928
+tests), and `test:e2e:full` (373 passed, 1 skipped). The `black-sea-captain`
+win rate is 0.5422. The highest rate is `football-tycoon` at 0.5499, which
+leaves 0.0001 of margin, and the lowest is `thunder-tribune` at 0.4552. These
+results do not establish product-owner visual acceptance, a phone-specific
+scene review, or a listening review. AC-036-03 stays open.

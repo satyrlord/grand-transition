@@ -544,14 +544,14 @@
       "ownerType": "scene",
       "ownerId": "grand-hotel-romania",
       "layerRole": "back",
-      "sourceDescription": "OpenAI Images API gpt-image-2.5-flare, high quality, native 3840x2160 opaque PNG; metadata registration only.",
+      "sourceDescription": "OpenAI Images API gpt-image-2.5-flare edit, high quality, native 3840x2160 opaque PNG; one reference edit of the earlier hotel background that moves background guests out of the protected regions; metadata registration only.",
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "grand-hotel-romania.png",
-        "sha256": "71c759658e616c10caf70fd61461ae199acb798a3552bb07f5622a6763211083",
+        "sha256": "fdfd8d243315806ca2410036048feaa7c00a1371821191927cf1115d590f0437",
         "width": 3840,
         "height": 2160,
-        "bytes": 7300919,
+        "bytes": 7716974,
         "format": "png"
       },
       "focalPoint": {
@@ -627,91 +627,91 @@
           "path": "variants/grand-hotel-romania-640x360.avif",
           "width": 640,
           "height": 360,
-          "bytes": 31320,
+          "bytes": 33420,
           "format": "avif",
           "quality": 70,
-          "sha256": "188de4a65c257938c8c5ee266a48665413662331e80c7f5c980e17f8d21bd2e1"
+          "sha256": "9fb678f8c95c9e486c9516f99f96b8b5fff647272f9da7a6ad43c1bae2dfe122"
         },
         {
           "path": "variants/grand-hotel-romania-640x360.webp",
           "width": 640,
           "height": 360,
-          "bytes": 38418,
+          "bytes": 39964,
           "format": "webp",
           "quality": 86,
-          "sha256": "3f0b4717310f26557a323fa0e3986de3f53c0be884b8ae22d5c4d94b50efce7d"
+          "sha256": "a406d1b187323d5d9e92c54c88de8fa1dc788fcc3cc1703d9c7f86339ae2e153"
         },
         {
           "path": "variants/grand-hotel-romania-1280x720.avif",
           "width": 1280,
           "height": 720,
-          "bytes": 94869,
+          "bytes": 102418,
           "format": "avif",
           "quality": 70,
-          "sha256": "c42e3d06397fbf483104ab8bc54e9f2f0cf1a10bfcba1c8a2103d5a14e0ae20f"
+          "sha256": "44972cf21fd29bae4bbbd060cb82501be5aec37501eb2a4d18237f600b7efa7c"
         },
         {
           "path": "variants/grand-hotel-romania-1280x720.webp",
           "width": 1280,
           "height": 720,
-          "bytes": 120494,
+          "bytes": 128966,
           "format": "webp",
           "quality": 86,
-          "sha256": "2beeecb446c4058317b2607d45342814dbe9632a18b8a7f6a2bd64b959ffaf8a"
+          "sha256": "c34cb3e3a0b34e87d80280c289c6fee047a084923bd36d2f542c89a5be6fa46a"
         },
         {
           "path": "variants/grand-hotel-romania-1920x1080.avif",
           "width": 1920,
           "height": 1080,
-          "bytes": 169468,
+          "bytes": 185164,
           "format": "avif",
           "quality": 70,
-          "sha256": "09cf2362b6f2473b5d8ba6faa5b99bd10d36604f0b47baa38512711a429d978a"
+          "sha256": "2360ecf72198f1ded870d0d333f34c06ad5cea63713fe5ec82ad1d716613f11c"
         },
         {
           "path": "variants/grand-hotel-romania-1920x1080.webp",
           "width": 1920,
           "height": 1080,
-          "bytes": 219834,
+          "bytes": 235446,
           "format": "webp",
           "quality": 86,
-          "sha256": "0a32bf6fb8faf44d51b1943bc17b93815b6ce57835cff62ecc726724829058b5"
+          "sha256": "9a9d7cd2ca1266943c92c39bc0db2d769a107cd02e9f57585d304c0716bc0577"
         },
         {
           "path": "variants/grand-hotel-romania-2560x1440.avif",
           "width": 2560,
           "height": 1440,
-          "bytes": 250055,
+          "bytes": 274368,
           "format": "avif",
           "quality": 70,
-          "sha256": "f92d4d67b9553b1d2a9f906dedf4a69860a0b967bd22920cde9fe0292bb758c4"
+          "sha256": "951d2b09a20ee98019d018cbb3a6ce11422144293a02af2ca5a2d72cbbb51606"
         },
         {
           "path": "variants/grand-hotel-romania-2560x1440.webp",
           "width": 2560,
           "height": 1440,
-          "bytes": 334556,
+          "bytes": 358876,
           "format": "webp",
           "quality": 86,
-          "sha256": "6ca8b6e5cf35e02b3c814ab0bb57e2d8cbbeb68597786f479838f3980d43e2cb"
+          "sha256": "952091bdfb7408d06a7852bb731168f5cf8b06983f9668a97d4f4c78a779d8e6"
         },
         {
           "path": "variants/grand-hotel-romania-3840x2160.avif",
           "width": 3840,
           "height": 2160,
-          "bytes": 335334,
+          "bytes": 324560,
           "format": "avif",
-          "quality": 62,
-          "sha256": "0e0b13ecee816925d14a21e3d565e6e9f11af6bf50bd9931df0d234741a48efa"
+          "quality": 58,
+          "sha256": "44fba0ee52ccc4f601dd4db25f4d7a072122422eb78bf929d41f7f8c77ebe69c"
         },
         {
           "path": "variants/grand-hotel-romania-3840x2160.webp",
           "width": 3840,
           "height": 2160,
-          "bytes": 495120,
+          "bytes": 461958,
           "format": "webp",
-          "quality": 82,
-          "sha256": "0832ac34df10de1c6bd740470880d8f51c5078b260aa3dce5dca8ac43cc2c9f2"
+          "quality": 78,
+          "sha256": "36e980b4a38677b2b9f7c925d950f8b7edc3630d805e321e465e317ed70bcd5d"
         }
       ]
     },

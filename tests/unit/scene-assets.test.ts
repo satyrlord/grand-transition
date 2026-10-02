@@ -152,7 +152,7 @@ describe('scene asset resolver', () => {
       },
     });
     expect(layers[0]!.sourceDescription).toBe(
-      'OpenAI Images API gpt-image-2.5-flare, high quality, native 3840x2160 opaque PNG; metadata registration only.',
+      'OpenAI Images API gpt-image-2.5-flare edit, high quality, native 3840x2160 opaque PNG; one reference edit of the earlier hotel background that moves background guests out of the protected regions; metadata registration only.',
     );
     expect(layers[0]!.variants).toHaveLength(10);
     expect(resolveSceneAsset('grand-hotel-romania').layerRole).toBe('back');
