@@ -24,7 +24,9 @@ The approved Local Baron default selection and five reviewed matching poses are
 also installed under the owner-authorized package integration.
 The approved Local Baron municipal-patron alternate selection and five reviewed
 matching poses are also installed under the owner-authorized integration.
-All twenty-one packages are
+The approved Coalition Acrobat default selection and five reviewed matching
+poses are also installed under the owner-authorized package integration.
+All twenty-two packages are
 installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
@@ -52,6 +54,7 @@ character's identity into another.
 | Marble Diplomat | [Selection](../../src/assets/characters/marble-diplomat.png) | [Five poses](../../src/assets/characters/states/marble-diplomat/) |
 | Local Baron | [Selection](../../src/assets/characters/county-baron.png) | [Five poses](../../src/assets/characters/states/county-baron/) |
 | Local Baron municipal patron | [Selection](../../src/assets/characters/county-baron--municipal-patron.png) | [Five poses](../../src/assets/characters/states/county-baron--municipal-patron/) |
+| Coalition Acrobat | [Selection](../../src/assets/characters/coalition-acrobat.png) | [Five poses](../../src/assets/characters/states/coalition-acrobat/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -129,6 +132,17 @@ two recoil strengths, and guarded collar gestures. Thinking, light-hit,
 heavy-hit, and weakness use only bounded removal of detached alpha-1 pixels.
 Selection and delivery retain their generated pixels. Metadata registration
 preserves all reviewed pixels. The default Baron remains unchanged.
+
+Coalition Acrobat retains six native
+1254-square sources, a right-facing mature drawn face, high bald crown,
+rectangular dark glasses, pale-centered grouped beard, navy blazer, white
+shirt, burgundy tie, charcoal trousers, and one blank oxblood folder. Each pose
+used only its accepted selection. Preserve the horizontal calculating hold,
+speaking palm, small recoil, stronger defensive recoil, and guarded crossed
+forearms. Keep the face, holding fingers and folder above desk occlusion.
+Thinking and heavy-hit use only bounded removal of detached alpha-1 pixels;
+selection, delivery, light-hit and weakness retain their generated pixels.
+Metadata registration preserves all reviewed decoded pixels.
 
 Artwork approval and integration verification are separate. Specification 023
 records the current package status. The remaining human-roster rollout is

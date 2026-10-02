@@ -207,6 +207,31 @@ encoded-asset, support and runtime reviews found no blocking defect. These focus
 checks do not establish the full viewport matrix, performance, heard speech
 quality or acceptance in a played match. The aggregate quality gate remains deferred; owner
 in-game evaluation is separate from technical verification.
+The approved Coalition Acrobat default selection and five reviewed matching
+poses are installed. All six sources retain native 1254-square canvases,
+right-facing composition, the accepted mature drawn face, high bald crown,
+rectangular dark glasses, pale-centered grouped beard, slim adult silhouette,
+navy blazer, neutral white shirt, burgundy tie, charcoal trousers, dark shoes,
+and one blank oxblood agreement folder. Each pose used only the accepted
+selection as its image reference. Preserve its horizontal calculating hold,
+speaking palm, small recoil, stronger defensive recoil, and guarded crossed
+forearms. Keep the complete face, glasses, holding fingers, folder and
+important gestures above desk occlusion inside the visible match window.
+Thinking and heavy-hit use only bounded removal of detached alpha-1 pixels.
+Selection, delivery, light-hit and weakness retain generated pixels. Metadata
+registration preserves all reviewed decoded pixels without enlargement.
+Existing nine-state mappings, character identity, phrases, balance and voices
+remain unchanged. Focused asset checks, 48 unit tests, the production build and
+one selected Chromium state test passed. Installed presentation checks cover
+all nine logical states on both sides across the nine landscape viewports,
+the near-square 1024-by-1023 viewport and the 640-by-320 touch viewport.
+Six representative setup and idle samples also include 1920 by 1080 at DPR 2.
+Response hashes, decoded variant dimensions, mirroring, upper portrait layers
+and stable interface geometry passed without browser errors. These checks use
+held public cues, reduced motion and Palace Press Hall. They do not establish
+played-match progression, normal animation timing, other scenes, performance
+or heard speech quality. The aggregate quality gate remains deferred; owner
+in-game evaluation is separate from technical verification.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted
