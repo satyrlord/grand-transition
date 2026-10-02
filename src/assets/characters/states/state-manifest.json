@@ -6495,11 +6495,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/marble-diplomat/thinking.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1154918,
-        "sha256": "e5449cbea9193caf36f7247e9e7086116622f4432e08645ee1007ca264fe962c"
+        "bytes": 617542,
+        "sha256": "585cfec07f85de7954bda260483f498e330bc7d9bbeccb7035aeda4670874cae"
       },
       "focalPoint": {
         "x": 0.5,
@@ -6518,48 +6518,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 6342,
-          "sha256": "abb47a378c056bbd91459a3154c8e1cc066947504f47003049c69b567886fe82"
+          "bytes": 7385,
+          "sha256": "664bd27965b77cebd15528b95b4669cbbc964c7e8200574564d0e799cfdc7a82"
         },
         {
           "path": "states/variants/marble-diplomat--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9242,
-          "sha256": "74dcb5bc802588e9d5d76b426e5c77bdfc1a90bd273fa4106c2930be63d25ca4"
+          "bytes": 11158,
+          "sha256": "5cd9e385a5f027201dd928e8aade5445f5697741e6c31b75a49fc49639775109"
         },
         {
           "path": "states/variants/marble-diplomat--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 15348,
-          "sha256": "3e37d61d0f7b1a19012378dc80da0b39b3e6fee798f90e911d14a6471d524841"
+          "bytes": 18062,
+          "sha256": "8e2469f41eb18d0d76776cbd3b6ce3a17e204453747ce5109c53b407e3f2f5b9"
         },
         {
           "path": "states/variants/marble-diplomat--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 21230,
-          "sha256": "0e8527f668d84a33e1edfc11fc5c5f206b2ac87011497bec2ace5e6b507c15c1"
+          "bytes": 26988,
+          "sha256": "04fc62c4b4a095dfbfbed930faad679851a430fb36ec29597770e5c4c2550878"
         },
         {
           "path": "states/variants/marble-diplomat--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 24932,
-          "sha256": "7ecdb7dc83734d2fcfd380a6245ac0449d4e096070291ed46c843498f8bfc645"
+          "bytes": 30551,
+          "sha256": "c6fb9c7bdc8358dcdd43b53724ffe5a8c2e9ad315ffe3e8d334078490623666a"
         },
         {
           "path": "states/variants/marble-diplomat--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 33852,
-          "sha256": "984678381df181c21599b05b1e54408af5fdf952e3e4375f33b26b418df5ef21"
+          "bytes": 47252,
+          "sha256": "500ff3817a991d8f66ff612a1419782701c89c73953b89e4b3b9aeb6715eace4"
         }
       ]
     },
@@ -6575,11 +6575,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/marble-diplomat/delivery.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1258570,
-        "sha256": "80bf7caab3e08eb55f157e0f117527a176e799ea6a84ce253bfb2a13d5573560"
+        "bytes": 577940,
+        "sha256": "fc9bc60e53f1d750f1ba428572ebfe04cf875fdd7e4f80d1f7518cb77758e234"
       },
       "focalPoint": {
         "x": 0.5,
@@ -6598,48 +6598,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7430,
-          "sha256": "d7032cc4e3130707e333320bb285c64b676f1fffb88840af26303362f1de55c8"
+          "bytes": 7682,
+          "sha256": "7ad46340a5c483daef75aa2f13b24b2e04d11715867a73f2a264916b5d9de64c"
         },
         {
           "path": "states/variants/marble-diplomat--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10566,
-          "sha256": "e60047ae37e2b38bafaa44dcf59c835fd137281ad0857c4398d70f92d7c9bb96"
+          "bytes": 11936,
+          "sha256": "119e36c1e45953c25b48d1d605541ac4ec4b31fa104ab26e6c4fd79ac21aca00"
         },
         {
           "path": "states/variants/marble-diplomat--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 18022,
-          "sha256": "4510330d3d1a0918a453344bacf596e2a3fa4209fb858da39da32922e9c8141e"
+          "bytes": 19596,
+          "sha256": "0da4467e49bd3a9ea72f5b67e8eed3fa5cd2fb5c330af2445dbbb7da424f73df"
         },
         {
           "path": "states/variants/marble-diplomat--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 24456,
-          "sha256": "d220c5275ffaa1228f483adcee9bb2649a5547a28c1a961b30e860bf58aaab74"
+          "bytes": 29168,
+          "sha256": "48a61f1d2569367d38f418c07928e9936fd69415662df7655f82cd258a39f08b"
         },
         {
           "path": "states/variants/marble-diplomat--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 28222,
-          "sha256": "45853af5e28c531cb22f4a9522670fddc2fcd011c550ecb83b581f98e2c242f4"
+          "bytes": 33146,
+          "sha256": "1979696aef8fbb29793b91e8b3ce0e9915666564852f0d6bb9ff917e99e1c6c7"
         },
         {
           "path": "states/variants/marble-diplomat--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 38090,
-          "sha256": "cfc9d0ca681bffe58d06bfd73280469a9761246426703b350f3a5be1f5529e4c"
+          "bytes": 51984,
+          "sha256": "1a781130695f7ca7e53e5ed400dacfa8f968e04edf23ad9da7c34bba692b5826"
         }
       ]
     },
@@ -6655,11 +6655,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/marble-diplomat/light-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1194563,
-        "sha256": "c63e2a54da4a2067b76d56df9d7fd35b3a284a73fee656d74ec04d89b219ca39"
+        "bytes": 636775,
+        "sha256": "11b4cda362259c94c3b9c2b7d67b693c26b78139d516b9cd26fe659d659a575e"
       },
       "focalPoint": {
         "x": 0.5,
@@ -6678,48 +6678,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 6498,
-          "sha256": "0191d8fdbc8801607e103ee571e2336cb578e7be7100c53b656f072de524c067"
+          "bytes": 7383,
+          "sha256": "4c86daa6940f55a2dd2bf60ff15d9cb4f2d4d7465cbf827688fa54e46b43ee4e"
         },
         {
           "path": "states/variants/marble-diplomat--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9138,
-          "sha256": "f78f6aeeec1535631eb53929156ebd6b2322ee143e17e6de494046ad3e94b02b"
+          "bytes": 11002,
+          "sha256": "78ad87bbe549cd172d1109ad063e17fc23f6d5d8fa469a79b7be02453eb966af"
         },
         {
           "path": "states/variants/marble-diplomat--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 15838,
-          "sha256": "1b260b9ebc9fe6c7661a5682dd026061d455e4575fad2d41155b1081add485fb"
+          "bytes": 18416,
+          "sha256": "856281ffa7060600e1ad2a7cb283dfe16f4fc8b5677c514ef2dcdb48902707f6"
         },
         {
           "path": "states/variants/marble-diplomat--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 21824,
-          "sha256": "74dbebb08b28ad2f4f520ff078dbbb13d1c5c5d1082afd05f631af96d5b9b605"
+          "bytes": 27284,
+          "sha256": "97523065c5959cf47877219ee2940d69a076db45e75247bbfcc9da0fc9486165"
         },
         {
           "path": "states/variants/marble-diplomat--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 25344,
-          "sha256": "e244ee37b487a30509ad1fcc25fa04e53690bda6ea9f41f80cd5968f7e6fcdbe"
+          "bytes": 30670,
+          "sha256": "6724e45bdfe727aa736dbebcd84e69832e9480dd233dd1f1a3b692b5450a7443"
         },
         {
           "path": "states/variants/marble-diplomat--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 34594,
-          "sha256": "5403c7b25fe7328c88ccba7825e2e4524360cea5dacd843ab31f535b64c1c3ca"
+          "bytes": 47812,
+          "sha256": "b2a4c40102d02bb9a1748c5808ed2674876883f17ebb8654e51ef9688be42119"
         }
       ]
     },
@@ -6735,11 +6735,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/marble-diplomat/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1382390,
-        "sha256": "cb67bb65eaad7506be661f27914b569bd3c6e746c963bbfb3a79c9e84e760166"
+        "bytes": 647645,
+        "sha256": "834c8c3b6a51afd58b617c8576417efa714c06c21da798705e3c9dbc3eec850b"
       },
       "focalPoint": {
         "x": 0.5,
@@ -6758,48 +6758,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7560,
-          "sha256": "aa14c74e7f082a410ef9ac34f7970f074765696f996286b367122636ba75021a"
+          "bytes": 8087,
+          "sha256": "71dde1ddb96760a2df527f160519dc9d099acb05b2b1e56266ff6f5b13e9b4be"
         },
         {
           "path": "states/variants/marble-diplomat--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9988,
-          "sha256": "7e317510ea22f1769cff229c20f0ea9f6a796dbb20d5d57222546bd65c7a5038"
+          "bytes": 11472,
+          "sha256": "57398b266a5e3a70358977b1a30f3f6417be7214287694e5987a536595342302"
         },
         {
           "path": "states/variants/marble-diplomat--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 18185,
-          "sha256": "230f46dece540cc494dfd9c3bdc5ca7cd36209362d6b04827239bb4c256eea00"
+          "bytes": 19466,
+          "sha256": "5cbaffadccfd8382a84aa3eccfdbe5628cba7f13db3ffdd1405aaf4ebd7bc26b"
         },
         {
           "path": "states/variants/marble-diplomat--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 23112,
-          "sha256": "d7d09f9e452e1649dbdfae77e717bde4522c1a6a785c58693c8c16cb0aa72858"
+          "bytes": 28176,
+          "sha256": "66e82a489a844e69f29df3a3156c22154b5183b42d547ff23e85d30948626e1a"
         },
         {
           "path": "states/variants/marble-diplomat--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 29394,
-          "sha256": "13c63194536da34b52a92435a04a6a71b1feeb73c64466da20822e511eb95de7"
+          "bytes": 32245,
+          "sha256": "3ac6dcfa17897c91cf941584f9d3c722c4af61712bf5ba6dd6f1722287cbdaf3"
         },
         {
           "path": "states/variants/marble-diplomat--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 37230,
-          "sha256": "400dcc6a3acdf237bd74d6f55d7395cbba26d7ef2170cb9a47c6b51ca9275a8f"
+          "bytes": 50496,
+          "sha256": "7dd1515899d508acdd3bbb1015651d66076d9c9349700d96cc2c4098d3bd64a2"
         }
       ]
     },
@@ -6815,11 +6815,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/marble-diplomat/weakness.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1316950,
-        "sha256": "df83e9afec30afd56b46c235be745bd0b25d4d9752bda7b3c97b7fb5950f4837"
+        "bytes": 483842,
+        "sha256": "565ee13ffc35a8e9aa0a4a1cba245922b938a967821adbc980b783581ef8be72"
       },
       "focalPoint": {
         "x": 0.5,
@@ -6838,48 +6838,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 6803,
-          "sha256": "daa95eac0df36a0f4893633eae0d7d1886ee5e0990ebf9b535fac30e48dfbe6e"
+          "bytes": 6331,
+          "sha256": "e148da8c307fd35231b927fdc72e74e6153aad559e04a8963bbf1c3864814855"
         },
         {
           "path": "states/variants/marble-diplomat--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 9152,
-          "sha256": "bea28ed6e71f50960f5191f2c20a95f214e30012bba71249b13b9f77ed06b92f"
+          "bytes": 9512,
+          "sha256": "baf18c617630104313033e77613a454054d77d22067038c8f29b1fdf3f119280"
         },
         {
           "path": "states/variants/marble-diplomat--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 16431,
-          "sha256": "8f9f5438d640fa116938d65f1af0a2ea7d93e4378b35594a393453ec3a9412e8"
+          "bytes": 16125,
+          "sha256": "d6518115ed9eb386b364d8beea88d1f8a37e3a9b62d5fd29ef6ae7cdbdb7d159"
         },
         {
           "path": "states/variants/marble-diplomat--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 21742,
-          "sha256": "5a32309f326c67827821f7e3a0e9c6341f6bf3d2f512a1e0fbd564bb73b54c05"
+          "bytes": 24026,
+          "sha256": "390611ef2487a3c6681f9391c304d7775402b3a3cb252bc034ad40ddcdde0ea9"
         },
         {
           "path": "states/variants/marble-diplomat--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 26919,
-          "sha256": "60986942908d15e0c1dab3d50c497ea933266111213ce99dda5dde5da8b09f90"
+          "bytes": 26489,
+          "sha256": "8f7b66e86bb91e77ed1fc788753e4bcb3405b76bf426533a852ae08891e889f0"
         },
         {
           "path": "states/variants/marble-diplomat--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 35614,
-          "sha256": "fcab070728e882a203ddc6e50a1a8b6eb97b2387ee6538d7104d1cd4b3f82ec1"
+          "bytes": 41778,
+          "sha256": "ffd1190b3dc066cad21d8f7ebb06d2133eba8b1c4b303a8949ecdea23ad5c336"
         }
       ]
     },

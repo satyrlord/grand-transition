@@ -225,6 +225,10 @@ Its approved alternate selection and five reviewed matching poses are also
 installed. Keep the alternate's thin black glasses, long brown-to-blonde hair,
 orange open blazer, cream blouse, navy trousers, brown low-heeled pumps, and
 single high inner-side cup.
+The approved Marble Diplomat selection and five reviewed matching poses are
+also installed. Keep its mature drawn face, short swept gray hair, tall adult
+silhouette, charcoal suit, cream-white shirt, black tie, and single blank gold
+folder held above desk occlusion on the inner side.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.

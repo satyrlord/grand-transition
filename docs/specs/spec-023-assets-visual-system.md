@@ -139,6 +139,25 @@ checks cover all nine logical states at 1024 by 768, 1280 by 1024, and near-squa
 high-density and landscape touch emulation. They do not establish full rollout
 acceptance. The aggregate quality gate remains deferred, and owner in-game
 evaluation is separate from technical verification.
+The approved Marble Diplomat selection is installed with five reviewed matching
+poses under the authorized package integration. All six sources retain native
+1254-square canvases, right-facing composition, the accepted mature drawn face,
+short swept gray hair, tall adult silhouette, charcoal suit, cream-white shirt,
+black tie, and one blank ochre-gold folder held above desk occlusion.
+Each pose used only the approved selection as its image reference. Thinking,
+light-hit, and heavy-hit use only the reviewed bounded removal of detached
+alpha-1 pixels. Selection, delivery, and weakness retain their generated pixels.
+Metadata registration preserves all reviewed pixels. Thinking uses a chin
+gesture, delivery a declarative palm, light-hit and heavy-hit distinct recoil,
+and weakness a guarded folder hold. The existing nine-state mappings, skin
+identifier, voices, phrases, and gameplay content remain unchanged.
+Focused asset and unit checks, the production build, the state-transition
+browser test, and installed two-sided runtime checks passed. The runtime checks
+cover all nine logical states at 1024 by 768, 1280 by 1024, and near-square
+1024 by 1023, plus six representative setup and idle samples, including
+high-density and landscape touch emulation. These checks do not establish
+full rollout acceptance. The aggregate quality gate remains deferred. Owner
+in-game evaluation is separate from technical verification.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted

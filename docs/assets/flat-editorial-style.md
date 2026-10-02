@@ -18,7 +18,9 @@ The approved Oat-Milk Reformist default selection and five reviewed matching
 poses are also installed under the owner-authorized package integration.
 The approved Oat-Milk Reformist alternate selection and five reviewed matching
 poses are also installed under the owner-authorized package integration.
-All eighteen packages are
+The approved Marble Diplomat selection and five reviewed matching poses are
+also installed under the owner-authorized package integration.
+All nineteen packages are
 installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
@@ -43,6 +45,7 @@ character's identity into another.
 | Retiring Cassandra statesman | [Selection](../../src/assets/characters/retiring-cassandra--statesman.png) | [Five poses](../../src/assets/characters/states/retiring-cassandra--statesman/) |
 | Oat-Milk Reformist | [Selection](../../src/assets/characters/oat-milk-reformist.png) | [Five poses](../../src/assets/characters/states/oat-milk-reformist/) |
 | Oat-Milk Reformist alternate | [Selection](../../src/assets/characters/oat-milk-reformist--alternate.png) | [Five poses](../../src/assets/characters/states/oat-milk-reformist--alternate/) |
+| Marble Diplomat | [Selection](../../src/assets/characters/marble-diplomat.png) | [Five poses](../../src/assets/characters/states/marble-diplomat/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -87,6 +90,16 @@ Preserve its distinct chin, speaking, recoil, and guarded gestures. Keep face,
 glasses, holding fingers, and cup clear above desk occlusion. The sources use
 only bounded detached alpha-1 cleanup, with reviewed pixels preserved during
 metadata registration. The default package remains unchanged.
+
+Marble Diplomat retains six native 1254-square sources, the approved mature
+drawn face, short swept gray hair, tall adult silhouette, charcoal suit,
+cream-white shirt, black tie, and one blank ochre-gold folder. Each pose used
+only its approved selection as the image reference. Preserve its chin gesture,
+declarative palm, distinct recoil strengths, and guarded folder hold. Keep the
+face, important hand gestures, and folder above desk occlusion on the inner
+side. Thinking, light-hit, and heavy-hit use only the reviewed bounded removal
+of detached alpha-1 pixels. The selection, delivery, and weakness retain their
+generated pixels. Metadata registration preserves all reviewed pixels.
 
 Artwork approval and integration verification are separate. Specification 023
 records the current package status. The remaining human-roster rollout is
