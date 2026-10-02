@@ -12,7 +12,9 @@ masters and their twenty matching poses also have owner approval for integration
 The revised Black Sea Captain selection also has owner approval, with generation
 and integration of its five-pose package authorized. The Retiring Cassandra
 default selection and all five matching poses also have owner approval and are
-installed. All fifteen packages are
+installed. The owner also approved the Retiring Cassandra statesman alternate
+selection and authorized generation and integration of its five reviewed poses.
+All sixteen packages are
 installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
@@ -34,6 +36,7 @@ character's identity into another.
 | Velvet Mogul Velvet Statesman | [Selection](../../src/assets/characters/velvet-mogul--velvet-statesman.png) | [Five poses](../../src/assets/characters/states/velvet-mogul--velvet-statesman/) |
 | Black Sea Captain | [Selection](../../src/assets/characters/black-sea-captain.png) | [Five poses](../../src/assets/characters/states/black-sea-captain/) |
 | Retiring Cassandra | [Selection](../../src/assets/characters/retiring-cassandra.png) | [Five poses](../../src/assets/characters/states/retiring-cassandra/) |
+| Retiring Cassandra statesman | [Selection](../../src/assets/characters/retiring-cassandra--statesman.png) | [Five poses](../../src/assets/characters/states/retiring-cassandra--statesman/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -54,7 +57,13 @@ the visible match window.
 Retiring Cassandra's default package retains six native 1254-square sources and
 the accepted slim adult silhouette, silver hair, compact goatee and charcoal
 suit. Its distinct calculation, speech, recoil and guarded-doubt gestures stay
-visible above desk occlusion. The alternate statesman skin remains unchanged.
+visible above desk occlusion. Its installed statesman alternate uses six native
+1254-square sources, the accepted mature face, short dark-brown bob with a silver
+temple streak, navy pantsuit, cream blouse, and burgundy pumps. Preserve its
+distinct calculation, speech, recoil, and guarded-disappointment gestures.
+Each pose used only its accepted selection as the image reference. The selection
+retains its generated pixels and native alpha; delivery and heavy-hit use only
+the reviewed bounded cleanup of detached alpha-1 pixels.
 
 Artwork approval and integration verification are separate. Specification 023
 records the current package status. The remaining human-roster rollout is

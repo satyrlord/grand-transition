@@ -86,10 +86,24 @@ reference. Registration preserves the reviewed pixels and existing nine-state
 mappings. Thinking shows inward calculation; delivery shows a measured warning;
 light-hit and heavy-hit have distinct recoil; weakness shows guarded doubt.
 Idle reuses selection, comeback reuses delivery, and grammar-mistake reuses
-weakness. The alternate statesman skin remains unchanged. Focused asset and unit
+weakness. Focused asset and unit
 checks, the production build, the nine-state browser test, and installed
 two-sided runtime checks passed. These checks do not establish full rollout
 acceptance; the aggregate quality gate remains deferred.
+The approved Retiring Cassandra statesman alternate selection is installed
+with five reviewed matching poses under the authorized package integration.
+All six sources retain native 1254-square canvases, right-facing composition,
+the short dark-brown bob and silver temple streak, navy pantsuit, cream blouse,
+and burgundy low heels. Each pose used only the accepted selection as its
+image reference. The selection retains its original generated pixels and native
+alpha; delivery and heavy-hit use only bounded detached alpha-1 cleanup.
+Thinking shows restrained calculation, delivery shows firm speech, light-hit
+and heavy-hit have distinct recoil, and weakness shows guarded disappointment.
+Registration preserves the reviewed pixels. The existing nine-state mappings,
+skin identifiers, phrases, voices, and gameplay content remain unchanged.
+Focused asset and unit checks, the production build, the nine-state browser
+test, and installed two-sided runtime checks passed. These checks do not
+establish full rollout acceptance; the aggregate quality gate remains deferred.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted
@@ -184,9 +198,10 @@ that compression cannot put border haze back.
 
 Record the lossless setting in the selection manifest.
 Keep all the byte budgets and the encoding settings for larger images.
-Decode larger native AVIF variants after encoding. If quality 70 puts pixels
-that are not transparent on the border, retry at quality 90 and decode again.
-If that border still fails, encode the variant losslessly. Record the actual
+Decode larger native AVIF variants after encoding. If quality 70 creates
+nontransparent border pixels or fails the native contour-alpha requirement,
+retry at quality 90 and decode again. If either check still fails, encode the
+variant losslessly. Record the actual
 quality and, for lossless output, `lossless: true` in the selection manifest. Keep the same
 byte budget, and reject each variant that continues to fail alpha validation.
 

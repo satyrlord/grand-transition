@@ -2633,11 +2633,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "retiring-cassandra--statesman.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 985499,
-        "sha256": "c3e77b7276ac4de7c98190e5fa5c441a0b64495f51b1c26454457f187de0461a"
+        "bytes": 519410,
+        "sha256": "dd5fdf1637b275f2976858517d947c3ca3986b98552ee10666060e4376de10d2"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2656,9 +2656,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 2480,
-          "sha256": "ab51fb14fdf6664024cc4f02700bc6ff370f87ec98d712be398467dc015d1770"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 12641,
+          "sha256": "ac05f073c6786619df094ea772e7cf430c3fa26f98decc2f8f11780faf55b1c3"
         },
         {
           "path": "variants/retiring-cassandra--statesman-128x128.webp",
@@ -2666,17 +2667,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 3146,
-          "sha256": "39896179ed79f115751379e9c62dc9ada74a7643ed9a5e0fdf7fbad84886ceff"
+          "bytes": 4224,
+          "sha256": "5035d687343556b2feb4e77ab4a0287b85564401ea7d11dbcbdfb9e92128ac0f"
         },
         {
           "path": "variants/retiring-cassandra--statesman-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 5057,
-          "sha256": "1b47ee9746e8071f3a903f47a18211f61ca265a75a1e7220b5702a5e6283c3d1"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 29847,
+          "sha256": "7af07f9c96760ab223cea9f5bee51e70ed10d74b8fd9a6fb88d395a4899135e4"
         },
         {
           "path": "variants/retiring-cassandra--statesman-256x256.webp",
@@ -2684,17 +2686,17 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 6982,
-          "sha256": "7656fb1f733f6c158fcc1dce42bcacbe62b750865ad61ba9622ba59dfa848e82"
+          "bytes": 8696,
+          "sha256": "aa68a2fa584b6ea182bd80d4aa9c5f96491145abb15fc7df0fc1b62f3981b88b"
         },
         {
           "path": "variants/retiring-cassandra--statesman-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "quality": 70,
-          "bytes": 6302,
-          "sha256": "7ac22beedfaf5e95ebbacde52bcf00139c42482d7d6d483110117d9e4f32c746"
+          "quality": 90,
+          "bytes": 12036,
+          "sha256": "ae41092e4d6f673c47bf2a8eb2b0db9f4dd8963618290dd63c80566c041cca21"
         },
         {
           "path": "variants/retiring-cassandra--statesman-320x320.webp",
@@ -2702,8 +2704,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 8922,
-          "sha256": "95980581cb6a2c7f6ece6f346e2762b56fbdec884cbd53c8fcc00f5f1cd03d3e"
+          "bytes": 11004,
+          "sha256": "c6db1fa64b4bc55476d119460e448bb6267335675e32b526efeea8379642c0d4"
         },
         {
           "path": "variants/retiring-cassandra--statesman-640x640.avif",
@@ -2711,8 +2713,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 15026,
-          "sha256": "dcbcc4b6fadc71c1ab5c672587c0e3f421096d87bbf12b432a6b1f9f78d18ff6"
+          "bytes": 18678,
+          "sha256": "65fd570fca51e9680c5b3953f51045417fe037e76c04833fadb691a6c4f1ea61"
         },
         {
           "path": "variants/retiring-cassandra--statesman-640x640.webp",
@@ -2720,8 +2722,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 20522,
-          "sha256": "fbcd2200d2818b86f71b7743a86cddb734becef062994e8c76bb4c0681852b66"
+          "bytes": 27734,
+          "sha256": "fda5cdcf0cddab922d9643f4ea1de559b48aa839ca1ddcad9a9e2d787ac22661"
         },
         {
           "path": "variants/retiring-cassandra--statesman-960x960.avif",
@@ -2729,8 +2731,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 24376,
-          "sha256": "c89c45722a6589cb96b1824b65827ee28b187dd21a9bd7710cdfe3a870eec5bd"
+          "bytes": 31080,
+          "sha256": "54c6c70f9bd115259b7b3d15ce0132b2ea03ba652c890822ef28c461147590f3"
         },
         {
           "path": "variants/retiring-cassandra--statesman-960x960.webp",
@@ -2738,8 +2740,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 32980,
-          "sha256": "0ff2fd217af5d5e6ed2bbd67d104da548e4c7babf3dd696ad5d569c6e6cffb68"
+          "bytes": 49290,
+          "sha256": "090842e2a1fa027f5a47b2c0b958e35b411444a4ed4c274068f64977fcf2032b"
         }
       ]
     },

@@ -14,7 +14,11 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import baseline from './character-replacement-baseline.json' with { type: 'json' };
 import portraitLayout from '../src/assets/characters/portrait-layout.json' with { type: 'json' };
-import { hasNativeAlphaProvenance } from './asset-pixels.ts';
+import {
+  hasNativeAlphaProvenance,
+  measureNativeAlphaTopology,
+  NATIVE_ALPHA_MIN_CONTOUR_RATIO,
+} from './asset-pixels.ts';
 import { isCharacterSourceSize } from '../src/visual/asset-resolution.ts';
 
 export const CHARACTER_MASTER_NAMES = Object.freeze(
@@ -125,18 +129,18 @@ export async function encodeVariant(
   return (await encodeVariantWithMetadata(input, width, format)).output;
 }
 
-async function hasNontransparentBorder(input: Buffer): Promise<boolean> {
+async function hasInvalidNativeAlphaTopology(input: Buffer): Promise<boolean> {
   const { data, info } = await sharp(input)
     .ensureAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true });
-  return data.some((alpha, index) => {
-    if (index % 4 !== 3 || alpha === 0) return false;
-    const pixel = (index - 3) / 4;
-    const x = pixel % info.width;
-    const y = Math.floor(pixel / info.width);
-    return x === 0 || y === 0 || x === info.width - 1 || y === info.height - 1;
-  });
+  const topology = measureNativeAlphaTopology(data, info.width, info.height);
+  return (
+    topology.nontransparentBorderPixels > 0 ||
+    topology.partialAlphaPixels === 0 ||
+    topology.contourPartialAlphaPixels / topology.partialAlphaPixels <
+      NATIVE_ALPHA_MIN_CONTOUR_RATIO
+  );
 }
 
 export async function encodeVariantWithMetadata(
@@ -173,12 +177,17 @@ export async function encodeVariantWithMetadata(
       : await pipeline
           .webp({ alphaQuality: 100, effort: 6, quality: QUALITY.webp, smartSubsample: true })
           .toBuffer();
-  if (format === 'avif' && nativeAlpha && !lossless && (await hasNontransparentBorder(output))) {
-    // A higher lossy quality can preserve zero border alpha without the much
-    // larger lossless output. Decode it too; never trade alpha for byte size.
+  if (
+    format === 'avif' &&
+    nativeAlpha &&
+    !lossless &&
+    (await hasInvalidNativeAlphaTopology(output))
+  ) {
+    // Higher quality can preserve transparent borders and immediate-contour
+    // alpha without the larger lossless output. Decode each retry too.
     quality = 90;
     output = await pipeline.clone().avif({ effort: 8, quality, lossless: false }).toBuffer();
-    if (await hasNontransparentBorder(output)) {
+    if (await hasInvalidNativeAlphaTopology(output)) {
       lossless = true;
       quality = 100;
       output = await pipeline.avif({ effort: 8, quality: 100, lossless: true }).toBuffer();

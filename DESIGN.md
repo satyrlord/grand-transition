@@ -214,6 +214,9 @@ The default and alternate Red-Folded Chairman selections and their five-pose
 packages are also accepted and installed.
 The Retiring Cassandra default selection and its five matching poses are also
 accepted and installed, with their native dimensions and reviewed pixels intact.
+Its approved statesman alternate selection and five reviewed matching poses are
+also installed under the authorized package integration. Keep its mature face,
+silver-streaked dark bob, navy pantsuit, cream blouse, and burgundy pumps.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.

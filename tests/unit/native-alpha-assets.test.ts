@@ -94,6 +94,21 @@ test('native thinking pose fits the AVIF byte budget without border haze', async
   ).resolves.toBeUndefined();
 }, 30_000);
 
+test('native statesman AVIF encoding preserves contour alpha when its borders are clear', async () => {
+  const input = await readFile(
+    path.resolve('src/assets/characters/retiring-cassandra--statesman.png'),
+  );
+  expect(hasNativeAlphaProvenance(input)).toBe(true);
+  const encoded = await encodeVariantWithMetadata(input, 320, 'avif');
+  // Quality 70 can leave detached alpha inside a fully transparent border.
+  // The decoded contract applies on each platform, regardless of retry level.
+  expect(encoded.lossless ? [100] : [70, 90]).toContain(encoded.quality);
+  expect(encoded.output.length).toBeLessThanOrEqual(250 * 1024);
+  await expect(
+    inspectCharacter(encoded.output, '320px statesman AVIF', { nativeAlpha: true }),
+  ).resolves.toBeUndefined();
+}, 30_000);
+
 async function fixture(interior = 250, edge = 128, green = false): Promise<Buffer> {
   const pixels = Buffer.alloc(100 * 100 * 4);
   for (let y = 2; y < 98; y += 1) {
