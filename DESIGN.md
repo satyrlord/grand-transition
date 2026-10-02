@@ -221,6 +221,10 @@ The approved Oat-Milk Reformist default selection and five reviewed matching
 poses are installed under the authorized package integration. Keep its short
 dark hair and stubble, orange blazer, cream shirt, navy trousers, and single
 beige lidded cup above desk occlusion on the inner side.
+Its approved alternate selection and five reviewed matching poses are also
+installed. Keep the alternate's thin black glasses, long brown-to-blonde hair,
+orange open blazer, cream blouse, navy trousers, brown low-heeled pumps, and
+single high inner-side cup.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.

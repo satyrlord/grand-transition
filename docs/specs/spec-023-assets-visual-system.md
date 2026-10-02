@@ -121,6 +121,24 @@ runtime checks passed. The runtime checks cover all nine logical states at
 including high-density and landscape touch emulation. These checks do not
 establish full rollout acceptance. The aggregate quality gate remains deferred,
 and owner in-game evaluation is separate from technical verification.
+The approved Oat-Milk Reformist alternate selection is installed with five
+reviewed matching poses under the authorized package integration. All six
+sources retain native 1254-square canvases, right-facing composition, the
+accepted young adult face, thin black glasses, long brown-to-blonde hair,
+orange open blazer, cream round-neck blouse, navy trousers, brown low-heeled
+pumps, and one high inner-side beige lidded cup. Each pose used only the
+accepted alternate selection as its image reference. The sources use only
+bounded detached alpha-1 cleanup. Metadata registration preserves reviewed
+pixels. Thinking uses a chin gesture, delivery an inclusive speaking palm,
+light-hit and heavy-hit distinct recoil, and weakness a guarded folded arm.
+The existing nine-state mappings, skin identifiers, content, and default skin
+remain unchanged. Focused asset and unit checks, the production build, the
+nine-state browser test, and installed two-sided runtime checks passed. These
+checks cover all nine logical states at 1024 by 768, 1280 by 1024, and near-square
+1024 by 1023, plus six representative setup and idle samples, including
+high-density and landscape touch emulation. They do not establish full rollout
+acceptance. The aggregate quality gate remains deferred, and owner in-game
+evaluation is separate from technical verification.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted

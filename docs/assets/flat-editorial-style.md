@@ -16,7 +16,9 @@ installed. The owner also approved the Retiring Cassandra statesman alternate
 selection and authorized generation and integration of its five reviewed poses.
 The approved Oat-Milk Reformist default selection and five reviewed matching
 poses are also installed under the owner-authorized package integration.
-All seventeen packages are
+The approved Oat-Milk Reformist alternate selection and five reviewed matching
+poses are also installed under the owner-authorized package integration.
+All eighteen packages are
 installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
@@ -40,6 +42,7 @@ character's identity into another.
 | Retiring Cassandra | [Selection](../../src/assets/characters/retiring-cassandra.png) | [Five poses](../../src/assets/characters/states/retiring-cassandra/) |
 | Retiring Cassandra statesman | [Selection](../../src/assets/characters/retiring-cassandra--statesman.png) | [Five poses](../../src/assets/characters/states/retiring-cassandra--statesman/) |
 | Oat-Milk Reformist | [Selection](../../src/assets/characters/oat-milk-reformist.png) | [Five poses](../../src/assets/characters/states/oat-milk-reformist/) |
+| Oat-Milk Reformist alternate | [Selection](../../src/assets/characters/oat-milk-reformist--alternate.png) | [Five poses](../../src/assets/characters/states/oat-milk-reformist--alternate/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -76,6 +79,14 @@ fingers above desk occlusion on the inner side. Preserve the distinct chin
 gesture, inclusive speaking palm, two recoil strengths, and guarded hunch.
 The sources use only bounded detached alpha-1 cleanup; metadata registration
 preserves all reviewed pixels. Owner in-game evaluation remains separate.
+Its alternate package also retains six native 1254-square sources, the accepted
+young adult face, thin black glasses, long brown-to-blonde hair, orange open
+blazer, cream round-neck blouse, navy trousers, brown low-heeled pumps, and one
+beige lidded cup. Each pose used only its accepted alternate selection.
+Preserve its distinct chin, speaking, recoil, and guarded gestures. Keep face,
+glasses, holding fingers, and cup clear above desk occlusion. The sources use
+only bounded detached alpha-1 cleanup, with reviewed pixels preserved during
+metadata registration. The default package remains unchanged.
 
 Artwork approval and integration verification are separate. Specification 023
 records the current package status. The remaining human-roster rollout is
