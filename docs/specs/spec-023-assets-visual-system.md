@@ -626,8 +626,9 @@ tonal variation and Romanian city silhouettes. Palace Press Hall retains its
 approved ceremonial architecture, slight tonal variation and separate podiums.
 Influencer Campaign Livestream retains its approved nighttime palette,
 recording equipment, tonal variation and matching separate streamer desks.
-The Civic Cypher Boxing Ring evening background and separate microphone
-foreground replacements remain open under Milestone 032.
+The Civic Cypher Boxing Ring packed evening background with camera-facing
+spectators in shadow is accepted and installed under Milestone 032. Keep its
+background equipment; it has no hanging microphones or separate foreground.
 Use the accepted flat editorial cartoon rendering of
 the character trial: broad clean shapes, controlled contours, one base tone,
 and one hard-edged shadow tone. Use a sparse highlight only for readability.
@@ -1236,10 +1237,9 @@ exception for transparent canvas padding: its native 1672-by-941 artwork is
 preserved inside a 1680-by-945 master. Use the repaired master width for its
 runtime variants. Do not describe the padded canvas as native generator output.
 Milestone 026 controls the foundation scenes. Milestone 032 controls the
-seventh scene, which uses a separate native-transparent microphone foreground
-generated in chat. Its opaque background contains no microphones or their
-suspension cords. The microphone plate uses the shared crop and clearance
-rules. Furniture and opaque lower-body coverage are not required.
+seventh scene, which has one opaque background with equipment and no separate
+microphone foreground. Its audience looks directly at the camera. Keep the
+shared crop and interface-clearance rules.
 
 The approved Transition-Era Television Studio background uses native
 3840 by 2160 `gpt-image-2.5-flare` output with inspected reference inputs and

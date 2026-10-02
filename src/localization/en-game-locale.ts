@@ -32,7 +32,7 @@ export function createEnglishGameLocale(
         'A campaign livestream set with ring lights, vertical screens, donation alerts, and wellness props.',
       'scene.civic-cypher-boxing-ring.name': 'Civic Cypher Boxing Ring',
       'scene.civic-cypher-boxing-ring.description':
-        'A classic hip-hop battle in a worn Romanian sports hall, with a boxing ring, hanging microphones, vinyl crates, and a roaring cartoon crowd.',
+        'A classic hip-hop battle in a worn Romanian sports hall at night, with a boxing ring, audio equipment and a cartoon audience facing the camera.',
       'scene.grand-hotel-romania.name': 'Grand Hotel Romania',
       'scene.grand-hotel-romania.description':
         'A communist futurist hotel lobby with a monumental atrium, glass-block columns, a suspended brass globe engraved with continents, wealthy fictional guests, and uniformed hotel staff.',

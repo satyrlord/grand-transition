@@ -114,7 +114,7 @@ describe('scene asset resolver', () => {
     const root = path.resolve('src/assets/scenes');
     const bytes = await readFile(path.join(root, 'civic-cypher-boxing-ring.png'));
     const hash = createHash('sha256').update(bytes).digest('hex');
-    expect(hash).toBe('1b377bdfc260c715909486744e6b5acdd71b755b288bd2d3f83e017c557f5db1');
+    expect(hash).toBe('06627decbda6a9f16010b28990ef4f60d4bfbf83089b828f675fb9183497b8a8');
     const manifest = JSON.parse(await readFile(path.join(root, 'scene-manifest.json'), 'utf8'));
     const scene = manifest.assets.find(
       (asset: { id: string }) => asset.id === 'civic-cypher-boxing-ring',
@@ -126,8 +126,9 @@ describe('scene asset resolver', () => {
     });
     expect(scene.sourceDescription).toContain('gpt-image-2.5-flare');
     expect(scene.sourceDescription).toContain('text-only');
-    expect(scene.sourceDescription).toContain('reference-edited');
-    expect(scene.sourceDescription).toContain('composited at fixed clear positions');
+    expect(scene.sourceDescription).toContain('reference-edited once');
+    expect(scene.sourceDescription).toContain('packed camera-facing crowd in shadow');
+    expect(scene.sourceDescription).not.toContain('microphone');
     expect(scene.sourceDescription).toContain('No upscaling');
     expect(
       manifest.assets.some((asset: { id: string }) =>
@@ -289,7 +290,7 @@ describe('scene asset resolver', () => {
       'civic-cypher-boxing-ring': {
         layers: ['civic-cypher-boxing-ring'],
         animationId: 'civic-cypher-crowd-bounce',
-        effectIds: ['crowd-bounce', 'microphone-swing'],
+        effectIds: ['crowd-bounce'],
       },
       'grand-hotel-romania': {
         layers: ['grand-hotel-romania'],
@@ -306,6 +307,6 @@ describe('scene asset resolver', () => {
       expect(scene.effectIds).toEqual(expected[scene.id as keyof typeof expected].effectIds);
     }
     expect(new Set(gameCatalog.scenes.map(({ animationId }) => animationId)).size).toBe(8);
-    expect(new Set(gameCatalog.scenes.flatMap(({ effectIds }) => effectIds)).size).toBe(14);
+    expect(new Set(gameCatalog.scenes.flatMap(({ effectIds }) => effectIds)).size).toBe(13);
   });
 });

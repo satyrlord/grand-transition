@@ -49,12 +49,13 @@ cream captain uniform, cap and single cigar. All six sources use native
 the visible match window.
 
 Artwork approval and integration verification are separate. Specification 023
-records the current package status. The remaining human-roster rollout and
-Civic Cypher Boxing Ring evening background and separate microphone foreground
-are unfinished. The approved Transition-Era
+records the current package status. The remaining human-roster rollout is
+unfinished. The approved Transition-Era
 Television Studio, Modern Debate Studio, County Council Ballroom, Midnight Call-In
-Studio, Palace Press Hall, and Influencer Campaign Livestream replacements are
-installed. The owner also accepted the first studio's clearance in the game. Opaque scene backgrounds
+Studio, Palace Press Hall, Influencer Campaign Livestream, and Civic Cypher Boxing
+Ring replacements are installed. Civic Cypher Boxing Ring uses a packed camera-facing
+crowd in deep shadow, retains its background equipment, and has no microphone
+foreground. The owner also accepted the first studio's clearance in the game. Opaque scene backgrounds
 use the approved 4K Flare route.
 
 Midnight Call-In Studio uses a modest Romanian cable-studio setting with older

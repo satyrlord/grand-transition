@@ -35,10 +35,8 @@ The scene description, all game text, and each relation form have English and Ro
 ## Visual contract
 
 Use one opaque back master of 3840 by 2160 pixels and the shared AVIF/WebP pipeline with five sizes.
-Use a separate native-transparent 16:9 foreground master for the two microphones and their suspension cords.
-Generate this foreground with the built-in chat image generator at no less than 1280 by 720 pixels.
-Keep its native dimensions and build AVIF/WebP variants without enlargement.
-The foreground replaces the role of the desk layer in other scenes; it contains no furniture.
+This scene has no separate foreground plate or hanging microphones.
+The background contains the hall, bleachers, audience, structural boxing ring and supporting equipment.
 It has no desks, podiums, tables, moderator, host, referee, judge, announcer, or baked playable character.
 The boxing-ring canvas, the two front corner posts, the rear structure, and short side-rope fragments show the ring.
 No long rope goes across a portrait plane.
@@ -48,19 +46,25 @@ It is not a glossy American commercial arena.
 Set the scene in the evening, with dark exterior windows and restrained practical interior lights.
 Keep the audience dimmer than the playable characters and preserve separation behind dark suits.
 Use concrete bleachers, painted steel, repaired acoustic panels, and practical ceiling fixtures that show long use.
-Also use cable runs that you can see, and repaired equipment.
-Add new boom boxes, speakers, vinyl crates with blank sleeves, and coiled audio cables, all without brands.
-Two wired stage microphones, and no more, hang from the ceiling.
-Keep both microphones and their suspension cords in the transparent foreground only.
-The opaque background contains neither microphone nor suspension cord.
-They are out of the central interaction region and out of the focal rectangles of the playable characters.
+Fixed heating pipes and built-in radiator grilles supply architectural detail.
+Keep unbranded background equipment: speakers, a boombox or portable radio, vinyl crates with blank sleeves, a closed case and coiled audio cables.
+Training alcoves can contain wall bars, a punching bag or speed bag, and stored mats.
+Keep this equipment out of the central interaction region and the playable character focal regions.
+Do not add hanging microphones or their suspension cords, and do not use a microphone foreground.
 
 The deep background contains a clearly enthusiastic adult cartoon crowd.
+The crowd fills close, steep bleachers on both sides of the central lane, so the hall does not look empty.
 The crowd looks mostly Romanian and Eastern European, not like a sports-arena audience from the United States.
 Use different faces, ages, builds, hair, and usual streetwear from the 1990s.
+Every audience member faces the camera and looks directly toward the viewer, not at another spectator.
+Both eyes remain visible. Vary expressions and proportions rather than gaze direction.
+Most hands rest on each person's own knees or thighs, with clear wrist connections.
+A spectator who stands at an aisle rail can hold the rail.
+A few spectators on each side can raise one hand above all heads against clear wall, without overlap with another person.
+Separate the seating tiers so hands do not overlap another person's hair, face or shoulders.
 Do not use racial caricature, the same face two times, or many baseball caps.
 Do not use varsity uniforms, sports jerseys, flags, readable text, or real branding.
-Keep the crowd low-contrast and behind the portrait planes.
+Keep the crowd in deep shadow, low-contrast and behind the portrait planes, clearly darker than the ring, the equipment and the playable characters.
 Research local sports and cultural photographs for period clothing, grooming, age variety, and social grouping.
 Use clean solid fills and one hard-edged shadow tone on each material.
 Do not use paint blotches, mottling, surface noise, or photographic texture on the audience.
@@ -69,20 +73,11 @@ Apply the flat cel-shaded editorial-cartoon language of Milestone 023.
 Also apply the neutral sRGB white balance, the crop core, the safe rectangles, and the byte budgets of that milestone.
 Complete fresh visual web research and an original detailed scene brief before generation.
 Generate the opaque background at 3840 by 2160 pixels with `gpt-image-2.5-flare`.
-Generate the microphone foreground separately in chat with the same normalized camera and crop.
-Do not use the rejected candidate as a generation reference.
-Neither layer uses upscaling. Keep private studies and prompts out of shipped metadata.
-The evening background and separate microphone foreground await artwork acceptance and integration.
-The installed one-layer source is not evidence that this replacement contract is complete.
-
-On a reference canvas of 3840 by 2160 pixels, the microphone bodies are at `x=492-528` and `x=3312-3348`, with `y=510-650`.
-Map these positions proportionally to the native foreground canvas.
-The two microphones stay in the crop core and out of the protected regions.
-The top parts of the cords stay out of the top band, and they bend in below it.
-Keep the foreground outer border transparent and its contours complete.
-Render the foreground once above the playable portraits, aligned with the background.
-Keep the protected interface regions and character focal rectangles transparent.
-Furniture and opaque lower-body coverage are not required in this foreground.
+Use text-only generation from the researched brief, without a previous image as input.
+After the owner reviews that candidate, one corrective edit can use that candidate as its only image reference.
+Do not upscale the source. Keep private studies and prompts out of shipped metadata.
+The owner accepted the packed evening background with camera-facing spectators in shadow on 2026-10-02, and it is installed.
+Its source is one text-only generation followed by one corrective edit of that candidate.
 The central wall, the ring floor, the top status band, the face zones, and the action regions keep the interface clear.
 
 The `civic-cypher-crowd-bounce` overlay does not receive pointer events, and it adds small crowd motion.
@@ -117,17 +112,17 @@ Add no room tone and no runtime network request.
 - **AC-032-01:** The catalog shows the stable seventh scene in English and Romanian.
   It has the 34-card role and tense composition above, and the content validation and the locale validation pass.
 - **AC-032-02:** The scene manifest contains one opaque back master of 3840 by 2160 pixels with provenance, and ten correct runtime variants.
-  It also declares one native-transparent microphone foreground and the variants appropriate to its native size.
-  Both layers use the same normalized crop. The scene has no desk layer.
+  The manifest declares no foreground or desk layer for this scene.
   The asset, alpha-provenance, color, crop, and byte-budget checks pass.
 - **AC-032-03:** Visual inspection shows the Romanian municipal sports-hall setting and the mostly Romanian and Eastern European crowd.
-  It shows the identity of a boxing ring and of hip-hop.
-  It shows an evening setting, a clean flat-shaded audience, two hanging microphones in the foreground and no more, no moderator or desks, and clear regions for the playable characters and the interface.
+  It shows an evening boxing ring and a clean flat-shaded audience looking directly at the camera.
+  Background equipment retains the gym and hip-hop identity, with no hanging microphones, foreground plate, moderator or desks.
+  The playable characters and interface retain clear regions.
 - **AC-032-04:** Scene selection sends the different local boom-bap treatment to the scene.
   All three formats pass the hash, codec, 48 kHz, loudness, peak, duration, and loop checks.
   Automated checks do not show a subjective musical fit.
 - **AC-032-05:** At each supported desktop landscape viewport, the production browser loads the selected scene through the manifest.
-  The characters, the sentence, the nine shared phrases, the actions, and both scene layers stay decoded and clear.
+  The characters, the sentence, the nine shared phrases, the actions, and the single scene layer stay decoded and clear.
   They do not receive pointer events that they must not receive, and the page does not scroll.
 - **AC-032-06:** New Ladder progress includes all seven scene IDs of this time, one time each.
   When the game loads correct six-scene version-1 progress, it adds the seventh scene to the end and stores the new sequence.

@@ -93,7 +93,7 @@ export function createGameCatalog(
         animationId: 'civic-cypher-crowd-bounce',
         music: media('civic-cypher-boxing-ring-theme'),
         phrasePool: [...scenePhraseIds('civic-cypher-boxing-ring')],
-        effectIds: ['crowd-bounce', 'microphone-swing'],
+        effectIds: ['crowd-bounce'],
       },
       {
         id: 'grand-hotel-romania',
