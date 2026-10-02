@@ -10,7 +10,9 @@ Both Midnight Sensationalist masters also have owner approval, with generation
 and integration of their five-pose packages authorized. The four Velvet Mogul
 masters and their twenty matching poses also have owner approval for integration.
 The revised Black Sea Captain selection also has owner approval, with generation
-and integration of its five-pose package authorized. All fourteen packages are
+and integration of its five-pose package authorized. The Retiring Cassandra
+default selection and all five matching poses also have owner approval and are
+installed. All fifteen packages are
 installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
@@ -31,6 +33,7 @@ character's identity into another.
 | Velvet Mogul Silk Diplomat | [Selection](../../src/assets/characters/velvet-mogul--silk-diplomat.png) | [Five poses](../../src/assets/characters/states/velvet-mogul--silk-diplomat/) |
 | Velvet Mogul Velvet Statesman | [Selection](../../src/assets/characters/velvet-mogul--velvet-statesman.png) | [Five poses](../../src/assets/characters/states/velvet-mogul--velvet-statesman/) |
 | Black Sea Captain | [Selection](../../src/assets/characters/black-sea-captain.png) | [Five poses](../../src/assets/characters/states/black-sea-captain/) |
+| Retiring Cassandra | [Selection](../../src/assets/characters/retiring-cassandra.png) | [Five poses](../../src/assets/characters/states/retiring-cassandra/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -47,6 +50,11 @@ Black Sea Captain retains the approved selection's revised facial structure,
 cream captain uniform, cap and single cigar. All six sources use native
 1254-square canvases and face right. Keep the cigar and each gesture within
 the visible match window.
+
+Retiring Cassandra's default package retains six native 1254-square sources and
+the accepted slim adult silhouette, silver hair, compact goatee and charcoal
+suit. Its distinct calculation, speech, recoil and guarded-doubt gestures stay
+visible above desk occlusion. The alternate statesman skin remains unchanged.
 
 Artwork approval and integration verification are separate. Specification 023
 records the current package status. The remaining human-roster rollout is

@@ -78,6 +78,18 @@ the approved facial structure and visible gestures. Registration preserves
 the reviewed pixels and existing nine-state mappings. Focused asset checks,
 the production build, the nine-state browser test, and installed two-sided
 runtime checks passed. These checks do not establish full rollout acceptance.
+The approved Retiring Cassandra default selection and five matching poses are
+installed. All six sources retain their native 1254-square canvases, right-facing
+composition, silver hair, compact gray goatee, charcoal suit, pale-blue shirt,
+and burgundy tie. Each pose used only the accepted selection as its image
+reference. Registration preserves the reviewed pixels and existing nine-state
+mappings. Thinking shows inward calculation; delivery shows a measured warning;
+light-hit and heavy-hit have distinct recoil; weakness shows guarded doubt.
+Idle reuses selection, comeback reuses delivery, and grammar-mistake reuses
+weakness. The alternate statesman skin remains unchanged. Focused asset and unit
+checks, the production build, the nine-state browser test, and installed
+two-sided runtime checks passed. These checks do not establish full rollout
+acceptance; the aggregate quality gate remains deferred.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted

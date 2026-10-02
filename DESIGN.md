@@ -212,6 +212,8 @@ Test Football Tycoon, EU-Funds Alchemist, and Luxury Minister before roster expa
 The rendering style, the three researched pilot selections, and all fifteen matching poses are accepted.
 The default and alternate Red-Folded Chairman selections and their five-pose
 packages are also accepted and installed.
+The Retiring Cassandra default selection and its five matching poses are also
+accepted and installed, with their native dimensions and reviewed pixels intact.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.

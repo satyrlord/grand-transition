@@ -2756,11 +2756,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "retiring-cassandra.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1264904,
-        "sha256": "f94f17db3f61ca727489b8908e9197b07b93b28fae9138779b41d53e3630b312"
+        "bytes": 488034,
+        "sha256": "4d290ecfc95984f02f4803f21f431fb3503b6be0fb6ea1cff8c0b2bc5dabafa7"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2779,9 +2779,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 2829,
-          "sha256": "53be214ea138da394a7b8ed878425d6312be6a15896efdff505ce59ed64832dc"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 11568,
+          "sha256": "1f4d9479da34516b4f7426b3293c63f81f256c437b222184ef0d216315def67f"
         },
         {
           "path": "variants/retiring-cassandra-128x128.webp",
@@ -2789,17 +2790,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 3408,
-          "sha256": "9135beba6d7c9ac69a62c7a7aa7a1ea9d622191d9e05655347ba605826d5e327"
+          "bytes": 3664,
+          "sha256": "43d00e3cf9df267fbe5395a27bfa80851f69f93bd69b1588ebf1babb8709ef1f"
         },
         {
           "path": "variants/retiring-cassandra-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 5888,
-          "sha256": "d67284d4ae1efeb5f2dd6a33863ec108c28a20714e3c8ea71e96d59a18083663"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 28358,
+          "sha256": "830d5ee2ec1bf4e7704f86301eefab9584e2b1165668c8a6eca386658e1ba278"
         },
         {
           "path": "variants/retiring-cassandra-256x256.webp",
@@ -2807,8 +2809,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 7750,
-          "sha256": "1cea5ecf2d4e0d23d7f4688cc58666cb77989860b1530b776dac42a88af9d422"
+          "bytes": 7942,
+          "sha256": "b6aa65d7a30b62c90af0f9cea6afe2e3a26dd84198cb3c4bb6e65c4ab3584a1c"
         },
         {
           "path": "variants/retiring-cassandra-320x320.avif",
@@ -2816,8 +2818,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 7331,
-          "sha256": "4426cfab585709255639a365d5079dc5becf55ec157ea8683cc544b206ec8d06"
+          "bytes": 6976,
+          "sha256": "5a9e73edd56e1503886f4ae46eb20a560168913a44aadfc3f304aa8d9801cee7"
         },
         {
           "path": "variants/retiring-cassandra-320x320.webp",
@@ -2825,8 +2827,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 10068,
-          "sha256": "e06a4ca552aa4a3066f17b81e9c3dea762a5582708459e069bd718a6685e6aec"
+          "bytes": 10276,
+          "sha256": "990a8a71c71b46f0895afa61f378eaff3ee8e21b0c06df90ecab8b9bb6f5fc4e"
         },
         {
           "path": "variants/retiring-cassandra-640x640.avif",
@@ -2834,8 +2836,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 17519,
-          "sha256": "dd36019849a5780a5c922e6d57349dc19fd3230180f945a66d13b1d8fcae1aeb"
+          "bytes": 17205,
+          "sha256": "8901aba6b18bcc5699891af6f5695d1c957685bbc2c55a8a2a00a7af6a1da2d2"
         },
         {
           "path": "variants/retiring-cassandra-640x640.webp",
@@ -2843,8 +2845,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 23392,
-          "sha256": "f7509c7984c7be46ccc12b3055cbfd689bb7c40e0a78700e35e9d2d0610632ce"
+          "bytes": 25572,
+          "sha256": "10f86d4a761a452b187922bd964d391203566085bb01793fc95ff7a0f1aba5d7"
         },
         {
           "path": "variants/retiring-cassandra-960x960.avif",
@@ -2852,8 +2854,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 29817,
-          "sha256": "c43bde41ff2f27e00d3938ddb09bb5ecd395dc41198752e7f515ccb1f84fdf3c"
+          "bytes": 28547,
+          "sha256": "d0d193d333177a8b0cf177ee2779db0059d8fa76a00e661b42c79a7bc5d84183"
         },
         {
           "path": "variants/retiring-cassandra-960x960.webp",
@@ -2861,8 +2863,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 38814,
-          "sha256": "24a957a3aacb5196ffe228f7efc3fd9dbf9196e5022ff478fac16cd1d5b03927"
+          "bytes": 45442,
+          "sha256": "abddbdf270ccbf0708fb4c9d3a83956ac85903f34047dfef82251f7005ab8a3a"
         }
       ]
     },

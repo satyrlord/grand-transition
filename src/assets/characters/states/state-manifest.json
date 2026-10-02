@@ -9695,11 +9695,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/retiring-cassandra/thinking.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1137694,
-        "sha256": "c1453e55b2a36038167d52cf87cf1acdba8f7156e7fa6c1c67a1b7170ad221c5"
+        "bytes": 447465,
+        "sha256": "287596e040eadd6db656d532ee13898c78e8da0f5d2d00012130520eb39973fc"
       },
       "focalPoint": {
         "x": 0.5,
@@ -9718,48 +9718,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 6408,
-          "sha256": "2ada5f0059bee6200b0e9d28984e6d9e38c1e9c51bff97f8fe6c0a35649eb904"
+          "bytes": 6026,
+          "sha256": "50568a1ac8c5ca0e445f819b3df20638a1963a511322231d1f27e0d6ce867bc2"
         },
         {
           "path": "states/variants/retiring-cassandra--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 8844,
-          "sha256": "3261710ec9fd12639846eee89735b9d03a8598cb24346e98518f256888b6f417"
+          "bytes": 8806,
+          "sha256": "bfc738b0e8b8740f89e8be28f4572ddf0a0889e32045c7413b5d94b851a13b47"
         },
         {
           "path": "states/variants/retiring-cassandra--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 14824,
-          "sha256": "f624297af0bf9e4be6d16f2d376b1a3e3059aa2ca774fd3ca80552717735da8c"
+          "bytes": 15105,
+          "sha256": "3daad7735a26317059c3bb29d6aed1babd177bfd1ec6c86460a5b4eef45104e9"
         },
         {
           "path": "states/variants/retiring-cassandra--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 20358,
-          "sha256": "4b30a95728932411a89f3b85537de248e18f7a4033333f1b90e6fc6414719716"
+          "bytes": 21740,
+          "sha256": "22fd6b3fed4786c7770b815c69ff1d464457e87a8ed1782df5a41d85d552f62e"
         },
         {
           "path": "states/variants/retiring-cassandra--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 25461,
-          "sha256": "964c1f60c544b10e1db5f88a9e99fdb568778d642adfc0ac68e970ca4c0b5c63"
+          "bytes": 25126,
+          "sha256": "1983ede55f99d16c956e15862c5b29a1a493649636db4d0b05a711d18ab00309"
         },
         {
           "path": "states/variants/retiring-cassandra--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 33914,
-          "sha256": "1acfd78e0530edca4bf5453dabb0f956f1c088095906311c96dee2a0974fbd34"
+          "bytes": 38624,
+          "sha256": "ff07351e41a7bdc5b21cbded418e9c244a437952eb84265a4eec36170e202003"
         }
       ]
     },
@@ -9775,11 +9775,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/retiring-cassandra/delivery.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1250754,
-        "sha256": "8c8597a1cf5ab6c8a1e023ef4308760287a5623697bf629bba4aa4c615b70ada"
+        "bytes": 500584,
+        "sha256": "b971c7b2b11aaeb6425aa2dffaefc1f58015e89aadfce39e0208f325ceb044a8"
       },
       "focalPoint": {
         "x": 0.5,
@@ -9798,48 +9798,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7303,
-          "sha256": "e13612d835a3b9eeb69ed50206db7aecf216ff252deeb18dc74b7c817776ab43"
+          "bytes": 7193,
+          "sha256": "0d545e5b4806883ce00bd49d1764d5f8f891670c454c848246ea008a7c4288bd"
         },
         {
           "path": "states/variants/retiring-cassandra--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10060,
-          "sha256": "3d97bd32b00bb8493e5beb4eeac52a09e72c5b475e9c016a9f6456298d81c654"
+          "bytes": 10354,
+          "sha256": "b7a39d5e597c3ca19430da1275db924adc1224770df960e7a0933b1617af0e96"
         },
         {
           "path": "states/variants/retiring-cassandra--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 17716,
-          "sha256": "10e4aa3aa3a4525fe2d5b033a1704fdd0ed94632c559604b12fd7c79f93c5fba"
+          "bytes": 17364,
+          "sha256": "14911cd038602b969fd41a55b997b702ae6a9dfc5afee5a869d0a6006053104c"
         },
         {
           "path": "states/variants/retiring-cassandra--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 23816,
-          "sha256": "077c2570e72e0744b34eb26baee023b0721b27fd495324c21c73c066e915a2f6"
+          "bytes": 25260,
+          "sha256": "67359e0dc8167262bbfe9d92f0e252d1f6c88df0a83cd8a46b9d9cf18b6e559e"
         },
         {
           "path": "states/variants/retiring-cassandra--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 28517,
-          "sha256": "826f8aed28edf9139d7bd796d0b379e9091de63bdf16aa20b124df9dcc7e2f19"
+          "bytes": 29315,
+          "sha256": "860284933e916b402e8199ba43f0d4b695e57989db5ba2d96a29b60d97dc0ae7"
         },
         {
           "path": "states/variants/retiring-cassandra--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 38172,
-          "sha256": "753696ebc900590e1df9d02976c71e45d441bbd4f2c429b52b5e5842ca45e012"
+          "bytes": 45388,
+          "sha256": "04db16320a381edaad52fa06c2d463deea9eba059bc8f04f91b68c764bfad246"
         }
       ]
     },
@@ -9855,11 +9855,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/retiring-cassandra/light-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1299033,
-        "sha256": "996f1aaf61756728afd5cb50dc7ec25ab5265bb1d1270204afe8139c780b9545"
+        "bytes": 543276,
+        "sha256": "5739ccc0b97dc97e145ca97bed455f3e9088f9d0d12d2d4c36ae16073cc804eb"
       },
       "focalPoint": {
         "x": 0.5,
@@ -9878,48 +9878,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7832,
-          "sha256": "86cf8809ac5597c78751cb608d47f42c82388f65e7cccf5767fb2db925a283e8"
+          "bytes": 6628,
+          "sha256": "dcaa589c1371be7e5101fab13d7e6aa0cc6b1bbd587f33257ab046eb3cc4dec4"
         },
         {
           "path": "states/variants/retiring-cassandra--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10622,
-          "sha256": "49a295667758612c1b9fab780867ea969afb4917b6b36930aef06110035219ed"
+          "bytes": 9544,
+          "sha256": "f76713af78c604d3ff6ba667ae3fda655e36c27c4bf1267e5f2fdd91f07ece9f"
         },
         {
           "path": "states/variants/retiring-cassandra--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 19087,
-          "sha256": "6c1e5a827895d9da43c722d3ed432fcc669910a1d468cd220bfb815c5c0c946f"
+          "bytes": 16278,
+          "sha256": "b48b42f9ae462cd7635bdf6b075707e250e3b33b4c986be6d1eb75e5b145b270"
         },
         {
           "path": "states/variants/retiring-cassandra--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 25008,
-          "sha256": "f03829132ac2ff4ff243741c22c0127afe7b9501b094acf00c6e91bdeba1da64"
+          "bytes": 23722,
+          "sha256": "0721237c446e3c9b34e2fbe4d1e241840681810f12a01312c9917522bf81c155"
         },
         {
           "path": "states/variants/retiring-cassandra--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 30609,
-          "sha256": "5b7993d5c0429a278e7d0fafc204c8e274553c26d6678644be5a299d4ab79156"
+          "bytes": 26652,
+          "sha256": "662729160a3e24706adb22494f78716a5525471d7be30a44a43e69351809b92d"
         },
         {
           "path": "states/variants/retiring-cassandra--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 40760,
-          "sha256": "7224702e89d587178bf56617b494474fc0b27d038dcbb37ea277f30e14e47f9f"
+          "bytes": 41652,
+          "sha256": "00e5ee24e67cbb0fb7b97bb6517530a74f0cfd96fa6e3348a191c96476cb5112"
         }
       ]
     },
@@ -9935,11 +9935,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/retiring-cassandra/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1536072,
-        "sha256": "f401b2ffb1d03010e7f5e9175e78b92ff44451f0787104dfe51827270e478bb6"
+        "bytes": 579656,
+        "sha256": "334fc8d55f09e52df9fa8f78961ccfcf2119344a722aafc6fbaee7b3235bc5f9"
       },
       "focalPoint": {
         "x": 0.5,
@@ -9958,48 +9958,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9584,
-          "sha256": "fd6e0e60c2f16141099837cf502e8e27087ec3187cb20613ab10cc2b04e221d6"
+          "bytes": 7737,
+          "sha256": "b7b794750e3dcb88f8321f336b8b47445084c1ce1a80f6dbc4627bcd6c6d6377"
         },
         {
           "path": "states/variants/retiring-cassandra--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12388,
-          "sha256": "70a31905266fa63267038055a851899d2d6a82edd9c121a667dcec9fe31d8e13"
+          "bytes": 10940,
+          "sha256": "6987eb4216567e84bd35f3d5cf63b1e03ab4b3fd47f4ebb0fad71bf084b1b7b3"
         },
         {
           "path": "states/variants/retiring-cassandra--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 22859,
-          "sha256": "14e1411907fe3e0d513cee27c152eef8fd63fd00cd5c4177ec85febbe3f593ca"
+          "bytes": 19337,
+          "sha256": "839795e6b218cff906d5c8882a888de2be660f03b018e3e7749b4592a19cfd22"
         },
         {
           "path": "states/variants/retiring-cassandra--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 29558,
-          "sha256": "3e43956581b43a434aa70b9f5875d352d553b374f27c9adc803a60e3c773120d"
+          "bytes": 27434,
+          "sha256": "9a65d8dd678a2c50b0bef5cd4a86d4e9118f37cc1505e8ec3b6abbea8dbed424"
         },
         {
           "path": "states/variants/retiring-cassandra--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 37035,
-          "sha256": "07f29c1414fd3c05867f7bcb2b57dd869104b8cc0bfc42fabfc8288720885da9"
+          "bytes": 31951,
+          "sha256": "1f1d89dd93df57cf1ad4e0aa2f9b309d3cb97befa061960e918998d422fd382b"
         },
         {
           "path": "states/variants/retiring-cassandra--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 47944,
-          "sha256": "014c41243cc5066fe7aa18ccc32fb32f8de14ca7a6e2e5128b4ee9f1918b3c17"
+          "bytes": 48518,
+          "sha256": "4c98723cdd21a64109e3d9921ad92ba478cb1a0f16adafea431af469712e0e20"
         }
       ]
     },
@@ -10015,11 +10015,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/retiring-cassandra/weakness.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1185314,
-        "sha256": "10c07ba5aa4f47b8e756a246c0b4a09af53e8c54d296db873095da3a3f9b756f"
+        "bytes": 436515,
+        "sha256": "6c3fa9892684c5e2da0ce889b4750c35b5a32ecbecddf45ab8e1ff0d372abc0f"
       },
       "focalPoint": {
         "x": 0.5,
@@ -10038,48 +10038,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 6281,
-          "sha256": "e31830ae6f2878527ea26907132a9638ccb691f0e3d6a219be65e05339741866"
+          "bytes": 5920,
+          "sha256": "4c63df76ba48a3abc7161d016a324cfa7cd1e3bcaa5b4b061efa86f718a586ed"
         },
         {
           "path": "states/variants/retiring-cassandra--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 8704,
-          "sha256": "dc4ce7f14e321962347466390c8b2f8aba02e5132214389c9b9b0fbe88c15a5c"
+          "bytes": 8654,
+          "sha256": "71063730a399d728a24ebbaf692f4154e9a5b1e2dac31346990e51639cbb5851"
         },
         {
           "path": "states/variants/retiring-cassandra--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 15359,
-          "sha256": "f72a34394576b128017f5715133697bed6903ef8aff96cc026ee4032ab94d555"
+          "bytes": 14496,
+          "sha256": "ce2cbee3afb0986b99e8906b9d09d15abe190c21f040423fc14445bd1a6bdd04"
         },
         {
           "path": "states/variants/retiring-cassandra--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 20624,
-          "sha256": "c077283e1886a8f0a9913dd9e9b75fa67a53a53b5d0ffa2270a9cae14397ccfb"
+          "bytes": 21412,
+          "sha256": "13139b60cde2df88dc2b3501a7443a278dedb2007ded84f7fbcce0444db298fd"
         },
         {
           "path": "states/variants/retiring-cassandra--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 25983,
-          "sha256": "9efa9aa8e0a64e1cbab70ce7e5d7d6592c833aa70cc170c9f4ae9f5bcd36e1f1"
+          "bytes": 24127,
+          "sha256": "b7ae26c6d2476b799531ba9c93307c46a71f20b3b6eace76e8cf4bbc7bfc0fb8"
         },
         {
           "path": "states/variants/retiring-cassandra--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 34142,
-          "sha256": "ffa8f308ef58b1fd5281caa2a9aa741395869fd00a1e09ed59f566812452d9fc"
+          "bytes": 37676,
+          "sha256": "57fbfb0aa94506bb26a6cf3308cba6e1e7b29ec62bcc7890a23a302628059834"
         }
       ]
     },
