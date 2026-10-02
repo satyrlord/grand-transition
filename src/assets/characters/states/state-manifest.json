@@ -243,6 +243,66 @@
     },
     {
       "ownerId": "county-baron",
+      "skinId": "municipal-patron",
+      "states": [
+        {
+          "stateId": "idle",
+          "assetId": "county-baron--municipal-patron",
+          "durationMs": 4000,
+          "loop": true
+        },
+        {
+          "stateId": "selection",
+          "assetId": "county-baron--municipal-patron",
+          "durationMs": 320,
+          "loop": false
+        },
+        {
+          "stateId": "thinking",
+          "assetId": "county-baron--municipal-patron--thinking",
+          "durationMs": 3000,
+          "loop": true
+        },
+        {
+          "stateId": "delivery",
+          "assetId": "county-baron--municipal-patron--delivery",
+          "durationMs": 400,
+          "loop": false
+        },
+        {
+          "stateId": "light-hit",
+          "assetId": "county-baron--municipal-patron--light-hit",
+          "durationMs": 300,
+          "loop": false
+        },
+        {
+          "stateId": "heavy-hit",
+          "assetId": "county-baron--municipal-patron--heavy-hit",
+          "durationMs": 520,
+          "loop": false
+        },
+        {
+          "stateId": "weakness",
+          "assetId": "county-baron--municipal-patron--weakness",
+          "durationMs": 500,
+          "loop": false
+        },
+        {
+          "stateId": "comeback",
+          "assetId": "county-baron--municipal-patron--delivery",
+          "durationMs": 500,
+          "loop": false
+        },
+        {
+          "stateId": "grammar-mistake",
+          "assetId": "county-baron--municipal-patron--weakness",
+          "durationMs": 520,
+          "loop": false
+        }
+      ]
+    },
+    {
+      "ownerId": "county-baron",
       "skinId": "default",
       "states": [
         {
@@ -3280,6 +3340,406 @@
           "format": "webp",
           "bytes": 42446,
           "sha256": "207e6f45a92b8973e7f6247588d9d837488135c026a05c0c9908682a8a91fcbf"
+        }
+      ]
+    },
+    {
+      "id": "county-baron--municipal-patron--thinking",
+      "ownerType": "character",
+      "ownerId": "county-baron",
+      "skinId": "municipal-patron",
+      "stateId": "thinking",
+      "poseId": "thinking",
+      "expressionId": "thinking",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/county-baron--municipal-patron/thinking.png",
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "bytes": 677821,
+        "sha256": "0ff60c5de55206cb0e707aca97f76c958527b948273fba1c9d490de99c53b856"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/county-baron--municipal-patron--thinking-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 7894,
+          "sha256": "fe9a5f663034ebe94dd80ef18d5889f85a1ba4ba72382537fe1cbd5c80744b1b"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--thinking-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 11070,
+          "sha256": "309c315c460de48d63b9506749eee52afc8a45489fcbcca617ddda374a9ae730"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--thinking-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 19240,
+          "sha256": "cdf07aad3dbbda377cdb6f7bee2b79d7b77ad39a7363b5cb2d2344192c879651"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--thinking-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 27358,
+          "sha256": "868ea002ea1786fedfabb268daf5e0a3f5dc73df66d8e67da9ba6c25efb5212d"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--thinking-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 31587,
+          "sha256": "5a655147fa60deeaaa10169e610ae239f7188f2f149e78b0a10df5000f8186d7"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--thinking-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 47994,
+          "sha256": "5e4d486dc6521de8203f267015ee1afecbda07dbd6a5146df6cec3eea822e19a"
+        }
+      ]
+    },
+    {
+      "id": "county-baron--municipal-patron--delivery",
+      "ownerType": "character",
+      "ownerId": "county-baron",
+      "skinId": "municipal-patron",
+      "stateId": "delivery",
+      "poseId": "delivery",
+      "expressionId": "delivery",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/county-baron--municipal-patron/delivery.png",
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "bytes": 704480,
+        "sha256": "46b55d19ade799c0b8c2868b91dc61e934ff8d3e7128f1d3f048cfbe8420ad3c"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/county-baron--municipal-patron--delivery-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 9941,
+          "sha256": "8d87e6bdc8616831af5cc7f1c019e9fa3111cf1db9d7a99484af3119b85cdd0d"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--delivery-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 14070,
+          "sha256": "61b25251f8b8b2e1992cc09a7115e3f7000e0d3ccdde754c40fc3340b991b0c0"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--delivery-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 22896,
+          "sha256": "039427682c34e22f27ad82e314be8a9ae58a4e5535da605baddcb843d3145e83"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--delivery-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 33642,
+          "sha256": "d32f47a5a0adb1cc7c91834fa9be72b80202ddae66176c3688c7fffc97980fae"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--delivery-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 38284,
+          "sha256": "4af7c5ef8a3b9201cb9e9166fa25e2a28e3fb548ce3f1fc5480ebcf387062118"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--delivery-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 59570,
+          "sha256": "a660aae19c6548b08449d13cd1561b2c2d5f5cef9d719dd3af80a5b134d07ebe"
+        }
+      ]
+    },
+    {
+      "id": "county-baron--municipal-patron--light-hit",
+      "ownerType": "character",
+      "ownerId": "county-baron",
+      "skinId": "municipal-patron",
+      "stateId": "light-hit",
+      "poseId": "light-hit",
+      "expressionId": "light-hit",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/county-baron--municipal-patron/light-hit.png",
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "bytes": 725771,
+        "sha256": "042955694f000013d7161b1b773a5b8e3610f695af72b5fbd5d0c6b7b4cdc8c4"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/county-baron--municipal-patron--light-hit-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 13742,
+          "sha256": "e8032bc06bca046d74dbf2e13ae5d6ca54a21c17b6ec3ec3d8761102b8dc0452"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--light-hit-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 11828,
+          "sha256": "8c8f7262ea6d794effa2b4386f8e2c35897d56e1fcf53b2a14ef9351ba50d5f7"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--light-hit-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 20662,
+          "sha256": "fdbf3b651caef62d0c3a328b757685fdffebdbb6c2714fb0118f7a08cfd05f65"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--light-hit-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 29182,
+          "sha256": "8d6f2d5d0b8873605441c8fc853ab40912c6a857a5a69020379f103d39af7078"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--light-hit-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 33807,
+          "sha256": "1a5ea1bebe695c6a80dc1d0c5773f7270d48cdde9a4594488a5bc48d0202c27d"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--light-hit-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 51214,
+          "sha256": "cf577e74c59fc02a2a654db5a3eb4f09d12afb8487d10007fb15c363339a7b72"
+        }
+      ]
+    },
+    {
+      "id": "county-baron--municipal-patron--heavy-hit",
+      "ownerType": "character",
+      "ownerId": "county-baron",
+      "skinId": "municipal-patron",
+      "stateId": "heavy-hit",
+      "poseId": "heavy-hit",
+      "expressionId": "heavy-hit",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/county-baron--municipal-patron/heavy-hit.png",
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "bytes": 812516,
+        "sha256": "3c2312c2f392d7cecccf3278c9669ab8891e00b540356c1f09e93d2a0492880e"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/county-baron--municipal-patron--heavy-hit-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 9906,
+          "sha256": "b86c810ff33f74509bbc973e385bfe18a89797c6258a0abc6d99aa2a0dea0a30"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--heavy-hit-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 13638,
+          "sha256": "ae7f03c3966dee3378c39b958d296734174fe445c0785dd2617091ba7ec9e489"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--heavy-hit-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 24041,
+          "sha256": "0bb6d9e422f1af0887bac9e6cab2d4252d793f8beeeaf5a50d7e247f05869c04"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--heavy-hit-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 33330,
+          "sha256": "d8327d243dd72a348a566fee8b9adb1992f8fbdc76eb33388ffce099a410d2b3"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--heavy-hit-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 39518,
+          "sha256": "19af331fa01a81ba77b440ea94d15488ea861e66c37212097b05b278c2b2be17"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--heavy-hit-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 59410,
+          "sha256": "57d2d3d4ec3df2f3a4e42544f3e47a61e9635a701a4e55aaf4d52e31340fef9d"
+        }
+      ]
+    },
+    {
+      "id": "county-baron--municipal-patron--weakness",
+      "ownerType": "character",
+      "ownerId": "county-baron",
+      "skinId": "municipal-patron",
+      "stateId": "weakness",
+      "poseId": "weakness",
+      "expressionId": "weakness",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/county-baron--municipal-patron/weakness.png",
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "bytes": 662359,
+        "sha256": "39ad3f073c7993a2acaafb3a96eff3b974e632ad1f65155d536aa80dc81cddc9"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/county-baron--municipal-patron--weakness-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 7772,
+          "sha256": "cdff0267383e156547081c905dcc330baeab4c79a93c79531398255a43e4be3c"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--weakness-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 10718,
+          "sha256": "b1a9c859d0be4facc8936084225125202850189134217a810b3847e522a910b3"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--weakness-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 18181,
+          "sha256": "5912725579f7a0d55dee1324d09b2f20484683144d09070d2b7831f446cec0dd"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--weakness-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 25904,
+          "sha256": "1371d91aef59f7b035ab906fd5b3e5198492f649222db9c999a85ba73fe64cb8"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--weakness-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 29720,
+          "sha256": "1733c7c282f627a91e980dc5000c241cf0af105a06ef2fa4d3af6ac5366327f6"
+        },
+        {
+          "path": "states/variants/county-baron--municipal-patron--weakness-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 45408,
+          "sha256": "aefecf4bfc0bcaca797f9f36047a8c29d023640e7f123c0eadd96039a83d9f6e"
         }
       ]
     },

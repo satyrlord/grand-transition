@@ -514,11 +514,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "county-baron--municipal-patron.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 3250825,
-        "sha256": "f016a895eba52b68a202fd46d2d1f1678da4a3b7cefc3ba74970ceb92097529e"
+        "bytes": 624727,
+        "sha256": "aebc3932a41ee778ba22835783ff59fb00ec0c34da148e7dfba2eecfa6a32444"
       },
       "focalPoint": {
         "x": 0.5,
@@ -539,8 +539,8 @@
           "format": "avif",
           "quality": 100,
           "lossless": true,
-          "bytes": 15247,
-          "sha256": "b302e231e83ef5d1959e09e0cda698198bebf40023f4962796c6534046b97f05"
+          "bytes": 13391,
+          "sha256": "740261fb8924fc6c0f867e614a9a51edaa0689ddbfc486a4e8d58156415e77d6"
         },
         {
           "path": "variants/county-baron--municipal-patron-128x128.webp",
@@ -548,8 +548,8 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 4594,
-          "sha256": "887824fd731e24ef85a3753dc57f6e3013ec54416b30987bb4d9ff2408f7bdc4"
+          "bytes": 4290,
+          "sha256": "33f180a8ca71b3dd6f8060d6a7888800b78da5caa85d867efe2098e47a579415"
         },
         {
           "path": "variants/county-baron--municipal-patron-256x256.avif",
@@ -558,8 +558,8 @@
           "format": "avif",
           "quality": 100,
           "lossless": true,
-          "bytes": 42352,
-          "sha256": "c1e796da52948229ccdee331f455214612a8f39f735940ae7145e7ab54ef616b"
+          "bytes": 35506,
+          "sha256": "7697bfa679add972e5292053eb55ed3399d7fab1b49dd9930d2eab27ce8ef50f"
         },
         {
           "path": "variants/county-baron--municipal-patron-256x256.webp",
@@ -567,8 +567,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 10500,
-          "sha256": "2496d2075e438e73ffa6177e002c91029a2e58f6ea9e835ceb78b3bda869d1c9"
+          "bytes": 9242,
+          "sha256": "e0a6dec46c0f546f8864fbbb10ebe396d33de21f1eb1799373006b4e5e251214"
         },
         {
           "path": "variants/county-baron--municipal-patron-320x320.avif",
@@ -576,8 +576,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 8936,
-          "sha256": "19ad161834b2f92952fc3b895d02f526d743b334c17b390b33b2070337e67c7c"
+          "bytes": 8610,
+          "sha256": "0df720b01d0e90280c26601ef2e51c9a9d9bbf1c604ded7189599946afd0a688"
         },
         {
           "path": "variants/county-baron--municipal-patron-320x320.webp",
@@ -585,8 +585,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 13644,
-          "sha256": "7a59aaa00dc7f1bfe870d244b2b602a081a7d8ae0ce205ed7504ffe8e335fd9d"
+          "bytes": 12194,
+          "sha256": "a30d4213a4071d494fef24aa9faa0e7eac90292af88025e2b4c5dbfad8075951"
         },
         {
           "path": "variants/county-baron--municipal-patron-640x640.avif",
@@ -594,8 +594,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 22003,
-          "sha256": "6b47cf1479e45bcc30f97af134010348f1e7872b1b805df319681b75baed3a48"
+          "bytes": 20677,
+          "sha256": "652bbb8f1e7b77ae237c355e90d636c86b53979d86f474178696c63c9e4725b6"
         },
         {
           "path": "variants/county-baron--municipal-patron-640x640.webp",
@@ -603,8 +603,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 33634,
-          "sha256": "2dfa6a9747b5fe243c0852c26bdaf01608c77bbeb4c924a2c1ee2bbf36747b1f"
+          "bytes": 29754,
+          "sha256": "34b3c1438ceb7a502a94f34e10036872d29ace31eaa28276de4940c081e56f56"
         },
         {
           "path": "variants/county-baron--municipal-patron-960x960.avif",
@@ -612,8 +612,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 35483,
-          "sha256": "f2240aba8b300a5a5618ba56cb6fe71d97ad2a1cb7171120ebf0c80576de026b"
+          "bytes": 34619,
+          "sha256": "8abbdd40fce732d00a422e92a4fc021abd6c35b7766f17f6f0e4a90e2cfeb285"
         },
         {
           "path": "variants/county-baron--municipal-patron-960x960.webp",
@@ -621,8 +621,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 55312,
-          "sha256": "9495252c774614661fda1066fee1a6dccd1c73a06b948b874e3a3519760be260"
+          "bytes": 52796,
+          "sha256": "e42a9b22936ccea4e365d8e766bbd4ca9cff63cd63ba67c0e9eabb7f842ab703"
         }
       ]
     },

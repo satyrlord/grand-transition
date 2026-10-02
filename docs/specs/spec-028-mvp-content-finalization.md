@@ -72,13 +72,19 @@ An archetype can keep only its default skin.
 
 The Black Sea Captain keeps only its default skin in the approved roster of this time.
 
-Local Baron (`county-baron`) has the `municipal-patron` portrait with native transparency.
-Its installed appearance stays until an authorized replacement.
-It is not the mandatory style reference for new art.
-The flat editorial cartoon trial and researched identity workflow in Milestone 023 control new human art.
-File-name discovery shows it in the setup and carries it into matches.
-Do not change its default portrait, character identity, phrases, balance, and voice.
-It uses the selection-art fallback, without a new state package.
+Local Baron (`county-baron`) has the installed approved `municipal-patron` alternate
+selection and five reviewed matching poses in the flat editorial-cartoon
+direction of Milestone 023. Use the accepted selection as the only pose image
+reference. Keep its broad adult silhouette, bald scalp, round dark glasses,
+short dark beard, navy open jacket, white open collar, charcoal trousers, and
+single blank burgundy folder. Its source faces left. Keep the full face,
+holding fingers, folder, and important gestures above desk occlusion.
+File-name discovery shows it in setup and carries it into matches.
+It uses the full nine-state package, with five state masters and the selection.
+Do not change its default portrait, character identity, phrases, balance, or voice.
+The focused integration and runtime evidence is recorded in Milestone 023.
+The aggregate quality gate remains deferred; owner in-game evaluation remains
+separate from technical verification.
 
 The Reluctant Theorem (`reluctant-theorem`) has one default portrait in the shared cel-shaded editorial-cartoon style of Milestone 023.
 It holds one money envelope with new generic banknote edges and no markings.
@@ -94,11 +100,11 @@ That integration removes `reluctant-theorem` from the fallback list, and it adds
 Do not change the executable inventory before then.
 
 All other selectable skins use the full nine-state package of Milestone 023.
-Thus, the last state inventory contains 28 skin packages and 140 state masters.
+Thus, the last state inventory contains 29 skin packages and 145 state masters.
 Each package uses five state masters and the selection, and no more.
 It maps idle to the selection, comeback to delivery, and grammar mistake to weakness.
 It agrees with the minimum values of six poses and five expressions.
-`county-baron--municipal-patron` and `reluctant-theorem` are the only selection-art fallback IDs.
+`reluctant-theorem` is the only selection-art fallback ID.
 A validator does not accept a different missing package or a fallback that the inventory does not declare.
 It also does not accept a dedicated master for a state that the package uses again.
 

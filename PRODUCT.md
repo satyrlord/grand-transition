@@ -112,7 +112,7 @@ Two untracked screenshots of the initial game in the temporary folder are only r
 They are not product assets or layout specifications.
 
 The 30 character skins and 14 scene layers have manifests and runtime variants.
-The code contains 28 full character state packages, two fallbacks to selection art, seven different scene music treatments, and ten effects.
+The code contains 29 full character state packages, one fallback to selection art, seven different scene music treatments, and ten effects.
 Milestone 028 controls their MVP acceptance.
 Specification 032 controls the seventh scene package.
 Specification 036 controls the eighth scene, Grand Hotel Romania, with its

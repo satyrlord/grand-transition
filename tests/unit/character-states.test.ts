@@ -12,10 +12,12 @@ import {
 import {
   buildCharacterStatePackage,
   buildCharacterStates,
+  cachedStatePackageInventory,
   prepareCharacterStatePackage,
   selectedStatePackageIds,
   stateAssetId,
   statePackages,
+  type StateManifest,
 } from '../../tools/build-character-states.ts';
 
 type SelectionEntry = Readonly<{ id: string; ownerId: string; skinId: string }>;
@@ -96,15 +98,12 @@ describe('complete character state contract', () => {
     expect(() => selectedStatePackageIds(['missing'], packages)).toThrow(/known/u);
   });
 
-  test('derives 28 state packages from all 19 characters and exactly two fallbacks', () => {
+  test('derives 29 state packages from all 19 characters and exactly one fallback', () => {
     const { manifest, selection } = fixture();
     expect(contract.characterIds).toHaveLength(19);
-    expect(contract.selectionArtFallbackSkinIds).toEqual([
-      'county-baron--municipal-patron',
-      'reluctant-theorem',
-    ]);
-    expect(statePackages(selection)).toHaveLength(28);
-    expect(manifest.packages).toHaveLength(28);
+    expect(contract.selectionArtFallbackSkinIds).toEqual(['reluctant-theorem']);
+    expect(statePackages(selection)).toHaveLength(29);
+    expect(manifest.packages).toHaveLength(29);
     expect(manifest.packages.every(({ states }) => states.length === 9)).toBe(true);
     expect(contract.stateMasterIds).toEqual([
       'thinking',
@@ -113,8 +112,8 @@ describe('complete character state contract', () => {
       'heavy-hit',
       'weakness',
     ]);
-    expect(contract.expectedStateMasterCount).toBe(140);
-    expect(manifest.assets).toHaveLength(140);
+    expect(contract.expectedStateMasterCount).toBe(145);
+    expect(manifest.assets).toHaveLength(145);
 
     const minimumMasters = new Set(['thinking', 'delivery', 'light-hit', 'heavy-hit', 'weakness']);
     expect(stateAssetId('fixture', 'idle', minimumMasters)).toBe('fixture');
@@ -122,6 +121,71 @@ describe('complete character state contract', () => {
     expect(stateAssetId('fixture', 'comeback', minimumMasters)).toBe('fixture--delivery');
     expect(stateAssetId('fixture', 'grammar-mistake', minimumMasters)).toBe('fixture--weakness');
     expect(() => stateAssetId('fixture', 'thinking', new Set())).toThrow(/required state master/u);
+  });
+
+  test('adds a selected new state package while preserving every cached package', () => {
+    const { manifest, selection } = fixture();
+    const selected = new Set(['county-baron--municipal-patron']);
+    manifest.packages = manifest.packages.filter(
+      ({ ownerId, skinId }) => ownerId !== 'county-baron' || skinId !== 'municipal-patron',
+    );
+    manifest.assets = manifest.assets.filter(
+      ({ ownerId, skinId }) => ownerId !== 'county-baron' || skinId !== 'municipal-patron',
+    );
+    const packages = statePackages(selection);
+    const cached = cachedStatePackageInventory(manifest as StateManifest, packages, selected);
+    expect(cached.size).toBe(28);
+    for (const group of manifest.packages) {
+      const skin = packages.find(
+        (entry) => entry.ownerId === group.ownerId && entry.skinId === group.skinId,
+      )!;
+      expect(cached.get(skin.id)!.group).toBe(group);
+      expect(cached.get(skin.id)!.assets).toEqual(
+        manifest.assets.filter(
+          (asset) => asset.ownerId === group.ownerId && asset.skinId === group.skinId,
+        ),
+      );
+    }
+    expect(() =>
+      cachedStatePackageInventory(manifest as StateManifest, packages, new Set(['county-baron'])),
+    ).toThrow(/municipal-patron.*incomplete/u);
+  });
+
+  test('rejects missing unselected packages and altered cached state mappings', () => {
+    const first = fixture();
+    first.manifest.packages = first.manifest.packages.filter(
+      ({ ownerId, skinId }) => ownerId !== 'county-baron' || skinId !== 'default',
+    );
+    first.manifest.assets = first.manifest.assets.filter(
+      ({ ownerId, skinId }) => ownerId !== 'county-baron' || skinId !== 'default',
+    );
+    const selected = new Set(['county-baron--municipal-patron']);
+    expect(() =>
+      cachedStatePackageInventory(
+        first.manifest as StateManifest,
+        statePackages(first.selection),
+        selected,
+      ),
+    ).toThrow(/county-baron.*incomplete/u);
+
+    const second = fixture();
+    second.manifest.packages[0]!.states[0]!.assetId = 'wrong-selection';
+    expect(() =>
+      cachedStatePackageInventory(
+        second.manifest as StateManifest,
+        statePackages(second.selection),
+        selected,
+      ),
+    ).toThrow(/invalid state mappings/u);
+    const third = fixture();
+    third.manifest.packages[0]!.ownerId = 'unknown';
+    expect(() =>
+      cachedStatePackageInventory(
+        third.manifest as StateManifest,
+        statePackages(third.selection),
+        selected,
+      ),
+    ).toThrow(/unknown packages/u);
   });
 
   test('package budget includes both scene layers, all states, fallback format, and foundation portraits', () => {
@@ -251,7 +315,7 @@ describe('complete character state contract', () => {
     const missingPackage = fixture();
     missingPackage.manifest.packages.pop();
     expect(() => validateStateManifest(missingPackage.manifest, missingPackage.selection)).toThrow(
-      /exactly 28 packages/u,
+      /exactly 29 packages/u,
     );
 
     const missingCharacter = fixture();
@@ -263,9 +327,8 @@ describe('complete character state contract', () => {
     ).toThrow(/selection portrait is missing/u);
 
     const missingFallback = fixture();
-    missingFallback.selection.assets = missingFallback.selection.assets.filter(
-      ({ id }) => id !== 'county-baron--municipal-patron',
-    );
+    missingFallback.selection.assets.find(({ id }) => id === 'reluctant-theorem')!.id =
+      'reluctant-theorem--undeclared';
     expect(() =>
       validateStateManifest(missingFallback.manifest, missingFallback.selection),
     ).toThrow(/declared selection-art fallback is missing/u);
@@ -286,7 +349,7 @@ describe('complete character state contract', () => {
     });
     expect(() =>
       validateStateManifest(fallbackAsPackage.manifest, fallbackAsPackage.selection),
-    ).toThrow(/exactly 28 packages/u);
+    ).toThrow(/exactly 29 packages/u);
   });
 
   test('rejects altered timing and loop contracts', () => {

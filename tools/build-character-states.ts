@@ -62,12 +62,10 @@ export function statePackages(
   }
   if (
     !Array.isArray(contract.selectionArtFallbackSkinIds) ||
-    contract.selectionArtFallbackSkinIds.length !== 2 ||
-    new Set(contract.selectionArtFallbackSkinIds).size !== 2
+    contract.selectionArtFallbackSkinIds.length !== 1 ||
+    new Set(contract.selectionArtFallbackSkinIds).size !== 1
   ) {
-    throw new Error(
-      'Character state contract must declare exactly two unique selection-art fallbacks.',
-    );
+    throw new Error('Character state contract must declare exactly one selection-art fallback.');
   }
   const relevant = (selectionManifest.assets as CharacterAsset[]).filter((asset) =>
     contract.characterIds.includes(asset.ownerId),
@@ -135,29 +133,34 @@ export function selectedStatePackageIds(
   return new Set(only as string[]);
 }
 
-async function verifiedCachedStatePackages(
-  characterRoot: string,
-  packages: readonly CharacterAsset[],
+export function cachedStatePackageInventory(
+  manifest: StateManifest,
+  packages: readonly StateSkin[],
   selected: ReadonlySet<string>,
-): Promise<Map<string, { group: StatePackage; assets: CharacterAsset[] }>> {
-  const manifest = JSON.parse(
-    await readFile(path.join(characterRoot, 'states/state-manifest.json'), 'utf8'),
-  ) as StateManifest;
+): Map<string, { group: StatePackage; assets: CharacterAsset[] }> {
   if (
     manifest.schemaVersion !== 1 ||
     !Array.isArray(manifest.packages) ||
     !Array.isArray(manifest.assets) ||
-    manifest.packages.length !== packages.length ||
-    manifest.assets.length !== contract.expectedStateMasterCount
+    manifest.assets.length !== manifest.packages.length * contract.stateMasterIds.length
   ) {
-    throw new Error('Selective state builds require a complete existing state manifest.');
+    throw new Error('Selective state builds require complete cached packages.');
+  }
+  const key = (skin: { ownerId: string; skinId: string }) => `${skin.ownerId}:${skin.skinId}`;
+  const known = new Map(packages.map((skin) => [key(skin), skin]));
+  const groups = new Map(manifest.packages.map((group) => [key(group), group]));
+  if (
+    groups.size !== manifest.packages.length ||
+    [...groups.keys()].some((id) => !known.has(id)) ||
+    new Set(manifest.assets.map((asset) => asset.id)).size !== manifest.assets.length ||
+    manifest.assets.some((asset) => !groups.has(key(asset)))
+  ) {
+    throw new Error('Cached state inventory contains duplicate or unknown packages or assets.');
   }
   const cache = new Map<string, { group: StatePackage; assets: CharacterAsset[] }>();
   for (const skin of packages) {
-    if (selected.has(skin.id)) continue;
-    const group = manifest.packages.find(
-      (entry) => entry.ownerId === skin.ownerId && entry.skinId === skin.skinId,
-    );
+    const group = groups.get(key(skin));
+    if (!group && selected.has(skin.id)) continue;
     const assets = manifest.assets.filter(
       (asset) => asset.ownerId === skin.ownerId && asset.skinId === skin.skinId,
     );
@@ -169,6 +172,45 @@ async function verifiedCachedStatePackages(
     ) {
       throw new Error(`Cached state package "${skin.id}" is incomplete.`);
     }
+    const availableStateIds = new Set(contract.stateMasterIds);
+    for (const state of contract.states) {
+      const mappings = group.states.filter((record) => record.stateId === state.id);
+      if (
+        mappings.length !== 1 ||
+        mappings[0]!.assetId !== stateAssetId(skin.id, state.id, availableStateIds) ||
+        mappings[0]!.durationMs !== state.durationMs ||
+        mappings[0]!.loop !== state.loop
+      ) {
+        throw new Error(`Cached state package "${skin.id}" has invalid state mappings.`);
+      }
+    }
+    if (
+      assets.some(
+        (asset) =>
+          !contract.stateMasterIds.includes(asset.stateId) ||
+          asset.id !== `${skin.id}--${asset.stateId}`,
+      )
+    ) {
+      throw new Error(`Cached state package "${skin.id}" has invalid state assets.`);
+    }
+    if (!selected.has(skin.id)) cache.set(skin.id, { group, assets });
+  }
+  return cache;
+}
+
+async function verifiedCachedStatePackages(
+  characterRoot: string,
+  packages: readonly CharacterAsset[],
+  selected: ReadonlySet<string>,
+): Promise<Map<string, { group: StatePackage; assets: CharacterAsset[] }>> {
+  const manifest = JSON.parse(
+    await readFile(path.join(characterRoot, 'states/state-manifest.json'), 'utf8'),
+  ) as StateManifest;
+  const cache = cachedStatePackageInventory(manifest, packages, selected);
+  for (const skin of packages) {
+    const cached = cache.get(skin.id);
+    if (!cached) continue;
+    const { assets } = cached;
     for (const asset of assets) {
       if (
         !contract.stateMasterIds.includes(asset.stateId) ||
@@ -235,7 +277,6 @@ async function verifiedCachedStatePackages(
         }
       }
     }
-    cache.set(skin.id, { group, assets });
   }
   return cache;
 }

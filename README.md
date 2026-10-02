@@ -112,8 +112,8 @@ New installations use English interface text and Romanian game content.
 
 The last asset contract lets each archetype have one default skin and zero through eight alternate skins.
 The 30 skins are 19 default skins and 11 alternate skins.
-Twenty-eight skins have full nine-state packages.
-The Local Baron municipal-patron skin and the Reluctant Theorem use the selection art as a fallback.
+Twenty-nine skins have full nine-state packages.
+The Reluctant Theorem uses the selection art as a fallback.
 Character manifests and scene manifests give the generated AVIF and WebP variants.
 The milestone contract controls the last visual acceptance.
 

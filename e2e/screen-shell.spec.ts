@@ -536,7 +536,9 @@ test('every alternate portrait decodes while the roster exposes all portrait ski
   await page.getByRole('button', { name: 'Start match' }).click();
   const redPlayer = page.locator('.match-player[data-side="red"]');
   await expect(redPlayer.getByRole('heading')).toHaveText('Local Baron');
-  await expect(redPlayer.locator('.character-portrait')).toHaveAttribute(
+  const visibleFrame = redPlayer.locator('grand-transition-character [data-state-visible="true"]');
+  await expect(visibleFrame).toHaveCount(1);
+  await expect(visibleFrame.locator('.character-portrait')).toHaveAttribute(
     'src',
     /county-baron--municipal-patron/u,
   );

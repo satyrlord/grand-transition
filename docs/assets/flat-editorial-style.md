@@ -22,7 +22,9 @@ The approved Marble Diplomat selection and five reviewed matching poses are
 also installed under the owner-authorized package integration.
 The approved Local Baron default selection and five reviewed matching poses are
 also installed under the owner-authorized package integration.
-All twenty packages are
+The approved Local Baron municipal-patron alternate selection and five reviewed
+matching poses are also installed under the owner-authorized integration.
+All twenty-one packages are
 installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
@@ -49,6 +51,7 @@ character's identity into another.
 | Oat-Milk Reformist alternate | [Selection](../../src/assets/characters/oat-milk-reformist--alternate.png) | [Five poses](../../src/assets/characters/states/oat-milk-reformist--alternate/) |
 | Marble Diplomat | [Selection](../../src/assets/characters/marble-diplomat.png) | [Five poses](../../src/assets/characters/states/marble-diplomat/) |
 | Local Baron | [Selection](../../src/assets/characters/county-baron.png) | [Five poses](../../src/assets/characters/states/county-baron/) |
+| Local Baron municipal patron | [Selection](../../src/assets/characters/county-baron--municipal-patron.png) | [Five poses](../../src/assets/characters/states/county-baron--municipal-patron/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -113,8 +116,19 @@ distinct recoil strengths, and guarded folder hold visible above desk occlusion.
 Each pose used only the accepted selection. Selection, thinking, light-hit,
 and weakness use only the reviewed bounded removal of detached alpha-1 pixels.
 Delivery and heavy-hit retain their generated pixels and native alpha.
-Metadata registration preserves all reviewed pixels. The municipal-patron
-alternate remains unchanged.
+Metadata registration preserves all reviewed pixels.
+
+The installed municipal-patron alternate selection and reviewed five-pose
+package retain the accepted bald scalp, round dark glasses, mature drawn face,
+short dark beard, broad adult silhouette, navy open jacket, neutral-white open
+collar, charcoal trousers, dark shoes, and one blank burgundy folder. The
+selection and five poses retain native 1254-square canvases and face left.
+Each pose used only the accepted selection. Keep the face, glasses, hands, and
+folder clear above desk occlusion. Preserve the distinct chin, speaking-palm,
+two recoil strengths, and guarded collar gestures. Thinking, light-hit,
+heavy-hit, and weakness use only bounded removal of detached alpha-1 pixels.
+Selection and delivery retain their generated pixels. Metadata registration
+preserves all reviewed pixels. The default Baron remains unchanged.
 
 Artwork approval and integration verification are separate. Specification 023
 records the current package status. The remaining human-roster rollout is

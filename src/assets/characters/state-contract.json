@@ -21,12 +21,9 @@
     "government-ai",
     "reluctant-theorem"
   ],
-  "selectionArtFallbackSkinIds": [
-    "county-baron--municipal-patron",
-    "reluctant-theorem"
-  ],
-  "expectedPackageCount": 28,
-  "expectedStateMasterCount": 140,
+  "selectionArtFallbackSkinIds": ["reluctant-theorem"],
+  "expectedPackageCount": 29,
+  "expectedStateMasterCount": 145,
   "stateMasterIds": [
     "thinking",
     "delivery",

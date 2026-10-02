@@ -172,7 +172,7 @@ and native alpha. Metadata registration preserves all reviewed pixels.
 Thinking uses a calculating lapel gesture, delivery a persuasive handshake,
 light-hit and heavy-hit distinct recoil, and weakness a guarded folder hold.
 The existing nine-state mappings, skin identifiers, voices, phrases and gameplay
-content remain unchanged. The municipal-patron alternate remains unchanged.
+content remain unchanged.
 Focused asset checks, 45 unit tests, the production build and the selected
 state-transition browser test passed. Installed two-sided checks cover all
 nine logical states at 1024 by 768, 1280 by 1024 and 1024 by 1023, plus six
@@ -182,6 +182,31 @@ and stable interface geometry passed without browser errors. Independent
 source, encoded-asset and runtime review found no blocking defect.
 The aggregate quality gate remains deferred; owner in-game evaluation is
 separate from technical verification.
+The approved Local Baron municipal-patron alternate selection and five reviewed
+matching poses are installed. All six sources retain native 1254-square canvases.
+Keep the accepted bald scalp, round dark glasses, mature drawn face, short dark beard,
+broad adult silhouette, navy open jacket, neutral-white open-collar shirt,
+charcoal trousers, dark shoes, and one blank rigid burgundy folder. The source
+faces left. Keep the face, glasses, holding fingers, folder, and important
+gestures within the visible match window above desk occlusion. Use only the
+accepted selection as each pose image reference. Keep thinking and weakness
+faces and glasses clear of the speech record. Thinking, light-hit,
+heavy-hit and weakness use only bounded removal of detached alpha-1 pixels.
+Selection and delivery retain generated pixels. Metadata registration preserves
+all reviewed decoded pixels. Keep native transparency and source dimensions
+without enlargement. The alternate owns the full nine-state package.
+The default Baron, voices, phrases, character
+identity, and gameplay content remain unchanged. Focused asset checks, 48 unit
+tests, three selected native-alpha tests, the production build and two focused
+browser tests passed. Installed checks cover all nine logical states on both
+sides at 1024 by 768, 1280 by 1024 and 1024 by 1023, plus six representative
+setup and idle samples through 1920 by 1080 at DPR 2 and 640 by 320. Response
+hashes, decoded variant dimensions, mirroring, upper portrait layers and stable
+interface geometry passed without browser errors. Independent source,
+encoded-asset, support and runtime reviews found no blocking defect. These focused
+checks do not establish the full viewport matrix, performance, heard speech
+quality or acceptance in a played match. The aggregate quality gate remains deferred; owner
+in-game evaluation is separate from technical verification.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted
@@ -234,8 +259,8 @@ Each non-fallback skin has one transparent square selection master of at least 1
 five state masters with the usual AVIF/WebP variants: `thinking`,
 `delivery`, `light-hit`, `heavy-hit`, and `weakness`. Each package maps `idle`
 to selection, `comeback` to delivery, and `grammar-mistake` to weakness. The
-executable inventory at this time contains 30 selection masters and 28 state
-packages, which contain 140 state masters. Keep the 27-entry
+executable inventory at this time contains 30 selection masters and 29 state
+packages, which contain 145 state masters. Keep the 27-entry
 replacement-baseline record with no changes. Declare all reviewed selections in
 `portrait-layout.json`, and keep the full manifest inventories coherent.
 
@@ -257,18 +282,12 @@ Each generated
 JavaScript chunk stays in the production gate of 500,000 bytes.
 The remaining roster uses its selection portrait until Milestone 028.
 
-Local Baron adds the selection-only `municipal-patron` skin in Milestone
-028. Its master is `county-baron--municipal-patron.png`. The OpenAI API
-generated it with `gpt-image-2.5-sunburst`. The generation used native 2048 by
-2048 dimensions, native alpha, and an approved conforming portrait as a
-style reference. This describes the existing asset provenance, not the route or style reference for new work. The
-background repair that the owner approved clears only alpha-1 pixels that are
-more than four pixels from near-opaque content.
-
-Subsequently, the owner approved a deterministic
-white-balance correction. It decreases the visible warm cast without
-regeneration, resizing, geometry changes, or alpha changes. Keep the native
-border and contour validation rules with no changes.
+Local Baron's `municipal-patron` skin uses the accepted native transparent
+1254-square selection `county-baron--municipal-patron.png` and five matching
+pose sources. The built-in chat image generator is the approved route for
+this replacement package. Keep the source dimensions, reviewed pixels, native
+border checks, and contour validation rules. Apply only measured, reviewed
+detached alpha-1 cleanup when the native-alpha procedure permits it.
 For native character variants, clear only the outer-border alpha that resizing
 generated at 8 or less. Reject stronger border coverage, and do not clip the
 figure. Encode the native AVIF variants of 128 and 256 pixels losslessly, so
@@ -1455,11 +1474,11 @@ milliseconds or less. Idle loops are 2 through 8 seconds.
 ### State package and event projection
 
 `src/assets/characters/state-contract.json` records the 19 character IDs and
-the nine named states. Milestone 028 gives the 28 mandatory packages, and it
-declares the two selection-art fallbacks. Get the default and alternate
+the nine named states. Milestone 028 gives the 29 mandatory packages, and it
+declares the remaining selection-art fallback. Get the default and alternate
 packages from the selection manifest. Do not keep a different skin list. Each
 package contains five more masters at
-`src/assets/characters/states/<portrait-stem>/<state-id>.png`, for 140 state
+`src/assets/characters/states/<portrait-stem>/<state-id>.png`, for 145 state
 masters in total.
 
 The only correct master state IDs are `thinking`, `delivery`,
@@ -1540,7 +1559,7 @@ reaction, or a character state is replaced or updated, the layout shift is
 - **AC-023-03:** Browser tests select AVIF when the browser can use it, and
   they use WebP as the fallback. They keep the dimensions before decode, and
   they load no unselected match package.
-- **AC-023-04:** All 28 state packages show all nine logical states through
+- **AC-023-04:** All 29 state packages show all nine logical states through
   five state masters and the selection. They have five or more expressions
   and six or more poses. These fail validation: missing mappings, dedicated
   masters for states that a package uses again, and source PNGs that are not

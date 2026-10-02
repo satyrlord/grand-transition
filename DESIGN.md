@@ -234,6 +234,11 @@ are also installed. Keep its mature drawn face, silver-gray side-parted hair,
 gray mustache, adult silhouette, navy suit, open white collar, and single blank
 ochre folder. Its source faces left. Keep the face, folder, holding fingers,
 and important gestures above desk occlusion in the visible match window.
+Its approved municipal-patron alternate selection and five reviewed matching
+poses are also installed. Keep the alternate's bald scalp, round dark glasses, short dark beard,
+broad adult silhouette, navy open jacket, white open collar, charcoal trousers,
+and single blank burgundy folder. It also faces left. Keep the face, glasses,
+holding fingers, folder, and important gestures above desk occlusion.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.
@@ -596,9 +601,9 @@ Inset brass and navy rules make the arena look like a built structure.
 
 The build uses three brand rasters, eight scene backgrounds, and six transparent foreground plates.
 It also uses 30 transparent character portraits: 19 default portraits and 11 alternate portraits.
-Twenty-eight skins have full nine-state packages that the build makes from the selection and five state masters, and no more.
+Twenty-nine skins have full nine-state packages that the build makes from the selection and five state masters, and no more.
 Idle uses the selection again, Comeback uses delivery again, and grammar mistake uses weakness again.
-The Local Baron municipal-patron skin and the Reluctant Theorem use the selection art as a fallback.
+The Reluctant Theorem uses the selection art as a fallback.
 All portrait skins are visual-only variations.
 They do not change the fictional character identity or the character text.
 
