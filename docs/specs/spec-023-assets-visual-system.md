@@ -104,6 +104,23 @@ skin identifiers, phrases, voices, and gameplay content remain unchanged.
 Focused asset and unit checks, the production build, the nine-state browser
 test, and installed two-sided runtime checks passed. These checks do not
 establish full rollout acceptance; the aggregate quality gate remains deferred.
+The approved Oat-Milk Reformist default selection is installed with five
+reviewed matching poses under the authorized package integration. All six
+sources retain native 1254-square canvases, right-facing composition, short
+dark hair and stubble, orange blazer, cream shirt, navy trousers, brown shoes,
+and a single beige lidded cup held above desk occlusion on the inner side.
+Each pose used only the accepted selection as its image reference. The sources
+use only bounded detached alpha-1 cleanup. Metadata registration preserves
+the reviewed pixels. Thinking uses a chin gesture, delivery uses an inclusive
+speaking palm, light-hit and heavy-hit have distinct recoil, and weakness
+uses a guarded hunch. The existing nine-state mappings, skin identifiers,
+content, and alternate skin remain unchanged. Focused asset and unit checks,
+the production build, the nine-state browser test, and installed two-sided
+runtime checks passed. The runtime checks cover all nine logical states at
+1024 by 768 and 1280 by 1024, plus six representative setup and idle samples,
+including high-density and landscape touch emulation. These checks do not
+establish full rollout acceptance. The aggregate quality gate remains deferred,
+and owner in-game evaluation is separate from technical verification.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted

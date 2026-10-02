@@ -8095,11 +8095,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/oat-milk-reformist/thinking.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1343978,
-        "sha256": "8c4feb46a571e85db5b608975767a573758631b3bd39a9ab0b0abedc5f7c4ff6"
+        "bytes": 729466,
+        "sha256": "0373d200958e5459d6782423a227d8014e2940df49155d85baaecb6abd087deb"
       },
       "focalPoint": {
         "x": 0.5,
@@ -8118,48 +8118,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8111,
-          "sha256": "86d89c4c13d281db4a9fe84ee1777e80d2d537b21be65f4d4bd61ac60946cce3"
+          "bytes": 9112,
+          "sha256": "7ad4478003fe4611394e45ce69a8c8265cffd87a7ecf685ad2aaa1954de51b5d"
         },
         {
           "path": "states/variants/oat-milk-reformist--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10906,
-          "sha256": "2d4d9bbb1bd737497c5de517d0d8cc7cc651e4962e90e7c8acc22ac44178ecaa"
+          "bytes": 13540,
+          "sha256": "40706d779e3ded6f856629c59fd0a37a043349c3d6974937b4ce6ba7bcbdd3a7"
         },
         {
           "path": "states/variants/oat-milk-reformist--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 17739,
-          "sha256": "c6e479adc9c3770d506194da2718545513f8c0073a06d610350fd6ffaba9ac36"
+          "bytes": 22861,
+          "sha256": "790e8d24c9b9c72e16061aed1d1e2e35c1129214cb610d5f3311233f848d5725"
         },
         {
           "path": "states/variants/oat-milk-reformist--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 24622,
-          "sha256": "b127b15fecd9122a42ad3bbe4745d9edc40e22b909a120419d07ca57d7a081d5"
+          "bytes": 34222,
+          "sha256": "b1a95995b8a9ce938506ada2a5650937e0390f43957e3bd4c2a157ce8225e152"
         },
         {
           "path": "states/variants/oat-milk-reformist--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 30107,
-          "sha256": "6f29a9a83e357c76e7df2fe4bdf5b2a54f1f29c475fce9458e3d37c1571fd5a9"
+          "bytes": 39882,
+          "sha256": "669f9b70e5c2711f62ef6ad7ba59505ddd5a2964e4ddadd5aab69c159518e49e"
         },
         {
           "path": "states/variants/oat-milk-reformist--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 40950,
-          "sha256": "d6f25a43d70c181f222485f17c32ed50783dc8c61c93286e69d237b8de3c41c5"
+          "bytes": 61944,
+          "sha256": "d6011203e11c4356e202190860bfde38dc926d90c90e8bb75a580b428de6a3ae"
         }
       ]
     },
@@ -8175,11 +8175,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/oat-milk-reformist/delivery.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1475214,
-        "sha256": "37e0afc7762735eaec0a4befd1361077dc9028fcaf08903ceab626498f926d26"
+        "bytes": 769230,
+        "sha256": "248c2b25e6c894b0184f918d938ff646773ae00f4e0758c64dd4a61fa547b46a"
       },
       "focalPoint": {
         "x": 0.5,
@@ -8198,48 +8198,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9516,
-          "sha256": "4217334b255551f39c43ee0354d1023b123ceb9afa3d8d86528d634164dadbc7"
+          "bytes": 9707,
+          "sha256": "573ec0704b6e13c72733f2895f0d47945b11cf2b991b1e1799fb67925a91a09a"
         },
         {
           "path": "states/variants/oat-milk-reformist--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12996,
-          "sha256": "26609ab9c8c88f85e93014702174617a6c50c865da665e226e8705dd7389816f"
+          "bytes": 14246,
+          "sha256": "c925d56b32fe81a2bd56bcd9022e4ac893488fac4d29802a0585946c8c5845bf"
         },
         {
           "path": "states/variants/oat-milk-reformist--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 22007,
-          "sha256": "3fd426dd9d08036cc6c3d7d16ec43982a2f27abc5a3fbdbfe2f4ffb9070633bf"
+          "bytes": 24343,
+          "sha256": "ab9f696c160f33cd91972a56b9909228942dfc30a5f2b7d33293cd3c5e01912c"
         },
         {
           "path": "states/variants/oat-milk-reformist--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 29688,
-          "sha256": "1e3683fbe51ed7a8533330682df2363d800a6bd134aaa46f75a2e650b31f4a55"
+          "bytes": 36480,
+          "sha256": "9bf0913c797a2bccb814b2b730b08ca157dc46c1713ebb4132d44d955799a76c"
         },
         {
           "path": "states/variants/oat-milk-reformist--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 35026,
-          "sha256": "d1a9fb53314fd31dd08e4ac18429bceff37db54e7f881a9d244b6d16161a568e"
+          "bytes": 42379,
+          "sha256": "b70f2a0e241b59512d40489b28ec47bf73fa635cdba3762296507d9311dd8a25"
         },
         {
           "path": "states/variants/oat-milk-reformist--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 47842,
-          "sha256": "2ae20a5532edd291dc4d8c528f6fd200f1fceca98dfcf7263c3849333acb6f28"
+          "bytes": 65748,
+          "sha256": "f74ae56d01a092c14d4eb525f3e75cbc97f452082a03323463139d334755ac6c"
         }
       ]
     },
@@ -8255,11 +8255,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/oat-milk-reformist/light-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1408934,
-        "sha256": "11a7bd5d3e9a7640de641de2570032c983e4726323d1c93aeae18f58e4128d82"
+        "bytes": 753857,
+        "sha256": "87a1cf1aab83a34c31c07a3cb77c8a53bb4c2393390a94af88636b86c34b8e5d"
       },
       "focalPoint": {
         "x": 0.5,
@@ -8278,48 +8278,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9386,
-          "sha256": "2369a95d1719b4a39d0d947a282d84ed79d881847c472cfc40659c194c6b07a5"
+          "bytes": 9680,
+          "sha256": "1fca6f1c9822fa1dcb662750fdd86a9a50f73d4a422078363147bd1a7d57d62f"
         },
         {
           "path": "states/variants/oat-milk-reformist--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12504,
-          "sha256": "c7bc9faba26d74ac54c72c1d85e03e5e75fb496070db834ce6c6c05dde47c971"
+          "bytes": 13898,
+          "sha256": "c54a230d48f192b155a2eda126f94a8fa9b459e7ab3b43ea7f11ec1723c192b9"
         },
         {
           "path": "states/variants/oat-milk-reformist--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 20424,
-          "sha256": "1c8a9ec074d517fed951e7102017fd12d93d2be83f974d2fce9f4156dea3bfa0"
+          "bytes": 24199,
+          "sha256": "45f912f717bddfdb6215a1fb5a0f97ad83e72dd88be9232f23f482ce8cce86fb"
         },
         {
           "path": "states/variants/oat-milk-reformist--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 28604,
-          "sha256": "3b1e014709f7a19ab5004676e9e7095111f938f7bf67761121413b9721ce1fe7"
+          "bytes": 35662,
+          "sha256": "9ac2d12965626def4d87745a7c991e2183f1dc091ae2564861e45c0f70c9f4a5"
         },
         {
           "path": "states/variants/oat-milk-reformist--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 34663,
-          "sha256": "526cd5c2ca2b105bab6e58e4d1b922a79b6c64fc5f02513f08df8bdb917b35e9"
+          "bytes": 42216,
+          "sha256": "d83a56ba28723bfe5a66647c55f6481034ef9e1bdd578af206b7bb5bcf0ecdaa"
         },
         {
           "path": "states/variants/oat-milk-reformist--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 47572,
-          "sha256": "2b9fc3146c7415114208f071367b687baf40accc34cece47256bac5f3ed10c2b"
+          "bytes": 63756,
+          "sha256": "b9680bb42bb3db6e42e5be808fcb10d330765d791649337d93f42acb7867c37f"
         }
       ]
     },
@@ -8335,11 +8335,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/oat-milk-reformist/heavy-hit.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1499152,
-        "sha256": "5c9f7462d3a6f8781fa56ed8d77e1b9b071befae0a51fc1b3d50aae41a43f98e"
+        "bytes": 749290,
+        "sha256": "79324a3d0101eb881a7eb00946079ed260d8010b3079ddcbc2d8e443b2175332"
       },
       "focalPoint": {
         "x": 0.5,
@@ -8358,48 +8358,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9316,
-          "sha256": "5e29789969710509a1c81574c69ed2893001c3a4df2cd78363d60da5d5980978"
+          "bytes": 9672,
+          "sha256": "ed23038936218c66cc300803ccd883bc48f26539e554bb91a911a2dee761e061"
         },
         {
           "path": "states/variants/oat-milk-reformist--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 11858,
-          "sha256": "955d3f0dba951a49acc8113dfeb997da93b4c31c56f231b58a800f3c6737e067"
+          "bytes": 13920,
+          "sha256": "f802ca304278fee713c7671a55ae71020b7f7f9a5040d325278e1bb407182591"
         },
         {
           "path": "states/variants/oat-milk-reformist--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 20929,
-          "sha256": "0dda7580d4633bd51a4a8a58f66daa913a3ffe853c65128b0e1e56ad1a70cf75"
+          "bytes": 23823,
+          "sha256": "81805eb6484ecbb453f7f0cd4c9dd712b66d31509657a1c7affd7abbf0eeb589"
         },
         {
           "path": "states/variants/oat-milk-reformist--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 27594,
-          "sha256": "404f5a4eb006abb770aecccb228799870f543c201cdd91f3122b4c930e536df0"
+          "bytes": 35052,
+          "sha256": "b59a8513aebc43e81b87f5a7d13f642b12ca7eef205fe0a53a223b1a26d73c39"
         },
         {
           "path": "states/variants/oat-milk-reformist--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 34950,
-          "sha256": "d1c617249f5fbd747572a55dd8cbdcf12ac5b009bb8b07dda67543cec1039134"
+          "bytes": 39926,
+          "sha256": "e735283121e02421eb4337a170f11857fc4b6e8817744c688406ea1a7f5e2991"
         },
         {
           "path": "states/variants/oat-milk-reformist--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 45812,
-          "sha256": "875720b83c8e011da8efac6d494c266259bf74d17f04c5841f59d2b5637bd1c9"
+          "bytes": 62842,
+          "sha256": "a7a1330814ce747af7143e44007b24eb81d3778e9ad0fdc82c7609e70fc75954"
         }
       ]
     },
@@ -8415,11 +8415,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "states/oat-milk-reformist/weakness.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1442086,
-        "sha256": "5740bd23b5a2688863b0148568b5f45c36a5a2d6285909acb683f7db13c6920e"
+        "bytes": 669437,
+        "sha256": "50ce87cb9351f86e53cd8be120eb293cbfc6ab2873cb4424d1eab4a6f691e3b2"
       },
       "focalPoint": {
         "x": 0.5,
@@ -8438,48 +8438,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 7286,
-          "sha256": "c4e43bac63811ae72e2a62b7b39b693506a0e3d4ec85550d11f01907bdc04975"
+          "bytes": 8227,
+          "sha256": "39420a16bcde337230c072bb3510b0bd48098b826caef682fa07c02435c55624"
         },
         {
           "path": "states/variants/oat-milk-reformist--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 10034,
-          "sha256": "5c8adda3194aaec8dd2ab6cb3cfcd62971b5a38e5d2d25a17634c1c2c97a5dc5"
+          "bytes": 12146,
+          "sha256": "d5c0d0b3d802240fbbcdb2b372bfa0cfce350bbb0ff0ff7d6a99fc654ca2f907"
         },
         {
           "path": "states/variants/oat-milk-reformist--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 17524,
-          "sha256": "1543d01429bd7100c32eda2eff31fae9ef157337c8d6d63e3951ea504e27c559"
+          "bytes": 20673,
+          "sha256": "3de0622fc7963f7856eb3a3836687e43c5ce7dd7e551f726cfd395e287f89eee"
         },
         {
           "path": "states/variants/oat-milk-reformist--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 23544,
-          "sha256": "d5b7d82bfe2d86d597eaecdc19fecd659ca833651a2607da44c8cdefdb0dcc80"
+          "bytes": 31262,
+          "sha256": "1686ede0a20532f8c1ec0b7bf569189f22a28a9b1a55e044a2f30cf9a07e7ef1"
         },
         {
           "path": "states/variants/oat-milk-reformist--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 30122,
-          "sha256": "fb4b250a1d22dfe6f8b5d43facf65a9e66a0f6e7ec44ccd086eb2e07f7440123"
+          "bytes": 35293,
+          "sha256": "5b19a9598d27b5d6393df3d46d7525cd7dbcabc7f17972076fdf499e7431839f"
         },
         {
           "path": "states/variants/oat-milk-reformist--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 39818,
-          "sha256": "abf035adcf0bac823faddb98351b679591052daf3a6ad160354d32c14e2e6882"
+          "bytes": 55470,
+          "sha256": "0fbc7364797653da434c76848acd0b0a4e62de942579bded018065cdb620e674"
         }
       ]
     },

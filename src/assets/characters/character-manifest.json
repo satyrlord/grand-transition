@@ -2137,11 +2137,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "oat-milk-reformist.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1466839,
-        "sha256": "a3fe1088850650efb159f8baf8ef62a278ce5dc3ec48d7e55bebeaaaf253746e"
+        "bytes": 737077,
+        "sha256": "224e263d080229f4e59810728774f4a76e4f7bf1afd22f498d265c1812c69619"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2160,9 +2160,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 3427,
-          "sha256": "770c84fa48e5b10f9b702abd4e291e5197b32492b5be98080cf5f976c36ae0f7"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 14845,
+          "sha256": "c1f6050864b1b268431fba18a9b0b481928b3a890079964c232b136e80972455"
         },
         {
           "path": "variants/oat-milk-reformist-128x128.webp",
@@ -2170,17 +2171,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 4026,
-          "sha256": "4ad573c4e548487cc7ec86a63f096c262d64a02c7d24ce1eb24ca33c243448f0"
+          "bytes": 4734,
+          "sha256": "df6f928acb1bb05cd6ea1fa7c0341c2db2888ce0a55120d0a23185cbd2477c3f"
         },
         {
           "path": "variants/oat-milk-reformist-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 6750,
-          "sha256": "53699bdcd958bea64eb9df8a77520ca1e01d7e13e021bb00f15478f18e4eb57f"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 35992,
+          "sha256": "21939cddc538be4d4517cd738902a27c1b3b2fc216ad470b948ded4a1652ee7b"
         },
         {
           "path": "variants/oat-milk-reformist-256x256.webp",
@@ -2188,8 +2190,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 8986,
-          "sha256": "73da965fadfac9a9c16c62f88d7138cd4ff91d280690435272c601ae021594ca"
+          "bytes": 10466,
+          "sha256": "30c562019b207a76062b890cdaca77f8f1d369aab2314f5fb3045eb898d8af4b"
         },
         {
           "path": "variants/oat-milk-reformist-320x320.avif",
@@ -2197,8 +2199,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 8399,
-          "sha256": "4735000fa8e0701ae1a976545252bff809bab19c88cbd91f7d905e44aaa5f58c"
+          "bytes": 9248,
+          "sha256": "afc361b7914b5c6fff8086b4f1ca0ebc4ff09ddd5bf980b72d7ce161d73149ad"
         },
         {
           "path": "variants/oat-milk-reformist-320x320.webp",
@@ -2206,8 +2208,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 11474,
-          "sha256": "b8cd1dec66a467661ab688e97cd1c6b7c0795378d01bfa771a832379b331b0b6"
+          "bytes": 13686,
+          "sha256": "2795360a860544c5febdee303ce21cad131b428ed30b50ca3734e46e27994eca"
         },
         {
           "path": "variants/oat-milk-reformist-640x640.avif",
@@ -2215,8 +2217,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 19830,
-          "sha256": "374c81260bdb61e8ed706e694bc189a75aeafa3d3aedb312d66e7dac3622a7ea"
+          "bytes": 23152,
+          "sha256": "193c71c84549c8d72c3c05ac89cf9e488853e5fca25657132406e757098d391a"
         },
         {
           "path": "variants/oat-milk-reformist-640x640.webp",
@@ -2224,8 +2226,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 26550,
-          "sha256": "9ae366489957ee3999aab6ef5fba16ef37158646183dea7e590ea81ee43f68ca"
+          "bytes": 34710,
+          "sha256": "e138ffade4e6ee08ccadf38c33a39127a359b75c79ac0243095b3dcbd9a853e7"
         },
         {
           "path": "variants/oat-milk-reformist-960x960.avif",
@@ -2233,8 +2235,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 33242,
-          "sha256": "46f96b7f6aa63b06b45568211e0305b1a9b110265ef1b15bfba2338b509fcf59"
+          "bytes": 39500,
+          "sha256": "7e31e464d68f4e166f5875f95e922ce6352b05a58707af4b375683df5f39ead2"
         },
         {
           "path": "variants/oat-milk-reformist-960x960.webp",
@@ -2242,8 +2244,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 43604,
-          "sha256": "6bbbbb49db11b8978f3387b90395c514c8f81eb8b6a5cc0ae808d2b2483faea2"
+          "bytes": 61874,
+          "sha256": "7bb360d2f038bc38f51f6c4a8255640fa1e972e5b67bdc28fea3b0ffe9af3582"
         }
       ]
     },

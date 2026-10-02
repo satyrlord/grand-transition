@@ -217,6 +217,10 @@ accepted and installed, with their native dimensions and reviewed pixels intact.
 Its approved statesman alternate selection and five reviewed matching poses are
 also installed under the authorized package integration. Keep its mature face,
 silver-streaked dark bob, navy pantsuit, cream blouse, and burgundy pumps.
+The approved Oat-Milk Reformist default selection and five reviewed matching
+poses are installed under the authorized package integration. Keep its short
+dark hair and stubble, orange blazer, cream shirt, navy trousers, and single
+beige lidded cup above desk occlusion on the inner side.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.
