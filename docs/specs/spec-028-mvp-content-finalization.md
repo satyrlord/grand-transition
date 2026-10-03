@@ -86,26 +86,24 @@ The focused integration and runtime evidence is recorded in Milestone 023.
 The aggregate quality gate remains deferred; owner in-game evaluation remains
 separate from technical verification.
 
-The Reluctant Theorem (`reluctant-theorem`) has one default portrait in the shared cel-shaded editorial-cartoon style of Milestone 023.
-It holds one money envelope with new generic banknote edges and no markings.
-The portrait uses the approved green-matte conversion fallback, because native transparency failed validation.
-The banknote edges are pale blue so that they are not the key color.
-Keep the alpha checks and the color checks.
-Matches use the selection-art fallback, without a new pose package or state package.
+The Reluctant Theorem (`reluctant-theorem`) has one approved default portrait
+and five matching state masters in the flat editorial-cartoon direction of
+Milestone 023. Use the accepted selection as the only pose image reference.
+Keep its broad oval face, grouped dark curls, clean-shaven jaw, navy blazer,
+white open collar, charcoal trousers, and plain black shoes. It holds one
+plain off-white money envelope with generic pale-blue banknote edges and no
+markings. Keep the full face, holding fingers, envelope, and important
+gestures above desk occlusion. Use native transparent sources and keep the
+alpha checks and the color checks. Its package follows the shared state
+mappings. Owner acceptance of the selection is separate from the technical
+checks and owner in-game evaluation of the poses.
 
-A later authorized replacement of the Reluctant Theorem must follow the art direction and trial acceptance boundary in Milestone 023.
-Keep the fallback and the package counts of this time until the user gives approval directly for that one-archetype cycle.
-The cycle must also be integrated, validated, and accepted manually.
-That integration removes `reluctant-theorem` from the fallback list, and it adds its five state masters.
-Do not change the executable inventory before then.
-
-All other selectable skins use the full nine-state package of Milestone 023.
-Thus, the last state inventory contains 29 skin packages and 145 state masters.
+All 30 selectable skins use the full nine-state package of Milestone 023.
+Thus, the last state inventory contains 30 skin packages and 150 state masters.
 Each package uses five state masters and the selection, and no more.
 It maps idle to the selection, comeback to delivery, and grammar mistake to weakness.
 It agrees with the minimum values of six poses and five expressions.
-`reluctant-theorem` is the only selection-art fallback ID.
-A validator does not accept a different missing package or a fallback that the inventory does not declare.
+A validator does not accept a missing package or selection-only state mappings.
 It also does not accept a dedicated master for a state that the package uses again.
 
 Eighteen archetypes are human.

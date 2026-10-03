@@ -118,8 +118,8 @@
       "sourceSha256": "aebc3932a41ee778ba22835783ff59fb00ec0c34da148e7dfba2eecfa6a32444"
     },
     "reluctant-theorem": {
-      "sourceSha256": "7ee999121774ccc7e07785c21e58e46e3da6a5ab312651843336ea0fe0c4fc14",
-      "facing": "right"
+      "facing": "right",
+      "sourceSha256": "7ddae04a963ee8e3e00fcf425c8b52b63a4681a3b455aae3725463ca759415c1"
     }
   }
 }

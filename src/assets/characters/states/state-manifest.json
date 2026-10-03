@@ -1202,6 +1202,66 @@
       ]
     },
     {
+      "ownerId": "reluctant-theorem",
+      "skinId": "default",
+      "states": [
+        {
+          "stateId": "idle",
+          "assetId": "reluctant-theorem",
+          "durationMs": 4000,
+          "loop": true
+        },
+        {
+          "stateId": "selection",
+          "assetId": "reluctant-theorem",
+          "durationMs": 320,
+          "loop": false
+        },
+        {
+          "stateId": "thinking",
+          "assetId": "reluctant-theorem--thinking",
+          "durationMs": 3000,
+          "loop": true
+        },
+        {
+          "stateId": "delivery",
+          "assetId": "reluctant-theorem--delivery",
+          "durationMs": 400,
+          "loop": false
+        },
+        {
+          "stateId": "light-hit",
+          "assetId": "reluctant-theorem--light-hit",
+          "durationMs": 300,
+          "loop": false
+        },
+        {
+          "stateId": "heavy-hit",
+          "assetId": "reluctant-theorem--heavy-hit",
+          "durationMs": 520,
+          "loop": false
+        },
+        {
+          "stateId": "weakness",
+          "assetId": "reluctant-theorem--weakness",
+          "durationMs": 500,
+          "loop": false
+        },
+        {
+          "stateId": "comeback",
+          "assetId": "reluctant-theorem--delivery",
+          "durationMs": 500,
+          "loop": false
+        },
+        {
+          "stateId": "grammar-mistake",
+          "assetId": "reluctant-theorem--weakness",
+          "durationMs": 520,
+          "loop": false
+        }
+      ]
+    },
+    {
       "ownerId": "retiring-cassandra",
       "skinId": "statesman",
       "states": [
@@ -9740,6 +9800,406 @@
           "format": "webp",
           "bytes": 55104,
           "sha256": "50a0ea6fc23916141d1a9c25ca1ba044c4031857f3469c13fe017c793bcaabff"
+        }
+      ]
+    },
+    {
+      "id": "reluctant-theorem--thinking",
+      "ownerType": "character",
+      "ownerId": "reluctant-theorem",
+      "skinId": "default",
+      "stateId": "thinking",
+      "poseId": "thinking",
+      "expressionId": "thinking",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/reluctant-theorem/thinking.png",
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "bytes": 712123,
+        "sha256": "be053dbc67ac039533f082c6af56188cdd2d9c9222c553bf91fa5c57f4e431cd"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/reluctant-theorem--thinking-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 8374,
+          "sha256": "12c3d7454dd6f5f56b5c00f11f59d785b7f9078c4cb3a94c3492001aacc28b7d"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--thinking-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 11286,
+          "sha256": "e11ebc43e50e4fd459760171bdccf3b56b4cbe16ba1ebcc48b0a55eff570060a"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--thinking-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 21574,
+          "sha256": "f97f943a01f92a4d8eddb7fd2460682c0176367d4f099f3abd157b21524a2c6e"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--thinking-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 29428,
+          "sha256": "79c2f94c5e65571a6a3b10a487b08ba0aa17187a8ab277c60e1d1a14611a1b6c"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--thinking-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 36249,
+          "sha256": "071a9c52972bb778a3d846d4d765318a1327bd32585e31a144ce40a2ea136c48"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--thinking-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 51716,
+          "sha256": "d7a241fee4ce5d857421ce9d45d0c3ae5773bb3b58891a5697e3de9e17fb7083"
+        }
+      ]
+    },
+    {
+      "id": "reluctant-theorem--delivery",
+      "ownerType": "character",
+      "ownerId": "reluctant-theorem",
+      "skinId": "default",
+      "stateId": "delivery",
+      "poseId": "delivery",
+      "expressionId": "delivery",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/reluctant-theorem/delivery.png",
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "bytes": 740376,
+        "sha256": "efb1574212f816e8899b79a4246da743bdf2342ab21a44e78c5f1cbda6bb3b76"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/reluctant-theorem--delivery-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 8855,
+          "sha256": "42ff4ccaeceeda49b71b249e59c32d4f5dcf141b26fbfa54f6e2994c09ed9147"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--delivery-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 12406,
+          "sha256": "da80c2bf0f50de8305d152f15392b178d45709886586b7b1425cba2a089594f6"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--delivery-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 22906,
+          "sha256": "426c1e5baf169382751eec11ee6994f2cb21dc085388d499166d84aa7d1df18f"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--delivery-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 31476,
+          "sha256": "b81c99c51bec762bcf9ce7efa32ab053d3e740301ad2a655ccab100fa21b5b7a"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--delivery-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 38825,
+          "sha256": "111edc440f08a024dc27ebd75e9889c178da7108a045339da8edf8d3787a2afb"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--delivery-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 55896,
+          "sha256": "6f41fb8194302dcafad7d416009a86bf1516cb76791d7e686094588711d72483"
+        }
+      ]
+    },
+    {
+      "id": "reluctant-theorem--light-hit",
+      "ownerType": "character",
+      "ownerId": "reluctant-theorem",
+      "skinId": "default",
+      "stateId": "light-hit",
+      "poseId": "light-hit",
+      "expressionId": "light-hit",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/reluctant-theorem/light-hit.png",
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "bytes": 757135,
+        "sha256": "b947fab8fcb5e23be5574858bee6876051abcc4ffe9270f4dea28e89bd0ad605"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/reluctant-theorem--light-hit-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 9039,
+          "sha256": "85d6baebdaa7c2c5a3ed24bd47e91f8a9dc6545b79d460647cae79a31c291088"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--light-hit-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 12922,
+          "sha256": "441dac7478751c377dea27aba6905c1296af49e1381cd36ea5d2b354f25197ff"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--light-hit-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 39313,
+          "sha256": "88ab0bc1d329ed0a4f599126256c2f8ccfe673efa747e53dea15fa861cd6633c"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--light-hit-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 33008,
+          "sha256": "61e1a6f2a2f862913087a8846de6c51029b08da86e32fbc6088150e289d2bbd9"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--light-hit-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 39294,
+          "sha256": "51f7129148065dee2b38593c15048ab9b4e3d5a193634913a1eb222b9384443a"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--light-hit-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 58336,
+          "sha256": "3cd13f967a1f857658873fefa9a890e5881bd2b097b64d61bb29d58571602f6b"
+        }
+      ]
+    },
+    {
+      "id": "reluctant-theorem--heavy-hit",
+      "ownerType": "character",
+      "ownerId": "reluctant-theorem",
+      "skinId": "default",
+      "stateId": "heavy-hit",
+      "poseId": "heavy-hit",
+      "expressionId": "heavy-hit",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/reluctant-theorem/heavy-hit.png",
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "bytes": 755816,
+        "sha256": "12b6ecf37aed049af6f576b30cc59720991089c97ba93831035d4efa348da19b"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/reluctant-theorem--heavy-hit-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 9295,
+          "sha256": "7659df96df7e11e1fbf9ee85012cc5e3aff5bf8696d4fddf09aacb9aa50740a6"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--heavy-hit-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 13068,
+          "sha256": "77c197656b974b5070b7eceefdafb22fe6257125d7d59a292491acdb0439ec4c"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--heavy-hit-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 23528,
+          "sha256": "84914ddf47d8bf92ed8b6ca1e6677c85f685ac5ef29694e6eac9cc417904e8d4"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--heavy-hit-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 33486,
+          "sha256": "c0d5fd2cd13669cbae1d210944b6adf954f9d5c3cfe2ddb3896dad6bb9c3d17b"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--heavy-hit-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 39896,
+          "sha256": "8ed84167dbf1e9a3a1bdb81d6848571fb813ac4f012ff28ef8f922f27ac98871"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--heavy-hit-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 59140,
+          "sha256": "fb1683d70b7130b8cc25012e2cc693fef2b9933a90255120639574a65eca2dc3"
+        }
+      ]
+    },
+    {
+      "id": "reluctant-theorem--weakness",
+      "ownerType": "character",
+      "ownerId": "reluctant-theorem",
+      "skinId": "default",
+      "stateId": "weakness",
+      "poseId": "weakness",
+      "expressionId": "weakness",
+      "sourceDescription": "Original flat cel-shaded editorial-cartoon character state created for Grand Transition.",
+      "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
+      "source": {
+        "path": "states/reluctant-theorem/weakness.png",
+        "width": 1254,
+        "height": 1254,
+        "format": "png",
+        "bytes": 693594,
+        "sha256": "1a40f48bba15d2adfa2f5f5480c3f03e460a8bb1ef76439dbfab43313e30e56a"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.32
+      },
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "strategy": "full-body-safe-margin-v1"
+      },
+      "variants": [
+        {
+          "path": "states/variants/reluctant-theorem--weakness-320x320.avif",
+          "width": 320,
+          "height": 320,
+          "format": "avif",
+          "bytes": 8080,
+          "sha256": "321c2cfae370c2a9f340369effda59ae68e0861b7938e5cb8bf536c24d9e481a"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--weakness-320x320.webp",
+          "width": 320,
+          "height": 320,
+          "format": "webp",
+          "bytes": 11182,
+          "sha256": "0415c3a0daa815afecd0c1f259f31440edc66683817b7e72dc604fb7285f80c7"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--weakness-640x640.avif",
+          "width": 640,
+          "height": 640,
+          "format": "avif",
+          "bytes": 20810,
+          "sha256": "2618e61b7e238ab67bee5e000334310419839dfd52c0a0b69fde26b2cec6a5cd"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--weakness-640x640.webp",
+          "width": 640,
+          "height": 640,
+          "format": "webp",
+          "bytes": 29110,
+          "sha256": "5cfee752f35a4b6928b690f419d01fd91f12a3a55e5cfa475a08aa58aa8d795d"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--weakness-960x960.avif",
+          "width": 960,
+          "height": 960,
+          "format": "avif",
+          "bytes": 35347,
+          "sha256": "ca4b581b2b042c0057cf4ce575467d7684e22dc1d4c24f970fbee7c4129b877e"
+        },
+        {
+          "path": "states/variants/reluctant-theorem--weakness-960x960.webp",
+          "width": 960,
+          "height": 960,
+          "format": "webp",
+          "bytes": 51416,
+          "sha256": "49e03cea4c3c6b125ff56fc796fb427fd5c7465c0b6b89caffcd4f04bce71726"
         }
       ]
     },

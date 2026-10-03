@@ -267,6 +267,16 @@ shoes, and single inert gray mouse plush. Its source faces right. Preserve its
 glasses-temple calculation, pointing speech, small stop-palm recoil, stronger
 cap-holding shock, and guarded worried toy hold. Keep the face, complete plush,
 curled tail, gripping fingers, and defining gestures visible above the desk.
+The approved Reluctant Theorem selection and five reviewed matching poses are
+also installed under the authorized package integration. Keep its broad
+clean-shaven drawn face, rounded chin, dense dark curls with gray groups,
+medium-slim adult silhouette, navy blazer, white open collar, charcoal trousers,
+black shoes, and single partly open pale envelope with blank pale-blue note
+edges. Its sources face right. Preserve chin-touch calculation, precise
+speaking pinch, small stop-palm flinch, stronger defensive recoil, and guarded
+lapel hold. Keep the face, full envelope, note edges, and gripping fingers
+above desk occlusion. Idle uses Selection, Comeback uses Delivery, and
+Grammar-mistake uses Weakness.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.
@@ -629,9 +639,9 @@ Inset brass and navy rules make the arena look like a built structure.
 
 The build uses three brand rasters, eight scene backgrounds, and six transparent foreground plates.
 It also uses 30 transparent character portraits: 19 default portraits and 11 alternate portraits.
-Twenty-nine skins have full nine-state packages that the build makes from the selection and five state masters, and no more.
+All thirty skins have full nine-state packages that the build makes from the selection and five state masters, and no more.
 Idle uses the selection again, Comeback uses delivery again, and grammar mistake uses weakness again.
-The Reluctant Theorem uses the selection art as a fallback.
+Reluctant Theorem has its own five-pose package.
 All portrait skins are visual-only variations.
 They do not change the fictional character identity or the character text.
 

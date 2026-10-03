@@ -21,9 +21,8 @@
     "government-ai",
     "reluctant-theorem"
   ],
-  "selectionArtFallbackSkinIds": ["reluctant-theorem"],
-  "expectedPackageCount": 29,
-  "expectedStateMasterCount": 145,
+  "expectedPackageCount": 30,
+  "expectedStateMasterCount": 150,
   "stateMasterIds": [
     "thinking",
     "delivery",

@@ -145,56 +145,28 @@ test('rejects duplicate packages and a state pointing at another owner', () => {
   ).toThrow(/incorrect asset/u);
 });
 
-test('uses selection art only for the remaining declared fallback skin', () => {
-  const fallbacks = [resolveCharacterAsset('reluctant-theorem')];
-  for (const fallback of fallbacks) {
-    expect(
-      resolveCharacterFramesFromInventory(fallback.ownerId, fallback.skinId, new Map(), [fallback]),
-    ).toBeNull();
-  }
-
-  const required = resolveCharacterAsset('algorithmic-prophet');
-  expect(() =>
-    resolveCharacterFramesFromInventory(required.ownerId, required.skinId, new Map(), [required]),
-  ).toThrow(/Required character state package is missing/u);
-
-  const frames = fixture();
-  expect(() =>
-    resolveCharacterFramesFromInventory(
-      fallbacks[0]!.ownerId,
-      fallbacks[0]!.skinId,
-      new Map([
-        [
-          fallbacks[0]!.ownerId + ':' + fallbacks[0]!.skinId,
-          createCharacterStatePackages(frames.manifest, [frames.selection], frames.urls)[0]!.frames,
-        ],
+test.each(['reluctant-theorem', 'county-baron--municipal-patron'])(
+  'requires the %s state package and resolves its nine frames',
+  (skinId) => {
+    const { manifest, selection, urls } = fixture(skinId);
+    expect(() =>
+      resolveCharacterFramesFromInventory(selection.ownerId, selection.skinId, new Map(), [
+        selection,
       ]),
-      [fallbacks[0]!],
-    ),
-  ).toThrow(/Selection-art fallback must not declare/u);
-});
-
-test('requires the municipal-patron state package and resolves its nine frames', () => {
-  const { manifest, selection, urls } = fixture('county-baron--municipal-patron');
-  expect(() =>
-    resolveCharacterFramesFromInventory(selection.ownerId, selection.skinId, new Map(), [
-      selection,
-    ]),
-  ).toThrow(/Required character state package is missing/u);
-  const frames = createCharacterStatePackages(manifest, [selection], urls)[0]!.frames;
-  expect(frames).toHaveLength(9);
-  expect(
-    resolveCharacterFramesFromInventory(
-      selection.ownerId,
-      selection.skinId,
-      new Map([[selection.ownerId + ':' + selection.skinId, frames]]),
-      [selection],
-    ),
-  ).toBe(frames);
-  expect(frames.find(({ stateId }) => stateId === 'comeback')!.id).toBe(
-    'county-baron--municipal-patron--delivery',
-  );
-  expect(frames.find(({ stateId }) => stateId === 'grammar-mistake')!.id).toBe(
-    'county-baron--municipal-patron--weakness',
-  );
-});
+    ).toThrow(/Required character state package is missing/u);
+    const frames = createCharacterStatePackages(manifest, [selection], urls)[0]!.frames;
+    expect(frames).toHaveLength(9);
+    expect(
+      resolveCharacterFramesFromInventory(
+        selection.ownerId,
+        selection.skinId,
+        new Map([[selection.ownerId + ':' + selection.skinId, frames]]),
+        [selection],
+      ),
+    ).toBe(frames);
+    expect(frames.find(({ stateId }) => stateId === 'comeback')!.id).toBe(`${skinId}--delivery`);
+    expect(frames.find(({ stateId }) => stateId === 'grammar-mistake')!.id).toBe(
+      `${skinId}--weakness`,
+    );
+  },
+);

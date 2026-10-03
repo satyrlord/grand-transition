@@ -60,31 +60,16 @@ export function statePackages(
   if (!selectionManifest || !Array.isArray(selectionManifest.assets)) {
     throw new Error('Character selection manifest must declare an asset inventory.');
   }
-  if (
-    !Array.isArray(contract.selectionArtFallbackSkinIds) ||
-    contract.selectionArtFallbackSkinIds.length !== 1 ||
-    new Set(contract.selectionArtFallbackSkinIds).size !== 1
-  ) {
-    throw new Error('Character state contract must declare exactly one selection-art fallback.');
-  }
-  const relevant = (selectionManifest.assets as CharacterAsset[]).filter((asset) =>
+  const packages = (selectionManifest.assets as CharacterAsset[]).filter((asset) =>
     contract.characterIds.includes(asset.ownerId),
   );
   for (const characterId of contract.characterIds) {
-    if (!relevant.some((asset) => asset.ownerId === characterId)) {
+    if (!packages.some((asset) => asset.ownerId === characterId)) {
       throw new Error(
         `${characterId}: selection portrait is missing from the final character state inventory.`,
       );
     }
   }
-  for (const fallbackId of contract.selectionArtFallbackSkinIds) {
-    if (!relevant.some((asset) => asset.id === fallbackId)) {
-      throw new Error(`${fallbackId}: declared selection-art fallback is missing.`);
-    }
-  }
-  const packages = relevant.filter(
-    (asset) => !contract.selectionArtFallbackSkinIds.includes(asset.id),
-  );
   if (packages.length !== contract.expectedPackageCount) {
     throw new Error(
       `Final character state inventory requires exactly ${contract.expectedPackageCount} state packages; found ${packages.length}.`,

@@ -98,12 +98,14 @@ describe('complete character state contract', () => {
     expect(() => selectedStatePackageIds(['missing'], packages)).toThrow(/known/u);
   });
 
-  test('derives 29 state packages from all 19 characters and exactly one fallback', () => {
+  test('requires all 30 selection skins to have state packages across the 19 characters', () => {
     const { manifest, selection } = fixture();
     expect(contract.characterIds).toHaveLength(19);
-    expect(contract.selectionArtFallbackSkinIds).toEqual(['reluctant-theorem']);
-    expect(statePackages(selection)).toHaveLength(29);
-    expect(manifest.packages).toHaveLength(29);
+    expect(statePackages(selection).map(({ id }) => id)).toEqual(
+      selection.assets.map(({ id }) => id),
+    );
+    expect(statePackages(selection)).toHaveLength(30);
+    expect(manifest.packages).toHaveLength(30);
     expect(manifest.packages.every(({ states }) => states.length === 9)).toBe(true);
     expect(contract.stateMasterIds).toEqual([
       'thinking',
@@ -112,8 +114,8 @@ describe('complete character state contract', () => {
       'heavy-hit',
       'weakness',
     ]);
-    expect(contract.expectedStateMasterCount).toBe(145);
-    expect(manifest.assets).toHaveLength(145);
+    expect(contract.expectedStateMasterCount).toBe(150);
+    expect(manifest.assets).toHaveLength(150);
 
     const minimumMasters = new Set(['thinking', 'delivery', 'light-hit', 'heavy-hit', 'weakness']);
     expect(stateAssetId('fixture', 'idle', minimumMasters)).toBe('fixture');
@@ -125,16 +127,12 @@ describe('complete character state contract', () => {
 
   test('adds a selected new state package while preserving every cached package', () => {
     const { manifest, selection } = fixture();
-    const selected = new Set(['county-baron--municipal-patron']);
-    manifest.packages = manifest.packages.filter(
-      ({ ownerId, skinId }) => ownerId !== 'county-baron' || skinId !== 'municipal-patron',
-    );
-    manifest.assets = manifest.assets.filter(
-      ({ ownerId, skinId }) => ownerId !== 'county-baron' || skinId !== 'municipal-patron',
-    );
+    const selected = new Set(['reluctant-theorem']);
+    manifest.packages = manifest.packages.filter(({ ownerId }) => ownerId !== 'reluctant-theorem');
+    manifest.assets = manifest.assets.filter(({ ownerId }) => ownerId !== 'reluctant-theorem');
     const packages = statePackages(selection);
     const cached = cachedStatePackageInventory(manifest as StateManifest, packages, selected);
-    expect(cached.size).toBe(28);
+    expect(cached.size).toBe(29);
     for (const group of manifest.packages) {
       const skin = packages.find(
         (entry) => entry.ownerId === group.ownerId && entry.skinId === group.skinId,
@@ -148,7 +146,7 @@ describe('complete character state contract', () => {
     }
     expect(() =>
       cachedStatePackageInventory(manifest as StateManifest, packages, new Set(['county-baron'])),
-    ).toThrow(/municipal-patron.*incomplete/u);
+    ).toThrow(/reluctant-theorem.*incomplete/u);
   });
 
   test('rejects missing unselected packages and altered cached state mappings', () => {
@@ -311,11 +309,13 @@ describe('complete character state contract', () => {
     );
   });
 
-  test('rejects missing required packages and undeclared selection-art fallbacks', () => {
+  test('rejects missing required packages and selection-only Reluctant Theorem states', () => {
     const missingPackage = fixture();
-    missingPackage.manifest.packages.pop();
+    missingPackage.manifest.packages = missingPackage.manifest.packages.filter(
+      ({ ownerId }) => ownerId !== 'reluctant-theorem',
+    );
     expect(() => validateStateManifest(missingPackage.manifest, missingPackage.selection)).toThrow(
-      /exactly 29 packages/u,
+      /exactly 30 packages/u,
     );
 
     const missingCharacter = fixture();
@@ -326,30 +326,15 @@ describe('complete character state contract', () => {
       validateStateManifest(missingCharacter.manifest, missingCharacter.selection),
     ).toThrow(/selection portrait is missing/u);
 
-    const missingFallback = fixture();
-    missingFallback.selection.assets.find(({ id }) => id === 'reluctant-theorem')!.id =
-      'reluctant-theorem--undeclared';
-    expect(() =>
-      validateStateManifest(missingFallback.manifest, missingFallback.selection),
-    ).toThrow(/declared selection-art fallback is missing/u);
-
-    const fallbackAsPackage = fixture();
-    const fallback = fallbackAsPackage.selection.assets.find(
-      ({ id }) => id === 'reluctant-theorem',
-    )!;
-    fallbackAsPackage.manifest.packages.push({
-      ownerId: fallback.ownerId,
-      skinId: fallback.skinId,
-      states: contract.states.map((state) => ({
-        stateId: state.id,
-        durationMs: state.durationMs,
-        loop: state.loop,
-        assetId: fallback.id,
-      })),
-    });
-    expect(() =>
-      validateStateManifest(fallbackAsPackage.manifest, fallbackAsPackage.selection),
-    ).toThrow(/exactly 29 packages/u);
+    const selectionOnly = fixture();
+    for (const state of selectionOnly.manifest.packages.find(
+      ({ ownerId }) => ownerId === 'reluctant-theorem',
+    )!.states) {
+      state.assetId = 'reluctant-theorem';
+    }
+    expect(() => validateStateManifest(selectionOnly.manifest, selectionOnly.selection)).toThrow(
+      /reluctant-theorem\/thinking: incorrect asset mapping/u,
+    );
   });
 
   test('rejects altered timing and loop contracts', () => {

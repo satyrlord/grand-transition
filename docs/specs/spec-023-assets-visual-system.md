@@ -338,6 +338,61 @@ do not establish played-match progression, continuous motion quality,
 other-scene clearance, performance, physical-device behavior or heard speech.
 Product-owner in-game evaluation is separate from technical verification.
 The aggregate gate has not run.
+The approved Reluctant Theorem selection and five reviewed matching poses are
+installed under the owner-authorized package integration. All six sources
+retain native 1254-square canvases and right-facing composition. Keep its broad
+clean-shaven drawn face, rounded chin, dense dark curls with gray groups,
+medium-slim adult silhouette, navy blazer, white open collar, charcoal trousers,
+black shoes, and single partly open pale envelope with blank pale-blue note
+edges. Each pose used only the accepted selection as its image reference.
+Preserve chin-touch calculation, precise speaking pinch, small stop-palm flinch,
+stronger defensive recoil, and guarded lapel hold. Keep the full face, envelope,
+note edges, gripping fingers, and defining gestures above desk occlusion.
+Idle uses Selection, Comeback uses Delivery, and Grammar-mistake uses Weakness.
+Reluctant Theorem now has five new state masters. All thirty skins have their
+own nine-state mappings from six drawings each.
+Selection, Thinking, Delivery, Light-hit, Heavy-hit, and Weakness use bounded
+removal of 1,916, 2,494, 2,780, 2,599, 1,701, and 1,969 detached alpha-1 pixels
+respectively. Every RGB value and all stronger alpha remain unchanged.
+Metadata registration preserves all reviewed decoded pixels without enlargement.
+The standard builder clears only faint outer-border resize alpha of eight or
+less. The approved selection remains unchanged; its 128-pixel AVIF and WebP
+variants have transparent borders. The accepted master's tight margins and
+source-specific tonal face detail do not change the written direction for new
+selections. The targeted staged build and full character validators passed
+with 30 selections, 30 packages, and 150 state masters. Native-alpha provenance
+passed for all 180 transparent masters; color validation passed for all 1,380
+character rasters. All six installed masters match the reviewed pixels, and
+all 40 selected encoded variants have transparent outer borders. Exactly 49
+art package paths changed; all 1,334 unrelated character files remain
+byte-identical, with unrelated manifest entries and state mappings unchanged.
+The state contract has the separate authorized inventory update to thirty
+packages and 150 state masters.
+The largest declared two-character and scene package remains 1,593,620 bytes.
+The production build, 55 focused unit tests, and one selected Chromium
+nine-state test passed. Installed checks cover all nine logical states on both
+player sides across nineteen landscape contexts, including minimum touch,
+near-square, DPR 2, and ultrawide views. All 3,801 runtime checks passed with no
+failures, including 190 state captures and 86 long-speech captures. Exact
+served variant hashes, dimensions, mirroring, decoded image state, stable
+interface geometry, and browser-error checks passed. Three roster contexts
+passed after the visible portrait decoded. A normal-motion probe checked 48
+CSS-animation extrema captures across all nine states and both speakers with
+no browser errors. Reviewed near-square motion frames retain both eyebrows,
+eyes, nose, mouth, envelope, blank note edges, and gripping fingers. During
+Heavy-hit, the fully open speech tail partly covers the raised free fingertips;
+the palm and defensive gesture remain readable. The envelope and gripping hand
+remain clear. This is a scoped review advisory. The accepted tight source
+margins and fine face and hair modeling remain source-specific advisories.
+Independent review found no blocking defect in the code contract, installed
+sources, package reports, roster crops, minimum, near-square and ultrawide
+state and long-speech contacts, or the 48 normal-motion endpoint frames.
+Close near-square inner-forehead clearance remains an advisory.
+These checks use held public cues in Transition-Era Television Studio. They
+do not establish played-match progression, continuous motion quality,
+other-scene clearance, performance, physical-device behavior, or heard speech.
+Product-owner in-game evaluation is separate from technical verification.
+The aggregate gate has not run.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted
@@ -386,12 +441,12 @@ bell-shaped lower chassis, and a teaching platform with three wheels. Do not
 use an apron, frills, a maid cap, or a skirt.
 Do not use a vacuum, a cleaning tool, or a different domestic-service costume cue.
 
-Each non-fallback skin has one transparent square selection master of at least 1024 pixels per edge. It has
+Each skin has one transparent square selection master of at least 1024 pixels per edge. It has
 five state masters with the usual AVIF/WebP variants: `thinking`,
 `delivery`, `light-hit`, `heavy-hit`, and `weakness`. Each package maps `idle`
 to selection, `comeback` to delivery, and `grammar-mistake` to weakness. The
-executable inventory at this time contains 30 selection masters and 29 state
-packages, which contain 145 state masters. Keep the 27-entry
+executable inventory at this time contains 30 selection masters and 30 state
+packages, which contain 150 state masters. Keep the 27-entry
 replacement-baseline record with no changes. Declare all reviewed selections in
 `portrait-layout.json`, and keep the full manifest inventories coherent.
 
@@ -460,8 +515,7 @@ Setup stages and matches mirror the drawing when its source direction is
 different from the direction of the opponent. The two opponents face the
 confrontation. Mirror the drawing layer independently of the reaction
 transform. The reaction movement goes away from the opponent on each side, also when the
-source faces left. This also applies to selection-only fallback portraits and
-their turn-entry motion. Keep text, controls, and scene layers in their usual
+source faces left. This also applies to turn-entry motion. Keep text, controls, and scene layers in their usual
 orientation.
 
 ## Deliver
@@ -1269,7 +1323,7 @@ Action plates use coherent authored icons and framing.
 
 Characters use three-quarter silhouettes that face the opponent, and layered
 parts. Human characters use human anatomy, and robot characters use only
-mechanical anatomy. Each non-fallback skin uses six visual poses: the
+mechanical anatomy. Each skin uses six visual poses: the
 selection and the five state masters `thinking`, `delivery`, `light-hit`,
 `heavy-hit`, and `weakness`. These give five or more expressions. The nine
 logical states map `idle` to selection, `comeback` to delivery, and
@@ -1605,11 +1659,11 @@ milliseconds or less. Idle loops are 2 through 8 seconds.
 ### State package and event projection
 
 `src/assets/characters/state-contract.json` records the 19 character IDs and
-the nine named states. Milestone 028 gives the 29 mandatory packages, and it
-declares the remaining selection-art fallback. Get the default and alternate
+the nine named states. Milestone 028 gives the 30 mandatory packages. Every
+selection skin has its own package. Get the default and alternate
 packages from the selection manifest. Do not keep a different skin list. Each
 package contains five more masters at
-`src/assets/characters/states/<portrait-stem>/<state-id>.png`, for 145 state
+`src/assets/characters/states/<portrait-stem>/<state-id>.png`, for 150 state
 masters in total.
 
 The only correct master state IDs are `thinking`, `delivery`,
@@ -1690,7 +1744,7 @@ reaction, or a character state is replaced or updated, the layout shift is
 - **AC-023-03:** Browser tests select AVIF when the browser can use it, and
   they use WebP as the fallback. They keep the dimensions before decode, and
   they load no unselected match package.
-- **AC-023-04:** All 29 state packages show all nine logical states through
+- **AC-023-04:** All 30 state packages show all nine logical states through
   five state masters and the selection. They have five or more expressions
   and six or more poses. These fail validation: missing mappings, dedicated
   masters for states that a package uses again, and source PNGs that are not

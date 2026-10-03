@@ -2519,11 +2519,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "reluctant-theorem.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1592736,
-        "sha256": "7ee999121774ccc7e07785c21e58e46e3da6a5ab312651843336ea0fe0c4fc14"
+        "bytes": 726995,
+        "sha256": "7ddae04a963ee8e3e00fcf425c8b52b63a4681a3b455aae3725463ca759415c1"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2542,9 +2542,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 3253,
-          "sha256": "fd5cbe3569d42cf7317edcdef6fcb5fd68a0122829b03306f1a98e79fb23a50d"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 12944,
+          "sha256": "b22796a05426c096ada4955dab3f86df96568d3f0195efed48fbbb28d2f4e7a1"
         },
         {
           "path": "variants/reluctant-theorem-128x128.webp",
@@ -2552,17 +2553,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 3704,
-          "sha256": "21a53905aebf10bca93748c1db1411f019e80c48accc68ec90b4353d5a931d30"
+          "bytes": 4082,
+          "sha256": "55ae9eee2e28475069ef063c9ffec8779567561cdfb86e835811c7f2289a848d"
         },
         {
           "path": "variants/reluctant-theorem-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 6766,
-          "sha256": "5d05653cb0bdbd4322bed9a77a1d97a85b8ba893aa5f0ba18f1e34e260aa503e"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 34580,
+          "sha256": "65a305431d6a7a1d3d23bdc613ddafa446523d279a21d27c46c59947bcf0f174"
         },
         {
           "path": "variants/reluctant-theorem-256x256.webp",
@@ -2570,8 +2572,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 8312,
-          "sha256": "ca7729e73c36a39decce2991c866b23e59bbcc637ba240b6ed03116af84c2c4d"
+          "bytes": 9364,
+          "sha256": "1293b48c0752d3d2fbdf08440ce711a5657709d50346f21d4609619406732b49"
         },
         {
           "path": "variants/reluctant-theorem-320x320.avif",
@@ -2579,8 +2581,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 8340,
-          "sha256": "c85112cadad6370a172484c4c0ff552c4fe25afd3e99c163282527bb6f3aed8a"
+          "bytes": 8715,
+          "sha256": "72acf073ae8178d160e1df369e07abf9a490248d4128dfab6236bdb1d0def440"
         },
         {
           "path": "variants/reluctant-theorem-320x320.webp",
@@ -2588,8 +2590,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 10716,
-          "sha256": "f7633e7c832a10033ccbef4545e7698efc2ecee1e1e96f9a73226f22b656b5a6"
+          "bytes": 12418,
+          "sha256": "c794b7e0cad7bb000ca3f9786abe2a01b31cab0b5e51a9d9f1b83bd92f85cde4"
         },
         {
           "path": "variants/reluctant-theorem-640x640.avif",
@@ -2597,8 +2599,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 21789,
-          "sha256": "455d69dfadf6e364f65961f9870de6da4cd8d7429fc23218c27b7d46c36432ce"
+          "bytes": 22854,
+          "sha256": "2ca06c1103a318313bb822ca80912daa689b103e42e9a0dcd0ea87dabaf1e8c0"
         },
         {
           "path": "variants/reluctant-theorem-640x640.webp",
@@ -2606,8 +2608,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 26984,
-          "sha256": "25609b8186e5643e5fe0f68bff6a217dbad9371749a50b4e4cc073b3312bd814"
+          "bytes": 31786,
+          "sha256": "8fd2aed9aa24459d2247f396c76145c3c7d9af4ae9af8b22665b6533bdce14d9"
         },
         {
           "path": "variants/reluctant-theorem-960x960.avif",
@@ -2615,8 +2617,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 37610,
-          "sha256": "64d8278ab6574ff08afc714645986ccb5a0c1a76875ce812e2e48254e5a7b742"
+          "bytes": 38454,
+          "sha256": "29efa2d496d2cf7a60eeba1d398b071a1ba8abfca12f674231f2570389042c72"
         },
         {
           "path": "variants/reluctant-theorem-960x960.webp",
@@ -2624,8 +2626,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 45574,
-          "sha256": "1eee1337ca4d14fd5c07a0f16bc9612d8ccf3e92e99d740ddd4395105d91482d"
+          "bytes": 56940,
+          "sha256": "0f41c2d54f401c68744efc34d0021e051b10554d49e06b190fcd98fd5568a5a2"
         }
       ]
     },

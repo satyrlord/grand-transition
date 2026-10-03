@@ -59,14 +59,6 @@ export function resolveCharacterFramesFromInventory(
     (asset) => asset.ownerId === ownerId && asset.skinId === skinId,
   );
   if (!selection) return null;
-  if (contract.selectionArtFallbackSkinIds.includes(selection.id)) {
-    if (frames) {
-      throw new Error(
-        'Selection-art fallback must not declare a character state package: ' + selection.id,
-      );
-    }
-    return null;
-  }
   if (frames) return frames;
   if (contract.characterIds.includes(ownerId)) {
     throw new Error('Required character state package is missing: ' + selection.id);

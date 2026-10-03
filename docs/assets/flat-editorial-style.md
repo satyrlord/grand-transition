@@ -32,7 +32,9 @@ The approved Diaspora Oracle selection and five reviewed matching poses are
 also installed under the owner-authorized package integration.
 The approved Apartment-Block Geopolitician selection and five reviewed matching
 poses are also installed under the owner-authorized package integration.
-All twenty-five packages are
+The approved Reluctant Theorem selection and five reviewed matching poses are
+also installed under the owner-authorized package integration.
+All twenty-six packages are
 installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
@@ -64,6 +66,7 @@ character's identity into another.
 | Spreadsheet Technocrat | [Selection](../../src/assets/characters/spreadsheet-technocrat.png) | [Five poses](../../src/assets/characters/states/spreadsheet-technocrat/) |
 | Diaspora Oracle | [Selection](../../src/assets/characters/diaspora-oracle.png) | [Five poses](../../src/assets/characters/states/diaspora-oracle/) |
 | Apartment-Block Geopolitician | [Selection](../../src/assets/characters/apartment-block-geopolitician.png) | [Five poses](../../src/assets/characters/states/apartment-block-geopolitician/) |
+| Reluctant Theorem | [Selection](../../src/assets/characters/reluctant-theorem.png) | [Five poses](../../src/assets/characters/states/reluctant-theorem/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -101,6 +104,20 @@ Weakness keep their generated alpha unchanged. Delivery and Light-hit use
 bounded detached alpha-1 removal only. Metadata registration preserves all
 reviewed pixels. Specification 023 gives the focused verification results and
 remaining in-game review limits.
+
+Reluctant Theorem retains six native 1254-square, right-facing sources. Keep
+its broad clean-shaven drawn face, rounded chin, dense dark curls with gray
+groups, medium-slim adult silhouette, navy blazer, white open collar, charcoal
+trousers, black shoes, and single partly open pale envelope with blank
+pale-blue note edges. Preserve chin-touch calculation, precise speaking pinch,
+small stop-palm flinch, stronger defensive recoil, and guarded lapel hold.
+Keep the full face, envelope, note edges, and gripping fingers above desk
+occlusion. Each pose used only the accepted selection. All six sources use
+bounded detached alpha-1 removal only. Metadata registration preserves all
+reviewed pixels. The standard builder clears faint resize residue from the
+selection's 128-pixel border. Keep the approved selection pixels unchanged.
+Specification 023 gives the focused verification results and remaining
+in-game review limits.
 
 Black Sea Captain retains the approved selection's revised facial structure,
 cream captain uniform, cap and single cigar. All six sources use native
