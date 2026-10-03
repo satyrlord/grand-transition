@@ -28,7 +28,9 @@ Each specification uses one of these status values on its third line:
 - `Approved, complete`: the contract applies, and each acceptance criterion has its evidence.
 - `Approved, evidence pending: <AC IDs>`: the contract applies, and the listed acceptance criteria do not have their evidence.
 
-Each status value starts with `Approved`, so each specification in this set is an approved specification.
+Each status value starts with `Approved`, so each specification with one of these values is an approved specification.
+A file with the status `Draft, not approved` is a proposal.
+It is not an authority, and it changes no approved contract until its status changes.
 
 `docs/specs/` is the only authority for the application.
 General product information and contributor information can be in `README.md`, but no specification can use it as a source.
@@ -327,15 +329,24 @@ A review that uses only the source code does not satisfy them.
     After a match, the game shows which committed phrases come from real speech,
     and in which context, with no names or links. It adds a Real-or-invented
     guess and a local quote archive.
-35. [Party mode with room codes](spec-035-party-mode-room-codes.md). Budget: 12.
-    Draft, not approved. A host screen runs the game, and each player uses a phone
-    as a controller with a private hand. A Cloudflare relay joins them through a
-    room code. It changes the online-play scope rule of this index.
+35. [Online room foundation](spec-035-online-room-foundation.md). Budget: 12.
+    Draft, not approved. The Cloudflare relay, the room protocol, room codes,
+    seat tokens, the host session, reconnect, and the one CSP exception that the
+    two online modes share. It gives no screen. It changes the online-play scope
+    rule of this index.
 36. [Grand Hotel Romania](spec-036-grand-hotel-romania.md). Budget: 24 source
     and authoring files, with a separate generated-media package. An eighth
     bilingual scene adds a communist futurist hotel lobby with an engraved
     brass globe, background guests and staff, 34 phrases, and existing local jazz.
     Its source and production-stage visual evidence remain open.
+37. [Play on a couch](spec-037-play-on-a-couch.md). Budget: 8. Draft, not
+    approved. The host shows the match to the room, and each player uses a phone
+    as a terminal with a private hand. It adds the Multiplayer dialog with Hotseat
+    and Play on a Couch.
+38. [Play remotely](spec-038-play-remotely.md). Budget: 9. Draft, not approved.
+    Two players on different machines play one match through a room code. Each
+    machine shows the arena and plays its own audio. It adds Play Remotely to the
+    Multiplayer dialog.
 
 Each milestone obeys its **Depends on** field.
 Milestone file names, headings, acceptance IDs, and references use the same numeric identifier.
@@ -362,4 +373,5 @@ This sequence limits the context and the files that each implementation session 
 | Audio and speech                     | 024, 028-029       |
 | Full content, safety, and balance    | 026-028            |
 | Post-MVP scene extension             | 032, 036           |
+| Online rooms, relay, room rules      | 035, 037, 038      |
 | Release quality and deployment       | 030-031            |

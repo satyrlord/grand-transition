@@ -261,6 +261,30 @@ These checks use held public cues, reduced motion and Palace Press Hall.
 They do not establish played-match progression, normal animation timing,
 other scenes, performance or heard speech quality. The aggregate gate has
 not run. Owner in-game evaluation is separate from technical verification.
+The approved Diaspora Oracle selection and five reviewed matching poses are
+installed under the owner-authorized package integration. All six sources
+retain native 1254-square canvases and left-facing composition. Keep its broad
+drawn adult face, short swept dark hair, sturdy silhouette, white rolled-sleeve
+shirt, navy trousers, black shoes, single black microphone with an orange ring,
+and single blank paper stack with an orange band. Each pose used only the
+accepted selection as its image reference. Delivery shows angry speech as the
+owner instructed; Comeback continues to use that drawing. Thinking, small
+recoil, strong shock and guarded worry retain the same identity and props.
+Selection, Thinking and Heavy-hit retain their generated alpha unchanged.
+Delivery, Light-hit and Weakness use bounded removal of detached alpha-1
+pixels only. Metadata registration preserves all reviewed decoded pixels.
+The reviewed tight source margins satisfy the silhouette-height contract and
+runtime reduction preflight. Existing nine-state mappings, character identity,
+phrases, balance and voices remain unchanged. The targeted staged package,
+native-alpha provenance, color and encoded-border checks passed. All six
+installed masters match the reviewed pixels; all 40 variants have transparent
+outer borders; 1,300 unrelated character files are byte-identical.
+Production-build, focused test and installed-browser verification results are
+pending. Agent source review found no blocking defect. Thinking's expression
+stays close to the selection, with a distinct upper-chest microphone gesture.
+Product-owner in-game evaluation is separate from technical verification.
+The aggregate gate has not run. Normal animation and heard speech quality
+remain outside this art-source review.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted

@@ -28,7 +28,9 @@ The approved Coalition Acrobat default selection and five reviewed matching
 poses are also installed under the owner-authorized package integration.
 The approved Spreadsheet Technocrat selection and five reviewed matching poses
 are also installed under the owner-authorized package integration.
-All twenty-three packages are
+The approved Diaspora Oracle selection and five reviewed matching poses are
+also installed under the owner-authorized package integration.
+All twenty-four packages are
 installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
@@ -58,6 +60,7 @@ character's identity into another.
 | Local Baron municipal patron | [Selection](../../src/assets/characters/county-baron--municipal-patron.png) | [Five poses](../../src/assets/characters/states/county-baron--municipal-patron/) |
 | Coalition Acrobat | [Selection](../../src/assets/characters/coalition-acrobat.png) | [Five poses](../../src/assets/characters/states/coalition-acrobat/) |
 | Spreadsheet Technocrat | [Selection](../../src/assets/characters/spreadsheet-technocrat.png) | [Five poses](../../src/assets/characters/states/spreadsheet-technocrat/) |
+| Diaspora Oracle | [Selection](../../src/assets/characters/diaspora-oracle.png) | [Five poses](../../src/assets/characters/states/diaspora-oracle/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -69,6 +72,18 @@ Each pose uses its own accepted selection as the only image reference. Keep
 native transparency and source dimensions. Do not enlarge or sharpen a source
 to simulate missing detail. Use the built-in chat image generator for
 characters, poses, desks, props, and foregrounds. Preserve approved robot art.
+
+Diaspora Oracle retains six native 1254-square, left-facing sources. Keep its
+sturdy adult silhouette, swept dark hair, white rolled-sleeve shirt, navy
+trousers, black shoes, single orange-ring microphone and orange-banded blank
+paper stack. Delivery shows the owner-required angry speech and also supplies
+Comeback. Thinking holds the microphone across the upper chest. The hit states
+show small recoil and stronger shock. Weakness shows guarded worry. Keep the
+complete face, signature props and gripping fingers above desk occlusion.
+Selection, Thinking and Heavy-hit keep their generated alpha unchanged.
+The other three poses use bounded detached alpha-1 removal only. Metadata
+registration preserves all reviewed pixels. Specification 023 gives the
+focused verification results and remaining in-game review limits.
 
 Black Sea Captain retains the approved selection's revised facial structure,
 cream captain uniform, cap and single cigar. All six sources use native

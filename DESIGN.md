@@ -252,6 +252,13 @@ and single plain black pen. Its source faces right. Keep the complete head,
 pen, gripping fingers and defining gestures inside the visible match window
 above the desk. Preserve the accepted master's source-specific tonal drawing;
 it does not change the direction for new selections.
+The approved Diaspora Oracle selection and five reviewed matching poses are
+also installed under the authorized package integration. Keep its short swept
+dark hair, broad adult face, white rolled-sleeve shirt, navy trousers, black
+shoes, single black microphone with an orange ring, and single blank paper
+stack with an orange band. Its source faces left. Delivery shows angry speech
+and also supplies Comeback. Keep the face, gripping fingers and signature
+props visible above the desk in both player positions.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.
