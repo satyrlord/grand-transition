@@ -18,8 +18,8 @@ Add `grand-hotel-romania` after `civic-cypher-boxing-ring` in the scene catalog.
 Its English name is `Grand Hotel Romania`, and its Romanian name is
 `Grand Hotel România`. Interface names follow the interface language.
 Descriptions and phrase text follow the game language under Milestone 029.
-The custom Single Player and Multiplayer selectors discover the scene through
-the catalog. The first-round opening player index is `0`.
+The Single Player and Multiplayer scene guide of Milestone 039 discovers the
+scene through the catalog. The first-round opening player index is `0`.
 
 This specification replaces the seven-scene total of Specification 032 with
 eight scenes. It adds 34 scene-restricted cards. The full catalog has 1,687

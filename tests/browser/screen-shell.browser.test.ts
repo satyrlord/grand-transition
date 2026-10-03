@@ -66,22 +66,6 @@ test('roster crops and selected stages keep full responsive portrait sources', a
   }
 });
 
-test('keeps wrapping scene text synchronized with the native accessible selection', async () => {
-  const app = await mountApp();
-  await page.getByRole('button', { name: 'Multiplayer' }).click();
-  const select = app.querySelector<HTMLSelectElement>('#sceneId')!;
-  for (const option of select.options) {
-    select.value = option.value;
-    select.dispatchEvent(new Event('change', { bubbles: true }));
-    await app.updateComplete;
-    await app.querySelector<GrandTransitionSetup>('grand-transition-setup')!.updateComplete;
-    const display = app.querySelector('.scene-selected-text')!;
-    expect(display.textContent?.trim()).toBe(option.text.trim());
-    expect(display.getAttribute('aria-hidden')).toBe('true');
-    expect(select.value).toBe(option.value);
-  }
-});
-
 test('explains the historical secret-police weakness in plain English', async () => {
   const setup = await mountSetup({
     ...createDefaultSetupSnapshot(),
@@ -153,8 +137,8 @@ test('moves through the two-state graph on one URL and restores setup values', a
     )
     .toHaveAttribute('data-character-id', 'thunder-tribune');
   await expect
-    .element(page.getByLabelText('Scene'))
-    .toHaveValue('transition-era-television-studio');
+    .element(page.getByTestId('scene-monitor'))
+    .toHaveAttribute('data-scene-id', 'transition-era-television-studio');
   const weaknesses = document.querySelectorAll('.contestant-weaknesses');
   expect(weaknesses).toHaveLength(2);
   expect(weaknesses[0]!.textContent?.trim()).toBe(publicWeaknesses('red-folded-chairman'));
@@ -586,9 +570,11 @@ test('creates, persists, resumes, and resets the ladder setup', async () => {
   expect(
     document.querySelector('.contestant-stage--two .contestant-locked-state')?.textContent,
   ).toContain('Opponent fixed by rung');
-  expect(document.querySelector('.ladder-field-label')?.textContent).toContain(
+  expect(document.querySelector('label[for="sceneId"]')?.textContent).toContain(
     'Rung scene — fixed',
   );
+  expect(document.querySelector<HTMLButtonElement>('#sceneId')?.disabled).toBe(true);
+  expect(document.querySelector('grand-transition-scene-picker')).toBeNull();
   expect(document.querySelector('.setup-note')?.textContent).toContain(
     'Opponent and scene are fixed by local ladder progress.',
   );

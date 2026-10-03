@@ -5,7 +5,7 @@ import type { MatchScreenSnapshot } from '../src/app/match-screen-snapshot.ts';
 import { loadGameContent } from '../tools/load-game-content.ts';
 import { planMatchBrowserFlow, useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 import { finishPresentation } from './helpers/presentation.ts';
-import { lockInSetup } from './helpers/setup.ts';
+import { chooseScene, lockInSetup } from './helpers/setup.ts';
 import { storedHistory } from './helpers/stored-data.ts';
 import { gateViewports } from './helpers/viewports.ts';
 
@@ -193,7 +193,7 @@ for (const viewport of gateViewports([
     await page
       .locator(`.roster-choice[data-character-id="${longestCharacter.id}"][data-skin-id="default"]`)
       .click();
-    await page.getByLabel('Scene', { exact: true }).selectOption(longestScene.id);
+    await chooseScene(page, longestScene.id);
     await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await page.clock.install();

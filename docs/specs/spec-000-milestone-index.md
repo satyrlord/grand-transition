@@ -352,6 +352,10 @@ A review that uses only the source code does not satisfy them.
     different machines play one match through a room code. Each machine shows
     the arena and plays its own audio. It adds Play Remotely to the Multiplayer
     dialog.
+39. [Visual scene selector](spec-039-visual-scene-selector.md). Budget: 4. The
+    native Scene select becomes a monitor that opens a scene guide with a live
+    preview and a tile wall. It replaces the native selector of Milestones 015
+    and 028 and changes no setup value, rule, or asset.
 
 Each milestone obeys its **Depends on** field.
 Milestone file names, headings, acceptance IDs, and references use the same numeric identifier.
@@ -378,5 +382,6 @@ This sequence limits the context and the files that each implementation session 
 | Audio and speech                     | 024, 028-029       |
 | Full content, safety, and balance    | 026-028            |
 | Post-MVP scene extension             | 032, 036           |
+| Setup scene selector                 | 039                |
 | Online rooms, relay, room rules      | 035, 037, 038      |
 | Release quality and deployment       | 030-031            |

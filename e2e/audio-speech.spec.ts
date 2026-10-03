@@ -1,5 +1,5 @@
 import { productionOrigin } from './helpers/production-preview.ts';
-import { lockInSetup } from './helpers/setup.ts';
+import { chooseScene, lockInSetup } from './helpers/setup.ts';
 import { type Page, type TestInfo } from '@playwright/test';
 import { expect, test } from './helpers/fixtures.ts';
 import { writeFile } from 'node:fs/promises';
@@ -282,7 +282,7 @@ test('every playable scene routes its distinct music treatment', async ({ page }
   await ready(page);
   const scenes = Object.entries(sceneMusicTrackIds);
   for (const [index, [sceneId, trackId]] of scenes.entries()) {
-    await page.getByLabel('Scene', { exact: true }).selectOption(sceneId);
+    await chooseScene(page, sceneId);
     await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await expect

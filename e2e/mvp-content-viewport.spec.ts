@@ -1,4 +1,4 @@
-import { lockInSetup } from './helpers/setup.ts';
+import { chooseScene, lockInSetup, sceneMonitor } from './helpers/setup.ts';
 import { type Page } from '@playwright/test';
 import { expect, test } from './helpers/fixtures.ts';
 import characterManifest from '../src/assets/characters/character-manifest.json' with { type: 'json' };
@@ -91,27 +91,27 @@ for (const viewport of gateViewports(supportedViewports)) {
       );
     }
 
-    const scene = page.getByLabel('Scene', { exact: true });
-    await expect(page.locator('.scene-selected-text')).toHaveCSS('pointer-events', 'none');
+    const sceneFits: { id: string; fits: boolean }[] = [];
     for (const entry of catalog.scenes) {
-      await scene.selectOption(entry.id);
-      await expect(scene).toHaveValue(entry.id);
+      await chooseScene(page, entry.id);
+      sceneFits.push({
+        id: entry.id,
+        fits: await sceneMonitor(page).evaluate((monitor) => {
+          const name = monitor.querySelector<HTMLElement>('.scene-monitor-text strong')!;
+          const range = document.createRange();
+          range.selectNodeContents(name);
+          const text = range.getBoundingClientRect();
+          const box = monitor.getBoundingClientRect();
+          return (
+            text.left >= box.left - 1 &&
+            text.right <= box.right + 1 &&
+            text.top >= box.top - 1 &&
+            text.bottom <= box.bottom + 1
+          );
+        }),
+      });
     }
-    const labelGeometry = await scene.evaluate((select: HTMLSelectElement) => {
-      const style = getComputedStyle(select);
-      const context = document.createElement('canvas').getContext('2d')!;
-      context.font = style.font;
-      const available =
-        select.clientWidth -
-        Number.parseFloat(style.paddingLeft) -
-        Number.parseFloat(style.paddingRight) -
-        12;
-      return [...select.options].map((option) => ({
-        text: option.text,
-        fits: context.measureText(option.text).width <= available,
-      }));
-    });
-    expect(labelGeometry.filter(({ fits }) => !fits)).toEqual([]);
+    expect(sceneFits.filter(({ fits }) => !fits)).toEqual([]);
     // Each match-settings select shows its longest option. At 1400 by 1050, the
     // Phrase language select once had 40 pixels beside its inline label.
     const settingsGeometry = await page.locator('.match-settings').evaluate((fieldset) => {
@@ -151,6 +151,12 @@ for (const viewport of gateViewports(supportedViewports)) {
     await page
       .locator(`.roster-choice[data-character-id="${longestCharacter.id}"][data-skin-id="default"]`)
       .click();
+    await chooseScene(
+      page,
+      catalog.scenes.find(
+        ({ nameKey }) => catalog.locales[0]!.messages[nameKey] === longestSceneName,
+      )!.id,
+    );
     const expandedLabels = await page.evaluate(
       ({ characterName, sceneName }) => {
         const expand = (value: string) =>
@@ -158,13 +164,9 @@ for (const viewport of gateViewports(supportedViewports)) {
         const character = document.querySelector<HTMLElement>(
           '.contestant-stage--one .contestant-record strong',
         )!;
-        const scene = document.querySelector<HTMLElement>('.scene-selected-text')!;
-        const sceneSelect = document.querySelector<HTMLSelectElement>('#sceneId')!;
-        const sceneOption = [...sceneSelect.options].find((option) => option.text === sceneName)!;
-        sceneSelect.value = sceneOption.value;
-        sceneOption.text = expand(sceneName);
+        const scene = document.querySelector<HTMLElement>('.scene-monitor-text strong')!;
         character.textContent = expand(characterName);
-        scene.textContent = sceneOption.text;
+        scene.textContent = expand(sceneName);
         const evidence = (element: HTMLElement, source: string) => {
           const box = element.getBoundingClientRect();
           const containerBox = element.parentElement!.getBoundingClientRect();
@@ -222,7 +224,7 @@ for (const viewport of gateViewports([
           catalog.locales[0]!.messages[right.nameKey]!.length -
           catalog.locales[0]!.messages[left.nameKey]!.length,
       )[0]!;
-      await page.getByLabel('Scene', { exact: true }).selectOption(longestScene.id);
+      await chooseScene(page, longestScene.id);
       await lockInSetup(page);
       await page.getByRole('button', { name: 'Start match', exact: true }).click();
 
@@ -262,7 +264,7 @@ for (const scene of catalog.scenes) {
     page,
   }, testInfo) => {
     await openSinglePlayerSetup(page, compactViewports[0]!);
-    await page.getByLabel('Scene', { exact: true }).selectOption(scene.id);
+    await chooseScene(page, scene.id);
     await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     for (const viewport of compactViewports) {

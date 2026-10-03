@@ -6,7 +6,19 @@ import {
   interfaceWeaknessName,
 } from '../interface-names.ts';
 import { LitElement, html, nothing, type PropertyValues, type TemplateResult } from 'lit';
-import { characterSkins, gameCatalog, type CharacterSkin } from '../../game-content.ts';
+import {
+  characterSkins,
+  gameCatalog,
+  gameLocaleBundle,
+  type CharacterSkin,
+} from '../../game-content.ts';
+import { gameTextLanguage } from '../game-text-language.ts';
+import { resolveSceneAsset } from '../scene-assets.ts';
+import {
+  renderSceneLayers,
+  type ScenePickerChooseEvent,
+  type ScenePickerScene,
+} from '../../components/scene-picker.ts';
 import { resolveBrandAsset } from '../brand-assets.ts';
 import type { MatchMode } from '../../engine/match-lifecycle.ts';
 import type { LadderProgress } from '../../engine/ladder.ts';
@@ -100,6 +112,7 @@ export class GrandTransitionSetup extends LitElement {
     playerTwoLocked: { state: true },
     previewCharacterId: { state: true },
     previewPinned: { state: true },
+    scenePickerOpen: { state: true },
     ladderProgress: { attribute: false },
     ladderPersistenceFailure: { attribute: false },
     gameLocale: { attribute: false },
@@ -114,11 +127,13 @@ export class GrandTransitionSetup extends LitElement {
   declare private playerTwoLocked: boolean;
   declare private previewCharacterId: string | null;
   declare private previewPinned: boolean;
+  declare private scenePickerOpen: boolean;
   declare ladderProgress: LadderProgress | null;
   declare ladderPersistenceFailure: LadderProgressFailureCode | null;
   declare gameLocale: GameLocale;
   declare rehearsal: boolean;
   private submissionLocked = false;
+  private sceneViewCache: { key: string; scenes: readonly ScenePickerScene[] } | undefined;
 
   constructor() {
     super();
@@ -130,6 +145,7 @@ export class GrandTransitionSetup extends LitElement {
     this.playerTwoLocked = false;
     this.previewCharacterId = null;
     this.previewPinned = false;
+    this.scenePickerOpen = false;
     this.ladderProgress = null;
     this.ladderPersistenceFailure = null;
     this.gameLocale = defaultGameLocale;
@@ -146,10 +162,20 @@ export class GrandTransitionSetup extends LitElement {
       if (previousSnapshot?.mode !== this.snapshot?.mode) {
         this.playerOneLocked = false;
         this.playerTwoLocked = false;
+        this.scenePickerOpen = false;
         this.selectionTarget = 'playerOneCharacterId';
       } else if (this.snapshot?.mode === 'ladder') {
         this.selectionTarget = 'playerOneCharacterId';
       }
+    }
+  }
+
+  protected override updated(changed: PropertyValues): void {
+    // The modal returns focus only after its own update closes it, and a
+    // browser that does not focus a clicked button has nothing to restore.
+    if (changed.get('scenePickerOpen') === true && !this.scenePickerOpen) {
+      const picker = this.querySelector<LitElement>('grand-transition-scene-picker');
+      void picker?.updateComplete.then(() => this.querySelector<HTMLElement>('#sceneId')?.focus());
     }
   }
 
@@ -320,23 +346,7 @@ export class GrandTransitionSetup extends LitElement {
                   : nothing
             }
             <div class="match-settings-scene">
-              ${
-                this.snapshot.mode === 'ladder'
-                  ? html`<span class="ladder-field-label"
-                        >${msg('Rung scene — fixed')}</span
-                      >
-                      <output>${interfaceSceneName(this.snapshot.sceneId)}</output>`
-                  : this.selectField({
-                      field: 'sceneId',
-                      label: msg('Scene'),
-                      value: this.snapshot.sceneId,
-                      error: errors.sceneId,
-                      options: gameCatalog.scenes.map((scene) => ({
-                        value: scene.id,
-                        label: interfaceSceneName(scene.id),
-                      })),
-                    })
-              }
+              ${this.sceneMonitorField(this.snapshot, errors.sceneId)}
             </div>
             <div class="match-settings-language setup-field">
               <label for="gameLocale">${msg('Phrase language')}</label>
@@ -382,6 +392,17 @@ export class GrandTransitionSetup extends LitElement {
             </button>
           </div>
         </form>
+        ${
+          this.snapshot.mode === 'ladder'
+            ? nothing
+            : html`<grand-transition-scene-picker
+                .scenes=${this.sceneViews(this.snapshot.mode)}
+                .selectedId=${this.snapshot.sceneId}
+                .open=${this.scenePickerOpen}
+                @scene-picker-choose=${this.chooseScene}
+                @scene-picker-close=${this.closeScenePicker}
+              ></grand-transition-scene-picker>`
+        }
       </main>
     `;
   }
@@ -702,7 +723,7 @@ export class GrandTransitionSetup extends LitElement {
   }
 
   private selectField(config: {
-    field: Extract<SetupField, 'aiDifficulty' | 'mode' | 'sceneId'>;
+    field: Extract<SetupField, 'aiDifficulty' | 'mode'>;
     label: string;
     value: string;
     error: string | undefined;
@@ -715,7 +736,6 @@ export class GrandTransitionSetup extends LitElement {
     return html`
       <div class="setup-field">
         <label for=${config.field}>${config.label}</label>
-        <div class=${config.field === 'sceneId' ? 'scene-select-view' : nothing}>
         <select
           id=${config.field}
           name=${config.field}
@@ -732,18 +752,82 @@ export class GrandTransitionSetup extends LitElement {
             `,
           )}
         </select>
-        ${
-          config.field === 'sceneId'
-            ? html`<span class="scene-selected-text" aria-hidden="true">${
-                config.options.find((option) => option.value === config.value)?.label
-              }</span>`
-            : nothing
-        }
-        </div>
         ${config.error ? html`<p class="field-error" id=${errorId}>${config.error}</p>` : nothing}
       </div>
     `;
   }
+
+  private sceneMonitorField(snapshot: SetupSnapshot, error: string | undefined): TemplateResult {
+    const fixed = snapshot.mode === 'ladder';
+    const scene = this.sceneViews(snapshot.mode).find(({ id }) => id === snapshot.sceneId);
+    const errorId = 'sceneId-error';
+    return html`
+      <div class="setup-field scene-field">
+        <label id="sceneId-label" for="sceneId">
+          ${fixed ? msg('Rung scene — fixed') : msg('Scene')}
+        </label>
+        <button
+          id="sceneId"
+          type="button"
+          class="scene-monitor"
+          data-testid="scene-monitor"
+          data-scene-id=${scene?.id ?? ''}
+          ?disabled=${fixed}
+          aria-labelledby="sceneId-label sceneId-name"
+          aria-haspopup=${fixed ? nothing : 'dialog'}
+          aria-invalid=${error ? 'true' : nothing}
+          aria-describedby=${error ? errorId : nothing}
+          @click=${this.openScenePicker}
+        >
+          <span class="scene-monitor-screen" aria-hidden="true">
+            ${scene ? renderSceneLayers(scene.layers, '6rem') : nothing}
+          </span>
+          <span class="scene-monitor-text">
+            <strong id="sceneId-name">${scene ? scene.name : msg('No scene selected')}</strong>
+            <span class="scene-monitor-hint" aria-hidden="true">
+              ${fixed ? msg('Set by ladder progress') : msg('Change scene')}
+              ${
+                fixed
+                  ? nothing
+                  : html`<svg
+                      class="scene-monitor-chevron"
+                      viewBox="0 0 16 16"
+                      width="10"
+                      height="10"
+                      focusable="false"
+                    >
+                      <path d="M5 2l6 6-6 6" />
+                    </svg>`
+              }
+            </span>
+          </span>
+        </button>
+        ${error ? html`<p class="field-error" id=${errorId}>${error}</p>` : nothing}
+      </div>
+    `;
+  }
+
+  private sceneViews(mode: string): readonly ScenePickerScene[] {
+    const key = [interfaceLocale(), this.gameLocale, mode].join('|');
+    if (this.sceneViewCache?.key !== key) {
+      this.sceneViewCache = { key, scenes: sceneViews(mode, this.gameLocale) };
+    }
+    return this.sceneViewCache.scenes;
+  }
+
+  private readonly openScenePicker = (event: Event): void => {
+    event.stopPropagation();
+    this.scenePickerOpen = true;
+  };
+
+  private readonly closeScenePicker = (): void => {
+    this.scenePickerOpen = false;
+  };
+
+  private readonly chooseScene = (event: ScenePickerChooseEvent): void => {
+    event.stopPropagation();
+    this.dispatchSetupChange('sceneId', event.detail.sceneId);
+  };
 
   private readonly changeGameLocale = (event: Event): void => {
     event.stopPropagation();
@@ -1155,6 +1239,34 @@ function immutableStartMatchPayload(snapshot: SetupSnapshot): StartMatchPayload 
     playerTwoCharacterId: snapshot.playerTwoCharacterId,
     playerTwoSkinId: snapshot.playerTwoSkinId,
     sceneId: snapshot.sceneId,
+  });
+}
+
+function sceneViews(mode: string, gameLocale: GameLocale): readonly ScenePickerScene[] {
+  const descriptions = gameLocaleBundle(gameLocale).messages;
+  const descriptionLang = gameTextLanguage(gameLocale);
+  return gameCatalog.scenes.map((scene) => {
+    const opensFirst = scene.openingPlayerIndex === 0;
+    return {
+      id: scene.id,
+      name: interfaceSceneName(scene.id),
+      description: descriptions[scene.descriptionKey] ?? '',
+      descriptionLang,
+      descriptionLanguageName: descriptionLang ? gameLocaleAutonyms[descriptionLang] : undefined,
+      opener:
+        mode === 'ai'
+          ? opensFirst
+            ? msg('You open')
+            : msg('Opponent opens')
+          : opensFirst
+            ? msg('Player one opens')
+            : msg('Player two opens'),
+      openerSide: opensFirst ? 'red' : 'blue',
+      effectCount: scene.effectIds.length,
+      layers: [...scene.backgroundLayers]
+        .sort((left, right) => left.depth - right.depth)
+        .map((layer) => resolveSceneAsset(layer.media.assetId)),
+    };
   });
 }
 

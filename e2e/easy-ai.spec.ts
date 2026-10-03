@@ -495,7 +495,7 @@ async function expectNoViewportOverflow(locator: Locator): Promise<void> {
 async function readSetupFooterGeometry(page: Page) {
   return page.locator('.match-settings').evaluate((fieldset) => {
     const difficulty = fieldset.querySelector<HTMLSelectElement>('#aiDifficulty');
-    const scene = fieldset.querySelector<HTMLSelectElement>('#sceneId')!;
+    const scene = fieldset.querySelector<HTMLElement>('#sceneId')!;
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d')!;
     const labelFits = (select: HTMLSelectElement) => {
@@ -517,8 +517,20 @@ async function readSetupFooterGeometry(page: Page) {
         height: bounds.height,
       };
     };
+    const sceneNameFits = (monitor: HTMLElement) => {
+      const range = document.createRange();
+      range.selectNodeContents(monitor.querySelector('.scene-monitor-text strong')!);
+      const text = range.getBoundingClientRect();
+      const bounds = monitor.getBoundingClientRect();
+      return (
+        text.left >= bounds.left - 1 &&
+        text.right <= bounds.right + 1 &&
+        text.top >= bounds.top - 1 &&
+        text.bottom <= bounds.bottom + 1
+      );
+    };
     const controls = [difficulty, scene].filter(
-      (control): control is HTMLSelectElement => control !== null,
+      (control): control is HTMLElement => control !== null,
     );
     const controlTops = controls.map((control) => control.getBoundingClientRect().top);
 
@@ -530,7 +542,7 @@ async function readSetupFooterGeometry(page: Page) {
       difficultyValue: difficulty?.value ?? null,
       controlsAligned: Math.max(...controlTops) - Math.min(...controlTops) <= 1,
       difficultyLabelFits: difficulty ? labelFits(difficulty) : true,
-      sceneLabelFits: labelFits(scene),
+      sceneLabelFits: sceneNameFits(scene),
     };
   });
 }

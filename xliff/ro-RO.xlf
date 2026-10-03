@@ -1126,6 +1126,82 @@
   <source>Game version</source>
   <target>Versiunea jocului</target>
 </trans-unit>
+<trans-unit id="saef7712b48f68563">
+  <source>No scene selected</source>
+  <target>Nicio scenă aleasă</target>
+</trans-unit>
+<trans-unit id="sc42c3d84b2e9ec5f">
+  <source>Set by ladder progress</source>
+  <target>Stabilită de progresul în campanie</target>
+</trans-unit>
+<trans-unit id="sc4fd6289ea2ab7f4">
+  <source>You open</source>
+  <target>Tu deschizi</target>
+</trans-unit>
+<trans-unit id="s8416e2dc12c6360d">
+  <source>Opponent opens</source>
+  <target>Adversarul deschide</target>
+</trans-unit>
+<trans-unit id="s9d821bb4158baf8d">
+  <source>Player one opens</source>
+  <target>Jucătorul unu deschide</target>
+</trans-unit>
+<trans-unit id="s204cfc2b8b0cd9e7">
+  <source>Player two opens</source>
+  <target>Jucătorul doi deschide</target>
+</trans-unit>
+<trans-unit id="s417b90913e05bc17">
+  <source>Preview</source>
+  <target>Previzualizare</target>
+</trans-unit>
+<trans-unit id="s4eed365a9d8f29c4">
+  <source>On air</source>
+  <target>În direct</target>
+</trans-unit>
+<trans-unit id="sffd1f788ecef6ff7">
+  <source>Desks in front</source>
+  <target>Pupitre în prim-plan</target>
+</trans-unit>
+<trans-unit id="s7f95b287aee8d817">
+  <source>Open floor</source>
+  <target>Podea liberă</target>
+</trans-unit>
+<trans-unit id="s9538869fcb384f21">
+  <source>Still set</source>
+  <target>Decor static</target>
+</trans-unit>
+<trans-unit id="s3b15327b6b7f0274">
+  <source>One live effect</source>
+  <target>Un efect activ</target>
+</trans-unit>
+<trans-unit id="s0a06a0018716724f">
+  <source><x id="0" equiv-text="${count}"/> live effects</source>
+  <target><x id="0" equiv-text="${count}"/> efecte active</target>
+</trans-unit>
+<trans-unit id="s541207d58884f4c5">
+  <source>Change scene</source>
+  <target>Schimbă scena</target>
+</trans-unit>
+<trans-unit id="s085f5bb579f7708f">
+  <source>Choose the scene</source>
+  <target>Alege scena</target>
+</trans-unit>
+<trans-unit id="sfba1184e9530e42c">
+  <source>Point at a scene to preview it. Click one to choose it, then press Done.</source>
+  <target>Arată spre o scenă pentru previzualizare. Dă clic pe una pentru a o alege, apoi apasă Gata.</target>
+</trans-unit>
+<trans-unit id="s79f449e9c32ad920">
+  <source>Scenes</source>
+  <target>Scene</target>
+</trans-unit>
+<trans-unit id="se5bdca5ed35e4b63">
+  <source>Scene preview</source>
+  <target>Previzualizarea scenei</target>
+</trans-unit>
+<trans-unit id="s0379fc73608ab971">
+  <source>Done</source>
+  <target>Gata</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

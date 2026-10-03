@@ -5,7 +5,7 @@ import type { CharacterStateId } from '../../src/app/character-motion.ts';
 import type { GrandTransitionMatch } from '../../src/app/screens/match-screen.ts';
 import { defaultSettings, encodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
 import { useFixedBrowserMatchSeed } from './match-flow.ts';
-import { lockInSetup } from './setup.ts';
+import { chooseScene, lockInSetup } from './setup.ts';
 import { settingsStorageKey } from './stored-data.ts';
 
 export const clearancePackages = characterManifest.assets.map((selection) => ({
@@ -101,7 +101,7 @@ export async function startClearanceMatch(
     await expect(stage).toHaveAttribute('data-skin-id', entry.skinId);
     await page.getByTestId(index === 0 ? 'lock-player-one' : 'lock-player-two').click();
   }
-  await page.getByLabel('Scene', { exact: true }).selectOption('transition-era-television-studio');
+  await chooseScene(page, 'transition-era-television-studio');
   await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match', exact: true }).click();
   await expect(page.locator('grand-transition-character')).toHaveCount(2);

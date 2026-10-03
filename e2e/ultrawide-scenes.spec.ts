@@ -1,4 +1,4 @@
-import { lockInSetup } from './helpers/setup.ts';
+import { chooseScene, lockInSetup } from './helpers/setup.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 import { expect, test } from './helpers/fixtures.ts';
 
@@ -18,7 +18,7 @@ for (const scene of [
     await page.setViewportSize({ width: 3424, height: 1427 });
     await page.goto('');
     await page.getByRole('button', { name: 'Multiplayer' }).click();
-    await page.getByLabel('Scene').selectOption(scene);
+    await chooseScene(page, scene);
     await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match' }).click();
     await expect(page.locator('.broadcast-stage-art')).toBeVisible();

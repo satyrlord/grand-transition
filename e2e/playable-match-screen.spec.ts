@@ -1,4 +1,4 @@
-import { lockInSetup } from './helpers/setup.ts';
+import { chooseScene, lockInSetup } from './helpers/setup.ts';
 import { finishPresentation } from './helpers/presentation.ts';
 import type { RoundPresentationFrame } from '../src/app/round-presentation.ts';
 import { type Locator, type Page } from '@playwright/test';
@@ -481,7 +481,7 @@ test('the reported long bubble works on both sides at the reported viewport', as
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   await selectSetupCharacter(page, 'one', 'black-sea-captain');
   await selectSetupCharacter(page, 'two', 'thunder-tribune');
-  await page.getByLabel('Scene').selectOption('modern-debate-studio');
+  await chooseScene(page, 'modern-debate-studio');
   await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match' }).click();
   await expect(page.getByRole('heading', { name: /Round 1.*turn/u })).toBeVisible();
@@ -685,8 +685,11 @@ for (const viewport of gateViewports([
     });
     await page.reload();
     await page.getByRole('button', { name: 'Multiplayer' }).click();
-    await page.getByLabel('Scene').selectOption('modern-debate-studio');
-    expect(sceneVariantRequests).toEqual([]);
+    await chooseScene(page, 'modern-debate-studio');
+    // The studio guide previews the scene while it is chosen. Start the match
+    // from a cold cache, so the count below is what the match itself loads.
+    await (await page.context().newCDPSession(page)).send('Network.clearBrowserCache');
+    sceneVariantRequests.length = 0;
     await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match' }).click();
     await expect(page.getByRole('heading', { name: /Round 1.*turn/u })).toBeVisible();

@@ -166,14 +166,6 @@
       min-height: 2.75rem;
       font-size: 1rem;
     }
-    .match-settings-scene select {
-      padding-inline: 0.5rem 1.5rem;
-    }
-    .scene-selected-text {
-      margin-right: 1.5rem;
-      padding-left: 0.5rem;
-      font-size: 1rem;
-    }
     .setup-actions {
       display: flex;
       flex-wrap: wrap;

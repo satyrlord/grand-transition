@@ -174,6 +174,8 @@ Each state keeps its own task hierarchy.
 The title is a Curtain Call proscenium with a live wordmark and the Single Player, Multiplayer, and Ladder actions.
 It also has the less important Settings and match-history actions.
 Setup is a contestant register with three parts: two selected player stages around a compact roster.
+Its footer holds the match settings. The Scene field is a small control-room monitor that opens the scene guide: a modal with a live preview on the left and a wall of scene tiles on the right.
+The guide uses the same brass frame, oxblood action, and On air tally as the rest of the broadcast language, and it has no kicker or numbering.
 The match is one confrontation.
 The scene, characters, sentence construction, speech, status, and actions are on the same stage.
 They are not a decorative scene above a dashboard.

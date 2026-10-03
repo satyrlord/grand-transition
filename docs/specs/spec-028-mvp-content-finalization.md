@@ -321,12 +321,11 @@ Each scene has a different music treatment, and the game can get to each named e
 
 ## Variety contract
 
-The setup keeps the native scene selection and its keyboard behavior.
-The selected scene name has a visual text layer that wraps in the control.
+Milestone 039 replaces the native scene selection with a visual selector and keeps its keyboard operation.
+The selected scene name wraps in the Scene monitor.
 Thus, a name that is 40 percent longer stays easy to read on compact viewports.
-Assistive technology does not get the duplicate visual layer.
-The native option owns the accessible value.
-The expansion evidence must use the selected option, not the different Scene field label.
+The accessible name of the monitor holds the Scene label and the selected scene name once each.
+The expansion evidence must use the scene name of the monitor, not the different Scene field label.
 
 The loaded catalog has unique authored phrase text across the common pools and the owned pools.
 Each character and tier has unique comeback text.

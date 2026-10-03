@@ -1,0 +1,674 @@
+@layer screen {
+  /* Setup footer: the selected studio on a small control-room monitor. */
+  .scene-field {
+    min-width: 0;
+  }
+
+  /* The monitor is as tall as the neighboring selects, with its thumbnail flush
+     to the frame. A long name wraps and grows the monitor downward. */
+  .scene-monitor {
+    --scene-monitor-height: 2.4rem;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    min-width: 0;
+    min-height: var(--scene-monitor-height);
+    padding: 0 0.6rem 0 0;
+    border: 1px solid var(--broadcast-brass);
+    border-radius: 0;
+    background: var(--broadcast-black);
+    color: var(--broadcast-paper-light);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    transition:
+      border-color 160ms ease-out,
+      box-shadow 160ms ease-out;
+  }
+
+  .scene-monitor:hover:not(:disabled),
+  .scene-monitor:focus-visible {
+    border-color: var(--broadcast-paper-light);
+    box-shadow: inset 0 0 0 1px var(--broadcast-brass);
+  }
+
+  .scene-monitor:focus-visible {
+    outline: 3px solid var(--broadcast-paper-light);
+    outline-offset: 2px;
+  }
+
+  .scene-monitor:disabled {
+    cursor: default;
+  }
+
+  .scene-monitor-screen {
+    position: relative;
+    display: block;
+    align-self: start;
+    width: calc((var(--scene-monitor-height) - 2px) * 16 / 9);
+    height: calc(var(--scene-monitor-height) - 2px);
+    overflow: hidden;
+    background: var(--broadcast-ink);
+    box-shadow: inset 0 0 0 1px rgb(228 193 125 / 38%);
+  }
+
+  .scene-layer,
+  .scene-layer img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .scene-monitor-text {
+    display: grid;
+    gap: 0.22rem;
+    min-width: 0;
+  }
+
+  .scene-monitor-text strong {
+    font: 600 clamp(0.7rem, 0.9vw, 0.82rem) / 1.15 var(--font-interface);
+    overflow-wrap: anywhere;
+  }
+
+  .scene-monitor-chevron {
+    flex: none;
+    fill: none;
+    stroke: var(--broadcast-brass-light);
+    stroke-width: 1.8;
+  }
+
+  .scene-monitor-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--broadcast-brass-light);
+    font-size: 0.69rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Studio guide dialog. */
+  .scene-picker {
+    position: fixed;
+    inset: 0;
+    width: min(96vw, calc(94svh * 1.72), 120rem);
+    height: min(94svh, 72rem);
+    max-width: none;
+    max-height: none;
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--broadcast-brass);
+    background:
+      linear-gradient(90deg, rgb(143 40 34 / 18%), transparent 24% 76%, rgb(18 71 127 / 20%)),
+      var(--broadcast-ink);
+    color: var(--broadcast-paper-light);
+    box-shadow:
+      0 2rem 5rem rgb(0 0 0 / 68%),
+      inset 0 0 0 0.28rem var(--broadcast-black);
+    font-family: var(--font-interface);
+    user-select: none;
+  }
+
+  .scene-picker::backdrop {
+    background: rgb(5 8 11 / 74%);
+  }
+
+  .scene-picker[open] {
+    animation: scene-picker-open 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .scene-picker[open]::backdrop {
+    animation: scene-picker-backdrop 240ms ease-out both;
+  }
+
+  @keyframes scene-picker-open {
+    from {
+      opacity: 0;
+      transform: translateY(0.8rem) scale(0.985);
+    }
+  }
+
+  @keyframes scene-picker-backdrop {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .scene-picker-frame {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: clamp(0.6rem, 1.4vh, 1rem);
+    width: 100%;
+    height: 100%;
+    padding: clamp(0.7rem, 1.6vh, 1.1rem) clamp(0.9rem, 1.8vw, 1.5rem);
+  }
+
+  .scene-picker-heading {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(0.8rem, 1.6vw, 1.4rem);
+    padding-block-end: clamp(0.5rem, 1.2vh, 0.8rem);
+    border-block-end: 3px double var(--broadcast-brass);
+  }
+
+  .scene-picker-channel {
+    margin: 0;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--broadcast-brass);
+    color: var(--broadcast-brass-light);
+    font-size: clamp(0.69rem, 0.9vw, 0.8rem);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .scene-picker-title {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+
+  .scene-picker-title h2 {
+    margin: 0;
+    font: 400 clamp(1.4rem, 2.6vw, 2.2rem) / 0.95 var(--font-feature);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.7px currentcolor;
+    overflow-wrap: anywhere;
+  }
+
+  .scene-picker-title p {
+    margin: 0;
+    color: var(--broadcast-paper);
+    font-size: clamp(0.7rem, 0.9vw, 0.82rem);
+    line-height: 1.3;
+  }
+
+  .scene-picker-close {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    padding: 0;
+    border: 1px solid var(--broadcast-brass);
+    border-radius: 0;
+    background: var(--broadcast-black);
+    color: var(--broadcast-paper-light);
+    cursor: pointer;
+  }
+
+  .scene-picker-close svg {
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 1.6;
+  }
+
+  .scene-picker-close:hover,
+  .scene-picker-close:focus-visible {
+    border-color: var(--broadcast-paper-light);
+    background: var(--television-blue);
+  }
+
+  .scene-picker-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
+    gap: clamp(0.8rem, 1.8vw, 1.6rem);
+    min-height: 0;
+  }
+
+  /* Live preview: the monitor keeps between 16:9 and 4:3 of the column, and the
+     caption takes the remaining height. Art crops around its center, as the
+     match stage does. */
+  .scene-preview {
+    container-type: size;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: clamp(0.5rem, 1.2vh, 0.8rem);
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .scene-preview-monitor {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    height: min(75cqw, calc(100cqh - 12.5rem));
+    min-height: 0;
+    overflow: hidden;
+    border: 1px solid var(--broadcast-brass);
+    background: var(--broadcast-black);
+    box-shadow:
+      inset 0 0 0 0.3rem var(--broadcast-black),
+      0 1rem 2.6rem rgb(0 0 0 / 52%);
+  }
+
+  .scene-preview-monitor .scene-layer {
+    animation: scene-layer-reveal 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes scene-layer-reveal {
+    from {
+      opacity: 0;
+      transform: scale(1.015);
+    }
+  }
+
+  .scene-preview-monitor .broadcast-stage-ambience {
+    position: absolute;
+    inset: 0 auto 0 50%;
+    z-index: 2;
+    width: auto;
+    height: 100%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .scene-preview-monitor::after {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background:
+      repeating-linear-gradient(180deg, rgb(5 8 11 / 7%) 0 2px, transparent 2px 4px),
+      linear-gradient(180deg, rgb(5 8 11 / 34%), transparent 20% 78%, rgb(5 8 11 / 36%)),
+      linear-gradient(90deg, rgb(5 8 11 / 24%), transparent 20% 80%, rgb(5 8 11 / 24%));
+    content: '';
+    pointer-events: none;
+  }
+
+  .scene-preview-tally,
+  .scene-tile-tally {
+    position: absolute;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.32rem 0.55rem;
+    border: 1px solid var(--broadcast-oxblood-bright);
+    background: var(--broadcast-black);
+    color: var(--broadcast-paper-light);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .scene-preview-tally {
+    top: 0.75rem;
+    left: 0.75rem;
+  }
+
+  .scene-preview-tally::before,
+  .scene-tile-tally::before {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--broadcast-oxblood-bright);
+    content: '';
+    animation: scene-tally-pulse 1.8s ease-in-out infinite;
+  }
+
+  .scene-preview[data-previewing='true'] .scene-preview-tally {
+    border-color: var(--broadcast-brass);
+    color: var(--broadcast-brass-light);
+  }
+
+  .scene-preview[data-previewing='true'] .scene-preview-tally::before {
+    background: var(--broadcast-brass-light);
+    animation: none;
+  }
+
+  @keyframes scene-tally-pulse {
+    50% {
+      opacity: 0.45;
+    }
+  }
+
+  .scene-preview-caption {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: 0.4rem;
+    min-height: 0;
+    padding: clamp(0.55rem, 1.2vh, 0.85rem) clamp(0.7rem, 1.2vw, 1rem);
+    border: 1px solid var(--broadcast-brass);
+    background: rgb(5 8 11 / 62%);
+  }
+
+  .scene-preview-caption h3 {
+    margin: 0;
+    font: 400 clamp(1.3rem, 2.3vw, 2rem) / 1 var(--font-feature);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.6px currentcolor;
+    overflow-wrap: anywhere;
+  }
+
+  .scene-preview-body {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    justify-items: start;
+    gap: 0.35rem;
+    min-height: 0;
+  }
+
+  /* Names the game language when it differs from the interface language. */
+  .scene-language-cue {
+    padding: 0.18rem 0.45rem;
+    border: 1px solid var(--broadcast-brass);
+    color: var(--broadcast-brass-light);
+    font-size: 0.69rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .scene-preview-description {
+    min-height: 0;
+    margin: 0;
+    overflow-y: auto;
+    scrollbar-color: var(--broadcast-brass) var(--broadcast-black);
+    color: var(--broadcast-paper);
+    font-size: clamp(0.74rem, 0.95vw, 0.9rem);
+    line-height: 1.35;
+  }
+
+  .scene-preview-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .scene-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.9rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .scene-fact {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--broadcast-paper-light);
+    font-size: clamp(0.68rem, 0.82vw, 0.78rem);
+    font-weight: 600;
+  }
+
+  .scene-fact::before {
+    flex: none;
+    width: 0.55rem;
+    height: 0.55rem;
+    border: 1px solid var(--broadcast-brass);
+    background: var(--broadcast-ink);
+    content: '';
+  }
+
+  .scene-fact[data-side='red']::before {
+    border-color: var(--broadcast-oxblood-bright);
+    background: var(--broadcast-oxblood);
+  }
+
+  .scene-fact[data-side='blue']::before {
+    border-color: var(--television-blue-bright);
+    background: var(--television-blue);
+  }
+
+  .scene-preview-done {
+    min-width: clamp(6.5rem, 9vw, 9rem);
+    min-height: 2.9rem;
+    padding: 0.55rem 1rem;
+    border: 3px double var(--broadcast-brass);
+    border-radius: 0;
+    background: var(--broadcast-oxblood);
+    color: var(--broadcast-paper-light);
+    font: 400 clamp(0.9rem, 1.3vw, 1.1rem) / 1 var(--font-feature);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.7px currentcolor;
+    cursor: pointer;
+  }
+
+  .scene-preview-done:hover,
+  .scene-preview-done:focus-visible {
+    border-color: var(--broadcast-paper-light);
+    background: var(--broadcast-oxblood-bright);
+  }
+
+  /* Tile wall: one tile per studio, in catalog order. */
+  .scene-tiles {
+    --scene-tile-columns: 2;
+    display: grid;
+    grid-template-columns: repeat(var(--scene-tile-columns), minmax(0, 1fr));
+    grid-auto-rows: minmax(0, 1fr);
+    gap: clamp(0.4rem, 0.9vw, 0.7rem);
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .scene-tile {
+    position: relative;
+    display: block;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--broadcast-brass);
+    border-radius: 0;
+    background: var(--broadcast-black);
+    color: var(--broadcast-paper-light);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    transition:
+      border-color 140ms ease-out,
+      box-shadow 140ms ease-out;
+  }
+
+  .scene-tile-monitor {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  .scene-tile-monitor .scene-layer img {
+    transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .scene-tile[data-previewing='true'] .scene-layer img {
+    transform: scale(1.04);
+  }
+
+  .scene-tile-name {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 4;
+    padding: 1.1rem 0.6rem 0.5rem;
+    background: linear-gradient(180deg, transparent, rgb(5 8 11 / 88%) 55%);
+    font: 600 clamp(0.72rem, 0.9vw, 0.84rem) / 1.15 var(--font-interface);
+    overflow-wrap: anywhere;
+    text-shadow: 0 1px 2px var(--broadcast-black);
+  }
+
+  .scene-tile-tally {
+    top: 0;
+    right: 0;
+  }
+
+  .scene-tile[data-previewing='true'] {
+    z-index: 1;
+    border-color: var(--broadcast-brass-light);
+    box-shadow: 0 0.6rem 1.4rem rgb(0 0 0 / 48%);
+  }
+
+  .scene-tile[aria-checked='true'] {
+    border-color: var(--broadcast-paper-light);
+    box-shadow: inset 0 0 0 2px var(--broadcast-paper-light);
+  }
+
+  .scene-tile[aria-checked='true'][data-previewing='true'] {
+    box-shadow:
+      inset 0 0 0 2px var(--broadcast-paper-light),
+      0 0.6rem 1.4rem rgb(0 0 0 / 48%);
+  }
+
+  .scene-tile:focus-visible {
+    outline: 3px solid var(--broadcast-paper-light);
+    outline-offset: -5px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scene-picker[open],
+    .scene-picker[open]::backdrop,
+    .scene-preview-monitor .scene-layer,
+    .scene-tile-tally::before,
+    .scene-preview-tally::before {
+      animation: none;
+    }
+
+    .scene-tile-monitor .scene-layer img,
+    .scene-tile,
+    .scene-monitor {
+      transition: none;
+    }
+
+    .scene-tile[data-previewing='true'] .scene-layer img {
+      transform: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .scene-monitor,
+    .scene-picker,
+    .scene-picker-close,
+    .scene-preview-caption,
+    .scene-preview-done,
+    .scene-tile-name,
+    .scene-preview-tally,
+    .scene-tile-tally {
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    .scene-monitor,
+    .scene-picker,
+    .scene-picker-close,
+    .scene-preview-caption,
+    .scene-preview-done,
+    .scene-tile {
+      border-color: CanvasText;
+    }
+
+    .scene-tile[aria-checked='true'] {
+      outline: 3px solid Highlight;
+      outline-offset: -3px;
+    }
+
+    .scene-layer {
+      forced-color-adjust: none;
+    }
+  }
+
+  /* Compact viewports: the guide stacks and scrolls inside its own frame. */
+  @media (width < 1024px), (height < 720px), (orientation: portrait) {
+    .scene-monitor {
+      --scene-monitor-height: 2.75rem;
+    }
+
+    /* A wrapped scene name makes the monitor taller than a select. */
+    .match-settings-difficulty,
+    .match-settings-scene {
+      align-self: start;
+    }
+
+    .scene-monitor-text strong {
+      font-size: 1rem;
+    }
+
+    .scene-picker {
+      width: 96vw;
+      height: 94svh;
+    }
+
+    .scene-picker-frame {
+      grid-template-rows: auto auto;
+      align-content: start;
+      overflow: auto;
+      overscroll-behavior: contain;
+      scrollbar-color: var(--broadcast-brass) var(--broadcast-black);
+    }
+
+    /* The desktop layout fills a fixed height. Here every row sizes to its
+       content, and the frame scrolls. */
+    .scene-picker-body,
+    .scene-preview,
+    .scene-preview-caption,
+    .scene-preview-body,
+    .scene-preview-description,
+    .scene-tiles,
+    .scene-tile {
+      min-height: auto;
+    }
+
+    .scene-picker-body {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .scene-preview {
+      container-type: normal;
+      grid-template-rows: auto auto;
+    }
+
+    .scene-preview-caption {
+      grid-template-rows: auto auto auto;
+    }
+
+    .scene-preview-body {
+      grid-template-rows: auto auto;
+    }
+
+    .scene-preview-monitor {
+      height: auto;
+      aspect-ratio: 16 / 9;
+    }
+
+    .scene-preview-monitor .broadcast-stage-ambience {
+      inset: 0;
+      width: 100%;
+      transform: none;
+    }
+
+    .scene-preview-description {
+      overflow: visible;
+    }
+
+    .scene-tiles {
+      grid-auto-rows: auto;
+    }
+
+    .scene-tile {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  /* Landscape phones and short windows keep the two columns side by side. */
+  @media (orientation: landscape) and (height < 720px) and (width >= 640px) {
+    .scene-picker-body {
+      grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
+    }
+  }
+}

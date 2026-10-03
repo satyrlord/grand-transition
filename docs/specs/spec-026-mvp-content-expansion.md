@@ -139,7 +139,7 @@ Milestone 027 controls the last balance evidence and the editorial evidence.
 - **AC-026-05:** The test adds and removes one synthetic character that uses the naming convention.
   After the removal, no setup, match, locale, or production-build reference to that character stays.
 - **AC-026-06:** The production-browser setup can select each character and each scene.
-  The 19 identity records, the longest names, the six-scene selector, and the selected temporary portrait stay usable at each supported viewport.
+  The 19 identity records, the longest names, the six-scene selector (replaced by the visual selector of Milestone 039), and the selected temporary portrait stay usable at each supported viewport.
   Milestone 018 lets the layout use compact roster reflow and vertical page scroll.
   The foundation view with only default portraits uses one compact fighting-game character-selection grid.
   Its rows of this time have six, six, six, and one portraits.

@@ -125,17 +125,12 @@ for (const viewport of gateViewports(supportedViewports)) {
     await page.evaluate(() => document.fonts.ready);
 
     const geometry = await page.evaluate(() => {
-      const scene = document.querySelector<HTMLSelectElement>('#sceneId')!;
-      const sceneStyle = getComputedStyle(scene);
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d')!;
-      context.font = sceneStyle.font;
-      const selectedScene = scene.selectedOptions[0]?.text ?? '';
-      const availableSceneWidth =
-        scene.clientWidth -
-        Number.parseFloat(sceneStyle.paddingLeft) -
-        Number.parseFloat(sceneStyle.paddingRight) -
-        12;
+      const scene = document.querySelector<HTMLElement>('#sceneId')!;
+      const sceneName = scene.querySelector<HTMLElement>('.scene-monitor-text strong')!;
+      const sceneNameRange = document.createRange();
+      sceneNameRange.selectNodeContents(sceneName);
+      const sceneNameBox = sceneNameRange.getBoundingClientRect();
+      const sceneBox = scene.getBoundingClientRect();
       const robotChoice = document.querySelector<HTMLElement>(
         '.roster-choice[data-character-id="government-ai"][data-skin-id="default"]',
       )!;
@@ -208,7 +203,11 @@ for (const viewport of gateViewports(supportedViewports)) {
           .fontFamily,
         headingFont: getComputedStyle(document.querySelector<HTMLElement>('#setup-title')!)
           .fontFamily,
-        sceneLabelFits: context.measureText(selectedScene).width <= availableSceneWidth,
+        sceneLabelFits:
+          sceneNameBox.left >= sceneBox.left - 1 &&
+          sceneNameBox.right <= sceneBox.right + 1 &&
+          sceneNameBox.top >= sceneBox.top - 1 &&
+          sceneNameBox.bottom <= sceneBox.bottom + 1,
         controlsInside: [...document.querySelectorAll('select, button')]
           .filter((control) => !control.matches('.roster-choice'))
           .every((control) => {

@@ -1,4 +1,4 @@
-import { lockInSetup } from './setup-test-helpers.ts';
+import { chooseSceneInSetup, lockInSetup } from './setup-test-helpers.ts';
 import { page, userEvent } from 'vitest/browser';
 import { afterEach, expect, test, vi } from 'vitest';
 import matchScreenStyles from '../../src/styles/match-screen.css?raw';
@@ -2603,11 +2603,7 @@ async function startMatch(
   await app.updateComplete;
 
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  if (sceneId !== 'transition-era-television-studio') {
-    const scene = document.querySelector<HTMLSelectElement>('#sceneId')!;
-    scene.value = sceneId;
-    scene.dispatchEvent(new Event('change', { bubbles: true }));
-  }
+  if (sceneId !== 'transition-era-television-studio') await chooseSceneInSetup(sceneId);
   await lockInSetup();
   await page.getByRole('button', { name: 'Start match' }).click();
   await app.updateComplete;

@@ -1,5 +1,5 @@
 import sceneManifest from '../src/assets/scenes/scene-manifest.json' with { type: 'json' };
-import { lockInSetup } from './helpers/setup.ts';
+import { chooseScene, lockInSetup } from './helpers/setup.ts';
 import { expect, test } from './helpers/fixtures.ts';
 
 // A layer with a native source below 4K stops its variants at the source width,
@@ -45,7 +45,7 @@ for (const scene of [
         const page = await context.newPage();
         await page.goto(testInfo.project.use.baseURL!);
         await page.getByRole('button', { name: 'Multiplayer' }).click();
-        await page.getByLabel('Scene').selectOption(scene);
+        await chooseScene(page, scene);
         await lockInSetup(page);
         await page.getByRole('button', { name: 'Start match', exact: true }).click();
         const layers = page.locator('.broadcast-stage-art, .broadcast-stage-foreground');

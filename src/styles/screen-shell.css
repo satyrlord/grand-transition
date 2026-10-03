@@ -739,29 +739,12 @@
     font-weight: 700;
   }
 
-  .match-settings-scene:has(output) {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-    gap: 0.45rem;
-  }
-
-  .ladder-field-label,
   .ladder-record strong {
     color: var(--broadcast-brass-light);
     font-size: clamp(0.69rem, 0.74vw, 0.75rem);
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-  }
-
-  .match-settings-scene output {
-    min-width: 0;
-    color: var(--broadcast-paper-light);
-    font-size: clamp(0.7rem, 0.9vw, 0.82rem);
-    font-weight: 600;
-    line-height: 1.1;
-    white-space: normal;
   }
 
   .ladder-record {
@@ -834,30 +817,6 @@
     background: var(--broadcast-black);
     color: var(--broadcast-paper-light);
     font: 600 clamp(0.7rem, 0.9vw, 0.82rem) / 1 var(--font-interface);
-  }
-
-  .scene-select-view {
-    display: grid;
-    min-width: 0;
-  }
-
-  .scene-select-view > select,
-  .scene-selected-text {
-    grid-area: 1 / 1;
-  }
-
-  .scene-selected-text {
-    position: relative;
-    display: flex;
-    align-items: center;
-    min-width: 0;
-    margin: 1px 1.9rem 1px 1px;
-    padding: 0.45rem 0 0.45rem 0.6rem;
-    background: var(--broadcast-black);
-    color: var(--broadcast-paper-light);
-    font: 600 clamp(0.7rem, 0.9vw, 0.82rem) / 1.2 var(--font-interface);
-    overflow-wrap: anywhere;
-    pointer-events: none;
   }
 
   .field-error {

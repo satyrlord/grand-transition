@@ -1,6 +1,7 @@
 import { expect, test } from './helpers/fixtures.ts';
 import sharp from 'sharp';
 import { loadGameContent } from '../tools/load-game-content.ts';
+import { chooseScene, sceneMonitor } from './helpers/setup.ts';
 import { gateViewports } from './helpers/viewports.ts';
 
 const { gameCatalog: catalog, englishGameLocale: locale } = loadGameContent();
@@ -21,9 +22,9 @@ for (const viewport of gateViewports(viewports)) {
     await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
     await page.evaluate(() => document.fonts.ready);
     await expect(page.locator('.roster-choice')).toHaveCount(30);
-    await expect(page.getByLabel('Scene', { exact: true }).locator('option')).toHaveCount(
-      catalog.scenes.length,
-    );
+    await sceneMonitor(page).click();
+    await expect(page.getByTestId('scene-tile')).toHaveCount(catalog.scenes.length);
+    await page.getByTestId('scene-picker-close').click();
     await page.locator('.roster-headshot').evaluateAll(async (images) => {
       await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
     });
@@ -123,8 +124,7 @@ for (const viewport of gateViewports(viewports)) {
     }
 
     for (const scene of catalog.scenes) {
-      await page.getByLabel('Scene', { exact: true }).selectOption(scene.id);
-      await expect(page.getByLabel('Scene', { exact: true })).toHaveValue(scene.id);
+      await chooseScene(page, scene.id);
       await expect(page.getByRole('button', { name: 'Start match', exact: true })).toBeEnabled();
     }
     await page.mouse.move(0, 0);

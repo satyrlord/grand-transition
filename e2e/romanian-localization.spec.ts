@@ -1,6 +1,6 @@
-import { lockInSetup } from './helpers/setup.ts';
+import { lockInSetup, sceneMonitor } from './helpers/setup.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
-import { type Page } from '@playwright/test';
+import { type Locator, type Page } from '@playwright/test';
 import { expect, test } from './helpers/fixtures.ts';
 import captainContent from '../src/content/characters/black-sea-captain-phrase-cards.json' with { type: 'json' };
 // Keep this spec free of application modules that pull in Vite-only virtual
@@ -36,6 +36,10 @@ const romanianSettings = {
   tutorialMode: false,
   basePointsMultiplier: 4,
 };
+
+function sceneTileName(page: Page, sceneId: string): Locator {
+  return page.locator(`[data-testid="scene-tile"][data-scene-id="${sceneId}"] .scene-tile-name`);
+}
 
 async function openSettings(page: Page): Promise<void> {
   await page.locator('.title-settings-action').click();
@@ -168,9 +172,18 @@ test('keeps the interface Romanian while game text stays in the game language', 
       page.locator(`.roster-choice[data-character-id="${id}"][data-skin-id="default"]`),
     ).toContainText(name);
   }
-  await expect(
-    page.locator('#sceneId option[value="transition-era-television-studio"]'),
-  ).toHaveText(romanianSceneNames['transition-era-television-studio']!);
+  // A scene name is interface copy too, but its description is game text, so
+  // the English game language annotates it while the interface stays Romanian.
+  await expect(sceneMonitor(page).locator('.scene-monitor-text strong')).toHaveText(
+    romanianSceneNames['transition-era-television-studio']!,
+  );
+  await sceneMonitor(page).click();
+  for (const [id, name] of Object.entries(romanianSceneNames)) {
+    await expect(sceneTileName(page, id)).toHaveText(name);
+  }
+  await expect(page.locator('.scene-preview-description')).toHaveAttribute('lang', 'en');
+  await expect(sceneTileName(page, 'transition-era-television-studio')).not.toHaveAttribute('lang');
+  await page.getByTestId('scene-picker-close').click();
   await expect(page.locator('.roster-choice').first()).toHaveAccessibleName(/Slăbiciuni/u);
   const alternate = page.locator('.roster-choice[data-skin-id="alternate"]').first();
   await expect(alternate).toHaveAccessibleName(/Alternativ/u);
@@ -178,7 +191,9 @@ test('keeps the interface Romanian while game text stays in the game language', 
   await expect(page.locator('.contestant-stage-target').first()).toHaveAccessibleName(
     /^Tu, personaj:/u,
   );
-  await expect(page.locator('#sceneId option').first()).not.toHaveAttribute('lang');
+  await expect(sceneMonitor(page).locator('.scene-monitor-text strong')).not.toHaveAttribute(
+    'lang',
+  );
   await expect(page.getByTestId('lock-player-one')).toHaveText('Confirmă alegerea');
 
   await lockInSetup(page);
@@ -282,9 +297,12 @@ test('plays Romanian game text under an English interface and annotates it', asy
       page.locator(`.roster-choice[data-character-id="${id}"][data-skin-id="default"]`),
     ).not.toContainText(name);
   }
+  await sceneMonitor(page).click();
   for (const [id, name] of Object.entries(romanianSceneNames)) {
-    await expect(page.locator(`#sceneId option[value="${id}"]`)).not.toHaveText(name);
+    await expect(sceneTileName(page, id)).not.toHaveText(name);
   }
+  await expect(page.locator('.scene-preview-description')).toHaveAttribute('lang', 'ro-RO');
+  await page.getByTestId('scene-picker-close').click();
   // A weakness label is interface copy too, so the English interface keeps the
   // English label while the phrases and sentences are Romanian.
   const captain = page.locator(
@@ -297,7 +315,9 @@ test('plays Romanian game text under an English interface and annotates it', asy
     ),
   );
   await expect(captain).not.toHaveAccessibleName(/Fosta Securitate/u);
-  await expect(page.locator('#sceneId option').first()).not.toHaveAttribute('lang');
+  await expect(sceneMonitor(page).locator('.scene-monitor-text strong')).not.toHaveAttribute(
+    'lang',
+  );
   // With an English interface the unlocked action keeps its English wording.
   await expect(page.getByTestId('lock-player-one')).toHaveText('Confirm selection');
 

@@ -108,6 +108,7 @@ After a confirmation, a “Back to menu” action from the hidden Pause screen r
 It keeps the setup values for a subsequent setup visit.
 
 The setup fields are the player-one character and skin, the player-two character and skin, and the scene.
+Milestone 039 owns how the scene field looks and how the player chooses it. It replaces the native select, and the field value and its validation stay as this milestone defines them.
 The mode is part of the Main Menu, and it stays in the setup payload.
 The label of the bottom fieldset is “Match settings.”
 It also has a native `Phrase language` select with the Milestone 029 game languages.

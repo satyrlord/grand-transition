@@ -1,4 +1,4 @@
-import { lockInSetup } from './helpers/setup.ts';
+import { chooseScene, lockInSetup } from './helpers/setup.ts';
 import { expect, test } from './helpers/fixtures.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 
@@ -105,7 +105,7 @@ for (const scene of scenes) {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('');
     await page.getByRole('button', { name: 'Multiplayer' }).click();
-    await page.getByLabel('Scene', { exact: true }).selectOption(scene);
+    await chooseScene(page, scene);
     await lockInSetup(page);
     await page.getByRole('button', { name: 'Start match', exact: true }).click();
     await expect(page.locator('.broadcast-stage-art')).toHaveAttribute('data-scene-asset', scene);
