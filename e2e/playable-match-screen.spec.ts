@@ -1231,7 +1231,13 @@ for (const viewport of gateViewports([
         textClipping: text
           .filter(
             (node) =>
-              node.scrollWidth > node.clientWidth + 1 || node.scrollHeight > node.clientHeight + 1,
+              node.scrollWidth > node.clientWidth + 1 ||
+              (node.scrollHeight > node.clientHeight + 1 &&
+                !(
+                  node.matches('.sentence-preview') &&
+                  getComputedStyle(node).overflowY === 'auto' &&
+                  node.tabIndex === 0
+                )),
           )
           .map((node) => ({
             text: node.textContent?.trim(),
@@ -1269,6 +1275,32 @@ for (const viewport of gateViewports([
     });
     expect(fit.largerOverflow, `${viewport.width}x${viewport.height}`).toBe(true);
     expect(fit.scrolls && fit.chosen !== 'dense').toBe(false);
+    if (fit.scrolls) {
+      const preview = page.locator('.sentence-preview');
+      await preview.focus();
+      await preview.press('End');
+      await expect
+        .poll(() =>
+          preview.evaluate((node) => node.scrollTop + node.clientHeight >= node.scrollHeight - 1),
+        )
+        .toBe(true);
+      const finalGlyphVisible = await preview.evaluate((node) => {
+        const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+        let last: Text | null = null;
+        for (let text = walker.nextNode(); text; text = walker.nextNode()) {
+          if (text.textContent?.trim()) last = text as Text;
+        }
+        if (!last) return false;
+        const range = document.createRange();
+        range.setStart(last, last.length - 1);
+        range.setEnd(last, last.length);
+        const glyph = range.getBoundingClientRect();
+        const record = node.closest('.sentence-ledger')!.getBoundingClientRect();
+        return glyph.top >= record.top && glyph.bottom <= record.bottom;
+      });
+      expect(finalGlyphVisible).toBe(true);
+      expect(await page.evaluate(() => scrollY)).toBe(0);
+    }
     expect(facts.sentence.textOverflow).not.toBe('ellipsis');
     expect(await actionRailsUseBoardMargins(page)).toBe(true);
     expect(await centeredHeaderControls(page)).toBe(true);

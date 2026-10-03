@@ -76,9 +76,11 @@ Reduced motion keeps each score transition and each state transition, and it sto
 Use inline presentation.
 Do not use a central boxed score panel or a visible Clause heading that occurs more than one time.
 Align the speech bubble to its speaker of that time.
-Its center has an offset of 11 percent of the scene width from the viewport center.
-The offset is to the left for red and to the right for blue.
-The tail ends near the speaker.
+Use the shared framing and speech-clearance model in Milestone 023.
+Up to 16:9, its center moves left for red and right for blue by two percent
+of the scene width, less twenty percent of the horizontal scene crop, with a
+minimum offset of zero. Wider views use the clear band beside the status rail.
+The side tail points toward the speaker without extending below the record.
 Keep faces, names, and controls clear.
 
 Show each rendered scored line inline near the bottom stage edge of the speaking player.

@@ -883,9 +883,10 @@ that become unreadable. Do not claim scale quality from source resolution
 alone. Use actual roster crops, setup previews, and both match sides.
 
 Keep the signature prop in the inner visible region at chest height or higher.
-The source-space runtime window hides the outer 34 percent of the square and
-the area below 46 percent of its height in the most restrictive match layout.
-Use the runtime-window overlay and inspect the actual composition. Do not
+Keep the conservative authoring window inside the inner 66 percent of the
+square and above 46 percent of its height. The runtime-window overlay retains
+this reserve for new poses; it is not the exact crop of the per-pose desktop
+framing below. Inspect the actual composition as well. Do not
 accept necessary props that the desk, viewport, face, or hand hides.
 
 Get selection acceptance before generating its five poses. Use that accepted
@@ -1068,8 +1069,36 @@ Runtime portrait frames use the same bottom-aligned scene canvas as the back
 and foreground layers. Each square portrait frame is 80 percent of the scene
 height, and it starts at 24 percent of the scene height. Its center is at 20 or
 80 percent of the scene width. Keep the full square source without a
-letterbox offset. The speech record stays in the central 32 percent
-of the scene width, from 18 through 34 percent of the scene height.
+letterbox offset. Keep this shared camera, its desks, and the tactical layout.
+
+Correct only a pose that needs horizontal clearance. Measure its decoded
+opaque pixels in a conservative protection region: the upper 30 percent of
+the source, plus the inner-facing 66 percent above source height 46 percent.
+The first region reserves heads and raised hands; the second retains the
+signature-prop authoring window. This is not semantic image segmentation.
+After facing correction, use the smallest horizontal translation that keeps
+this region inside the viewport with space for recoil and rotation. A pose
+that already fits keeps zero correction. Recompute after image selection or
+viewport geometry changes, including width changes that only move the frame.
+Translate the drawing independently of its mirroring and state animation.
+Do not resize or regenerate the artwork, add a character-specific registry,
+move the scene camera, or move every pose to accommodate one extreme pose.
+
+Let `H` and `W` be the scene height and width, and let
+`E = max(W - viewport width, 0)` be the horizontal scene crop. Up to 16:9,
+the speech record starts at the larger of `7.9rem` and
+`viewport height - 0.88H`. Its height is the larger of `4rem` and
+`0.09H`. Its width is `0.32W - 0.44E`. Its center moves toward the
+speaker by `max(0.02W - 0.2E, 0)`. Its side-pointing tail stays inside the
+record's vertical band. Wider views use the clear band beside the status rail.
+Compact layouts retain Milestone 018's separate sentence strip.
+Keep the record's inner padding constant across speech densities, so a hover
+preview that wraps does not move or resize the text region.
+
+Check the protected pixels through their actual mirrored and animated
+transform against the viewport and active speech record, including its tail.
+Also inspect the full composition for gestures outside this conservative region
+and for coherent body and desk occlusion.
 
 Validate the visible
 character anatomy and the speech together, not only the bounds of the image
@@ -1144,9 +1173,8 @@ the master width and height:
 - Lower-left action region: `x=12.5-24`, `y=66-94`.
 - Lower-right action region: `x=76-87.5`, `y=66-94`.
 
-Move speech bubbles to their speakers. Set the red bubble to x=23-55 and
-the blue bubble to x=45-77 in scene coordinates. Keep the two bubbles in the
-top vertical band, and point each tail to its speaker. Do not cover a
+Use the runtime speech placement above to identify the speaker. Keep the
+record in the top vertical band, and point its side tail to the speaker. Do not cover a
 character face, a necessary gesture, a prop, or the moderator focal rectangle.
 
 The central interaction region contains a reserved moderator window at
@@ -1186,6 +1214,10 @@ portrait size based on the viewport height and the horizontal portrait anchors
 based on the scene width. Move the speech record above the cropped moderator
 face region and make it shorter.
 The record is then at the height of the Pride plaques and the status rail.
+Its top is 9 percent of the viewport height. Cap its height at 13 percent of
+the viewport height, subject to the tighter moderator-clearance bound and the
+5rem minimum. This leaves motion clearance before the portrait plane starts
+at 24 percent of the viewport height. Keep its tail inside that vertical band.
 Keep it in the band between its speaker's plaque and the rail, with 1rem clear on each side.
 Its width is the smaller of 32 percent of the scene width and that band.
 Do checks at 1920 by 950, 2560 by 1080, and 3440 by 1050, the sizes of desktop browser windows that have toolbars or developer tools.

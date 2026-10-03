@@ -2,11 +2,49 @@ import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import { guard } from 'lit/directives/guard.js';
 import {
+  characterFramingOffset,
+  measureCharacterFramingBounds,
+  type CharacterFacing,
+  type CharacterFramingBounds,
+} from '../visual/character-framing.ts';
+import {
   characterMotion,
   type CharacterCue,
   type CharacterFrame,
   type CharacterStateId,
 } from '../app/character-motion.ts';
+
+const framingCache = new Map<string, CharacterFramingBounds | null>();
+
+function decodedFramingBounds(
+  image: HTMLImageElement,
+  url: string,
+  facing: CharacterFacing,
+): CharacterFramingBounds | null {
+  const key = `${facing}:${url}`;
+  if (framingCache.has(key)) return framingCache.get(key)!;
+  let bounds: CharacterFramingBounds | null;
+  try {
+    const canvas = document.createElement('canvas');
+    canvas.width = image.naturalWidth;
+    canvas.height = Math.ceil(image.naturalHeight * 0.46);
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    if (!context) return null;
+    context.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight);
+    bounds = measureCharacterFramingBounds(
+      context.getImageData(0, 0, canvas.width, canvas.height).data,
+      image.naturalWidth,
+      image.naturalHeight,
+      facing,
+    );
+  } catch {
+    // Image playback must continue if the browser cannot read its alpha channel.
+    return null;
+  }
+  if (framingCache.size >= 64) framingCache.delete(framingCache.keys().next().value!);
+  framingCache.set(key, bounds);
+  return bounds;
+}
 
 /** Owns decorative image readiness and animation time, never game state. */
 export class GrandTransitionCharacter extends LitElement {
@@ -30,9 +68,11 @@ export class GrandTransitionCharacter extends LitElement {
   private cueKey = '';
   private timer: ReturnType<typeof setTimeout> | undefined;
   private readonly decoded = new Map<CharacterStateId, string>();
+  private readonly framingBounds = new Map<CharacterStateId, CharacterFramingBounds | null>();
   private readonly webpOnly = new Set<CharacterStateId>();
   private offscreen = false;
   private observer: IntersectionObserver | undefined;
+  private frameObserver: ResizeObserver | undefined;
 
   constructor() {
     super();
@@ -59,12 +99,19 @@ export class GrandTransitionCharacter extends LitElement {
       }
     });
     this.observer.observe(this);
+    this.frameObserver = new ResizeObserver(this.updateFraming);
+    const frame = this.closest('.character-frame');
+    if (frame) this.frameObserver.observe(frame);
+    window.addEventListener('resize', this.updateFraming);
     if (this.hasUpdated) void this.recoverDecodedFrames();
+    this.updateFraming();
   }
 
   override disconnectedCallback(): void {
     this.stopTimer();
     this.observer?.disconnect();
+    this.frameObserver?.disconnect();
+    window.removeEventListener('resize', this.updateFraming);
     document.removeEventListener('visibilitychange', this.syncVisibility);
     super.disconnectedCallback();
   }
@@ -81,6 +128,7 @@ export class GrandTransitionCharacter extends LitElement {
       if (key !== this.packageKey) {
         this.packageKey = key;
         this.decoded.clear();
+        this.framingBounds.clear();
         this.webpOnly.clear();
         this.stopTimer();
         this.cueKey = '';
@@ -110,6 +158,7 @@ export class GrandTransitionCharacter extends LitElement {
   }
 
   protected override updated(): void {
+    this.updateFraming();
     if (this.suspended) return;
     const visible = this.querySelector<HTMLElement>('[data-state-visible="true"]');
     if (visible?.dataset.motionRevision !== String(this.motionRevision)) {
@@ -122,6 +171,26 @@ export class GrandTransitionCharacter extends LitElement {
       }
     }
   }
+
+  private readonly updateFraming = (): void => {
+    if (!this.isConnected) return;
+    const frame = this.closest<HTMLElement>('.character-frame');
+    if (!frame) return;
+    const frameRect = frame.getBoundingClientRect();
+    const stage = this.closest('.match-screen')?.getBoundingClientRect();
+    const viewport = {
+      left: Math.max(0, stage?.left ?? 0),
+      right: Math.min(document.documentElement.clientWidth, stage?.right ?? Infinity),
+    };
+    for (const drawing of this.querySelectorAll<HTMLElement>('.character-state-drawing')) {
+      const state = drawing.parentElement?.dataset.stateId as CharacterStateId;
+      const bounds = this.framingBounds.get(state);
+      const offset = bounds
+        ? characterFramingOffset(bounds, frame.dataset.mirrored === 'true', frameRect, viewport)
+        : 0;
+      drawing.style.setProperty('--character-fit-x', `${offset}px`);
+    }
+  };
 
   private stopTimer(): void {
     if (this.timer !== undefined) clearTimeout(this.timer);
@@ -166,6 +235,7 @@ export class GrandTransitionCharacter extends LitElement {
 
   private async decodeImage(image: HTMLImageElement, frame: CharacterFrame): Promise<void> {
     const key = this.packageKey;
+    const url = image.currentSrc || image.src;
     try {
       await image.decode();
     } catch {
@@ -175,10 +245,15 @@ export class GrandTransitionCharacter extends LitElement {
       !this.isConnected ||
       !image.isConnected ||
       key !== this.packageKey ||
+      url !== (image.currentSrc || image.src) ||
       image.naturalWidth === 0
     )
       return;
-    this.decoded.set(frame.stateId, image.currentSrc || image.src);
+    const facing = this.closest<HTMLElement>('.character-frame')?.dataset.sourceFacing;
+    if (facing === 'left' || facing === 'right') {
+      this.framingBounds.set(frame.stateId, decodedFramingBounds(image, url, facing));
+    }
+    this.decoded.set(frame.stateId, url);
     this.showDecodedRequest();
     this.requestUpdate();
   }

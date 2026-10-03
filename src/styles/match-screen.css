@@ -15,8 +15,14 @@
     --scene-ceiling-continuation: #101f2f;
     --scene-height: min(100svh, 75cqw);
     --scene-width: calc(var(--scene-height) * 16 / 9);
-    --sentence-top: calc(100svh - var(--scene-height) * 0.82);
-    --sentence-height: calc(var(--scene-height) * 0.16);
+    --scene-inline-overflow: max(0px, calc(var(--scene-width) - 100cqw));
+    --sentence-top: max(7.9rem, calc(100svh - var(--scene-height) * 0.88));
+    --sentence-height: max(4rem, calc(var(--scene-height) * 0.09));
+    --sentence-width: calc(var(--scene-width) * 0.32 - var(--scene-inline-overflow) * 0.44);
+    --sentence-offset: max(
+      0px,
+      calc(var(--scene-width) * 0.02 - var(--scene-inline-overflow) * 0.2)
+    );
     --status-rail-width: clamp(7.6rem, 11vw, 10.5rem);
     --player-hud-width: 25.5rem;
     --broadcast-gold: #b48a48;
@@ -698,6 +704,10 @@
     transform-origin: 50% 58%;
   }
 
+  .character-state-drawing {
+    translate: var(--character-fit-x, 0px) 0;
+  }
+
   .character-state-frame[data-state-visible='true'] {
     display: block;
     visibility: visible;
@@ -1078,9 +1088,9 @@
     display: grid;
     align-items: center;
     grid-template-rows: minmax(0, 1fr);
-    width: calc(var(--scene-width) * 0.32);
+    width: var(--sentence-width);
     height: var(--sentence-height);
-    padding: 0.72rem clamp(0.8rem, 1.3vw, 1.5rem) 1rem;
+    padding: 0.15rem clamp(0.8rem, 1.3vw, 1.5rem);
     border: 3px double #242424;
     background: rgb(252 250 246 / 98%);
     box-shadow: 0 0.55rem 1.2rem rgb(0 0 0 / 48%);
@@ -1091,37 +1101,37 @@
 
   .sentence-ledger::after {
     position: absolute;
-    bottom: -1.9rem;
-    width: 2.9rem;
-    height: 2rem;
+    top: calc(50% - 0.75rem);
+    width: 1rem;
+    height: 1.5rem;
     background: rgb(252 250 246 / 98%);
-    clip-path: polygon(0 0, 100% 0, 46% 100%);
+    clip-path: polygon(100% 0, 100% 100%, 0 65%);
     content: '';
   }
 
   @media (aspect-ratio > 16 / 9) {
     .match-screen {
       --sentence-top: 9svh;
-      /* The centered scene's protected face starts at y=35% of its canvas. */
-      --sentence-height: max(5rem, min(16svh, calc(40svh - 8.4375cqw)));
+      /* Clear the cropped moderator and the portrait plane starting at 24svh. */
+      --sentence-height: max(5rem, min(13svh, calc(40svh - 8.4375cqw)));
     }
   }
 
   .sentence-ledger[data-speaker-side='red']::after {
-    left: 2%;
+    left: -1rem;
   }
 
   .sentence-ledger[data-speaker-side='blue']::after {
-    right: 2%;
+    right: -1rem;
     transform: scaleX(-1);
   }
 
   .sentence-ledger[data-speaker-side='red'] {
-    left: calc(50% - var(--scene-width) * 0.11);
+    left: calc(50% - var(--sentence-offset));
   }
 
   .sentence-ledger[data-speaker-side='blue'] {
-    left: calc(50% + var(--scene-width) * 0.11);
+    left: calc(50% + var(--sentence-offset));
   }
 
   /* A stage wider than 16:9 puts the speech record at the height of the Pride
@@ -1219,10 +1229,6 @@
       max(1rem, calc(var(--scene-height) * 0.0148))
     );
     line-height: 1.08;
-  }
-
-  .sentence-ledger:has(.sentence-preview[data-density='dense']) {
-    padding-block: 0.15rem;
   }
 
   .round-review-backdrop {

@@ -3,12 +3,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
-// The match screen shows only part of a square character master, at any source resolution.
-// `.character-frame` in `src/styles/match-screen.css` is a square of 0.8 scene heights. Its center
-// sits 0.3 scene widths from the stage center, so the outer side of the square leaves the screen.
-// At the narrowest supported ratio (4:3) that is the outer 33 percent of the width. The standing
-// desk starts at about 62 percent of the scene height, and the square starts at 24 percent, so the
-// desk covers everything below about 47 percent of the square height.
+// Conservative authoring reserve for a square master at any source resolution.
+// Per-pose framing can keep more outer artwork visible. Retain this inner-side reserve
+// for new signature props and gestures, and verify their actual production composition separately.
+// The desktop portrait plane retains its authored size and desk alignment.
 // The source art faces right. The inner side is the right side of the master, for both players.
 export const RUNTIME_WINDOW = Object.freeze({ innerXMinPercent: 34, yMaxPercent: 46 });
 

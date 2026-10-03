@@ -773,12 +773,17 @@ The HTML for side actions stays above the plain desk fronts.
 
 The title curtain is not a fallback for gameplay.
 
-Portrait frames use the same scene canvas as the background, aligned to the bottom.
-Their square source planes start at 24 percent of the scene height, and their height is 80 percent of the scene height.
-Their centers are at 20 percent and 80 percent of the scene width.
-This position puts the faces above the studio desks.
+Portrait frames retain the original scene camera: 80 percent of the scene height,
+starting at 24 percent, with centers at 20 and 80 percent of the scene width.
+Only a pose whose protected pixels would leave the viewport receives the minimum
+horizontal correction. The renderer measures decoded alpha; it does not keep
+a character-specific placement registry. The correction stays separate from
+mirroring and motion. Specification 023 gives the protection region and checks.
+Preserve all approved source pixels, including the robot skins.
 
-The speech record fills the central 32 percent of the scene width, from 18 percent to 34 percent of the scene height.
+The speech record uses a higher, fixed band that narrows with the scene crop.
+Its side tail points toward the speaker and stays inside the record's vertical band.
+Long text scrolls inside the same record; it does not move the board or enlarge the panel over a face.
 The two physical moderators are at the center, between the speech and the phrase pool.
 
 The pool starts at 52 percent of the scene height, and it has a dark background that is 88 percent opaque.

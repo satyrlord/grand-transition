@@ -389,3 +389,133 @@ test('a reaction does not intercept a pointer action or change the reserved fram
   expect(clicks).toBe(1);
   expect(presenter.getBoundingClientRect().toJSON()).toEqual(before);
 });
+
+function framingImage(size: number, left: number, width: number): string {
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const context = canvas.getContext('2d')!;
+  context.fillRect(left, size * 0.1, width, size * 0.15);
+  return canvas.toDataURL('image/png');
+}
+
+function mountFraming(mirrored = false) {
+  const presenter = mount();
+  const frame = presenter.parentElement!;
+  frame.dataset.sourceFacing = 'right';
+  frame.dataset.mirrored = String(mirrored);
+  frame.style.cssText = `position:fixed;top:0;left:${mirrored ? 784 : -80}px;width:320px;height:320px;`;
+  const url = framingImage(100, 10, 20);
+  presenter.frames = presenter.frames.map((entry) => ({
+    ...entry,
+    id: `framing-${entry.stateId}`,
+    url,
+    avif: { ...entry.avif, srcSet: `${url} 100w`, variants: [] },
+    webp: { ...entry.webp, srcSet: `${url} 100w`, variants: [] },
+  }));
+  return presenter;
+}
+
+function fitOffset(presenter: GrandTransitionCharacter): number {
+  const drawing = presenter.querySelector<HTMLElement>(
+    '[data-state-visible="true"] .character-state-drawing',
+  )!;
+  return Number.parseFloat(drawing.style.getPropertyValue('--character-fit-x'));
+}
+
+test.each([false, true])(
+  'keeps protected pixels inside the viewport with mirrored=%s',
+  async (mirrored) => {
+    await page.viewport(1024, 768);
+    const presenter = mountFraming(mirrored);
+    await ready(presenter);
+    const drawing = presenter.querySelector<HTMLElement>(
+      '[data-state-visible="true"] .character-state-drawing',
+    )!;
+    expect(fitOffset(presenter)).toBeCloseTo(mirrored ? -53.48 : 53.48);
+    expect(Number.parseFloat(getComputedStyle(drawing).translate)).toBeCloseTo(
+      fitOffset(presenter),
+    );
+    const rendered = drawing.getBoundingClientRect();
+    const protectedLeft = rendered.left + (mirrored ? 0.7 : 0.1) * rendered.width;
+    const protectedRight = rendered.left + (mirrored ? 0.9 : 0.3) * rendered.width;
+    expect(protectedLeft).toBeGreaterThanOrEqual(5);
+    expect(protectedRight).toBeLessThanOrEqual(1019);
+  },
+);
+
+test('updates a fit after window resize changes only the frame position', async () => {
+  await page.viewport(1024, 768);
+  const presenter = mountFraming();
+  await ready(presenter);
+  expect(fitOffset(presenter)).toBeGreaterThan(0);
+  const frame = presenter.parentElement!;
+  const width = frame.getBoundingClientRect().width;
+  frame.style.left = '40px';
+  window.dispatchEvent(new Event('resize'));
+  expect(frame.getBoundingClientRect().width).toBe(width);
+  expect(fitOffset(presenter)).toBe(0);
+});
+
+test('updates a fit when its reserved frame changes size without a window resize', async () => {
+  await page.viewport(1024, 768);
+  const presenter = mountFraming();
+  await ready(presenter);
+  const previous = fitOffset(presenter);
+  presenter.parentElement!.style.width = '640px';
+  presenter.parentElement!.style.height = '640px';
+  await vi.waitFor(() => expect(fitOffset(presenter)).not.toBe(previous));
+  expect(fitOffset(presenter)).toBeCloseTo(25.96);
+});
+
+test('a replacement package does not inherit the previous image fit', async () => {
+  await page.viewport(1024, 768);
+  const presenter = mountFraming();
+  await ready(presenter);
+  expect(fitOffset(presenter)).toBeGreaterThan(0);
+  const url = framingImage(100, 60, 20);
+  presenter.frames = presenter.frames.map((entry) => ({
+    ...entry,
+    id: `replacement-${entry.stateId}`,
+    url,
+    avif: { ...entry.avif, srcSet: `${url} 100w`, variants: [] },
+    webp: { ...entry.webp, srcSet: `${url} 100w`, variants: [] },
+  }));
+  await ready(presenter);
+  expect(fitOffset(presenter)).toBe(0);
+});
+
+test('a reloaded responsive image refreshes decoded bounds without replacing the package', async () => {
+  await page.viewport(1024, 768);
+  const presenter = mountFraming();
+  const large = framingImage(200, 120, 40);
+  await ready(presenter);
+  expect(fitOffset(presenter)).toBeGreaterThan(0);
+  const frames = presenter.frames;
+  const image = presenter.querySelector<HTMLImageElement>('[data-state-visible="true"] img')!;
+  for (const source of image.parentElement!.querySelectorAll('source')) {
+    source.srcset = `${large} 200w`;
+  }
+  await vi.waitFor(() => expect(fitOffset(presenter)).toBe(0));
+  expect(presenter.frames).toBe(frames);
+  expect(presenter.querySelector('[data-state-visible="true"] img')).toBe(image);
+  expect(image.currentSrc).toBe(large);
+});
+
+test('an alpha readback failure does not block decoded image playback', async () => {
+  await page.viewport(1024, 768);
+  vi.spyOn(CanvasRenderingContext2D.prototype, 'getImageData').mockImplementation(() => {
+    throw new DOMException('Canvas readback is unavailable.', 'SecurityError');
+  });
+  const presenter = mountFraming();
+  const url = framingImage(100, 11, 21);
+  presenter.frames = presenter.frames.map((entry) => ({
+    ...entry,
+    url,
+    avif: { ...entry.avif, srcSet: `${url} 100w`, variants: [] },
+    webp: { ...entry.webp, srcSet: `${url} 100w`, variants: [] },
+  }));
+  await ready(presenter);
+  expect(fitOffset(presenter)).toBe(0);
+  expect(presenter.querySelectorAll('.character-state-upper')).toHaveLength(9);
+});

@@ -49,6 +49,9 @@ Browser evidence at phone dimensions does not show a verification on a physical 
 ## Responsive layout
 
 The desktop landscape matrix keeps its integrated arena and has no page scroll.
+Apply Milestone 023's per-pose framing and speech-clearance rules at
+narrow desktop ratios. Check both player sides, short and long active speech,
+and the extreme positions of each pose without changing approved raster art.
 A layout is compact when it is portrait, narrower than 1024 CSS pixels, or shorter than 720 CSS pixels.
 Compact landscape keeps the scene, all nine common phrase slots, and the two private choices.
 It also keeps the sentence of that time, the player facts, and each available action.
