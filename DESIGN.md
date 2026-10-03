@@ -259,6 +259,14 @@ shoes, single black microphone with an orange ring, and single blank paper
 stack with an orange band. Its source faces left. Delivery shows angry speech
 and also supplies Comeback. Keep the face, gripping fingers and signature
 props visible above the desk in both player positions.
+The approved Apartment-Block Geopolitician selection and five reviewed matching
+poses are also installed under the authorized package integration. Keep its
+broad clean-shaven drawn face, short dark hair, black rectangular glasses,
+plain red cap, charcoal suit, white shirt, oxblood tie, brass buttons, black
+shoes, and single inert gray mouse plush. Its source faces right. Preserve its
+glasses-temple calculation, pointing speech, small stop-palm recoil, stronger
+cap-holding shock, and guarded worried toy hold. Keep the face, complete plush,
+curled tail, gripping fingers, and defining gestures visible above the desk.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.

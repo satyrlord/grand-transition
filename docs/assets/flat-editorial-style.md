@@ -30,7 +30,9 @@ The approved Spreadsheet Technocrat selection and five reviewed matching poses
 are also installed under the owner-authorized package integration.
 The approved Diaspora Oracle selection and five reviewed matching poses are
 also installed under the owner-authorized package integration.
-All twenty-four packages are
+The approved Apartment-Block Geopolitician selection and five reviewed matching
+poses are also installed under the owner-authorized package integration.
+All twenty-five packages are
 installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
@@ -61,6 +63,7 @@ character's identity into another.
 | Coalition Acrobat | [Selection](../../src/assets/characters/coalition-acrobat.png) | [Five poses](../../src/assets/characters/states/coalition-acrobat/) |
 | Spreadsheet Technocrat | [Selection](../../src/assets/characters/spreadsheet-technocrat.png) | [Five poses](../../src/assets/characters/states/spreadsheet-technocrat/) |
 | Diaspora Oracle | [Selection](../../src/assets/characters/diaspora-oracle.png) | [Five poses](../../src/assets/characters/states/diaspora-oracle/) |
+| Apartment-Block Geopolitician | [Selection](../../src/assets/characters/apartment-block-geopolitician.png) | [Five poses](../../src/assets/characters/states/apartment-block-geopolitician/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -84,6 +87,20 @@ Selection, Delivery and Heavy-hit keep their generated alpha unchanged.
 Thinking, Light-hit and Weakness use bounded detached alpha-1 removal only. Metadata
 registration preserves all reviewed pixels. Specification 023 gives the
 focused verification results and remaining in-game review limits.
+
+Apartment-Block Geopolitician retains six native 1254-square, right-facing
+sources. Keep its broad clean-shaven drawn face, short dark hair, black
+rectangular glasses, plain red cap, charcoal suit, white shirt, oxblood tie,
+brass buttons, black shoes, and single inert gray mouse plush. Thinking shows
+glasses-temple calculation. Delivery shows pointing speech and also supplies
+Comeback. The hit states show small stop-palm recoil and stronger cap-holding
+shock. Weakness shows a guarded worried toy hold and also supplies
+Grammar-mistake. Keep the face, complete plush, curled tail, gripping fingers,
+and defining gestures above desk occlusion. Selection, Thinking, Heavy-hit, and
+Weakness keep their generated alpha unchanged. Delivery and Light-hit use
+bounded detached alpha-1 removal only. Metadata registration preserves all
+reviewed pixels. Specification 023 gives the focused verification results and
+remaining in-game review limits.
 
 Black Sea Captain retains the approved selection's revised facial structure,
 cream captain uniform, cap and single cigar. All six sources use native

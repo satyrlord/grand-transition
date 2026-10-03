@@ -298,6 +298,46 @@ They do not establish played-match progression, continuous animation quality,
 other-scene clearance, performance, physical-device behavior or heard speech
 quality. Product-owner in-game evaluation is separate from technical verification.
 The aggregate gate has not run.
+The approved Apartment-Block Geopolitician selection and five reviewed matching
+poses are installed under the owner-authorized package integration. All six
+sources retain native 1254-square canvases and right-facing composition. Keep
+its broad clean-shaven drawn face, short dark hair, black rectangular glasses,
+plain red cap, charcoal suit, white shirt, oxblood tie, brass buttons, black
+shoes, and single inert gray mouse plush. Each pose used only the approved
+selection as its image reference. Preserve glasses-temple calculation,
+forceful pointing speech, small stop-palm recoil, stronger vertical
+cap-holding shock, and guarded worried toy hold. Keep the face, complete plush,
+curled tail, gripping fingers, and defining gestures inside the visible match
+window above desk occlusion. Selection and Idle use the approved master;
+Comeback uses Delivery, and Grammar-mistake uses Weakness.
+Selection, Thinking, Heavy-hit, and Weakness retain their generated alpha
+unchanged. Delivery and Light-hit use bounded removal of 1,976 and 975
+detached alpha-1 pixels respectively. Every RGB value and all stronger alpha
+remain unchanged. Metadata registration preserves all reviewed decoded pixels
+without enlargement. Existing nine-state mappings, character identity,
+phrases, balance, and voices remain unchanged. The targeted staged package,
+native-alpha provenance, color, and encoded-border checks passed. All six
+installed masters match the reviewed pixels; all 40 variants have transparent
+outer borders; exactly 49 package paths changed. All 1,300 unrelated character
+files remain byte-identical, with unrelated manifest entries unchanged.
+The production build, 55 focused unit tests and the selected Chromium
+nine-state test passed. Installed checks cover all nine logical states on
+both player sides across 19 landscape contexts, including minimum touch,
+near-square, DPR 2 and ultrawide views. Exact served variant hashes, dimensions,
+mirroring, stable geometry, decoded roster windows and browser-error checks
+passed. The corrected Weakness and Grammar-mistake drawings passed another
+1,634 checks across all 19 contexts, with 76 long-sentence captures. Near-square
+animation-extrema checks cover all nine states; twelve final focused frames
+retain both eyebrows, the glasses contours, nose, mouth, plush and gripping
+fingers clear of the long speech record. Independent visual review passed.
+The current package retains tight source margins. Outer cap, ear or elbow
+cropping and minor cap-rim overlap remain advisories where core features and
+gestures stay readable.
+These checks use held public cues in Transition-Era Television Studio. They
+do not establish played-match progression, continuous motion quality,
+other-scene clearance, performance, physical-device behavior or heard speech.
+Product-owner in-game evaluation is separate from technical verification.
+The aggregate gate has not run.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted
