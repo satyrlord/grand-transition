@@ -9,6 +9,10 @@ export default defineConfig({
     // (CPU) bound. This machine runs six workers well; continuous integration
     // keeps the smaller proven count instead of oversubscribing a small runner.
     maxWorkers: process.env.CI ? 2 : 6,
+    // Tests that spawn tools or encode images take several seconds when the
+    // workers compete for the CPU, so the 5 s default fails them at random.
+    testTimeout: 30_000,
+    hookTimeout: 30_000,
     include: ['tests/unit/**/*.test.ts'],
     exclude: ['tests/browser/**'],
   },

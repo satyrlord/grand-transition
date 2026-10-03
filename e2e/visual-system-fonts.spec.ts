@@ -192,6 +192,9 @@ for (const fallback of [false, true]) {
               box = element.getBoundingClientRect();
             const frame = role === 'timer' ? element.closest<HTMLElement>('.timer-fact')! : element;
             const frameBox = frame.getBoundingClientRect();
+            // AC-016-12: oversized speech scrolls vertically in its focusable fixed record.
+            const scrollsSpeech =
+              role === 'speech' && style.overflowY === 'auto' && element.tabIndex === 0;
             const textRange = document.createRange();
             textRange.selectNodeContents(element);
             const textBox = textRange.getBoundingClientRect();
@@ -206,7 +209,7 @@ for (const fallback of [false, true]) {
               visible: box.width > 0 && box.height > 0 && style.visibility === 'visible',
               fits:
                 frame.scrollWidth <= frame.clientWidth + 1 &&
-                frame.scrollHeight <= frame.clientHeight + 1 &&
+                (scrollsSpeech || frame.scrollHeight <= frame.clientHeight + 1) &&
                 (role !== 'timer' ||
                   (textBox.top >= frameBox.top &&
                     textBox.bottom <= frameBox.bottom &&

@@ -9,6 +9,27 @@ import { gateViewports } from './helpers/viewports.ts';
 
 test.use({ contextOptions: { reducedMotion: 'reduce' } });
 
+/**
+ * Milestone 023: up to 16:9 the speech record center moves toward the speaker by
+ * max(0.02W - 0.2E, 0), where W is the scene width and E its horizontal crop.
+ */
+async function expectSpeechRecordOffset(page: Page, direction: 1 | -1) {
+  const placement = await page.locator('.sentence-ledger').evaluate((element) => {
+    const box = element.getBoundingClientRect();
+    const stage = element.closest('.match-screen')!.getBoundingClientRect();
+    const sceneWidth = (Math.min(innerHeight, stage.width * 0.75) * 16) / 9;
+    const crop = Math.max(sceneWidth - stage.width, 0);
+    return {
+      offset: box.x + box.width / 2 - (stage.x + stage.width / 2),
+      expected: Math.max(sceneWidth * 0.02 - crop * 0.2, 0),
+    };
+  });
+  expect(
+    Math.abs(placement.offset - direction * placement.expected),
+    JSON.stringify(placement),
+  ).toBeLessThan(2);
+}
+
 async function phase(page: Page, expected: string, maximum = 20000) {
   for (let elapsed = 0; elapsed <= maximum; elapsed += 100) {
     if ((await page.locator('.match-screen').getAttribute('data-delivery-phase')) === expected)
@@ -74,12 +95,7 @@ for (const size of gateViewports([
         .locator('.sentence-ledger')
         .evaluate((element) => element.getBoundingClientRect().width),
     ).toBeGreaterThan(draftingBubbleWidth * 1.05);
-    expect(
-      await page.locator('.sentence-ledger').evaluate((element) => {
-        const box = element.getBoundingClientRect();
-        return box.x + box.width / 2 - innerWidth / 2;
-      }),
-    ).toBeGreaterThan(size.width * 0.08);
+    await expectSpeechRecordOffset(page, 1);
     const state = await page.evaluate(() => {
       const app = document.querySelector('grand-transition-app') as unknown as {
         matchState: MatchState;
@@ -140,12 +156,7 @@ for (const size of gateViewports([
     }
     await page.clock.runFor(500);
     await expect(page.locator('.sentence-ledger')).toHaveAttribute('data-speaker-side', 'red');
-    expect(
-      await page.locator('.sentence-ledger').evaluate((element) => {
-        const box = element.getBoundingClientRect();
-        return innerWidth / 2 - (box.x + box.width / 2);
-      }),
-    ).toBeGreaterThan(size.width * 0.08);
+    await expectSpeechRecordOffset(page, -1);
     await expect(page.locator('.sentence-preview')).toHaveText(
       state.players['player-one']!.constructionText,
     );

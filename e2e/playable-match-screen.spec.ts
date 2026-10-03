@@ -1070,14 +1070,14 @@ test('keeps the physical moderator face clear of drafting UI', async ({ page }) 
 
 test('waits for a replacement portrait before measuring moderator clearance', async ({ page }) => {
   await page.getByRole('button', { name: 'Multiplayer' }).click();
-  // A declared selection-art fallback keeps the static portrait path. State-package
-  // characters render through the frame presenter, whose own visible frame would
-  // count as a third replacement portrait.
   await selectSetupCharacter(page, 'one', 'reluctant-theorem');
   await lockInSetup(page);
 
   await page.getByRole('button', { name: 'Start match' }).click();
   await decodeImages(page.locator('.broadcast-stage-art, .character-portrait'));
+  // The frame presenter re-renders its picture until both frames finish decoding, and
+  // that render can restore a cached source that would load the replacement at once.
+  await expect(page.locator('.character-portrait[data-character-part="lower"]')).toHaveCount(2);
   let releasePortrait!: () => void;
   let requestStarted!: () => void;
   const responseReleased = new Promise<void>((resolve) => {

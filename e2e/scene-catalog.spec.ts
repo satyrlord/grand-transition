@@ -58,6 +58,7 @@ test('a sentence forty percent longer than the long-match fixture fits above the
     const preview = page.locator('.sentence-preview');
     await preview.focus();
     await preview.press('Home');
+    await expect.poll(() => preview.evaluate((element) => element.scrollTop)).toBe(0);
     const endpointFits = async (last: boolean) =>
       preview.evaluate(
         (element, { value, last }) => {

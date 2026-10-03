@@ -1379,6 +1379,29 @@
     text-align: right;
   }
 
+  /* The speech record is 9 percent of the scene tall, so the strike stacks its
+     two lines compactly where the record is narrow. */
+  @media (width <= 1180px) {
+    .cliffhanger-strike {
+      box-sizing: border-box;
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: 0.05rem;
+      min-height: 0;
+      padding: 0.05rem 0.4rem;
+      border-width: 1px;
+    }
+
+    .cliffhanger-strike strong {
+      font-size: 1rem;
+    }
+
+    .cliffhanger-strike span {
+      line-height: 1.1;
+      text-align: center;
+    }
+  }
+
   @keyframes cliffhanger-arena-open {
     0% {
       opacity: 0;
