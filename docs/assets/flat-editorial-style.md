@@ -26,7 +26,9 @@ The approved Local Baron municipal-patron alternate selection and five reviewed
 matching poses are also installed under the owner-authorized integration.
 The approved Coalition Acrobat default selection and five reviewed matching
 poses are also installed under the owner-authorized package integration.
-All twenty-two packages are
+The approved Spreadsheet Technocrat selection and five reviewed matching poses
+are also installed under the owner-authorized package integration.
+All twenty-three packages are
 installed with their reviewed matching poses. Use these
 distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
@@ -55,6 +57,7 @@ character's identity into another.
 | Local Baron | [Selection](../../src/assets/characters/county-baron.png) | [Five poses](../../src/assets/characters/states/county-baron/) |
 | Local Baron municipal patron | [Selection](../../src/assets/characters/county-baron--municipal-patron.png) | [Five poses](../../src/assets/characters/states/county-baron--municipal-patron/) |
 | Coalition Acrobat | [Selection](../../src/assets/characters/coalition-acrobat.png) | [Five poses](../../src/assets/characters/states/coalition-acrobat/) |
+| Spreadsheet Technocrat | [Selection](../../src/assets/characters/spreadsheet-technocrat.png) | [Five poses](../../src/assets/characters/states/spreadsheet-technocrat/) |
 
 Use clearly drawn faces, varied adult body and head shapes, moderate head
 exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
@@ -143,6 +146,19 @@ forearms. Keep the face, holding fingers and folder above desk occlusion.
 Thinking and heavy-hit use only bounded removal of detached alpha-1 pixels;
 selection, delivery, light-hit and weakness retain their generated pixels.
 Metadata registration preserves all reviewed decoded pixels.
+
+Spreadsheet Technocrat retains six native 1254-square sources, a right-facing
+mature clean-shaven drawn face, bald crown, broad adult silhouette, navy suit,
+cream-white shirt, medium-blue tie and one plain black pen. Each pose used only
+its accepted selection. Keep its pen-near-chin concentration, speaking pen and
+open palm, small stop-palm flinch, stronger defensive recoil, and worried
+crossed-arm guard distinct. Keep the whole head, pen and defining fingers above
+desk occlusion in the visible match window. Selection, thinking, delivery,
+light-hit and weakness use only bounded removal of detached alpha-1 pixels.
+The corrected heavy-hit retains its generated pixels and native alpha.
+Metadata registration preserves all reviewed decoded pixels. Preserve the
+accepted master's source-specific tonal drawing without changing the direction
+for new selections.
 
 Artwork approval and integration verification are separate. Specification 023
 records the current package status. The remaining human-roster rollout is

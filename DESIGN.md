@@ -245,6 +245,13 @@ long mature face, pale-centered grouped beard, slim adult silhouette, navy
 blazer, white shirt, burgundy tie, charcoal trousers, and single blank oxblood
 folder. Its source faces right. Keep the complete face, holding fingers,
 folder, and important gestures inside the visible match window above the desk.
+The approved Spreadsheet Technocrat selection and five reviewed matching poses
+are also installed. Keep its bald crown, mature clean-shaven drawn face, broad
+adult silhouette, navy suit, cream-white shirt, medium-blue tie, dark shoes,
+and single plain black pen. Its source faces right. Keep the complete head,
+pen, gripping fingers and defining gestures inside the visible match window
+above the desk. Preserve the accepted master's source-specific tonal drawing;
+it does not change the direction for new selections.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
 Before each new master, visually inspect at least three distinct usable web photographs and target five.
 Use more when likeness is unclear, with varied views from a coherent chosen era.

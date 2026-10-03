@@ -232,6 +232,35 @@ held public cues, reduced motion and Palace Press Hall. They do not establish
 played-match progression, normal animation timing, other scenes, performance
 or heard speech quality. The aggregate quality gate remains deferred; owner
 in-game evaluation is separate from technical verification.
+The approved Spreadsheet Technocrat selection and five reviewed matching poses
+are installed under the owner-authorized package integration. All six sources
+retain native 1254-square canvases and right-facing composition. Keep its bald
+crown, mature clean-shaven drawn face, broad adult silhouette, navy suit,
+cream-white shirt, medium-blue tie, dark shoes and one plain black pen.
+Each pose used only the accepted selection as its image reference. Preserve
+its pen-near-chin concentration, speaking pen and explanatory palm, small
+stop-palm flinch, stronger defensive recoil and worried crossed-arm guard.
+Keep the whole head, pen, gripping fingers and defining gestures inside the
+visible match window above desk occlusion. The accepted master's tighter
+margins, medium-blue tie and mild tonal drawing are source-specific decisions;
+they do not change the flat-shading direction for new selections.
+Selection, thinking, delivery, light-hit and weakness use only bounded removal
+of detached alpha-1 pixels. The corrected heavy-hit retains its generated pixels
+and native alpha. Metadata registration preserves all reviewed decoded pixels
+without enlargement. Existing nine-state mappings, character identity, phrases,
+balance and voices remain unchanged. Focused asset checks, 71 unit tests, the
+production build and one selected Chromium state test passed. Installed checks
+cover all nine logical states on both player sides and with both long-sentence
+positions across the nine landscape viewports, the near-square 1024-by-1023
+viewport and the 640-by-320 touch viewport. Six representative setup and idle
+samples also include 1920 by 1080 at DPR 2. Exact variant response hashes,
+decoded dimensions, mirroring, upper portrait layers and stable interface
+geometry passed without browser errors. The 210 paired cases include 420
+character presentations. Source and runtime screenshots were reviewed.
+These checks use held public cues, reduced motion and Palace Press Hall.
+They do not establish played-match progression, normal animation timing,
+other scenes, performance or heard speech quality. The aggregate gate has
+not run. Owner in-game evaluation is separate from technical verification.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted

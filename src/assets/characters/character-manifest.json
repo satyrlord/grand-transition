@@ -2890,11 +2890,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "spreadsheet-technocrat.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 1416455,
-        "sha256": "c79549bed2e8805cc5aa64f3aba7f1e8f9c4fd4008804ecb9c5f69eedda7398b"
+        "bytes": 746252,
+        "sha256": "3ae3b3bc472c097d5d9a6a1e0632998bf9d5a85b3a587322f77afad7027fdca3"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2913,9 +2913,10 @@
           "width": 128,
           "height": 128,
           "format": "avif",
-          "quality": 70,
-          "bytes": 3148,
-          "sha256": "19eca4f7682a3a1278cd5822c90d6137f9df1184324b12a60122b1c775460f58"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 13622,
+          "sha256": "6f9f030a1370d28cce90d908789a6869dccd67a262a3f21b35125a396936e18b"
         },
         {
           "path": "variants/spreadsheet-technocrat-128x128.webp",
@@ -2923,17 +2924,18 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 3652,
-          "sha256": "136042f313c2fbd06a2de8e2a67cf655b8e72bb76e7049c5e6a63382b8f3f610"
+          "bytes": 4208,
+          "sha256": "f09692986e1ec957cd5e41f726c595dbfd2e865bc7e41e08988093ed67f2ac48"
         },
         {
           "path": "variants/spreadsheet-technocrat-256x256.avif",
           "width": 256,
           "height": 256,
           "format": "avif",
-          "quality": 70,
-          "bytes": 6256,
-          "sha256": "e6d185c6ef2ce4c01ceb5f55e5dd95621954aa80194144858382a9d61572c3d8"
+          "quality": 100,
+          "lossless": true,
+          "bytes": 35435,
+          "sha256": "ed0a5333e811ddd0db204ee84cbabd2f798e0c380ebc6a4c9f98d0ffd415508f"
         },
         {
           "path": "variants/spreadsheet-technocrat-256x256.webp",
@@ -2941,8 +2943,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 7918,
-          "sha256": "e0630dbf7f3ca8afefb7b24b8e7c2d880ecc814ec4960e37912a8e6ac2ffdc07"
+          "bytes": 8962,
+          "sha256": "9b1c97f18ef6c7b779a97b274079af0b216a23cb811aee6b437592a560f55c4c"
         },
         {
           "path": "variants/spreadsheet-technocrat-320x320.avif",
@@ -2950,8 +2952,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 7460,
-          "sha256": "012530d0ee89c93a50e7ac843b4cbebfe33be08142bda21e775bf6c76385e44b"
+          "bytes": 8337,
+          "sha256": "2fface5ca62b5acc75951f15665ca01ec81fc83f73042f91b2dedb0a561edef8"
         },
         {
           "path": "variants/spreadsheet-technocrat-320x320.webp",
@@ -2959,8 +2961,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 10046,
-          "sha256": "873cdb508261199326b217862093fb18461e66888766f614d53cfea72886cd9e"
+          "bytes": 12214,
+          "sha256": "e7b6e383a27ad5a7d44decd3070ce594883349b177897f683152e28d30911910"
         },
         {
           "path": "variants/spreadsheet-technocrat-640x640.avif",
@@ -2968,8 +2970,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 17974,
-          "sha256": "265d83fc08a4e7cc1b523a10ab0d851e98740fc4340a41274b6ab48db3f345a8"
+          "bytes": 19955,
+          "sha256": "a38cba2ef55fe388638b2e73040bbb6509261fd41048bf28245e162bfedb75b8"
         },
         {
           "path": "variants/spreadsheet-technocrat-640x640.webp",
@@ -2977,8 +2979,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 23100,
-          "sha256": "07664db76c881d5c4f80a6a3f694a43537f29937ae8b3e88cf9d6ba405ef41ed"
+          "bytes": 29166,
+          "sha256": "0c0fce09f73c6e7456fbbe8f563290c32d52413d152add62d1c799224f53c266"
         },
         {
           "path": "variants/spreadsheet-technocrat-960x960.avif",
@@ -2986,8 +2988,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 29882,
-          "sha256": "f94c5743297ec1748928afacdb7da38e8c49b8b120af5f4f4fd6ef08a8f043f3"
+          "bytes": 33275,
+          "sha256": "0a62167ba77db929cb1b18a9abdc76b272becdc90691956a9da276cecda4ed45"
         },
         {
           "path": "variants/spreadsheet-technocrat-960x960.webp",
@@ -2995,8 +2997,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 37774,
-          "sha256": "07c414ec83dbe7f4afb7962cd2fead73879d960aedad8c6bc389557942c78791"
+          "bytes": 51318,
+          "sha256": "5bf87cbf94a751ae93f5cbddf992f66a31171e471be0b343b66b056bbca32238"
         }
       ]
     },
