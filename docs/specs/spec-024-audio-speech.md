@@ -36,6 +36,8 @@ Make all the speech for the sentences that the game builds at runtime, with
 local browser neural text-to-speech (TTS). Use the local Microsoft robot voices
 that this specification gives. Do not ship recorded phrases or phrase packs.
 Milestone 025 controls the Hollywood Roast presentation sequence.
+Milestone 038 lets the joiner of a Remote room make its own speech and music from the public round resolution, with its own Settings.
+Milestone 037 gives a Couch terminal no speech and no music.
 
 Use a different package for each of these areas:
 

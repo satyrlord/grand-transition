@@ -33,7 +33,8 @@ The notice tells the user that the changes will not stay after the page closes.
 The title shows one `Settings` control.
 It opens a modal with three columns: Play, Sound, and Speech.
 The columns are in reading sequence and keyboard sequence.
-The navy and brass visual system uses open sections with ruled headings, aligned controls, and a full-width footer for the voice privacy text and the credits.
+The navy and brass visual system uses open sections with ruled headings, aligned controls, and a full-width footer.
+The footer has the voice privacy text, the online play privacy notice of Milestone 035, and the credits.
 The heading and Close stay visible if the settings body must scroll.
 Close and Escape close the modal, and they put the focus back on `Settings`.
 
@@ -200,7 +201,8 @@ The adapter in memory stays active for the browser session.
   They let the user do the setup and play a full match.
 - **AC-020-04:** When the user closes the notice, it stays hidden for the session.
   The game does not say that the persistence operates again.
-- **AC-020-05:** Only the storage adapters use IndexedDB and `localStorage`.
+- **AC-020-05:** Only the storage adapters use IndexedDB, `localStorage`, and `sessionStorage`.
+  Milestone 035 adds the session adapter for the seat token.
   Codecs are deterministic pure modules, and they log no stored value.
 - **AC-020-06:** The selected Turn timer option stays visually different in forced-colors mode, and it does not hide its `aria-pressed` state.
 

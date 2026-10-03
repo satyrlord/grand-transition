@@ -80,8 +80,8 @@ paper stack. Delivery shows the owner-required angry speech and also supplies
 Comeback. Thinking holds the microphone across the upper chest. The hit states
 show small recoil and stronger shock. Weakness shows guarded worry. Keep the
 complete face, signature props and gripping fingers above desk occlusion.
-Selection, Thinking and Heavy-hit keep their generated alpha unchanged.
-The other three poses use bounded detached alpha-1 removal only. Metadata
+Selection, Delivery and Heavy-hit keep their generated alpha unchanged.
+Thinking, Light-hit and Weakness use bounded detached alpha-1 removal only. Metadata
 registration preserves all reviewed pixels. Specification 023 gives the
 focused verification results and remaining in-game review limits.
 

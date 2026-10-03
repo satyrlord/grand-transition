@@ -64,6 +64,8 @@ Each entry contains these items:
 - One stable identifier and the `completedAt` time in International Organization for Standardization (ISO) 8601 format.
 - The initial unsigned 32-bit seed.
 - The selected mode, scene, characters, and timer, the Auto-complete state, and the Phrase color coding state.
+- The optional `venue`: `local`, `couch`, or `remote` (Milestone 035).
+  An entry with no `venue` is `local`, and the `venue` is not in the replay.
 - The winner, the number of completed rounds, the last Pride, the public round breakdowns, the public accepted commands, and the public rule events.
 - The rendered public sentence of each player and the ordered used phrases for each round.
   Each used phrase contains its stable identifier, its rendered text without a change, and its active or carried source.
@@ -200,5 +202,8 @@ It also does checks for zero runtime network calls and zero page errors or conso
 ## Review repair regression
 
 **AC-019-08:** Show the stored mode `ai` as `Single player`, and `hotseat` as `Hotseat`.
-This mapping does not change the stored history schema or the replay schema, and it does not add a Ladder discriminator.
+This mapping does not change the replay schema, and it does not add a Ladder discriminator.
+Milestone 035 adds the optional `venue` field to the stored entry.
+An entry with the venue `couch` shows `Couch`, and an entry with the venue `remote` shows `Remote`.
+For these two venues, the venue label replaces the mode label.
 Browser history tests do checks of the two labels, and of the kept storage values and replay behavior.

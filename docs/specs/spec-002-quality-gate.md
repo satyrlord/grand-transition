@@ -78,6 +78,8 @@ A GitHub workflow never runs `quality:full`, `ci`, or an end-to-end test script.
 `quality:release` is the full gate without the `test:e2e:full` phase.
 It runs `build:bundle` in place of that phase, because the release workflow of Milestone 031 deploys the `dist/` output of the gate.
 The pull-request quality workflow and the release workflow run `quality:release`.
+When a change touches `relay/`, the quality workflow also installs the relay dependencies and runs the relay tests, as Milestone 035 requires.
+The relay tests are not end-to-end tests.
 Thus, the end-to-end tests and the performance trials run only in a local full gate.
 The quality workflow installs stable Chrome and keeps the gate records for 14 days.
 The release gate gives the same full-mode environment markers as the full gate.

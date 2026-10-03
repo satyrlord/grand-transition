@@ -6,6 +6,7 @@ The approved files in `docs/specs/` control the app. No other file controls it.
 The README, agent documents, guidance, and untracked files in the temporary folder give only context.
 Put Lit screens in `src/app/` and components in `src/components/`.
 Put pure rules in `src/engine/` and artificial intelligence (AI) in `src/ai/`.
+Put the online room protocol and host session in `src/online/`, and the relay in `relay/`.
 
 Put data in `src/content/` and media in `src/assets/`.
 Keep temporary renders in the temporary folder.
@@ -45,6 +46,7 @@ All browser tests use Chromium in both gates.
 An agent runs the full gate only when the user tells the agent directly to use the full quality-gate skill.
 Continuous integration (CI) never runs the full gate.
 The pull-request workflow and the release workflow run `quality:release`, which is the full gate without `test:e2e:full`.
+When a change touches `relay/`, CI also runs the relay tests.
 
 These test commands do not run the slowest set: `npm run test`, `npm run test:browser`, `npm run test:coverage`, and `npm run test:e2e`.
 Do not say that a check passed until the scripts are in `package.json` and run.
@@ -117,7 +119,8 @@ For correct translation, keep the real wording of phrases from real speech.
 
 Do not copy assets from websites.
 Do not commit secrets.
-Do not add network calls at runtime.
+Do not add network calls at runtime, except the room relay of Milestones 035, 037, and 038.
+Only Create a Room and Join a Room use it.
 Generate AVIF and WebP image variants and metadata through the approved Sharp tool.
 Keep controls and necessary text out of the canvas.
 
@@ -125,6 +128,7 @@ For a release, deploy only `dist/` through GitHub Actions after `npm run quality
 The release gate is the full gate without `test:e2e:full`.
 The release process and its record are in `docs/release-github-pages.md`.
 No other workflow deploys to Pages. Milestone 031 removed the tester workflow.
+The relay deployment workflow of Milestone 035 deploys Workers, not Pages.
 Do not change the Vite `/grand-transition/` base path.
 
 All generated representational raster art must agree with the shared cel-shaded editorial-cartoon direction in Milestone 023.

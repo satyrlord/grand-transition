@@ -88,16 +88,19 @@ A statement in a file that is not in `docs/specs/` does not replace, change, or 
 - The pure deterministic reducer controls the game state.
   Lit is only for views.
   Data controls the content, and the content is validated.
-  Runtime network calls are not permitted.
+  Runtime network calls are not permitted, except the room relay of Milestones 035, 037, and 038.
 - Readability is more important than spectacle.
   The player must understand the turn, the available actions, the information ownership, and the Pride of that time.
 - The privacy, security, performance, new-asset, and static GitHub Pages requirements apply from the first milestone that can use them.
   Subsequent work must not make them worse.
-- These items are not in the scope: online multiplayer, matchmaking, accounts, cloud saves, remote leaderboards, and chat.
-  Servers, live-service systems, public content sharing, blockchain, tokens, and real-money purchases are also not in the scope.
+- These items are not in the scope: matchmaking, accounts, cloud saves, remote leaderboards, and chat.
+  Online play is in the scope only as the two room modes of Milestones 035, 037, and 038, through one relay.
+  Free-text display names and spectators in a room are not in the scope.
+  Other servers, live-service systems, public content sharing, blockchain, tokens, and real-money purchases are also not in the scope.
 - Milestone 029 gives approval for the post-MVP Romanian localization and local speech.
   Specification 032 gives approval for the first post-MVP scene extension.
   Specification 036 adds Grand Hotel Romania as the eighth playable scene.
+  Specifications 035, 037, and 038 give approval for online room play, as the Couch and Remote modes.
   Other post-MVP candidates include more content, controller support, local content packs, recorded voice, replays, and local simulation tools.
   Milestone 019 gives approval for the local match history.
   Do not add a different candidate without a new approved specification.
@@ -171,6 +174,7 @@ Do not record private hand content, personal data, machine secrets, or hidden sp
 
 Browser UI support uses the content viewport in CSS pixels.
 Milestone 018 controls the geometry, the portrait warning, the hotseat restrictions, and the compact layout contract.
+Milestones 037 and 038 give the orientation rules of the Couch and Remote modes.
 In landscape, the width must be more than the height, and the viewport must be 640 by 320 or more.
 In portrait, the height must be more than the width, and the viewport must be 360 by 640 or more.
 Square viewports are not supported.
@@ -203,6 +207,7 @@ An unsupported viewport replaces the application with a blocking compatibility s
 It names the two minimum dimensions, recommends landscape, and gives no path around the block.
 Portrait shows a landscape recommendation that the user can close, one time in each page session, and it disables hotseat.
 An active hotseat match in portrait cannot continue until landscape comes back.
+Milestones 037 and 038 give the portrait and landscape rules of the room modes.
 All blocking conditions hide the match facts, and they keep the remaining turn time without a change.
 
 The game continues automatically only after all the blocks clear.
@@ -330,23 +335,23 @@ A review that uses only the source code does not satisfy them.
     and in which context, with no names or links. It adds a Real-or-invented
     guess and a local quote archive.
 35. [Online room foundation](spec-035-online-room-foundation.md). Budget: 12.
-    Draft, not approved. The Cloudflare relay, the room protocol, room codes,
-    seat tokens, the host session, reconnect, and the one CSP exception that the
-    two online modes share. It gives no screen. It changes the online-play scope
-    rule of this index.
+    The Cloudflare relay, the room protocol, room codes, seat tokens, the host
+    session, reconnect, and the one CSP exception that the two online modes
+    share. It gives no screen. It changes the online-play scope rule of this
+    index.
 36. [Grand Hotel Romania](spec-036-grand-hotel-romania.md). Budget: 24 source
     and authoring files, with a separate generated-media package. An eighth
     bilingual scene adds a communist futurist hotel lobby with an engraved
     brass globe, background guests and staff, 34 phrases, and existing local jazz.
     Its source and production-stage visual evidence remain open.
-37. [Play on a couch](spec-037-play-on-a-couch.md). Budget: 8. Draft, not
-    approved. The host shows the match to the room, and each player uses a phone
-    as a terminal with a private hand. It adds the Multiplayer dialog with Hotseat
-    and Play on a Couch.
-38. [Play remotely](spec-038-play-remotely.md). Budget: 9. Draft, not approved.
-    Two players on different machines play one match through a room code. Each
-    machine shows the arena and plays its own audio. It adds Play Remotely to the
-    Multiplayer dialog.
+37. [Play on a couch](spec-037-play-on-a-couch.md). Budget: 8. The host shows
+    the match to the room, and each player uses a phone as a terminal with a
+    private hand. It adds the Multiplayer dialog with Hotseat and Play on a
+    Couch.
+38. [Play remotely](spec-038-play-remotely.md). Budget: 9. Two players on
+    different machines play one match through a room code. Each machine shows
+    the arena and plays its own audio. It adds Play Remotely to the Multiplayer
+    dialog.
 
 Each milestone obeys its **Depends on** field.
 Milestone file names, headings, acceptance IDs, and references use the same numeric identifier.

@@ -1,6 +1,6 @@
 # Milestone 037: Play on a Couch
 
-**Status:** Draft, not approved  
+**Status:** Approved  
 **Depends on:** 015, 016, 018, 019, 020, 024, 029, 035\
 **Owns:** The Multiplayer menu dialog, the Couch host, the phone terminal, the Couch lobby, and the Couch room rules  
 **Production-file budget:** 8

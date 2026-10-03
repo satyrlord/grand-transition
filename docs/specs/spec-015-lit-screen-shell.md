@@ -63,8 +63,10 @@ The shell has the `title` view state and the `setup` view state.
 The Main Menu gives “Single Player”, “Multiplayer”, and “Ladder”.
 Each button sends a typed `show-setup` command with the mode `ai`, `hotseat`, or `ladder`, in that sequence.
 It opens the setup in that mode.
-Multiplayer means two persons on this device.
-In portrait, Milestone 018 disables its action and the submission of the hotseat setup.
+Milestone 037 changes the Multiplayer button: it opens a dialog, and only the Hotseat entry of the dialog sends `show-setup` with the mode `hotseat`.
+The Multiplayer button stays enabled in portrait.
+Hotseat means two persons on this device.
+In portrait, Milestone 018 and Milestone 037 disable the Hotseat entry and the submission of the hotseat setup.
 
 Its command handlers also do not accept these actions.
 Single Player and Ladder stay available in the two supported orientations.

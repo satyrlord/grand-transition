@@ -64,6 +64,7 @@ Add `npm run test:published -- --base-url <url>`.
 The command does not change the published state.
 It stops with a nonzero exit code when an assertion fails.
 These assertions are for the response, the assets, refresh, the CSP, runtime network requests, the speech state, and the full match.
+The smoke does not select Create a Room or Join a Room, and it contacts no relay (Milestone 035).
 They also make sure that the title shows a production game version, not the development label.
 It runs in the Milestone 030 browser matrix: stable desktop Chrome and mobile Chrome.
 The optional `--artifact-dir <directory>` argument compares each file of an extracted Pages artifact with the served bytes.
@@ -116,7 +117,7 @@ To publish again without a new commit, dispatch the release workflow manually fr
 - **AC-031-02:** The permissions, the environment, the concurrency, the job dependency, the action SHA pins, the tool versions, and the artifact root agree with this contract.
 - **AC-031-03:** Failed CI, a failed artifact upload, and a canceled build cannot deploy or give release success.
   A push that is not on main and a smoke failure also cannot deploy or give release success.
-- **AC-031-04:** The published command passes subpath navigation, local assets, reload, the CSP without a difference, and zero runtime requests.
+- **AC-031-04:** The published command passes subpath navigation, local assets, reload, the CSP without a difference except the relay origin of Milestone 035, and zero runtime requests.
   It also passes supported speech, speech that is not available, and the fixed full match.
 - **AC-031-05:** The release documentation contains each necessary value, and its artifact digest agrees with the deployed build.
 - **AC-031-06:** A recovery rehearsal uses a Pages artifact that is not production.

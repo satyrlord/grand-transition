@@ -1,6 +1,6 @@
 # Milestone 035: Online Room Foundation
 
-**Status:** Draft, not approved  
+**Status:** Approved  
 **Depends on:** 003, 004, 016, 018, 019, 020, 031\
 **Owns:** The room relay, the room protocol, the host session, room codes, seat tokens, reconnect, and the network boundary of the client  
 **Production-file budget:** 12

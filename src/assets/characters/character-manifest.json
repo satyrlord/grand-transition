@@ -764,11 +764,11 @@
       "licenseIdentifier": "LicenseRef-Grand-Transition-Original",
       "source": {
         "path": "diaspora-oracle.png",
-        "width": 2048,
-        "height": 2048,
+        "width": 1254,
+        "height": 1254,
         "format": "png",
-        "bytes": 3567891,
-        "sha256": "d0ba186eda03f1e15ff6068abd903fc5e597f61a0e06436b5d1f858e1097149f"
+        "bytes": 619047,
+        "sha256": "5dde7062b3ee7c30d81de122ced3124c8e161b9cb55e574e048fe1388bd4f43b"
       },
       "focalPoint": {
         "x": 0.5,
@@ -789,8 +789,8 @@
           "format": "avif",
           "quality": 100,
           "lossless": true,
-          "bytes": 14683,
-          "sha256": "c3c7e2cc777bee6b98a77cb26110c06c76d644a7048e41b8f5c7654bafda705b"
+          "bytes": 14400,
+          "sha256": "6f40dd5787faee3c369cc664992e6838b048e484e208ae91bba69d7344e0033b"
         },
         {
           "path": "variants/diaspora-oracle-128x128.webp",
@@ -798,8 +798,8 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 4328,
-          "sha256": "95782c1bcf3f05693506b95cf7b2b62ca9d0c2b56dc03c72e42536da0898296f"
+          "bytes": 4706,
+          "sha256": "4f0b23c34875d7a49de406c2c9eb6b9b30e7c4bfaf9928c90256cc7bcc77e86f"
         },
         {
           "path": "variants/diaspora-oracle-256x256.avif",
@@ -808,8 +808,8 @@
           "format": "avif",
           "quality": 100,
           "lossless": true,
-          "bytes": 38136,
-          "sha256": "a1d913c8b874b301ad1c054f4a943bb2f78dcf864a7512bc43b08b802c442cba"
+          "bytes": 37820,
+          "sha256": "da36d27d7b16a068b01fc43583cd347a6102a30ec4a45c7bad50ea34de7e2cd8"
         },
         {
           "path": "variants/diaspora-oracle-256x256.webp",
@@ -817,18 +817,17 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 9774,
-          "sha256": "54dd7049f7e3682d93b1a6882324b9ef9631ca3384cb4f08de1e020834bbb5f3"
+          "bytes": 10384,
+          "sha256": "5acf4c58c8336f7abb90003924713114656e23e1ffacb88eb3f7772ec1d59d81"
         },
         {
           "path": "variants/diaspora-oracle-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "quality": 100,
-          "lossless": true,
-          "bytes": 53212,
-          "sha256": "cbf969da5d992ca165828b180bfc17283fe1f0803f759eb77892c5c64ba4940f"
+          "quality": 70,
+          "bytes": 9272,
+          "sha256": "bf162e1ea71e459e60215bf6e33f75ce932be8a080bbca8a9a4a011c9542a660"
         },
         {
           "path": "variants/diaspora-oracle-320x320.webp",
@@ -836,8 +835,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 13160,
-          "sha256": "9dd9b72ed1afe03464b87a049ba48dfd1c5d1e9649ed25a4e7c993080ce4fc25"
+          "bytes": 13770,
+          "sha256": "b009f808fb62bdcd70be5229972a21204733a89b0ae0eadd4ef6e24d12e60419"
         },
         {
           "path": "variants/diaspora-oracle-640x640.avif",
@@ -845,8 +844,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 22010,
-          "sha256": "9890ea618026104f88831d846ad12d5facdfa8b61b13dafa6f013aad5db300e8"
+          "bytes": 21704,
+          "sha256": "866b55d8d85e721473a6b1a82a2f3e9252db3d4a65e5572e22afeb82507c65d8"
         },
         {
           "path": "variants/diaspora-oracle-640x640.webp",
@@ -854,8 +853,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 32026,
-          "sha256": "3dd8aa17e27172f9095f6e03a23bd296769de7ca1ce450fddfb68bfa45f943be"
+          "bytes": 32692,
+          "sha256": "5e4bf6039179da027210bce0dd566fe791434998a77294bf8db4000c40092eab"
         },
         {
           "path": "variants/diaspora-oracle-960x960.avif",
@@ -863,8 +862,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 36243,
-          "sha256": "019b454e91be77e916423554192efbd8c39d11a71aac6c2d24386961039a9aec"
+          "bytes": 37093,
+          "sha256": "420183fa844e3dd9da25828525ab59804d0552a03dcf178327082dea9ce9461a"
         },
         {
           "path": "variants/diaspora-oracle-960x960.webp",
@@ -872,8 +871,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 54042,
-          "sha256": "76a16d1ecc76ec68b1815557cfe285af38b145c0eeb94faff3fffea8cb57fd3f"
+          "bytes": 58642,
+          "sha256": "9933adff125389f2c481a88e6343e44cc7157b23222774d5255a1d12b342d070"
         }
       ]
     },

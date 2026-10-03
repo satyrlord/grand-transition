@@ -82,11 +82,13 @@ The first time that the page session enters a supported portrait viewport, show 
 Tell the user that the game design is for landscape, and give “Continue in portrait”.
 The user can close the warning, and it shows one time or less in that page session.
 A reload starts a new session.
+The warning does not show in a Couch session (Milestone 037).
 When the device turns to supported landscape, the warning closes.
 Keyboard focus goes into the warning, and after the warning closes, focus goes back to the screen that the game shows again.
 
 Single Player and Ladder stay available in portrait.
-In portrait, disable the Multiplayer hotseat action on the title, and tell the user that landscape is necessary.
+In portrait, disable the Hotseat entry of the Multiplayer dialog, and tell the user that landscape is necessary.
+The Multiplayer button stays enabled, because Join a Room for a Couch terminal needs portrait (Milestone 037).
 After the device turns to portrait, disable the start of a hotseat setup.
 Apply these restrictions in the command handlers and also in the controls.
 Do not change the selected mode without a message to the user.
@@ -97,6 +99,9 @@ It has no action to continue in portrait.
 Keep the match.
 Continue only after supported landscape comes back, unless manual Pause stays active.
 The game adds no other gameplay restriction.
+
+Milestone 037 gives the orientation rules of the Couch mode, and Milestone 038 gives them for the Remote mode.
+A device in a room that an orientation condition blocks counts as a disconnected seat (Milestone 035).
 
 ## Interruption and privacy
 

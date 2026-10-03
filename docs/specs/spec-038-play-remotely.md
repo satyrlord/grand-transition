@@ -1,6 +1,6 @@
 # Milestone 038: Play Remotely
 
-**Status:** Draft, not approved  
+**Status:** Approved  
 **Depends on:** 015, 016, 018, 019, 020, 024, 029, 035, 037\
 **Owns:** Remote rooms, the seat projection, the remote player flow, the Remote lobby, and the Remote pause budget  
 **Production-file budget:** 9

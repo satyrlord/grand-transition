@@ -427,7 +427,8 @@ If the timer setting
 does not change, Resume shows the match with no changes and starts the timer
 again from that value. When the player pauses the match two or more times, the
 game does not add time, unless the player selects a different timer value.
-Pause has no quota, because the local players control the interruption.
+Pause has no quota in hotseat and in Couch rooms, because the local players control the interruption.
+Milestone 038 gives a Remote match a pause budget.
 Concealment and the preservation of the timer value prevent state inspection
 and abuse that adds time to the timer.
 

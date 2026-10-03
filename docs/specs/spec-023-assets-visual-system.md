@@ -270,8 +270,8 @@ and single blank paper stack with an orange band. Each pose used only the
 accepted selection as its image reference. Delivery shows angry speech as the
 owner instructed; Comeback continues to use that drawing. Thinking, small
 recoil, strong shock and guarded worry retain the same identity and props.
-Selection, Thinking and Heavy-hit retain their generated alpha unchanged.
-Delivery, Light-hit and Weakness use bounded removal of detached alpha-1
+Selection, Delivery and Heavy-hit retain their generated alpha unchanged.
+Thinking, Light-hit and Weakness use bounded removal of detached alpha-1
 pixels only. Metadata registration preserves all reviewed decoded pixels.
 The reviewed tight source margins satisfy the silhouette-height contract and
 runtime reduction preflight. Existing nine-state mappings, character identity,
@@ -279,12 +279,25 @@ phrases, balance and voices remain unchanged. The targeted staged package,
 native-alpha provenance, color and encoded-border checks passed. All six
 installed masters match the reviewed pixels; all 40 variants have transparent
 outer borders; 1,300 unrelated character files are byte-identical.
-Production-build, focused test and installed-browser verification results are
-pending. Agent source review found no blocking defect. Thinking's expression
-stays close to the selection, with a distinct upper-chest microphone gesture.
-Product-owner in-game evaluation is separate from technical verification.
-The aggregate gate has not run. Normal animation and heard speech quality
-remain outside this art-source review.
+The production build, 71 focused unit tests and one selected Chromium state
+test passed. Installed checks cover all nine logical states on both player
+sides across 13 landscape contexts. The minimum 640-by-320, near-square
+1024-by-1023 and widest 5120-by-1440 contexts also show every state with a
+long sentence at each speaker position. Three focused roster samples wait
+for the visible Oracle portrait to decode. Exact served variant hashes,
+dimensions, mirroring, stable geometry and browser-error checks passed.
+Thinking has a closed concentrated mouth and an upper-chest microphone gesture.
+Thinking, Delivery and Weakness place their faces farther outside the central
+speech record. Reviewed installed screenshots retain their core facial
+features, signature props and gripping fingers. A near-square normal-motion
+probe also checked 26 CSS-animation extrema frames for the corrected drawings
+and their aliases, with the speech record fully open. Minor hair-contour
+proximity and tight margins remain review advisories.
+These checks use held public cues and Transition-Era Television Studio.
+They do not establish played-match progression, continuous animation quality,
+other-scene clearance, performance, physical-device behavior or heard speech
+quality. Product-owner in-game evaluation is separate from technical verification.
+The aggregate gate has not run.
 The approved Influencer Campaign Livestream background is installed at native
 3840 by 2160 with a matching transparent streamer-desk foreground. Retain its
 nighttime charcoal/teal room, local cyan/violet accents, equipment, accepted

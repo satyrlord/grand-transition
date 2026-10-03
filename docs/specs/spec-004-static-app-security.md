@@ -13,7 +13,7 @@
 ## Deliver
 
 Set the Vite and Playwright base Uniform Resource Locator (URL) to `/grand-transition/`.
-Put the production-only Content Security Policy (CSP) below into the HTML, without changes.
+Put the production-only Content Security Policy (CSP) below into the HTML, without changes, except the one relay origin that Milestone 035 adds.
 Add a production preview smoke test for the entry page, the assets, and the refresh behavior.
 The test must also examine the remote connections that the policy does not let the page make.
 Milestone 030 declares the local brand emblem as the favicon in the entry HTML.
@@ -29,6 +29,8 @@ connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'
 ```
 
 Development does not use it, because of Vite Hot Module Replacement (HMR).
+Milestone 035 adds exactly one `wss:` origin to `connect-src`, the origin of the production relay.
+The build reads it from one configuration value.
 In production, these items are not permitted: inline script, `unsafe-eval`, imported style text, Hypertext Markup Language (HTML) that is not safe, and a remote font, image, or audio.
 The local neural speech policy lets the game fetch static assets from the same origin for audio, model weights, voice embeddings, vocabulary, and WASM.
 These requests do not send credentials, and they do not accept redirects.
@@ -37,6 +39,8 @@ No phrase goes out of the device.
 Local module workers and WASM compilation are permitted.
 Generic JavaScript `unsafe-eval` stays not permitted.
 No XMLHttpRequest, WebSocket, EventSource, analytics, cloud speech, or other runtime API request is permitted.
+The one exception is the WebSocket connection to the room relay.
+Milestone 035 permits it only in its adapter file, and only after the player selects Create a Room or Join a Room.
 The robot exception that the owner approved uses only the installed Microsoft David, Mark, or Zira voice with `localService=true`.
 The game does not select a remote platform voice.
 
@@ -62,13 +66,14 @@ The build makes `dist/`. Do not commit it.
   It loads only local script, style, and font assets.
   When Chromium loads the same URL again, the title stays visible.
 - **AC-004-02:** Production contains one CSP meta element.
-  Its normalized content agrees with this specification without a difference.
+  Its normalized content agrees with this specification without a difference, except the relay origin of Milestone 035.
   Development at port 5174 contains no CSP meta element.
 - **AC-004-03:** The browser does not accept a fetch probe to `https://network.invalid/csp-probe` before a network route gets it.
 - **AC-004-04:** Production navigation and reload have no failed request, external request, console error, or uncaught page error.
 - **AC-004-05:** `git ls-files dist` gives no path.
   A production source scan finds only the audio fetches and neural asset fetches in the manifests, from the same origin.
-  It finds no XMLHttpRequest, WebSocket, or EventSource.
+  It finds no XMLHttpRequest or EventSource.
+  It finds WebSocket only in the one adapter file that Milestone 035 names.
   It also finds no remote font, analytics, HTML sink that is not safe, or inline script.
 
 ## Checks and stop conditions
