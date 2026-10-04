@@ -134,7 +134,8 @@ Do not change the Vite `/grand-transition/` base path.
 All generated representational raster art must agree with the shared cel-shaded editorial-cartoon direction in Milestone 023.
 Character skins and states use the flat editorial cartoon direction of that milestone.
 Use the accepted three-character trial as the shared style reference after product-owner acceptance.
-Preserve approved robot art.
+Preserve approved robot identity and construction. Replace robot source pixels
+only for a product-owner-authorized, reviewed correction.
 Use the built-in chat image generator for characters, poses, desks, props, and foregrounds.
 Use Flare only for opaque 4K scene backgrounds.
 Do not generate painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, three-dimensional-render, or mixed-style assets.

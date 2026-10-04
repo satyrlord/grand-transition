@@ -19,7 +19,8 @@ Do not accept painted comic-book, painterly semi-realistic, realistic concept-ar
 For each character skin and state, use the flat editorial cartoon direction of Milestone 023.
 Compare at equal figure height with the accepted three-character trial after product-owner acceptance.
 Use clearly drawn faces, varied adult proportions, moderate head exaggeration, and broad two-tone shading.
-Preserve approved robot art.
+Preserve approved robot identity and construction during owner-authorized,
+reviewed contour corrections.
 
 Examine the owner, source, license, dimensions, crop, and format of each asset.
 When media changed, run the asset validation.

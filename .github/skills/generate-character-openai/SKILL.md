@@ -1,6 +1,6 @@
 ---
 name: generate-character-openai
-description: Generate, review, or integrate Grand Transition character selections and pose packages with the built-in chat image generator. Use for the flat editorial cartoon trial, identity and prop continuity, and continuation of accepted work. Preserve approved robot art.
+description: Generate, review, or integrate Grand Transition character selections and pose packages with the built-in chat image generator. Use for the flat editorial cartoon trial, identity and prop continuity, and continuation of accepted work. Preserve approved robot identity during owner-authorized, reviewed contour corrections.
 ---
 
 # Generate character art in chat

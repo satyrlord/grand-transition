@@ -226,7 +226,8 @@ beige lidded cup above desk occlusion on the inner side.
 Its approved alternate selection and five reviewed matching poses are also
 installed. Keep the alternate's thin black glasses, long brown-to-blonde hair,
 orange open blazer, cream blouse, navy trousers, brown low-heeled pumps, and
-single high inner-side cup.
+single high inner-side cup. Weakness has exactly two connected arms and hands:
+one hand holds the cup, and the other supports that forearm.
 The approved Marble Diplomat selection and five reviewed matching poses are
 also installed. Keep its mature drawn face, short swept gray hair, tall adult
 silhouette, charcoal suit, cream-white shirt, black tie, and single blank gold
@@ -286,7 +287,7 @@ Do not count duplicates or resized copies. Correct conflicting private notes.
 Compare source images, small roster crops, setup portraits, and match compositions on the two player sides.
 Use the actual three-character artwork as the shared style reference only after product-owner acceptance.
 Do not impose an existing raster as the trial style reference.
-Preserve approved robot art.
+Preserve approved robot identity, composition, and props during reviewed contour corrections.
 
 Fixed moderators, scene architecture, furniture, fixtures, and props use the same broad cartoon rendering.
 Materials show through silhouette, color, and contour rather than realistic surface detail.
@@ -781,7 +782,8 @@ Only a pose whose protected pixels would leave the viewport receives the minimum
 horizontal correction. The renderer measures decoded alpha; it does not keep
 a character-specific placement registry. The correction stays separate from
 mirroring and motion. Specification 023 gives the protection region and checks.
-Preserve all approved source pixels, including the robot skins.
+The renderer preserves source pixels. Reviewed contour corrections are authored
+in the asset sources before build, including owner-authorized robot corrections.
 
 The speech record uses a higher, fixed band that narrows with the scene crop.
 Its side tail points toward the speaker and stays inside the record's vertical band.

@@ -34,7 +34,8 @@ Add a sparse hard-edged highlight only when needed for readability.
 Draw moderators and crowds in the same nonrealistic style as the characters.
 Do not use photographic surfaces, painterly blending, or realistic portrait modeling.
 Use clearly drawn faces with varied adult proportions and moderate head exaggeration.
-Keep approved robots unchanged.
+Keep approved robot identity and construction. Change robot source pixels only
+for owner-authorized, reviewed contour corrections.
 Keep materials readable through shape and color.
 Keep architecture and equipment richly designed while their rendering stays in the shared cartoon language.
 Do not confuse simple shading with a sparse scene.

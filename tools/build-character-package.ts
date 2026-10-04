@@ -1,12 +1,31 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildCharacterAssets } from './build-character-assets.ts';
-import { buildCharacterStates, statePackages } from './build-character-states.ts';
+import { buildCharacterAssets, type CharacterManifest } from './build-character-assets.ts';
+import {
+  buildCharacterStates,
+  statePackages,
+  type StateManifest,
+} from './build-character-states.ts';
 import { validateCharacterAssets } from './validate-character-assets.ts';
 import { validateCharacterStates } from './validate-character-states.ts';
 
 const SHIPPING_ROOT = path.resolve('src/assets/characters');
+
+type VariantInventory = readonly {
+  variants: readonly { path: string; sha256: string }[];
+}[];
+
+export function changedVariantCount(previous: VariantInventory, current: VariantInventory): number {
+  const previousHashes = new Map(
+    previous.flatMap(({ variants }) => variants.map(({ path, sha256 }) => [path, sha256] as const)),
+  );
+  return current.reduce(
+    (count, { variants }) =>
+      count + variants.filter(({ path, sha256 }) => previousHashes.get(path) !== sha256).length,
+    0,
+  );
+}
 
 export async function buildCharacterPackage({
   characterRoot,
@@ -30,14 +49,15 @@ export async function buildCharacterPackage({
   }
   const currentSelection = JSON.parse(
     await readFile(path.join(root, 'character-manifest.json'), 'utf8'),
-  );
-  const skin = (currentSelection.assets as { id?: string }[] | undefined)?.find(
-    (asset) => asset?.id === skinId,
-  );
+  ) as CharacterManifest;
+  const skin = currentSelection.assets?.find((asset) => asset?.id === skinId);
   if (!skin) throw new Error(`Unknown selection skin ID "${skinId}".`);
   if (!statePackages(currentSelection).some((entry: { id: string }) => entry.id === skinId)) {
     throw new Error(`Skin "${skinId}" does not own a five-pose state package.`);
   }
+  const currentStates = JSON.parse(
+    await readFile(path.join(root, 'states/state-manifest.json'), 'utf8'),
+  ) as StateManifest;
 
   const selectionManifest = await buildCharacterAssets({
     characterRoot: root,
@@ -52,10 +72,20 @@ export async function buildCharacterPackage({
   return {
     skinId,
     selectionAssets: selectionManifest.assets.length,
-    selectionVariantsRebuilt: 10,
+    selectionVariantsChanged: changedVariantCount(
+      currentSelection.assets.filter((asset) => asset.id === skinId),
+      selectionManifest.assets.filter((asset) => asset.id === skinId),
+    ),
     statePackages: stateManifest.packages.length,
     stateMasters: stateManifest.assets.length,
-    stateVariantsRebuilt: 30,
+    stateVariantsChanged: changedVariantCount(
+      currentStates.assets.filter(
+        (asset) => asset.ownerId === skin.ownerId && asset.skinId === skin.skinId,
+      ),
+      stateManifest.assets.filter(
+        (asset) => asset.ownerId === skin.ownerId && asset.skinId === skin.skinId,
+      ),
+    ),
     worstPackageBytes: stateValidation.worstPackageBytes,
   };
 }

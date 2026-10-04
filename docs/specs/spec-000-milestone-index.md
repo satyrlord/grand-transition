@@ -56,7 +56,8 @@ A statement in a file that is not in `docs/specs/` does not replace, change, or 
   Painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, and three-dimensional-render styles are not permitted.
   New human character art follows the flat editorial cartoon direction and three-character trial of Milestone 023.
   Use clearly drawn faces, varied adult proportions, and researched recognizable likeness cues.
-  Preserve approved robot art.
+  Preserve approved robot identity and construction. Replace robot source pixels
+  only for a product-owner-authorized, reviewed correction under Milestone 023.
   Do not change a skin into a prestige portrait that is not funny or that is realistic.
   This rule also applies when the skin uses outlines and cel shading.
 - Use fictional composite archetypes.

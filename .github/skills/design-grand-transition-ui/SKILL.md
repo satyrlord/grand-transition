@@ -61,7 +61,8 @@ Apply these rules to characters, moderators, scenes, furniture, fixtures, and pr
 For character skins and states, apply the flat editorial cartoon direction of Milestone 023.
 Use clearly drawn faces, varied adult proportions, moderate head exaggeration, and broad two-tone shading.
 Use the accepted three-character trial as the shared style reference after product-owner acceptance.
-Preserve approved robot art.
+Preserve approved robot identity and construction during owner-authorized,
+reviewed contour corrections.
 
 Do not accept painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, three-dimensional-render, or mixed-style output.
 Make phrase cards and tactical state easy to read.

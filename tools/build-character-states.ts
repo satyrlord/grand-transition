@@ -170,6 +170,7 @@ export function cachedStatePackageInventory(
       }
     }
     if (
+      new Set(assets.map((asset) => asset.stateId)).size !== assets.length ||
       assets.some(
         (asset) =>
           !contract.stateMasterIds.includes(asset.stateId) ||
@@ -178,7 +179,7 @@ export function cachedStatePackageInventory(
     ) {
       throw new Error(`Cached state package "${skin.id}" has invalid state assets.`);
     }
-    if (!selected.has(skin.id)) cache.set(skin.id, { group, assets });
+    cache.set(skin.id, { group, assets });
   }
   return cache;
 }
@@ -187,15 +188,23 @@ async function verifiedCachedStatePackages(
   characterRoot: string,
   packages: readonly CharacterAsset[],
   selected: ReadonlySet<string>,
-): Promise<Map<string, { group: StatePackage; assets: CharacterAsset[] }>> {
+  prepared: readonly PreparedStatePackage[],
+): Promise<{
+  cached: Map<string, { group: StatePackage; assets: CharacterAsset[] }>;
+  reusableSelectedAssets: Map<string, Map<string, CharacterAsset>>;
+}> {
   const manifest = JSON.parse(
     await readFile(path.join(characterRoot, 'states/state-manifest.json'), 'utf8'),
   ) as StateManifest;
   const cache = cachedStatePackageInventory(manifest, packages, selected);
+  const reusableSelectedAssets = new Map<string, Map<string, CharacterAsset>>();
   for (const skin of packages) {
     const cached = cache.get(skin.id);
     if (!cached) continue;
     const { assets } = cached;
+    const selectedSources = selected.has(skin.id)
+      ? prepared.find((item) => item.skin.id === skin.id)?.sources
+      : undefined;
     for (const asset of assets) {
       if (
         !contract.stateMasterIds.includes(asset.stateId) ||
@@ -206,20 +215,23 @@ async function verifiedCachedStatePackages(
       ) {
         throw new Error(`Cached state asset "${asset.id}" has invalid source metadata.`);
       }
-      const source = await readFile(path.join(characterRoot, asset.source.path));
-      const sourceMetadata = await sharp(source).metadata();
-      if (
-        source.length !== asset.source.bytes ||
-        sha256(source) !== asset.source.sha256 ||
-        sourceMetadata.width !== asset.source.width ||
-        sourceMetadata.height !== asset.source.height ||
-        sourceMetadata.format !== 'png' ||
-        !sourceMetadata.hasAlpha
-      ) {
+      const selectedSource = selectedSources?.find(({ state }) => state.id === asset.stateId);
+      const source =
+        selectedSource?.input ?? (await readFile(path.join(characterRoot, asset.source.path)));
+      const sourceMetadata = selectedSource ? undefined : await sharp(source).metadata();
+      const sourceMatches =
+        source.length === asset.source.bytes &&
+        sha256(source) === asset.source.sha256 &&
+        (selectedSource?.width ?? sourceMetadata?.width) === asset.source.width &&
+        (selectedSource?.height ?? sourceMetadata?.height) === asset.source.height &&
+        (selectedSource !== undefined ||
+          (sourceMetadata?.format === 'png' && sourceMetadata.hasAlpha));
+      if (!sourceMatches && !selected.has(skin.id)) {
         throw new Error(
           `Cached state source "${asset.source.path}" changed or is invalid; select it for rebuilding.`,
         );
       }
+      if (!sourceMatches) continue;
       if (
         !Array.isArray(asset.variants) ||
         asset.variants.length !== stateWidths.length * stateFormats.length
@@ -261,9 +273,14 @@ async function verifiedCachedStatePackages(
           }
         }
       }
+      if (selected.has(skin.id)) {
+        const reusable = reusableSelectedAssets.get(skin.id) ?? new Map<string, CharacterAsset>();
+        reusable.set(asset.stateId, asset);
+        reusableSelectedAssets.set(skin.id, reusable);
+      }
     }
   }
-  return cache;
+  return { cached: cache, reusableSelectedAssets };
 }
 
 export async function prepareCharacterStatePackage(
@@ -319,6 +336,7 @@ export async function prepareCharacterStatePackage(
 export async function buildCharacterStatePackage(
   prepared: PreparedStatePackage,
   variantsRoot: string,
+  reused?: { assets: ReadonlyMap<string, CharacterAsset>; characterRoot: string },
 ): Promise<BuiltStatePackage> {
   const { skin, sources, availableStateIds } = prepared;
   const assets = await mapWithConcurrency(
@@ -332,6 +350,16 @@ export async function buildCharacterStatePackage(
       height: sourceHeight,
     }): Promise<CharacterAsset> => {
       const id = `${skin.id}--${state.id}`;
+      const cached = reused?.assets.get(state.id);
+      if (cached && reused) {
+        for (const variant of cached.variants) {
+          await copyFile(
+            path.join(reused.characterRoot, variant.path),
+            path.join(variantsRoot, path.basename(variant.path)),
+          );
+        }
+        return cached;
+      }
       const variants: CharacterVariant[] = [];
       for (const width of stateWidths) {
         for (const format of stateFormats) {
@@ -400,21 +428,22 @@ export async function buildCharacterStates({
   );
   const packages = statePackages(selectionManifest);
   const selected = selectedStatePackageIds(only, packages);
-  const cached = selected
-    ? await verifiedCachedStatePackages(root, packages, selected)
-    : new Map<string, { group: StatePackage; assets: CharacterAsset[] }>();
   const preparedPackages: PreparedStatePackage[] = [];
   // Complete preflight before any output changes. Selection reuses its approved baseline.
   for (const skin of packages) {
-    if (!cached.has(skin.id)) preparedPackages.push(await prepareCharacterStatePackage(root, skin));
+    if (!selected || selected.has(skin.id))
+      preparedPackages.push(await prepareCharacterStatePackage(root, skin));
   }
+  const verified = selected
+    ? await verifiedCachedStatePackages(root, packages, selected, preparedPackages)
+    : null;
   const work = await mkdtemp(path.join(root, '.character-states-build-'));
   try {
     const variantsRoot = path.join(work, 'variants');
     await mkdir(variantsRoot);
     const builtPackages: BuiltStatePackage[] = [];
     for (const skin of packages) {
-      const reused = cached.get(skin.id);
+      const reused = selected?.has(skin.id) ? undefined : verified?.cached.get(skin.id);
       if (reused) {
         for (const asset of reused.assets) {
           for (const variant of asset.variants) {
@@ -429,7 +458,14 @@ export async function buildCharacterStates({
       }
       const prepared = preparedPackages.find(({ skin: item }) => item.id === skin.id);
       if (!prepared) throw new Error(`${skin.id}: prepared state package is missing.`);
-      builtPackages.push(await buildCharacterStatePackage(prepared, variantsRoot));
+      const reusableAssets = verified?.reusableSelectedAssets.get(skin.id);
+      builtPackages.push(
+        await buildCharacterStatePackage(
+          prepared,
+          variantsRoot,
+          reusableAssets ? { assets: reusableAssets, characterRoot: root } : undefined,
+        ),
+      );
     }
     const manifest = {
       schemaVersion: 1,

@@ -47,7 +47,8 @@ It cannot use a different rendering style.
 New playable portraits use the flat editorial cartoon direction and researched identity workflow in Milestone 023.
 Natural adult proportions are permitted. Use moderate head exaggeration and distinct silhouettes.
 The temporary status does not permit realistic faces or mixed rendering.
-Preserve approved robot art.
+Preserve approved robot identity and construction. An owner-authorized,
+reviewed contour correction can replace its source pixels under Milestone 023.
 
 It also uses neutral sRGB white balance without a global yellow, amber, sepia, or other warm color wash.
 Local warm materials and light stay correct when the shared asset color guard can continue to measure neutral or cool anchors.

@@ -119,7 +119,8 @@ The milestone contract controls the last visual acceptance.
 
 All last character images and scene images use one shared cel-shaded editorial-cartoon style.
 New human character art follows the flat editorial cartoon direction and researched identity workflow in Specification 023.
-Approved robot art stays unchanged.
+Approved robot identity and construction remain; owner-authorized, reviewed
+contour corrections can change source pixels.
 Painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, and three-dimensional-render styles are not permitted.
 The last raster art uses neutral sRGB white balance without a global yellow or amber wash.
 Warm color occurs only in authored local materials and light.

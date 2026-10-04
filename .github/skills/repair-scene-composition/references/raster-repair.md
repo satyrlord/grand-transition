@@ -29,7 +29,8 @@ Do not accept painted comic-book, painterly semi-realistic, realistic concept-ar
 
 For character skins and states, use flat editorial cartoons with clearly drawn faces and varied adult proportions.
 Use moderate head exaggeration, broad shapes, and two-tone shading.
-Preserve approved robot art.
+Preserve approved robot identity and construction during owner-authorized,
+reviewed contour corrections.
 Use the accepted three-character trial as the shared style reference after product-owner acceptance.
 
 Use neutral sRGB white balance and a color treatment without a grade.

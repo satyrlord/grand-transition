@@ -127,18 +127,20 @@ sources retain native 1254-square canvases, right-facing composition, the
 accepted young adult face, thin black glasses, long brown-to-blonde hair,
 orange open blazer, cream round-neck blouse, navy trousers, brown low-heeled
 pumps, and one high inner-side beige lidded cup. Each pose used only the
-accepted alternate selection as its image reference. The sources use only
-bounded detached alpha-1 cleanup. Metadata registration preserves reviewed
-pixels. Thinking uses a chin gesture, delivery an inclusive speaking palm,
-light-hit and heavy-hit distinct recoil, and weakness a guarded folded arm.
+accepted alternate selection as its image reference. The selection and four
+other poses retain their reviewed alpha and bounded exterior RGB contour
+corrections. Weakness uses a regenerated two-arm pose with one cup-holding
+hand and one hand supporting that forearm. Its only pixel preparation removes
+detached alpha-1 residue. Metadata registration preserves the reviewed pixels.
+Thinking uses a chin gesture, delivery an inclusive speaking palm, light-hit
+and heavy-hit distinct recoil, and weakness a guarded forearm hold.
 The existing nine-state mappings, skin identifiers, content, and default skin
-remain unchanged. Focused asset and unit checks, the production build, the
-nine-state browser test, and installed two-sided runtime checks passed. These
-checks cover all nine logical states at 1024 by 768, 1280 by 1024, and near-square
-1024 by 1023, plus six representative setup and idle samples, including
-high-density and landscape touch emulation. They do not establish full rollout
-acceptance. The aggregate quality gate remains deferred, and owner in-game
-evaluation is separate from technical verification.
+remain unchanged. The package passes asset and state validation and the
+production build. Focused production checks cover all nine states on both
+match sides at 1024 by 768. Weakness and grammar-mistake also pass protected
+art clearance with short and long speech at 1280 by 720, 1024 by 1023, and
+915 by 412. Owner in-game evaluation and the complete viewport and scene
+matrix remain separate. The aggregate quality gate remains deferred.
 The approved Marble Diplomat selection is installed with five reviewed matching
 poses under the authorized package integration. All six sources retain native
 1254-square canvases, right-facing composition, the accepted mature drawn face,
@@ -440,6 +442,10 @@ academic chassis panels. It also uses a ruler, an empty gradebook, a
 bell-shaped lower chassis, and a teaching platform with three wheels. Do not
 use an apron, frills, a maid cap, or a skirt.
 Do not use a vacuum, a cleaning tool, or a different domestic-service costume cue.
+The installed `schoolteacher` delivery source has a bounded exterior RGB ink
+correction with unchanged alpha and composition. Eight reviewed outer edges and
+42 neighboring samples meet the 1.80-through-2.20 range. Its selection and
+other poses retain their approved source pixels.
 
 Each skin has one transparent square selection master of at least 1024 pixels per edge. It has
 five state masters with the usual AVIF/WebP variants: `thinking`,
@@ -601,8 +607,8 @@ The PNG masters stay in the source package and in the development asset path.
 
 The fixed character and scene Portable Network Graphics (PNG) baseline below
 remains the inventory-validation boundary. It does not authorize a new bulk
-regeneration. The three-character trial and robot-preservation rules control
-new character work. Do not get replacement scope from a directory scan. The baseline contains 27 character PNG
+regeneration. The three-character trial and owner-authorized contour corrections
+control new character work. Do not get replacement scope from a directory scan. The baseline contains 27 character PNG
 files and four scene PNG files.
 
 The fixed character baseline contains 18 default portraits and these nine
@@ -657,8 +663,8 @@ generated again, those future requirements do not move into this milestone.
 Keep the baseline source hashes for replacement-inventory validation.
 Do not change the inventory to approve a rejected source.
 For new character work, apply the current character art direction and trial
-acceptance boundary below. Preserve approved robots and unrelated shipping
-packages. The initial trial uses researched identity briefs without old raster
+acceptance boundary below. Preserve unrelated shipping packages and approved
+robot features outside each reviewed contour correction. The initial trial uses researched identity briefs without old raster
 style inputs. After acceptance, the trial provides shared style references.
 A pose uses its accepted selection as its only image reference.
 
@@ -811,7 +817,20 @@ faces, varied adult body and head shapes, moderate head exaggeration, broad
 clean color shapes, controlled dark contours, and two-tone cel shading.
 Keep face and body rendering consistent. Do not use realistic skin detail,
 photographic portrait shading, glossy modeling, or one repeated head template.
-The approved Government AI robot skins remain unchanged.
+Keep approved Government AI robot skins installed until contour corrections
+pass the owner-set range and their replacement art is reviewed.
+
+For new or corrected character selections and poses, target an outer silhouette
+contour width of 2 source pixels per 1000 pixels of the selection's visible
+figure height. Accept widths from 1.80 through 2.20 pixels per 1000 pixels of
+that height. Measure visible height from the near-opaque subject, not the
+square canvas. When a pose and its selection have the same source canvas size,
+use the same nominal source-pixel width. If their canvas sizes differ, scale
+the width by the pose-to-selection canvas-width ratio. Do not make a crouched
+pose's contour thinner because its visible figure is shorter. Compare
+characters at equal displayed figure height and poses at a fixed canvas scale.
+Retain each approved Government AI robot source until a reviewed replacement
+passes the contour range and is installed.
 
 Each fictional archetype has a distinct silhouette, face shape, costume,
 gesture rhythm, and prop system. Keep anatomy coherent and recognizably adult.
@@ -898,7 +917,8 @@ requirement or a substitute for image review.
 
 A new selection with changed proportions needs matching state art before it
 replaces the shipping package. Keep the existing shipping selection and poses
-until that package is complete and checked. Do not replace approved robot art.
+until that package is complete and checked. Replace approved robot art only with
+a reviewed owner-authorized contour correction.
 Retain stable character and skin identifiers, gameplay data, and unaffected
 assets. The three-character trial does not authorize bulk roster replacement
 before artwork acceptance.
@@ -1399,12 +1419,13 @@ fixed baseline automatically. It can use its source PNG until Milestone 028
 promotes it through the release asset pipeline.
 
 `tools/build-character-package.ts` controls a targeted rebuild of one skin in
-a staged character tree. It builds again only the ten variants of the selected
-portrait and the thirty state variants of that skin. It uses all other variant
-bytes again only after validation of the source, manifest, hash, format,
-dimension, and byte budget. It builds the two global manifests again, runs the
-full character validators, and does not operate directly on the shipping
-character root.
+a staged character tree. It prepares the selected portrait's ten variants.
+Within the selected skin, it builds variants only for
+changed state sources and keeps the exact bytes of unchanged state variants.
+It keeps other skins' variants. Reuse requires validation of the source,
+manifest, hash, format, dimensions, and byte budget. It builds the two global
+manifests again, runs the full character validators, and does not operate
+directly on the shipping character root.
 
 Milestone 023 promotes the Milestone 015 title emblem, proscenium, and setup
 portrait frame through `tools/brand-assets.ts`. Their
@@ -1858,7 +1879,8 @@ reaction, or a character state is replaced or updated, the layout shift is
   reference. Its flat editorial cartoons have distinct adult silhouettes,
   clearly drawn faces, moderate head exaggeration, broad shapes, and two-tone
   shading. The product owner accepts the actual trial artwork before roster
-  expansion. Approved Government AI robot art stays unchanged.
+  expansion. Approved Government AI robot art stays installed until a reviewed
+  replacement meets the owner-set contour range.
 - **AC-023-16:** Inspect the three trial selections at source, roster, setup,
   and match scales on both player sides. Compare resemblance with the
   researched subject separately from style. Record identity distinction, contour

@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -5,6 +6,7 @@ import sharp from 'sharp';
 import { describe, expect, test } from 'vitest';
 import contract from '../../src/assets/characters/state-contract.json';
 import shippedSelection from '../../src/assets/characters/character-manifest.json';
+import { encodeVariant } from '../../tools/build-character-assets.ts';
 import {
   measurePackageBytes,
   validateStateManifest,
@@ -391,6 +393,90 @@ describe('complete character state contract', () => {
       await rm(root, { recursive: true, force: true });
     }
   });
+
+  test('a selected pose change preserves verified variants of unchanged poses', async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-state-reuse-'));
+    const { selection, manifest } = fixture();
+    const selectedId = 'government-ai--schoolteacher';
+    const hash = (bytes: Buffer) => createHash('sha256').update(bytes).digest('hex');
+    try {
+      const original = await sharp({
+        create: {
+          width: 1024,
+          height: 1024,
+          channels: 4,
+          background: { r: 120, g: 80, b: 40, alpha: 0.5 },
+        },
+      })
+        .png()
+        .toBuffer();
+      const variantBytes = new Map<string, Buffer>();
+      for (const width of [320, 640, 960]) {
+        for (const format of ['avif', 'webp'] as const) {
+          variantBytes.set(`${width}-${format}`, await encodeVariant(original, width, format));
+        }
+      }
+      const distinctThinking = await sharp(original)
+        .resize(320, 320)
+        .avif({ quality: 10 })
+        .toBuffer();
+      const thinkingVariant = `states/variants/${selectedId}--thinking-320x320.avif`;
+      await mkdir(path.join(root, 'states', 'variants'), { recursive: true });
+      const outputFiles: Promise<void>[] = [];
+      for (const asset of manifest.assets) {
+        const sourcePath = path.join(root, asset.source.path);
+        await mkdir(path.dirname(sourcePath), { recursive: true });
+        asset.source.width = 1024;
+        asset.source.height = 1024;
+        asset.source.bytes = original.length;
+        asset.source.sha256 = hash(original);
+        outputFiles.push(writeFile(sourcePath, original));
+        for (const variant of asset.variants) {
+          const bytes =
+            variant.path === thinkingVariant
+              ? distinctThinking
+              : variantBytes.get(`${variant.width}-${variant.format}`)!;
+          variant.bytes = bytes.length;
+          variant.sha256 = hash(bytes);
+          outputFiles.push(writeFile(path.join(root, variant.path), bytes));
+        }
+      }
+      await Promise.all(outputFiles);
+      await writeFile(path.join(root, 'character-manifest.json'), JSON.stringify(selection));
+      const manifestPath = path.join(root, 'states', 'state-manifest.json');
+      await writeFile(manifestPath, JSON.stringify(manifest));
+
+      const changed = await sharp({
+        create: {
+          width: 1024,
+          height: 1024,
+          channels: 4,
+          background: { r: 40, g: 80, b: 120, alpha: 0.5 },
+        },
+      })
+        .png()
+        .toBuffer();
+      await writeFile(path.join(root, 'states', selectedId, 'delivery.png'), changed);
+      const beforeManifest = await readFile(manifestPath);
+      await writeFile(path.join(root, thinkingVariant), Buffer.from('corrupt'));
+      await expect(
+        buildCharacterStates({ characterRoot: root, only: [selectedId] }),
+      ).rejects.toThrow(/Cached state variant.*failed metadata/u);
+      expect(await readFile(manifestPath)).toEqual(beforeManifest);
+      await writeFile(path.join(root, thinkingVariant), distinctThinking);
+
+      const result = await buildCharacterStates({ characterRoot: root, only: [selectedId] });
+      expect(await readFile(path.join(root, thinkingVariant))).toEqual(distinctThinking);
+      expect(
+        result.assets.find(({ id }) => id === `${selectedId}--thinking`)!.variants[0]!.sha256,
+      ).toBe(hash(distinctThinking));
+      expect(result.assets.find(({ id }) => id === `${selectedId}--delivery`)!.source.sha256).toBe(
+        hash(changed),
+      );
+    } finally {
+      await rm(root, { recursive: true, force: true });
+    }
+  }, 180_000);
 
   test('reproduces one minimum-source package with exact reuse mappings and bytes', async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), 'grand-transition-state-package-'));

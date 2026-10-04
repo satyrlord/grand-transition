@@ -77,7 +77,8 @@ and one repeated head template.
 Each pose uses its own accepted selection as the only image reference. Keep
 native transparency and source dimensions. Do not enlarge or sharpen a source
 to simulate missing detail. Use the built-in chat image generator for
-characters, poses, desks, props, and foregrounds. Preserve approved robot art.
+characters, poses, desks, props, and foregrounds. Preserve approved robot
+identity and construction during reviewed contour corrections.
 
 Diaspora Oracle retains six native 1254-square, left-facing sources. Keep its
 sturdy adult silhouette, swept dark hair, white rolled-sleeve shirt, navy
@@ -147,10 +148,13 @@ Its alternate package also retains six native 1254-square sources, the accepted
 young adult face, thin black glasses, long brown-to-blonde hair, orange open
 blazer, cream round-neck blouse, navy trousers, brown low-heeled pumps, and one
 beige lidded cup. Each pose used only its accepted alternate selection.
-Preserve its distinct chin, speaking, recoil, and guarded gestures. Keep face,
-glasses, holding fingers, and cup clear above desk occlusion. The sources use
-only bounded detached alpha-1 cleanup, with reviewed pixels preserved during
-metadata registration. The default package remains unchanged.
+Preserve its distinct chin, speaking, recoil, and guarded gestures. Weakness
+uses two connected arms: one hand holds the cup, and the other supports that
+forearm. Keep face, glasses, holding fingers, and cup clear above desk occlusion.
+The selection and four other poses retain their reviewed contour corrections.
+The regenerated weakness uses only bounded detached alpha-1 cleanup, with
+reviewed pixels preserved during metadata registration. The default package
+remains unchanged.
 
 Marble Diplomat retains six native 1254-square sources, the approved mature
 drawn face, short swept gray hair, tall adult silhouette, charcoal suit,
