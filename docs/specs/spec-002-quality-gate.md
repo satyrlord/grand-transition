@@ -40,7 +40,14 @@ The production build validates the audio assets and the neural speech assets bef
 
 `quality:quick` runs `validate`, unit tests, coverage, and end-to-end tests in that sequence.
 The coverage phase runs the complete Browser Mode suite, so the gate does not run `test:browser` as a separate phase.
-The gate prints the elapsed time of each phase when it stops.
+The gate runs each phase, also after an earlier phase failed, and it exits with the failure status of the first failed phase.
+When the production build of the end-to-end phase fails, that phase stops and reports the build failure.
+At the end, it prints the elapsed time of each phase and a summary of each failed test, and it writes `tmp/quality-gate/report.json`.
+The summary gives the phase, the file, the full test name, and one command that runs only that test in the same mode.
+The gate never retries a failed test, and Playwright runs with retries disabled.
+When `quality:quick` or `quality:full` passes on a clean working tree, it writes `tmp/quality-gate/last-pass.json` with the mode, the Git tree SHA of `HEAD`, the Node.js and npm versions, and the time.
+The optional `.githooks/pre-push` check, which `npm run hooks:install` enables, uses that record for pushes to `main`.
+Milestone 033 specifies the report, the record, and the check.
 It does not run the slowest tests until their cumulative elapsed time gets to 20 percent of the last recorded full gate.
 These tests are the current-catalog 500-match calibration, the content-balance matrix, and the production ladder flow, which plays one rung for each playable scene.
 They also include the isolated character content lifecycle with its two production builds.
@@ -74,13 +81,15 @@ Only that project runs the five cold and five warm performance trials.
 On a hosted CI runner, it records the Milestone 030 timing budgets without enforcing them.
 Quick mode and direct quick test commands cannot select that workload.
 `ci` is an alias of `quality:full`.
-A GitHub workflow never runs `quality:full`, `ci`, or an end-to-end test script.
+A GitHub workflow never runs `quality:full`, `ci`, or an end-to-end test script directly.
+Its push run uses `quality:quick`, which includes the quick end-to-end phase.
 `quality:release` is the full gate without the `test:e2e:full` phase.
 It runs `build:bundle` in place of that phase, because the release workflow of Milestone 031 deploys the `dist/` output of the gate.
 The pull-request quality workflow and the release workflow run `quality:release`.
+The quality workflow runs `quality:quick` on Linux for each push to `main`, so that a platform defect shows before a release.
 When a change touches `relay/`, the quality workflow also installs the relay dependencies and runs the relay tests, as Milestone 035 requires.
 The relay tests are not end-to-end tests.
-Thus, the end-to-end tests and the performance trials run only in a local full gate.
+Thus, the full end-to-end tests and the performance trials run only in a local full gate.
 The quality workflow installs stable Chrome and keeps the gate records for 14 days.
 The release gate gives the same full-mode environment markers as the full gate.
 An agent uses `quality:quick` for the usual validation.

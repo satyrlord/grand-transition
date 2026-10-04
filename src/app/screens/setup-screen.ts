@@ -205,7 +205,7 @@ export class GrandTransitionSetup extends LitElement {
         @pointerdown=${this.dismissPinnedPanel}
         @click=${this.dismissPinnedPanel}
       >
-        <header class="setup-heading">
+        <header class="setup-heading" data-layout-region="heading">
           <p class="setup-channel">${msg('Channel 3')}</p>
           <h1 id="setup-title" tabindex="-1">
             ${msg('Select your debaters')}
@@ -231,6 +231,7 @@ export class GrandTransitionSetup extends LitElement {
           ${errors.mode ? html`<p id="mode" role="alert" tabindex="-1">${errors.mode}</p>` : nothing}
           <section
             class="character-select-stage"
+            data-layout-region="character-stage"
             aria-label=${msg('Character selection')}
           >
             ${this.contestantStage({
@@ -246,8 +247,8 @@ export class GrandTransitionSetup extends LitElement {
               fixed: false,
             })}
 
-            <section class="roster-zone" aria-labelledby="roster-title">
-              <div class="roster-heading">
+            <section class="roster-zone" data-layout-region="roster" aria-labelledby="roster-title">
+              <div class="roster-heading" data-layout-region="roster-heading">
                 <h2 id="roster-title">${msg('Contestant roster')}</h2>
                 <p aria-live="polite">
                   ${
@@ -266,6 +267,7 @@ export class GrandTransitionSetup extends LitElement {
 
               <div
                 class="roster-grid"
+                data-layout-region="roster-grid"
                 role="group"
                 aria-label=${msg(str`Contestant portrait roster, ${portraits.length} portraits`)}
                 tabindex="0"
@@ -273,7 +275,7 @@ export class GrandTransitionSetup extends LitElement {
                 ${portraits.map((portrait) => this.rosterChoice(portrait))}
               </div>
 
-              <p class="setup-note">
+              <p class="setup-note" data-layout-region="roster-note">
                 ${
                   this.snapshot.mode === 'ladder'
                     ? msg('Opponent and scene are fixed by local ladder progress.')
@@ -304,6 +306,7 @@ export class GrandTransitionSetup extends LitElement {
           </section>
 
           <fieldset
+            data-layout-region="match-settings"
             class="match-settings match-settings--${
               this.snapshot.mode === 'ladder'
                 ? 'ladder'
@@ -319,7 +322,7 @@ export class GrandTransitionSetup extends LitElement {
             </legend>
             ${
               this.snapshot.mode === 'ai'
-                ? html`<div class="match-settings-difficulty">
+                ? html`<div class="match-settings-difficulty" data-layout-region="settings-difficulty">
                     ${this.selectField({
                       field: 'aiDifficulty',
                       label: msg('Difficulty'),
@@ -345,10 +348,10 @@ export class GrandTransitionSetup extends LitElement {
                   ? this.ladderRecord()
                   : nothing
             }
-            <div class="match-settings-scene">
+            <div class="match-settings-scene" data-layout-region="settings-scene">
               ${this.sceneMonitorField(this.snapshot, errors.sceneId)}
             </div>
-            <div class="match-settings-language setup-field">
+            <div class="match-settings-language setup-field" data-layout-region="settings-language">
               <label for="gameLocale">${msg('Phrase language')}</label>
               <select id="gameLocale" name="gameLocale" .value=${this.gameLocale}
                 @change=${this.changeGameLocale}>
@@ -361,7 +364,7 @@ export class GrandTransitionSetup extends LitElement {
             </div>
           </fieldset>
 
-          <div class="setup-actions">
+          <div class="setup-actions" data-layout-region="actions">
             ${
               this.snapshot.mode === 'hotseat' && !this.hotseatAvailable
                 ? html`<p class="orientation-note">${msg('Rotate to landscape to start Multiplayer.')}</p>`
@@ -428,6 +431,7 @@ export class GrandTransitionSetup extends LitElement {
     return html`
       <section
         class="contestant-stage contestant-stage--${config.side}"
+        data-layout-region=${`contestant-${config.side}`}
         data-character-id=${config.character?.id ?? ''}
         data-skin-id=${config.skin?.id ?? ''}
         data-portrait-facing=${config.skin?.facing ?? 'right'}
@@ -1095,13 +1099,14 @@ export class GrandTransitionSetup extends LitElement {
   private ladderRecord(): TemplateResult {
     const progress = this.ladderProgress;
     if (!progress) {
-      return html`<div class="match-settings-difficulty ladder-record" role="status">
+      return html`<div class="match-settings-difficulty ladder-record" data-layout-region="settings-difficulty" role="status">
         <strong>${msg('Ladder unavailable')}</strong>
         <span>${msg('Choose Ladder again to create local progress.')}</span>
       </div>`;
     }
     return html`<div
       class="match-settings-difficulty ladder-record"
+      data-layout-region="settings-difficulty"
       role="status"
       data-completed=${progress.completed ? 'true' : 'false'}
     >

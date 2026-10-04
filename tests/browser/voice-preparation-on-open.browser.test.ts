@@ -4,7 +4,11 @@ import type { GrandTransitionApp } from '../../src/app/app-shell.ts';
 import '../../src/app/app-shell.ts';
 import { defaultSettings, encodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
 import { settingsStorageKey } from '../../src/persistence/settings.ts';
-import { reloadStoredData, resetStoredData } from './persistence-test-helpers.ts';
+import {
+  reloadStoredData,
+  resetStoredData,
+  writeStoredDocument,
+} from './persistence-test-helpers.ts';
 
 const workers: string[] = [];
 const commands: string[] = [];
@@ -40,7 +44,7 @@ async function openMenu(speechEnabled: boolean): Promise<GrandTransitionApp> {
   await page.viewport(1280, 720);
   vi.stubGlobal('Worker', HeldWorker);
   if (!('gpu' in navigator)) vi.stubGlobal('navigator', Object.assign(navigator, { gpu: {} }));
-  localStorage.setItem(
+  writeStoredDocument(
     settingsStorageKey,
     encodeSettings({ ...defaultSettings, interfaceLocale: 'en', speechEnabled, gpuVoices: true }),
   );

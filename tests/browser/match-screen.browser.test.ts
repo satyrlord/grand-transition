@@ -24,11 +24,7 @@ import {
 import { decodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
 import { settingsStorageKey } from '../../src/persistence/settings.ts';
 import { displayWeaknessName } from '../../src/localization/romanian-display-names.ts';
-import {
-  resetStoredData,
-  storeReturningPlayerSettings,
-  storedDocument,
-} from './persistence-test-helpers.ts';
+import { storedDocument } from './persistence-test-helpers.ts';
 import { setInterfaceLocale } from '../../src/app/interface-localization.ts';
 import { currentGameTextLocale, setGameTextLocale } from '../../src/app/game-text-language.ts';
 
@@ -2139,7 +2135,6 @@ test('updates and expires one 30-second turn', async () => {
 
 test('ticks the final five seconds of a timed turn once each', async () => {
   vi.useFakeTimers();
-  await resetStoredData();
   const match = await startMatch();
   const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   const audio = (
@@ -2180,7 +2175,6 @@ test('ticks the final five seconds of a timed turn once each', async () => {
 
 test('keeps timer audio silent while the document is hidden', async () => {
   vi.useFakeTimers();
-  await resetStoredData();
   const match = await startMatch();
   const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   const audio = (
@@ -2216,7 +2210,6 @@ test('keeps timer audio silent while the document is hidden', async () => {
 
 test('requests no timer tick under Unlimited or while paused', async () => {
   vi.useFakeTimers();
-  await resetStoredData();
   const match = await startMatch();
   const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   let ticks = 0;
@@ -2411,7 +2404,6 @@ test('resets fractional elapsed time for a new turn and expires it once', async 
 
 test('applies Pause settings when the match resumes', async () => {
   vi.useFakeTimers();
-  await resetStoredData();
   const match = await startMatch();
   const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   const commands: MatchCommandEvent[] = [];
@@ -2596,8 +2588,6 @@ async function startMatch(
   sceneId = 'transition-era-television-studio',
 ): Promise<GrandTransitionMatch> {
   await page.viewport(1280, 720);
-  // These checks cover a returning player's stored timer and Tutorial choices.
-  await storeReturningPlayerSettings();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;

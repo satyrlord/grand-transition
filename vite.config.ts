@@ -77,6 +77,11 @@ export default defineConfig(({ command }) => ({
               name: 'scene-data',
               test: /[/\\]src[/\\]assets[/\\]scenes[/\\]scene-manifest\.json$/u,
             },
+            {
+              // The pause view keeps the application shell chunk under the Vite warning limit.
+              name: 'interruption-screen',
+              test: /[/\\]src[/\\]app[/\\]screens[/\\]interruption-screen\.ts$/u,
+            },
             { name: 'vendor', test: /[/\\]node_modules[/\\]/u, priority: 1 },
           ],
         },

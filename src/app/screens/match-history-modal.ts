@@ -47,13 +47,14 @@ export class GrandTransitionMatchHistory extends LitElement {
       <div class="match-history-backdrop">
         <section
           class="match-history-dialog"
+          data-layout-region="history-dialog"
           role="dialog"
           aria-modal="true"
           aria-labelledby="match-history-title"
           aria-describedby="match-history-description"
           @keydown=${this.handleKeyDown}
         >
-          <header class="match-history-heading">
+          <header class="match-history-heading" data-layout-region="history-heading">
             <h2 id="match-history-title">${msg('Match history')}</h2>
             <button
               type="button"
@@ -63,11 +64,11 @@ export class GrandTransitionMatchHistory extends LitElement {
               ${msg('Close')}
             </button>
           </header>
-          <p id="match-history-description" class="match-history-description">
+          <p id="match-history-description" class="match-history-description" data-layout-region="history-description">
             ${msg('Completed matches stored on this browser.')}
           </p>
           ${this.renderPersistenceNotice()}
-          <div class="match-history-list" tabindex="0">
+          <div class="match-history-list" data-layout-region="history-list" tabindex="0">
             ${
               this.entries.length === 0
                 ? html`<p class="match-history-empty">
@@ -84,7 +85,7 @@ export class GrandTransitionMatchHistory extends LitElement {
   private renderPersistenceNotice(): TemplateResult | typeof nothing {
     if (this.persistenceFailure === null) return nothing;
     return html`
-      <p class="match-history-notice" role="status">
+      <p class="match-history-notice" data-layout-region="history-notice" role="status">
         ${msg(
           "Match history cannot use persistent storage. New results are available only until this page closes. Allow site storage or clear this site's stored data, then reload.",
         )}

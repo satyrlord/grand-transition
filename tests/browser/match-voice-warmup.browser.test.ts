@@ -6,7 +6,11 @@ import '../../src/app/app-shell.ts';
 import { NeuralVoiceRouter } from '../../src/audio/neural-voice-router.ts';
 import { defaultSettings, encodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
 import { settingsStorageKey } from '../../src/persistence/settings.ts';
-import { reloadStoredData, resetStoredData } from './persistence-test-helpers.ts';
+import {
+  reloadStoredData,
+  resetStoredData,
+  writeStoredDocument,
+} from './persistence-test-helpers.ts';
 
 afterEach(async () => {
   vi.restoreAllMocks();
@@ -20,7 +24,7 @@ test('a Romanian match starts loading the voices of its two speakers before the 
   vi.spyOn(NeuralVoiceRouter.prototype, 'initialize').mockResolvedValue(false);
   const warm = vi.spyOn(NeuralVoiceRouter.prototype, 'warmVoices').mockImplementation(() => {});
   await page.viewport(1280, 720);
-  localStorage.setItem(
+  writeStoredDocument(
     settingsStorageKey,
     encodeSettings({
       ...defaultSettings,

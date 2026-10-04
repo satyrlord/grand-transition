@@ -18,16 +18,18 @@ import {
   resetStoredData,
   storedDocument,
   storedDocumentKeys,
+  writeStoredDocument,
 } from './persistence-test-helpers.ts';
+import { firstRun } from './stored-profile.ts';
 
 beforeEach(async () => {
   await page.viewport(1280, 720);
-  await resetStoredData();
 });
 
-afterEach(() => {
+afterEach(async () => {
   vi.restoreAllMocks();
   document.body.innerHTML = '';
+  await resetStoredData();
 });
 
 test('restores every stored setting and applies title changes immediately', async () => {
@@ -48,7 +50,7 @@ test('restores every stored setting and applies title changes immediately', asyn
     autoComplete: false,
     tutorialMode: true,
   });
-  localStorage.setItem(settingsStorageKey, encodeSettings(stored));
+  writeStoredDocument(settingsStorageKey, encodeSettings(stored));
   let app = await mountApp();
   let settings = await openSettings(app);
 
@@ -184,7 +186,7 @@ test.each([
 ] as const)(
   'uses defaults for %s without overwriting it before a user change',
   async (_case, badBytes) => {
-    localStorage.setItem(settingsStorageKey, badBytes);
+    writeStoredDocument(settingsStorageKey, badBytes);
     const app = await mountApp();
 
     expect(document.querySelector('.title-settings-notice')?.textContent).toContain(
@@ -273,57 +275,64 @@ test.each([
   },
 );
 
-test('a new browser plays one rehearsal match without changing stored settings', async () => {
-  const app = await mountApp();
-  await page.getByRole('button', { name: 'Multiplayer' }).click();
-  await expect
-    .element(page.getByText('Rehearsal match: Tutorial is on and there is no turn timer.'))
-    .toBeVisible();
-  await lockInSetup();
-  await page.getByRole('button', { name: 'Start match' }).click();
-  await app.updateComplete;
-  let match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
-  expect(match.turnTimerSeconds).toBeNull();
-  expect(match.tutorialMode).toBe(true);
-  expect(await storedDocument(settingsStorageKey)).toBeNull();
+test(
+  'a new browser plays one rehearsal match without changing stored settings',
+  firstRun,
+  async () => {
+    const app = await mountApp();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
+    await expect
+      .element(page.getByText('Rehearsal match: Tutorial is on and there is no turn timer.'))
+      .toBeVisible();
+    await lockInSetup();
+    await page.getByRole('button', { name: 'Start match' }).click();
+    await app.updateComplete;
+    let match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
+    expect(match.turnTimerSeconds).toBeNull();
+    expect(match.tutorialMode).toBe(true);
+    expect(await storedDocument(settingsStorageKey)).toBeNull();
 
-  await completeMatch(app);
-  await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
-  match.querySelector<HTMLButtonElement>('.round-review-primary')!.click();
-  await app.updateComplete;
+    await completeMatch(app);
+    await vi.waitFor(() => expect(document.querySelector('#round-review-title')).not.toBeNull());
+    match.querySelector<HTMLButtonElement>('.round-review-primary')!.click();
+    await app.updateComplete;
 
-  await page.getByRole('button', { name: 'Multiplayer' }).click();
-  expect(document.querySelector('.setup-rehearsal-note')).toBeNull();
-  await lockInSetup();
-  await page.getByRole('button', { name: 'Start match' }).click();
-  await app.updateComplete;
-  match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
-  expect(match.turnTimerSeconds).toBe(30);
-  expect(match.tutorialMode).toBe(false);
-});
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
+    expect(document.querySelector('.setup-rehearsal-note')).toBeNull();
+    await lockInSetup();
+    await page.getByRole('button', { name: 'Start match' }).click();
+    await app.updateComplete;
+    match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
+    expect(match.turnTimerSeconds).toBe(30);
+    expect(match.tutorialMode).toBe(false);
+  },
+);
 
-test('a timer selected in Pause replaces the rehearsal timer and ends the rehearsal', async () => {
-  const app = await mountApp();
-  await page.getByRole('button', { name: 'Multiplayer' }).click();
-  await lockInSetup();
-  await page.getByRole('button', { name: 'Start match' }).click();
-  await app.updateComplete;
-  const match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
-  expect(match.turnTimerSeconds).toBeNull();
+test(
+  'a timer selected in Pause replaces the rehearsal timer and ends the rehearsal',
+  firstRun,
+  async () => {
+    const app = await mountApp();
+    await page.getByRole('button', { name: 'Multiplayer' }).click();
+    await lockInSetup();
+    await page.getByRole('button', { name: 'Start match' }).click();
+    await app.updateComplete;
+    const match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
+    expect(match.turnTimerSeconds).toBeNull();
 
-  match.dispatchEvent(new CustomEvent('turn-timer-change', { bubbles: true, detail: 15 }));
-  await app.updateComplete;
-  expect(match.turnTimerSeconds).toBe(15);
-  expect(match.tutorialMode).toBe(true);
-  expect(decodeSettings((await storedDocument(settingsStorageKey))!)).toMatchObject({
-    ok: true,
-    value: { turnTimerSeconds: 15, tutorialMode: false },
-  });
-  expect((app as unknown as { rehearsalAvailable(): boolean }).rehearsalAvailable()).toBe(false);
-});
+    match.dispatchEvent(new CustomEvent('turn-timer-change', { bubbles: true, detail: 15 }));
+    await app.updateComplete;
+    expect(match.turnTimerSeconds).toBe(15);
+    expect(match.tutorialMode).toBe(true);
+    expect(decodeSettings((await storedDocument(settingsStorageKey))!)).toMatchObject({
+      ok: true,
+      value: { turnTimerSeconds: 15, tutorialMode: false },
+    });
+    expect((app as unknown as { rehearsalAvailable(): boolean }).rehearsalAvailable()).toBe(false);
+  },
+);
 
 test('stored settings skip the rehearsal match', async () => {
-  localStorage.setItem(settingsStorageKey, encodeSettings(defaultSettings));
   const app = await mountApp();
   await page.getByRole('button', { name: 'Multiplayer' }).click();
   expect(document.querySelector('.setup-rehearsal-note')).toBeNull();
@@ -365,7 +374,7 @@ test('the Settings modal traps focus, closes with Escape, and restores focus', a
 });
 
 test('applies the interface language immediately and keeps every other stored value', async () => {
-  localStorage.setItem(
+  writeStoredDocument(
     settingsStorageKey,
     encodeSettings({ ...defaultSettings, basePointsMultiplier: 4, tutorialMode: true }),
   );
@@ -426,7 +435,6 @@ test('applies the interface language immediately and keeps every other stored va
 });
 
 test('keeps the interface and game languages independent and persists both after reload', async () => {
-  localStorage.setItem(settingsStorageKey, encodeSettings(defaultSettings));
   let app = await mountApp();
   let settings = await openSettings(app);
   const interfaceSelect = () =>
@@ -483,7 +491,7 @@ test('keeps the interface and game languages independent and persists both after
 });
 
 test('shows the storage fallback notice in the selected interface language', async () => {
-  localStorage.setItem(
+  writeStoredDocument(
     settingsStorageKey,
     encodeSettings({ ...defaultSettings, interfaceLocale: 'ro-RO' }),
   );

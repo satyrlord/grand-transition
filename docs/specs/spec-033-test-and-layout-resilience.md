@@ -127,11 +127,17 @@ It does these checks at each viewport of the supported landscape matrix and at t
   An overlay must not intersect a sibling region that is not an overlay, and its test must name the overlay.
 - Each region is fully inside its parent region, or inside a scroll container that the user can reach.
 - The document has no horizontal scroll.
-- The text in each region has a computed font size of 12 pixels or more.
+- The text in each region has a computed font size of 11 pixels or more, the floor of Milestone 023.
 
 The test also records the smallest free space around each region.
 It writes the value to its output, so a review can see which regions have almost no space before they overlap.
 `quality:quick` runs the reference viewport, and the full gate runs all the viewports, as Milestone 002 specifies.
+
+The page is the parent of a top-level region.
+The test uses page coordinates, so a scrolled page gives the same result.
+A top-level region below the fold is inside the page when the page scrolls vertically.
+A region inside a scroll container is reachable when the container has a tab stop or holds a control that can take the keyboard focus.
+The test uses the 1024 by 720, 1024 by 768, 1280 by 720, 1400 by 1050, and 1920 by 1080 matrix of Milestone 018, and the 915 by 412 Pixel 7 landscape viewport.
 
 A new element in an existing region gets these checks automatically.
 A new region must declare its name, and it then also gets the checks.
@@ -152,7 +158,7 @@ When this test and an existing geometry test check the same property, keep the m
 - **AC-033-09:** With the hooks installed, a push to `main` of a commit whose tree has no gate record stops and gives the gate command.
   A push of a commit with a record, a push to a different branch, and a push with the skip variable continue.
 - **AC-033-10:** Each primary screen marks its regions.
-  The shared layout test finds a sibling overlap, a region outside its parent, horizontal scroll, and text smaller than 12 pixels.
+  The shared layout test finds a sibling overlap, a region outside its parent, horizontal scroll, and text smaller than 11 pixels.
   A fixture test of each failure proves this.
 - **AC-033-11:** The shared layout test passes on all primary screens at all the supported viewports in the full gate.
 - **AC-033-12:** The named hover test passes in 20 consecutive complete runs of the browser suite, with no retry.
@@ -167,6 +173,36 @@ Stop when the acceptance criteria pass.
 Do not change a game rule, the content, the art, or the visual design.
 If a layout region fails the new test, record the defect and repair it in the owner milestone of that screen.
 Do not change the design in this milestone.
+
+## Implementation record
+
+- **Storage profiles:** `tests/browser/setup-stored-profile.ts` applies the profile before each browser test, and `firstRun` from `tests/browser/stored-profile.ts` selects `first-run`.
+  The Playwright fixture already existed from Milestone 031.
+  Seven browser test files changed because of the profile, and one helper lost `storeReturningPlayerSettings()`.
+  The two `first-run` browser tests that needed the empty state declare it.
+- **Platform-independent tests:** the brand-asset reproduction test, the native-alpha AVIF tests, and the `tmp/` tests already followed the contract in the checked-out tree.
+  The Linux runner is not available locally, so the first push to `main` is the Linux evidence.
+- **Gate:** `tools/run-quality-gate.ts`, `tools/quality-gate-report.ts`, and `tools/quality-gate-record.ts` implement the report, the single-test commands, and the gate record.
+  `.githooks/pre-push` and `npm run hooks:install` implement the optional check.
+  Playwright retries are off.
+- **Layout regions:** the title, the three setup modes, the match, the pause overlay, the victory dialog, and match history mark their regions in `src/app/screens/`.
+  `tests/browser/layout-regions.ts` is the shared checker, and `tests/browser/layout-regions.browser.test.ts` has its fixture tests and the screen checks.
+- **Text floor:** the draft required 12 pixels, but the shipped screens use 11 to 11.5 pixels and Milestone 023 sets an 11 pixel floor.
+  The product owner chose the 11 pixel floor, so this specification now says 11 pixels.
+- **Defects found and repaired without a design change:** the title channel label was 10.2 pixels at narrow widths, and the history fact labels and phrase annotations were 10.6 and 9.3 pixels.
+  They now use the 11 pixel floor.
+  The title region of the emblem, the heading, and the subtitle replaced the wide marquee box, because only that box met the channel label.
+- **Bundle limit:** the region attributes made `app-shell` 501,495 bytes, which is over the 500,000 byte warning limit.
+  The pause overlay now has its own chunk in `vite.config.ts`, and `app-shell` is 490,460 bytes.
+  A chunk that held both the pause overlay and match history made the production page load with a `script-src: eval` violation, so match history stays in `app-shell`.
+- **Evidence:**
+  `quality:quick` passed on the final tree: validate 133.0 s, test 297.3 s, coverage 69.9 s, and end-to-end 925.2 s.
+  The first quick run before the chunk repair failed one end-to-end test, and the new report named it and its command.
+  The Browser Mode suite passed 20 consecutive complete runs, 946 tests in each run, with no retry.
+  The first attempt at 20 runs had one run that failed with "Browser connection was closed" in `match-screen`, so the count restarted.
+  A clean checkout cannot run the earlier gate without the ignored local files, so there are no phase times from before the change.
+  The gate record was not written, because the working tree has changes.
+  The full gate and `test:e2e:full` were not run, as `AGENTS.md` requires.
 
 ## Reference
 

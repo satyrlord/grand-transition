@@ -73,8 +73,9 @@ export class GrandTransitionInterruption extends LitElement {
         data-exit-confirmation=${confirmingExit ? 'true' : nothing}
         @keydown=${this.handleKeydown}
       >
-        <div class="interruption-broadcast-mark">${msg('Channel 3')}</div>
+        <div class="interruption-broadcast-mark" data-layout-region="broadcast-mark">${msg('Channel 3')}</div>
         <section
+          data-layout-region="notice"
           class="interruption-notice ${
             paused && !confirmingExit ? 'interruption-notice--paused' : ''
           }"
@@ -86,7 +87,7 @@ export class GrandTransitionInterruption extends LitElement {
           ${
             recommendation
               ? nothing
-              : html`<p class="interruption-status">
+              : html`<p class="interruption-status" data-layout-region="status">
             ${
               confirmingExit
                 ? msg('Match interruption')
@@ -96,7 +97,7 @@ export class GrandTransitionInterruption extends LitElement {
             }
           </p>`
           }
-          <h1 id="interruption-title">
+          <h1 id="interruption-title" data-layout-region="title">
             ${
               confirmingExit
                 ? msg('End this match?')
@@ -147,8 +148,8 @@ export class GrandTransitionInterruption extends LitElement {
                     <p>
                       ${msg('The match is concealed and the turn timer is stopped.')}
                     </p>
-                    <div class="interruption-settings">
-                      <fieldset class="interruption-setting">
+                    <div class="interruption-settings" data-layout-region="settings">
+                      <fieldset class="interruption-setting" data-layout-region="setting-timer">
                         <legend>${msg('Turn timer')}</legend>
                         <div
                           class="interruption-setting-options interruption-setting-options--timer"
@@ -160,7 +161,7 @@ export class GrandTransitionInterruption extends LitElement {
                           ${this.renderTimerOption(null, msg('Unlimited'))}
                         </div>
                       </fieldset>
-                      <fieldset class="interruption-setting">
+                      <fieldset class="interruption-setting" data-layout-region="setting-auto-complete">
                         <legend>${msg('Auto-complete')}</legend>
                         <div
                           class="interruption-setting-options"
@@ -173,6 +174,7 @@ export class GrandTransitionInterruption extends LitElement {
                       </fieldset>
                       <fieldset
                         class="interruption-setting interruption-setting--sound"
+                        data-layout-region="setting-sound"
                       >
                         <legend>${msg('Sound')}</legend>
                         <div class="interruption-audio-options">
@@ -192,6 +194,7 @@ export class GrandTransitionInterruption extends LitElement {
                       </fieldset>
                       <fieldset
                         class="interruption-setting interruption-setting--phrase-color-coding"
+                        data-layout-region="setting-color-coding"
                       >
                         <legend>${msg('Phrase color coding')}</legend>
                         <div
@@ -206,6 +209,7 @@ export class GrandTransitionInterruption extends LitElement {
                     </div>
                     <div
                       class="interruption-actions interruption-actions--paused"
+                      data-layout-region="actions"
                     >
                       <button
                         type="button"
@@ -243,7 +247,7 @@ export class GrandTransitionInterruption extends LitElement {
                   `
           }
         </section>
-        <footer>${msg('Grand Transition: A Verbal Republic')}</footer>
+        <footer data-layout-region="footer">${msg('Grand Transition: A Verbal Republic')}</footer>
       </main>
     `;
   }

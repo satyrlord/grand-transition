@@ -29,7 +29,7 @@ npm run localization:extract | localization:build | localization:validate
 npm run test | test:coverage | test:browser | test:e2e
 npm run test:full | test:coverage:full | test:browser:full | test:e2e:full
 npm run test:published -- --base-url <url>
-npm run quality:quick | quality:full | ci
+npm run quality:quick | quality:full | ci | hooks:install
 ```
 
 `validate` includes markdownlint-cli2, the Prettier format check, assets, content, localization, pure-boundary checks, lint, and types.
@@ -46,6 +46,7 @@ All browser tests use Chromium in both gates.
 An agent runs the full gate only when the user tells the agent directly to use the full quality-gate skill.
 Continuous integration (CI) never runs the full gate.
 The pull-request workflow and the release workflow run `quality:release`, which is the full gate without `test:e2e:full`.
+A push to `main` runs `quality:quick` on Linux in the quality workflow.
 When a change touches `relay/`, CI also runs the relay tests.
 
 These test commands do not run the slowest set: `npm run test`, `npm run test:browser`, `npm run test:coverage`, and `npm run test:e2e`.
@@ -94,6 +95,11 @@ Give each test a name that tells its behavior, for example `continuation-break.t
 Add a regression test for each rule defect.
 Do not change fast-check seeds and replay paths.
 
+Each browser test and each E2E test starts with a storage profile.
+The default is `returning`, so the rehearsal match does not start.
+Declare `first-run` with `firstRun` from `tests/browser/stored-profile.ts` or with `test.use({ storedProfile: 'first-run' })`.
+Only the shared setup file and the shared fixture store default settings to make a returning player.
+Each primary screen marks its layout regions with `data-layout-region`, and `tests/browser/layout-regions.browser.test.ts` checks them.
 Run Lit tests in Vitest Browser Mode.
 Run full-build tests with Playwright.
 Run tests of the primary user interface (UI) states at the supported landscape viewport matrix.

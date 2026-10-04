@@ -1,6 +1,6 @@
 import { lockInSetup } from './setup-test-helpers.ts';
 import { page } from 'vitest/browser';
-import { afterEach, beforeEach, expect, onTestFinished, test, vi } from 'vitest';
+import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { GrandTransitionApp } from '../../src/app/app-shell.ts';
 import { NeuralVoiceRouter } from '../../src/audio/neural-voice-router.ts';
 import {
@@ -17,17 +17,22 @@ import type { MatchState } from '../../src/engine/match-lifecycle.ts';
 import { decodeMatchHistoryEntry } from '../../src/persistence/match-history.ts';
 import { defaultSettings, encodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
 import { settingsStorageKey } from '../../src/persistence/settings.ts';
-import { reloadStoredData, resetStoredData, storedHistory } from './persistence-test-helpers.ts';
+import {
+  reloadStoredData,
+  resetStoredData,
+  storedHistory,
+  writeStoredDocument,
+} from './persistence-test-helpers.ts';
 
 beforeEach(async () => {
   await page.viewport(1280, 720);
-  await resetStoredData();
 });
 
-afterEach(() => {
+afterEach(async () => {
   vi.useRealTimers();
   vi.restoreAllMocks();
   document.body.innerHTML = '';
+  await resetStoredData();
 });
 
 test('keeps a singular predicate complement for you in the sentence bubble', async () => {
@@ -166,7 +171,7 @@ test.each([
   'shows the comeback inline and resumes both deliveries after $pauseMode',
   async ({ width, height, pauseMode }) => {
     vi.useFakeTimers();
-    localStorage.setItem(
+    writeStoredDocument(
       settingsStorageKey,
       encodeSettings({
         ...defaultSettings,
@@ -249,12 +254,7 @@ test('a lethal grammar mistake shows persistent victory and restores history aft
   // voices from loading; this test covers only the recorded setting.
   vi.spyOn(NeuralVoiceRouter.prototype, 'preload').mockResolvedValue(false);
   vi.spyOn(NeuralVoiceRouter.prototype, 'initialize').mockResolvedValue(false);
-  const previousSettings = localStorage.getItem(settingsStorageKey);
-  onTestFinished(() => {
-    if (previousSettings === null) localStorage.removeItem(settingsStorageKey);
-    else localStorage.setItem(settingsStorageKey, previousSettings);
-  });
-  localStorage.setItem(
+  writeStoredDocument(
     settingsStorageKey,
     encodeSettings({
       ...defaultSettings,

@@ -38,7 +38,8 @@ export default defineConfig({
   testMatch: '**/*.spec.ts',
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
-  retries: process.env.CI ? 2 : 0,
+  // The gate never retries a failed test. See Milestone 033.
+  retries: 0,
   workers: process.env.CI ? 1 : 2,
   reporter: 'line',
   projects,

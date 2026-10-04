@@ -60,9 +60,13 @@ The full gate also runs the slowest test set, so let the run continue until it s
 Do not run a phase that passed again unless there is a change, a failure, or an open problem.
 When a change to configuration or to the files in `.github/` changes the checks in `npm run validate`, run that command.
 
-The runner stops at the first phase that fails.
-In verification mode, you can run each subsequent phase through its `:full` script.
-Do this only when the phase is safe and does not use the output of the failed phase.
+The runner runs each phase, also after a phase fails, and it exits with a failure status when one or more phases failed.
+When the production build of the end-to-end phase fails, that phase stops and reports the build failure.
+Read the summary and `tmp/quality-gate/report.json`.
+For each failed test, they give the phase, the file, the full test name, and one command that runs only that test.
+Do not retry a failed test to hide the failure.
+A test that fails and then passes at the next run is a defect in that test, so record it and repair its cause.
+A pass on a clean working tree writes `tmp/quality-gate/last-pass.json`, which the optional pre-push check reads.
 The balance validator runs only through the full-gate runner.
 
 In release mode, run the full gate.

@@ -84,9 +84,9 @@ export class GrandTransitionTitle extends LitElement {
       <main class="title-screen" aria-labelledby="game-title"
         style=${styleMap({ '--title-scene-image': brandImageSet(proscenium) })}>
         <div class="title-proscenium" aria-hidden="true"></div>
-        <p class="broadcast-channel">${msg('Channel 3')}</p>
+        <p class="broadcast-channel" data-layout-region="broadcast-channel">${msg('Channel 3')}</p>
         <header class="title-marquee">
-          <div class="title-emblem-frame">
+          <div class="title-emblem-frame" data-layout-region="emblem">
             <span class="title-emblem-poster" aria-hidden="true"></span>
             <picture class="title-emblem-picture">
               <source srcset=${emblem.avif} type="image/avif" />
@@ -104,16 +104,16 @@ export class GrandTransitionTitle extends LitElement {
               />
             </picture>
           </div>
-          <h1 id="game-title" tabindex="-1">
+          <h1 id="game-title" tabindex="-1" data-layout-region="game-title">
             <span>${msg('Grand')}</span>
             <span>${msg('Transition')}</span>
           </h1>
-          <p class="subtitle">${msg('A Verbal Republic')}</p>
+          <p class="subtitle" data-layout-region="subtitle">${msg('A Verbal Republic')}</p>
         </header>
 
-        <div class="title-transmission">
-          <p class="status">${msg('Live now, on NTV Channel 3!')}</p>
-          <nav class="title-mode-actions" aria-label=${msg('Main Menu')}>
+        <div class="title-transmission" data-layout-region="transmission">
+          <p class="status" data-layout-region="status">${msg('Live now, on NTV Channel 3!')}</p>
+          <nav class="title-mode-actions" data-layout-region="mode-actions" aria-label=${msg('Main Menu')}>
             ${(
               [
                 ['ai', msg('Single Player')],
@@ -145,7 +145,7 @@ export class GrandTransitionTitle extends LitElement {
           </p>`
               : nothing
           }
-          <div class="title-secondary-actions">
+          <div class="title-secondary-actions" data-layout-region="secondary-actions">
             <button
               type="button"
               class="title-settings-action"
@@ -189,10 +189,10 @@ export class GrandTransitionTitle extends LitElement {
           }
         </div>
 
-        <p class="title-disclaimer">
+        <p class="title-disclaimer" data-layout-region="disclaimer">
           ${msg('All characters and events are fictional composites created for satire.')}
         </p>
-        <p class="title-version">
+        <p class="title-version" data-layout-region="version">
           <span class="visually-hidden">${msg('Game version')}</span>
           ${__GAME_VERSION__}
         </p>

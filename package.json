@@ -44,6 +44,7 @@
     "quality:full": "node tools/run-quality-gate.ts full",
     "quality:release": "node tools/run-quality-gate.ts release",
     "ci": "npm run quality:full",
+    "hooks:install": "git config core.hooksPath .githooks",
     "audio:build": "node tools/audio-assets.ts build",
     "audio:validate": "node tools/audio-assets.ts validate",
     "speech:build": "node tools/neural-speech-assets.ts build && node tools/kokoro-gpu-assets.ts build && node tools/romanian-speech-assets.ts build",

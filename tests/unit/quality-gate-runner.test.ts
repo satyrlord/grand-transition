@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { stripVTControlCharacters } from 'node:util';
 import { describe, expect, test } from 'vitest';
+import type { GateReport } from '../../tools/quality-gate-report.ts';
 
 const runner = path.resolve('tools/run-quality-gate.ts');
 const phaseRunner = path.resolve('tools/run-test-phase.ts');
@@ -16,21 +17,26 @@ const fullPhases = ['validate', 'balance:validate', 'test', 'test:coverage', 'te
 const releasePhases = ['validate', 'balance:validate', 'test', 'test:coverage', 'build:bundle'];
 const fullScriptPhases = new Set(['test', 'test:coverage', 'test:e2e']);
 
-async function runFixture(mode: string, failPhase = '', includeNpm = true) {
+async function runFixture(mode: string, failPhase = '', includeNpm = true, resultsJson = '') {
   const root = await mkdtemp(path.join(os.tmpdir(), 'grand transition gate '));
   try {
     const npmCli = path.join(root, 'fake npm cli.mjs');
     const capture = path.join(root, 'phases.jsonl');
     await writeFile(
       npmCli,
-      `import { appendFileSync } from 'node:fs';
+      `import { appendFileSync, writeFileSync } from 'node:fs';
 appendFileSync(process.env.GT_GATE_CAPTURE, JSON.stringify({
   args: process.argv.slice(2), mode: process.env.GRAND_TRANSITION_QUALITY_GATE,
   runner: process.env.GRAND_TRANSITION_QUALITY_GATE_RUNNER,
   marker: process.env.GT_GATE_MARKER,
   validated: process.env.GRAND_TRANSITION_ASSETS_VALIDATED ?? null,
 }) + '\\n');
-if (process.argv[3] === process.env.GT_GATE_FAIL_PHASE) process.exit(23);
+if (process.argv[3] === process.env.GT_GATE_FAIL_PHASE) {
+  if (process.env.GT_GATE_RESULTS_JSON && process.env.GRAND_TRANSITION_GATE_RESULTS) {
+    writeFileSync(process.env.GRAND_TRANSITION_GATE_RESULTS, process.env.GT_GATE_RESULTS_JSON);
+  }
+  process.exit(23);
+}
 `,
     );
     const env = Object.fromEntries(
@@ -43,6 +49,8 @@ if (process.argv[3] === process.env.GT_GATE_FAIL_PHASE) process.exit(23);
         ...env,
         GT_GATE_CAPTURE: capture,
         GT_GATE_FAIL_PHASE: failPhase,
+        // The result paths are absolute, so the fixture root stands in for them.
+        GT_GATE_RESULTS_JSON: resultsJson.replaceAll('<root>', root.replaceAll('\\', '/')),
         GT_GATE_MARKER: 'preserved value with spaces',
       },
       encoding: 'utf8',
@@ -64,7 +72,14 @@ if (process.argv[3] === process.env.GT_GATE_FAIL_PHASE) process.exit(23);
           ),
       () => [],
     );
-    return { result, calls };
+    const report = await readFile(
+      path.join(root, 'tmp', 'quality-gate', 'report.json'),
+      'utf8',
+    ).then(
+      (text) => JSON.parse(text) as GateReport,
+      () => null,
+    );
+    return { result, calls, report };
   } finally {
     await rm(root, { recursive: true, force: true });
   }
@@ -117,10 +132,61 @@ describe('portable quality gate runner', () => {
     },
   );
 
-  test('preserves the first failing phase exit code and stops later phases', async () => {
-    const { result, calls } = await runFixture('quick', 'test:coverage');
+  test('runs every phase after a failure and keeps the first failing exit code', async () => {
+    const { result, calls, report } = await runFixture('quick', 'test:coverage');
     expect(result.status, result.stderr).toBe(23);
-    expect(calls.map((call) => call.args[1])).toEqual(phases.slice(0, 3));
+    // Each phase runs once, so the gate does not retry a failed phase.
+    expect(calls.map((call) => call.args[1])).toEqual(phases);
+    expect(report?.passed).toBe(false);
+    expect(report?.phases.map(({ phase, status }) => [phase, status])).toEqual([
+      ['validate', 'passed'],
+      ['test', 'passed'],
+      ['test:coverage', 'failed'],
+      ['test:e2e', 'passed'],
+    ]);
+    expect(report?.record).toBe('not written: a phase failed');
+    expect(stripVTControlCharacters(result.stdout)).toContain('Quality gate (quick) FAILED');
+  });
+
+  test('names each failed test and a command that runs only that test', async () => {
+    const results = JSON.stringify({
+      testResults: [
+        {
+          name: '<root>/tests/browser/match-screen.browser.test.ts',
+          status: 'failed',
+          assertionResults: [
+            { fullName: 'a passing test', status: 'passed' },
+            { fullName: 'keeps (long) text reachable', status: 'failed' },
+          ],
+        },
+      ],
+    });
+    const { result, report } = await runFixture('quick', 'test:coverage', true, results);
+    expect(result.status).toBe(23);
+    expect(report?.phases[2]?.failures).toEqual([
+      {
+        phase: 'test:coverage',
+        file: 'tests/browser/match-screen.browser.test.ts',
+        name: 'keeps (long) text reachable',
+        command:
+          'npm run test:browser -- tests/browser/match-screen.browser.test.ts -t "keeps \\(long\\) text reachable"',
+      },
+    ]);
+    const summary = stripVTControlCharacters(result.stdout);
+    expect(summary).toContain('test:  keeps (long) text reachable');
+    expect(summary).toContain('run:   npm run test:browser -- ');
+  });
+
+  test('reports a failed end-to-end build as the failure of that phase', async () => {
+    const results = JSON.stringify({
+      suites: [],
+      errors: [{ message: 'Process from config.webServer exited early.' }],
+    });
+    const { result, report } = await runFixture('quick', 'test:e2e', true, results);
+    expect(result.status).toBe(23);
+    expect(report?.phases[3]).toMatchObject({ phase: 'test:e2e', status: 'failed', failures: [] });
+    expect(report?.phases[3]?.note).toContain('production build or a web server failed');
+    expect(report?.phases[3]?.note).toContain('exited early');
   });
 
   test('requires npm invocation when its CLI path is unavailable', async () => {

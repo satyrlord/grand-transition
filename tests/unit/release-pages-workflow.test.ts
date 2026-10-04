@@ -27,6 +27,17 @@ describe('Milestone 031 release workflow', () => {
     expect(qualityWorkflow).not.toMatch(/deploy-pages|pages: write|id-token/u);
   });
 
+  test('runs the quick gate on Linux for each push to main, in addition to pull requests', async () => {
+    const workflow = await readFile('.github/workflows/quality-gate.yml', 'utf8');
+
+    expect(workflow).toMatch(/\non:\n {2}pull_request:\n {2}push:\n {4}branches:\n {6}- main\n/u);
+    expect(workflow).toContain('runs-on: ubuntu-latest');
+    expect(workflow).toMatch(/if: github\.event_name == 'push'\n {8}run: npm run quality:quick\n/u);
+    expect(workflow).toMatch(
+      /if: github\.event_name == 'pull_request'\n {8}run: npm run quality:release\n/u,
+    );
+  });
+
   test('never runs the full gate or the end-to-end tests in a GitHub workflow', async () => {
     const workflowFiles = await readdir('.github/workflows');
     for (const file of workflowFiles) {

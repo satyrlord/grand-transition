@@ -7,7 +7,6 @@ import { expect, test, vi } from 'vitest';
 import { registerGrandTransitionTitle } from '../../src/app/screens/title-screen.ts';
 import type { GrandTransitionMatchHistory } from '../../src/app/screens/match-history-modal.ts';
 import type { GrandTransitionApp } from '../../src/app/app-shell.ts';
-import { resetStoredData } from './persistence-test-helpers.ts';
 import '../../src/main.ts';
 
 test('renders the title screen in a real browser', async () => {
@@ -87,7 +86,6 @@ test('preserves an existing title-screen registration', async () => {
 });
 
 test('prevents the browser context menu only while the app shell is connected', async () => {
-  await resetStoredData();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;
@@ -103,7 +101,6 @@ test('prevents the browser context menu only while the app shell is connected', 
 
 test('opens an empty title-only history modal and traps keyboard focus', async () => {
   await page.viewport(1280, 720);
-  await resetStoredData();
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
   const app = document.querySelector('grand-transition-app') as GrandTransitionApp;
   await app.updateComplete;

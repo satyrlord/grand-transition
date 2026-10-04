@@ -408,6 +408,7 @@ export class GrandTransitionMatch extends LitElement {
       >
         <div
           class="broadcast-stage"
+          data-layout-region="broadcast-stage"
           data-scene-asset=${backgroundLayers[0]?.assetId ?? nothing}
           data-arena-reaction=${arenaReaction?.kind ?? nothing}
           data-reaction-side=${reactionSide ?? nothing}
@@ -423,7 +424,7 @@ export class GrandTransitionMatch extends LitElement {
               ></grand-transition-scene-ambience>`
               : nothing
           }
-          <header class="match-status-rail">
+          <header class="match-status-rail" data-layout-region="status-rail">
             <div class="match-header-controls">
               <button
                 type="button"
@@ -511,6 +512,8 @@ export class GrandTransitionMatch extends LitElement {
 
           <section
             class="sentence-ledger"
+            data-layout-region="sentence-bubble"
+            data-layout-overlay
             data-testid="sentence-ledger"
             data-speaker-side=${first.isActive ? 'red' : 'blue'}
             data-presenting=${this.presentation ? 'true' : nothing}
@@ -563,6 +566,7 @@ export class GrandTransitionMatch extends LitElement {
                 >
                   <section
                     class="common-phrases"
+                    data-layout-region="common-phrases"
                     aria-labelledby="common-phrases-title"
                   >
                     <h2 id="common-phrases-title" class="visually-hidden">
@@ -580,6 +584,7 @@ export class GrandTransitionMatch extends LitElement {
                     this.thinking
                       ? html`<section
                           class="ai-thinking-record"
+                          data-layout-region="private-hand"
                           data-side=${first.isActive ? 'red' : 'blue'}
                           aria-label=${msg('Artificial intelligence turn')}
                         >
@@ -588,6 +593,7 @@ export class GrandTransitionMatch extends LitElement {
                         </section>`
                       : html`<section
                           class="private-hand"
+                          data-layout-region="private-hand"
                           data-side=${first.isActive ? 'red' : 'blue'}
                           aria-labelledby="private-hand-title"
                         >
@@ -616,6 +622,7 @@ export class GrandTransitionMatch extends LitElement {
 
                         <nav
                     class="match-actions"
+                    data-layout-region="match-actions"
                     data-side=${first.isActive ? 'red' : 'blue'}
                     aria-label=${msg('Turn actions')}
                   >
@@ -667,7 +674,7 @@ export class GrandTransitionMatch extends LitElement {
           }`,
         )}
       >
-        <header class="player-hud">
+        <header class="player-hud" data-layout-region=${`plaque-${side}`}>
           <div class="player-health">
             <span class="player-health-label">${msg('Pride')}</span>
             <meter
@@ -1049,6 +1056,7 @@ export class GrandTransitionMatch extends LitElement {
       <div class="round-review-backdrop">
         <section
           class="round-review-dialog"
+          data-layout-region="victory-dialog"
           role="dialog"
           aria-modal="true"
           aria-labelledby="round-review-title"
@@ -1056,12 +1064,12 @@ export class GrandTransitionMatch extends LitElement {
           data-round-result=${round}
           data-victory="true"
         >
-          <header class="round-review-heading">
+          <header class="round-review-heading" data-layout-region="victory-heading">
             <h2 id="round-review-title">
               ${msg('Victory')}
             </h2>
           </header>
-          <p id="round-review-outcome" class="reaction-outcome">
+          <p id="round-review-outcome" class="reaction-outcome" data-layout-region="victory-outcome">
             <strong>
               ${msg(str`${victory.winnerName} wins the match`)}
             </strong>
@@ -1077,13 +1085,14 @@ export class GrandTransitionMatch extends LitElement {
                 : nothing
             }
           </p>
-          <dl class="reaction-scores">
+          <dl class="reaction-scores" data-layout-region="victory-scores">
             ${this.renderReactionScore(first, 'red')}
             ${this.renderReactionScore(second, 'blue')}
           </dl>
           <button
             type="button"
             class="round-review-continue round-review-primary"
+            data-layout-region="victory-continue"
             @click=${this.returnToMainMenu}
           >
             ${victory.ladder ? msg('Continue ladder') : msg('Return to main menu')}

@@ -1,5 +1,17 @@
 import { spawnSync } from 'node:child_process';
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
 import { performance } from 'node:perf_hooks';
+import {
+  formatSummary,
+  phaseTestKind,
+  playwrightFailures,
+  vitestFailures,
+  type GateFailure,
+  type GatePhaseReport,
+  type GateReport,
+} from './quality-gate-report.ts';
+import { workingTreeIsClean, writeGateRecord } from './quality-gate-record.ts';
 
 const mode = process.argv[2];
 if (!['quick', 'full', 'release'].includes(mode)) {
@@ -27,25 +39,92 @@ const phases =
       ? ['validate', 'balance:validate', 'test', 'test:coverage', 'build:bundle']
       : ['validate', 'test', 'test:coverage', 'test:e2e'];
 const fullTestPhases = new Set(['test', 'test:coverage', 'test:e2e']);
-const timings: string[] = [];
-const report = () => console.log(`\nQuality gate (${mode}) phase times:\n${timings.join('\n')}`);
+
+// Every phase runs, also after an earlier phase failed, so one run reports all
+// the failures. The gate never retries a failed test: a test that passes at
+// the second attempt is a defect of that test.
+const reportDirectory = path.resolve('tmp', 'quality-gate');
+mkdirSync(reportDirectory, { recursive: true });
+rmSync(path.join(reportDirectory, 'last-pass.json'), { force: true });
+const cleanBefore = workingTreeIsClean();
+const startedAt = new Date().toISOString();
+const reports: GatePhaseReport[] = [];
+
 for (const phase of phases) {
   const script = gateMode === 'full' && fullTestPhases.has(phase) ? `${phase}:full` : phase;
+  const kind = phaseTestKind(phase);
+  const resultsFile = path.join(reportDirectory, `${phase.replaceAll(':', '-')}.json`);
+  rmSync(resultsFile, { force: true });
   const started = performance.now();
+  // The validate phase checks every asset that the production build checks,
+  // so the end-to-end build after it bundles without validating them again.
+  const phaseEnvironment =
+    phase === 'test:e2e' ? { ...environment, GRAND_TRANSITION_ASSETS_VALIDATED: '1' } : environment;
   const result = spawnSync(process.execPath, [npmCli, 'run', script], {
     stdio: 'inherit',
-    // The validate phase checks every asset that the production build checks,
-    // so the end-to-end build after it bundles without validating them again.
-    env:
-      phase === 'test:e2e'
-        ? { ...environment, GRAND_TRANSITION_ASSETS_VALIDATED: '1' }
-        : environment,
+    env: kind
+      ? { ...phaseEnvironment, GRAND_TRANSITION_GATE_RESULTS: resultsFile }
+      : phaseEnvironment,
   });
-  timings.push(`  ${script.padEnd(18)} ${((performance.now() - started) / 1000).toFixed(1)} s`);
   if (result.error) throw result.error;
-  if (result.status !== 0) {
-    report();
-    process.exit(result.status ?? 1);
+  const exitCode = result.status ?? 1;
+  const seconds = (performance.now() - started) / 1000;
+  let failures: GateFailure[] = [];
+  let note: string | undefined;
+  if (exitCode !== 0 && kind) {
+    const context = {
+      phase,
+      mode: gateMode as 'quick' | 'full',
+      repositoryRoot: process.cwd(),
+    };
+    try {
+      const results: unknown = JSON.parse(readFileSync(resultsFile, 'utf8'));
+      if (kind === 'vitest') {
+        failures = vitestFailures(results, context);
+      } else {
+        const summary = playwrightFailures(results, context);
+        failures = summary.failures;
+        if (summary.executed === 0) {
+          note =
+            `the production build or a web server failed before any test ran. ${summary.errors.join(' ')}`.trim();
+        }
+      }
+    } catch {
+      note = 'the phase wrote no result file.';
+    }
+    if (failures.length === 0 && !note) {
+      note = 'no test failed. A coverage threshold or the runner itself failed.';
+    }
+  }
+  reports.push({
+    phase,
+    script,
+    status: exitCode === 0 ? 'passed' : 'failed',
+    exitCode,
+    seconds,
+    failures,
+    ...(note ? { note } : {}),
+  });
+}
+
+const failedPhase = reports.find(({ status }) => status === 'failed');
+let record = 'not written: the release gate leaves no record';
+if (mode !== 'release') {
+  if (failedPhase) {
+    record = 'not written: a phase failed';
+  } else {
+    const written = writeGateRecord(gateMode as 'quick' | 'full', { cleanBefore });
+    record = written.written ? 'tmp/quality-gate/last-pass.json' : `not written: ${written.reason}`;
   }
 }
-report();
+const report: GateReport = {
+  mode,
+  startedAt,
+  finishedAt: new Date().toISOString(),
+  passed: !failedPhase,
+  record,
+  phases: reports,
+};
+writeFileSync(path.join(reportDirectory, 'report.json'), `${JSON.stringify(report, null, 2)}\n`);
+console.log(formatSummary(report));
+if (failedPhase) process.exit(failedPhase.exitCode);

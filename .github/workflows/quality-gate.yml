@@ -2,6 +2,9 @@ name: Quality gate
 
 on:
   pull_request:
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -36,9 +39,15 @@ jobs:
       - name: Install Chromium for game and audio checks
         run: npx playwright install --with-deps chromium chrome
       # GitHub workflows never run quality:full. The release gate is the full
-      # gate without test:e2e:full. See Milestone 002.
+      # gate without test:e2e:full. See Milestone 002. A push to main runs the
+      # quick gate on Linux, so a platform defect shows before a release.
+      # See Milestone 033.
       - name: Run the release gate without deployment
+        if: github.event_name == 'pull_request'
         run: npm run quality:release
+      - name: Run the quick gate on Linux
+        if: github.event_name == 'push'
+        run: npm run quality:quick
       - name: Keep release measurement evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -47,5 +56,6 @@ jobs:
           path: |
             test-results/
             tmp/release-hardening/
+            tmp/quality-gate/report.json
           if-no-files-found: ignore
           retention-days: 14

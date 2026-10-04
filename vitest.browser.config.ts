@@ -36,6 +36,7 @@ export default defineConfig({
     ],
   },
   test: {
+    setupFiles: ['tests/browser/setup-stored-profile.ts'],
     include: [
       'tests/browser/**/*.browser.test.ts',
       'tests/unit/content-schemas.test.ts',
