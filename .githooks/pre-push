@@ -1,0 +1,4 @@
+#!/bin/sh
+# Optional pre-push check of Milestone 033. Install it with: npm run hooks:install
+# A push that updates refs/heads/main needs a gate record for the pushed tree.
+exec node "$(dirname "$0")/../tools/quality-gate-record.ts" check-push
