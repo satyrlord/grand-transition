@@ -45,6 +45,7 @@ A reveal record has these fields:
 - `year`: a four-digit year from 1990 through the current year.
 
 `sourceLanguage`, `venue`, `level`, and `year` are required unless the classification is `invented`.
+An `invented` record has none of these four fields, because an invented phrase has no source.
 The interface translates each enumerated value through Lit localization, so a record has no free text.
 
 The labels obey the Milestone 005 rule against adaptations shown as real words:
@@ -55,7 +56,9 @@ The labels obey the Milestone 005 rule against adaptations shown as real words:
 - `real-slogan`: **Real slogan.**
 - `invented`: **Invented for the game.**
 
-Each predicate, modifier, and ending must have a record that is not `invented`, because Milestone 005 requires a real source for it.
+Each predicate, modifier, and ending must have a record.
+When a card has no recorded source, or its source is not sure, its record is `invented`.
+A record never gives a venue, a level, or a year that the provenance record does not give.
 A card with a different role can have any classification.
 A card with no record shows no receipt.
 
@@ -73,13 +76,19 @@ The content schema validates each record, and it does not accept unknown fields.
 `npm run content:validate` finds these defects:
 
 - A record for a card that does not exist, or two records for one card.
-- A required predicate, modifier, or ending with no record, or with the `invented` classification.
+- A required predicate, modifier, or ending with no record.
 - A field that is missing for its classification.
 - A string that contains `http`, `www.`, or `@`.
 
 When the private research folder exists, `tools/validate-quote-reveals.ts` also compares each record with its provenance record.
 It finds a different classification, source language, or year.
+A provenance record is one row of a Markdown table in the research folder.
+The table has the columns `Card ID`, `Classification`, `Source language`, and `Year`, and it can have more columns.
+The tool also finds a record with a source that has no provenance record, and two provenance records for one card.
+Its messages give only the card ID and the public values.
 When the folder does not exist, for example in CI, the tool reports that it did not do this comparison, and it passes.
+The tool gives the number of required cards with no record for each owner.
+`node tools/validate-quote-reveals.ts --list-missing` gives each card.
 
 ### Receipts after a match
 
@@ -88,6 +97,8 @@ It opens a panel that lists each committed sentence of the match in turn order.
 In each sentence, each phrase that has a record shows its label and its context, for example
 **Real quote · County council, 2014**.
 A phrase with no record, and a continuation, shows no receipt.
+A receipt of a phrase from real speech is the reward, so its label and its context are larger than those of an `invented` receipt.
+When no committed phrase comes from real speech, the panel says so.
 
 The panel shows only committed public sentences.
 It never shows a card from a private hand that was not committed.
@@ -99,21 +110,32 @@ It uses the ordered used phrases that the Milestone 019 history entry already re
 ### Real or invented?
 
 Before the panel shows the receipts, the player can select **Guess first**.
+The panel offers the guess only when one or more committed phrases come from real speech.
+In a match with only `invented` phrases, each answer is **Invented**, so the panel shows the receipts immediately.
 The game selects up to five phrases from the committed sentences of the match.
-These are phrases that have a record, and the selection uses the match seed, so it is deterministic.
+These are phrases that have a record.
+The selection takes the phrases from real speech first, and `invented` phrases fill the other places.
+The selection uses the match seed, so it is deterministic.
+The panel does not give the number of real phrases before the guess.
 For each phrase, the player selects **Real quote**, **Adapted**, or **Invented**.
 `real-slogan` counts as **Real quote**.
 Then the panel shows the receipts, marks each guess correct or not correct, and gives the score, for example **3 of 5**.
 
 In hotseat, the two players make one shared guess.
+The best guess score is the score with the most correct answers.
+A guess from match history can also become the best score.
 The guess does not change the match result, the Pride, the ladder, or the replay.
 
 ### Quote archive
 
 The main menu gets a **Quote archive** item.
-It lists each reveal record whose card the player committed in a completed match.
+It lists each reveal record whose card a player committed in a completed match, for the two players of the match.
+The context shows the venue, the level, and the year, for example **Television (national level), 2014**.
+It does not show the level when the venue gives it, for example **County council, 2014**.
 Each item shows the card text in the interface language, its label, and its context.
+The phrases from real speech are first in the list.
 The archive also shows the number of records found, the total number of records, and the best guess score.
+It shows the same two numbers for the records from real speech.
 
 Store the archive in the Milestone 020 persistence as a new document with its own codec and schema version.
 It contains only card IDs and the best guess score.
@@ -144,6 +166,16 @@ A match that does not complete does not add records.
 The receipt is the reward of the match.
 Make the label and the context easy to read, with the card text as the most important item.
 Do not use a decoration that hides the text.
+
+## Objective verifiers
+
+- `tests/unit/quote-reveals.test.ts` does checks of AC-034-01 and AC-034-08 with fixtures.
+  `npm run content:validate` does the check of the shipped records.
+- `tests/unit/quote-receipts.test.ts` and `tests/browser/quote-receipts.browser.test.ts` do checks of AC-034-03, AC-034-04, and AC-034-05.
+- `tests/unit/quote-archive.test.ts`, `tests/unit/match-coordinator.test.ts`, and the browser test do checks of AC-034-06.
+- `tests/browser/layout-regions.browser.test.ts` and `e2e/quote-reveals.spec.ts` do checks of AC-034-07.
+- `e2e/quote-reveals.spec.ts` does the check of AC-034-02 on the built `dist/` output.
+  It reads the private names, links, and source wording from the research folder, so it does not run where that folder does not exist.
 
 ## Checks and stop conditions
 

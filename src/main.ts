@@ -3,6 +3,7 @@ import './styles/title-screen.css';
 import './styles/screen-shell.css';
 import './styles/scene-picker.css';
 import './styles/match-screen.css';
+import './styles/quote-receipts.css';
 import './styles/interruption-screen.css';
 import './styles/mobile-layout.css';
 // Configure interface localization before either dynamic import constructs

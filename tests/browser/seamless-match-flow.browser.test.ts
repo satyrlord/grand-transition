@@ -310,8 +310,14 @@ test('a lethal grammar mistake shows persistent victory and restores history aft
     [...match.querySelectorAll<HTMLElement>('button')].filter(
       (button) => !button.hasAttribute('disabled') && !button.closest('[inert]'),
     ),
-  ).toEqual([match.querySelector('.round-review-primary')]);
-  expect(document.querySelector('[aria-haspopup="dialog"]')).toBeNull();
+  ).toEqual([
+    match.querySelector('.round-review-primary'),
+    // Milestone 034 adds the receipts action. It is the only action that opens a dialog.
+    match.querySelector('.round-review-receipts'),
+  ]);
+  expect([...document.querySelectorAll('[aria-haspopup="dialog"]')]).toEqual([
+    match.querySelector('.round-review-receipts'),
+  ]);
 
   window.dispatchEvent(new Event('resize'));
   await app.updateComplete;

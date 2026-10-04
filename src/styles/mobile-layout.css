@@ -76,6 +76,7 @@
       width: 100%;
     }
     .title-transmission .title-history-action,
+    .title-transmission .title-archive-action,
     .title-transmission .title-settings-action {
       min-height: 2.75rem;
     }

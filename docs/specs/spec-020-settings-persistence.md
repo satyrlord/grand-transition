@@ -18,6 +18,7 @@ Add the initial versioned codec, browser storage, and recovery from corrupt data
 Also add a fallback in memory and a failure notice that does not block.
 
 Keep settings and ladder progress in the `documents` object store of the `grand-transition` IndexedDB database.
+Milestone 034 keeps the quote archive in the same store, as its own document with the key `grand-transition.quote-archive.v1`.
 Milestone 019 keeps the match history in the `match-history` object store of the same database.
 The entry point opens the database and loads each stored value before the application shell starts.
 Thus each repository reads its value synchronously.

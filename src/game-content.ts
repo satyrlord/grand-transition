@@ -1,9 +1,12 @@
 /// <reference types="vite/client" />
 
 import commonSource from './content/common-phrase-cards.json' with { type: 'json' };
+import quoteRevealSource from './content/quote-reveals.json' with { type: 'json' };
 import portraitSources from 'virtual:character-portrait-fallbacks';
 import { buildPhraseCardCatalog, type PhraseCardCatalog } from './content/phrase-card-catalog.ts';
 import { createGameCatalog } from './content/game-catalog.ts';
+import { parseQuoteReveals, type QuoteRevealRecord } from './content/quote-reveals.ts';
+import { createQuoteRevealIndex, type QuoteRevealIndex } from './engine/quote-receipts.ts';
 import {
   indexGameLocaleBundles,
   selectGameLocaleBundle,
@@ -67,6 +70,15 @@ export const gameCatalog = createGameCatalog(
   phraseCardCatalog,
   [englishGameLocale, romanianGameLocale],
   catalogBuildOptions,
+);
+
+// The Milestone 034 reveal records that can show a receipt, by card ID.
+export const quoteReveals: QuoteRevealIndex = createQuoteRevealIndex(
+  // The Node build step checks the shape, so the production bundle has no record schema.
+  import.meta.env.PROD
+    ? (quoteRevealSource as readonly QuoteRevealRecord[])
+    : parseQuoteReveals(quoteRevealSource),
+  phraseCardCatalog.phrases,
 );
 
 // Every shipped game-locale bundle, indexed by the locale it renders.

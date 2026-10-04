@@ -8,6 +8,11 @@ import { interfaceCharacterName } from '../../src/app/interface-names.ts';
 import { setGameTextLocale } from '../../src/app/game-text-language.ts';
 import type { GrandTransitionMatchHistory } from '../../src/app/screens/match-history-modal.ts';
 import type { GrandTransitionMatch } from '../../src/app/screens/match-screen.ts';
+import '../../src/app/screens/quote-archive-modal.ts';
+import '../../src/app/screens/quote-receipts-panel.ts';
+import type { GrandTransitionQuoteArchive } from '../../src/app/screens/quote-archive-modal.ts';
+import type { GrandTransitionQuoteReceipts } from '../../src/app/screens/quote-receipts-panel.ts';
+import { createQuoteRevealIndex } from '../../src/engine/quote-receipts.ts';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
 import type { MatchState } from '../../src/engine/match-lifecycle.ts';
 import { gameCatalog, romanianGameLocale } from '../../src/game-content.ts';
@@ -20,6 +25,7 @@ import fontStyles from '../../src/styles/fonts.css?raw';
 import interruptionStyles from '../../src/styles/interruption-screen.css?raw';
 import matchStyles from '../../src/styles/match-screen.css?raw';
 import mobileStyles from '../../src/styles/mobile-layout.css?raw';
+import quoteStyles from '../../src/styles/quote-receipts.css?raw';
 import sceneStyles from '../../src/styles/scene-picker.css?raw';
 import shellStyles from '../../src/styles/screen-shell.css?raw';
 import titleStyles from '../../src/styles/title-screen.css?raw';
@@ -248,6 +254,7 @@ describe('layout regions of the primary screens', () => {
       shellStyles,
       sceneStyles,
       matchStyles,
+      quoteStyles,
       interruptionStyles,
       mobileStyles,
     ].join('\n');
@@ -453,7 +460,79 @@ describe('layout regions of the primary screens', () => {
         return { root: history.querySelector('.match-history-backdrop')! };
       },
     },
+    // Milestone 034: the receipts panel in each stage, and the quote archive.
+    ...(['gate', 'guess', 'receipts'] as const).map((stage) => ({
+      name: `receipts panel ${stage}`,
+      mount: async () => {
+        await setInterfaceLocale('ro-RO');
+        const log = romanianMatchLog();
+        document.body.innerHTML =
+          '<grand-transition-quote-receipts></grand-transition-quote-receipts>';
+        const panel = document.querySelector(
+          'grand-transition-quote-receipts',
+        ) as GrandTransitionQuoteReceipts;
+        panel.match = log;
+        panel.reveals = everyCardReveals(log);
+        await panel.updateComplete;
+        if (stage !== 'gate') {
+          panel
+            .querySelector<HTMLButtonElement>(
+              stage === 'guess' ? '.quote-receipts-primary' : '.quote-receipts-secondary',
+            )!
+            .click();
+          await panel.updateComplete;
+        }
+        return { root: panel.querySelector('.quote-receipts-backdrop')! };
+      },
+    })),
+    {
+      name: 'quote archive',
+      mount: async () => {
+        await setInterfaceLocale('ro-RO');
+        const log = romanianMatchLog();
+        const reveals = everyCardReveals(log);
+        document.body.innerHTML =
+          '<grand-transition-quote-archive></grand-transition-quote-archive>';
+        const archive = document.querySelector(
+          'grand-transition-quote-archive',
+        ) as GrandTransitionQuoteArchive;
+        archive.reveals = reveals;
+        archive.archive = {
+          cardIds: [...reveals.keys()],
+          bestGuess: { correct: 3, total: 5 },
+          persistenceFailure: 'storage-quota',
+        };
+        await archive.updateComplete;
+        return { root: archive.querySelector('.quote-archive-backdrop')! };
+      },
+    },
   ];
+
+  function romanianMatchLog() {
+    return simulateMatch(
+      20_260_917,
+      createSimulationSetup(gameCatalog, { aiDifficulty: 'palace-operator', gameLocale: 'ro-RO' }),
+      { catalog: gameCatalog, locale: romanianGameLocale, balance: basicScoringBalance },
+    ).matchLog;
+  }
+
+  // Each committed card gets the record with the longest label and context.
+  function everyCardReveals(log: ReturnType<typeof romanianMatchLog>) {
+    const cardIds = [...new Set(log.sentences.flatMap(({ phrases }) => phrases))].map(
+      ({ phraseId }) => phraseId,
+    );
+    return createQuoteRevealIndex(
+      [...new Set(cardIds)].map((cardId, index) => ({
+        cardId,
+        classification: index % 2 === 0 ? ('exact-quote' as const) : ('adapted-quote' as const),
+        sourceLanguage: 'en' as const,
+        venue: 'press-conference' as const,
+        level: 'international' as const,
+        year: 2014,
+      })),
+      gameCatalog.phrases,
+    );
+  }
 
   for (const screen of screens) {
     test.each(viewports)(

@@ -29,7 +29,7 @@ import {
 import './screens/setup-screen.ts';
 import './screens/title-screen.ts';
 import { basicScoringBalance } from '../content/basic-scoring-balance.ts';
-import { characterSkins, gameLocaleBundle, gameCatalog } from '../game-content.ts';
+import { characterSkins, gameLocaleBundle, gameCatalog, quoteReveals } from '../game-content.ts';
 import { defaultGameLocale, shippedGameLocale } from '../localization/game-locale.ts';
 import {
   createMatchSetupState,
@@ -62,10 +62,13 @@ import {
 } from '../engine/ladder.ts';
 import {
   type ShowMatchHistoryEvent,
+  type ShowQuoteArchiveEvent,
   type ShowSettingsEvent,
   type ShowSetupEvent,
 } from './screens/title-screen.ts';
 import { type CloseMatchHistoryEvent } from './screens/match-history-modal.ts';
+import type { CloseQuoteArchiveEvent } from './screens/quote-archive-modal.ts';
+import type { QuoteGuessScoredEvent } from './screens/quote-receipts-panel.ts';
 import {
   type CloseSettingsEvent,
   type DismissSettingsNoticeEvent,
@@ -90,6 +93,11 @@ import {
   ladderProgressStorageKey,
   type LadderProgressSnapshot,
 } from '../persistence/ladder-progress.ts';
+import {
+  QuoteArchiveRepository,
+  quoteArchiveStorageKey,
+  type QuoteArchiveSnapshot,
+} from '../persistence/quote-archive.ts';
 
 const elementName = 'grand-transition-app';
 const historyStateKey = 'grandTransitionScreen';
@@ -197,6 +205,8 @@ export class GrandTransitionApp extends LitElement {
     phraseColorCoding: { state: true },
     matchHistory: { state: true },
     matchHistoryOpen: { state: true },
+    quoteArchive: { state: true },
+    quoteArchiveOpen: { state: true },
     settingsSnapshot: { state: true },
     settingsOpen: { state: true },
     settingsNoticeDismissed: { state: true },
@@ -218,6 +228,8 @@ export class GrandTransitionApp extends LitElement {
   declare private phraseColorCoding: boolean;
   declare private matchHistory: MatchHistorySnapshot;
   declare private matchHistoryOpen: boolean;
+  declare private quoteArchive: QuoteArchiveSnapshot;
+  declare private quoteArchiveOpen: boolean;
   declare private settingsSnapshot: SettingsSnapshot;
   declare private settingsOpen: boolean;
   declare private settingsNoticeDismissed: boolean;
@@ -234,6 +246,7 @@ export class GrandTransitionApp extends LitElement {
   private readonly matchHistoryRepository: MatchHistoryRepository;
   private readonly settingsRepository: SettingsRepository;
   private readonly ladderProgressRepository: LadderProgressRepository;
+  private readonly quoteArchiveRepository: QuoteArchiveRepository;
   private readonly persistence: BrowserPersistence;
   private stopStorageFailures: (() => void) | null = null;
   private currentMatchIsLadder = false;
@@ -265,10 +278,13 @@ export class GrandTransitionApp extends LitElement {
     );
     this.settingsRepository = new SettingsRepository(this.persistence.documents);
     this.ladderProgressRepository = new LadderProgressRepository(this.persistence.documents);
+    this.quoteArchiveRepository = new QuoteArchiveRepository(this.persistence.documents);
     this.matchCoordinator = new MatchCoordinator({
       context: matchContext,
       history: this.matchHistoryRepository,
       ladder: this.ladderProgressRepository,
+      quoteArchive: this.quoteArchiveRepository,
+      quoteReveals,
       log: publishDevelopmentGameLog,
       now: () => new Date().toISOString(),
       setTimeout: (callback, delay) => window.setTimeout(callback, delay),
@@ -312,6 +328,8 @@ export class GrandTransitionApp extends LitElement {
     this.phraseColorCoding = true;
     this.matchHistory = this.matchHistoryRepository.snapshot();
     this.matchHistoryOpen = false;
+    this.quoteArchive = this.quoteArchiveRepository.snapshot();
+    this.quoteArchiveOpen = false;
     this.settingsSnapshot = this.settingsRepository.snapshot();
     this.applyInterfaceLocale(this.settingsSnapshot.settings.interfaceLocale);
     this.applyGameTextLocale();
@@ -446,6 +464,8 @@ export class GrandTransitionApp extends LitElement {
       this.settingsSnapshot = this.settingsRepository.storageFailed(code);
     } else if (store === 'documents' && key === ladderProgressStorageKey) {
       this.ladderSnapshot = this.ladderProgressRepository.storageFailed(code);
+    } else if (store === 'documents' && key === quoteArchiveStorageKey) {
+      this.quoteArchive = this.quoteArchiveRepository.storageFailed(code);
     } else {
       this.matchHistory = this.matchHistoryRepository.storageFailed(code);
     }
@@ -510,7 +530,9 @@ export class GrandTransitionApp extends LitElement {
         .autoRevealWaitingSentence=${Boolean(
           liveMatchState?.setup.mode === 'ai' && liveMatchState.activePlayerId === 'player-one',
         )}
+        .completedMatch=${this.completedMatchLog()}
         @match-command=${this.reduceMatchCommand}
+        @quote-guess-scored=${this.recordQuoteGuess}
         @return-to-main-menu=${this.returnToMainMenu}
         @pause-match=${this.pauseMatch}
         @resume-match=${this.resumeMatch}
@@ -545,6 +567,8 @@ export class GrandTransitionApp extends LitElement {
           .historyEntries=${this.matchHistory.entries}
           .historyOpen=${this.matchHistoryOpen}
           .historyPersistenceFailure=${this.matchHistory.persistenceFailure}
+          .quoteArchive=${this.quoteArchive}
+          .quoteArchiveOpen=${this.quoteArchiveOpen}
           .settings=${this.settingsSnapshot.settings}
           .settingsOpen=${this.settingsOpen}
           .audioStatus=${this.audio?.status ?? 'idle'}
@@ -559,6 +583,9 @@ export class GrandTransitionApp extends LitElement {
           @show-setup=${this.showSetup}
           @show-match-history=${this.showMatchHistory}
           @close-match-history=${this.closeMatchHistory}
+          @show-quote-archive=${this.showQuoteArchive}
+          @close-quote-archive=${this.closeQuoteArchive}
+          @quote-guess-scored=${this.recordQuoteGuess}
           @show-settings=${this.showSettings}
           @close-settings=${this.closeSettings}
           @settings-change=${this.changeSettings}
@@ -619,6 +646,7 @@ export class GrandTransitionApp extends LitElement {
     if (mode === 'hotseat' && this.portraitViewport) return;
     this.selectSetupMode(mode);
     this.matchHistoryOpen = false;
+    this.quoteArchiveOpen = false;
     this.settingsOpen = false;
     this.screenController.showSetup();
     this.view = 'setup';
@@ -629,6 +657,7 @@ export class GrandTransitionApp extends LitElement {
     event.stopPropagation();
     if (this.view === 'title') {
       this.settingsOpen = false;
+      this.quoteArchiveOpen = false;
       this.matchHistoryOpen = true;
     }
   };
@@ -638,10 +667,31 @@ export class GrandTransitionApp extends LitElement {
     this.matchHistoryOpen = false;
   };
 
+  private readonly showQuoteArchive = (event: ShowQuoteArchiveEvent): void => {
+    event.stopPropagation();
+    if (this.view === 'title') {
+      this.settingsOpen = false;
+      this.matchHistoryOpen = false;
+      this.quoteArchiveOpen = true;
+    }
+  };
+
+  private readonly closeQuoteArchive = (event: CloseQuoteArchiveEvent): void => {
+    event.stopPropagation();
+    this.quoteArchiveOpen = false;
+  };
+
+  // The guess changes only the archive. The match record and the replay stay.
+  private readonly recordQuoteGuess = (event: QuoteGuessScoredEvent): void => {
+    event.stopPropagation();
+    this.quoteArchive = this.quoteArchiveRepository.recordGuess(event.detail);
+  };
+
   private readonly showSettings = (event: ShowSettingsEvent): void => {
     event.stopPropagation();
     if (this.view === 'title') {
       this.matchHistoryOpen = false;
+      this.quoteArchiveOpen = false;
       this.settingsOpen = true;
     }
   };
@@ -883,8 +933,15 @@ export class GrandTransitionApp extends LitElement {
     }
     this.ladderSnapshot = this.ladderProgressRepository.snapshot();
     this.matchHistory = this.matchHistoryRepository.snapshot();
+    this.quoteArchive = this.quoteArchiveRepository.snapshot();
     this.scheduleAiTurn();
     return true;
+  }
+
+  /** The public record of the completed match that Victory shows. */
+  private completedMatchLog(): MatchHistorySnapshot['entries'][number]['matchLog'] | null {
+    if (this.matchState?.phase !== 'results') return null;
+    return this.matchHistory.entries.find(({ id }) => id === this.matchId)?.matchLog ?? null;
   }
 
   private finishRoundPresentation(): void {

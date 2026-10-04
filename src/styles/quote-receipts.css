@@ -1,0 +1,631 @@
+/* Milestone 034: the receipts panel, the Real-or-invented guess, and the quote archive. */
+@layer screen {
+  .quote-receipts-backdrop,
+  .quote-archive-backdrop {
+    position: fixed;
+    z-index: 30;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    background: rgb(5 8 11 / 86%);
+  }
+
+  .quote-receipts-dialog,
+  .quote-archive-dialog {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    width: min(58rem, 100%);
+    max-height: min(52rem, calc(100svh - clamp(3rem, 8vw, 6rem)));
+    padding: clamp(1rem, 2vw, 1.5rem);
+    border: 3px double var(--broadcast-brass-light);
+    background: var(--broadcast-black);
+    box-shadow:
+      0 1.4rem 3rem rgb(0 0 0 / 68%),
+      inset 0 0 0 1px rgb(228 193 125 / 18%);
+    color: var(--broadcast-paper-light);
+    font-family: var(--font-interface);
+    text-align: start;
+    user-select: text;
+  }
+
+  /* The notice of the archive is optional, so its rows are a column. */
+  .quote-archive-dialog {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .quote-receipts-heading,
+  .quote-archive-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block-end: 0.8rem;
+    border-block-end: 1px solid rgb(228 193 125 / 42%);
+  }
+
+  .quote-receipts-heading h2,
+  .quote-archive-heading h2 {
+    margin: 0;
+    color: white;
+    font: 400 clamp(1.6rem, 3vw, 2.45rem) / 1 var(--font-feature);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.8px currentcolor;
+  }
+
+  .quote-receipts-close,
+  .quote-archive-close,
+  .quote-receipts-secondary,
+  .match-history-receipts {
+    min-width: 6.5rem;
+    min-height: 2.75rem;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid var(--broadcast-brass);
+    border-radius: 0;
+    background: var(--broadcast-ink);
+    color: var(--broadcast-paper-light);
+    font: 700 0.76rem/1 var(--font-interface);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .quote-receipts-close:hover,
+  .quote-archive-close:hover,
+  .quote-receipts-secondary:hover,
+  .match-history-receipts:hover,
+  .round-review-receipts:hover {
+    border-color: var(--broadcast-paper-light);
+    background: var(--broadcast-panel);
+  }
+
+  .quote-receipts-primary {
+    min-width: 11rem;
+    min-height: 2.75rem;
+    padding: 0.45rem 1rem;
+    border: 3px double var(--broadcast-brass-light);
+    border-radius: 0;
+    background: var(--broadcast-oxblood);
+    color: white;
+    font: 400 1.15rem/1 var(--font-feature);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.7px currentcolor;
+    cursor: pointer;
+  }
+
+  .quote-receipts-primary:hover {
+    background: var(--broadcast-oxblood-bright);
+  }
+
+  .quote-receipts-dialog :is(button, .quote-receipts-list):focus-visible,
+  .quote-archive-dialog :is(button, .quote-archive-list):focus-visible,
+  .match-history-receipts:focus-visible,
+  .round-review-receipts:focus-visible {
+    outline: 3px solid var(--focus-blue, #77c8ff);
+    outline-offset: 3px;
+  }
+
+  /* The gate before the receipts. */
+  .quote-receipts-gate {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 0.65rem;
+    min-height: 13rem;
+    padding-block: 1.5rem 0.75rem;
+    text-align: center;
+  }
+
+  .quote-receipts-gate p {
+    max-width: 44ch;
+    margin: 0;
+    color: var(--broadcast-paper);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    text-wrap: balance;
+  }
+
+  .quote-receipts-gate .quote-receipts-count {
+    color: var(--broadcast-brass-light);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .quote-receipts-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-block-start: 0.85rem;
+  }
+
+  /* Card text is the most important item of a receipt and of a guess. */
+  .quote-card-text {
+    margin: 0;
+    color: var(--broadcast-black);
+    font: 900 clamp(1rem, 1.5vw, 1.3rem) / 1.18 var(--font-speech);
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  /* The guess. */
+  .quote-guess,
+  .quote-receipts-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .quote-guess-intro {
+    margin: 0;
+    padding-block: 0.75rem 0.6rem;
+    color: var(--broadcast-paper);
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .quote-guess-list,
+  .quote-receipts-list,
+  .quote-archive-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0 0.55rem 0.4rem 0;
+    overflow: auto;
+    scrollbar-color: var(--broadcast-brass) var(--broadcast-ink);
+    scrollbar-width: thin;
+  }
+
+  .quote-guess-list {
+    display: grid;
+    align-content: start;
+    gap: 0.6rem;
+    list-style: none;
+  }
+
+  .quote-guess-item,
+  .quote-receipt {
+    display: grid;
+    gap: 0.5rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0.7rem 0.85rem 0.75rem;
+    /* The transparent border becomes the edge of the slip in forced colors. */
+    border: 1px solid transparent;
+    background: var(--broadcast-paper-light);
+    box-shadow: 0 0.2rem 0.5rem rgb(0 0 0 / 46%);
+    color: var(--broadcast-black);
+  }
+
+  .quote-guess-item legend {
+    float: left;
+    width: 100%;
+    padding: 0;
+  }
+
+  .quote-guess-options {
+    clear: both;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid var(--broadcast-black);
+    background: var(--broadcast-black);
+  }
+
+  .quote-guess-option {
+    position: relative;
+    display: grid;
+    min-width: 0;
+    cursor: pointer;
+  }
+
+  .quote-guess-option input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .quote-guess-option span {
+    display: grid;
+    place-items: center;
+    min-height: 2.75rem;
+    padding: 0.4rem 0.5rem;
+    background: var(--broadcast-paper-light);
+    color: var(--broadcast-black);
+    font: 700 0.76rem/1.15 var(--font-interface);
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .quote-guess-option:hover input:not(:checked) + span {
+    background: var(--broadcast-paper);
+  }
+
+  .quote-guess-option input:checked + span {
+    background: var(--broadcast-ink);
+    color: var(--broadcast-paper-light);
+    box-shadow: inset 0 -3px 0 var(--broadcast-brass-light);
+  }
+
+  /* The focus blue has no contrast on paper, so an option that is not selected gets the ink. */
+  .quote-guess-option input:focus-visible + span {
+    outline: 3px solid var(--broadcast-ink);
+    outline-offset: -5px;
+  }
+
+  .quote-guess-option input:checked:focus-visible + span {
+    outline-color: var(--focus-blue, #77c8ff);
+  }
+
+  .quote-guess-submit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem 1rem;
+    padding-block-start: 0.8rem;
+  }
+
+  .quote-guess-missing {
+    margin: 0;
+    color: var(--reaction-apricot);
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  /* The receipts. */
+  .quote-guess-score {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin: 0;
+    padding-block: 0.7rem 0.55rem;
+    color: var(--broadcast-brass-light);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .quote-guess-score strong {
+    color: white;
+    font-size: clamp(1.35rem, 2.5vw, 2rem);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    line-height: 0.95;
+    text-transform: none;
+  }
+
+  .quote-receipts-empty,
+  .quote-archive-empty {
+    margin: 0;
+    padding-block: 0.75rem 0.55rem;
+    color: var(--broadcast-paper);
+    font-size: 0.86rem;
+    line-height: 1.35;
+  }
+
+  .quote-receipts-list {
+    padding-block-start: 0.2rem;
+  }
+
+  .quote-receipts-round + .quote-receipts-round {
+    margin-block-start: 1.1rem;
+  }
+
+  .quote-receipts-round h3 {
+    margin: 0;
+    padding-block: 0.6rem 0.4rem;
+    border-block-end: 1px solid rgb(228 193 125 / 24%);
+    color: var(--broadcast-brass-light);
+    font-size: 0.75rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .quote-receipts-sentence {
+    padding-block: 0.65rem 0.2rem;
+  }
+
+  .quote-receipts-sentence h4 {
+    margin: 0;
+    color: white;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .quote-receipts-sentence-text {
+    max-width: 75ch;
+    margin: 0.3rem 0 0;
+    color: var(--broadcast-paper);
+    font: 700 0.86rem/1.4 var(--font-speech);
+    overflow-wrap: anywhere;
+  }
+
+  .quote-receipt-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: 0.6rem;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .quote-receipt {
+    align-content: start;
+    gap: 0.45rem;
+  }
+
+  .quote-receipt-facts,
+  .quote-receipt-guess {
+    margin: 0;
+    color: var(--broadcast-ink);
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  /* The dashed rule is the tear line between the phrase and its record. */
+  .quote-receipt-facts {
+    padding-block-start: 0.45rem;
+    border-block-start: 1px dashed rgb(5 8 11 / 52%);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .quote-receipt-label {
+    color: var(--broadcast-oxblood);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .quote-receipt[data-receipt-classification='adapted-quote'] .quote-receipt-label {
+    color: var(--television-blue);
+  }
+
+  .quote-receipt[data-receipt-classification='invented'] .quote-receipt-label {
+    color: var(--broadcast-ink);
+  }
+
+  /* A phrase from real speech is the reward: its label is a stamp, and its context is larger. */
+  .quote-receipt:not([data-receipt-classification='invented']) {
+    outline: 2px solid var(--broadcast-brass-light);
+    outline-offset: -2px;
+  }
+
+  .quote-receipt:not([data-receipt-classification='invented']) .quote-receipt-facts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem 0.6rem;
+    font-size: 0.88rem;
+  }
+
+  /* The gap divides the stamp from the context, so the dot is not necessary. */
+  .quote-receipt:not([data-receipt-classification='invented'])
+    .quote-receipt-facts
+    > [aria-hidden='true'] {
+    display: none;
+  }
+
+  .quote-receipt:not([data-receipt-classification='invented']) .quote-receipt-label {
+    display: inline-block;
+    padding: 0.12rem 0.4rem;
+    border: 2px solid currentcolor;
+    font-size: 0.78rem;
+  }
+
+  .quote-receipt[data-receipt-classification='invented'] {
+    background: var(--broadcast-paper);
+  }
+
+  .quote-guess-score:focus {
+    outline: none;
+  }
+
+  .quote-receipt-guess strong {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .quote-receipt-guess[data-guess-result='not-correct'] strong {
+    color: var(--broadcast-oxblood);
+  }
+
+  /* The archive. */
+  .quote-archive-description {
+    margin: 0;
+    padding-block: 0.75rem 0.55rem;
+    color: var(--broadcast-paper);
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .quote-archive-facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.45rem;
+    margin: 0 0 0.75rem;
+  }
+
+  .quote-archive-facts > div {
+    min-width: 0;
+    padding: 0.52rem;
+    border-block: 1px solid rgb(228 193 125 / 24%);
+  }
+
+  .quote-archive-facts dt {
+    color: var(--broadcast-brass-light);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .quote-archive-facts dd {
+    margin: 0.32rem 0 0;
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+  }
+
+  .quote-archive-notice {
+    margin: 0 0 0.65rem;
+    padding: 0.58rem 0.75rem;
+    border: 1px solid var(--reaction-apricot);
+    background: #351a12;
+    color: #ffe1bd;
+    font-size: 0.78rem;
+    line-height: 1.3;
+  }
+
+  .quote-archive-list {
+    min-height: 7rem;
+  }
+
+  .quote-archive-list .quote-receipt-list {
+    margin-block-start: 0;
+  }
+
+  .quote-archive-empty {
+    display: grid;
+    place-items: center;
+    min-height: 7rem;
+    padding: 1rem;
+    border: 1px solid rgb(228 193 125 / 32%);
+    text-align: center;
+  }
+
+  /* The actions of the hosts: Victory, match history, and the title. */
+  .round-review-actions {
+    grid-area: continue;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .round-review-receipts {
+    min-width: 11rem;
+    min-height: 2.75rem;
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--broadcast-brass-light);
+    border-radius: 0;
+    background: var(--broadcast-ink);
+    color: var(--broadcast-paper-light);
+    cursor: pointer;
+    font: 400 1.15rem/1 var(--font-feature);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.7px currentcolor;
+  }
+
+  .match-history-phrases-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+  }
+
+  .match-history-phrases .match-history-phrases-heading h4 {
+    margin: 0;
+  }
+
+  @media (width < 1024px), (height < 720px), (orientation: portrait) {
+    .quote-receipts-backdrop,
+    .quote-archive-backdrop {
+      padding: 0.5rem;
+    }
+
+    .quote-receipts-dialog,
+    .quote-archive-dialog {
+      width: 100%;
+      max-height: calc(100svh - 1rem);
+      padding: 0.75rem;
+    }
+
+    .quote-receipts-heading,
+    .quote-archive-heading {
+      gap: 0.5rem;
+      padding-block-end: 0.5rem;
+    }
+
+    .quote-receipts-heading h2,
+    .quote-archive-heading h2 {
+      font-size: 1.65rem;
+    }
+
+    .quote-receipts-gate {
+      min-height: 0;
+      padding-block: 0.75rem 0.25rem;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .quote-receipts-dialog,
+    .quote-archive-dialog,
+    .quote-guess-item,
+    .quote-receipt {
+      border-color: CanvasText;
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    .quote-card-text,
+    .quote-receipt-facts,
+    .quote-receipt-guess,
+    .quote-receipt-label,
+    .quote-receipt-guess strong {
+      color: CanvasText;
+    }
+
+    .quote-guess-options {
+      border-color: CanvasText;
+      background: CanvasText;
+    }
+
+    .quote-guess-option span {
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    .quote-guess-option input:checked + span {
+      forced-color-adjust: none;
+      background: Highlight;
+      color: HighlightText;
+      box-shadow: none;
+      outline: 2px solid CanvasText;
+      outline-offset: -4px;
+    }
+
+    .quote-guess-option input:focus-visible + span {
+      outline: 3px solid Highlight;
+      outline-offset: 3px;
+    }
+
+    .quote-guess-option:has(input:focus-visible) {
+      z-index: 1;
+    }
+  }
+}

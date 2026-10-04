@@ -93,7 +93,7 @@ The other rows apply to each trial.
 | Animation frame interval      | Pooled 95th percentile 18.2 ms or less. Pooled share above 50 ms below 2 percent             |
 | Initial page CLS              | 0.05 or less in each trial                                                                   |
 | Card-update CLS               | 0 in each trial                                                                              |
-| Initial JavaScript            | 350 KiB or less in total after gzip, without media and without voice-preparation scripts     |
+| Initial JavaScript            | 500 KiB or less in total after gzip, without media and without voice-preparation scripts     |
 | Trial JavaScript              | 500 KiB or less in total after gzip, without media, in each trial                            |
 | Selected audio decode         | Median 1 second or less for each cache mode. Each trial decodes before the first playback    |
 

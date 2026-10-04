@@ -307,8 +307,8 @@
   <target>Suspans · Runda <x id="0" equiv-text="${this.snapshot.round}"/></target>
 </trans-unit>
 <trans-unit id="sd013b84b2761098d">
-  <source>Round <x id="0" equiv-text="${this.snapshot.round}"/></source>
-  <target>Runda <x id="0" equiv-text="${this.snapshot.round}"/></target>
+  <source>Round <x id="0" equiv-text="${round}"/></source>
+  <target>Runda <x id="0" equiv-text="${round}"/></target>
 </trans-unit>
 <trans-unit id="se912116525a3eb72">
   <source>Insult delivery</source>
@@ -1201,6 +1201,210 @@
 <trans-unit id="s0379fc73608ab971">
   <source>Done</source>
   <target>Gata</target>
+</trans-unit>
+<trans-unit id="se6c83aeba7072b71">
+  <source>Real quote</source>
+  <target>Citat real</target>
+</trans-unit>
+<trans-unit id="seb124bca1a2b783e">
+  <source>Adapted from a real statement</source>
+  <target>Adaptare după o declarație reală</target>
+</trans-unit>
+<trans-unit id="s10e42dce03e3eaf9">
+  <source>Real slogan</source>
+  <target>Slogan real</target>
+</trans-unit>
+<trans-unit id="sbda4b8293349aaaa">
+  <source>Invented for the game</source>
+  <target>Inventat pentru joc</target>
+</trans-unit>
+<trans-unit id="sa07c1708dbd36760">
+  <source>Translated from Romanian</source>
+  <target>Tradus din română</target>
+</trans-unit>
+<trans-unit id="s1db693fa436436f1">
+  <source>Translated from English</source>
+  <target>Tradus din engleză</target>
+</trans-unit>
+<trans-unit id="s76b827f84a0ecaec">
+  <source>Translated from another language</source>
+  <target>Tradus din altă limbă</target>
+</trans-unit>
+<trans-unit id="s89649937ddef97b1">
+  <source><x id="0" equiv-text="${venue}"/>, <x id="1" equiv-text="${year}"/></source>
+  <target><x id="0" equiv-text="${venue}"/>, <x id="1" equiv-text="${year}"/></target>
+</trans-unit>
+<trans-unit id="sfe4e37ddc362e47a">
+  <source><x id="0" equiv-text="${venue}"/> (<x id="1" equiv-text="${levelName(record.level)}"/>), <x id="2" equiv-text="${year}"/></source>
+  <target><x id="0" equiv-text="${venue}"/> (<x id="1" equiv-text="${levelName(record.level)}"/>), <x id="2" equiv-text="${year}"/></target>
+</trans-unit>
+<trans-unit id="s2b13aced7acf1f1e">
+  <source>Adapted</source>
+  <target>Adaptat</target>
+</trans-unit>
+<trans-unit id="s23f32ddd3b3bd374">
+  <source>Invented</source>
+  <target>Inventat</target>
+</trans-unit>
+<trans-unit id="s3eb6f75b91444d2a">
+  <source>Parliament</source>
+  <target>Parlament</target>
+</trans-unit>
+<trans-unit id="sba76728e0293ddf6">
+  <source>Government</source>
+  <target>Guvern</target>
+</trans-unit>
+<trans-unit id="s1a319a5b4e418c3c">
+  <source>County council</source>
+  <target>Consiliu județean</target>
+</trans-unit>
+<trans-unit id="s5455926fbf5cd28b">
+  <source>Local council</source>
+  <target>Consiliu local</target>
+</trans-unit>
+<trans-unit id="s841abdc50b9e2533">
+  <source>Campaign</source>
+  <target>Campanie electorală</target>
+</trans-unit>
+<trans-unit id="s06c30e6e05b59e82">
+  <source>Press conference</source>
+  <target>Conferință de presă</target>
+</trans-unit>
+<trans-unit id="s40e8795372723a11">
+  <source>Television</source>
+  <target>Televiziune</target>
+</trans-unit>
+<trans-unit id="s47d3bb78437e7f74">
+  <source>Radio</source>
+  <target>Radio</target>
+</trans-unit>
+<trans-unit id="seec6798afe90ffc8">
+  <source>Print</source>
+  <target>Presă scrisă</target>
+</trans-unit>
+<trans-unit id="sb9162330a169b6e6">
+  <source>Social media</source>
+  <target>Rețele sociale</target>
+</trans-unit>
+<trans-unit id="s940e71c438e0873c">
+  <source>Protest</source>
+  <target>Protest</target>
+</trans-unit>
+<trans-unit id="s7161c9f4b6552808">
+  <source>Court</source>
+  <target>Instanță</target>
+</trans-unit>
+<trans-unit id="sf3cab5ce182ed04d">
+  <source>national level</source>
+  <target>nivel național</target>
+</trans-unit>
+<trans-unit id="sf1c54e78500f5a6d">
+  <source>county level</source>
+  <target>nivel județean</target>
+</trans-unit>
+<trans-unit id="s331cf119209ee6ce">
+  <source>local level</source>
+  <target>nivel local</target>
+</trans-unit>
+<trans-unit id="s04493c47b212aed1">
+  <source>international level</source>
+  <target>nivel internațional</target>
+</trans-unit>
+<trans-unit id="s6344b3dc4e66feb5">
+  <source>Quote archive</source>
+  <target>Arhiva de citate</target>
+</trans-unit>
+<trans-unit id="se13ad016463a815f">
+  <source>Found</source>
+  <target>Găsite</target>
+</trans-unit>
+<trans-unit id="s17ac6b5d92989ef2">
+  <source>Best guess</source>
+  <target>Cel mai bun scor</target>
+</trans-unit>
+<trans-unit id="s2da2fb8eab17baa9">
+  <source>No guess yet</source>
+  <target>Niciun răspuns încă</target>
+</trans-unit>
+<trans-unit id="sdcbef3b4f253f98e">
+  <source>Who said that?</source>
+  <target>Cine a spus asta?</target>
+</trans-unit>
+<trans-unit id="s15b1675e6e0afcd4">
+  <source>Guess first</source>
+  <target>Ghicește întâi</target>
+</trans-unit>
+<trans-unit id="sc368cecd1d8644b1">
+  <source>Show receipts</source>
+  <target>Arată dovezile</target>
+</trans-unit>
+<trans-unit id="s627b31246060b570">
+  <source>Real, adapted, or invented? Select one answer for each phrase.</source>
+  <target>Real, adaptat sau inventat? Alege un răspuns pentru fiecare expresie.</target>
+</trans-unit>
+<trans-unit id="se576115e4d3efa8b">
+  <source>The two players make one guess together.</source>
+  <target>Cei doi jucători dau un singur răspuns împreună.</target>
+</trans-unit>
+<trans-unit id="s55d8d4daf99ef86f">
+  <source>Select an answer for each phrase.</source>
+  <target>Alege un răspuns pentru fiecare expresie.</target>
+</trans-unit>
+<trans-unit id="sb2b44de8a70ae954">
+  <source><x id="0" equiv-text="${formatInterfaceNumber(this.score.correct)}"/> of <x id="1" equiv-text="${formatInterfaceNumber(this.score.total)}"/></source>
+  <target><x id="0" equiv-text="${formatInterfaceNumber(this.score.correct)}"/> din <x id="1" equiv-text="${formatInterfaceNumber(this.score.total)}"/></target>
+</trans-unit>
+<trans-unit id="sbfb94dfb3fe4121b">
+  <source>Sentences of this match</source>
+  <target>Propozițiile acestui meci</target>
+</trans-unit>
+<trans-unit id="sc46bc42ad953d575">
+  <source>Your guess: <x id="0" equiv-text="${quoteGuessAnswerLabel(guess)}"/></source>
+  <target>Răspunsul tău: <x id="0" equiv-text="${quoteGuessAnswerLabel(guess)}"/></target>
+</trans-unit>
+<trans-unit id="s4158d5fc29a1f991">
+  <source>Correct</source>
+  <target>Corect</target>
+</trans-unit>
+<trans-unit id="s8ceffdad7aacf3cc">
+  <source>Not correct</source>
+  <target>Greșit</target>
+</trans-unit>
+<trans-unit id="s4abf9586d12d5a42">
+  <source>The quote archive cannot use persistent storage. New phrases are available only until this page closes. Allow site storage or clear this site's stored data, then reload.</source>
+  <target>Arhiva de citate nu poate folosi stocarea permanentă. Expresiile noi rămân disponibile doar până închizi pagina. Permite stocarea datelor pentru acest site sau șterge datele lui salvate, apoi reîncarcă pagina.</target>
+</trans-unit>
+<trans-unit id="s05ccf1fb8700b5c1">
+  <source>No phrases yet. Complete a match to add the phrases that you use.</source>
+  <target>Nicio expresie încă. Încheie un meci pentru a adăuga expresiile pe care le folosești.</target>
+</trans-unit>
+<trans-unit id="s211324f7861d50ec">
+  <source>The phrases that you used in completed matches, and where each one comes from.</source>
+  <target>Expresiile pe care le-ai folosit în meciurile încheiate și proveniența fiecăreia.</target>
+</trans-unit>
+<trans-unit id="s309c45602d188083">
+  <source>From real speech</source>
+  <target>Din declarații reale</target>
+</trans-unit>
+<trans-unit id="se93fd9ca93f2c915">
+  <source>Some phrases in this match come from real speech.</source>
+  <target>Unele expresii din acest meci vin din declarații reale.</target>
+</trans-unit>
+<trans-unit id="sdfd25fecd9494da1">
+  <source>Guess which ones before you see the receipts.</source>
+  <target>Ghicește care, înainte să vezi dovezile.</target>
+</trans-unit>
+<trans-unit id="s5ad48e719ed3e73e">
+  <source>Check my guesses</source>
+  <target>Verifică răspunsurile</target>
+</trans-unit>
+<trans-unit id="s0495f7c6bb4c17ac">
+  <source>Your score</source>
+  <target>Scorul tău</target>
+</trans-unit>
+<trans-unit id="s1a8f05505feb37a2">
+  <source>No phrase in this match comes from real speech.</source>
+  <target>Nicio expresie din acest meci nu vine dintr-o declarație reală.</target>
 </trans-unit>
 </body>
 </file>

@@ -10,6 +10,8 @@ import type {
 import { defaultSettings, type SettingsDocument } from '../../persistence/codecs/settings-codec.ts';
 import type { AudioStatus } from '../../audio/audio-port.ts';
 import type { NeuralSpeechStatus } from '../../audio/neural-speech.ts';
+import { quoteReveals } from '../../game-content.ts';
+import type { QuoteArchiveSnapshot } from '../../persistence/quote-archive.ts';
 import './match-history-modal.ts';
 import './settings-modal.ts';
 
@@ -19,12 +21,14 @@ const proscenium = resolveBrandAsset('title-proscenium-background');
 export const showSetupEventName = 'show-setup';
 export const showMatchHistoryEventName = 'show-match-history';
 export const showSettingsEventName = 'show-settings';
+export const showQuoteArchiveEventName = 'show-quote-archive';
 export const dismissSettingsNoticeEventName = 'dismiss-settings-notice';
 
 export type MenuMode = 'ai' | 'hotseat' | 'ladder';
 export type ShowSetupEvent = CustomEvent<Readonly<{ type: 'show-setup'; mode: MenuMode }>>;
 export type ShowMatchHistoryEvent = CustomEvent<Readonly<{ type: 'show-match-history' }>>;
 export type ShowSettingsEvent = CustomEvent<Readonly<{ type: 'show-settings' }>>;
+export type ShowQuoteArchiveEvent = CustomEvent<Readonly<{ type: 'show-quote-archive' }>>;
 
 export class GrandTransitionTitle extends LitElement {
   static properties = {
@@ -32,6 +36,8 @@ export class GrandTransitionTitle extends LitElement {
     historyEntries: { attribute: false },
     historyOpen: { type: Boolean },
     historyPersistenceFailure: { attribute: false },
+    quoteArchive: { attribute: false },
+    quoteArchiveOpen: { type: Boolean },
     settings: { attribute: false },
     settingsOpen: { type: Boolean },
     showSettingsPersistenceNotice: { type: Boolean },
@@ -47,6 +53,8 @@ export class GrandTransitionTitle extends LitElement {
   declare historyEntries: readonly MatchHistoryEntry[];
   declare historyOpen: boolean;
   declare historyPersistenceFailure: MatchHistoryFailureCode | null;
+  declare quoteArchive: QuoteArchiveSnapshot;
+  declare quoteArchiveOpen: boolean;
   declare settings: SettingsDocument;
   declare settingsOpen: boolean;
   declare showSettingsPersistenceNotice: boolean;
@@ -64,6 +72,8 @@ export class GrandTransitionTitle extends LitElement {
     this.historyEntries = [];
     this.historyOpen = false;
     this.historyPersistenceFailure = null;
+    this.quoteArchive = { cardIds: [], bestGuess: null, persistenceFailure: null };
+    this.quoteArchiveOpen = false;
     this.settings = defaultSettings;
     this.settingsOpen = false;
     this.showSettingsPersistenceNotice = false;
@@ -162,6 +172,17 @@ export class GrandTransitionTitle extends LitElement {
             >
               ${msg('Match history')} <span>(${formatInterfaceNumber(this.historyEntries.length)})</span>
             </button>
+            <button
+              type="button"
+              class="title-archive-action"
+              aria-haspopup="dialog"
+              @click=${this.showQuoteArchive}
+            >
+              ${msg('Quote archive')}
+              <span>(${formatInterfaceNumber(
+                this.quoteArchive.cardIds.filter((cardId) => quoteReveals.has(cardId)).length,
+              )}/${formatInterfaceNumber(quoteReveals.size)})</span>
+            </button>
           </div>
           ${this.renderGpuStatus()}
           ${
@@ -205,6 +226,13 @@ export class GrandTransitionTitle extends LitElement {
             : nothing
         }
         ${
+          this.quoteArchiveOpen
+            ? html`<grand-transition-quote-archive
+              .archive=${this.quoteArchive}
+            ></grand-transition-quote-archive>`
+            : nothing
+        }
+        ${
           this.settingsOpen
             ? html`<grand-transition-settings
               .settings=${this.settings}
@@ -226,6 +254,9 @@ export class GrandTransitionTitle extends LitElement {
     }
     if (changedProperties.get('settingsOpen') === true && this.settingsOpen === false) {
       this.querySelector<HTMLButtonElement>('.title-settings-action')?.focus();
+    }
+    if (changedProperties.get('quoteArchiveOpen') === true && this.quoteArchiveOpen === false) {
+      this.querySelector<HTMLButtonElement>('.title-archive-action')?.focus();
     }
   }
 
@@ -292,6 +323,18 @@ export class GrandTransitionTitle extends LitElement {
     );
   };
 
+  private readonly showQuoteArchive = (): void => {
+    // The archive loads when a player opens it, so it is not in the initial download.
+    void import('./quote-archive-modal.ts');
+    this.dispatchEvent(
+      new CustomEvent(showQuoteArchiveEventName, {
+        bubbles: true,
+        composed: true,
+        detail: Object.freeze({ type: 'show-quote-archive' as const }),
+      }),
+    );
+  };
+
   private readonly showSettings = (): void => {
     this.dispatchEvent(
       new CustomEvent(showSettingsEventName, {
@@ -326,5 +369,6 @@ declare global {
     [showSetupEventName]: ShowSetupEvent;
     [showMatchHistoryEventName]: ShowMatchHistoryEvent;
     [showSettingsEventName]: ShowSettingsEvent;
+    [showQuoteArchiveEventName]: ShowQuoteArchiveEvent;
   }
 }

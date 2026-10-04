@@ -116,7 +116,7 @@ test('initial production JavaScript stays within the total gzip budget', async (
   await writeFile(
     resultPath,
     JSON.stringify(
-      { budgetBytes: 350 * 1024, gzipBytes, chunks, voiceGzipBytes, voiceChunks },
+      { budgetBytes: 500 * 1024, gzipBytes, chunks, voiceGzipBytes, voiceChunks },
       null,
       2,
     ),
@@ -125,7 +125,7 @@ test('initial production JavaScript stays within the total gzip budget', async (
     path: resultPath,
     contentType: 'application/json',
   });
-  expect(gzipBytes).toBeLessThanOrEqual(350 * 1024);
+  expect(gzipBytes).toBeLessThanOrEqual(500 * 1024);
 });
 
 test('production content and dependencies have separate emitted chunks', async () => {

@@ -382,16 +382,17 @@
 
   .title-secondary-actions {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.4rem;
-    width: clamp(22rem, 31vw, 30rem);
+    width: clamp(36rem, 50vw, 46rem);
   }
 
   .title-transmission .title-history-action,
+  .title-transmission .title-archive-action,
   .title-transmission .title-settings-action {
     min-width: 0;
     min-height: 2.5rem;
-    padding: 0.45rem 1.2rem;
+    padding: 0.45rem 0.8rem;
     border: 1px solid rgb(180 138 72 / 38%);
     background: rgb(5 8 11 / 56%);
     box-shadow: none;
@@ -403,12 +404,14 @@
   }
 
   .title-transmission .title-history-action:hover,
+  .title-transmission .title-archive-action:hover,
   .title-transmission .title-settings-action:hover {
     border-color: rgb(228 193 125 / 68%);
     background: rgb(11 23 34 / 84%);
   }
 
-  .title-history-action span {
+  .title-history-action span,
+  .title-archive-action span {
     color: rgb(228 193 125 / 72%);
     font-variant-numeric: tabular-nums;
   }

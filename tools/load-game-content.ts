@@ -6,6 +6,7 @@ import {
   type PhraseCardCatalog,
 } from '../src/content/phrase-card-catalog.ts';
 import { createGameCatalog } from '../src/content/game-catalog.ts';
+import { parseQuoteReveals, type QuoteRevealRecord } from '../src/content/quote-reveals.ts';
 import { createEnglishGameLocale } from '../src/localization/en-game-locale.ts';
 import {
   createRomanianGameLocale,
@@ -43,6 +44,16 @@ export function loadGameContent(rootDirectory = repositoryRoot): {
     gameLocaleBundles: indexGameLocaleBundles(gameCatalog.locales),
     gameCatalog,
   };
+}
+
+/**
+ * Reads the Milestone 034 reveal records and checks their shape. The production
+ * bundle trusts that shape, so the Node build step checks it first.
+ */
+export function loadQuoteReveals(rootDirectory = repositoryRoot): readonly QuoteRevealRecord[] {
+  return parseQuoteReveals(
+    readJson(path.join(rootDirectory, 'src', 'content', 'quote-reveals.json')),
+  );
 }
 
 // The authored Romanian content tree is a flat locale-key map spread across

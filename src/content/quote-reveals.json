@@ -1,0 +1,2834 @@
+[
+  {
+    "cardId": "algorithmic-prophet-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-ending-002",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "social-media",
+    "level": "national",
+    "year": 2024
+  },
+  {
+    "cardId": "algorithmic-prophet-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "algorithmic-prophet-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-predicate-002-future",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "television",
+    "level": "national",
+    "year": 2014
+  },
+  {
+    "cardId": "apartment-block-geopolitician-predicate-002-past",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "television",
+    "level": "national",
+    "year": 2014
+  },
+  {
+    "cardId": "apartment-block-geopolitician-predicate-002-present",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "television",
+    "level": "national",
+    "year": 2014
+  },
+  {
+    "cardId": "apartment-block-geopolitician-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "apartment-block-geopolitician-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-ending-001",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "social-media",
+    "level": "national",
+    "year": 2019
+  },
+  {
+    "cardId": "black-sea-captain-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-predicate-003-future",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "social-media",
+    "level": "national",
+    "year": 2019
+  },
+  {
+    "cardId": "black-sea-captain-predicate-003-past",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "social-media",
+    "level": "national",
+    "year": 2019
+  },
+  {
+    "cardId": "black-sea-captain-predicate-003-present",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "social-media",
+    "level": "national",
+    "year": 2019
+  },
+  {
+    "cardId": "black-sea-captain-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "black-sea-captain-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "coalition-acrobat-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-conjunction-027",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-conjunction-028",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-conjunction-029",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-006",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-007",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-008",
+    "classification": "real-slogan",
+    "sourceLanguage": "ro",
+    "venue": "protest",
+    "level": "national",
+    "year": 2017
+  },
+  {
+    "cardId": "common-ending-009",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-010",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-011",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-012",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-013",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-014",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-015",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-016",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-017",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-018",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-019",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-020",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-021",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-022",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-023",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-024",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-025",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-026",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-027",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-028",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-029",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-030",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-031",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-032",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-033",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-034",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-035",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-036",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-037",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-038",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-039",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-040",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-041",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-042",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-043",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-044",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-045",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-046",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-047",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-048",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-049",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-050",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-051",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-052",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-053",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-054",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-055",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-056",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-057",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-058",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-059",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-060",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-061",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-062",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-063",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-064",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-065",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-066",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-067",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-068",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-069",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-070",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-071",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-072",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-073",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-ending-074",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-006",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-007",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-008",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-009",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-010",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-011",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-012",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-013",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-014",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-015",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-016",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-017",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-018",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-019",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-020",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-021",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-022",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-023",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-024",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-025",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-026",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-027",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-028",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-029",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-030",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-031",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-032",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-033",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-034",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-035",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-036",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-037",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-038",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-039",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-040",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-041",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-042",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-043",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-044",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-045",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-046",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-047",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-048",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-049",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-050",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-051",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-052",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-053",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-054",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-055",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-056",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-057",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-058",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-059",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-060",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-061",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-062",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-063",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-064",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-065",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-066",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-067",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-068",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-069",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-070",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-071",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-072",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-073",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-modifier-074",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-noun-372",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-noun-373",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-noun-375",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-noun-380",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-005-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-005-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-005-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-006-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-006-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-006-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-007-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-007-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-007-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-008-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-008-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-008-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-009-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-009-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-009-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-010-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-010-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-010-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-011-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-011-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-011-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-012-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-012-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-012-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-013-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-013-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-013-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-014-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-014-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-014-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-015-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-015-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-015-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-016-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-016-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-016-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-017-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-017-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-017-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-018-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-018-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-018-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-019-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-019-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-019-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-020-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-020-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-020-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-021-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-021-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-021-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-022-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-022-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-022-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-023-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-023-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-023-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-024-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-024-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-024-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-025-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-025-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-025-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-026-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-026-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-026-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-027-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-027-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-027-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-028-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-028-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-028-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-029-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-029-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-029-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-030-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-030-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-030-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-031-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-031-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-031-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-032-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-032-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-032-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-033-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-033-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-033-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-034-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-034-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-034-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-035-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-035-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-035-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-036-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-036-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-036-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-037-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-037-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-037-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-038-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-038-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-038-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-039-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-039-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-039-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-040-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-040-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-040-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-041-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-041-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-041-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-042-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-042-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-042-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-043-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-043-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-043-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-044-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-044-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-044-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-045-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-045-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-045-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-046-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-046-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-046-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-047-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-047-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-047-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-048-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-048-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-048-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-049-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-049-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-predicate-049-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-verb-074-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-verb-074-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "common-verb-074-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "county-baron-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-predicate-002-future",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "television",
+    "level": "national",
+    "year": 2025
+  },
+  {
+    "cardId": "diaspora-oracle-predicate-002-past",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "television",
+    "level": "national",
+    "year": 2025
+  },
+  {
+    "cardId": "diaspora-oracle-predicate-002-present",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "television",
+    "level": "national",
+    "year": 2025
+  },
+  {
+    "cardId": "diaspora-oracle-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "diaspora-oracle-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "eu-funds-alchemist-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "football-tycoon-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "government-ai-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "luxury-minister-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-ending-001",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "print",
+    "level": "national",
+    "year": 2014
+  },
+  {
+    "cardId": "marble-diplomat-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-modifier-001",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "press-conference",
+    "level": "national",
+    "year": 2016
+  },
+  {
+    "cardId": "marble-diplomat-modifier-002",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "press-conference",
+    "level": "national",
+    "year": 2016
+  },
+  {
+    "cardId": "marble-diplomat-modifier-003",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "television",
+    "level": "national",
+    "year": 2014
+  },
+  {
+    "cardId": "marble-diplomat-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "marble-diplomat-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-predicate-002-future",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "campaign",
+    "level": "national",
+    "year": 2014
+  },
+  {
+    "cardId": "midnight-sensationalist-predicate-002-past",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "campaign",
+    "level": "national",
+    "year": 2014
+  },
+  {
+    "cardId": "midnight-sensationalist-predicate-002-present",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "campaign",
+    "level": "national",
+    "year": 2014
+  },
+  {
+    "cardId": "midnight-sensationalist-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "midnight-sensationalist-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-ending-002",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "parliament",
+    "level": "international",
+    "year": 2025
+  },
+  {
+    "cardId": "oat-milk-reformist-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "oat-milk-reformist-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "red-folded-chairman-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "reluctant-theorem-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "retiring-cassandra-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-predicate-002-future",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "radio",
+    "level": "national",
+    "year": 2026
+  },
+  {
+    "cardId": "spreadsheet-technocrat-predicate-002-past",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "radio",
+    "level": "national",
+    "year": 2026
+  },
+  {
+    "cardId": "spreadsheet-technocrat-predicate-002-present",
+    "classification": "adapted-quote",
+    "sourceLanguage": "ro",
+    "venue": "radio",
+    "level": "national",
+    "year": 2026
+  },
+  {
+    "cardId": "spreadsheet-technocrat-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "spreadsheet-technocrat-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "thunder-tribune-predicate-004-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-ending-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-ending-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-ending-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-ending-004",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-ending-005",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-modifier-001",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-modifier-002",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-modifier-003",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-predicate-001-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-predicate-001-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-predicate-001-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-predicate-002-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-predicate-002-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-predicate-002-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-predicate-003-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-predicate-003-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-predicate-003-present",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-predicate-004-future",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-predicate-004-past",
+    "classification": "invented"
+  },
+  {
+    "cardId": "velvet-mogul-predicate-004-present",
+    "classification": "invented"
+  }
+]

@@ -22,6 +22,7 @@ import './interruption-screen.ts';
 import '../../components/character-presenter.ts';
 import '../../components/scene-ambience.ts';
 import type { TurnTimerSeconds } from './interruption-screen.ts';
+import type { MatchLogDocument } from '../../persistence/codecs/replay-codec.ts';
 import { ApplicationTurnClock } from '../turn-clock.ts';
 
 const elementName = 'grand-transition-match';
@@ -53,6 +54,7 @@ export class GrandTransitionMatch extends LitElement {
     aiName: { type: String },
     autoRevealWaitingSentence: { type: Boolean },
     presentation: { attribute: false },
+    completedMatch: { attribute: false },
   };
 
   declare snapshot: MatchScreenSnapshot | undefined;
@@ -67,6 +69,9 @@ export class GrandTransitionMatch extends LitElement {
   declare aiName: string;
   declare autoRevealWaitingSentence: boolean;
   declare presentation: RoundPresentationFrame | null;
+  /** The public record of the completed match, for the Milestone 034 receipts. */
+  declare completedMatch: MatchLogDocument | null;
+  private receiptsOpen = false;
   private previewText: string | null;
   private commandPending: boolean;
   private revealedWaitingPlayerId: string | null;
@@ -107,6 +112,7 @@ export class GrandTransitionMatch extends LitElement {
     this.aiName = msg('Local Radio Caller');
     this.autoRevealWaitingSentence = false;
     this.presentation = null;
+    this.completedMatch = null;
     this.previewText = null;
     this.commandPending = false;
     this.revealedWaitingPlayerId = null;
@@ -191,6 +197,7 @@ export class GrandTransitionMatch extends LitElement {
       this.discardedPortraitSequence = this.snapshot.revision;
     }
     if (changed.has('snapshot')) {
+      if (!this.snapshot?.victory) this.receiptsOpen = false;
       const previousSnapshot = changed.get('snapshot') as MatchScreenSnapshot | undefined;
       const previousWaitingPlayer = previousSnapshot?.players.find((player) => !player.isActive);
       const currentWaitingPlayer = this.snapshot?.players.find((player) => !player.isActive);
@@ -552,7 +559,12 @@ export class GrandTransitionMatch extends LitElement {
             this.presentation
               ? this.renderDelivery(first, second)
               : this.snapshot.victory
-                ? this.renderVictory(first, second)
+                ? this.receiptsOpen && this.completedMatch
+                  ? html`<grand-transition-quote-receipts
+                      .match=${this.completedMatch}
+                      @close-quote-receipts=${this.closeReceipts}
+                    ></grand-transition-quote-receipts>`
+                  : this.renderVictory(first, second)
                 : arenaReaction?.kind === 'grammar-mistake'
                   ? this.renderArenaReaction(arenaReaction)
                   : nothing
@@ -1089,18 +1101,50 @@ export class GrandTransitionMatch extends LitElement {
             ${this.renderReactionScore(first, 'red')}
             ${this.renderReactionScore(second, 'blue')}
           </dl>
-          <button
-            type="button"
-            class="round-review-continue round-review-primary"
-            data-layout-region="victory-continue"
-            @click=${this.returnToMainMenu}
-          >
-            ${victory.ladder ? msg('Continue ladder') : msg('Return to main menu')}
-          </button>
+          <div class="round-review-actions" data-layout-region="victory-actions">
+            <button
+              type="button"
+              class="round-review-continue round-review-primary"
+              data-layout-region="victory-continue"
+              @click=${this.returnToMainMenu}
+            >
+              ${victory.ladder ? msg('Continue ladder') : msg('Return to main menu')}
+            </button>
+            ${
+              this.completedMatch
+                ? html`<button
+                    type="button"
+                    class="round-review-receipts"
+                    data-layout-region="victory-receipts"
+                    aria-haspopup="dialog"
+                    @click=${this.openReceipts}
+                  >
+                    ${msg('Who said that?')}
+                  </button>`
+                : nothing
+            }
+          </div>
         </section>
       </div>
     `;
   }
+
+  private readonly openReceipts = (): void => {
+    // The panel loads when a player opens it, so it is not in the initial download.
+    void import('./quote-receipts-panel.ts');
+    this.receiptsOpen = true;
+    this.requestUpdate();
+  };
+
+  // The panel closes back to Victory. The terminal state stays.
+  private readonly closeReceipts = (event: Event): void => {
+    event.stopPropagation();
+    this.receiptsOpen = false;
+    this.requestUpdate();
+    void this.updateComplete.then(() =>
+      this.querySelector<HTMLButtonElement>('.round-review-receipts')?.focus(),
+    );
+  };
 
   private clearGrammarStrike(): void {
     window.clearTimeout(this.grammarStrikeTimerId);

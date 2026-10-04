@@ -9,6 +9,7 @@ import {
   type MatchState,
 } from '../engine/match-lifecycle.ts';
 import { recordLadderResult } from '../engine/ladder.ts';
+import { revealedCardIds, type QuoteRevealIndex } from '../engine/quote-receipts.ts';
 import { shippedGameLocale } from '../localization/game-locale.ts';
 import type { GameLocaleBundle } from '../localization/game-locale-schema.ts';
 import {
@@ -17,6 +18,7 @@ import {
   type MatchHistorySettings,
 } from '../persistence/match-history.ts';
 import type { LadderProgressRepository } from '../persistence/ladder-progress.ts';
+import type { QuoteArchiveRepository } from '../persistence/quote-archive.ts';
 import { inThreadAiDecider, type AiDecider } from './ai-decider.ts';
 
 export type MatchArenaReaction =
@@ -63,6 +65,9 @@ type CoordinatorDependencies = Readonly<{
   context: MatchEngineContext;
   history: MatchHistoryRepository;
   ladder: LadderProgressRepository;
+  /** Milestone 034: a completed match adds its committed reveal records. */
+  quoteArchive: QuoteArchiveRepository;
+  quoteReveals: QuoteRevealIndex;
   log: (entry: MatchCommandLog) => void;
   now: () => string;
   setTimeout: (callback: () => void, delay: number) => number;
@@ -272,14 +277,16 @@ export class MatchCoordinator {
         recordLadderResult(progress, state.winner === 'player-one' ? 'win' : 'loss'),
       );
     }
-    this.dependencies.history.append(
-      createMatchHistoryEntry(state, {
-        id: identity.id,
-        initialSeed: identity.initialSeed,
-        completedAt: this.dependencies.now(),
-        settings: identity.settings,
-        gameLocale: shippedGameLocale(this.locale),
-      }),
+    const entry = createMatchHistoryEntry(state, {
+      id: identity.id,
+      initialSeed: identity.initialSeed,
+      completedAt: this.dependencies.now(),
+      settings: identity.settings,
+      gameLocale: shippedGameLocale(this.locale),
+    });
+    this.dependencies.history.append(entry);
+    this.dependencies.quoteArchive.addCards(
+      revealedCardIds(entry.matchLog.sentences, this.dependencies.quoteReveals),
     );
   }
 }

@@ -13,8 +13,10 @@ import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
 import { createMatchSetupState, type MatchState } from '../../src/engine/match-lifecycle.ts';
 import { listSimulationOptions } from '../../src/simulation/simulation.ts';
 import { createLadderProgress } from '../../src/engine/ladder.ts';
+import { createQuoteRevealIndex } from '../../src/engine/quote-receipts.ts';
 import { MatchHistoryRepository } from '../../src/persistence/match-history.ts';
 import { LadderProgressRepository } from '../../src/persistence/ladder-progress.ts';
+import { QuoteArchiveRepository } from '../../src/persistence/quote-archive.ts';
 import { replayMatch } from '../../src/persistence/codecs/replay-codec.ts';
 import {
   createMemoryRecordStorage,
@@ -33,6 +35,11 @@ const identity = {
   ladder: false,
   settings: { turnTimerSeconds: 30 as const, autoComplete: false, phraseColorCoding: true },
 };
+// Each card has a record here, so each committed card goes into the quote archive.
+const quoteReveals = createQuoteRevealIndex(
+  gameCatalog.phrases.map(({ id }) => ({ cardId: id, classification: 'invented' as const })),
+  gameCatalog.phrases,
+);
 
 function setup(ai = false, basePointsMultiplier?: BasePointsMultiplier): MatchState {
   const player = (index: number) => {
@@ -65,6 +72,7 @@ function harness() {
   const storage = createMemoryStorage();
   const history = new MatchHistoryRepository(createMemoryRecordStorage(), storage);
   const ladder = new LadderProgressRepository(storage);
+  const quoteArchive = new QuoteArchiveRepository(storage);
   const logs: MatchCommandLog[] = [];
   const tasks = new Map<number, () => void>();
   let nextId = 0;
@@ -72,6 +80,8 @@ function harness() {
     context,
     history,
     ladder,
+    quoteArchive,
+    quoteReveals,
     log: (entry) => logs.push(entry),
     now: () => '2026-09-05T00:00:00.000Z',
     setTimeout: (callback) => {
@@ -87,7 +97,7 @@ function harness() {
     tasks.delete(id);
     task();
   };
-  return { coordinator, history, ladder, logs, tasks, runTask };
+  return { coordinator, history, ladder, quoteArchive, logs, tasks, runTask };
 }
 
 describe('match coordination', () => {
@@ -114,7 +124,7 @@ describe('match coordination', () => {
   });
 
   test.each([false, true])('records a deterministic complete match and ladder=%s', (isLadder) => {
-    const { coordinator, history, ladder, logs } = harness();
+    const { coordinator, history, ladder, quoteArchive, logs } = harness();
     if (isLadder)
       ladder.replace(
         createLadderProgress(
@@ -141,6 +151,8 @@ describe('match coordination', () => {
         expect(transition.review.resolution).toEqual(state.resolutionHistory.at(-1));
         if (state.phase !== 'results') {
           expect(history.snapshot().entries).toHaveLength(0);
+          // AC-034-06: a match that is not complete does not change the archive.
+          expect(quoteArchive.snapshot().cardIds).toEqual([]);
           state = coordinator.continueRound(state, identity.initialSeed);
         }
       }
@@ -162,6 +174,16 @@ describe('match coordination', () => {
     const progress = ladder.snapshot().progress;
     if (isLadder) expect(progress!.wins + progress!.losses).toBe(1);
     else expect(progress).toBeNull();
+    // AC-034-06: the completed match adds each committed card that has a record.
+    const committed = new Set(
+      history
+        .snapshot()
+        .entries[0]!.matchLog.sentences.flatMap(({ phrases }) => phrases)
+        .map(({ phraseId }) => phraseId)
+        .filter((phraseId) => quoteReveals.has(phraseId)),
+    );
+    expect(committed.size).toBeGreaterThan(0);
+    expect(new Set(quoteArchive.snapshot().cardIds)).toEqual(committed);
   });
 
   test('captures each new match multiplier for both players and saved replays', () => {
@@ -191,7 +213,7 @@ describe('match coordination', () => {
   });
 
   test('logs a rejected command without state changes or completion writes', () => {
-    const { coordinator, history, logs } = harness();
+    const { coordinator, history, quoteArchive, logs } = harness();
     const state = coordinator.start(setup(), englishGameLocale);
     const before = JSON.stringify(state);
     expect(
@@ -200,6 +222,7 @@ describe('match coordination', () => {
     expect(JSON.stringify(state)).toBe(before);
     expect(logs.at(-1)).toMatchObject({ outcome: 'rejected', before: state, after: state });
     expect(history.snapshot().entries).toHaveLength(0);
+    expect(quoteArchive.snapshot().cardIds).toEqual([]);
   });
 
   test.each([3, 60])('preserves grammar-mistake presentation with Pride %s', (pride) => {
@@ -277,6 +300,8 @@ describe('match coordination', () => {
         context,
         history: new MatchHistoryRepository(createMemoryRecordStorage(), createMemoryStorage()),
         ladder: new LadderProgressRepository(createMemoryStorage()),
+        quoteArchive: new QuoteArchiveRepository(createMemoryStorage()),
+        quoteReveals,
         log: () => {},
         now: () => '2026-09-05T00:00:00.000Z',
         setTimeout: (callback, delay) => tasks.push({ callback, delay }),

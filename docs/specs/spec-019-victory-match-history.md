@@ -41,6 +41,8 @@ Show these items:
 
 The record has one `Return to main menu` action.
 It has no automatic timeout, Continue action, rematch action, replay action, history action, or hidden path that closes it.
+Milestone 034 adds a **Who said that?** action to the record and to each entry of the history modal.
+That action opens the receipts panel, and it does not clear or close the terminal state.
 
 The victory state stays until the user selects `Return to main menu`.
 That action clears the active terminal match and shows the title screen.

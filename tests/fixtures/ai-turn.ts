@@ -5,9 +5,10 @@ import {
   type MatchEngineContext,
   type MatchState,
 } from '../../src/engine/match-lifecycle.ts';
-import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
+import { englishGameLocale, gameCatalog, quoteReveals } from '../../src/game-content.ts';
 import { LadderProgressRepository } from '../../src/persistence/ladder-progress.ts';
 import { MatchHistoryRepository } from '../../src/persistence/match-history.ts';
+import { QuoteArchiveRepository } from '../../src/persistence/quote-archive.ts';
 import {
   createMemoryRecordStorage,
   createMemoryStorage,
@@ -37,6 +38,8 @@ export function aiTurnState(): MatchState {
     context,
     history: new MatchHistoryRepository(createMemoryRecordStorage(), createMemoryStorage()),
     ladder: new LadderProgressRepository(createMemoryStorage()),
+    quoteArchive: new QuoteArchiveRepository(createMemoryStorage()),
+    quoteReveals,
     log: () => {},
     now: () => '2026-09-25T00:00:00.000Z',
     setTimeout: () => 0,

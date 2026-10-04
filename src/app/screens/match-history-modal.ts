@@ -20,11 +20,14 @@ export class GrandTransitionMatchHistory extends LitElement {
     entries: { attribute: false },
     persistenceFailure: { attribute: false },
     expandedEntryIds: { state: true },
+    receiptsEntryId: { state: true },
   };
 
   declare entries: readonly MatchHistoryEntry[];
   declare persistenceFailure: MatchHistoryFailureCode | null;
   declare private expandedEntryIds: ReadonlySet<string>;
+  /** The stored match whose Milestone 034 receipts panel is open. */
+  declare private receiptsEntryId: string | null;
 
   constructor() {
     super();
@@ -32,6 +35,7 @@ export class GrandTransitionMatchHistory extends LitElement {
     this.entries = [];
     this.persistenceFailure = null;
     this.expandedEntryIds = new Set();
+    this.receiptsEntryId = null;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -43,6 +47,13 @@ export class GrandTransitionMatchHistory extends LitElement {
   }
 
   protected override render(): TemplateResult {
+    const receiptsEntry = this.entries.find(({ id }) => id === this.receiptsEntryId);
+    if (receiptsEntry) {
+      return html`<grand-transition-quote-receipts
+        .match=${receiptsEntry.matchLog}
+        @close-quote-receipts=${this.closeReceipts}
+      ></grand-transition-quote-receipts>`;
+    }
     return html`
       <div class="match-history-backdrop">
         <section
@@ -137,7 +148,7 @@ export class GrandTransitionMatchHistory extends LitElement {
             <dd>${formatInterfaceNumber(log.seed)}</dd>
           </div>
         </dl>
-        ${this.renderPhraseHistory(log)}
+        ${this.renderPhraseHistory(entry)}
         <details
           .open=${expanded}
           @toggle=${(event: Event) => this.toggleTechnicalRecord(event, entry.id)}
@@ -157,10 +168,22 @@ export class GrandTransitionMatchHistory extends LitElement {
     `;
   }
 
-  private renderPhraseHistory(log: MatchHistoryEntry['matchLog']): TemplateResult {
+  private renderPhraseHistory(entry: MatchHistoryEntry): TemplateResult {
+    const log = entry.matchLog;
     return html`
       <section class="match-history-phrases" aria-label=${msg('Phrases used')}>
-        <h4>${msg('Phrases used')}</h4>
+        <div class="match-history-phrases-heading">
+          <h4>${msg('Phrases used')}</h4>
+          <button
+            type="button"
+            class="match-history-receipts"
+            data-receipts-entry=${entry.id}
+            aria-haspopup="dialog"
+            @click=${() => this.openReceipts(entry.id)}
+          >
+            ${msg('Who said that?')}
+          </button>
+        </div>
         ${log.rounds.map(
           (round) => html`
             <section class="match-history-phrase-round">
@@ -248,6 +271,24 @@ export class GrandTransitionMatchHistory extends LitElement {
       event.preventDefault();
       first.focus();
     }
+  };
+
+  private openReceipts(entryId: string): void {
+    // The panel loads when a player opens it, so it is not in the initial download.
+    void import('./quote-receipts-panel.ts');
+    this.receiptsEntryId = entryId;
+  }
+
+  // The panel closes back to the history list, to the action that opened it.
+  private readonly closeReceipts = (event: Event): void => {
+    event.stopPropagation();
+    const entryId = this.receiptsEntryId;
+    this.receiptsEntryId = null;
+    void this.updateComplete.then(() =>
+      [...this.querySelectorAll<HTMLButtonElement>('.match-history-receipts')]
+        .find((button) => button.dataset.receiptsEntry === entryId)
+        ?.focus(),
+    );
   };
 
   private toggleTechnicalRecord(event: Event, entryId: string): void {
