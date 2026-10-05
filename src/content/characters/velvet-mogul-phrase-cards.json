@@ -69,22 +69,18 @@
     {
       "id": "velvet-mogul-modifier-001",
       "role": "modifier",
-      "text": "to an economy booming inside my wallet",
+      "text": "with wealth measured in ideas",
       "tags": [
-        "wealth",
-        "influence",
-        "credibility"
+        "wealth"
       ],
       "rarity": "uncommon"
     },
     {
       "id": "velvet-mogul-ending-001",
       "role": "ending",
-      "text": "and my loose change has a holding company.",
+      "text": "and the wealth is in my head.",
       "tags": [
-        "wealth",
-        "influence",
-        "credibility"
+        "wealth"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -92,10 +88,9 @@
     {
       "id": "velvet-mogul-ending-002",
       "role": "ending",
-      "text": "and you count silverware; I buy the room.",
+      "text": "and a public stake needs public investment.",
       "tags": [
-        "wealth",
-        "influence"
+        "wealth"
       ],
       "rarity": "rare",
       "finisherBonus": 3
@@ -103,10 +98,10 @@
     {
       "id": "velvet-mogul-ending-003",
       "role": "ending",
-      "text": "and I measure words, then buy the microphone.",
+      "text": "and bureaucracy has no competition to make it smarter.",
       "tags": [
-        "influence",
-        "credibility"
+        "bureaucracy",
+        "competence"
       ],
       "rarity": "rare",
       "finisherBonus": 3
@@ -114,50 +109,9 @@
     {
       "id": "velvet-mogul-noun-002",
       "role": "noun",
-      "text": "an editorial opinion with a share certificate",
+      "text": "a bureaucracy sheltered from competition",
       "tags": [
-        "influence"
-      ],
-      "scoreGroups": {
-        "substance": [
-          "media"
-        ],
-        "flavour": [
-          "politics"
-        ]
-      },
-      "grammaticalNumber": "singular",
-      "grammaticalPerson": "third",
-      "referentKind": "nonpersonal",
-      "rarity": "common"
-    },
-    {
-      "id": "velvet-mogul-noun-003",
-      "role": "noun",
-      "text": "a veto button under the desk",
-      "tags": [
-        "influence"
-      ],
-      "scoreGroups": {
-        "substance": [
-          "media"
-        ],
-        "flavour": [
-          "politics"
-        ]
-      },
-      "grammaticalNumber": "singular",
-      "grammaticalPerson": "third",
-      "referentKind": "nonpersonal",
-      "rarity": "common"
-    },
-    {
-      "id": "velvet-mogul-noun-004",
-      "role": "noun",
-      "text": "independence on a monthly lease",
-      "tags": [
-        "wealth",
-        "credibility"
+        "bureaucracy"
       ],
       "scoreGroups": {
         "substance": [
@@ -173,9 +127,9 @@
       "rarity": "common"
     },
     {
-      "id": "velvet-mogul-noun-005",
+      "id": "velvet-mogul-noun-003",
       "role": "noun",
-      "text": "an offshore account for public applause",
+      "text": "a public stake that requires investment",
       "tags": [
         "wealth"
       ],
@@ -193,16 +147,55 @@
       "rarity": "common"
     },
     {
-      "id": "velvet-mogul-noun-006",
+      "id": "velvet-mogul-noun-004",
       "role": "noun",
-      "text": "a conscience sponsored sentence by sentence",
+      "text": "a tax holiday for solvent companies",
       "tags": [
-        "influence",
-        "credibility"
+        "wealth"
       ],
       "scoreGroups": {
         "substance": [
-          "personal"
+          "wealth"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common"
+    },
+    {
+      "id": "velvet-mogul-noun-005",
+      "role": "noun",
+      "text": "a fiscal inferno",
+      "tags": [
+        "bureaucracy"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "wealth"
+        ],
+        "flavour": [
+          "politics"
+        ]
+      },
+      "grammaticalNumber": "singular",
+      "grammaticalPerson": "third",
+      "referentKind": "nonpersonal",
+      "rarity": "common"
+    },
+    {
+      "id": "velvet-mogul-noun-006",
+      "role": "noun",
+      "text": "a business beyond moral judgment",
+      "tags": [
+        "accountability"
+      ],
+      "scoreGroups": {
+        "substance": [
+          "wealth"
         ],
         "flavour": [
           "politics"
@@ -420,14 +413,13 @@
     {
       "id": "velvet-mogul-predicate-001-past",
       "role": "predicate",
-      "text": "charged rent for the moral high ground",
-      "singularText": "charged rent for the moral high ground",
-      "pluralText": "charged rent for the moral high ground",
-      "personalSingularText": "charged rent for the moral high ground",
-      "secondPersonText": "charged rent for the moral high ground",
+      "text": "called the state the worst asset manager",
+      "singularText": "called the state the worst asset manager",
+      "pluralText": "called the state the worst asset manager",
+      "personalSingularText": "called the state the worst asset manager",
+      "secondPersonText": "called the state the worst asset manager",
       "tags": [
-        "wealth",
-        "credibility"
+        "competence"
       ],
       "scorePreferences": {
         "substance": [
@@ -449,14 +441,13 @@
     {
       "id": "velvet-mogul-predicate-001-present",
       "role": "predicate",
-      "text": "charges rent for the moral high ground",
-      "singularText": "charges rent for the moral high ground",
-      "pluralText": "charge rent for the moral high ground",
-      "personalSingularText": "charges rent for the moral high ground",
-      "secondPersonText": "charge rent for the moral high ground",
+      "text": "calls the state the worst asset manager",
+      "singularText": "calls the state the worst asset manager",
+      "pluralText": "call the state the worst asset manager",
+      "personalSingularText": "calls the state the worst asset manager",
+      "secondPersonText": "call the state the worst asset manager",
       "tags": [
-        "wealth",
-        "credibility"
+        "competence"
       ],
       "scorePreferences": {
         "substance": [
@@ -478,14 +469,13 @@
     {
       "id": "velvet-mogul-predicate-001-future",
       "role": "predicate",
-      "text": "will charge rent for the moral high ground",
-      "singularText": "will charge rent for the moral high ground",
-      "pluralText": "will charge rent for the moral high ground",
-      "personalSingularText": "will charge rent for the moral high ground",
-      "secondPersonText": "will charge rent for the moral high ground",
+      "text": "will call the state the worst asset manager",
+      "singularText": "will call the state the worst asset manager",
+      "pluralText": "will call the state the worst asset manager",
+      "personalSingularText": "will call the state the worst asset manager",
+      "secondPersonText": "will call the state the worst asset manager",
       "tags": [
-        "wealth",
-        "credibility"
+        "competence"
       ],
       "scorePreferences": {
         "substance": [
@@ -507,9 +497,10 @@
     {
       "id": "velvet-mogul-modifier-002",
       "role": "modifier",
-      "text": "with the watchdog listed as a subsidiary",
+      "text": "without any competition to sharpen the bureaucracy",
       "tags": [
-        "influence"
+        "bureaucracy",
+        "competence"
       ],
       "rarity": "uncommon"
     },
@@ -530,7 +521,7 @@
       ],
       "scoreGroups": {
         "substance": [
-          "luxury"
+          "wealth"
         ],
         "flavour": [
           "influence"
@@ -679,7 +670,11 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-predicate-002"
+      "tenseFamily": "velvet-mogul-predicate-002",
+      "singularText": "was wealth in the head, not money",
+      "personalSingularText": "was wealth in the head, not money",
+      "pluralText": "were wealth in the head, not money",
+      "secondPersonText": "were wealth in the head, not money"
     },
     {
       "id": "velvet-mogul-predicate-002-present",
@@ -732,9 +727,9 @@
     {
       "id": "velvet-mogul-predicate-003-past",
       "role": "predicate",
-      "text": "was a public promise with a private sponsor",
+      "text": "denied that any business could be immoral",
       "tags": [
-        "influence"
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -749,18 +744,22 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-predicate-003"
+      "tenseFamily": "velvet-mogul-predicate-003",
+      "singularText": "denied that any business could be immoral",
+      "pluralText": "denied that any business could be immoral",
+      "personalSingularText": "denied that any business could be immoral",
+      "secondPersonText": "denied that any business could be immoral"
     },
     {
       "id": "velvet-mogul-predicate-003-present",
       "role": "predicate",
-      "text": "is a public promise with a private sponsor",
-      "singularText": "is a public promise with a private sponsor",
-      "pluralText": "are a public promise with a private sponsor",
-      "personalSingularText": "is a public promise with a private sponsor",
-      "secondPersonText": "is a public promise with a private sponsor",
+      "text": "denies that any business can be immoral",
+      "singularText": "denies that any business can be immoral",
+      "pluralText": "deny that any business can be immoral",
+      "personalSingularText": "denies that any business can be immoral",
+      "secondPersonText": "deny that any business can be immoral",
       "tags": [
-        "influence"
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -780,9 +779,9 @@
     {
       "id": "velvet-mogul-predicate-003-future",
       "role": "predicate",
-      "text": "will be a public promise with a private sponsor",
+      "text": "will deny that any business can be immoral",
       "tags": [
-        "influence"
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -797,14 +796,18 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "velvet-mogul-predicate-003"
+      "tenseFamily": "velvet-mogul-predicate-003",
+      "singularText": "will deny that any business can be immoral",
+      "pluralText": "will deny that any business can be immoral",
+      "personalSingularText": "will deny that any business can be immoral",
+      "secondPersonText": "will deny that any business can be immoral"
     },
     {
       "id": "velvet-mogul-predicate-004-past",
       "role": "predicate",
-      "text": "was a fortune wearing a modesty badge",
+      "text": "was a tax hell for business",
       "tags": [
-        "credibility"
+        "bureaucracy"
       ],
       "scorePreferences": {
         "substance": [
@@ -819,18 +822,22 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "velvet-mogul-predicate-004"
+      "tenseFamily": "velvet-mogul-predicate-004",
+      "singularText": "was a tax hell for business",
+      "pluralText": "were tax hells for business",
+      "personalSingularText": "was a tax hell for business",
+      "secondPersonText": "were a tax hell for business"
     },
     {
       "id": "velvet-mogul-predicate-004-present",
       "role": "predicate",
-      "text": "is a fortune wearing a modesty badge",
-      "singularText": "is a fortune wearing a modesty badge",
-      "pluralText": "are a fortune wearing a modesty badge",
-      "personalSingularText": "is a fortune wearing a modesty badge",
-      "secondPersonText": "is a fortune wearing a modesty badge",
+      "text": "is a tax hell for business",
+      "singularText": "is a tax hell for business",
+      "pluralText": "are tax hells for business",
+      "personalSingularText": "is a tax hell for business",
+      "secondPersonText": "are a tax hell for business",
       "tags": [
-        "credibility"
+        "bureaucracy"
       ],
       "scorePreferences": {
         "substance": [
@@ -850,9 +857,9 @@
     {
       "id": "velvet-mogul-predicate-004-future",
       "role": "predicate",
-      "text": "will be a fortune wearing a modesty badge",
+      "text": "will be a tax hell for business",
       "tags": [
-        "credibility"
+        "bureaucracy"
       ],
       "scorePreferences": {
         "substance": [
@@ -867,23 +874,25 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "velvet-mogul-predicate-004"
+      "tenseFamily": "velvet-mogul-predicate-004",
+      "singularText": "will be a tax hell for business",
+      "pluralText": "will be tax hells for business",
+      "personalSingularText": "will be a tax hell for business",
+      "secondPersonText": "will be a tax hell for business"
     },
     {
       "id": "velvet-mogul-modifier-003",
       "role": "modifier",
-      "text": "beside-a-platinum-apology",
-      "tags": [
-        "wealth"
-      ],
+      "text": "while cutting investment to pay current bills",
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "velvet-mogul-ending-004",
       "role": "ending",
-      "text": "and influence sent its own chauffeur.",
+      "text": "and only solvent firms qualify for postponed taxes.",
       "tags": [
-        "influence"
+        "wealth"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -891,10 +900,8 @@
     {
       "id": "velvet-mogul-ending-005",
       "role": "ending",
-      "text": "and the wealth report requested a silk cover.",
-      "tags": [
-        "wealth"
-      ],
+      "text": "and the alternative is simply collecting royalties.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     }

@@ -75,34 +75,27 @@
     {
       "id": "marble-diplomat-ending-001",
       "role": "ending",
-      "text": "and bad luck can use the servants' entrance.",
-      "tags": [
-        "luxury",
-        "elitism"
-      ],
+      "text": "and the answer is simply bad luck.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     },
     {
       "id": "marble-diplomat-ending-002",
       "role": "ending",
-      "text": "and the recount stopped the orchestra.",
-      "tags": [
-        "luxury"
-      ],
+      "text": "and a final answer would be premature.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     },
     {
       "id": "marble-diplomat-noun-002",
       "role": "noun",
-      "text": "an empty plinth with diplomatic immunity",
-      "tags": [
-        "elitism"
-      ],
+      "text": "a small aircraft",
+      "tags": [],
       "scoreGroups": {
         "substance": [
-          "bureaucracy"
+          "infrastructure"
         ],
         "flavour": [
           "politics"
@@ -116,13 +109,11 @@
     {
       "id": "marble-diplomat-noun-003",
       "role": "noun",
-      "text": "a gilded apology too heavy to deliver",
-      "tags": [
-        "luxury"
-      ],
+      "text": "the forgotten price of a tutoring lesson",
+      "tags": [],
       "scoreGroups": {
         "substance": [
-          "bureaucracy"
+          "wealth"
         ],
         "flavour": [
           "politics"
@@ -156,14 +147,14 @@
     {
       "id": "marble-diplomat-noun-005",
       "role": "noun",
-      "text": "a prestige carpet over an unpaid invoice",
+      "text": "an admission of overdue reforms",
       "tags": [
-        "luxury",
-        "corruption"
+        "accountability",
+        "delivery"
       ],
       "scoreGroups": {
         "substance": [
-          "wealth"
+          "politics"
         ],
         "flavour": [
           "politics"
@@ -177,11 +168,8 @@
     {
       "id": "marble-diplomat-noun-006",
       "role": "noun",
-      "text": "a crystal decanter reserved for official silence",
-      "tags": [
-        "luxury",
-        "elitism"
-      ],
+      "text": "a final answer delivered too early",
+      "tags": [],
       "scoreGroups": {
         "substance": [
           "bureaucracy"
@@ -402,15 +390,12 @@
     {
       "id": "marble-diplomat-predicate-001-past",
       "role": "predicate",
-      "text": "measured national prestige in carpet length",
-      "singularText": "measured national prestige in carpet length",
-      "pluralText": "measured national prestige in carpet length",
-      "personalSingularText": "measured national prestige in carpet length",
-      "secondPersonText": "measured national prestige in carpet length",
-      "tags": [
-        "luxury",
-        "elitism"
-      ],
+      "text": "arrived in a small aircraft",
+      "singularText": "arrived in a small aircraft",
+      "pluralText": "arrived in a small aircraft",
+      "personalSingularText": "arrived in a small aircraft",
+      "secondPersonText": "arrived in a small aircraft",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -431,15 +416,12 @@
     {
       "id": "marble-diplomat-predicate-001-present",
       "role": "predicate",
-      "text": "measures national prestige in carpet length",
-      "singularText": "measures national prestige in carpet length",
-      "pluralText": "measure national prestige in carpet length",
-      "personalSingularText": "measures national prestige in carpet length",
-      "secondPersonText": "measure national prestige in carpet length",
-      "tags": [
-        "luxury",
-        "elitism"
-      ],
+      "text": "arrives in a small aircraft",
+      "singularText": "arrives in a small aircraft",
+      "pluralText": "arrive in a small aircraft",
+      "personalSingularText": "arrives in a small aircraft",
+      "secondPersonText": "arrive in a small aircraft",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -460,15 +442,12 @@
     {
       "id": "marble-diplomat-predicate-001-future",
       "role": "predicate",
-      "text": "will measure national prestige in carpet length",
-      "singularText": "will measure national prestige in carpet length",
-      "pluralText": "will measure national prestige in carpet length",
-      "personalSingularText": "will measure national prestige in carpet length",
-      "secondPersonText": "will measure national prestige in carpet length",
-      "tags": [
-        "luxury",
-        "elitism"
-      ],
+      "text": "will arrive in a small aircraft",
+      "singularText": "will arrive in a small aircraft",
+      "pluralText": "will arrive in a small aircraft",
+      "personalSingularText": "will arrive in a small aircraft",
+      "secondPersonText": "will arrive in a small aircraft",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -642,10 +621,8 @@
     {
       "id": "marble-diplomat-predicate-002-past",
       "role": "predicate",
-      "text": "was bad luck with a diplomatic invitation",
-      "tags": [
-        "luxury"
-      ],
+      "text": "could not remember the tutoring fee",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -659,19 +636,21 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-predicate-002"
+      "tenseFamily": "marble-diplomat-predicate-002",
+      "singularText": "could not remember the tutoring fee",
+      "pluralText": "could not remember the tutoring fee",
+      "personalSingularText": "could not remember the tutoring fee",
+      "secondPersonText": "could not remember the tutoring fee"
     },
     {
       "id": "marble-diplomat-predicate-002-present",
       "role": "predicate",
-      "text": "is bad luck with a diplomatic invitation",
-      "singularText": "is bad luck with a diplomatic invitation",
-      "pluralText": "are bad luck with a diplomatic invitation",
-      "personalSingularText": "is bad luck with a diplomatic invitation",
-      "secondPersonText": "are bad luck with a diplomatic invitation",
-      "tags": [
-        "luxury"
-      ],
+      "text": "cannot remember the tutoring fee",
+      "singularText": "cannot remember the tutoring fee",
+      "pluralText": "cannot remember the tutoring fee",
+      "personalSingularText": "cannot remember the tutoring fee",
+      "secondPersonText": "cannot remember the tutoring fee",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -690,10 +669,8 @@
     {
       "id": "marble-diplomat-predicate-002-future",
       "role": "predicate",
-      "text": "will be bad luck with a diplomatic invitation",
-      "tags": [
-        "luxury"
-      ],
+      "text": "will not remember the tutoring fee",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -707,7 +684,11 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "marble-diplomat-predicate-002"
+      "tenseFamily": "marble-diplomat-predicate-002",
+      "singularText": "will not remember the tutoring fee",
+      "pluralText": "will not remember the tutoring fee",
+      "personalSingularText": "will not remember the tutoring fee",
+      "secondPersonText": "will not remember the tutoring fee"
     },
     {
       "id": "marble-diplomat-predicate-003-past",
@@ -729,7 +710,11 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-predicate-003"
+      "tenseFamily": "marble-diplomat-predicate-003",
+      "singularText": "was a public office with a private elevator",
+      "personalSingularText": "was a public office with a private elevator",
+      "pluralText": "were a public office with a private elevator",
+      "secondPersonText": "were a public office with a private elevator"
     },
     {
       "id": "marble-diplomat-predicate-003-present",
@@ -738,7 +723,7 @@
       "singularText": "is a public office with a private elevator",
       "pluralText": "are a public office with a private elevator",
       "personalSingularText": "is a public office with a private elevator",
-      "secondPersonText": "is a public office with a private elevator",
+      "secondPersonText": "are a public office with a private elevator",
       "tags": [
         "elitism"
       ],
@@ -782,7 +767,7 @@
     {
       "id": "marble-diplomat-predicate-004-past",
       "role": "predicate",
-      "text": "was a compromise in marble",
+      "text": "warned that corruption kills",
       "tags": [
         "corruption"
       ],
@@ -799,16 +784,20 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "marble-diplomat-predicate-004"
+      "tenseFamily": "marble-diplomat-predicate-004",
+      "singularText": "warned that corruption kills",
+      "pluralText": "warned that corruption kills",
+      "personalSingularText": "warned that corruption kills",
+      "secondPersonText": "warned that corruption kills"
     },
     {
       "id": "marble-diplomat-predicate-004-present",
       "role": "predicate",
-      "text": "is a compromise in marble",
-      "singularText": "is a compromise in marble",
-      "pluralText": "are a compromise in marble",
-      "personalSingularText": "is a compromise in marble",
-      "secondPersonText": "is a compromise in marble",
+      "text": "warns that corruption kills",
+      "singularText": "warns that corruption kills",
+      "pluralText": "warn that corruption kills",
+      "personalSingularText": "warns that corruption kills",
+      "secondPersonText": "warn that corruption kills",
       "tags": [
         "corruption"
       ],
@@ -830,7 +819,7 @@
     {
       "id": "marble-diplomat-predicate-004-future",
       "role": "predicate",
-      "text": "will be a compromise in marble",
+      "text": "will warn that corruption kills",
       "tags": [
         "corruption"
       ],
@@ -847,21 +836,23 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "marble-diplomat-predicate-004"
+      "tenseFamily": "marble-diplomat-predicate-004",
+      "singularText": "will warn that corruption kills",
+      "pluralText": "will warn that corruption kills",
+      "personalSingularText": "will warn that corruption kills",
+      "secondPersonText": "will warn that corruption kills"
     },
     {
       "id": "marble-diplomat-modifier-003",
       "role": "modifier",
       "text": "with the office as the entire country",
-      "tags": [
-        "elitism"
-      ],
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "marble-diplomat-ending-003",
       "role": "ending",
-      "text": "and the treaty arrived by limousine.",
+      "text": "and nobody has defined luxury for me.",
       "tags": [
         "luxury"
       ],
@@ -881,10 +872,8 @@
     {
       "id": "marble-diplomat-ending-005",
       "role": "ending",
-      "text": "and corruption wore the protocol badge.",
-      "tags": [
-        "corruption"
-      ],
+      "text": "and the time for change has come.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     }

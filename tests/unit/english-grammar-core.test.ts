@@ -3,6 +3,7 @@ import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
+  type GrammarPhrase,
   type GrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter.ts';
 
@@ -11,10 +12,70 @@ const phrase = (id: string) =>
     gameCatalog.phrases.find((candidate) => candidate.id === id)!,
     englishGameLocale,
   );
-const add = (id: string): GrammarStep => ({
+const step = (prepared: GrammarPhrase): GrammarStep => ({
   kind: 'phrase',
-  phrase: phrase(id),
+  phrase: prepared,
 });
+const add = (id: string): GrammarStep => step(phrase(id));
+const fixture = (
+  id: string,
+  role: GrammarPhrase['role'],
+  text: string,
+  forms: Partial<
+    Pick<GrammarPhrase, 'pluralText' | 'personalSingularText' | 'secondPersonText'>
+  > = {},
+): GrammarPhrase => ({
+  id,
+  role,
+  localeTag: 'en',
+  defaultText: text,
+  singularText: text,
+  pluralText: text,
+  personalSingularText: text,
+  secondPersonText: text,
+  ...forms,
+});
+// These small fixtures isolate agreement from editorial changes to card text.
+const possessivePast = fixture('fixture-possessive-past', 'predicate', 'checked its own notes', {
+  pluralText: 'checked their own notes',
+  personalSingularText: 'checked their own notes',
+  secondPersonText: 'checked your own notes',
+});
+const possessivePresent = fixture(
+  'fixture-possessive-present',
+  'predicate',
+  'checks its own notes',
+  {
+    pluralText: 'check their own notes',
+    personalSingularText: 'checks their own notes',
+    secondPersonText: 'check your own notes',
+  },
+);
+const possessiveFuture = fixture(
+  'fixture-possessive-future',
+  'predicate',
+  'will check its own notes',
+  {
+    pluralText: 'will check their own notes',
+    personalSingularText: 'will check their own notes',
+    secondPersonText: 'will check your own notes',
+  },
+);
+const secondPossessivePast = fixture('fixture-records-past', 'predicate', 'kept its own records', {
+  pluralText: 'kept their own records',
+  personalSingularText: 'kept their own records',
+  secondPersonText: 'kept your own records',
+});
+const shippedRelations = gameCatalog.phrases
+  .filter(({ role }) => role === 'verb' || role === 'predicate')
+  .map(({ id }) => phrase(id));
+const hasPossessiveAgreement = (relation: GrammarPhrase) =>
+  [
+    relation.singularText,
+    relation.pluralText,
+    relation.personalSingularText,
+    relation.secondPersonText,
+  ].some((text) => /\b(?:its|their|your) own\b/u.test(text));
 const analyze = (steps: readonly GrammarStep[]) =>
   englishGrammarAdapter.analyze({
     steps,
@@ -75,27 +136,16 @@ describe('Hollywood Roast English grammar', () => {
 
   test('renders complete number, person, and referent agreement', () => {
     const cases = [
-      [
-        ['common-noun-029', 'common-predicate-011-present'],
-        'Your party makes its own voters change the channel',
-      ],
-      [
-        ['common-noun-053', 'common-predicate-011-present'],
-        'Holy Water from the Danube makes its own voters change the channel',
-      ],
-      [
-        ['common-noun-028', 'common-predicate-011-present'],
-        'You make your own voters change the channel',
-      ],
-      [
-        ['common-noun-050', 'common-predicate-011-present'],
-        'EU funds make their own voters change the channel',
-      ],
+      ['common-noun-029', 'Your party checks its own notes'],
+      ['common-noun-053', 'Holy Water from the Danube checks its own notes'],
+      ['common-noun-036', 'Your brother checks their own notes'],
+      ['common-noun-028', 'You check your own notes'],
+      ['common-noun-050', 'EU funds check their own notes'],
     ] as const;
 
-    for (const [ids, expected] of cases) {
-      const result = analyze(ids.map(add));
-      expect(result, ids.join(' + ')).toMatchObject({
+    for (const [subject, expected] of cases) {
+      const result = analyze([add(subject), step(possessivePresent)]);
+      expect(result, subject).toMatchObject({
         accepted: true,
         analysis: { complete: true, publicText: expected },
       });
@@ -129,14 +179,14 @@ describe('Hollywood Roast English grammar', () => {
     }
   });
 
-  test('renders the requested social-media families and ending', () => {
+  test('renders the quote-adapted tense families and ending', () => {
     for (const [predicateId, expected] of [
-      ['common-predicate-003-past', 'A foreigner cheered for a Russian attack'],
-      ['common-predicate-003-present', 'A foreigner cheers for a Russian attack'],
-      ['common-predicate-003-future', 'A foreigner will cheer for a Russian attack'],
-      ['common-predicate-004-past', 'A foreigner harassed innocent people on social media'],
-      ['common-predicate-004-present', 'A foreigner harasses innocent people on social media'],
-      ['common-predicate-004-future', 'A foreigner will harass innocent people on social media'],
+      ['common-predicate-003-past', 'A foreigner wanted to learn how to make pretzels'],
+      ['common-predicate-003-present', 'A foreigner wants to learn how to make pretzels'],
+      ['common-predicate-003-future', 'A foreigner will want to learn how to make pretzels'],
+      ['common-predicate-004-past', 'A foreigner refused to comment on what rats said'],
+      ['common-predicate-004-present', 'A foreigner refuses to comment on what rats say'],
+      ['common-predicate-004-future', 'A foreigner will refuse to comment on what rats say'],
     ] as const) {
       expect(analyze([add('common-noun-044'), add(predicateId)])).toMatchObject({
         accepted: true,
@@ -146,11 +196,11 @@ describe('Hollywood Roast English grammar', () => {
 
     expect(analyze([add('common-noun-028'), add('common-predicate-003-present')])).toMatchObject({
       accepted: true,
-      analysis: { publicText: 'You cheer for a Russian attack' },
+      analysis: { publicText: 'You want to learn how to make pretzels' },
     });
     expect(analyze([add('common-noun-028'), add('common-predicate-004-present')])).toMatchObject({
       accepted: true,
-      analysis: { publicText: 'You harass innocent people on social media' },
+      analysis: { publicText: 'You refuse to comment on what rats say' },
     });
     expect(
       analyze([
@@ -162,26 +212,20 @@ describe('Hollywood Roast English grammar', () => {
       accepted: true,
       analysis: {
         state: 'ENDED',
-        publicText: 'A foreigner cheers for a Russian attack and most of your followers are bots.',
+        publicText:
+          'A foreigner wants to learn how to make pretzels and the sheep is a living statue.',
       },
     });
   });
 
-  test('renders every shipped possessive relation for every shipped noun', () => {
-    const relationIds = [
-      'common-predicate-007-past',
-      'common-predicate-007-present',
-      'common-predicate-007-future',
-      'common-predicate-009-past',
-      'common-predicate-009-present',
-      'common-predicate-009-future',
-      'common-predicate-011-present',
-      'common-predicate-011-past',
-      'common-predicate-011-future',
-      'black-sea-captain-predicate-002-present',
-      'black-sea-captain-predicate-002-past',
-      'black-sea-captain-predicate-002-future',
-    ] as const;
+  test('renders possessive fixtures and every shipped possessive relation for every shipped noun', () => {
+    const relations = [
+      possessivePast,
+      possessivePresent,
+      possessiveFuture,
+      secondPossessivePast,
+      ...shippedRelations.filter(hasPossessiveAgreement),
+    ];
     const nouns = gameCatalog.phrases.filter((candidate) => candidate.role === 'noun');
 
     for (const noun of nouns) {
@@ -191,14 +235,18 @@ describe('Hollywood Roast English grammar', () => {
           : noun.grammaticalNumber === 'plural' || noun.referentKind === 'personal'
             ? 'their'
             : 'its';
-      for (const relationId of relationIds) {
-        const result = analyze([add(noun.id), add(relationId)]);
-        expect(result, `${noun.id} + ${relationId}`).toMatchObject({
+      for (const relation of relations) {
+        const result = analyze([
+          add(noun.id),
+          step(relation),
+          ...(relation.role === 'verb' ? [add('common-noun-001')] : []),
+        ]);
+        expect(result, `${noun.id} + ${relation.id}`).toMatchObject({
           accepted: true,
           analysis: { complete: true },
         });
         if (result.accepted) {
-          expect(result.analysis.renderedPhrases[1]?.text, `${noun.id} + ${relationId}`).toContain(
+          expect(result.analysis.renderedPhrases[1]?.text, `${noun.id} + ${relation.id}`).toContain(
             `${expectedPossessive} own`,
           );
         }
@@ -209,17 +257,16 @@ describe('Hollywood Roast English grammar', () => {
   test('keeps second-person agreement through shared and compound subjects', () => {
     const shared = analyze([
       add('common-noun-028'),
-      add('common-predicate-011-past'),
+      step(possessivePast),
       add('common-conjunction-001'),
-      add('common-predicate-007-past'),
+      step(secondPossessivePast),
       { kind: 'end' },
     ]);
     expect(shared).toMatchObject({
       accepted: true,
       analysis: {
         complete: true,
-        publicText:
-          'You made your own voters change the channel and could not win an election in your own stairwell.',
+        publicText: 'You checked your own notes and kept your own records.',
       },
     });
 
@@ -227,14 +274,14 @@ describe('Hollywood Roast English grammar', () => {
       add('common-noun-053'),
       add('common-conjunction-001'),
       add('common-noun-028'),
-      add('common-predicate-011-past'),
+      step(possessivePast),
     ]);
     expect(compound).toMatchObject({
       accepted: true,
       analysis: {
         complete: true,
         agreement: { subject: 'plural' },
-        publicText: 'Holy Water from the Danube and you made your own voters change the channel',
+        publicText: 'Holy Water from the Danube and you checked your own notes',
       },
     });
   });
@@ -242,17 +289,17 @@ describe('Hollywood Roast English grammar', () => {
   test('replaces person agreement when a conjunction starts a new subject', () => {
     const result = analyze([
       add('common-noun-028'),
-      add('common-predicate-011-past'),
+      step(possessivePast),
       add('common-conjunction-001'),
       add('common-noun-053'),
-      add('common-predicate-011-past'),
+      step(possessivePast),
     ]);
     expect(result).toMatchObject({
       accepted: true,
       analysis: {
         complete: true,
         publicText:
-          'You made your own voters change the channel and Holy Water from the Danube made its own voters change the channel',
+          'You checked your own notes and Holy Water from the Danube checked its own notes',
       },
     });
   });
@@ -356,12 +403,14 @@ describe('Hollywood Roast English grammar', () => {
   });
 
   test('accepts modifiers only after a complete clause and keeps construction open', () => {
+    const firstModifier = fixture('fixture-modifier-first', 'modifier', 'during the meeting');
+    const secondModifier = fixture('fixture-modifier-second', 'modifier', 'without interruption');
     const result = analyze([
       add('common-noun-001'),
       add('common-verb-010-present'),
       add('common-noun-002'),
-      add('common-modifier-001'),
-      add('common-modifier-008'),
+      step(firstModifier),
+      step(secondModifier),
     ]);
     expect(result).toMatchObject({
       accepted: true,
@@ -370,10 +419,10 @@ describe('Hollywood Roast English grammar', () => {
         state: 'CLAUSE_COMPLETE',
         nextRoles: ['modifier', 'conjunction', 'ending'],
         publicText:
-          'Your unanimous disagreement reinvents a televised revolution before the promises lose their warranty behind doors transparent only in the brochure',
+          'Your unanimous disagreement reinvents a televised revolution during the meeting without interruption',
       },
     });
-    expect(analyze([add('common-noun-001'), add('common-modifier-001')])).toMatchObject({
+    expect(analyze([add('common-noun-001'), step(firstModifier)])).toMatchObject({
       accepted: false,
       faults: [
         {
@@ -405,8 +454,8 @@ describe('Hollywood Roast English grammar', () => {
   test('a finisher ends a complete sentence immediately', () => {
     const result = analyze([
       add('common-noun-001'),
-      add('common-predicate-010-present'),
-      add('common-ending-001'),
+      step(possessivePresent),
+      step(fixture('fixture-ending', 'ending', 'and that is final.')),
     ]);
     expect(result).toMatchObject({
       accepted: true,
@@ -414,8 +463,7 @@ describe('Hollywood Roast English grammar', () => {
         complete: true,
         state: 'ENDED',
         punctuation: '.',
-        publicText:
-          'Your unanimous disagreement belongs in a history museum by emergency ordinance; even Tuesday needs approval.',
+        publicText: 'Your unanimous disagreement checks its own notes and that is final.',
       },
     });
   });
@@ -436,7 +484,7 @@ test('with requires its noun before another connector can start a clause', () =>
   });
 });
 
-test('completes the approved cemetery-turnout sentence as a modifier', () => {
+test('completes a character predicate with its owned modifier', () => {
   const result = analyze([
     add('common-noun-053'),
     add('thunder-tribune-predicate-001-present'),
@@ -446,32 +494,45 @@ test('completes the approved cemetery-turnout sentence as a modifier', () => {
     accepted: true,
     analysis: {
       complete: true,
+      state: 'CLAUSE_COMPLETE',
       publicText:
-        'Holy Water from the Danube can lose an election to an empty ballot with 110% turnout at the cemetery',
+        'Holy Water from the Danube promises to keep everything within the rules without politically correct packaging',
     },
   });
 });
 
 // Catalog-wide guarantees. These read whatever the shipped catalog contains, so
-// adding or removing a card never needs an edit here. They fail only when an
-// authored card cannot reach a complete sentence.
+// adding or removing a card never needs an edit here. They check clause
+// completion and the agreement required by the current authored forms.
 describe('catalog-wide clause coverage', () => {
-  test.each([
-    ['red-folded-chairman-predicate-003', 'was', 'were'],
-    ['red-folded-chairman-predicate-004', 'was', 'were'],
-    ['thunder-tribune-predicate-004', 'was', 'were'],
-    ['football-tycoon-predicate-002', 'was', 'were'],
-    ['football-tycoon-predicate-003', 'was', 'were'],
-    ['football-tycoon-predicate-004', 'was', 'were'],
-  ])(
-    'agrees with singular, plural, and second-person subjects in %s',
-    (family, singular, plural) => {
+  const pastCopulas = [
+    fixture('fixture-copula-past', 'predicate', 'was ready', {
+      pluralText: 'were ready',
+      secondPersonText: 'were ready',
+    }),
+    ...shippedRelations.filter(
+      (relation) => relation.role === 'predicate' && /^was\b/u.test(relation.singularText),
+    ),
+  ];
+  const presentCopulas = [
+    fixture('fixture-copula-present', 'predicate', 'is ready', {
+      pluralText: 'are ready',
+      secondPersonText: 'are ready',
+    }),
+    ...shippedRelations.filter(
+      (relation) => relation.role === 'predicate' && /^is\b/u.test(relation.singularText),
+    ),
+  ];
+
+  test.each(pastCopulas)(
+    'agrees with singular, plural, and second-person subjects in $id',
+    (relation) => {
       for (const [subject, copula] of [
-        ['common-noun-001', singular],
-        ['common-noun-031', plural],
-        ['common-noun-028', plural],
+        ['common-noun-001', 'was'],
+        ['common-noun-031', 'were'],
+        ['common-noun-028', 'were'],
       ]) {
-        const result = analyze([add(subject!), add(`${family}-past`), { kind: 'end' }]);
+        const result = analyze([add(subject!), step(relation), { kind: 'end' }]);
         expect(result).toMatchObject({ accepted: true, analysis: { complete: true } });
         if (result.accepted) {
           expect(result.analysis.renderedPhrases[1]?.text).toMatch(new RegExp(`^${copula} `, 'u'));
@@ -480,13 +541,8 @@ describe('catalog-wide clause coverage', () => {
     },
   );
 
-  test.each([
-    'red-folded-chairman-predicate-004-present',
-    'thunder-tribune-predicate-004-present',
-    'football-tycoon-predicate-003-present',
-    'football-tycoon-predicate-004-present',
-  ])('uses the second-person copula in %s', (id) => {
-    const result = analyze([add('common-noun-028'), add(id), { kind: 'end' }]);
+  test.each(presentCopulas)('uses the second-person copula in $id', (relation) => {
+    const result = analyze([add('common-noun-028'), step(relation), { kind: 'end' }]);
     expect(result).toMatchObject({ accepted: true, analysis: { complete: true } });
     if (result.accepted) expect(result.analysis.publicText).toMatch(/^You are /u);
   });

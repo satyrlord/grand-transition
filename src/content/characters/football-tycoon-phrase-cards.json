@@ -502,11 +502,13 @@
       "role": "noun",
       "text": "the claim that the greatest credit is mine",
       "tags": [
-        "commercialism"
+        "results",
+        "credibility"
       ],
       "scoreGroups": {
         "substance": [
-          "commercialism"
+          "personal",
+          "results"
         ],
         "flavour": [
           "football"
@@ -641,9 +643,10 @@
       "role": "predicate",
       "text": "was a victory where the greatest credit was mine",
       "singularText": "was a victory where the greatest credit was mine",
-      "pluralText": "were a victory where the greatest credit was mine",
+      "pluralText": "were victories where the greatest credit is mine",
       "tags": [
-        "commercialism"
+        "results",
+        "credibility"
       ],
       "scorePreferences": {
         "substance": [
@@ -658,18 +661,21 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "football-tycoon-predicate-002"
+      "tenseFamily": "football-tycoon-predicate-002",
+      "personalSingularText": "was a victory where the greatest credit was mine",
+      "secondPersonText": "were a victory where the greatest credit was mine"
     },
     {
       "id": "football-tycoon-predicate-002-present",
       "role": "predicate",
       "text": "is a victory where the greatest credit is mine",
       "singularText": "is a victory where the greatest credit is mine",
-      "pluralText": "are a victory where the greatest credit is mine",
+      "pluralText": "are victories where the greatest credit is mine",
       "personalSingularText": "is a victory where the greatest credit is mine",
       "secondPersonText": "are a victory where the greatest credit is mine",
       "tags": [
-        "commercialism"
+        "results",
+        "credibility"
       ],
       "scorePreferences": {
         "substance": [
@@ -691,7 +697,8 @@
       "role": "predicate",
       "text": "will be a victory where the greatest credit is mine",
       "tags": [
-        "commercialism"
+        "results",
+        "credibility"
       ],
       "scorePreferences": {
         "substance": [
@@ -706,7 +713,11 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "football-tycoon-predicate-002"
+      "tenseFamily": "football-tycoon-predicate-002",
+      "singularText": "will be a victory where the greatest credit is mine",
+      "pluralText": "will be victories where the greatest credit is mine",
+      "personalSingularText": "will be a victory where the greatest credit is mine",
+      "secondPersonText": "will be a victory where the greatest credit is mine"
     },
     {
       "id": "football-tycoon-predicate-003-past",

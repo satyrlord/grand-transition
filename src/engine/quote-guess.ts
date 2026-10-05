@@ -38,7 +38,9 @@ export function selectQuoteGuessCards(
   reveals: QuoteRevealIndex,
   seed: number,
 ): readonly string[] {
-  const candidates = revealedCardIds(sentences, reveals);
+  const candidates = revealedCardIds(sentences, reveals).filter(
+    (cardId) => reveals.get(cardId)!.classification !== 'generic-phrase',
+  );
   const isInvented = (cardId: string) => reveals.get(cardId)!.classification === 'invented';
   const sourced = candidates.filter((cardId) => !isInvented(cardId));
   if (sourced.length === 0) return [];

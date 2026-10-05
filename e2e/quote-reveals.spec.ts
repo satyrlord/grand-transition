@@ -1,10 +1,11 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import type { Page } from '@playwright/test';
+import { isSourcedQuoteReveal } from '../src/content/quote-reveals.ts';
 import { encodeQuoteArchive } from '../src/persistence/codecs/quote-archive-codec.ts';
 import { defaultSettings, encodeSettings } from '../src/persistence/codecs/settings-codec.ts';
 import { quoteArchiveStorageKey } from '../src/persistence/quote-archive.ts';
-import { loadQuoteReveals } from '../tools/load-game-content.ts';
+import { loadGameContent, loadQuoteReveals } from '../tools/load-game-content.ts';
 import { readProvenanceRecords, researchFolder } from '../tools/validate-quote-reveals.ts';
 import { expect, test } from './helpers/fixtures.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
@@ -13,9 +14,7 @@ import { settingsStorageKey, storeDocument, storedJson } from './helpers/stored-
 import { gateViewports } from './helpers/viewports.ts';
 
 const shipped = loadQuoteReveals();
-const sourcedIds = shipped
-  .filter(({ classification }) => classification !== 'invented')
-  .map(({ cardId }) => cardId);
+const sourcedIds = shipped.filter(isSourcedQuoteReveal).map(({ cardId }) => cardId);
 const viewports = gateViewports([
   { width: 1024, height: 720 },
   { width: 1024, height: 768 },
@@ -35,6 +34,13 @@ test('the build has no private name, link, or source wording (AC-034-02)', () =>
       .map((value) => value.trim().replace(/^<|>$/gu, ''))
       .filter((value) => value.length > 0);
   const forbidden = new Set<string>();
+  // Accurate adaptations can retain a short source fragment in authored card text.
+  // The privacy contract forbids additional source wording, not the card itself.
+  const publicCardForms = loadGameContent().gameCatalog.locales.flatMap(({ messages }) =>
+    Object.entries(messages)
+      .filter(([key]) => key.startsWith('phrase.'))
+      .map(([, value]) => value.toLowerCase()),
+  );
   for (const row of provenance!) {
     for (const value of [...values(row.cells.speaker), ...values(row.cells['source url'])]) {
       forbidden.add(value.toLowerCase());
@@ -43,7 +49,12 @@ test('the build has no private name, link, or source wording (AC-034-02)', () =>
     const record = shippedById.get(row.cardId);
     if (record?.classification === 'adapted-quote') {
       for (const wording of values(row.cells['source wording'])) {
-        if (wording.split(/\s+/u).length >= 4) forbidden.add(wording.toLowerCase());
+        if (
+          wording.split(/\s+/u).length >= 4 &&
+          !publicCardForms.some((form) => form.includes(wording.toLowerCase()))
+        ) {
+          forbidden.add(wording.toLowerCase());
+        }
       }
     }
   }
@@ -122,7 +133,10 @@ for (const [interfaceLocale, labels] of [
     );
     await page.reload();
     const action = page.getByRole('button', { name: labels.archive });
-    await expect(action).toContainText(`(${sourcedIds.length}/${shipped.length})`);
+    const numbers = new Intl.NumberFormat(interfaceLocale);
+    await expect(action).toContainText(
+      `(${numbers.format(sourcedIds.length)}/${numbers.format(shipped.length)})`,
+    );
 
     // The keyboard opens the archive, stays in it, and closes it.
     await action.focus();

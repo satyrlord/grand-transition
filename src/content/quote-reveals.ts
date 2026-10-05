@@ -10,6 +10,7 @@ export const quoteRevealClassifications = [
   'exact-quote',
   'adapted-quote',
   'real-slogan',
+  'generic-phrase',
   'invented',
 ] as const;
 export const quoteRevealSourceLanguages = ['ro', 'en', 'other'] as const;
@@ -21,6 +22,7 @@ export const quoteRevealVenues = [
   'campaign',
   'press-conference',
   'television',
+  'web-interview',
   'radio',
   'print',
   'social-media',
@@ -37,14 +39,20 @@ export type QuoteRevealLevel = (typeof quoteRevealLevels)[number];
 
 export type SourcedQuoteReveal = Readonly<{
   cardId: string;
-  classification: Exclude<QuoteRevealClassification, 'invented'>;
+  classification: Exclude<QuoteRevealClassification, 'invented' | 'generic-phrase'>;
   sourceLanguage: QuoteRevealSourceLanguage;
   venue: QuoteRevealVenue;
   level: QuoteRevealLevel;
   year: number;
 }>;
 export type InventedQuoteReveal = Readonly<{ cardId: string; classification: 'invented' }>;
-export type QuoteRevealRecord = SourcedQuoteReveal | InventedQuoteReveal;
+export type GenericPhraseReveal = Readonly<{ cardId: string; classification: 'generic-phrase' }>;
+export type QuoteRevealRecord = SourcedQuoteReveal | InventedQuoteReveal | GenericPhraseReveal;
+
+/** Ordinary language is real, but it has no attributed statement or source context. */
+export function isSourcedQuoteReveal(record: QuoteRevealRecord): record is SourcedQuoteReveal {
+  return record.classification !== 'invented' && record.classification !== 'generic-phrase';
+}
 
 export type QuoteRevealFailureCode =
   | 'forbidden-text'
@@ -77,19 +85,21 @@ const quoteRevealRecordSchema = z
   })
   .strict()
   .superRefine((record, context) => {
+    const hasSource =
+      record.classification !== 'invented' && record.classification !== 'generic-phrase';
     for (const field of sourceFields) {
       const present = record[field] !== undefined;
-      if (record.classification === 'invented' && present) {
+      if (!hasSource && present) {
         context.addIssue({
           code: 'custom',
           path: [field],
-          message: 'An invented phrase has no source. Remove this field.',
+          message: 'An invented or generic phrase has no source metadata. Remove this field.',
         });
-      } else if (record.classification !== 'invented' && !present) {
+      } else if (hasSource && !present) {
         context.addIssue({
           code: 'custom',
           path: [field],
-          message: `Give the ${field} of a record that is not invented.`,
+          message: `Give the ${field} of a sourced record.`,
           params: { missingField: true },
         });
       }

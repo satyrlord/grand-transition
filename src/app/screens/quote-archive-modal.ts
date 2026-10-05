@@ -8,6 +8,7 @@ import {
   quoteRevealTranslation,
 } from './quote-receipts-panel.ts';
 import { phraseIndex } from '../../engine/phrase-index.ts';
+import { isSourcedQuoteReveal } from '../../content/quote-reveals.ts';
 import type { QuoteRevealIndex } from '../../engine/quote-receipts.ts';
 import { gameCatalog, gameLocaleBundle, quoteReveals } from '../../game-content.ts';
 import type { QuoteArchiveSnapshot } from '../../persistence/quote-archive.ts';
@@ -50,7 +51,7 @@ export class GrandTransitionQuoteArchive extends LitElement {
 
   protected override render(): TemplateResult {
     // A stored card whose record the game no longer ships is not in the list.
-    const isSourced = (cardId: string) => this.reveals.get(cardId)!.classification !== 'invented';
+    const isSourced = (cardId: string) => isSourcedQuoteReveal(this.reveals.get(cardId)!);
     const newest = this.archive.cardIds.filter((cardId) => this.reveals.has(cardId)).toReversed();
     // The phrases from real speech are the reward, so they are first.
     const found = [...newest.filter(isSourced), ...newest.filter((cardId) => !isSourced(cardId))];

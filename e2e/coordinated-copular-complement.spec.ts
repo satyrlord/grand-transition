@@ -39,7 +39,7 @@ for (const scenario of [
       { phraseId: 'common-modifier-013', role: 'modifier' },
     ],
     sentence:
-      'A pig stole a ribbon longer than the road on a campaign bus fuelled by applause during the decimal point migration under lights that bleach a scandal',
+      'A pig stole a ribbon longer than the road after declaring victory before the final count with prosperity measured by over one percent without commenting on what the rats say',
     total: 22,
   },
 ]) {

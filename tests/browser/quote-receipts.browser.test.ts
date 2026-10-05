@@ -11,7 +11,7 @@ import '../../src/app/screens/quote-receipts-panel.ts';
 import type { GrandTransitionQuoteArchive } from '../../src/app/screens/quote-archive-modal.ts';
 import type { GrandTransitionQuoteReceipts } from '../../src/app/screens/quote-receipts-panel.ts';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
-import type { QuoteRevealRecord } from '../../src/content/quote-reveals.ts';
+import { isSourcedQuoteReveal, type QuoteRevealRecord } from '../../src/content/quote-reveals.ts';
 import type { MatchState } from '../../src/engine/match-lifecycle.ts';
 import {
   quoteGuessAnswer,
@@ -134,6 +134,94 @@ afterEach(async () => {
 });
 
 describe('receipts panel', () => {
+  test.each(['en', 'ro-RO'] as const)(
+    'keeps historical %s text without a receipt or guess for replaced wording',
+    async (gameLocale) => {
+      const log = completedMatch(gameLocale).matchLog;
+      const cardId = log.sentences
+        .flatMap(({ phrases }) => phrases)
+        .find(({ phraseId }) =>
+          gameCatalog.phrases.some(
+            (phrase) => phrase.id === phraseId && phrase.role !== 'continuation',
+          ),
+        )!.phraseId;
+      const oldPhrase =
+        gameLocale === 'en'
+          ? 'an invented line from the old catalog'
+          : 'o replică inventată din catalogul vechi';
+      const oldSentence =
+        gameLocale === 'en'
+          ? 'The recorded historical sentence stays unchanged.'
+          : 'Propoziția istorică înregistrată rămâne neschimbată.';
+      const historical: MatchLogDocument = {
+        ...log,
+        sentences: log.sentences.map((sentence) => ({
+          ...sentence,
+          text: sentence.phrases.some(({ phraseId }) => phraseId === cardId)
+            ? oldSentence
+            : sentence.text,
+          phrases: sentence.phrases.map((phrase) =>
+            phrase.phraseId === cardId ? { ...phrase, text: oldPhrase } : phrase,
+          ),
+        })),
+      };
+      const before = JSON.stringify(historical);
+      const reveals = createQuoteRevealIndex(
+        [sourced(cardId, 'adapted-quote', 'ro', 'television', 'national', 2024)],
+        gameCatalog.phrases,
+      );
+      const panel = await mountPanel(historical, reveals);
+      expect(
+        panel.querySelector('[data-receipts-stage]')?.getAttribute('data-receipts-stage'),
+      ).toBe('receipts');
+      expect(panel.querySelector('.quote-receipts-gate')).toBeNull();
+      expect(panel.querySelector('.quote-receipt')).toBeNull();
+      expect(panel.querySelector('[data-guess-card]')).toBeNull();
+      expect(text(panel.querySelector('.quote-receipts-empty'))).toBe(
+        'No sourced phrases are available for this match.',
+      );
+      expect([...panel.querySelectorAll('.quote-receipts-sentence-text')].map(text)).toEqual(
+        sentencesInTurnOrder(historical.sentences, historical.rounds).map(
+          ({ text }) => text || 'No completed public sentence.',
+        ),
+      );
+      expect(text(panel)).toContain(oldSentence);
+      expect(JSON.stringify(historical)).toBe(before);
+    },
+  );
+
+  test('shows everyday language without a fictional attribution or a quote guess', async () => {
+    const log = completedMatch().matchLog;
+    const id = log.sentences
+      .flatMap(({ phrases }) => phrases)
+      .find(({ phraseId }) =>
+        gameCatalog.phrases.some(
+          (phrase) => phrase.id === phraseId && phrase.role !== 'continuation',
+        ),
+      )!.phraseId;
+    const reveals = createQuoteRevealIndex(
+      [{ cardId: id, classification: 'generic-phrase' }],
+      gameCatalog.phrases,
+    );
+    const panel = await mountPanel(log, reveals);
+    expect(receiptFacts(panel, id)).toEqual({
+      label: 'Everyday phrase',
+      translation: null,
+      context: null,
+    });
+    expect(panel.querySelector('[data-receipts-stage]')?.getAttribute('data-receipts-stage')).toBe(
+      'receipts',
+    );
+    expect(panel.querySelector('.quote-guess')).toBeNull();
+    await setInterfaceLocale('ro-RO');
+    await panel.updateComplete;
+    expect(receiptFacts(panel, id)).toEqual({
+      label: 'Expresie obișnuită',
+      translation: null,
+      context: null,
+    });
+  });
+
   test('shows the label and the context of each committed phrase that has a record (AC-034-03)', async () => {
     const log = completedMatch().matchLog;
     const { reveals, ids, noRecord, continuationId } = fixtureReveals(log);
@@ -276,7 +364,7 @@ describe('receipts panel', () => {
     const panel = await mountPanel(log, createQuoteRevealIndex([], gameCatalog.phrases));
     expect(panel.querySelector('.quote-receipts-gate')).toBeNull();
     expect(text(panel.querySelector('.quote-receipts-empty'))).toBe(
-      'No phrase in this match comes from real speech.',
+      'No sourced phrases are available for this match.',
     );
     expect(panel.querySelectorAll('.quote-receipts-sentence')).toHaveLength(log.sentences.length);
     expect(panel.querySelector('.quote-receipt')).toBeNull();
@@ -522,7 +610,7 @@ describe('quote archive (AC-034-06)', () => {
       'No phrases yet. Complete a match to add the phrases that you use.',
     );
     expect(text(archive.querySelector('[data-archive-fact="found"]'))).toBe(
-      `0 of ${quoteReveals.size}`,
+      `0 of ${new Intl.NumberFormat('en').format(quoteReveals.size)}`,
     );
     expect(text(archive.querySelector('[data-archive-fact="best-guess"]'))).toBe('No guess yet');
 
@@ -535,18 +623,22 @@ describe('quote archive (AC-034-06)', () => {
 
   test('opens from the title, survives a reload, and is empty after a reset', async () => {
     await page.viewport(1280, 720);
+    const saved = shipped.filter((id) => isSourcedQuoteReveal(quoteReveals.get(id)!)).slice(0, 2);
+    expect(saved).toHaveLength(2);
     writeStoredDocument(
       quoteArchiveStorageKey,
       encodeQuoteArchive({
         schemaVersion: 1,
-        cardIds: shipped.slice(0, 2),
+        cardIds: saved,
         bestGuess: { correct: 1, total: 2 },
       }),
     );
     await reloadStoredData();
     let app = await mountApp();
     const action = () => document.querySelector<HTMLButtonElement>('.title-archive-action')!;
-    expect(text(action())).toBe(`Quote archive (2/${quoteReveals.size})`);
+    expect(text(action())).toBe(
+      `Quote archive (2/${new Intl.NumberFormat('en').format(quoteReveals.size)})`,
+    );
 
     let archive = await openArchive(app);
     expect(document.activeElement).toBe(archive.querySelector('.quote-archive-close'));
@@ -554,7 +646,7 @@ describe('quote archive (AC-034-06)', () => {
       [...archive.querySelectorAll<HTMLElement>('.quote-receipt')].map(
         (item) => item.dataset.receiptCard,
       ),
-    ).toEqual(shipped.slice(0, 2).toReversed());
+    ).toEqual(saved.toReversed());
     expect(text(archive.querySelector('[data-archive-fact="best-guess"]'))).toBe('1 of 2');
 
     // The focus stays in the modal, and Escape puts it back on the title action.
@@ -581,20 +673,24 @@ describe('quote archive (AC-034-06)', () => {
     await vi.waitFor(async () =>
       expect(JSON.parse((await storedDocument(quoteArchiveStorageKey))!)).toEqual({
         schemaVersion: 1,
-        cardIds: shipped.slice(0, 2),
+        cardIds: saved,
         bestGuess: { correct: 2, total: 2 },
       }),
     );
 
     await reloadStoredData();
     app = await mountApp();
-    expect(text(action())).toBe(`Quote archive (2/${quoteReveals.size})`);
+    expect(text(action())).toBe(
+      `Quote archive (2/${new Intl.NumberFormat('en').format(quoteReveals.size)})`,
+    );
     archive = await openArchive(app);
     expect(text(archive.querySelector('[data-archive-fact="best-guess"]'))).toBe('2 of 2');
 
     await resetStoredData();
     app = await mountApp();
-    expect(text(action())).toBe(`Quote archive (0/${quoteReveals.size})`);
+    expect(text(action())).toBe(
+      `Quote archive (0/${new Intl.NumberFormat('en').format(quoteReveals.size)})`,
+    );
     archive = await openArchive(app);
     expect(archive.querySelector('.quote-receipt')).toBeNull();
     expect(text(archive.querySelector('[data-archive-fact="best-guess"]'))).toBe('No guess yet');
@@ -652,7 +748,7 @@ describe('receipts from Victory and from match history', () => {
     expect(victory()).toBeNull();
     expect(document.querySelectorAll('[role="dialog"]')).toHaveLength(1);
     expect(text(panel.querySelector('.quote-receipts-empty'))).toBe(
-      'No phrase in this match comes from real speech.',
+      'No sourced phrases are available for this match.',
     );
     expect(panel.querySelectorAll('.quote-receipts-sentence')).toHaveLength(2);
 

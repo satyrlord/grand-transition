@@ -228,19 +228,15 @@
     "id": "common-modifier-002",
     "role": "modifier",
     "text": "on television, with timed applause",
-    "tags": [
-      "media",
-      "authenticity"
-    ],
+    "tags": [],
     "rarity": "uncommon"
   },
   {
     "id": "common-modifier-003",
     "role": "modifier",
-    "text": "during the coalition custody battle",
+    "text": "with only the information available when deciding",
     "tags": [
-      "consistency",
-      "restraint"
+      "evidence"
     ],
     "sceneIds": [
       "transition-era-television-studio"
@@ -274,7 +270,7 @@
   {
     "id": "common-ending-001",
     "role": "ending",
-    "text": "by emergency ordinance; even Tuesday needs approval.",
+    "text": "and the government decides what is appropriate.",
     "tags": [
       "bureaucracy"
     ],
@@ -683,17 +679,14 @@
     "id": "common-modifier-004",
     "role": "modifier",
     "text": "at the government office, behind a fern",
-    "tags": [
-      "bureaucracy"
-    ],
+    "tags": [],
     "rarity": "common"
   },
   {
     "id": "common-modifier-005",
     "role": "modifier",
-    "text": "under an ordinance still warm",
+    "text": "simply because we can",
     "tags": [
-      "bureaucracy",
       "restraint"
     ],
     "rarity": "uncommon"
@@ -701,20 +694,20 @@
   {
     "id": "common-modifier-006",
     "role": "modifier",
-    "text": "beside a motorway drawn in washable chalk",
+    "text": "beside an elevated motorway promised within two years",
     "tags": [
-      "evidence",
-      "credibility"
+      "infrastructure",
+      "delivery"
     ],
     "rarity": "rare"
   },
   {
     "id": "common-ending-002",
     "role": "ending",
-    "text": "for the national interest, minus my handling fee.",
+    "text": "and the reason is simply that we can.",
     "tags": [
-      "corruption",
-      "spending"
+      "accountability",
+      "restraint"
     ],
     "rarity": "uncommon",
     "finisherBonus": 2
@@ -2214,80 +2207,78 @@
   {
     "id": "common-modifier-008",
     "role": "modifier",
-    "text": "behind doors transparent only in the brochure",
+    "text": "with pi missing from the calculation",
     "tags": [
-      "evidence",
-      "credibility"
+      "competence",
+      "evidence"
     ],
     "rarity": "common"
   },
   {
     "id": "common-modifier-009",
     "role": "modifier",
-    "text": "during the decimal point migration",
+    "text": "with prosperity measured by over one percent",
     "tags": [
-      "spending",
-      "competence"
+      "wealth",
+      "evidence"
     ],
     "rarity": "common"
   },
   {
     "id": "common-modifier-010",
     "role": "modifier",
-    "text": "from a podium taller than the achievements",
+    "text": "with an invitation to count the eggs",
     "tags": [
-      "decorum",
-      "credibility"
+      "evidence"
     ],
     "rarity": "common"
   },
   {
     "id": "common-modifier-011",
     "role": "modifier",
-    "text": "in the archive under permanent temporary measures",
+    "text": "without knowing counterintelligence belonged to the former secret police",
     "tags": [
       "legacy",
       "evidence",
-      "obsolete"
+      "securitate"
     ],
     "rarity": "rare"
   },
   {
     "id": "common-modifier-012",
     "role": "modifier",
-    "text": "on a campaign bus fuelled by applause",
+    "text": "after declaring victory before the final count",
     "tags": [
-      "credibility"
+      "credibility",
+      "results"
     ],
     "rarity": "common"
   },
   {
     "id": "common-modifier-013",
     "role": "modifier",
-    "text": "under lights that bleach a scandal",
+    "text": "without commenting on what the rats say",
     "tags": [
-      "media",
-      "credibility"
+      "decorum"
     ],
     "rarity": "uncommon"
   },
   {
     "id": "common-modifier-014",
     "role": "modifier",
-    "text": "with coalition partners checking the exits",
+    "text": "without handing in any resignation",
     "tags": [
-      "consistency",
-      "restraint"
+      "accountability"
     ],
     "rarity": "common"
   },
   {
     "id": "common-modifier-015",
     "role": "modifier",
-    "text": "with public consultation scheduled after the decision",
+    "text": "with honour measured beyond the billboards",
     "tags": [
       "decorum",
-      "evidence"
+      "authenticity"
     ],
     "rarity": "uncommon"
   },
@@ -2304,9 +2295,8 @@
   {
     "id": "common-modifier-017",
     "role": "modifier",
-    "text": "during a press conference about the conference",
+    "text": "with correct words on a little paper",
     "tags": [
-      "media",
       "competence"
     ],
     "rarity": "common"
@@ -2314,10 +2304,9 @@
   {
     "id": "common-modifier-018",
     "role": "modifier",
-    "text": "through another reform of the reform committee",
+    "text": "with digitalization staff afraid of digitalization",
     "tags": [
       "modernity",
-      "legacy",
       "obsolete"
     ],
     "rarity": "uncommon"
@@ -2325,21 +2314,19 @@
   {
     "id": "common-modifier-019",
     "role": "modifier",
-    "text": "across town halls connected by family trees",
+    "text": "with an inherited passion for farming",
     "tags": [
-      "bureaucracy",
-      "legacy",
-      "nepotism"
+      "family"
     ],
     "rarity": "uncommon"
   },
   {
     "id": "common-modifier-020",
     "role": "modifier",
-    "text": "beneath a flag hiding the invoice",
+    "text": "under a denial of any conflict of interest",
     "tags": [
       "corruption",
-      "spending"
+      "accountability"
     ],
     "rarity": "rare"
   },
@@ -2354,10 +2341,9 @@
   {
     "id": "common-ending-004",
     "role": "ending",
-    "text": "before the cameras call it a carpet.",
+    "text": "and no comment on what the rats say.",
     "tags": [
-      "media",
-      "credibility"
+      "decorum"
     ],
     "rarity": "uncommon",
     "finisherBonus": 2
@@ -2365,10 +2351,9 @@
   {
     "id": "common-ending-005",
     "role": "ending",
-    "text": "according to protocol; the facts lack an invitation.",
+    "text": "and everything was legal and constitutional.",
     "tags": [
-      "bureaucracy",
-      "decorum"
+      "bureaucracy"
     ],
     "rarity": "common",
     "finisherBonus": 2
@@ -2376,10 +2361,10 @@
   {
     "id": "common-ending-006",
     "role": "ending",
-    "text": "with one last amendment: arithmetic is optional.",
+    "text": "and the circle has a radius, but no pi.",
     "tags": [
-      "bureaucracy",
-      "competence"
+      "competence",
+      "evidence"
     ],
     "rarity": "uncommon",
     "finisherBonus": 3
@@ -2387,9 +2372,9 @@
   {
     "id": "common-ending-007",
     "role": "ending",
-    "text": "until the next reshuffle; new hats, same circus.",
+    "text": "and the country comes back step by step.",
     "tags": [
-      "consistency"
+      "politics"
     ],
     "rarity": "rare",
     "finisherBonus": 3
@@ -2408,10 +2393,9 @@
   {
     "id": "common-ending-009",
     "role": "ending",
-    "text": "before the microphone files a noise complaint.",
+    "text": "and visitors are welcome to count the eggs.",
     "tags": [
-      "media",
-      "restraint"
+      "evidence"
     ],
     "rarity": "uncommon",
     "finisherBonus": 3
@@ -2419,10 +2403,9 @@
   {
     "id": "common-ending-010",
     "role": "ending",
-    "text": "and most of your followers are bots.",
+    "text": "and the sheep is a living statue.",
     "tags": [
-      "credibility",
-      "media"
+      "credibility"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -2430,10 +2413,10 @@
   {
     "id": "common-ending-011",
     "role": "ending",
-    "text": "while the facts get lost in synergy.",
+    "text": "and democracy shrinks; sorry, bureaucracy.",
     "tags": [
       "bureaucracy",
-      "evidence"
+      "competence"
     ],
     "rarity": "common",
     "finisherBonus": 2
@@ -3069,14 +3052,13 @@
   {
     "id": "common-predicate-003-past",
     "role": "predicate",
-    "text": "cheered for a Russian attack",
-    "singularText": "cheered for a Russian attack",
-    "pluralText": "cheered for a Russian attack",
-    "personalSingularText": "cheered for a Russian attack",
-    "secondPersonText": "cheered for a Russian attack",
+    "text": "wanted to learn how to make pretzels",
+    "singularText": "wanted to learn how to make pretzels",
+    "pluralText": "wanted to learn how to make pretzels",
+    "personalSingularText": "wanted to learn how to make pretzels",
+    "secondPersonText": "wanted to learn how to make pretzels",
     "tags": [
-      "authenticity",
-      "credibility"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -3097,14 +3079,13 @@
   {
     "id": "common-predicate-003-present",
     "role": "predicate",
-    "text": "cheers for a Russian attack",
-    "singularText": "cheers for a Russian attack",
-    "pluralText": "cheer for a Russian attack",
-    "personalSingularText": "cheers for a Russian attack",
-    "secondPersonText": "cheer for a Russian attack",
+    "text": "wants to learn how to make pretzels",
+    "singularText": "wants to learn how to make pretzels",
+    "pluralText": "want to learn how to make pretzels",
+    "personalSingularText": "wants to learn how to make pretzels",
+    "secondPersonText": "want to learn how to make pretzels",
     "tags": [
-      "authenticity",
-      "credibility"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -3125,14 +3106,13 @@
   {
     "id": "common-predicate-003-future",
     "role": "predicate",
-    "text": "will cheer for a Russian attack",
-    "singularText": "will cheer for a Russian attack",
-    "pluralText": "will cheer for a Russian attack",
-    "personalSingularText": "will cheer for a Russian attack",
-    "secondPersonText": "will cheer for a Russian attack",
+    "text": "will want to learn how to make pretzels",
+    "singularText": "will want to learn how to make pretzels",
+    "pluralText": "will want to learn how to make pretzels",
+    "personalSingularText": "will want to learn how to make pretzels",
+    "secondPersonText": "will want to learn how to make pretzels",
     "tags": [
-      "authenticity",
-      "credibility"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -3153,14 +3133,14 @@
   {
     "id": "common-predicate-004-past",
     "role": "predicate",
-    "text": "harassed innocent people on social media",
-    "singularText": "harassed innocent people on social media",
-    "pluralText": "harassed innocent people on social media",
-    "personalSingularText": "harassed innocent people on social media",
-    "secondPersonText": "harassed innocent people on social media",
+    "text": "refused to comment on what rats said",
+    "singularText": "refused to comment on what rats said",
+    "pluralText": "refused to comment on what rats said",
+    "personalSingularText": "refused to comment on what rats said",
+    "secondPersonText": "refused to comment on what rats said",
     "tags": [
       "restraint",
-      "credibility"
+      "decorum"
     ],
     "scorePreferences": {
       "substance": [
@@ -3181,14 +3161,14 @@
   {
     "id": "common-predicate-004-present",
     "role": "predicate",
-    "text": "harasses innocent people on social media",
-    "singularText": "harasses innocent people on social media",
-    "pluralText": "harass innocent people on social media",
-    "personalSingularText": "harasses innocent people on social media",
-    "secondPersonText": "harass innocent people on social media",
+    "text": "refuses to comment on what rats say",
+    "singularText": "refuses to comment on what rats say",
+    "pluralText": "refuse to comment on what rats say",
+    "personalSingularText": "refuses to comment on what rats say",
+    "secondPersonText": "refuse to comment on what rats say",
     "tags": [
       "restraint",
-      "credibility"
+      "decorum"
     ],
     "scorePreferences": {
       "substance": [
@@ -3209,14 +3189,14 @@
   {
     "id": "common-predicate-004-future",
     "role": "predicate",
-    "text": "will harass innocent people on social media",
-    "singularText": "will harass innocent people on social media",
-    "pluralText": "will harass innocent people on social media",
-    "personalSingularText": "will harass innocent people on social media",
-    "secondPersonText": "will harass innocent people on social media",
+    "text": "will refuse to comment on what rats say",
+    "singularText": "will refuse to comment on what rats say",
+    "pluralText": "will refuse to comment on what rats say",
+    "personalSingularText": "will refuse to comment on what rats say",
+    "secondPersonText": "will refuse to comment on what rats say",
     "tags": [
       "restraint",
-      "credibility"
+      "decorum"
     ],
     "scorePreferences": {
       "substance": [
@@ -3321,9 +3301,9 @@
   {
     "id": "common-predicate-006-present",
     "role": "predicate",
-    "text": "keeps the former secret police on speed dial",
-    "singularText": "keeps the former secret police on speed dial",
-    "pluralText": "keep the former secret police on speed dial",
+    "text": "claims ignorance of counterintelligence links to former secret police",
+    "singularText": "claims ignorance of counterintelligence links to former secret police",
+    "pluralText": "claim ignorance of counterintelligence links to former secret police",
     "tags": [
       "legacy",
       "evidence",
@@ -3343,14 +3323,16 @@
     },
     "rarity": "uncommon",
     "tense": "present",
-    "tenseFamily": "common-predicate-006"
+    "tenseFamily": "common-predicate-006",
+    "personalSingularText": "claims ignorance of counterintelligence links to former secret police",
+    "secondPersonText": "claim ignorance of counterintelligence links to former secret police"
   },
   {
     "id": "common-predicate-006-past",
     "role": "predicate",
-    "text": "kept the former secret police on speed dial",
-    "singularText": "kept the former secret police on speed dial",
-    "pluralText": "kept the former secret police on speed dial",
+    "text": "claimed ignorance of counterintelligence links to former secret police",
+    "singularText": "claimed ignorance of counterintelligence links to former secret police",
+    "pluralText": "claimed ignorance of counterintelligence links to former secret police",
     "tags": [
       "legacy",
       "evidence",
@@ -3370,14 +3352,16 @@
     },
     "rarity": "common",
     "tense": "past",
-    "tenseFamily": "common-predicate-006"
+    "tenseFamily": "common-predicate-006",
+    "personalSingularText": "claimed ignorance of counterintelligence links to former secret police",
+    "secondPersonText": "claimed ignorance of counterintelligence links to former secret police"
   },
   {
     "id": "common-predicate-006-future",
     "role": "predicate",
-    "text": "will keep the former secret police on speed dial",
-    "singularText": "will keep the former secret police on speed dial",
-    "pluralText": "will keep the former secret police on speed dial",
+    "text": "will claim ignorance of counterintelligence links to former secret police",
+    "singularText": "will claim ignorance of counterintelligence links to former secret police",
+    "pluralText": "will claim ignorance of counterintelligence links to former secret police",
     "tags": [
       "legacy",
       "evidence",
@@ -3397,16 +3381,18 @@
     },
     "rarity": "rare",
     "tense": "future",
-    "tenseFamily": "common-predicate-006"
+    "tenseFamily": "common-predicate-006",
+    "personalSingularText": "will claim ignorance of counterintelligence links to former secret police",
+    "secondPersonText": "will claim ignorance of counterintelligence links to former secret police"
   },
   {
     "id": "common-predicate-007-past",
     "role": "predicate",
-    "text": "could not win an election in its own stairwell",
-    "singularText": "could not win an election in its own stairwell",
-    "pluralText": "could not win an election in their own stairwell",
-    "personalSingularText": "could not win an election in their own stairwell",
-    "secondPersonText": "could not win an election in your own stairwell",
+    "text": "declared victory before the final count",
+    "singularText": "declared victory before the final count",
+    "pluralText": "declared victory before the final count",
+    "personalSingularText": "declared victory before the final count",
+    "secondPersonText": "declared victory before the final count",
     "tags": [
       "credibility",
       "results"
@@ -3430,11 +3416,11 @@
   {
     "id": "common-predicate-007-present",
     "role": "predicate",
-    "text": "cannot win an election in its own stairwell",
-    "singularText": "cannot win an election in its own stairwell",
-    "pluralText": "cannot win an election in their own stairwell",
-    "personalSingularText": "cannot win an election in their own stairwell",
-    "secondPersonText": "cannot win an election in your own stairwell",
+    "text": "declares victory before the final count",
+    "singularText": "declares victory before the final count",
+    "pluralText": "declare victory before the final count",
+    "personalSingularText": "declares victory before the final count",
+    "secondPersonText": "declare victory before the final count",
     "tags": [
       "credibility",
       "results"
@@ -3458,11 +3444,11 @@
   {
     "id": "common-predicate-007-future",
     "role": "predicate",
-    "text": "will not win an election in its own stairwell",
-    "singularText": "will not win an election in its own stairwell",
-    "pluralText": "will not win an election in their own stairwell",
-    "personalSingularText": "will not win an election in their own stairwell",
-    "secondPersonText": "will not win an election in your own stairwell",
+    "text": "will declare victory before the final count",
+    "singularText": "will declare victory before the final count",
+    "pluralText": "will declare victory before the final count",
+    "personalSingularText": "will declare victory before the final count",
+    "secondPersonText": "will declare victory before the final count",
     "tags": [
       "credibility",
       "results"
@@ -3564,13 +3550,13 @@
   {
     "id": "common-predicate-009-past",
     "role": "predicate",
-    "text": "was rejected by its own voters",
-    "singularText": "was rejected by its own voters",
-    "pluralText": "were rejected by their own voters",
-    "personalSingularText": "was rejected by their own voters",
-    "secondPersonText": "were rejected by your own voters",
+    "text": "boasted of thirteen percent economic growth",
+    "singularText": "boasted of thirteen percent economic growth",
+    "pluralText": "boasted of thirteen percent economic growth",
+    "personalSingularText": "boasted of thirteen percent economic growth",
+    "secondPersonText": "boasted of thirteen percent economic growth",
     "tags": [
-      "credibility",
+      "evidence",
       "results"
     ],
     "scorePreferences": {
@@ -3592,13 +3578,13 @@
   {
     "id": "common-predicate-009-present",
     "role": "predicate",
-    "text": "is rejected by its own voters",
-    "singularText": "is rejected by its own voters",
-    "pluralText": "are rejected by their own voters",
-    "personalSingularText": "is rejected by their own voters",
-    "secondPersonText": "are rejected by your own voters",
+    "text": "boasts of thirteen percent economic growth",
+    "singularText": "boasts of thirteen percent economic growth",
+    "pluralText": "boast of thirteen percent economic growth",
+    "personalSingularText": "boasts of thirteen percent economic growth",
+    "secondPersonText": "boast of thirteen percent economic growth",
     "tags": [
-      "credibility",
+      "evidence",
       "results"
     ],
     "scorePreferences": {
@@ -3620,13 +3606,13 @@
   {
     "id": "common-predicate-009-future",
     "role": "predicate",
-    "text": "will be rejected by its own voters",
-    "singularText": "will be rejected by its own voters",
-    "pluralText": "will be rejected by their own voters",
-    "personalSingularText": "will be rejected by their own voters",
-    "secondPersonText": "will be rejected by your own voters",
+    "text": "will boast of thirteen percent economic growth",
+    "singularText": "will boast of thirteen percent economic growth",
+    "pluralText": "will boast of thirteen percent economic growth",
+    "personalSingularText": "will boast of thirteen percent economic growth",
+    "secondPersonText": "will boast of thirteen percent economic growth",
     "tags": [
-      "credibility",
+      "evidence",
       "results"
     ],
     "scorePreferences": {
@@ -3648,12 +3634,8 @@
   {
     "id": "common-predicate-010-present",
     "role": "predicate",
-    "text": "belongs in a history museum",
-    "tags": [
-      "legacy",
-      "modernity",
-      "obsolete"
-    ],
+    "text": "explains that winter is not summer",
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -3667,20 +3649,18 @@
       "flavour": []
     },
     "rarity": "uncommon",
-    "singularText": "belongs in a history museum",
-    "pluralText": "belong in a history museum",
+    "singularText": "explains that winter is not summer",
+    "pluralText": "explain that winter is not summer",
     "tense": "present",
-    "tenseFamily": "common-predicate-010"
+    "tenseFamily": "common-predicate-010",
+    "personalSingularText": "explains that winter is not summer",
+    "secondPersonText": "explain that winter is not summer"
   },
   {
     "id": "common-predicate-010-past",
     "role": "predicate",
-    "text": "belonged in a history museum",
-    "tags": [
-      "legacy",
-      "modernity",
-      "obsolete"
-    ],
+    "text": "explained that winter is not summer",
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -3694,20 +3674,18 @@
       "flavour": []
     },
     "rarity": "common",
-    "singularText": "belonged in a history museum",
-    "pluralText": "belonged in a history museum",
+    "singularText": "explained that winter is not summer",
+    "pluralText": "explained that winter is not summer",
     "tense": "past",
-    "tenseFamily": "common-predicate-010"
+    "tenseFamily": "common-predicate-010",
+    "personalSingularText": "explained that winter is not summer",
+    "secondPersonText": "explained that winter is not summer"
   },
   {
     "id": "common-predicate-010-future",
     "role": "predicate",
-    "text": "will belong in a history museum",
-    "tags": [
-      "legacy",
-      "modernity",
-      "obsolete"
-    ],
+    "text": "will explain that winter is not summer",
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -3721,22 +3699,23 @@
       "flavour": []
     },
     "rarity": "rare",
-    "singularText": "will belong in a history museum",
-    "pluralText": "will belong in a history museum",
+    "singularText": "will explain that winter is not summer",
+    "pluralText": "will explain that winter is not summer",
     "tense": "future",
-    "tenseFamily": "common-predicate-010"
+    "tenseFamily": "common-predicate-010",
+    "personalSingularText": "will explain that winter is not summer",
+    "secondPersonText": "will explain that winter is not summer"
   },
   {
     "id": "common-predicate-011-present",
     "role": "predicate",
-    "text": "makes its own voters change the channel",
-    "singularText": "makes its own voters change the channel",
-    "pluralText": "make their own voters change the channel",
-    "personalSingularText": "makes their own voters change the channel",
-    "secondPersonText": "make your own voters change the channel",
+    "text": "prefers notes to speaking nonsense",
+    "singularText": "prefers notes to speaking nonsense",
+    "pluralText": "prefer notes to speaking nonsense",
+    "personalSingularText": "prefers notes to speaking nonsense",
+    "secondPersonText": "prefer notes to speaking nonsense",
     "tags": [
-      "credibility",
-      "media"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -3757,14 +3736,13 @@
   {
     "id": "common-predicate-011-past",
     "role": "predicate",
-    "text": "made its own voters change the channel",
-    "singularText": "made its own voters change the channel",
-    "pluralText": "made their own voters change the channel",
-    "personalSingularText": "made their own voters change the channel",
-    "secondPersonText": "made your own voters change the channel",
+    "text": "preferred notes to speaking nonsense",
+    "singularText": "preferred notes to speaking nonsense",
+    "pluralText": "preferred notes to speaking nonsense",
+    "personalSingularText": "preferred notes to speaking nonsense",
+    "secondPersonText": "preferred notes to speaking nonsense",
     "tags": [
-      "credibility",
-      "media"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -3785,14 +3763,13 @@
   {
     "id": "common-predicate-011-future",
     "role": "predicate",
-    "text": "will make its own voters change the channel",
-    "singularText": "will make its own voters change the channel",
-    "pluralText": "will make their own voters change the channel",
-    "personalSingularText": "will make their own voters change the channel",
-    "secondPersonText": "will make your own voters change the channel",
+    "text": "will prefer notes to speaking nonsense",
+    "singularText": "will prefer notes to speaking nonsense",
+    "pluralText": "will prefer notes to speaking nonsense",
+    "personalSingularText": "will prefer notes to speaking nonsense",
+    "secondPersonText": "will prefer notes to speaking nonsense",
     "tags": [
-      "credibility",
-      "media"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -3813,10 +3790,10 @@
   {
     "id": "common-predicate-012-past",
     "role": "predicate",
-    "text": "turned an emergency into a campaign slogan",
+    "text": "justified everything with “because we can”",
     "tags": [
-      "authenticity",
-      "credibility"
+      "accountability",
+      "restraint"
     ],
     "scorePreferences": {
       "substance": [
@@ -3831,18 +3808,20 @@
       "flavour": []
     },
     "rarity": "common",
-    "singularText": "turned an emergency into a campaign slogan",
-    "pluralText": "turned an emergency into a campaign slogan",
+    "singularText": "justified everything with “because we can”",
+    "pluralText": "justified everything with “because we can”",
     "tense": "past",
-    "tenseFamily": "common-predicate-012"
+    "tenseFamily": "common-predicate-012",
+    "personalSingularText": "justified everything with “because we can”",
+    "secondPersonText": "justified everything with “because we can”"
   },
   {
     "id": "common-predicate-012-present",
     "role": "predicate",
-    "text": "turns an emergency into a campaign slogan",
+    "text": "justifies everything with “because we can”",
     "tags": [
-      "authenticity",
-      "credibility"
+      "accountability",
+      "restraint"
     ],
     "scorePreferences": {
       "substance": [
@@ -3857,18 +3836,20 @@
       "flavour": []
     },
     "rarity": "uncommon",
-    "singularText": "turns an emergency into a campaign slogan",
-    "pluralText": "turn an emergency into a campaign slogan",
+    "singularText": "justifies everything with “because we can”",
+    "pluralText": "justify everything with “because we can”",
     "tense": "present",
-    "tenseFamily": "common-predicate-012"
+    "tenseFamily": "common-predicate-012",
+    "personalSingularText": "justifies everything with “because we can”",
+    "secondPersonText": "justify everything with “because we can”"
   },
   {
     "id": "common-predicate-012-future",
     "role": "predicate",
-    "text": "will turn an emergency into a campaign slogan",
+    "text": "will justify everything with “because we can”",
     "tags": [
-      "authenticity",
-      "credibility"
+      "accountability",
+      "restraint"
     ],
     "scorePreferences": {
       "substance": [
@@ -3883,10 +3864,12 @@
       "flavour": []
     },
     "rarity": "rare",
-    "singularText": "will turn an emergency into a campaign slogan",
-    "pluralText": "will turn an emergency into a campaign slogan",
+    "singularText": "will justify everything with “because we can”",
+    "pluralText": "will justify everything with “because we can”",
     "tense": "future",
-    "tenseFamily": "common-predicate-012"
+    "tenseFamily": "common-predicate-012",
+    "personalSingularText": "will justify everything with “because we can”",
+    "secondPersonText": "will justify everything with “because we can”"
   },
   {
     "id": "common-predicate-013-past",
@@ -4792,8 +4775,6 @@
     "role": "modifier",
     "text": "to the former secret police",
     "tags": [
-      "legacy",
-      "evidence",
       "securitate"
     ],
     "rarity": "rare"
@@ -7890,16 +7871,15 @@
   {
     "id": "common-predicate-016-past",
     "role": "predicate",
-    "text": "was a waiting room, fully funded",
-    "singularText": "was a waiting room, fully funded",
-    "pluralText": "were waiting rooms, fully funded",
-    "personalSingularText": "was a waiting room, fully funded",
-    "secondPersonText": "were a waiting room, fully funded",
+    "text": "boasted of high wages for over one percent",
+    "singularText": "boasted of high wages for over one percent",
+    "pluralText": "boasted of high wages for over one percent",
+    "personalSingularText": "boasted of high wages for over one percent",
+    "secondPersonText": "boasted of high wages for over one percent",
     "tense": "past",
     "tenseFamily": "common-predicate-016",
     "tags": [
-      "bureaucracy",
-      "spending"
+      "wealth"
     ],
     "scorePreferences": {
       "substance": [
@@ -7922,16 +7902,15 @@
   {
     "id": "common-predicate-016-present",
     "role": "predicate",
-    "text": "is a waiting room, fully funded",
-    "singularText": "is a waiting room, fully funded",
-    "pluralText": "are waiting rooms, fully funded",
-    "personalSingularText": "is a waiting room, fully funded",
-    "secondPersonText": "are a waiting room, fully funded",
+    "text": "boasts of high wages for over one percent",
+    "singularText": "boasts of high wages for over one percent",
+    "pluralText": "boast of high wages for over one percent",
+    "personalSingularText": "boasts of high wages for over one percent",
+    "secondPersonText": "boast of high wages for over one percent",
     "tense": "present",
     "tenseFamily": "common-predicate-016",
     "tags": [
-      "bureaucracy",
-      "spending"
+      "wealth"
     ],
     "scorePreferences": {
       "substance": [
@@ -7954,16 +7933,15 @@
   {
     "id": "common-predicate-016-future",
     "role": "predicate",
-    "text": "will be a waiting room, fully funded",
-    "singularText": "will be a waiting room, fully funded",
-    "pluralText": "will be waiting rooms, fully funded",
-    "personalSingularText": "will be a waiting room, fully funded",
-    "secondPersonText": "will be a waiting room, fully funded",
+    "text": "will boast of high wages for over one percent",
+    "singularText": "will boast of high wages for over one percent",
+    "pluralText": "will boast of high wages for over one percent",
+    "personalSingularText": "will boast of high wages for over one percent",
+    "secondPersonText": "will boast of high wages for over one percent",
     "tense": "future",
     "tenseFamily": "common-predicate-016",
     "tags": [
-      "bureaucracy",
-      "spending"
+      "wealth"
     ],
     "scorePreferences": {
       "substance": [
@@ -7986,15 +7964,16 @@
   {
     "id": "common-predicate-017-past",
     "role": "predicate",
-    "text": "was the spare key nobody could use",
-    "singularText": "was the spare key nobody could use",
-    "pluralText": "were spare keys nobody could use",
-    "personalSingularText": "was the spare key nobody could use",
-    "secondPersonText": "were the spare key nobody could use",
+    "text": "confused democracy with bureaucracy",
+    "singularText": "confused democracy with bureaucracy",
+    "pluralText": "confused democracy with bureaucracy",
+    "personalSingularText": "confused democracy with bureaucracy",
+    "secondPersonText": "confused democracy with bureaucracy",
     "tense": "past",
     "tenseFamily": "common-predicate-017",
     "tags": [
-      "bureaucracy"
+      "bureaucracy",
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -8017,15 +7996,16 @@
   {
     "id": "common-predicate-017-present",
     "role": "predicate",
-    "text": "is the spare key nobody can use",
-    "singularText": "is the spare key nobody can use",
-    "pluralText": "are spare keys nobody can use",
-    "personalSingularText": "is the spare key nobody can use",
-    "secondPersonText": "are the spare key nobody can use",
+    "text": "confuses democracy with bureaucracy",
+    "singularText": "confuses democracy with bureaucracy",
+    "pluralText": "confuse democracy with bureaucracy",
+    "personalSingularText": "confuses democracy with bureaucracy",
+    "secondPersonText": "confuse democracy with bureaucracy",
     "tense": "present",
     "tenseFamily": "common-predicate-017",
     "tags": [
-      "bureaucracy"
+      "bureaucracy",
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -8048,15 +8028,16 @@
   {
     "id": "common-predicate-017-future",
     "role": "predicate",
-    "text": "will be the spare key nobody can use",
-    "singularText": "will be the spare key nobody can use",
-    "pluralText": "will be spare keys nobody can use",
-    "personalSingularText": "will be the spare key nobody can use",
-    "secondPersonText": "will be the spare key nobody can use",
+    "text": "will confuse democracy with bureaucracy",
+    "singularText": "will confuse democracy with bureaucracy",
+    "pluralText": "will confuse democracy with bureaucracy",
+    "personalSingularText": "will confuse democracy with bureaucracy",
+    "secondPersonText": "will confuse democracy with bureaucracy",
     "tense": "future",
     "tenseFamily": "common-predicate-017",
     "tags": [
-      "bureaucracy"
+      "bureaucracy",
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -8079,15 +8060,16 @@
   {
     "id": "common-predicate-018-past",
     "role": "predicate",
-    "text": "was an expense claim wearing a medal",
-    "singularText": "was an expense claim wearing a medal",
-    "pluralText": "were expense claims wearing medals",
-    "personalSingularText": "was an expense claim wearing a medal",
-    "secondPersonText": "were an expense claim wearing a medal",
+    "text": "answered bread prices with a bread-free diet",
+    "singularText": "answered bread prices with a bread-free diet",
+    "pluralText": "answered bread prices with a bread-free diet",
+    "personalSingularText": "answered bread prices with a bread-free diet",
+    "secondPersonText": "answered bread prices with a bread-free diet",
     "tense": "past",
     "tenseFamily": "common-predicate-018",
     "tags": [
-      "spending"
+      "spending",
+      "firsthand-knowledge"
     ],
     "scorePreferences": {
       "substance": [
@@ -8110,15 +8092,16 @@
   {
     "id": "common-predicate-018-present",
     "role": "predicate",
-    "text": "is an expense claim wearing a medal",
-    "singularText": "is an expense claim wearing a medal",
-    "pluralText": "are expense claims wearing medals",
-    "personalSingularText": "is an expense claim wearing a medal",
-    "secondPersonText": "are an expense claim wearing a medal",
+    "text": "answers bread prices with a bread-free diet",
+    "singularText": "answers bread prices with a bread-free diet",
+    "pluralText": "answer bread prices with a bread-free diet",
+    "personalSingularText": "answers bread prices with a bread-free diet",
+    "secondPersonText": "answer bread prices with a bread-free diet",
     "tense": "present",
     "tenseFamily": "common-predicate-018",
     "tags": [
-      "spending"
+      "spending",
+      "firsthand-knowledge"
     ],
     "scorePreferences": {
       "substance": [
@@ -8141,15 +8124,16 @@
   {
     "id": "common-predicate-018-future",
     "role": "predicate",
-    "text": "will be an expense claim wearing a medal",
-    "singularText": "will be an expense claim wearing a medal",
-    "pluralText": "will be expense claims wearing medals",
-    "personalSingularText": "will be an expense claim wearing a medal",
-    "secondPersonText": "will be an expense claim wearing a medal",
+    "text": "will answer bread prices with a bread-free diet",
+    "singularText": "will answer bread prices with a bread-free diet",
+    "pluralText": "will answer bread prices with a bread-free diet",
+    "personalSingularText": "will answer bread prices with a bread-free diet",
+    "secondPersonText": "will answer bread prices with a bread-free diet",
     "tense": "future",
     "tenseFamily": "common-predicate-018",
     "tags": [
-      "spending"
+      "spending",
+      "firsthand-knowledge"
     ],
     "scorePreferences": {
       "substance": [
@@ -8172,11 +8156,11 @@
   {
     "id": "common-predicate-019-past",
     "role": "predicate",
-    "text": "was a press release without an event",
-    "singularText": "was a press release without an event",
-    "pluralText": "were press releases without events",
-    "personalSingularText": "was a press release without an event",
-    "secondPersonText": "were a press release without an event",
+    "text": "called a sheep a living statue",
+    "singularText": "called a sheep a living statue",
+    "pluralText": "called a sheep a living statue",
+    "personalSingularText": "called a sheep a living statue",
+    "secondPersonText": "called a sheep a living statue",
     "tense": "past",
     "tenseFamily": "common-predicate-019",
     "tags": [
@@ -8203,11 +8187,11 @@
   {
     "id": "common-predicate-019-present",
     "role": "predicate",
-    "text": "is a press release without an event",
-    "singularText": "is a press release without an event",
-    "pluralText": "are press releases without events",
-    "personalSingularText": "is a press release without an event",
-    "secondPersonText": "are a press release without an event",
+    "text": "calls a sheep a living statue",
+    "singularText": "calls a sheep a living statue",
+    "pluralText": "call a sheep a living statue",
+    "personalSingularText": "calls a sheep a living statue",
+    "secondPersonText": "call a sheep a living statue",
     "tense": "present",
     "tenseFamily": "common-predicate-019",
     "tags": [
@@ -8234,11 +8218,11 @@
   {
     "id": "common-predicate-019-future",
     "role": "predicate",
-    "text": "will be a press release without an event",
-    "singularText": "will be a press release without an event",
-    "pluralText": "will be press releases without events",
-    "personalSingularText": "will be a press release without an event",
-    "secondPersonText": "will be a press release without an event",
+    "text": "will call a sheep a living statue",
+    "singularText": "will call a sheep a living statue",
+    "pluralText": "will call a sheep a living statue",
+    "personalSingularText": "will call a sheep a living statue",
+    "secondPersonText": "will call a sheep a living statue",
     "tense": "future",
     "tenseFamily": "common-predicate-019",
     "tags": [
@@ -8265,11 +8249,11 @@
   {
     "id": "common-predicate-020-past",
     "role": "predicate",
-    "text": "was a queue with its own supervisor",
-    "singularText": "was a queue with its own supervisor",
-    "pluralText": "were queues with their own supervisors",
-    "personalSingularText": "was a queue with its own supervisor",
-    "secondPersonText": "were a queue with its own supervisor",
+    "text": "let the government decide what was appropriate",
+    "singularText": "let the government decide what was appropriate",
+    "pluralText": "let the government decide what was appropriate",
+    "personalSingularText": "let the government decide what was appropriate",
+    "secondPersonText": "let the government decide what was appropriate",
     "tense": "past",
     "tenseFamily": "common-predicate-020",
     "tags": [
@@ -8296,11 +8280,11 @@
   {
     "id": "common-predicate-020-present",
     "role": "predicate",
-    "text": "is a queue with its own supervisor",
-    "singularText": "is a queue with its own supervisor",
-    "pluralText": "are queues with their own supervisors",
-    "personalSingularText": "is a queue with its own supervisor",
-    "secondPersonText": "are a queue with its own supervisor",
+    "text": "lets the government decide what is appropriate",
+    "singularText": "lets the government decide what is appropriate",
+    "pluralText": "let the government decide what is appropriate",
+    "personalSingularText": "lets the government decide what is appropriate",
+    "secondPersonText": "let the government decide what is appropriate",
     "tense": "present",
     "tenseFamily": "common-predicate-020",
     "tags": [
@@ -8327,11 +8311,11 @@
   {
     "id": "common-predicate-020-future",
     "role": "predicate",
-    "text": "will be a queue with its own supervisor",
-    "singularText": "will be a queue with its own supervisor",
-    "pluralText": "will be queues with their own supervisors",
-    "personalSingularText": "will be a queue with its own supervisor",
-    "secondPersonText": "will be a queue with its own supervisor",
+    "text": "will let the government decide what is appropriate",
+    "singularText": "will let the government decide what is appropriate",
+    "pluralText": "will let the government decide what is appropriate",
+    "personalSingularText": "will let the government decide what is appropriate",
+    "secondPersonText": "will let the government decide what is appropriate",
     "tense": "future",
     "tenseFamily": "common-predicate-020",
     "tags": [
@@ -8358,11 +8342,11 @@
   {
     "id": "common-predicate-021-past",
     "role": "predicate",
-    "text": "was a complaint box attached to a trashcan",
-    "singularText": "was a complaint box attached to a trashcan",
-    "pluralText": "were complaint boxes attached to trashcans",
-    "personalSingularText": "was a complaint box attached to a trashcan",
-    "secondPersonText": "were a complaint box attached to a trashcan",
+    "text": "refused to hand in any resignation",
+    "singularText": "refused to hand in any resignation",
+    "pluralText": "refused to hand in any resignation",
+    "personalSingularText": "refused to hand in any resignation",
+    "secondPersonText": "refused to hand in any resignation",
     "tense": "past",
     "tenseFamily": "common-predicate-021",
     "tags": [
@@ -8389,11 +8373,11 @@
   {
     "id": "common-predicate-021-present",
     "role": "predicate",
-    "text": "is a complaint box attached to a trashcan",
-    "singularText": "is a complaint box attached to a trashcan",
-    "pluralText": "are complaint boxes attached to trashcans",
-    "personalSingularText": "is a complaint box attached to a trashcan",
-    "secondPersonText": "are a complaint box attached to a trashcan",
+    "text": "refuses to hand in any resignation",
+    "singularText": "refuses to hand in any resignation",
+    "pluralText": "refuse to hand in any resignation",
+    "personalSingularText": "refuses to hand in any resignation",
+    "secondPersonText": "refuse to hand in any resignation",
     "tense": "present",
     "tenseFamily": "common-predicate-021",
     "tags": [
@@ -8420,11 +8404,11 @@
   {
     "id": "common-predicate-021-future",
     "role": "predicate",
-    "text": "will be a complaint box attached to a trashcan",
-    "singularText": "will be a complaint box attached to a trashcan",
-    "pluralText": "will be complaint boxes attached to trashcans",
-    "personalSingularText": "will be a complaint box attached to a trashcan",
-    "secondPersonText": "will be a complaint box attached to a trashcan",
+    "text": "will refuse to hand in any resignation",
+    "singularText": "will refuse to hand in any resignation",
+    "pluralText": "will refuse to hand in any resignation",
+    "personalSingularText": "will refuse to hand in any resignation",
+    "secondPersonText": "will refuse to hand in any resignation",
     "tense": "future",
     "tenseFamily": "common-predicate-021",
     "tags": [
@@ -8451,11 +8435,11 @@
   {
     "id": "common-predicate-022-past",
     "role": "predicate",
-    "text": "was a ribbon waiting for a road",
-    "singularText": "was a ribbon waiting for a road",
-    "pluralText": "were ribbons waiting for roads",
-    "personalSingularText": "was a ribbon waiting for a road",
-    "secondPersonText": "were a ribbon waiting for a road",
+    "text": "promised an elevated motorway within two years",
+    "singularText": "promised an elevated motorway within two years",
+    "pluralText": "promised an elevated motorway within two years",
+    "personalSingularText": "promised an elevated motorway within two years",
+    "secondPersonText": "promised an elevated motorway within two years",
     "tense": "past",
     "tenseFamily": "common-predicate-022",
     "tags": [
@@ -8483,11 +8467,11 @@
   {
     "id": "common-predicate-022-present",
     "role": "predicate",
-    "text": "is a ribbon waiting for a road",
-    "singularText": "is a ribbon waiting for a road",
-    "pluralText": "are ribbons waiting for roads",
-    "personalSingularText": "is a ribbon waiting for a road",
-    "secondPersonText": "are a ribbon waiting for a road",
+    "text": "promises an elevated motorway within two years",
+    "singularText": "promises an elevated motorway within two years",
+    "pluralText": "promise an elevated motorway within two years",
+    "personalSingularText": "promises an elevated motorway within two years",
+    "secondPersonText": "promise an elevated motorway within two years",
     "tense": "present",
     "tenseFamily": "common-predicate-022",
     "tags": [
@@ -8515,11 +8499,11 @@
   {
     "id": "common-predicate-022-future",
     "role": "predicate",
-    "text": "will be a ribbon awaiting a road",
-    "singularText": "will be a ribbon awaiting a road",
-    "pluralText": "will be ribbons awaiting roads",
-    "personalSingularText": "will be a ribbon awaiting a road",
-    "secondPersonText": "will be a ribbon awaiting a road",
+    "text": "will promise an elevated motorway within two years",
+    "singularText": "will promise an elevated motorway within two years",
+    "pluralText": "will promise an elevated motorway within two years",
+    "personalSingularText": "will promise an elevated motorway within two years",
+    "secondPersonText": "will promise an elevated motorway within two years",
     "tense": "future",
     "tenseFamily": "common-predicate-022",
     "tags": [
@@ -8547,15 +8531,15 @@
   {
     "id": "common-predicate-023-past",
     "role": "predicate",
-    "text": "was the minutes of an empty meeting",
-    "singularText": "was the minutes of an empty meeting",
-    "pluralText": "were the minutes of empty meetings",
-    "personalSingularText": "was the minutes of an empty meeting",
-    "secondPersonText": "were the minutes of an empty meeting",
+    "text": "used a crib sheet to avoid nonsense",
+    "singularText": "used a crib sheet to avoid nonsense",
+    "pluralText": "used a crib sheet to avoid nonsense",
+    "personalSingularText": "used a crib sheet to avoid nonsense",
+    "secondPersonText": "used a crib sheet to avoid nonsense",
     "tense": "past",
     "tenseFamily": "common-predicate-023",
     "tags": [
-      "evidence"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -8578,15 +8562,15 @@
   {
     "id": "common-predicate-023-present",
     "role": "predicate",
-    "text": "is the minutes of an empty meeting",
-    "singularText": "is the minutes of an empty meeting",
-    "pluralText": "are the minutes of empty meetings",
-    "personalSingularText": "is the minutes of an empty meeting",
-    "secondPersonText": "are the minutes of an empty meeting",
+    "text": "uses a crib sheet to avoid nonsense",
+    "singularText": "uses a crib sheet to avoid nonsense",
+    "pluralText": "use a crib sheet to avoid nonsense",
+    "personalSingularText": "uses a crib sheet to avoid nonsense",
+    "secondPersonText": "use a crib sheet to avoid nonsense",
     "tense": "present",
     "tenseFamily": "common-predicate-023",
     "tags": [
-      "evidence"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -8609,15 +8593,15 @@
   {
     "id": "common-predicate-023-future",
     "role": "predicate",
-    "text": "will be the minutes of an empty meeting",
-    "singularText": "will be the minutes of an empty meeting",
-    "pluralText": "will be the minutes of empty meetings",
-    "personalSingularText": "will be the minutes of an empty meeting",
-    "secondPersonText": "will be the minutes of an empty meeting",
+    "text": "will use a crib sheet to avoid nonsense",
+    "singularText": "will use a crib sheet to avoid nonsense",
+    "pluralText": "will use a crib sheet to avoid nonsense",
+    "personalSingularText": "will use a crib sheet to avoid nonsense",
+    "secondPersonText": "will use a crib sheet to avoid nonsense",
     "tense": "future",
     "tenseFamily": "common-predicate-023",
     "tags": [
-      "evidence"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -8640,16 +8624,16 @@
   {
     "id": "common-predicate-024-past",
     "role": "predicate",
-    "text": "was a fact check without a conclusion",
-    "singularText": "was a fact check without a conclusion",
-    "pluralText": "were fact checks without conclusions",
-    "personalSingularText": "was a fact check without a conclusion",
-    "secondPersonText": "were a fact check without a conclusion",
+    "text": "calculated circle area without pi",
+    "singularText": "calculated circle area without pi",
+    "pluralText": "calculated circle area without pi",
+    "personalSingularText": "calculated circle area without pi",
+    "secondPersonText": "calculated circle area without pi",
     "tense": "past",
     "tenseFamily": "common-predicate-024",
     "tags": [
-      "evidence",
-      "credibility"
+      "competence",
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -8672,16 +8656,16 @@
   {
     "id": "common-predicate-024-present",
     "role": "predicate",
-    "text": "is a fact check without a conclusion",
-    "singularText": "is a fact check without a conclusion",
-    "pluralText": "are fact checks without conclusions",
-    "personalSingularText": "is a fact check without a conclusion",
-    "secondPersonText": "are a fact check without a conclusion",
+    "text": "calculates circle area without pi",
+    "singularText": "calculates circle area without pi",
+    "pluralText": "calculate circle area without pi",
+    "personalSingularText": "calculates circle area without pi",
+    "secondPersonText": "calculate circle area without pi",
     "tense": "present",
     "tenseFamily": "common-predicate-024",
     "tags": [
-      "evidence",
-      "credibility"
+      "competence",
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -8704,16 +8688,16 @@
   {
     "id": "common-predicate-024-future",
     "role": "predicate",
-    "text": "will be a fact check without a conclusion",
-    "singularText": "will be a fact check without a conclusion",
-    "pluralText": "will be fact checks without conclusions",
-    "personalSingularText": "will be a fact check without a conclusion",
-    "secondPersonText": "will be a fact check without a conclusion",
+    "text": "will calculate circle area without pi",
+    "singularText": "will calculate circle area without pi",
+    "pluralText": "will calculate circle area without pi",
+    "personalSingularText": "will calculate circle area without pi",
+    "secondPersonText": "will calculate circle area without pi",
     "tense": "future",
     "tenseFamily": "common-predicate-024",
     "tags": [
-      "evidence",
-      "credibility"
+      "competence",
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -8736,16 +8720,15 @@
   {
     "id": "common-predicate-025-past",
     "role": "predicate",
-    "text": "was a public consultation behind locked doors",
-    "singularText": "was a public consultation behind locked doors",
-    "pluralText": "were public consultations behind locked doors",
-    "personalSingularText": "was a public consultation behind locked doors",
-    "secondPersonText": "were a public consultation behind locked doors",
+    "text": "questioned the definition of a luxury aircraft",
+    "singularText": "questioned the definition of a luxury aircraft",
+    "pluralText": "questioned the definition of a luxury aircraft",
+    "personalSingularText": "questioned the definition of a luxury aircraft",
+    "secondPersonText": "questioned the definition of a luxury aircraft",
     "tense": "past",
     "tenseFamily": "common-predicate-025",
     "tags": [
-      "transparency",
-      "accountability"
+      "luxury"
     ],
     "scorePreferences": {
       "substance": [
@@ -8768,16 +8751,15 @@
   {
     "id": "common-predicate-025-present",
     "role": "predicate",
-    "text": "is a public consultation behind locked doors",
-    "singularText": "is a public consultation behind locked doors",
-    "pluralText": "are public consultations behind locked doors",
-    "personalSingularText": "is a public consultation behind locked doors",
-    "secondPersonText": "are a public consultation behind locked doors",
+    "text": "questions the definition of a luxury aircraft",
+    "singularText": "questions the definition of a luxury aircraft",
+    "pluralText": "question the definition of a luxury aircraft",
+    "personalSingularText": "questions the definition of a luxury aircraft",
+    "secondPersonText": "question the definition of a luxury aircraft",
     "tense": "present",
     "tenseFamily": "common-predicate-025",
     "tags": [
-      "transparency",
-      "accountability"
+      "luxury"
     ],
     "scorePreferences": {
       "substance": [
@@ -8800,16 +8782,15 @@
   {
     "id": "common-predicate-025-future",
     "role": "predicate",
-    "text": "will be a public consultation behind locked doors",
-    "singularText": "will be a public consultation behind locked doors",
-    "pluralText": "will be public consultations behind locked doors",
-    "personalSingularText": "will be a public consultation behind locked doors",
-    "secondPersonText": "will be a public consultation behind locked doors",
+    "text": "will question the definition of a luxury aircraft",
+    "singularText": "will question the definition of a luxury aircraft",
+    "pluralText": "will question the definition of a luxury aircraft",
+    "personalSingularText": "will question the definition of a luxury aircraft",
+    "secondPersonText": "will question the definition of a luxury aircraft",
     "tense": "future",
     "tenseFamily": "common-predicate-025",
     "tags": [
-      "transparency",
-      "accountability"
+      "luxury"
     ],
     "scorePreferences": {
       "substance": [
@@ -8832,19 +8813,19 @@
   {
     "id": "common-modifier-022",
     "role": "modifier",
-    "text": "with the delivery date under a sticker",
+    "text": "with a two-year deadline for the elevated motorway",
     "tags": [
       "delivery",
-      "transparency"
+      "infrastructure"
     ],
     "rarity": "uncommon"
   },
   {
     "id": "common-modifier-023",
     "role": "modifier",
-    "text": "at a hearing inside a private lift",
+    "text": "aboard a private plane described as small",
     "tags": [
-      "transparency",
+      "luxury",
       "elitism"
     ],
     "rarity": "uncommon"
@@ -8852,28 +8833,28 @@
   {
     "id": "common-modifier-024",
     "role": "modifier",
-    "text": "on the authority of an unsigned claim",
+    "text": "with high wages for over one percent",
     "tags": [
-      "evidence",
-      "spending"
+      "wealth"
     ],
     "rarity": "uncommon"
   },
   {
     "id": "common-modifier-025",
     "role": "modifier",
-    "text": "after counting the empty chairs as supporters",
+    "text": "under a victory claim before counting finishes",
     "tags": [
-      "credibility"
+      "credibility",
+      "results"
     ],
     "rarity": "uncommon"
   },
   {
     "id": "common-modifier-026",
     "role": "modifier",
-    "text": "with the maintenance budget on the banner",
+    "text": "with a wish for a two-lei motorway",
     "tags": [
-      "maintenance",
+      "infrastructure",
       "spending"
     ],
     "rarity": "uncommon"
@@ -8881,7 +8862,7 @@
   {
     "id": "common-ending-012",
     "role": "ending",
-    "text": "and the complaint box wants witness protection.",
+    "text": "and everyone fears a criminal complaint.",
     "tags": [
       "accountability"
     ],
@@ -8891,7 +8872,7 @@
   {
     "id": "common-ending-013",
     "role": "ending",
-    "text": "and the rubber stamp wants a second opinion.",
+    "text": "and pi needs reminding.",
     "tags": [
       "competence"
     ],
@@ -8901,9 +8882,9 @@
   {
     "id": "common-ending-014",
     "role": "ending",
-    "text": "and the missing attachment has been promoted.",
+    "text": "and the reply is another question.",
     "tags": [
-      "bureaucracy"
+      "accountability"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -8911,9 +8892,10 @@
   {
     "id": "common-ending-015",
     "role": "ending",
-    "text": "and the printer has requested political asylum.",
+    "text": "and paper folders might disappear within five years.",
     "tags": [
-      "bureaucracy"
+      "bureaucracy",
+      "obsolete"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -8921,9 +8903,9 @@
   {
     "id": "common-ending-016",
     "role": "ending",
-    "text": "and the minutes deny that we met.",
+    "text": "and the little paper prevents nonsense.",
     "tags": [
-      "evidence"
+      "competence"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -8931,28 +8913,7 @@
   {
     "id": "common-ending-017",
     "role": "ending",
-    "text": "and only the receipt arrived.",
-    "tags": [
-      "delivery"
-    ],
-    "rarity": "rare",
-    "finisherBonus": 4
-  },
-  {
-    "id": "common-ending-018",
-    "role": "ending",
-    "text": "and the ribbon is longer than the road.",
-    "tags": [
-      "infrastructure",
-      "results"
-    ],
-    "rarity": "rare",
-    "finisherBonus": 4
-  },
-  {
-    "id": "common-ending-019",
-    "role": "ending",
-    "text": "and the foundation stone needs restoration.",
+    "text": "and now we move from deeds to words.",
     "tags": [
       "delivery",
       "results"
@@ -8961,11 +8922,34 @@
     "finisherBonus": 4
   },
   {
+    "id": "common-ending-018",
+    "role": "ending",
+    "text": "and the motorway floats above the city, in two years.",
+    "tags": [
+      "infrastructure",
+      "delivery"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 4
+  },
+  {
+    "id": "common-ending-019",
+    "role": "ending",
+    "text": "and a two-lei motorway remains a wish.",
+    "tags": [
+      "infrastructure",
+      "spending"
+    ],
+    "rarity": "rare",
+    "finisherBonus": 4
+  },
+  {
     "id": "common-ending-020",
     "role": "ending",
-    "text": "and the progress bar wants another term.",
+    "text": "and the elevated motorway gets a two-year promise.",
     "tags": [
-      "delivery"
+      "delivery",
+      "infrastructure"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -8973,10 +8957,9 @@
   {
     "id": "common-ending-021",
     "role": "ending",
-    "text": "and the facts got a quieter time slot.",
+    "text": "and the rats will get no comment.",
     "tags": [
-      "evidence",
-      "ratings"
+      "decorum"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -8984,9 +8967,10 @@
   {
     "id": "common-ending-022",
     "role": "ending",
-    "text": "and the correction arrived during the credits.",
+    "text": "and bureaucracy replaces democracy in the correction.",
     "tags": [
-      "credibility"
+      "bureaucracy",
+      "competence"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -8994,10 +8978,9 @@
   {
     "id": "common-ending-023",
     "role": "ending",
-    "text": "and the camera is the only paid witness.",
+    "text": "and high wages reach over one percent.",
     "tags": [
-      "evidence",
-      "spending"
+      "wealth"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9005,10 +8988,9 @@
   {
     "id": "common-ending-024",
     "role": "ending",
-    "text": "and the headline is suing the story.",
+    "text": "and a living sheep becomes a living statue.",
     "tags": [
-      "credibility",
-      "context"
+      "credibility"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9016,8 +8998,9 @@
   {
     "id": "common-ending-025",
     "role": "ending",
-    "text": "and the microphone wants a fact check.",
+    "text": "and the answer forgets pi.",
     "tags": [
+      "competence",
       "evidence"
     ],
     "rarity": "rare",
@@ -9026,10 +9009,9 @@
   {
     "id": "common-ending-026",
     "role": "ending",
-    "text": "and the applause track wants overtime pay.",
+    "text": "and thirteen percent is supposed to sound good.",
     "tags": [
-      "ratings",
-      "spending"
+      "evidence"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9037,9 +9019,10 @@
   {
     "id": "common-ending-027",
     "role": "ending",
-    "text": "and the contract came before the need.",
+    "text": "and even the minister wants a two-lei motorway.",
     "tags": [
-      "procurement"
+      "infrastructure",
+      "spending"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9047,10 +9030,10 @@
   {
     "id": "common-ending-028",
     "role": "ending",
-    "text": "and the sealed bids included the answers.",
+    "text": "and procurement reform nearly reduces democracy.",
     "tags": [
       "procurement",
-      "transparency"
+      "bureaucracy"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9058,9 +9041,9 @@
   {
     "id": "common-ending-029",
     "role": "ending",
-    "text": "and the audit trail ends in reserved parking.",
+    "text": "and all of it is declared constitutional.",
     "tags": [
-      "transparency"
+      "bureaucracy"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9068,10 +9051,9 @@
   {
     "id": "common-ending-030",
     "role": "ending",
-    "text": "and the tender has a private dress code.",
+    "text": "and the tutoring fee has slipped my memory.",
     "tags": [
-      "procurement",
-      "elitism"
+      "memory"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9079,9 +9061,10 @@
   {
     "id": "common-ending-031",
     "role": "ending",
-    "text": "and the warranty covers only the photograph.",
+    "text": "and the elevated motorway is promised within two years.",
     "tags": [
-      "maintenance"
+      "infrastructure",
+      "delivery"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9089,10 +9072,9 @@
   {
     "id": "common-ending-032",
     "role": "ending",
-    "text": "and hiring starts at the family tree.",
+    "text": "and farming is a family passion.",
     "tags": [
-      "family",
-      "nepotism"
+      "family"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9100,10 +9082,10 @@
   {
     "id": "common-ending-033",
     "role": "ending",
-    "text": "and the interview chair belongs to the cousin.",
+    "text": "and apparently there is no conflict of interest.",
     "tags": [
-      "family",
-      "nepotism"
+      "corruption",
+      "accountability"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9133,11 +9115,8 @@
   {
     "id": "common-ending-036",
     "role": "ending",
-    "text": "and the velvet rope works overtime.",
-    "tags": [
-      "elitism",
-      "service"
-    ],
+    "text": "and it is only a small aircraft.",
+    "tags": [],
     "rarity": "rare",
     "finisherBonus": 4
   },
@@ -9166,10 +9145,10 @@
   {
     "id": "common-ending-039",
     "role": "ending",
-    "text": "and austerity came with valet parking.",
+    "text": "and the price of bread meets a bread-free diet.",
     "tags": [
-      "austerity",
-      "luxury"
+      "spending",
+      "firsthand-knowledge"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9188,10 +9167,9 @@
   {
     "id": "common-ending-041",
     "role": "ending",
-    "text": "and a damp handshake erases the manifesto.",
+    "text": "and taking back the country takes steps.",
     "tags": [
-      "commitment",
-      "consistency"
+      "politics"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9209,9 +9187,10 @@
   {
     "id": "common-ending-043",
     "role": "ending",
-    "text": "and the promise joined the other coalition.",
+    "text": "and honour belongs beyond coalition billboards.",
     "tags": [
-      "consistency"
+      "authenticity",
+      "sincerity"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9219,10 +9198,9 @@
   {
     "id": "common-ending-044",
     "role": "ending",
-    "text": "and the apology needs a sponsor logo.",
+    "text": "and the apology blames a bad day.",
     "tags": [
-      "sincerity",
-      "influence"
+      "sincerity"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9230,9 +9208,9 @@
   {
     "id": "common-ending-045",
     "role": "ending",
-    "text": "and the spontaneous reaction is still rehearsing.",
+    "text": "and learning to make pretzels is the ambition.",
     "tags": [
-      "authenticity"
+      "competence"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9240,7 +9218,7 @@
   {
     "id": "common-ending-046",
     "role": "ending",
-    "text": "and the eyewitness still needs directions.",
+    "text": "and the price witness does not eat bread.",
     "tags": [
       "firsthand-knowledge",
       "context"
@@ -9251,21 +9229,18 @@
   {
     "id": "common-ending-047",
     "role": "ending",
-    "text": "and the local expert misspelled the town.",
-    "tags": [
-      "context",
-      "competence"
-    ],
+    "text": "and the cormorants bathe in swimming pools.",
+    "tags": [],
     "rarity": "rare",
     "finisherBonus": 4
   },
   {
     "id": "common-ending-048",
     "role": "ending",
-    "text": "and the nuance died in the forward.",
+    "text": "and one word separates democracy from bureaucracy.",
     "tags": [
       "nuance",
-      "context"
+      "bureaucracy"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9273,10 +9248,11 @@
   {
     "id": "common-ending-049",
     "role": "ending",
-    "text": "and the digital transformation needs carbon paper.",
+    "text": "and even the digitalization ministry fears digitalization.",
     "tags": [
       "modernity",
-      "obsolete"
+      "obsolete",
+      "bureaucracy"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9284,10 +9260,11 @@
   {
     "id": "common-ending-050",
     "role": "ending",
-    "text": "and the cloud is in the bottom drawer.",
+    "text": "and paper folders might need three to five years.",
     "tags": [
       "modernity",
-      "obsolete"
+      "obsolete",
+      "bureaucracy"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9295,17 +9272,16 @@
   {
     "id": "common-noun-151",
     "role": "noun",
-    "text": "the studio archive with tomorrow already filed",
+    "text": "the unknown unknown",
     "tags": [
-      "legacy",
-      "credibility"
+      "evidence"
     ],
     "scoreGroups": {
       "substance": [
-        "media"
+        "evidence"
       ],
       "flavour": [
-        "politics"
+        "proof"
       ]
     },
     "rarity": "common",
@@ -9316,10 +9292,10 @@
   {
     "id": "common-noun-152",
     "role": "noun",
-    "text": "a revolutionary curtain on a municipal budget",
+    "text": "the premature victory banner",
     "tags": [
-      "legacy",
-      "spending"
+      "credibility",
+      "results"
     ],
     "scoreGroups": {
       "substance": [
@@ -9738,16 +9714,15 @@
   {
     "id": "common-predicate-026-past",
     "role": "predicate",
-    "text": "was a rerun sold as new",
-    "singularText": "was a rerun sold as new",
-    "pluralText": "were reruns sold as new",
-    "personalSingularText": "was a rerun sold as new",
-    "secondPersonText": "were a rerun sold as new",
+    "text": "recognized unknown unknowns",
+    "singularText": "recognized unknown unknowns",
+    "pluralText": "recognized unknown unknowns",
+    "personalSingularText": "recognized unknown unknowns",
+    "secondPersonText": "recognized unknown unknowns",
     "tense": "past",
     "tenseFamily": "common-predicate-026",
     "tags": [
-      "legacy",
-      "credibility"
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -9773,16 +9748,15 @@
   {
     "id": "common-predicate-026-present",
     "role": "predicate",
-    "text": "is a rerun sold as new",
-    "singularText": "is a rerun sold as new",
-    "pluralText": "are reruns sold as new",
-    "personalSingularText": "is a rerun sold as new",
-    "secondPersonText": "are a rerun sold as new",
+    "text": "recognizes unknown unknowns",
+    "singularText": "recognizes unknown unknowns",
+    "pluralText": "recognize unknown unknowns",
+    "personalSingularText": "recognizes unknown unknowns",
+    "secondPersonText": "recognize unknown unknowns",
     "tense": "present",
     "tenseFamily": "common-predicate-026",
     "tags": [
-      "legacy",
-      "credibility"
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -9808,16 +9782,15 @@
   {
     "id": "common-predicate-026-future",
     "role": "predicate",
-    "text": "will be a rerun sold as new",
-    "singularText": "will be a rerun sold as new",
-    "pluralText": "will be reruns sold as new",
-    "personalSingularText": "will be a rerun sold as new",
-    "secondPersonText": "will be a rerun sold as new",
+    "text": "will recognize unknown unknowns",
+    "singularText": "will recognize unknown unknowns",
+    "pluralText": "will recognize unknown unknowns",
+    "personalSingularText": "will recognize unknown unknowns",
+    "secondPersonText": "will recognize unknown unknowns",
     "tense": "future",
     "tenseFamily": "common-predicate-026",
     "tags": [
-      "legacy",
-      "credibility"
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -9843,10 +9816,9 @@
   {
     "id": "common-modifier-027",
     "role": "modifier",
-    "text": "beneath a banner from the last beginning",
+    "text": "among things nobody knows they do not know",
     "tags": [
-      "legacy",
-      "credibility"
+      "evidence"
     ],
     "rarity": "uncommon",
     "sceneIds": [
@@ -9857,10 +9829,7 @@
     "id": "common-modifier-028",
     "role": "modifier",
     "text": "with the historic footage out of focus",
-    "tags": [
-      "legacy",
-      "credibility"
-    ],
+    "tags": [],
     "rarity": "uncommon",
     "sceneIds": [
       "transition-era-television-studio"
@@ -9880,10 +9849,9 @@
   {
     "id": "common-ending-051",
     "role": "ending",
-    "text": "and the revolution was delayed by a rerun.",
+    "text": "and the unknowns were themselves unknown.",
     "tags": [
-      "legacy",
-      "credibility"
+      "evidence"
     ],
     "rarity": "rare",
     "finisherBonus": 4,
@@ -9894,17 +9862,16 @@
   {
     "id": "common-noun-161",
     "role": "noun",
-    "text": "the undecided voter in the rehearsal booth",
+    "text": "the expertise with an acronym",
     "tags": [
-      "authenticity",
-      "electoral"
+      "evidence"
     ],
     "scoreGroups": {
       "substance": [
-        "media"
+        "evidence"
       ],
       "flavour": [
-        "politics"
+        "institution"
       ]
     },
     "rarity": "common",
@@ -9915,17 +9882,16 @@
   {
     "id": "common-noun-162",
     "role": "noun",
-    "text": "a county electoral map with the polling station moved",
+    "text": "the fleet counted like toy ships",
     "tags": [
-      "electoral",
-      "influence"
+      "competence"
     ],
     "scoreGroups": {
       "substance": [
-        "media"
+        "infrastructure"
       ],
       "flavour": [
-        "politics"
+        "strategy"
       ]
     },
     "rarity": "common",
@@ -10330,16 +10296,16 @@
   {
     "id": "common-predicate-027-past",
     "role": "predicate",
-    "text": "was a talking point without a question",
-    "singularText": "was a talking point without a question",
-    "pluralText": "were talking points without questions",
-    "personalSingularText": "was a talking point without a question",
-    "secondPersonText": "were a talking point without a question",
+    "text": "offered alternative facts",
+    "singularText": "offered alternative facts",
+    "pluralText": "offered alternative facts",
+    "personalSingularText": "offered alternative facts",
+    "secondPersonText": "offered alternative facts",
     "tense": "past",
     "tenseFamily": "common-predicate-027",
     "tags": [
-      "relevance",
-      "accountability"
+      "evidence",
+      "credibility"
     ],
     "scorePreferences": {
       "substance": [
@@ -10365,16 +10331,16 @@
   {
     "id": "common-predicate-027-present",
     "role": "predicate",
-    "text": "is a talking point without a question",
-    "singularText": "is a talking point without a question",
-    "pluralText": "are talking points without questions",
-    "personalSingularText": "is a talking point without a question",
-    "secondPersonText": "are a talking point without a question",
+    "text": "offers alternative facts",
+    "singularText": "offers alternative facts",
+    "pluralText": "offer alternative facts",
+    "personalSingularText": "offers alternative facts",
+    "secondPersonText": "offer alternative facts",
     "tense": "present",
     "tenseFamily": "common-predicate-027",
     "tags": [
-      "relevance",
-      "accountability"
+      "evidence",
+      "credibility"
     ],
     "scorePreferences": {
       "substance": [
@@ -10400,16 +10366,16 @@
   {
     "id": "common-predicate-027-future",
     "role": "predicate",
-    "text": "will be a talking point without a question",
-    "singularText": "will be a talking point without a question",
-    "pluralText": "will be talking points without questions",
-    "personalSingularText": "will be a talking point without a question",
-    "secondPersonText": "will be a talking point without a question",
+    "text": "will offer alternative facts",
+    "singularText": "will offer alternative facts",
+    "pluralText": "will offer alternative facts",
+    "personalSingularText": "will offer alternative facts",
+    "secondPersonText": "will offer alternative facts",
     "tense": "future",
     "tenseFamily": "common-predicate-027",
     "tags": [
-      "relevance",
-      "accountability"
+      "evidence",
+      "credibility"
     ],
     "scorePreferences": {
       "substance": [
@@ -10435,9 +10401,10 @@
   {
     "id": "common-modifier-029",
     "role": "modifier",
-    "text": "after excluding undecided answers from the poll",
+    "text": "with forecasts from consistently mistaken acronym experts",
     "tags": [
       "evidence",
+      "competence",
       "credibility"
     ],
     "rarity": "uncommon",
@@ -10448,7 +10415,7 @@
   {
     "id": "common-modifier-030",
     "role": "modifier",
-    "text": "while the fact checker queues",
+    "text": "with truth disputed by contradictory witnesses",
     "tags": [
       "evidence",
       "credibility"
@@ -10472,10 +10439,10 @@
   {
     "id": "common-ending-052",
     "role": "ending",
-    "text": "and the undecided audience changed channels.",
+    "text": "and corporate profits still end up in human pockets.",
     "tags": [
-      "ratings",
-      "relevance"
+      "wealth",
+      "commercialism"
     ],
     "rarity": "rare",
     "finisherBonus": 4,
@@ -10486,10 +10453,9 @@
   {
     "id": "common-noun-171",
     "role": "noun",
-    "text": "the municipal fountain without a water supply",
+    "text": "the unexpectedly complicated healthcare plan",
     "tags": [
-      "infrastructure",
-      "delivery"
+      "competence"
     ],
     "scoreGroups": {
       "substance": [
@@ -10507,16 +10473,16 @@
   {
     "id": "common-noun-172",
     "role": "noun",
-    "text": "a county contract folded as a place card",
+    "text": "the disgrace of cheese-import dependence",
     "tags": [
       "procurement"
     ],
     "scoreGroups": {
       "substance": [
-        "bureaucracy"
+        "procurement"
       ],
       "flavour": [
-        "politics"
+        "procurement"
       ]
     },
     "rarity": "common",
@@ -10922,16 +10888,15 @@
   {
     "id": "common-predicate-028-past",
     "role": "predicate",
-    "text": "was a construction site waiting for catering",
-    "singularText": "was a construction site waiting for catering",
-    "pluralText": "were construction sites waiting for catering",
-    "personalSingularText": "was a construction site waiting for catering",
-    "secondPersonText": "were a construction site waiting for catering",
+    "text": "discovered healthcare was surprisingly complicated",
+    "singularText": "discovered healthcare was surprisingly complicated",
+    "pluralText": "discovered healthcare was surprisingly complicated",
+    "personalSingularText": "discovered healthcare was surprisingly complicated",
+    "secondPersonText": "discovered healthcare was surprisingly complicated",
     "tense": "past",
     "tenseFamily": "common-predicate-028",
     "tags": [
-      "infrastructure",
-      "delivery"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -10957,16 +10922,15 @@
   {
     "id": "common-predicate-028-present",
     "role": "predicate",
-    "text": "is a construction site waiting for catering",
-    "singularText": "is a construction site waiting for catering",
-    "pluralText": "are construction sites waiting for catering",
-    "personalSingularText": "is a construction site waiting for catering",
-    "secondPersonText": "are a construction site waiting for catering",
+    "text": "discovers healthcare is surprisingly complicated",
+    "singularText": "discovers healthcare is surprisingly complicated",
+    "pluralText": "discover healthcare is surprisingly complicated",
+    "personalSingularText": "discovers healthcare is surprisingly complicated",
+    "secondPersonText": "discover healthcare is surprisingly complicated",
     "tense": "present",
     "tenseFamily": "common-predicate-028",
     "tags": [
-      "infrastructure",
-      "delivery"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -10992,16 +10956,15 @@
   {
     "id": "common-predicate-028-future",
     "role": "predicate",
-    "text": "will be a construction site waiting for catering",
-    "singularText": "will be a construction site waiting for catering",
-    "pluralText": "will be construction sites waiting for catering",
-    "personalSingularText": "will be a construction site waiting for catering",
-    "secondPersonText": "will be a construction site waiting for catering",
+    "text": "will discover healthcare is surprisingly complicated",
+    "singularText": "will discover healthcare is surprisingly complicated",
+    "pluralText": "will discover healthcare is surprisingly complicated",
+    "personalSingularText": "will discover healthcare is surprisingly complicated",
+    "secondPersonText": "will discover healthcare is surprisingly complicated",
     "tense": "future",
     "tenseFamily": "common-predicate-028",
     "tags": [
-      "infrastructure",
-      "delivery"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -11027,10 +10990,9 @@
   {
     "id": "common-modifier-031",
     "role": "modifier",
-    "text": "between the toast and the missing road",
+    "text": "with two thirds of the cheese imported",
     "tags": [
-      "procurement",
-      "infrastructure"
+      "procurement"
     ],
     "rarity": "uncommon",
     "sceneIds": [
@@ -11040,10 +11002,9 @@
   {
     "id": "common-modifier-032",
     "role": "modifier",
-    "text": "with the maintenance money in the napkins",
+    "text": "before the planned inspection of pig trotters",
     "tags": [
-      "maintenance",
-      "spending"
+      "procedure"
     ],
     "rarity": "uncommon",
     "sceneIds": [
@@ -11064,10 +11025,9 @@
   {
     "id": "common-ending-053",
     "role": "ending",
-    "text": "and every finished lane leads to the buffet.",
+    "text": "and the new export market was for pork.",
     "tags": [
-      "infrastructure",
-      "delivery"
+      "commercialism"
     ],
     "rarity": "rare",
     "finisherBonus": 4,
@@ -11078,10 +11038,10 @@
   {
     "id": "common-noun-181",
     "role": "noun",
-    "text": "the anonymous caller reading the host's notes",
+    "text": "the audience supposedly larger than every predecessor",
     "tags": [
-      "sources",
-      "authenticity"
+      "ratings",
+      "credibility"
     ],
     "scoreGroups": {
       "substance": [
@@ -11099,9 +11059,10 @@
   {
     "id": "common-noun-182",
     "role": "noun",
-    "text": "a breaking-news banner on a coffee break",
+    "text": "the partisan theatre posing as a debate",
     "tags": [
-      "ratings"
+      "authenticity",
+      "politics"
     ],
     "scoreGroups": {
       "substance": [
@@ -11516,16 +11477,15 @@
   {
     "id": "common-predicate-029-past",
     "role": "predicate",
-    "text": "was an exclusive scheduled for every midnight",
-    "singularText": "was an exclusive scheduled for every midnight",
-    "pluralText": "were exclusives scheduled for every midnight",
-    "personalSingularText": "was an exclusive scheduled for every midnight",
-    "secondPersonText": "were an exclusive scheduled for every midnight",
+    "text": "performed theatre instead of debate",
+    "singularText": "performed theatre instead of debate",
+    "pluralText": "performed theatre instead of debate",
+    "personalSingularText": "performed theatre instead of debate",
+    "secondPersonText": "performed theatre instead of debate",
     "tense": "past",
     "tenseFamily": "common-predicate-029",
     "tags": [
-      "ratings",
-      "credibility"
+      "authenticity"
     ],
     "scorePreferences": {
       "substance": [
@@ -11551,16 +11511,15 @@
   {
     "id": "common-predicate-029-present",
     "role": "predicate",
-    "text": "is an exclusive scheduled for every midnight",
-    "singularText": "is an exclusive scheduled for every midnight",
-    "pluralText": "are exclusives scheduled for every midnight",
-    "personalSingularText": "is an exclusive scheduled for every midnight",
-    "secondPersonText": "are an exclusive scheduled for every midnight",
+    "text": "performs theatre instead of debate",
+    "singularText": "performs theatre instead of debate",
+    "pluralText": "perform theatre instead of debate",
+    "personalSingularText": "performs theatre instead of debate",
+    "secondPersonText": "perform theatre instead of debate",
     "tense": "present",
     "tenseFamily": "common-predicate-029",
     "tags": [
-      "ratings",
-      "credibility"
+      "authenticity"
     ],
     "scorePreferences": {
       "substance": [
@@ -11586,16 +11545,15 @@
   {
     "id": "common-predicate-029-future",
     "role": "predicate",
-    "text": "will be an exclusive at midnight",
-    "singularText": "will be an exclusive at midnight",
-    "pluralText": "will be exclusives at midnight",
-    "personalSingularText": "will be an exclusive at midnight",
-    "secondPersonText": "will be an exclusive at midnight",
+    "text": "will perform theatre instead of debate",
+    "singularText": "will perform theatre instead of debate",
+    "pluralText": "will perform theatre instead of debate",
+    "personalSingularText": "will perform theatre instead of debate",
+    "secondPersonText": "will perform theatre instead of debate",
     "tense": "future",
     "tenseFamily": "common-predicate-029",
     "tags": [
-      "ratings",
-      "credibility"
+      "authenticity"
     ],
     "scorePreferences": {
       "substance": [
@@ -11621,9 +11579,10 @@
   {
     "id": "common-modifier-033",
     "role": "modifier",
-    "text": "with the source waiting for a pass",
+    "text": "with empty spaces blamed on white ground coverings",
     "tags": [
-      "sources"
+      "evidence",
+      "credibility"
     ],
     "rarity": "uncommon",
     "sceneIds": [
@@ -11633,10 +11592,9 @@
   {
     "id": "common-modifier-034",
     "role": "modifier",
-    "text": "during an emergency extension of the break",
+    "text": "while theatrical conflict passes for debate",
     "tags": [
-      "ratings",
-      "commercialism"
+      "authenticity"
     ],
     "rarity": "uncommon",
     "sceneIds": [
@@ -11660,10 +11618,10 @@
   {
     "id": "common-noun-191",
     "role": "noun",
-    "text": "the palace statement with no operative verb",
+    "text": "the oven-ready agreement in the microwave",
     "tags": [
-      "commitment",
-      "accountability"
+      "delivery",
+      "commitment"
     ],
     "scoreGroups": {
       "substance": [
@@ -11681,16 +11639,16 @@
   {
     "id": "common-noun-192",
     "role": "noun",
-    "text": "a national-interest carpet rolled over a dispute",
+    "text": "the toilet needing fifteen flushes",
     "tags": [
-      "transparency"
+      "maintenance"
     ],
     "scoreGroups": {
       "substance": [
-        "politics"
+        "infrastructure"
       ],
       "flavour": [
-        "politics"
+        "infrastructure"
       ]
     },
     "rarity": "common",
@@ -12099,15 +12057,15 @@
   {
     "id": "common-predicate-030-past",
     "role": "predicate",
-    "text": "was a solemn pause awaiting a statement",
-    "singularText": "was a solemn pause awaiting a statement",
-    "pluralText": "were solemn pauses awaiting statements",
-    "personalSingularText": "was a solemn pause awaiting a statement",
-    "secondPersonText": "were a solemn pause awaiting a statement",
+    "text": "put the oven-ready deal in a microwave",
+    "singularText": "put the oven-ready deal in a microwave",
+    "pluralText": "put the oven-ready deal in a microwave",
+    "personalSingularText": "put the oven-ready deal in a microwave",
+    "secondPersonText": "put the oven-ready deal in a microwave",
     "tense": "past",
     "tenseFamily": "common-predicate-030",
     "tags": [
-      "decorum",
+      "delivery",
       "commitment"
     ],
     "scorePreferences": {
@@ -12134,15 +12092,15 @@
   {
     "id": "common-predicate-030-present",
     "role": "predicate",
-    "text": "is a solemn pause awaiting a statement",
-    "singularText": "is a solemn pause awaiting a statement",
-    "pluralText": "are solemn pauses awaiting statements",
-    "personalSingularText": "is a solemn pause awaiting a statement",
-    "secondPersonText": "are a solemn pause awaiting a statement",
+    "text": "puts the oven-ready deal in a microwave",
+    "singularText": "puts the oven-ready deal in a microwave",
+    "pluralText": "put the oven-ready deal in a microwave",
+    "personalSingularText": "puts the oven-ready deal in a microwave",
+    "secondPersonText": "put the oven-ready deal in a microwave",
     "tense": "present",
     "tenseFamily": "common-predicate-030",
     "tags": [
-      "decorum",
+      "delivery",
       "commitment"
     ],
     "scorePreferences": {
@@ -12169,15 +12127,15 @@
   {
     "id": "common-predicate-030-future",
     "role": "predicate",
-    "text": "will be a solemn pause awaiting a statement",
-    "singularText": "will be a solemn pause awaiting a statement",
-    "pluralText": "will be solemn pauses awaiting statements",
-    "personalSingularText": "will be a solemn pause awaiting a statement",
-    "secondPersonText": "will be a solemn pause awaiting a statement",
+    "text": "will put the oven-ready deal in a microwave",
+    "singularText": "will put the oven-ready deal in a microwave",
+    "pluralText": "will put the oven-ready deal in a microwave",
+    "personalSingularText": "will put the oven-ready deal in a microwave",
+    "secondPersonText": "will put the oven-ready deal in a microwave",
     "tense": "future",
     "tenseFamily": "common-predicate-030",
     "tags": [
-      "decorum",
+      "delivery",
       "commitment"
     ],
     "scorePreferences": {
@@ -12204,11 +12162,8 @@
   {
     "id": "common-modifier-035",
     "role": "modifier",
-    "text": "after the protocol officer removes the question",
-    "tags": [
-      "accountability",
-      "decorum"
-    ],
+    "text": "with a wary eye on the rear-view mirror",
+    "tags": [],
     "rarity": "uncommon",
     "sceneIds": [
       "palace-press-hall"
@@ -12217,10 +12172,9 @@
   {
     "id": "common-modifier-036",
     "role": "modifier",
-    "text": "under a national-interest label with no contents",
+    "text": "after piercing the agreement's plastic wrapping",
     "tags": [
-      "accountability",
-      "credibility"
+      "procedure"
     ],
     "rarity": "uncommon",
     "sceneIds": [
@@ -12241,9 +12195,9 @@
   {
     "id": "common-ending-055",
     "role": "ending",
-    "text": "and the silence requested a larger podium.",
+    "text": "and the deal was already in the microwave.",
     "tags": [
-      "decorum",
+      "delivery",
       "commitment"
     ],
     "rarity": "rare",
@@ -12699,16 +12653,15 @@
   {
     "id": "common-predicate-031-past",
     "role": "predicate",
-    "text": "was a revelation waiting for donations",
-    "singularText": "was a revelation waiting for donations",
-    "pluralText": "were revelations waiting for donations",
-    "personalSingularText": "was a revelation waiting for donations",
-    "secondPersonText": "were a revelation waiting for donations",
+    "text": "remembered person, woman, man, camera, TV",
+    "singularText": "remembered person, woman, man, camera, TV",
+    "pluralText": "remembered person, woman, man, camera, TV",
+    "personalSingularText": "remembered person, woman, man, camera, TV",
+    "secondPersonText": "remembered person, woman, man, camera, TV",
     "tense": "past",
     "tenseFamily": "common-predicate-031",
     "tags": [
-      "authenticity",
-      "commercialism"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -12734,16 +12687,15 @@
   {
     "id": "common-predicate-031-present",
     "role": "predicate",
-    "text": "is a revelation waiting for donations",
-    "singularText": "is a revelation waiting for donations",
-    "pluralText": "are revelations waiting for donations",
-    "personalSingularText": "is a revelation waiting for donations",
-    "secondPersonText": "are a revelation waiting for donations",
+    "text": "remembers person, woman, man, camera, TV",
+    "singularText": "remembers person, woman, man, camera, TV",
+    "pluralText": "remember person, woman, man, camera, TV",
+    "personalSingularText": "remembers person, woman, man, camera, TV",
+    "secondPersonText": "remember person, woman, man, camera, TV",
     "tense": "present",
     "tenseFamily": "common-predicate-031",
     "tags": [
-      "authenticity",
-      "commercialism"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -12769,16 +12721,15 @@
   {
     "id": "common-predicate-031-future",
     "role": "predicate",
-    "text": "will be a revelation waiting for donations",
-    "singularText": "will be a revelation waiting for donations",
-    "pluralText": "will be revelations waiting for donations",
-    "personalSingularText": "will be a revelation waiting for donations",
-    "secondPersonText": "will be a revelation waiting for donations",
+    "text": "will remember person, woman, man, camera, TV",
+    "singularText": "will remember person, woman, man, camera, TV",
+    "pluralText": "will remember person, woman, man, camera, TV",
+    "personalSingularText": "will remember person, woman, man, camera, TV",
+    "secondPersonText": "will remember person, woman, man, camera, TV",
     "tense": "future",
     "tenseFamily": "common-predicate-031",
     "tags": [
-      "authenticity",
-      "commercialism"
+      "competence"
     ],
     "scorePreferences": {
       "substance": [
@@ -12804,11 +12755,9 @@
   {
     "id": "common-modifier-037",
     "role": "modifier",
-    "text": "after cutting the question from the clip",
+    "text": "with extra points for remembering the order",
     "tags": [
-      "evidence",
-      "authenticity",
-      "context"
+      "competence"
     ],
     "rarity": "uncommon",
     "sceneIds": [
@@ -12818,11 +12767,8 @@
   {
     "id": "common-modifier-038",
     "role": "modifier",
-    "text": "under a ring light sold as ancient",
-    "tags": [
-      "evidence",
-      "authenticity"
-    ],
+    "text": "under bulbs blamed for an orange complexion",
+    "tags": [],
     "rarity": "uncommon",
     "sceneIds": [
       "influencer-campaign-livestream"
@@ -12842,10 +12788,9 @@
   {
     "id": "common-ending-056",
     "role": "ending",
-    "text": "and the ancient truth has three subscription tiers.",
+    "text": "and the extra points were for the correct order.",
     "tags": [
-      "authenticity",
-      "commercialism"
+      "competence"
     ],
     "rarity": "rare",
     "finisherBonus": 4,
@@ -14614,9 +14559,9 @@
   {
     "id": "common-noun-314",
     "role": "noun",
-    "text": "an answer before the question",
+    "text": "another question instead of an answer",
     "tags": [
-      "evidence"
+      "accountability"
     ],
     "scoreGroups": {
       "substance": [
@@ -14631,16 +14576,16 @@
   {
     "id": "common-noun-315",
     "role": "noun",
-    "text": "a record that denies the meeting",
+    "text": "everything declared legal and constitutional",
     "tags": [
-      "evidence"
+      "bureaucracy"
     ],
     "scoreGroups": {
       "substance": [
-        "evidence"
+        "bureaucracy"
       ],
       "flavour": [
-        "proof"
+        "procedure"
       ]
     },
     "rarity": "uncommon"
@@ -14666,9 +14611,10 @@
   {
     "id": "common-noun-317",
     "role": "noun",
-    "text": "an undecided voter in a rehearsal booth",
+    "text": "a victory declared before the final count",
     "tags": [
-      "politics"
+      "credibility",
+      "results"
     ],
     "scoreGroups": {
       "substance": [
@@ -14683,16 +14629,16 @@
   {
     "id": "common-noun-318",
     "role": "noun",
-    "text": "a polling sample from the service lift",
+    "text": "over one percent earning over three thousand euros",
     "tags": [
-      "politics"
+      "wealth"
     ],
     "scoreGroups": {
       "substance": [
-        "politics"
+        "wealth"
       ],
       "flavour": [
-        "campaign"
+        "budget"
       ]
     },
     "rarity": "uncommon"
@@ -14700,16 +14646,17 @@
   {
     "id": "common-noun-319",
     "role": "noun",
-    "text": "a campaign chart with a trapdoor",
+    "text": "thirteen percent growth that supposedly sounds good",
     "tags": [
-      "politics"
+      "evidence",
+      "results"
     ],
     "scoreGroups": {
       "substance": [
-        "politics"
+        "wealth"
       ],
       "flavour": [
-        "campaign"
+        "arithmetic"
       ]
     },
     "rarity": "rare"
@@ -14717,7 +14664,7 @@
   {
     "id": "common-noun-320",
     "role": "noun",
-    "text": "a ballot box with a lifejacket",
+    "text": "a country taken back step by step",
     "tags": [
       "politics"
     ],
@@ -14734,9 +14681,10 @@
   {
     "id": "common-noun-321",
     "role": "noun",
-    "text": "an exit poll before the microwave",
+    "text": "the election-night cry of victory",
     "tags": [
-      "politics"
+      "electoral",
+      "results"
     ],
     "scoreGroups": {
       "substance": [
@@ -14751,9 +14699,10 @@
   {
     "id": "common-noun-322",
     "role": "noun",
-    "text": "a manifesto with a damp handshake",
+    "text": "honour beyond the coalition's billboards",
     "tags": [
-      "politics"
+      "authenticity",
+      "sincerity"
     ],
     "scoreGroups": {
       "substance": [
@@ -14768,9 +14717,9 @@
   {
     "id": "common-noun-323",
     "role": "noun",
-    "text": "a promise in the opposite coalition",
+    "text": "a refusal to hand in any resignation",
     "tags": [
-      "politics"
+      "accountability"
     ],
     "scoreGroups": {
       "substance": [
@@ -14785,9 +14734,10 @@
   {
     "id": "common-noun-324",
     "role": "noun",
-    "text": "a loyalty oath at an opinion poll",
+    "text": "the power to say “because we can”",
     "tags": [
-      "politics"
+      "accountability",
+      "restraint"
     ],
     "scoreGroups": {
       "substance": [
@@ -14802,16 +14752,17 @@
   {
     "id": "common-noun-325",
     "role": "noun",
-    "text": "a campaign ribbon longer than the road",
+    "text": "the elevated motorway promised within two years",
     "tags": [
-      "politics"
+      "infrastructure",
+      "delivery"
     ],
     "scoreGroups": {
       "substance": [
-        "politics"
+        "infrastructure"
       ],
       "flavour": [
-        "campaign"
+        "construction"
       ]
     },
     "rarity": "rare"
@@ -14853,9 +14804,9 @@
   {
     "id": "common-noun-328",
     "role": "noun",
-    "text": "a public apology with a sponsor",
+    "text": "the apology for a very bad day",
     "tags": [
-      "politics"
+      "sincerity"
     ],
     "scoreGroups": {
       "substance": [
@@ -14870,16 +14821,16 @@
   {
     "id": "common-noun-329",
     "role": "noun",
-    "text": "a national-salvation chair",
+    "text": "the government's choice of what is appropriate",
     "tags": [
-      "politics"
+      "bureaucracy"
     ],
     "scoreGroups": {
       "substance": [
-        "politics"
+        "bureaucracy"
       ],
       "flavour": [
-        "campaign"
+        "procedure"
       ]
     },
     "rarity": "common"
@@ -14887,16 +14838,17 @@
   {
     "id": "common-noun-330",
     "role": "noun",
-    "text": "a revolution on a rerun",
+    "text": "democracy corrected into bureaucracy",
     "tags": [
-      "politics"
+      "bureaucracy",
+      "competence"
     ],
     "scoreGroups": {
       "substance": [
-        "politics"
+        "bureaucracy"
       ],
       "flavour": [
-        "campaign"
+        "procedure"
       ]
     },
     "rarity": "uncommon"
@@ -14921,9 +14873,9 @@
   {
     "id": "common-noun-332",
     "role": "noun",
-    "text": "a family tree with a job description",
+    "text": "the family's inherited passion for farming",
     "tags": [
-      "credibility"
+      "family"
     ],
     "scoreGroups": {
       "substance": [
@@ -14972,16 +14924,17 @@
   {
     "id": "common-noun-335",
     "role": "noun",
-    "text": "an uncle as a strategic stakeholder",
+    "text": "the declaration of no conflict of interest",
     "tags": [
-      "credibility"
+      "corruption",
+      "accountability"
     ],
     "scoreGroups": {
       "substance": [
-        "personal"
+        "bureaucracy"
       ],
       "flavour": [
-        "society"
+        "procedure"
       ]
     },
     "rarity": "common"
@@ -15007,16 +14960,16 @@
   {
     "id": "common-noun-337",
     "role": "noun",
-    "text": "a pair of ceremonial scissors with a chauffeur",
+    "text": "an invitation to count the eggs",
     "tags": [
-      "credibility"
+      "evidence"
     ],
     "scoreGroups": {
       "substance": [
-        "personal"
+        "evidence"
       ],
       "flavour": [
-        "society"
+        "proof"
       ]
     },
     "rarity": "rare"
@@ -15024,16 +14977,17 @@
   {
     "id": "common-noun-338",
     "role": "noun",
-    "text": "an expense account with a suitcase",
+    "text": "the wage statistic for over one percent",
     "tags": [
-      "credibility"
+      "wealth",
+      "evidence"
     ],
     "scoreGroups": {
       "substance": [
-        "personal"
+        "wealth"
       ],
       "flavour": [
-        "society"
+        "arithmetic"
       ]
     },
     "rarity": "common"
@@ -15041,16 +14995,17 @@
   {
     "id": "common-noun-339",
     "role": "noun",
-    "text": "austerity with valet parking",
+    "text": "the price of bread answered with a diet",
     "tags": [
-      "credibility"
+      "spending",
+      "firsthand-knowledge"
     ],
     "scoreGroups": {
       "substance": [
-        "personal"
+        "wealth"
       ],
       "flavour": [
-        "society"
+        "budget"
       ]
     },
     "rarity": "uncommon"
@@ -15058,16 +15013,17 @@
   {
     "id": "common-noun-340",
     "role": "noun",
-    "text": "a modesty with a limousine",
+    "text": "the private jet described as a small aircraft",
     "tags": [
-      "credibility"
+      "luxury",
+      "elitism"
     ],
     "scoreGroups": {
       "substance": [
-        "personal"
+        "wealth"
       ],
       "flavour": [
-        "society"
+        "status"
       ]
     },
     "rarity": "rare"
@@ -15111,9 +15067,9 @@
   {
     "id": "common-noun-343",
     "role": "noun",
-    "text": "a catering invoice with an emergency",
+    "text": "the wish to learn how to make pretzels",
     "tags": [
-      "credibility"
+      "competence"
     ],
     "scoreGroups": {
       "substance": [
@@ -15128,16 +15084,17 @@
   {
     "id": "common-noun-344",
     "role": "noun",
-    "text": "a birthday cake with a procurement number",
+    "text": "the wish for a motorway costing two lei",
     "tags": [
-      "credibility"
+      "infrastructure",
+      "spending"
     ],
     "scoreGroups": {
       "substance": [
-        "personal"
+        "infrastructure"
       ],
       "flavour": [
-        "society"
+        "budget"
       ]
     },
     "rarity": "common"
@@ -15179,7 +15136,7 @@
   {
     "id": "common-noun-347",
     "role": "noun",
-    "text": "a rooster at a press conference",
+    "text": "a sheep promoted as a living statue",
     "tags": [
       "credibility"
     ],
@@ -15196,10 +15153,8 @@
   {
     "id": "common-noun-348",
     "role": "noun",
-    "text": "a puddle with a forecast",
-    "tags": [
-      "credibility"
-    ],
+    "text": "the discovery that winter is not summer",
+    "tags": [],
     "scoreGroups": {
       "substance": [
         "personal"
@@ -15213,10 +15168,8 @@
   {
     "id": "common-noun-349",
     "role": "noun",
-    "text": "a damp-sock prophecy",
-    "tags": [
-      "credibility"
-    ],
+    "text": "a cormorant bathing in a swimming pool",
+    "tags": [],
     "scoreGroups": {
       "substance": [
         "personal"
@@ -15230,9 +15183,9 @@
   {
     "id": "common-noun-350",
     "role": "noun",
-    "text": "a microchip made of lemonade",
+    "text": "a sheep competing with a leaf for national branding",
     "tags": [
-      "credibility"
+      "authenticity"
     ],
     "scoreGroups": {
       "substance": [
@@ -15247,16 +15200,17 @@
   {
     "id": "common-noun-351",
     "role": "noun",
-    "text": "a coffee-break emergency",
+    "text": "the reduction of democracy corrected on the spot",
     "tags": [
-      "credibility"
+      "bureaucracy",
+      "competence"
     ],
     "scoreGroups": {
       "substance": [
-        "personal"
+        "bureaucracy"
       ],
       "flavour": [
-        "satire"
+        "procedure"
       ]
     },
     "rarity": "uncommon"
@@ -15264,16 +15218,16 @@
   {
     "id": "common-noun-352",
     "role": "noun",
-    "text": "an apology in a suitcase",
+    "text": "your forgotten tutoring fee",
     "tags": [
-      "credibility"
+      "memory"
     ],
     "scoreGroups": {
       "substance": [
-        "personal"
+        "wealth"
       ],
       "flavour": [
-        "satire"
+        "status"
       ]
     },
     "rarity": "rare"
@@ -15281,9 +15235,9 @@
   {
     "id": "common-noun-353",
     "role": "noun",
-    "text": "a microphone with a noise complaint",
+    "text": "the refusal to discuss what rats say",
     "tags": [
-      "credibility"
+      "decorum"
     ],
     "scoreGroups": {
       "substance": [
@@ -15298,16 +15252,18 @@
   {
     "id": "common-noun-354",
     "role": "noun",
-    "text": "a printer seeking asylum",
+    "text": "the digitalization ministry's fear of digitalization",
     "tags": [
-      "credibility"
+      "modernity",
+      "obsolete",
+      "bureaucracy"
     ],
     "scoreGroups": {
       "substance": [
-        "personal"
+        "technology"
       ],
       "flavour": [
-        "satire"
+        "digital"
       ]
     },
     "rarity": "uncommon"
@@ -15315,16 +15271,17 @@
   {
     "id": "common-noun-355",
     "role": "noun",
-    "text": "a queue with a ticket",
+    "text": "the paper folder's three-to-five-year countdown",
     "tags": [
-      "credibility"
+      "bureaucracy",
+      "obsolete"
     ],
     "scoreGroups": {
       "substance": [
-        "personal"
+        "bureaucracy"
       ],
       "flavour": [
-        "satire"
+        "paperwork"
       ]
     },
     "rarity": "rare"
@@ -15332,16 +15289,17 @@
   {
     "id": "common-noun-356",
     "role": "noun",
-    "text": "a rubber stamp with a second opinion",
+    "text": "a circle calculation missing pi",
     "tags": [
-      "credibility"
+      "competence",
+      "evidence"
     ],
     "scoreGroups": {
       "substance": [
-        "personal"
+        "evidence"
       ],
       "flavour": [
-        "satire"
+        "arithmetic"
       ]
     },
     "rarity": "common"
@@ -15349,9 +15307,9 @@
   {
     "id": "common-noun-357",
     "role": "noun",
-    "text": "a complaint box with witness protection",
+    "text": "the fear of a criminal complaint",
     "tags": [
-      "credibility"
+      "accountability"
     ],
     "scoreGroups": {
       "substance": [
@@ -15366,10 +15324,9 @@
   {
     "id": "common-noun-358",
     "role": "noun",
-    "text": "a headline suing the story",
+    "text": "a choice between a crib sheet and nonsense",
     "tags": [
-      "credibility",
-      "context"
+      "competence"
     ],
     "scoreGroups": {
       "substance": [
@@ -15401,16 +15358,17 @@
   {
     "id": "common-noun-360",
     "role": "noun",
-    "text": "a silence with a podium",
+    "text": "the promised V-shaped economic recovery",
     "tags": [
-      "credibility"
+      "delivery",
+      "results"
     ],
     "scoreGroups": {
       "substance": [
-        "personal"
+        "wealth"
       ],
       "flavour": [
-        "satire"
+        "development"
       ]
     },
     "rarity": "uncommon"
@@ -16223,12 +16181,11 @@
   {
     "id": "common-predicate-033-past",
     "role": "predicate",
-    "text": "was a bad joke with a headline",
-    "singularText": "was a bad joke with a headline",
-    "pluralText": "were a bad joke with a headline",
+    "text": "asked whether thirteen percent sounded good",
+    "singularText": "asked whether thirteen percent sounded good",
+    "pluralText": "asked whether thirteen percent sounded good",
     "tags": [
-      "media",
-      "credibility"
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -16243,17 +16200,18 @@
     },
     "rarity": "common",
     "tense": "past",
-    "tenseFamily": "common-predicate-033"
+    "tenseFamily": "common-predicate-033",
+    "personalSingularText": "asked whether thirteen percent sounded good",
+    "secondPersonText": "asked whether thirteen percent sounded good"
   },
   {
     "id": "common-predicate-033-present",
     "role": "predicate",
-    "text": "is a bad joke with a headline",
-    "singularText": "is a bad joke with a headline",
-    "pluralText": "are a bad joke with a headline",
+    "text": "asks whether thirteen percent sounds good",
+    "singularText": "asks whether thirteen percent sounds good",
+    "pluralText": "ask whether thirteen percent sounds good",
     "tags": [
-      "media",
-      "credibility"
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -16268,17 +16226,18 @@
     },
     "rarity": "uncommon",
     "tense": "present",
-    "tenseFamily": "common-predicate-033"
+    "tenseFamily": "common-predicate-033",
+    "personalSingularText": "asks whether thirteen percent sounds good",
+    "secondPersonText": "ask whether thirteen percent sounds good"
   },
   {
     "id": "common-predicate-033-future",
     "role": "predicate",
-    "text": "will be a bad joke with a headline",
-    "singularText": "will be a bad joke with a headline",
-    "pluralText": "will be a bad joke with a headline",
+    "text": "will ask whether thirteen percent sounds good",
+    "singularText": "will ask whether thirteen percent sounds good",
+    "pluralText": "will ask whether thirteen percent sounds good",
     "tags": [
-      "media",
-      "credibility"
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -16293,7 +16252,9 @@
     },
     "rarity": "rare",
     "tense": "future",
-    "tenseFamily": "common-predicate-033"
+    "tenseFamily": "common-predicate-033",
+    "personalSingularText": "will ask whether thirteen percent sounds good",
+    "secondPersonText": "will ask whether thirteen percent sounds good"
   },
   {
     "id": "common-predicate-034-past",
@@ -16373,12 +16334,11 @@
   {
     "id": "common-predicate-035-past",
     "role": "predicate",
-    "text": "was a clean slate with fingerprints",
-    "singularText": "was a clean slate with fingerprints",
-    "pluralText": "were a clean slate with fingerprints",
+    "text": "took the country back step by step",
+    "singularText": "took the country back step by step",
+    "pluralText": "took the country back step by step",
     "tags": [
-      "consistency",
-      "commitment"
+      "politics"
     ],
     "scorePreferences": {
       "substance": [
@@ -16393,17 +16353,18 @@
     },
     "rarity": "common",
     "tense": "past",
-    "tenseFamily": "common-predicate-035"
+    "tenseFamily": "common-predicate-035",
+    "personalSingularText": "took the country back step by step",
+    "secondPersonText": "took the country back step by step"
   },
   {
     "id": "common-predicate-035-present",
     "role": "predicate",
-    "text": "is a clean slate with fingerprints",
-    "singularText": "is a clean slate with fingerprints",
-    "pluralText": "are a clean slate with fingerprints",
+    "text": "takes the country back step by step",
+    "singularText": "takes the country back step by step",
+    "pluralText": "take the country back step by step",
     "tags": [
-      "consistency",
-      "commitment"
+      "politics"
     ],
     "scorePreferences": {
       "substance": [
@@ -16418,17 +16379,18 @@
     },
     "rarity": "uncommon",
     "tense": "present",
-    "tenseFamily": "common-predicate-035"
+    "tenseFamily": "common-predicate-035",
+    "personalSingularText": "takes the country back step by step",
+    "secondPersonText": "take the country back step by step"
   },
   {
     "id": "common-predicate-035-future",
     "role": "predicate",
-    "text": "will be a clean slate with fingerprints",
-    "singularText": "will be a clean slate with fingerprints",
-    "pluralText": "will be a clean slate with fingerprints",
+    "text": "will take the country back step by step",
+    "singularText": "will take the country back step by step",
+    "pluralText": "will take the country back step by step",
     "tags": [
-      "consistency",
-      "commitment"
+      "politics"
     ],
     "scorePreferences": {
       "substance": [
@@ -16443,17 +16405,18 @@
     },
     "rarity": "rare",
     "tense": "future",
-    "tenseFamily": "common-predicate-035"
+    "tenseFamily": "common-predicate-035",
+    "personalSingularText": "will take the country back step by step",
+    "secondPersonText": "will take the country back step by step"
   },
   {
     "id": "common-predicate-036-past",
     "role": "predicate",
-    "text": "was the phone under oath",
-    "singularText": "was the phone under oath",
-    "pluralText": "were the phone under oath",
+    "text": "declared everything legal and constitutional",
+    "singularText": "declared everything legal and constitutional",
+    "pluralText": "declared everything legal and constitutional",
     "tags": [
-      "evidence",
-      "media"
+      "bureaucracy"
     ],
     "scorePreferences": {
       "substance": [
@@ -16468,17 +16431,18 @@
     },
     "rarity": "common",
     "tense": "past",
-    "tenseFamily": "common-predicate-036"
+    "tenseFamily": "common-predicate-036",
+    "personalSingularText": "declared everything legal and constitutional",
+    "secondPersonText": "declared everything legal and constitutional"
   },
   {
     "id": "common-predicate-036-present",
     "role": "predicate",
-    "text": "is the phone under oath",
-    "singularText": "is the phone under oath",
-    "pluralText": "are the phone under oath",
+    "text": "declares everything legal and constitutional",
+    "singularText": "declares everything legal and constitutional",
+    "pluralText": "declare everything legal and constitutional",
     "tags": [
-      "evidence",
-      "media"
+      "bureaucracy"
     ],
     "scorePreferences": {
       "substance": [
@@ -16493,17 +16457,18 @@
     },
     "rarity": "uncommon",
     "tense": "present",
-    "tenseFamily": "common-predicate-036"
+    "tenseFamily": "common-predicate-036",
+    "personalSingularText": "declares everything legal and constitutional",
+    "secondPersonText": "declare everything legal and constitutional"
   },
   {
     "id": "common-predicate-036-future",
     "role": "predicate",
-    "text": "will be the phone under oath",
-    "singularText": "will be the phone under oath",
-    "pluralText": "will be the phone under oath",
+    "text": "will declare everything legal and constitutional",
+    "singularText": "will declare everything legal and constitutional",
+    "pluralText": "will declare everything legal and constitutional",
     "tags": [
-      "evidence",
-      "media"
+      "bureaucracy"
     ],
     "scorePreferences": {
       "substance": [
@@ -16518,7 +16483,9 @@
     },
     "rarity": "rare",
     "tense": "future",
-    "tenseFamily": "common-predicate-036"
+    "tenseFamily": "common-predicate-036",
+    "personalSingularText": "will declare everything legal and constitutional",
+    "secondPersonText": "will declare everything legal and constitutional"
   },
   {
     "id": "common-predicate-037-past",
@@ -16527,7 +16494,7 @@
     "singularText": "was a radius squared without pi",
     "pluralText": "were a radius squared without pi",
     "tags": [
-      "spending",
+      "competence",
       "evidence"
     ],
     "scorePreferences": {
@@ -16552,7 +16519,7 @@
     "singularText": "is a radius squared without pi",
     "pluralText": "are a radius squared without pi",
     "tags": [
-      "spending",
+      "competence",
       "evidence"
     ],
     "scorePreferences": {
@@ -16577,7 +16544,7 @@
     "singularText": "will be a radius squared without pi",
     "pluralText": "will be a radius squared without pi",
     "tags": [
-      "spending",
+      "competence",
       "evidence"
     ],
     "scorePreferences": {
@@ -16598,12 +16565,12 @@
   {
     "id": "common-predicate-038-past",
     "role": "predicate",
-    "text": "was an economy that boomed on paper",
-    "singularText": "was an economy that boomed on paper",
-    "pluralText": "were an economy that boomed on paper",
+    "text": "moved from deeds to words",
+    "singularText": "moved from deeds to words",
+    "pluralText": "moved from deeds to words",
     "tags": [
       "delivery",
-      "evidence"
+      "results"
     ],
     "scorePreferences": {
       "substance": [
@@ -16618,17 +16585,19 @@
     },
     "rarity": "common",
     "tense": "past",
-    "tenseFamily": "common-predicate-038"
+    "tenseFamily": "common-predicate-038",
+    "personalSingularText": "moved from deeds to words",
+    "secondPersonText": "moved from deeds to words"
   },
   {
     "id": "common-predicate-038-present",
     "role": "predicate",
-    "text": "is an economy that boomed on paper",
-    "singularText": "is an economy that boomed on paper",
-    "pluralText": "are an economy that boomed on paper",
+    "text": "moves from deeds to words",
+    "singularText": "moves from deeds to words",
+    "pluralText": "move from deeds to words",
     "tags": [
       "delivery",
-      "evidence"
+      "results"
     ],
     "scorePreferences": {
       "substance": [
@@ -16643,17 +16612,19 @@
     },
     "rarity": "uncommon",
     "tense": "present",
-    "tenseFamily": "common-predicate-038"
+    "tenseFamily": "common-predicate-038",
+    "personalSingularText": "moves from deeds to words",
+    "secondPersonText": "move from deeds to words"
   },
   {
     "id": "common-predicate-038-future",
     "role": "predicate",
-    "text": "will be an economy that boomed on paper",
-    "singularText": "will be an economy that boomed on paper",
-    "pluralText": "will be an economy that boomed on paper",
+    "text": "will move from deeds to words",
+    "singularText": "will move from deeds to words",
+    "pluralText": "will move from deeds to words",
     "tags": [
       "delivery",
-      "evidence"
+      "results"
     ],
     "scorePreferences": {
       "substance": [
@@ -16668,7 +16639,9 @@
     },
     "rarity": "rare",
     "tense": "future",
-    "tenseFamily": "common-predicate-038"
+    "tenseFamily": "common-predicate-038",
+    "personalSingularText": "will move from deeds to words",
+    "secondPersonText": "will move from deeds to words"
   },
   {
     "id": "common-predicate-039-past",
@@ -16749,9 +16722,7 @@
     "id": "common-modifier-039",
     "role": "modifier",
     "text": "after one final question",
-    "tags": [
-      "media"
-    ],
+    "tags": [],
     "rarity": "uncommon"
   },
   {
@@ -16767,18 +16738,14 @@
     "id": "common-modifier-041",
     "role": "modifier",
     "text": "with winter unlike summer",
-    "tags": [
-      "infrastructure"
-    ],
+    "tags": [],
     "rarity": "rare"
   },
   {
     "id": "common-modifier-042",
     "role": "modifier",
     "text": "during a bad joke",
-    "tags": [
-      "bureaucracy"
-    ],
+    "tags": [],
     "rarity": "common"
   },
   {
@@ -16795,16 +16762,15 @@
     "role": "modifier",
     "text": "after counting the eggs",
     "tags": [
-      "credibility"
+      "evidence"
     ],
     "rarity": "rare"
   },
   {
     "id": "common-modifier-045",
     "role": "modifier",
-    "text": "beneath a clean slate",
+    "text": "with an apology for a very bad day",
     "tags": [
-      "influence",
       "sincerity"
     ],
     "rarity": "uncommon"
@@ -16813,19 +16779,15 @@
     "id": "common-modifier-046",
     "role": "modifier",
     "text": "with your permission",
-    "tags": [
-      "evidence",
-      "bureaucracy"
-    ],
+    "tags": [],
     "rarity": "common"
   },
   {
     "id": "common-modifier-047",
     "role": "modifier",
-    "text": "after a frugal lunch on caviar",
+    "text": "with luxury defended as a small aircraft",
     "tags": [
-      "luxury",
-      "spending"
+      "luxury"
     ],
     "rarity": "rare"
   },
@@ -16843,7 +16805,8 @@
     "role": "modifier",
     "text": "after a victory announced too early",
     "tags": [
-      "delivery"
+      "credibility",
+      "results"
     ],
     "rarity": "uncommon"
   },
@@ -16851,10 +16814,7 @@
     "id": "common-modifier-050",
     "role": "modifier",
     "text": "with two markers",
-    "tags": [
-      "bureaucracy",
-      "credibility"
-    ],
+    "tags": [],
     "rarity": "rare"
   },
   {
@@ -16881,28 +16841,22 @@
     "id": "common-modifier-053",
     "role": "modifier",
     "text": "after marketing and promotion",
-    "tags": [
-      "infrastructure",
-      "delivery"
-    ],
+    "tags": [],
     "rarity": "rare"
   },
   {
     "id": "common-modifier-054",
     "role": "modifier",
     "text": "during the fourth consultation",
-    "tags": [
-      "bureaucracy"
-    ],
+    "tags": [],
     "rarity": "common"
   },
   {
     "id": "common-modifier-055",
     "role": "modifier",
-    "text": "with the facts on mute",
+    "text": "with everything declared legal and constitutional",
     "tags": [
-      "evidence",
-      "media"
+      "bureaucracy"
     ],
     "rarity": "uncommon"
   },
@@ -16929,26 +16883,28 @@
   {
     "id": "common-modifier-058",
     "role": "modifier",
-    "text": "under a cloud of carbon paper",
+    "text": "before paper folders possibly disappear within five years",
     "tags": [
       "modernity",
-      "obsolete"
+      "obsolete",
+      "bureaucracy"
     ],
     "rarity": "uncommon"
   },
   {
     "id": "common-modifier-059",
     "role": "modifier",
-    "text": "with a queue for the queue",
+    "text": "with paper folders awaiting a three-to-five-year farewell",
     "tags": [
-      "bureaucracy"
+      "bureaucracy",
+      "obsolete"
     ],
     "rarity": "rare"
   },
   {
     "id": "common-modifier-060",
     "role": "modifier",
-    "text": "before the witness gets directions",
+    "text": "after answering a price question with a diet",
     "tags": [
       "firsthand-knowledge",
       "context"
@@ -16969,19 +16925,16 @@
     "id": "common-modifier-062",
     "role": "modifier",
     "text": "in a folder marked urgent",
-    "tags": [
-      "urgency",
-      "bureaucracy"
-    ],
+    "tags": [],
     "rarity": "rare"
   },
   {
     "id": "common-modifier-063",
     "role": "modifier",
-    "text": "with a ceremonial shortcut",
+    "text": "after confusing democracy with bureaucracy",
     "tags": [
-      "procedure",
-      "decorum"
+      "bureaucracy",
+      "competence"
     ],
     "rarity": "common"
   },
@@ -17070,12 +17023,12 @@
   {
     "id": "common-predicate-040-past",
     "role": "predicate",
-    "text": "was a rerun with a new flag",
-    "singularText": "was a rerun with a new flag",
-    "pluralText": "were a rerun with a new flag",
+    "text": "admitted the victory banner was a mistake",
+    "singularText": "admitted the victory banner was a mistake",
+    "pluralText": "admitted the victory banner was a mistake",
     "tags": [
-      "legacy",
-      "credibility"
+      "credibility",
+      "results"
     ],
     "scorePreferences": {
       "substance": [
@@ -17093,17 +17046,19 @@
     "tenseFamily": "common-predicate-040",
     "sceneIds": [
       "transition-era-television-studio"
-    ]
+    ],
+    "personalSingularText": "admitted the victory banner was a mistake",
+    "secondPersonText": "admitted the victory banner was a mistake"
   },
   {
     "id": "common-predicate-040-present",
     "role": "predicate",
-    "text": "is a rerun with a new flag",
-    "singularText": "is a rerun with a new flag",
-    "pluralText": "are a rerun with a new flag",
+    "text": "admits the victory banner was a mistake",
+    "singularText": "admits the victory banner was a mistake",
+    "pluralText": "admit the victory banner was a mistake",
     "tags": [
-      "legacy",
-      "credibility"
+      "credibility",
+      "results"
     ],
     "scorePreferences": {
       "substance": [
@@ -17121,17 +17076,19 @@
     "tenseFamily": "common-predicate-040",
     "sceneIds": [
       "transition-era-television-studio"
-    ]
+    ],
+    "personalSingularText": "admits the victory banner was a mistake",
+    "secondPersonText": "admit the victory banner was a mistake"
   },
   {
     "id": "common-predicate-040-future",
     "role": "predicate",
-    "text": "will be a rerun with a new flag",
-    "singularText": "will be a rerun with a new flag",
-    "pluralText": "will be a rerun with a new flag",
+    "text": "will admit the victory banner was a mistake",
+    "singularText": "will admit the victory banner was a mistake",
+    "pluralText": "will admit the victory banner was a mistake",
     "tags": [
-      "legacy",
-      "credibility"
+      "credibility",
+      "results"
     ],
     "scorePreferences": {
       "substance": [
@@ -17149,16 +17106,15 @@
     "tenseFamily": "common-predicate-040",
     "sceneIds": [
       "transition-era-television-studio"
-    ]
+    ],
+    "personalSingularText": "will admit the victory banner was a mistake",
+    "secondPersonText": "will admit the victory banner was a mistake"
   },
   {
     "id": "common-ending-057",
     "role": "ending",
     "text": "and winter is not like summer.",
-    "tags": [
-      "legacy",
-      "media"
-    ],
+    "tags": [],
     "rarity": "rare",
     "finisherBonus": 3,
     "sceneIds": [
@@ -17168,10 +17124,10 @@
   {
     "id": "common-ending-058",
     "role": "ending",
-    "text": "and the synergy of facts survived the rerun.",
+    "text": "and the victory banner had sent the wrong message.",
     "tags": [
-      "legacy",
-      "modernity"
+      "credibility",
+      "results"
     ],
     "rarity": "rare",
     "finisherBonus": 3,
@@ -17286,12 +17242,12 @@
   {
     "id": "common-predicate-041-past",
     "role": "predicate",
-    "text": "was a poll with an escape hatch",
-    "singularText": "was a poll with an escape hatch",
-    "pluralText": "were a poll with an escape hatch",
+    "text": "said truth was not truth",
+    "singularText": "said truth was not truth",
+    "pluralText": "said truth was not truth",
     "tags": [
       "credibility",
-      "commitment"
+      "nuance"
     ],
     "scorePreferences": {
       "substance": [
@@ -17309,17 +17265,19 @@
     "tenseFamily": "common-predicate-041",
     "sceneIds": [
       "modern-debate-studio"
-    ]
+    ],
+    "personalSingularText": "said truth was not truth",
+    "secondPersonText": "said truth was not truth"
   },
   {
     "id": "common-predicate-041-present",
     "role": "predicate",
-    "text": "is a poll with an escape hatch",
-    "singularText": "is a poll with an escape hatch",
-    "pluralText": "are a poll with an escape hatch",
+    "text": "says truth is not truth",
+    "singularText": "says truth is not truth",
+    "pluralText": "say truth is not truth",
     "tags": [
       "credibility",
-      "commitment"
+      "nuance"
     ],
     "scorePreferences": {
       "substance": [
@@ -17337,17 +17295,19 @@
     "tenseFamily": "common-predicate-041",
     "sceneIds": [
       "modern-debate-studio"
-    ]
+    ],
+    "personalSingularText": "says truth is not truth",
+    "secondPersonText": "say truth is not truth"
   },
   {
     "id": "common-predicate-041-future",
     "role": "predicate",
-    "text": "will be a poll with an escape hatch",
-    "singularText": "will be a poll with an escape hatch",
-    "pluralText": "will be a poll with an escape hatch",
+    "text": "will say truth is not truth",
+    "singularText": "will say truth is not truth",
+    "pluralText": "will say truth is not truth",
     "tags": [
       "credibility",
-      "commitment"
+      "nuance"
     ],
     "scorePreferences": {
       "substance": [
@@ -17365,16 +17325,15 @@
     "tenseFamily": "common-predicate-041",
     "sceneIds": [
       "modern-debate-studio"
-    ]
+    ],
+    "personalSingularText": "will say truth is not truth",
+    "secondPersonText": "will say truth is not truth"
   },
   {
     "id": "common-modifier-064",
     "role": "modifier",
     "text": "under the applause sign",
-    "tags": [
-      "ratings",
-      "authenticity"
-    ],
+    "tags": [],
     "rarity": "uncommon",
     "sceneIds": [
       "modern-debate-studio"
@@ -17383,10 +17342,9 @@
   {
     "id": "common-ending-059",
     "role": "ending",
-    "text": "and one final question found a fourth option.",
+    "text": "and some ships actually go underwater.",
     "tags": [
-      "accountability",
-      "nuance"
+      "technology"
     ],
     "rarity": "rare",
     "finisherBonus": 3,
@@ -17397,10 +17355,11 @@
   {
     "id": "common-ending-060",
     "role": "ending",
-    "text": "and a bad joke was rehearsed before the question.",
+    "text": "and those experts keep getting their forecasts wrong.",
     "tags": [
       "evidence",
-      "authenticity"
+      "competence",
+      "credibility"
     ],
     "rarity": "rare",
     "finisherBonus": 3,
@@ -17515,12 +17474,11 @@
   {
     "id": "common-predicate-042-past",
     "role": "predicate",
-    "text": "was a tender with a family seat",
-    "singularText": "was a tender with a family seat",
-    "pluralText": "were a tender with a family seat",
+    "text": "called cheese-import dependence a disgrace",
+    "singularText": "called cheese-import dependence a disgrace",
+    "pluralText": "called cheese-import dependence a disgrace",
     "tags": [
-      "procurement",
-      "nepotism"
+      "procurement"
     ],
     "scorePreferences": {
       "substance": [
@@ -17538,17 +17496,18 @@
     "tenseFamily": "common-predicate-042",
     "sceneIds": [
       "county-council-ballroom"
-    ]
+    ],
+    "personalSingularText": "called cheese-import dependence a disgrace",
+    "secondPersonText": "called cheese-import dependence a disgrace"
   },
   {
     "id": "common-predicate-042-present",
     "role": "predicate",
-    "text": "is a tender with a family seat",
-    "singularText": "is a tender with a family seat",
-    "pluralText": "are a tender with a family seat",
+    "text": "calls cheese-import dependence a disgrace",
+    "singularText": "calls cheese-import dependence a disgrace",
+    "pluralText": "call cheese-import dependence a disgrace",
     "tags": [
-      "procurement",
-      "nepotism"
+      "procurement"
     ],
     "scorePreferences": {
       "substance": [
@@ -17566,17 +17525,18 @@
     "tenseFamily": "common-predicate-042",
     "sceneIds": [
       "county-council-ballroom"
-    ]
+    ],
+    "personalSingularText": "calls cheese-import dependence a disgrace",
+    "secondPersonText": "call cheese-import dependence a disgrace"
   },
   {
     "id": "common-predicate-042-future",
     "role": "predicate",
-    "text": "will be a tender with a family seat",
-    "singularText": "will be a tender with a family seat",
-    "pluralText": "will be a tender with a family seat",
+    "text": "will call cheese-import dependence a disgrace",
+    "singularText": "will call cheese-import dependence a disgrace",
+    "pluralText": "will call cheese-import dependence a disgrace",
     "tags": [
-      "procurement",
-      "nepotism"
+      "procurement"
     ],
     "scorePreferences": {
       "substance": [
@@ -17594,16 +17554,15 @@
     "tenseFamily": "common-predicate-042",
     "sceneIds": [
       "county-council-ballroom"
-    ]
+    ],
+    "personalSingularText": "will call cheese-import dependence a disgrace",
+    "secondPersonText": "will call cheese-import dependence a disgrace"
   },
   {
     "id": "common-modifier-065",
     "role": "modifier",
     "text": "under the dessert trolley",
-    "tags": [
-      "procurement",
-      "spending"
-    ],
+    "tags": [],
     "rarity": "uncommon",
     "sceneIds": [
       "county-council-ballroom"
@@ -17612,10 +17571,9 @@
   {
     "id": "common-ending-061",
     "role": "ending",
-    "text": "and the country you love ended at the ribbon.",
+    "text": "and nobody expected healthcare to be this complicated.",
     "tags": [
-      "infrastructure",
-      "spending"
+      "competence"
     ],
     "rarity": "rare",
     "finisherBonus": 3,
@@ -17747,12 +17705,12 @@
   {
     "id": "common-predicate-043-past",
     "role": "predicate",
-    "text": "was a call with a script",
-    "singularText": "was a call with a script",
-    "pluralText": "were a call with a script",
+    "text": "claimed the largest inauguration audience ever",
+    "singularText": "claimed the largest inauguration audience ever",
+    "pluralText": "claimed the largest inauguration audience ever",
     "tags": [
-      "sources",
-      "authenticity"
+      "ratings",
+      "credibility"
     ],
     "scorePreferences": {
       "substance": [
@@ -17770,17 +17728,19 @@
     "tenseFamily": "common-predicate-043",
     "sceneIds": [
       "midnight-call-in-studio"
-    ]
+    ],
+    "personalSingularText": "claimed the largest inauguration audience ever",
+    "secondPersonText": "claimed the largest inauguration audience ever"
   },
   {
     "id": "common-predicate-043-present",
     "role": "predicate",
-    "text": "is a call with a script",
-    "singularText": "is a call with a script",
-    "pluralText": "are a call with a script",
+    "text": "claims the largest inauguration audience ever",
+    "singularText": "claims the largest inauguration audience ever",
+    "pluralText": "claim the largest inauguration audience ever",
     "tags": [
-      "sources",
-      "authenticity"
+      "ratings",
+      "credibility"
     ],
     "scorePreferences": {
       "substance": [
@@ -17798,17 +17758,19 @@
     "tenseFamily": "common-predicate-043",
     "sceneIds": [
       "midnight-call-in-studio"
-    ]
+    ],
+    "personalSingularText": "claims the largest inauguration audience ever",
+    "secondPersonText": "claim the largest inauguration audience ever"
   },
   {
     "id": "common-predicate-043-future",
     "role": "predicate",
-    "text": "will be a call with a script",
-    "singularText": "will be a call with a script",
-    "pluralText": "will be a call with a script",
+    "text": "will claim the largest inauguration audience ever",
+    "singularText": "will claim the largest inauguration audience ever",
+    "pluralText": "will claim the largest inauguration audience ever",
     "tags": [
-      "sources",
-      "authenticity"
+      "ratings",
+      "credibility"
     ],
     "scorePreferences": {
       "substance": [
@@ -17826,16 +17788,15 @@
     "tenseFamily": "common-predicate-043",
     "sceneIds": [
       "midnight-call-in-studio"
-    ]
+    ],
+    "personalSingularText": "will claim the largest inauguration audience ever",
+    "secondPersonText": "will claim the largest inauguration audience ever"
   },
   {
     "id": "common-modifier-066",
     "role": "modifier",
     "text": "under the commercial clock",
-    "tags": [
-      "ratings",
-      "commercialism"
-    ],
+    "tags": [],
     "rarity": "uncommon",
     "sceneIds": [
       "midnight-call-in-studio"
@@ -17844,9 +17805,10 @@
   {
     "id": "common-ending-063",
     "role": "ending",
-    "text": "and the eyewitness needed a commercial break.",
+    "text": "and the photographs supposedly hid the enormous crowd.",
     "tags": [
-      "sources",
+      "evidence",
+      "credibility",
       "ratings"
     ],
     "rarity": "rare",
@@ -17858,10 +17820,9 @@
   {
     "id": "common-ending-064",
     "role": "ending",
-    "text": "and the hidden tape sold the next hidden tape.",
+    "text": "and the debate turned out to be theatre.",
     "tags": [
-      "ratings",
-      "commercialism"
+      "authenticity"
     ],
     "rarity": "rare",
     "finisherBonus": 3,
@@ -17976,12 +17937,11 @@
   {
     "id": "common-predicate-044-past",
     "role": "predicate",
-    "text": "was a statement without a verb",
-    "singularText": "was a statement without a verb",
-    "pluralText": "were a statement without a verb",
+    "text": "complained about fifteen toilet flushes",
+    "singularText": "complained about fifteen toilet flushes",
+    "pluralText": "complained about fifteen toilet flushes",
     "tags": [
-      "accountability",
-      "commitment"
+      "maintenance"
     ],
     "scorePreferences": {
       "substance": [
@@ -17999,17 +17959,18 @@
     "tenseFamily": "common-predicate-044",
     "sceneIds": [
       "palace-press-hall"
-    ]
+    ],
+    "personalSingularText": "complained about fifteen toilet flushes",
+    "secondPersonText": "complained about fifteen toilet flushes"
   },
   {
     "id": "common-predicate-044-present",
     "role": "predicate",
-    "text": "is a statement without a verb",
-    "singularText": "is a statement without a verb",
-    "pluralText": "are a statement without a verb",
+    "text": "complains about fifteen toilet flushes",
+    "singularText": "complains about fifteen toilet flushes",
+    "pluralText": "complain about fifteen toilet flushes",
     "tags": [
-      "accountability",
-      "commitment"
+      "maintenance"
     ],
     "scorePreferences": {
       "substance": [
@@ -18027,17 +17988,18 @@
     "tenseFamily": "common-predicate-044",
     "sceneIds": [
       "palace-press-hall"
-    ]
+    ],
+    "personalSingularText": "complains about fifteen toilet flushes",
+    "secondPersonText": "complain about fifteen toilet flushes"
   },
   {
     "id": "common-predicate-044-future",
     "role": "predicate",
-    "text": "will be a statement without a verb",
-    "singularText": "will be a statement without a verb",
-    "pluralText": "will be a statement without a verb",
+    "text": "will complain about fifteen toilet flushes",
+    "singularText": "will complain about fifteen toilet flushes",
+    "pluralText": "will complain about fifteen toilet flushes",
     "tags": [
-      "accountability",
-      "commitment"
+      "maintenance"
     ],
     "scorePreferences": {
       "substance": [
@@ -18055,16 +18017,15 @@
     "tenseFamily": "common-predicate-044",
     "sceneIds": [
       "palace-press-hall"
-    ]
+    ],
+    "personalSingularText": "will complain about fifteen toilet flushes",
+    "secondPersonText": "will complain about fifteen toilet flushes"
   },
   {
     "id": "common-modifier-067",
     "role": "modifier",
     "text": "behind the tall doors",
-    "tags": [
-      "decorum",
-      "accountability"
-    ],
+    "tags": [],
     "rarity": "uncommon",
     "sceneIds": [
       "palace-press-hall"
@@ -18073,11 +18034,8 @@
   {
     "id": "common-ending-065",
     "role": "ending",
-    "text": "and the podium outlived the answer.",
-    "tags": [
-      "accountability",
-      "decorum"
-    ],
+    "text": "and the next leader should check the rear-view mirror.",
+    "tags": [],
     "rarity": "rare",
     "finisherBonus": 3,
     "sceneIds": [
@@ -18205,13 +18163,10 @@
   {
     "id": "common-predicate-045-past",
     "role": "predicate",
-    "text": "was a prophecy with a discount code",
-    "singularText": "was a prophecy with a discount code",
-    "pluralText": "were a prophecy with a discount code",
-    "tags": [
-      "commercialism",
-      "credibility"
-    ],
+    "text": "blamed an orange appearance on lightbulbs",
+    "singularText": "blamed an orange appearance on lightbulbs",
+    "pluralText": "blamed an orange appearance on lightbulbs",
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -18228,18 +18183,17 @@
     "tenseFamily": "common-predicate-045",
     "sceneIds": [
       "influencer-campaign-livestream"
-    ]
+    ],
+    "personalSingularText": "blamed an orange appearance on lightbulbs",
+    "secondPersonText": "blamed an orange appearance on lightbulbs"
   },
   {
     "id": "common-predicate-045-present",
     "role": "predicate",
-    "text": "is a prophecy with a discount code",
-    "singularText": "is a prophecy with a discount code",
-    "pluralText": "are a prophecy with a discount code",
-    "tags": [
-      "commercialism",
-      "credibility"
-    ],
+    "text": "blames an orange appearance on lightbulbs",
+    "singularText": "blames an orange appearance on lightbulbs",
+    "pluralText": "blame an orange appearance on lightbulbs",
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -18256,18 +18210,17 @@
     "tenseFamily": "common-predicate-045",
     "sceneIds": [
       "influencer-campaign-livestream"
-    ]
+    ],
+    "personalSingularText": "blames an orange appearance on lightbulbs",
+    "secondPersonText": "blame an orange appearance on lightbulbs"
   },
   {
     "id": "common-predicate-045-future",
     "role": "predicate",
-    "text": "will be a prophecy with a discount code",
-    "singularText": "will be a prophecy with a discount code",
-    "pluralText": "will be a prophecy with a discount code",
-    "tags": [
-      "commercialism",
-      "credibility"
-    ],
+    "text": "will blame an orange appearance on lightbulbs",
+    "singularText": "will blame an orange appearance on lightbulbs",
+    "pluralText": "will blame an orange appearance on lightbulbs",
+    "tags": [],
     "scorePreferences": {
       "substance": [
         {
@@ -18284,7 +18237,9 @@
     "tenseFamily": "common-predicate-045",
     "sceneIds": [
       "influencer-campaign-livestream"
-    ]
+    ],
+    "personalSingularText": "will blame an orange appearance on lightbulbs",
+    "secondPersonText": "will blame an orange appearance on lightbulbs"
   },
   {
     "id": "common-modifier-068",
@@ -18302,11 +18257,8 @@
   {
     "id": "common-ending-067",
     "role": "ending",
-    "text": "and the ancient truth had a sponsor.",
-    "tags": [
-      "commercialism",
-      "authenticity"
-    ],
+    "text": "and the orange look was blamed on the lighting.",
+    "tags": [],
     "rarity": "rare",
     "finisherBonus": 3,
     "sceneIds": [
@@ -18363,17 +18315,16 @@
   {
     "id": "common-noun-361",
     "role": "noun",
-    "text": "the boom box announcing every policy defeat",
+    "text": "the naughtiest run through a wheat field",
     "tags": [
-      "credibility",
-      "results"
+      "decorum"
     ],
     "scoreGroups": {
       "substance": [
-        "media"
+        "personal"
       ],
       "flavour": [
-        "politics"
+        "satire"
       ]
     },
     "rarity": "common",
@@ -18384,17 +18335,17 @@
   {
     "id": "common-noun-362",
     "role": "noun",
-    "text": "a record crate with the budget scratched off",
+    "text": "the corporate pocket belonging to a person",
     "tags": [
-      "spending",
-      "authenticity"
+      "wealth",
+      "commercialism"
     ],
     "scoreGroups": {
       "substance": [
-        "media"
+        "wealth"
       ],
       "flavour": [
-        "politics"
+        "budget"
       ]
     },
     "rarity": "common",
@@ -18889,16 +18840,15 @@
   {
     "id": "common-predicate-046-past",
     "role": "predicate",
-    "text": "was a verse rehearsed by committee",
-    "singularText": "was a verse rehearsed by committee",
-    "pluralText": "were verses rehearsed by committee",
-    "personalSingularText": "was a verse rehearsed by committee",
-    "secondPersonText": "were a verse rehearsed by committee",
+    "text": "confessed to running through wheat fields",
+    "singularText": "confessed to running through wheat fields",
+    "pluralText": "confessed to running through wheat fields",
+    "personalSingularText": "confessed to running through wheat fields",
+    "secondPersonText": "confessed to running through wheat fields",
     "tense": "past",
     "tenseFamily": "common-predicate-046",
     "tags": [
-      "authenticity",
-      "bureaucracy"
+      "decorum"
     ],
     "scorePreferences": {
       "substance": [
@@ -18919,16 +18869,15 @@
   {
     "id": "common-predicate-046-present",
     "role": "predicate",
-    "text": "is a verse rehearsed by committee",
-    "singularText": "is a verse rehearsed by committee",
-    "pluralText": "are verses rehearsed by committee",
-    "personalSingularText": "is a verse rehearsed by committee",
-    "secondPersonText": "are a verse rehearsed by committee",
+    "text": "confesses to running through wheat fields",
+    "singularText": "confesses to running through wheat fields",
+    "pluralText": "confess to running through wheat fields",
+    "personalSingularText": "confesses to running through wheat fields",
+    "secondPersonText": "confess to running through wheat fields",
     "tense": "present",
     "tenseFamily": "common-predicate-046",
     "tags": [
-      "authenticity",
-      "bureaucracy"
+      "decorum"
     ],
     "scorePreferences": {
       "substance": [
@@ -18949,16 +18898,15 @@
   {
     "id": "common-predicate-046-future",
     "role": "predicate",
-    "text": "will be a verse rehearsed by committee",
-    "singularText": "will be a verse rehearsed by committee",
-    "pluralText": "will be verses rehearsed by committee",
-    "personalSingularText": "will be a verse rehearsed by committee",
-    "secondPersonText": "will be a verse rehearsed by committee",
+    "text": "will confess to running through wheat fields",
+    "singularText": "will confess to running through wheat fields",
+    "pluralText": "will confess to running through wheat fields",
+    "personalSingularText": "will confess to running through wheat fields",
+    "secondPersonText": "will confess to running through wheat fields",
     "tense": "future",
     "tenseFamily": "common-predicate-046",
     "tags": [
-      "authenticity",
-      "bureaucracy"
+      "decorum"
     ],
     "scorePreferences": {
       "substance": [
@@ -18979,16 +18927,16 @@
   {
     "id": "common-predicate-047-past",
     "role": "predicate",
-    "text": "was a knockout scored by applause",
-    "singularText": "was a knockout scored by applause",
-    "pluralText": "were knockouts scored by applause",
-    "personalSingularText": "was a knockout scored by applause",
-    "secondPersonText": "were a knockout scored by applause",
+    "text": "came to speak rather than listen",
+    "singularText": "came to speak rather than listen",
+    "pluralText": "came to speak rather than listen",
+    "personalSingularText": "came to speak rather than listen",
+    "secondPersonText": "came to speak rather than listen",
     "tense": "past",
     "tenseFamily": "common-predicate-047",
     "tags": [
-      "credibility",
-      "results"
+      "decorum",
+      "restraint"
     ],
     "scorePreferences": {
       "substance": [
@@ -19009,16 +18957,16 @@
   {
     "id": "common-predicate-047-present",
     "role": "predicate",
-    "text": "is a knockout scored by applause",
-    "singularText": "is a knockout scored by applause",
-    "pluralText": "are knockouts scored by applause",
-    "personalSingularText": "is a knockout scored by applause",
-    "secondPersonText": "are a knockout scored by applause",
+    "text": "comes to speak rather than listen",
+    "singularText": "comes to speak rather than listen",
+    "pluralText": "come to speak rather than listen",
+    "personalSingularText": "comes to speak rather than listen",
+    "secondPersonText": "come to speak rather than listen",
     "tense": "present",
     "tenseFamily": "common-predicate-047",
     "tags": [
-      "credibility",
-      "results"
+      "decorum",
+      "restraint"
     ],
     "scorePreferences": {
       "substance": [
@@ -19039,16 +18987,16 @@
   {
     "id": "common-predicate-047-future",
     "role": "predicate",
-    "text": "will be a knockout scored by applause",
-    "singularText": "will be a knockout scored by applause",
-    "pluralText": "will be knockouts scored by applause",
-    "personalSingularText": "will be a knockout scored by applause",
-    "secondPersonText": "will be a knockout scored by applause",
+    "text": "will come to speak rather than listen",
+    "singularText": "will come to speak rather than listen",
+    "pluralText": "will come to speak rather than listen",
+    "personalSingularText": "will come to speak rather than listen",
+    "secondPersonText": "will come to speak rather than listen",
     "tense": "future",
     "tenseFamily": "common-predicate-047",
     "tags": [
-      "credibility",
-      "results"
+      "decorum",
+      "restraint"
     ],
     "scorePreferences": {
       "substance": [
@@ -19069,11 +19017,8 @@
   {
     "id": "common-modifier-069",
     "role": "modifier",
-    "text": "while the crowd counted the missing receipts",
-    "tags": [
-      "accountability",
-      "credibility"
-    ],
+    "text": "with wheat farmers decidedly unimpressed",
+    "tags": [],
     "rarity": "uncommon",
     "sceneIds": [
       "civic-cypher-boxing-ring"
@@ -19082,10 +19027,10 @@
   {
     "id": "common-modifier-070",
     "role": "modifier",
-    "text": "beneath a microphone lowered for the loudest promise",
+    "text": "with a microphone for speaking, not listening",
     "tags": [
-      "delivery",
-      "credibility"
+      "decorum",
+      "restraint"
     ],
     "rarity": "uncommon",
     "sceneIds": [
@@ -19095,10 +19040,10 @@
   {
     "id": "common-modifier-071",
     "role": "modifier",
-    "text": "on a beat borrowed from the emergency broadcast",
+    "text": "while political theatre imitates professional wrestling",
     "tags": [
-      "legacy",
-      "authenticity"
+      "authenticity",
+      "politics"
     ],
     "rarity": "uncommon",
     "sceneIds": [
@@ -19108,10 +19053,9 @@
   {
     "id": "common-ending-069",
     "role": "ending",
-    "text": "and the crowd demanded a recount in rhyme.",
+    "text": "and running through wheat was the naughtiest confession.",
     "tags": [
-      "credibility",
-      "results"
+      "decorum"
     ],
     "rarity": "rare",
     "finisherBonus": 4,
@@ -19122,10 +19066,10 @@
   {
     "id": "common-ending-070",
     "role": "ending",
-    "text": "and the final bell found no policy standing.",
+    "text": "and I came here to speak, not to listen.",
     "tags": [
-      "delivery",
-      "results"
+      "decorum",
+      "restraint"
     ],
     "rarity": "rare",
     "finisherBonus": 3,
@@ -19136,10 +19080,10 @@
   {
     "id": "common-ending-071",
     "role": "ending",
-    "text": "and the beat dropped before the budget did.",
+    "text": "and the host needed journalism school.",
     "tags": [
-      "spending",
-      "accountability"
+      "competence",
+      "media"
     ],
     "rarity": "rare",
     "finisherBonus": 3,
@@ -19201,10 +19145,9 @@
   {
     "id": "common-noun-372",
     "role": "noun",
-    "text": "a marble lobby for the classless elite",
+    "text": "the company described as a human being",
     "tags": [
-      "luxury",
-      "elitism"
+      "commercialism"
     ],
     "scoreGroups": {
       "substance": [
@@ -19866,11 +19809,8 @@
   {
     "id": "common-modifier-073",
     "role": "modifier",
-    "text": "with a warm welcome and a cold invoice",
-    "tags": [
-      "wealth",
-      "authenticity"
-    ],
+    "text": "with a lightbulb making everyone look orange",
+    "tags": [],
     "rarity": "uncommon",
     "sceneIds": [
       "grand-hotel-romania"
@@ -19879,10 +19819,9 @@
   {
     "id": "common-modifier-074",
     "role": "modifier",
-    "text": "while the staff anticipated another ministerial whim",
+    "text": "with pig-trotter inspectors expected soon",
     "tags": [
-      "luxury",
-      "elitism"
+      "procedure"
     ],
     "rarity": "uncommon",
     "sceneIds": [
@@ -19914,10 +19853,10 @@
   {
     "id": "common-ending-074",
     "role": "ending",
-    "text": "and the concierge anticipated everything except the audit.",
+    "text": "and pig trotters awaited an export inspection.",
     "tags": [
-      "accountability",
-      "corruption"
+      "procedure",
+      "commercialism"
     ],
     "rarity": "rare",
     "finisherBonus": 4,

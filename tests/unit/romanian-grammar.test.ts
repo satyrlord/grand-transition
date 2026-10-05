@@ -3,6 +3,7 @@ import { englishGameLocale, romanianGameLocale, gameCatalog } from '../../src/ga
 import {
   englishGrammarAdapter,
   prepareEnglishGrammarPhrase,
+  type GrammarPhrase,
   type GrammarStep,
 } from '../../src/engine/grammar/english-grammar-adapter.ts';
 import { grammarFor, type GrammarLocaleBinding } from '../../src/engine/grammar/grammar-locale.ts';
@@ -17,6 +18,7 @@ import {
   romanianPersonalObjectByNounId,
 } from '../../src/content/ro/grammar-metadata.ts';
 import type { GameLocaleBundle } from '../../src/localization/game-locale-schema.ts';
+import type { Phrase } from '../../src/content/schemas.ts';
 
 const phraseById = new Map(gameCatalog.phrases.map((phrase) => [phrase.id, phrase]));
 const phrase = (id: string) => phraseById.get(id)!;
@@ -29,14 +31,14 @@ const message = (locale: GameLocaleBundle, key: string) => {
 const analyzeWith = (
   binding: GrammarLocaleBinding,
   locale: GameLocaleBundle,
-  ids: readonly string[],
+  ids: readonly (string | GrammarPhrase)[],
   options: Readonly<{ end?: boolean }> = {},
 ): ReturnType<GrammarLocaleBinding['adapter']['analyze']> =>
   binding.adapter.analyze({
     steps: [
       ...ids.map((id): GrammarStep => ({
         kind: 'phrase',
-        phrase: binding.prepare(phrase(id), locale),
+        phrase: typeof id === 'string' ? binding.prepare(phrase(id), locale) : id,
       })),
       ...(options.end ? [{ kind: 'end' } as const] : []),
     ],
@@ -46,6 +48,68 @@ const analyzeWith = (
 
 const englishGrammar = grammarFor(englishGameLocale);
 const romanianGrammar = grammarFor(romanianGameLocale);
+
+const copularFixture = (
+  locale: GameLocaleBundle,
+  tense: 'past' | 'present' | 'future' = 'present',
+  complement: 'plan' | 'note' | 'embedded' = 'plan',
+  explicitPersonalForms = true,
+): GrammarPhrase => {
+  const key = `phrase.grammar-fixture-${complement}-${tense}`;
+  const card: Phrase = {
+    id: `grammar-fixture-${complement}-${tense}`,
+    role: 'predicate',
+    textKey: key,
+    tense,
+    tenseFamily: `grammar-fixture-${complement}`,
+    tags: [],
+    rarity: 'common',
+    numberForms: {
+      singularKey: `${key}.singular`,
+      pluralKey: `${key}.plural`,
+      ...(explicitPersonalForms
+        ? {
+            personalSingularKey: `${key}.personal-singular`,
+            secondPersonKey: `${key}.second-person`,
+          }
+        : {}),
+    },
+  };
+  const romanian = locale.locale === 'ro-RO';
+  const [singular, plural, second] = romanian
+    ? {
+        past: ['era', 'erau', 'erați'],
+        present: ['este', 'sunt', 'sunteți'],
+        future: ['va fi', 'vor fi', 'veți fi'],
+      }[tense]
+    : {
+        past: ['was', 'were', 'were'],
+        present: ['is', 'are', 'are'],
+        future: ['will be', 'will be', 'will be'],
+      }[tense];
+  const [singularTail, pluralTail] = romanian
+    ? {
+        plan: ['un plan', 'planuri'],
+        note: ['o notă', 'note'],
+        embedded: ['un plan care va funcționa', 'planuri care vor funcționa'],
+      }[complement]
+    : {
+        plan: ['a plan', 'plans'],
+        note: ['a note', 'notes'],
+        embedded: ['a plan that will work', 'plans that will work'],
+      }[complement];
+  return grammarFor(locale).prepare(card, {
+    ...locale,
+    messages: {
+      ...locale.messages,
+      [key]: `${singular} ${singularTail}`,
+      [`${key}.singular`]: `${singular} ${singularTail}`,
+      [`${key}.plural`]: `${plural} ${pluralTail}`,
+      [`${key}.personal-singular`]: `${singular} ${singularTail}`,
+      [`${key}.second-person`]: `${second} ${singularTail}`,
+    },
+  });
+};
 
 const singleSubjectClause = [
   'common-noun-001',
@@ -63,19 +127,18 @@ const compoundSubjectClause = [
 describe('Romanian grammar binding', () => {
   test('keeps the triplicate drinks plural and a quoted claim inside its noun slot', () => {
     for (const [noun, expected] of [
-      [
-        'common-noun-217',
-        'Băuturi răcoritoare în trei exemplare sunt comunicate de presă fără evenimente.',
-      ],
-      [
-        'football-tycoon-noun-007',
-        'Afirmația că cel mai mare merit este al meu este un comunicat de presă fără eveniment.',
-      ],
+      ['common-noun-217', 'Băuturi răcoritoare în trei exemplare sunt planuri.'],
+      ['football-tycoon-noun-007', 'Afirmația că cel mai mare merit este al meu este un plan.'],
     ]) {
       expect(
-        analyzeWith(romanianGrammar, romanianGameLocale, [noun!, 'common-predicate-019-present'], {
-          end: true,
-        }),
+        analyzeWith(
+          romanianGrammar,
+          romanianGameLocale,
+          [noun!, copularFixture(romanianGameLocale)],
+          {
+            end: true,
+          },
+        ),
       ).toMatchObject({
         accepted: true,
         analysis: { complete: true, publicText: expected },
@@ -84,30 +147,33 @@ describe('Romanian grammar binding', () => {
   });
 
   test.each([
-    'red-folded-chairman-predicate-003',
-    'red-folded-chairman-predicate-004',
-    'thunder-tribune-predicate-004',
-    'football-tycoon-predicate-002',
-    'football-tycoon-predicate-003',
-    'football-tycoon-predicate-004',
-  ])('preserves Romanian past agreement after adding English forms to %s', (family) => {
-    for (const [subject, copula] of [
-      ['common-noun-001', 'era'],
-      ['common-noun-031', 'erau'],
-      ['common-noun-028', 'erați'],
-    ]) {
-      const result = analyzeWith(
-        romanianGrammar,
-        romanianGameLocale,
-        [subject!, `${family}-past`],
-        { end: true },
-      );
-      expect(result).toMatchObject({ accepted: true, analysis: { complete: true } });
-      if (result.accepted) {
-        expect(result.analysis.renderedPhrases[1]?.text).toMatch(new RegExp(`^${copula} `, 'u'));
+    ['past', false, ['era', 'erau', 'erați']],
+    ['past', true, ['era', 'erau', 'erați']],
+    ['present', false, ['este', 'sunt', 'sunteți']],
+    ['present', true, ['este', 'sunt', 'sunteți']],
+    ['future', false, ['va fi', 'vor fi', 'veți fi']],
+    ['future', true, ['va fi', 'vor fi', 'veți fi']],
+  ] as const)(
+    'preserves Romanian %s agreement with explicit personal keys: %s',
+    (tense, explicit, copulas) => {
+      for (const [subject, copula] of [
+        ['common-noun-001', copulas[0]],
+        ['common-noun-031', copulas[1]],
+        ['common-noun-028', copulas[2]],
+      ]) {
+        const result = analyzeWith(
+          romanianGrammar,
+          romanianGameLocale,
+          [subject!, copularFixture(romanianGameLocale, tense, 'plan', explicit)],
+          { end: true },
+        );
+        expect(result).toMatchObject({ accepted: true, analysis: { complete: true } });
+        if (result.accepted) {
+          expect(result.analysis.renderedPhrases[1]?.text).toMatch(new RegExp(`^${copula} `, 'u'));
+        }
       }
-    }
-  });
+    },
+  );
 
   test.each([
     [
@@ -159,14 +225,14 @@ describe('Romanian grammar binding', () => {
         english,
         'You are Holy Water from the Danube',
         'your unanimous disagreement',
-        'belongs in a history museum',
+        'is a plan',
       ],
       [
         romanianGameLocale,
         romanian,
         'Dumneavoastră sunteți apa sfântă a Dunării',
         'dezacordul vostru unanim',
-        'are locul într-un muzeu de istorie',
+        'este un plan',
       ],
     ] as const) {
       const ids = [
@@ -175,7 +241,7 @@ describe('Romanian grammar binding', () => {
         'common-noun-053',
         id,
         'common-noun-001',
-        ...(kind === 'common-conjunction-004' ? ['common-predicate-010-present'] : []),
+        ...(kind === 'common-conjunction-004' ? [copularFixture(locale)] : []),
       ];
       expect(analyzeWith(grammarFor(locale), locale, ids, { end: true })).toMatchObject({
         accepted: true,
@@ -187,18 +253,35 @@ describe('Romanian grammar binding', () => {
     }
   });
 
-  test('renders the press-arrival ending with a grammatical Romanian preposition', () => {
+  test('joins a prepositional ending to a complete Romanian clause', () => {
+    const ending = romanianGrammar.prepare(
+      {
+        id: 'grammar-fixture-ending',
+        role: 'ending',
+        textKey: 'phrase.grammar-fixture-ending',
+        tags: [],
+        rarity: 'common',
+        finisherBonus: 1,
+      },
+      {
+        ...romanianGameLocale,
+        messages: {
+          ...romanianGameLocale.messages,
+          'phrase.grammar-fixture-ending': 'înaintea conferinței.',
+        },
+      },
+    );
     expect(
       analyzeWith(romanianGrammar, romanianGameLocale, [
         'common-noun-028',
-        'common-predicate-010-present',
-        'common-ending-004',
+        copularFixture(romanianGameLocale),
+        ending,
       ]),
     ).toMatchObject({
       accepted: true,
       analysis: {
         complete: true,
-        publicText: 'Dumneavoastră aveți locul într-un muzeu de istorie înaintea apariției presei.',
+        publicText: 'Dumneavoastră sunteți un plan înaintea conferinței.',
       },
     });
   });
@@ -331,31 +414,25 @@ describe('Romanian grammar binding', () => {
     const result = analyzeWith(
       romanianGrammar,
       romanianGameLocale,
-      ['common-noun-093', 'common-predicate-019-present'],
+      ['common-noun-093', copularFixture(romanianGameLocale)],
       { end: true },
     );
     expect(result.accepted).toBe(true);
     if (!result.accepted) return;
     expect(result.analysis.renderedPhrases[0]?.grammaticalNumber).toBe('plural');
     expect(result.analysis.publicText).toBe(
-      'Zborurile private pentru tăieri de panglici sunt comunicate de presă fără evenimente.',
+      'Zborurile private pentru tăieri de panglici sunt planuri.',
     );
   });
 
   test.each([
-    [
-      englishGameLocale,
-      'Your breaking news on a repeat schedule is a press release without an event.',
-    ],
-    [
-      romanianGameLocale,
-      'Fluxul vostru de știri de ultimă oră în reluare este un comunicat de presă fără eveniment.',
-    ],
+    [englishGameLocale, 'Your breaking news on a repeat schedule is a plan.'],
+    [romanianGameLocale, 'Fluxul vostru de știri de ultimă oră în reluare este un plan.'],
   ] as const)('keeps singular agreement for the news noun in $0.locale', (locale, expected) => {
     const result = analyzeWith(
       grammarFor(locale),
       locale,
-      ['common-noun-079', 'common-predicate-019-present'],
+      ['common-noun-079', copularFixture(locale)],
       { end: true },
     );
     expect(result.accepted).toBe(true);
@@ -363,18 +440,18 @@ describe('Romanian grammar binding', () => {
   });
 
   test.each([
-    ['common-predicate-044', 'o propoziție fără verb'],
-    ['common-predicate-045', 'o profeție la reducere'],
-  ])('preserves the predicate meaning for polite subjects in %s', (family, complement) => {
+    ['note', 'o notă'],
+    ['plan', 'un plan'],
+  ] as const)('keeps the %s complement singular for polite subjects', (fixture, complement) => {
     for (const [tense, copula] of [
       ['past', 'erați'],
       ['present', 'sunteți'],
       ['future', 'veți fi'],
-    ]) {
+    ] as const) {
       const result = analyzeWith(
         romanianGrammar,
         romanianGameLocale,
-        ['common-noun-028', `${family}-${tense}`],
+        ['common-noun-028', copularFixture(romanianGameLocale, tense, fixture)],
         { end: true },
       );
       expect(result.accepted).toBe(true);
@@ -420,7 +497,7 @@ describe('Romanian grammar binding', () => {
   });
 
   test.each(['past', 'present', 'future'])(
-    'ends the prestige predicate with a complete complement in %s',
+    'ends the authored arrival predicate with its complete complement in %s',
     (tense) => {
       for (const subject of ['common-noun-001', 'common-noun-031', 'common-noun-028']) {
         const result = analyzeWith(
@@ -432,7 +509,7 @@ describe('Romanian grammar binding', () => {
         expect(result.accepted).toBe(true);
         if (result.accepted) {
           expect(result.analysis.complete).toBe(true);
-          expect(result.analysis.publicText).toMatch(/prestigiul național în frunze căzute\.$/u);
+          expect(result.analysis.publicText).toMatch(/cu o aeronavă mică\.$/u);
         }
       }
     },
@@ -461,10 +538,7 @@ describe('Romanian grammar binding', () => {
   test.each([
     ['common-predicate-015-past', 'au fost turnători'],
     ['common-predicate-015-future', 'vor fi turnători'],
-    [
-      'football-tycoon-predicate-002-future',
-      'vor fi o victorie în care cel mai mare merit va fi al meu',
-    ],
+    ['football-tycoon-predicate-002-future', 'vor fi victorii cu meritul maxim atribuit mie'],
   ] as const)('agrees inside a plural predicate in %s', (predicateId, expected) => {
     const result = analyzeWith(
       romanianGrammar,
@@ -481,14 +555,12 @@ describe('Romanian grammar binding', () => {
     const result = analyzeWith(
       romanianGrammar,
       romanianGameLocale,
-      ['common-noun-028', 'football-tycoon-predicate-002-future'],
+      ['common-noun-028', copularFixture(romanianGameLocale, 'future', 'embedded')],
       { end: true },
     );
     expect(result.accepted).toBe(true);
     if (!result.accepted) return;
-    expect(result.analysis.renderedPhrases[1]?.text).toBe(
-      'veți fi o victorie în care cel mai mare merit va fi al meu',
-    );
+    expect(result.analysis.renderedPhrases[1]?.text).toBe('veți fi un plan care va funcționa');
   });
 
   test('contracts a past auxiliary after a nested clause anchor', () => {
@@ -833,14 +905,12 @@ describe('Romanian grammar binding', () => {
     const english = analyzeWith(
       englishGrammar,
       englishGameLocale,
-      ['common-noun-001', 'common-predicate-010-present'],
+      ['common-noun-001', copularFixture(englishGameLocale)],
       { end: true },
     );
     expect(english.accepted).toBe(true);
     if (english.accepted) {
-      expect(english.analysis.publicText).toBe(
-        'Your unanimous disagreement belongs in a history museum.',
-      );
+      expect(english.analysis.publicText).toBe('Your unanimous disagreement is a plan.');
     }
   });
 });

@@ -65,20 +65,20 @@
     {
       "id": "county-baron-modifier-001",
       "role": "modifier",
-      "text": "after the pothole inspection's family photo",
+      "text": "with doughnuts presented beside a second suitcase",
       "tags": [
-        "infrastructure",
-        "nepotism"
+        "transparency",
+        "accountability"
       ],
       "rarity": "uncommon"
     },
     {
       "id": "county-baron-ending-001",
       "role": "ending",
-      "text": "and the road contract runs on icing sugar.",
+      "text": "and the suitcase story is dismissed as a doughnut.",
       "tags": [
-        "procurement",
-        "infrastructure"
+        "transparency",
+        "accountability"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -406,14 +406,14 @@
     {
       "id": "county-baron-predicate-001-past",
       "role": "predicate",
-      "text": "counted one ribbon twice for the road total",
-      "singularText": "counted one ribbon twice for the road total",
-      "pluralText": "counted one ribbon twice for the road total",
-      "personalSingularText": "counted one ribbon twice for the road total",
-      "secondPersonText": "counted one ribbon twice for the road total",
+      "text": "was a suitcase allegation dismissed as a tall tale",
+      "singularText": "was a suitcase allegation dismissed as a tall tale",
+      "pluralText": "were suitcase allegations dismissed as tall tales",
+      "personalSingularText": "was a suitcase allegation dismissed as a tall tale",
+      "secondPersonText": "were a suitcase allegation dismissed as a tall tale",
       "tags": [
-        "infrastructure",
-        "procurement"
+        "transparency",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -435,14 +435,14 @@
     {
       "id": "county-baron-predicate-001-present",
       "role": "predicate",
-      "text": "counts one ribbon twice for the road total",
-      "singularText": "counts one ribbon twice for the road total",
-      "pluralText": "count one ribbon twice for the road total",
-      "personalSingularText": "counts one ribbon twice for the road total",
-      "secondPersonText": "count one ribbon twice for the road total",
+      "text": "is a suitcase allegation dismissed as a tall tale",
+      "singularText": "is a suitcase allegation dismissed as a tall tale",
+      "pluralText": "are suitcase allegations dismissed as tall tales",
+      "personalSingularText": "is a suitcase allegation dismissed as a tall tale",
+      "secondPersonText": "are a suitcase allegation dismissed as a tall tale",
       "tags": [
-        "infrastructure",
-        "procurement"
+        "transparency",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -464,14 +464,14 @@
     {
       "id": "county-baron-predicate-001-future",
       "role": "predicate",
-      "text": "will count one ribbon twice for the road total",
-      "singularText": "will count one ribbon twice for the road total",
-      "pluralText": "will count one ribbon twice for the road total",
-      "personalSingularText": "will count one ribbon twice for the road total",
-      "secondPersonText": "will count one ribbon twice for the road total",
+      "text": "will be a suitcase allegation dismissed as a tall tale",
+      "singularText": "will be a suitcase allegation dismissed as a tall tale",
+      "pluralText": "will be suitcase allegations dismissed as tall tales",
+      "personalSingularText": "will be a suitcase allegation dismissed as a tall tale",
+      "secondPersonText": "will be a suitcase allegation dismissed as a tall tale",
       "tags": [
-        "infrastructure",
-        "procurement"
+        "transparency",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -495,7 +495,6 @@
       "role": "modifier",
       "text": "with the inspector at the family table",
       "tags": [
-        "nepotism",
         "family"
       ],
       "rarity": "uncommon"
@@ -511,16 +510,17 @@
     {
       "id": "county-baron-noun-007",
       "role": "noun",
-      "text": "a doughnut where the budget should be",
+      "text": "an investigation dismissed as a doughnut story",
       "tags": [
-        "procurement"
+        "transparency",
+        "accountability"
       ],
       "scoreGroups": {
         "substance": [
-          "infrastructure"
+          "evidence"
         ],
         "flavour": [
-          "contract"
+          "accusation"
         ]
       },
       "rarity": "common"
@@ -528,16 +528,18 @@
     {
       "id": "county-baron-noun-008",
       "role": "noun",
-      "text": "a family tree at the tender",
+      "text": "a family without the required specialists",
       "tags": [
-        "infrastructure"
+        "nepotism",
+        "competence"
       ],
       "scoreGroups": {
         "substance": [
-          "infrastructure"
+          "family",
+          "bureaucracy"
         ],
         "flavour": [
-          "contract"
+          "local-power"
         ]
       },
       "rarity": "uncommon"
@@ -545,16 +547,17 @@
     {
       "id": "county-baron-noun-009",
       "role": "noun",
-      "text": "a contract with a Sunday lunch",
+      "text": "a claimed ten-billion-lei budget hole",
       "tags": [
-        "nepotism"
+        "evidence",
+        "spending"
       ],
       "scoreGroups": {
         "substance": [
-          "infrastructure"
+          "wealth"
         ],
         "flavour": [
-          "contract"
+          "budget"
         ]
       },
       "rarity": "rare"
@@ -562,16 +565,17 @@
     {
       "id": "county-baron-noun-010",
       "role": "noun",
-      "text": "a specialist chosen at the family table",
+      "text": "a suitcase with disowned contents",
       "tags": [
-        "procurement"
+        "transparency",
+        "accountability"
       ],
       "scoreGroups": {
         "substance": [
-          "infrastructure"
+          "evidence"
         ],
         "flavour": [
-          "contract"
+          "accusation"
         ]
       },
       "rarity": "common"
@@ -649,9 +653,10 @@
     {
       "id": "county-baron-predicate-002-past",
       "role": "predicate",
-      "text": "was a family matter with a public title",
+      "text": "was a family search that found no specialists",
       "tags": [
-        "procurement"
+        "nepotism",
+        "competence"
       ],
       "scorePreferences": {
         "substance": [
@@ -666,18 +671,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-predicate-002"
+      "tenseFamily": "county-baron-predicate-002",
+      "singularText": "was a family search that found no specialists",
+      "pluralText": "were family searches that found no specialists",
+      "personalSingularText": "was a family search that found no specialists",
+      "secondPersonText": "were a family search that found no specialists"
     },
     {
       "id": "county-baron-predicate-002-present",
       "role": "predicate",
-      "text": "is a family matter with a public title",
-      "singularText": "is a family matter with a public title",
-      "pluralText": "are a family matter with a public title",
-      "personalSingularText": "is a family matter with a public title",
-      "secondPersonText": "are a family matter with a public title",
+      "text": "is a family search that found no specialists",
+      "singularText": "is a family search that found no specialists",
+      "pluralText": "are family searches that found no specialists",
+      "personalSingularText": "is a family search that found no specialists",
+      "secondPersonText": "are a family search that found no specialists",
       "tags": [
-        "procurement"
+        "nepotism",
+        "competence"
       ],
       "scorePreferences": {
         "substance": [
@@ -697,9 +707,10 @@
     {
       "id": "county-baron-predicate-002-future",
       "role": "predicate",
-      "text": "will be a family matter with a public title",
+      "text": "will be a family search that found no specialists",
       "tags": [
-        "procurement"
+        "nepotism",
+        "competence"
       ],
       "scorePreferences": {
         "substance": [
@@ -714,14 +725,19 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-predicate-002"
+      "tenseFamily": "county-baron-predicate-002",
+      "singularText": "will be a family search that found no specialists",
+      "pluralText": "will be family searches that found no specialists",
+      "personalSingularText": "will be a family search that found no specialists",
+      "secondPersonText": "will be a family search that found no specialists"
     },
     {
       "id": "county-baron-predicate-003-past",
       "role": "predicate",
-      "text": "was a road map with a preferred destination",
+      "text": "was an alleged ten-billion-lei hole in the budget",
       "tags": [
-        "infrastructure"
+        "evidence",
+        "spending"
       ],
       "scorePreferences": {
         "substance": [
@@ -736,18 +752,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-predicate-003"
+      "tenseFamily": "county-baron-predicate-003",
+      "singularText": "was an alleged ten-billion-lei hole in the budget",
+      "pluralText": "were alleged ten-billion-lei holes in the budget",
+      "personalSingularText": "was an alleged ten-billion-lei hole in the budget",
+      "secondPersonText": "were an alleged ten-billion-lei hole in the budget"
     },
     {
       "id": "county-baron-predicate-003-present",
       "role": "predicate",
-      "text": "is a road map with a preferred destination",
-      "singularText": "is a road map with a preferred destination",
-      "pluralText": "are a road map with a preferred destination",
-      "personalSingularText": "is a road map with a preferred destination",
-      "secondPersonText": "is a road map with a preferred destination",
+      "text": "is an alleged ten-billion-lei hole in the budget",
+      "singularText": "is an alleged ten-billion-lei hole in the budget",
+      "pluralText": "are alleged ten-billion-lei holes in the budget",
+      "personalSingularText": "is an alleged ten-billion-lei hole in the budget",
+      "secondPersonText": "are an alleged ten-billion-lei hole in the budget",
       "tags": [
-        "infrastructure"
+        "evidence",
+        "spending"
       ],
       "scorePreferences": {
         "substance": [
@@ -767,9 +788,10 @@
     {
       "id": "county-baron-predicate-003-future",
       "role": "predicate",
-      "text": "will be a road map with a preferred destination",
+      "text": "will be an alleged ten-billion-lei hole in the budget",
       "tags": [
-        "infrastructure"
+        "evidence",
+        "spending"
       ],
       "scorePreferences": {
         "substance": [
@@ -784,14 +806,19 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-predicate-003"
+      "tenseFamily": "county-baron-predicate-003",
+      "singularText": "will be an alleged ten-billion-lei hole in the budget",
+      "pluralText": "will be alleged ten-billion-lei holes in the budget",
+      "personalSingularText": "will be an alleged ten-billion-lei hole in the budget",
+      "secondPersonText": "will be an alleged ten-billion-lei hole in the budget"
     },
     {
       "id": "county-baron-predicate-004-past",
       "role": "predicate",
-      "text": "was a grant wearing a ceremonial bow",
+      "text": "was a suitcase whose contents are supposedly unknown",
       "tags": [
-        "nepotism"
+        "transparency",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -806,18 +833,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "county-baron-predicate-004"
+      "tenseFamily": "county-baron-predicate-004",
+      "singularText": "was a suitcase whose contents are supposedly unknown",
+      "pluralText": "were suitcases whose contents are supposedly unknown",
+      "personalSingularText": "was a suitcase whose contents are supposedly unknown",
+      "secondPersonText": "were a suitcase whose contents are supposedly unknown"
     },
     {
       "id": "county-baron-predicate-004-present",
       "role": "predicate",
-      "text": "is a grant wearing a ceremonial bow",
-      "singularText": "is a grant wearing a ceremonial bow",
-      "pluralText": "are a grant wearing a ceremonial bow",
-      "personalSingularText": "is a grant wearing a ceremonial bow",
-      "secondPersonText": "is a grant wearing a ceremonial bow",
+      "text": "is a suitcase whose contents are supposedly unknown",
+      "singularText": "is a suitcase whose contents are supposedly unknown",
+      "pluralText": "are suitcases whose contents are supposedly unknown",
+      "personalSingularText": "is a suitcase whose contents are supposedly unknown",
+      "secondPersonText": "are a suitcase whose contents are supposedly unknown",
       "tags": [
-        "nepotism"
+        "transparency",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -837,9 +869,10 @@
     {
       "id": "county-baron-predicate-004-future",
       "role": "predicate",
-      "text": "will be a grant wearing a ceremonial bow",
+      "text": "will be a suitcase whose contents are supposedly unknown",
       "tags": [
-        "nepotism"
+        "transparency",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -854,23 +887,26 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "county-baron-predicate-004"
+      "tenseFamily": "county-baron-predicate-004",
+      "singularText": "will be a suitcase whose contents are supposedly unknown",
+      "pluralText": "will be suitcases whose contents are supposedly unknown",
+      "personalSingularText": "will be a suitcase whose contents are supposedly unknown",
+      "secondPersonText": "will be a suitcase whose contents are supposedly unknown"
     },
     {
       "id": "county-baron-modifier-003",
       "role": "modifier",
       "text": "under-a-family-seating-plan",
-      "tags": [
-        "nepotism"
-      ],
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "county-baron-ending-003",
       "role": "ending",
-      "text": "and the ribbon led to the cousin.",
+      "text": "and the alleged budget hole reaches ten billion lei.",
       "tags": [
-        "nepotism"
+        "evidence",
+        "spending"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -878,9 +914,10 @@
     {
       "id": "county-baron-ending-004",
       "role": "ending",
-      "text": "and the road arrived after dessert.",
+      "text": "and the suitcase supposedly has nothing to do with me.",
       "tags": [
-        "infrastructure"
+        "transparency",
+        "accountability"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -888,9 +925,10 @@
     {
       "id": "county-baron-ending-005",
       "role": "ending",
-      "text": "and the tender brought its own answer sheet.",
+      "text": "and nobody admits knowing what is in that suitcase.",
       "tags": [
-        "procurement"
+        "transparency",
+        "accountability"
       ],
       "rarity": "rare",
       "finisherBonus": 4

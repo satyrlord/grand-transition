@@ -137,6 +137,10 @@ It also does not accept protected-trait insults, sexual humiliation, and threats
   The visible card can be an accurate quote or a new fictional adaptation.
   The game must not show an adaptation as the words of the real speaker.
   Common nouns, verbs, conjunctions, and the continuation obey the general rule for invented phrases and real phrases.
+  Ordinary language is an exception to the source requirement: pronouns, family
+  members, basic relations, and simple connectors count as real without an
+  attributed statement. Milestone 034 records them as `generic-phrase` with no
+  source metadata. Do not replace generic vocabulary to increase quote coverage.
 - Each character owns one weak comeback line, one medium comeback line, and one strong comeback line, and no more.
   Each key uses `comeback.<character-id>.<tier>`, and a different character or tier cannot share it.
   There is no common comeback pool.
@@ -273,14 +277,11 @@ Content, localization, asset, simulation, and browser validation must pass befor
   It includes the negated copular forms `was not`, `is not`, and `will never be`, and the predicate `was a snitch`.
 
   Each phrase text and each agreement form that the player sees contains 11 or fewer words, when whitespace divides the words.
-  The stable `common-predicate-002` tense family renders three passive predicates.
-  They are `is dragged before the cameras`, `was dragged before the cameras`, and `will be dragged before the cameras`.
-  The `common-predicate-003` family renders `cheered for a Russian attack`, `cheers for a Russian attack`, and `will cheer for a Russian attack`.
-  The `common-predicate-004` family renders `harassed innocent
-  people on social media`, `harasses innocent people on social media`, and
-  `will harass innocent people on social media`.
-
-  The common ending `common-ending-010` renders `and most of your followers are bots.`
+  Quote research can replace authored relation and ending text while retaining
+  stable card IDs, complete tense families, and correct agreement forms.
+  The current wording and its private source record must agree with Milestone 034.
+  Grammar tests use explicit fixtures for rules that do not depend on the current
+  wording of an individual card.
 
   The only continuation is the card that all scenes and characters can use, and its cue for the player is always `[...]`.
   It stays neutral.

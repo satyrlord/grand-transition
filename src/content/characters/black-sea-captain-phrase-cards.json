@@ -50,17 +50,17 @@
     {
       "id": "black-sea-captain-noun-001",
       "role": "noun",
-      "text": "a hands-on presidency, hands on the microphone",
+      "text": "a resignation timed to five minutes",
       "tags": [
-        "consistency",
-        "decorum"
+        "commitment",
+        "accountability"
       ],
       "scoreGroups": {
         "substance": [
-          "bureaucracy"
+          "politics"
         ],
         "flavour": [
-          "command"
+          "procedure"
         ]
       },
       "rarity": "uncommon"
@@ -140,30 +140,25 @@
     {
       "id": "black-sea-captain-modifier-001",
       "role": "modifier",
-      "text": "with a snowplough booked for midsummer",
-      "tags": [
-        "competence",
-        "consistency"
-      ],
+      "text": "with winter still unlike summer",
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "black-sea-captain-ending-001",
       "role": "ending",
       "text": "and winter still refuses to act like summer.",
-      "tags": [
-        "consistency"
-      ],
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 3
     },
     {
       "id": "black-sea-captain-predicate-001-present",
       "role": "predicate",
-      "text": "announces victory before the lifeboat vote",
+      "text": "is a resignation promised five minutes after suspension",
       "tags": [
-        "consistency",
-        "decorum"
+        "commitment",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -176,18 +171,20 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "singularText": "announces victory before the lifeboat vote",
-      "pluralText": "announce victory before the lifeboat vote",
+      "singularText": "is a resignation promised five minutes after suspension",
+      "pluralText": "are resignations promised five minutes after suspension",
       "tense": "present",
-      "tenseFamily": "black-sea-captain-predicate-001"
+      "tenseFamily": "black-sea-captain-predicate-001",
+      "personalSingularText": "is a resignation promised five minutes after suspension",
+      "secondPersonText": "are a resignation promised five minutes after suspension"
     },
     {
       "id": "black-sea-captain-predicate-001-past",
       "role": "predicate",
-      "text": "announced victory before the lifeboat vote",
+      "text": "was a resignation promised five minutes after suspension",
       "tags": [
-        "consistency",
-        "decorum"
+        "commitment",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -200,18 +197,20 @@
         "flavour": []
       },
       "rarity": "common",
-      "singularText": "announced victory before the lifeboat vote",
-      "pluralText": "announced victory before the lifeboat vote",
+      "singularText": "was a resignation promised five minutes after suspension",
+      "pluralText": "were resignations promised five minutes after suspension",
       "tense": "past",
-      "tenseFamily": "black-sea-captain-predicate-001"
+      "tenseFamily": "black-sea-captain-predicate-001",
+      "personalSingularText": "was a resignation promised five minutes after suspension",
+      "secondPersonText": "were a resignation promised five minutes after suspension"
     },
     {
       "id": "black-sea-captain-predicate-001-future",
       "role": "predicate",
-      "text": "will announce victory before the lifeboat vote",
+      "text": "will be a resignation promised five minutes after suspension",
       "tags": [
-        "consistency",
-        "decorum"
+        "commitment",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -224,10 +223,12 @@
         "flavour": []
       },
       "rarity": "rare",
-      "singularText": "will announce victory before the lifeboat vote",
-      "pluralText": "will announce victory before the lifeboat vote",
+      "singularText": "will be a resignation promised five minutes after suspension",
+      "pluralText": "will be resignations promised five minutes after suspension",
       "tense": "future",
-      "tenseFamily": "black-sea-captain-predicate-001"
+      "tenseFamily": "black-sea-captain-predicate-001",
+      "personalSingularText": "will be a resignation promised five minutes after suspension",
+      "secondPersonText": "will be a resignation promised five minutes after suspension"
     },
     {
       "id": "black-sea-captain-noun-002",
@@ -384,14 +385,14 @@
     {
       "id": "black-sea-captain-predicate-002-present",
       "role": "predicate",
-      "text": "cannot steer its own party around a puddle",
-      "singularText": "cannot steer its own party around a puddle",
-      "pluralText": "cannot steer their own party around a puddle",
-      "personalSingularText": "cannot steer their own party around a puddle",
-      "secondPersonText": "cannot steer your own party around a puddle",
+      "text": "is a corrupt system brought to the surface",
+      "singularText": "is a corrupt system brought to the surface",
+      "pluralText": "are corrupt systems brought to the surface",
+      "personalSingularText": "is a corrupt system brought to the surface",
+      "secondPersonText": "are a corrupt system brought to the surface",
       "tags": [
-        "competence",
-        "consistency"
+        "corruption",
+        "transparency"
       ],
       "scorePreferences": {
         "substance": [
@@ -412,14 +413,14 @@
     {
       "id": "black-sea-captain-predicate-002-past",
       "role": "predicate",
-      "text": "could not steer its own party around a puddle",
-      "singularText": "could not steer its own party around a puddle",
-      "pluralText": "could not steer their own party around a puddle",
-      "personalSingularText": "could not steer their own party around a puddle",
-      "secondPersonText": "could not steer your own party around a puddle",
+      "text": "was a corrupt system brought to the surface",
+      "singularText": "was a corrupt system brought to the surface",
+      "pluralText": "were corrupt systems brought to the surface",
+      "personalSingularText": "was a corrupt system brought to the surface",
+      "secondPersonText": "were a corrupt system brought to the surface",
       "tags": [
-        "competence",
-        "consistency"
+        "corruption",
+        "transparency"
       ],
       "scorePreferences": {
         "substance": [
@@ -440,14 +441,14 @@
     {
       "id": "black-sea-captain-predicate-002-future",
       "role": "predicate",
-      "text": "will not steer its own party around a puddle",
-      "singularText": "will not steer its own party around a puddle",
-      "pluralText": "will not steer their own party around a puddle",
-      "personalSingularText": "will not steer their own party around a puddle",
-      "secondPersonText": "will not steer your own party around a puddle",
+      "text": "will be a corrupt system brought to the surface",
+      "singularText": "will be a corrupt system brought to the surface",
+      "pluralText": "will be corrupt systems brought to the surface",
+      "personalSingularText": "will be a corrupt system brought to the surface",
+      "secondPersonText": "will be a corrupt system brought to the surface",
       "tags": [
-        "competence",
-        "consistency"
+        "corruption",
+        "transparency"
       ],
       "scorePreferences": {
         "substance": [
@@ -468,9 +469,10 @@
     {
       "id": "black-sea-captain-ending-002",
       "role": "ending",
-      "text": "and the ballot box wants a lifejacket.",
+      "text": "and suspension should trigger resignation within five minutes.",
       "tags": [
-        "competence"
+        "commitment",
+        "accountability"
       ],
       "rarity": "rare",
       "finisherBonus": 3
@@ -507,32 +509,27 @@
       "id": "black-sea-captain-noun-007",
       "role": "noun",
       "text": "winter unlike summer",
-      "tags": [
-        "decorum"
-      ],
+      "tags": [],
       "scoreGroups": {
-        "substance": [
-          "media"
-        ],
-        "flavour": [
-          "sea"
-        ]
+        "substance": [],
+        "flavour": []
       },
       "rarity": "common"
     },
     {
       "id": "black-sea-captain-noun-008",
       "role": "noun",
-      "text": "a campaign promise full of holes",
+      "text": "the corrupt system above the surface",
       "tags": [
-        "consistency"
+        "corruption",
+        "transparency"
       ],
       "scoreGroups": {
         "substance": [
-          "media"
+          "politics"
         ],
         "flavour": [
-          "sea"
+          "accusation"
         ]
       },
       "rarity": "uncommon"
@@ -540,16 +537,17 @@
     {
       "id": "black-sea-captain-noun-009",
       "role": "noun",
-      "text": "a ballot with a weather excuse",
+      "text": "a vote too important for a rain excuse",
       "tags": [
-        "securitate"
+        "electoral",
+        "accountability"
       ],
       "scoreGroups": {
         "substance": [
-          "media"
+          "electoral"
         ],
         "flavour": [
-          "sea"
+          "campaign"
         ]
       },
       "rarity": "rare"
@@ -557,16 +555,17 @@
     {
       "id": "black-sea-captain-noun-010",
       "role": "noun",
-      "text": "a lifejacket for a winter vote",
+      "text": "five silent years after skipping the ballot",
       "tags": [
-        "decorum"
+        "electoral",
+        "accountability"
       ],
       "scoreGroups": {
         "substance": [
-          "media"
+          "electoral"
         ],
         "flavour": [
-          "sea"
+          "campaign"
         ]
       },
       "rarity": "common"
@@ -645,9 +644,7 @@
       "id": "black-sea-captain-predicate-003-past",
       "role": "predicate",
       "text": "was winter refusing to act like summer",
-      "tags": [
-        "decorum"
-      ],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -661,7 +658,11 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "black-sea-captain-predicate-003"
+      "tenseFamily": "black-sea-captain-predicate-003",
+      "singularText": "was winter refusing to act like summer",
+      "pluralText": "were winter refusing to act like summer",
+      "personalSingularText": "was winter refusing to act like summer",
+      "secondPersonText": "were winter refusing to act like summer"
     },
     {
       "id": "black-sea-captain-predicate-003-present",
@@ -671,9 +672,7 @@
       "pluralText": "are winter refusing to act like summer",
       "personalSingularText": "is winter refusing to act like summer",
       "secondPersonText": "are winter refusing to act like summer",
-      "tags": [
-        "decorum"
-      ],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -693,9 +692,7 @@
       "id": "black-sea-captain-predicate-003-future",
       "role": "predicate",
       "text": "will be winter refusing to act like summer",
-      "tags": [
-        "decorum"
-      ],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -709,14 +706,19 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "black-sea-captain-predicate-003"
+      "tenseFamily": "black-sea-captain-predicate-003",
+      "singularText": "will be winter refusing to act like summer",
+      "pluralText": "will be winter refusing to act like summer",
+      "personalSingularText": "will be winter refusing to act like summer",
+      "secondPersonText": "will be winter refusing to act like summer"
     },
     {
       "id": "black-sea-captain-predicate-004-past",
       "role": "predicate",
-      "text": "was a navy of one borrowed boat",
+      "text": "was five years of silence for not voting",
       "tags": [
-        "consistency"
+        "electoral",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -731,18 +733,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "black-sea-captain-predicate-004"
+      "tenseFamily": "black-sea-captain-predicate-004",
+      "singularText": "was five years of silence for not voting",
+      "pluralText": "were five years of silence for not voting",
+      "personalSingularText": "was five years of silence for not voting",
+      "secondPersonText": "were five years of silence for not voting"
     },
     {
       "id": "black-sea-captain-predicate-004-present",
       "role": "predicate",
-      "text": "is a navy of one borrowed boat",
-      "singularText": "is a navy of one borrowed boat",
-      "pluralText": "are a navy of one borrowed boat",
-      "personalSingularText": "is a navy of one borrowed boat",
-      "secondPersonText": "is a navy of one borrowed boat",
+      "text": "is five years of silence for not voting",
+      "singularText": "is five years of silence for not voting",
+      "pluralText": "are five years of silence for not voting",
+      "personalSingularText": "is five years of silence for not voting",
+      "secondPersonText": "are five years of silence for not voting",
       "tags": [
-        "consistency"
+        "electoral",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -762,9 +769,10 @@
     {
       "id": "black-sea-captain-predicate-004-future",
       "role": "predicate",
-      "text": "will be a navy of one borrowed boat",
+      "text": "will be five years of silence for not voting",
       "tags": [
-        "consistency"
+        "electoral",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -779,14 +787,19 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "black-sea-captain-predicate-004"
+      "tenseFamily": "black-sea-captain-predicate-004",
+      "singularText": "will be five years of silence for not voting",
+      "pluralText": "will be five years of silence for not voting",
+      "personalSingularText": "will be five years of silence for not voting",
+      "secondPersonText": "will be five years of silence for not voting"
     },
     {
       "id": "black-sea-captain-modifier-002",
       "role": "modifier",
-      "text": "beneath-a-summer-excuse",
+      "text": "within five minutes of a suspension vote",
       "tags": [
-        "consistency"
+        "commitment",
+        "accountability"
       ],
       "rarity": "uncommon"
     },
@@ -794,17 +807,16 @@
       "id": "black-sea-captain-modifier-003",
       "role": "modifier",
       "text": "with-both-hands-on-the-microphone",
-      "tags": [
-        "decorum"
-      ],
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "black-sea-captain-ending-003",
       "role": "ending",
-      "text": "and winter refused to sign the minutes.",
+      "text": "and skipping the vote should mean five silent years.",
       "tags": [
-        "consistency"
+        "electoral",
+        "accountability"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -812,9 +824,10 @@
     {
       "id": "black-sea-captain-ending-004",
       "role": "ending",
-      "text": "and the ballot box requested a lifejacket.",
+      "text": "and the corrupt system is now on the surface.",
       "tags": [
-        "decorum"
+        "corruption",
+        "transparency"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -822,9 +835,10 @@
     {
       "id": "black-sea-captain-ending-005",
       "role": "ending",
-      "text": "and the tide filed a correction.",
+      "text": "and a little rain is no excuse for abstention.",
       "tags": [
-        "securitate"
+        "electoral",
+        "accountability"
       ],
       "rarity": "rare",
       "finisherBonus": 4

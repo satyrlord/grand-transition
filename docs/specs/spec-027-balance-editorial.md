@@ -50,6 +50,11 @@ This includes each scene-restricted common card and each character-owned card.
 Record the difference privately.
 
 For each generated common expansion or character expansion, use a target of approximately 50/50 between authentic adaptations and fully fictional lines.
+Milestone 034 additionally requires non-invented reveal records for at least half
+of all shipped card IDs. Verified quotes, slogans, and ordinary-language cards
+count toward this minimum. Ordinary language is exempt from attributed-source
+requirements. Report it separately from sourced quotes. This whole-catalog
+minimum includes scene cards and is not limited to one expansion.
 An authentic adaptation keeps a documented quote, or its meaning, visible in the shipped wording.
 A new joke from a source that does not keep that wording stays fictional.
 Measure each expansion set independently.

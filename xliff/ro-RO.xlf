@@ -1402,9 +1402,17 @@
   <source>Your score</source>
   <target>Scorul tău</target>
 </trans-unit>
-<trans-unit id="s1a8f05505feb37a2">
-  <source>No phrase in this match comes from real speech.</source>
-  <target>Nicio expresie din acest meci nu vine dintr-o declarație reală.</target>
+<trans-unit id="s5daf9b7f173eed2f">
+  <source>Everyday phrase</source>
+  <target>Expresie obișnuită</target>
+</trans-unit>
+<trans-unit id="sa6d1759671187ebd">
+  <source>Online interview</source>
+  <target>Interviu online</target>
+</trans-unit>
+<trans-unit id="se5746499d51c6720">
+  <source>No sourced phrases are available for this match.</source>
+  <target>Nu sunt disponibile expresii cu sursă pentru acest meci.</target>
 </trans-unit>
 </body>
 </file>

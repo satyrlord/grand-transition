@@ -73,21 +73,16 @@
     {
       "id": "retiring-cassandra-modifier-001",
       "role": "modifier",
-      "text": "while hope updates its resignation letter",
-      "tags": [
-        "competence",
-        "hope",
-        "results"
-      ],
+      "text": "without seeking a further mandate",
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "retiring-cassandra-ending-001",
       "role": "ending",
-      "text": "and your conscience has hired a spokesperson.",
+      "text": "and the public money belongs to the people.",
       "tags": [
-        "accountability",
-        "credibility"
+        "accountability"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -95,7 +90,7 @@
     {
       "id": "retiring-cassandra-ending-002",
       "role": "ending",
-      "text": "and your patriotism arrives in a removal van.",
+      "text": "and you cannot love a country while robbing it.",
       "tags": [
         "corruption"
       ],
@@ -126,13 +121,11 @@
     {
       "id": "retiring-cassandra-noun-003",
       "role": "noun",
-      "text": "a resignation draft older than the printer",
-      "tags": [
-        "hope"
-      ],
+      "text": "a refusal to seek another mandate",
+      "tags": [],
       "scoreGroups": {
         "substance": [
-          "bureaucracy"
+          "electoral"
         ],
         "flavour": [
           "politics"
@@ -146,9 +139,10 @@
     {
       "id": "retiring-cassandra-noun-004",
       "role": "noun",
-      "text": "a disaster postponed to the next item",
+      "text": "a state captured by private interests",
       "tags": [
-        "competence"
+        "corruption",
+        "influence"
       ],
       "scoreGroups": {
         "substance": [
@@ -405,15 +399,12 @@
     {
       "id": "retiring-cassandra-predicate-001-past",
       "role": "predicate",
-      "text": "packed the emergency plan in a farewell hamper",
-      "singularText": "packed the emergency plan in a farewell hamper",
-      "pluralText": "packed the emergency plan in a farewell hamper",
-      "personalSingularText": "packed the emergency plan in a farewell hamper",
-      "secondPersonText": "packed the emergency plan in a farewell hamper",
-      "tags": [
-        "hope",
-        "results"
-      ],
+      "text": "refused to seek another term",
+      "singularText": "refused to seek another term",
+      "pluralText": "refused to seek another term",
+      "personalSingularText": "refused to seek another term",
+      "secondPersonText": "refused to seek another term",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -434,15 +425,12 @@
     {
       "id": "retiring-cassandra-predicate-001-present",
       "role": "predicate",
-      "text": "packs the emergency plan in a farewell hamper",
-      "singularText": "packs the emergency plan in a farewell hamper",
-      "pluralText": "pack the emergency plan in a farewell hamper",
-      "personalSingularText": "packs the emergency plan in a farewell hamper",
-      "secondPersonText": "pack the emergency plan in a farewell hamper",
-      "tags": [
-        "hope",
-        "results"
-      ],
+      "text": "refuses to seek another term",
+      "singularText": "refuses to seek another term",
+      "pluralText": "refuse to seek another term",
+      "personalSingularText": "refuses to seek another term",
+      "secondPersonText": "refuse to seek another term",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -463,15 +451,12 @@
     {
       "id": "retiring-cassandra-predicate-001-future",
       "role": "predicate",
-      "text": "will pack the emergency plan in a farewell hamper",
-      "singularText": "will pack the emergency plan in a farewell hamper",
-      "pluralText": "will pack the emergency plan in a farewell hamper",
-      "personalSingularText": "will pack the emergency plan in a farewell hamper",
-      "secondPersonText": "will pack the emergency plan in a farewell hamper",
-      "tags": [
-        "hope",
-        "results"
-      ],
+      "text": "will refuse to seek another term",
+      "singularText": "will refuse to seek another term",
+      "pluralText": "will refuse to seek another term",
+      "personalSingularText": "will refuse to seek another term",
+      "secondPersonText": "will refuse to seek another term",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -492,10 +477,9 @@
     {
       "id": "retiring-cassandra-modifier-002",
       "role": "modifier",
-      "text": "after the third rehearsal of the disaster",
+      "text": "with stolen public money returned",
       "tags": [
-        "competence",
-        "results"
+        "corruption"
       ],
       "rarity": "uncommon"
     },
@@ -648,9 +632,9 @@
     {
       "id": "retiring-cassandra-predicate-002-past",
       "role": "predicate",
-      "text": "was a final question awaiting competence",
+      "text": "said that stolen money must come back",
       "tags": [
-        "competence"
+        "corruption"
       ],
       "scorePreferences": {
         "substance": [
@@ -665,18 +649,22 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-predicate-002"
+      "tenseFamily": "retiring-cassandra-predicate-002",
+      "singularText": "said that stolen money must come back",
+      "pluralText": "said that stolen money must come back",
+      "personalSingularText": "said that stolen money must come back",
+      "secondPersonText": "said that stolen money must come back"
     },
     {
       "id": "retiring-cassandra-predicate-002-present",
       "role": "predicate",
-      "text": "is a final question awaiting competence",
-      "singularText": "is a final question awaiting competence",
-      "pluralText": "are a final question awaiting competence",
-      "personalSingularText": "is a final question awaiting competence",
-      "secondPersonText": "are a final question awaiting competence",
+      "text": "says that stolen money must come back",
+      "singularText": "says that stolen money must come back",
+      "pluralText": "say that stolen money must come back",
+      "personalSingularText": "says that stolen money must come back",
+      "secondPersonText": "say that stolen money must come back",
       "tags": [
-        "competence"
+        "corruption"
       ],
       "scorePreferences": {
         "substance": [
@@ -696,9 +684,9 @@
     {
       "id": "retiring-cassandra-predicate-002-future",
       "role": "predicate",
-      "text": "will be a final question awaiting competence",
+      "text": "will say that stolen money must come back",
       "tags": [
-        "competence"
+        "corruption"
       ],
       "scorePreferences": {
         "substance": [
@@ -713,7 +701,11 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "retiring-cassandra-predicate-002"
+      "tenseFamily": "retiring-cassandra-predicate-002",
+      "singularText": "will say that stolen money must come back",
+      "pluralText": "will say that stolen money must come back",
+      "personalSingularText": "will say that stolen money must come back",
+      "secondPersonText": "will say that stolen money must come back"
     },
     {
       "id": "retiring-cassandra-predicate-003-past",
@@ -735,7 +727,11 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-predicate-003"
+      "tenseFamily": "retiring-cassandra-predicate-003",
+      "singularText": "was a result wearing a sensible coat",
+      "personalSingularText": "was a result wearing a sensible coat",
+      "pluralText": "were a result wearing a sensible coat",
+      "secondPersonText": "were a result wearing a sensible coat"
     },
     {
       "id": "retiring-cassandra-predicate-003-present",
@@ -744,7 +740,7 @@
       "singularText": "is a result wearing a sensible coat",
       "pluralText": "are a result wearing a sensible coat",
       "personalSingularText": "is a result wearing a sensible coat",
-      "secondPersonText": "is a result wearing a sensible coat",
+      "secondPersonText": "are a result wearing a sensible coat",
       "tags": [
         "hope"
       ],
@@ -788,9 +784,9 @@
     {
       "id": "retiring-cassandra-predicate-004-past",
       "role": "predicate",
-      "text": "was a hopeful delay with paperwork",
+      "text": "made promises for politicians who broke them",
       "tags": [
-        "results"
+        "credibility"
       ],
       "scorePreferences": {
         "substance": [
@@ -805,18 +801,22 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "retiring-cassandra-predicate-004"
+      "tenseFamily": "retiring-cassandra-predicate-004",
+      "singularText": "made promises for politicians who broke them",
+      "pluralText": "made promises for politicians who broke them",
+      "personalSingularText": "made promises for politicians who broke them",
+      "secondPersonText": "made promises for politicians who broke them"
     },
     {
       "id": "retiring-cassandra-predicate-004-present",
       "role": "predicate",
-      "text": "is a hopeful delay with paperwork",
-      "singularText": "is a hopeful delay with paperwork",
-      "pluralText": "are a hopeful delay with paperwork",
-      "personalSingularText": "is a hopeful delay with paperwork",
-      "secondPersonText": "is a hopeful delay with paperwork",
+      "text": "makes promises for politicians who break them",
+      "singularText": "makes promises for politicians who break them",
+      "pluralText": "make promises for politicians who break them",
+      "personalSingularText": "makes promises for politicians who break them",
+      "secondPersonText": "make promises for politicians who break them",
       "tags": [
-        "results"
+        "credibility"
       ],
       "scorePreferences": {
         "substance": [
@@ -836,9 +836,9 @@
     {
       "id": "retiring-cassandra-predicate-004-future",
       "role": "predicate",
-      "text": "will be a hopeful delay with paperwork",
+      "text": "will make promises for politicians who break them",
       "tags": [
-        "results"
+        "credibility"
       ],
       "scorePreferences": {
         "substance": [
@@ -853,7 +853,11 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "retiring-cassandra-predicate-004"
+      "tenseFamily": "retiring-cassandra-predicate-004",
+      "singularText": "will make promises for politicians who break them",
+      "pluralText": "will make promises for politicians who break them",
+      "personalSingularText": "will make promises for politicians who break them",
+      "secondPersonText": "will make promises for politicians who break them"
     },
     {
       "id": "retiring-cassandra-modifier-003",
@@ -867,10 +871,8 @@
     {
       "id": "retiring-cassandra-ending-003",
       "role": "ending",
-      "text": "and the result finally found the door.",
-      "tags": [
-        "results"
-      ],
+      "text": "and I need no parliamentary immunity.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     },
@@ -887,7 +889,7 @@
     {
       "id": "retiring-cassandra-ending-005",
       "role": "ending",
-      "text": "and hope arrived before the ribbon.",
+      "text": "and one willing person is enough to start.",
       "tags": [
         "hope"
       ],

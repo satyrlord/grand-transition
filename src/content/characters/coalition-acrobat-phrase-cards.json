@@ -68,34 +68,25 @@
     {
       "id": "coalition-acrobat-modifier-001",
       "role": "modifier",
-      "text": "while yesterday's promise changes its lining",
-      "tags": [
-        "consistency",
-        "memory",
-        "commitment"
-      ],
+      "text": "like cash and leather jackets that stay fashionable",
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "coalition-acrobat-ending-001",
       "role": "ending",
-      "text": "and the coalition changed partners, kept the wallet.",
-      "tags": [
-        "consistency",
-        "memory",
-        "commitment"
-      ],
+      "text": "and the leather jacket still stays in fashion.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     },
     {
       "id": "coalition-acrobat-ending-002",
       "role": "ending",
-      "text": "and our clean slate still has your fingerprints.",
+      "text": "and the entire coalition starts again from zero.",
       "tags": [
-        "consistency",
-        "memory",
-        "commitment"
+        "commitment",
+        "consistency"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -397,14 +388,12 @@
     {
       "id": "coalition-acrobat-predicate-001-past",
       "role": "predicate",
-      "text": "was loyal until the lunch invitations arrived",
-      "tags": [
-        "commitment"
-      ],
-      "singularText": "was loyal until the lunch invitations arrived",
-      "pluralText": "were loyal until the lunch invitations arrived",
-      "personalSingularText": "was loyal until the lunch invitations arrived",
-      "secondPersonText": "were loyal until the lunch invitations arrived",
+      "text": "was cash that never goes out of style",
+      "tags": [],
+      "singularText": "was cash that never goes out of style",
+      "pluralText": "were cash that never goes out of style",
+      "personalSingularText": "was cash that never goes out of style",
+      "secondPersonText": "were cash that never goes out of style",
       "tense": "past",
       "tenseFamily": "coalition-acrobat-predicate-001",
       "scorePreferences": {
@@ -425,14 +414,12 @@
     {
       "id": "coalition-acrobat-predicate-001-present",
       "role": "predicate",
-      "text": "is loyal until the lunch invitations arrive",
-      "tags": [
-        "commitment"
-      ],
-      "singularText": "is loyal until the lunch invitations arrive",
-      "pluralText": "are loyal until the lunch invitations arrive",
-      "personalSingularText": "is loyal until the lunch invitations arrive",
-      "secondPersonText": "are loyal until the lunch invitations arrive",
+      "text": "is cash that never goes out of style",
+      "tags": [],
+      "singularText": "is cash that never goes out of style",
+      "pluralText": "are cash that never goes out of style",
+      "personalSingularText": "is cash that never goes out of style",
+      "secondPersonText": "are cash that never goes out of style",
       "tense": "present",
       "tenseFamily": "coalition-acrobat-predicate-001",
       "scorePreferences": {
@@ -453,14 +440,12 @@
     {
       "id": "coalition-acrobat-predicate-001-future",
       "role": "predicate",
-      "text": "will be loyal until the lunch invitations arrive",
-      "tags": [
-        "commitment"
-      ],
-      "singularText": "will be loyal until the lunch invitations arrive",
-      "pluralText": "will be loyal until the lunch invitations arrive",
-      "personalSingularText": "will be loyal until the lunch invitations arrive",
-      "secondPersonText": "will be loyal until the lunch invitations arrive",
+      "text": "will be cash that never goes out of style",
+      "tags": [],
+      "singularText": "will be cash that never goes out of style",
+      "pluralText": "will be cash that never goes out of style",
+      "personalSingularText": "will be cash that never goes out of style",
+      "secondPersonText": "will be cash that never goes out of style",
       "tense": "future",
       "tenseFamily": "coalition-acrobat-predicate-001",
       "scorePreferences": {
@@ -481,9 +466,10 @@
     {
       "id": "coalition-acrobat-modifier-002",
       "role": "modifier",
-      "text": "under an oath with a reversible cover",
+      "text": "with coalition talks starting from a clean slate",
       "tags": [
-        "commitment"
+        "commitment",
+        "consistency"
       ],
       "rarity": "uncommon"
     },
@@ -499,16 +485,10 @@
       "id": "coalition-acrobat-noun-007",
       "role": "noun",
       "text": "a leather jacket",
-      "tags": [
-        "consistency"
-      ],
+      "tags": [],
       "scoreGroups": {
-        "substance": [
-          "coalition"
-        ],
-        "flavour": [
-          "politics"
-        ]
+        "substance": [],
+        "flavour": []
       },
       "rarity": "common"
     },
@@ -516,15 +496,13 @@
       "id": "coalition-acrobat-noun-008",
       "role": "noun",
       "text": "cash that never goes out of fashion",
-      "tags": [
-        "memory"
-      ],
+      "tags": [],
       "scoreGroups": {
         "substance": [
-          "coalition"
+          "wealth"
         ],
         "flavour": [
-          "politics"
+          "status"
         ]
       },
       "rarity": "uncommon"
@@ -532,16 +510,17 @@
     {
       "id": "coalition-acrobat-noun-009",
       "role": "noun",
-      "text": "a clean slate with yesterday's signatures",
+      "text": "a refusal to oppose without a promise to support",
       "tags": [
-        "commitment"
+        "commitment",
+        "nuance"
       ],
       "scoreGroups": {
         "substance": [
           "coalition"
         ],
         "flavour": [
-          "politics"
+          "consensus"
         ]
       },
       "rarity": "rare"
@@ -551,6 +530,7 @@
       "role": "noun",
       "text": "a coalition starting from scratch",
       "tags": [
+        "commitment",
         "consistency"
       ],
       "scoreGroups": {
@@ -558,7 +538,7 @@
           "coalition"
         ],
         "flavour": [
-          "politics"
+          "consensus"
         ]
       },
       "rarity": "common"
@@ -636,8 +616,9 @@
     {
       "id": "coalition-acrobat-predicate-002-past",
       "role": "predicate",
-      "text": "was a fresh start with fingerprints",
+      "text": "was a coalition starting again from zero",
       "tags": [
+        "commitment",
         "consistency"
       ],
       "scorePreferences": {
@@ -653,17 +634,22 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "coalition-acrobat-predicate-002"
+      "tenseFamily": "coalition-acrobat-predicate-002",
+      "singularText": "was a coalition starting again from zero",
+      "pluralText": "were coalitions starting again from zero",
+      "personalSingularText": "was a coalition starting again from zero",
+      "secondPersonText": "were a coalition starting again from zero"
     },
     {
       "id": "coalition-acrobat-predicate-002-present",
       "role": "predicate",
-      "text": "is a fresh start with fingerprints",
-      "singularText": "is a fresh start with fingerprints",
-      "pluralText": "are a fresh start with fingerprints",
-      "personalSingularText": "is a fresh start with fingerprints",
-      "secondPersonText": "are a fresh start with fingerprints",
+      "text": "is a coalition starting again from zero",
+      "singularText": "is a coalition starting again from zero",
+      "pluralText": "are coalitions starting again from zero",
+      "personalSingularText": "is a coalition starting again from zero",
+      "secondPersonText": "are a coalition starting again from zero",
       "tags": [
+        "commitment",
         "consistency"
       ],
       "scorePreferences": {
@@ -684,8 +670,9 @@
     {
       "id": "coalition-acrobat-predicate-002-future",
       "role": "predicate",
-      "text": "will be a fresh start with fingerprints",
+      "text": "will be a coalition starting again from zero",
       "tags": [
+        "commitment",
         "consistency"
       ],
       "scorePreferences": {
@@ -701,14 +688,18 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "coalition-acrobat-predicate-002"
+      "tenseFamily": "coalition-acrobat-predicate-002",
+      "singularText": "will be a coalition starting again from zero",
+      "pluralText": "will be coalitions starting again from zero",
+      "personalSingularText": "will be a coalition starting again from zero",
+      "secondPersonText": "will be a coalition starting again from zero"
     },
     {
       "id": "coalition-acrobat-predicate-003-past",
       "role": "predicate",
-      "text": "was a coalition with a rehearsal date",
+      "text": "was a cat seeing a lion in the mirror",
       "tags": [
-        "memory"
+        "credibility"
       ],
       "scorePreferences": {
         "substance": [
@@ -723,18 +714,22 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "coalition-acrobat-predicate-003"
+      "tenseFamily": "coalition-acrobat-predicate-003",
+      "singularText": "was a cat seeing a lion in the mirror",
+      "pluralText": "were cats seeing lions in the mirror",
+      "personalSingularText": "was a cat seeing a lion in the mirror",
+      "secondPersonText": "were a cat seeing a lion in the mirror"
     },
     {
       "id": "coalition-acrobat-predicate-003-present",
       "role": "predicate",
-      "text": "is a coalition with a rehearsal date",
-      "singularText": "is a coalition with a rehearsal date",
-      "pluralText": "are a coalition with a rehearsal date",
-      "personalSingularText": "is a coalition with a rehearsal date",
-      "secondPersonText": "is a coalition with a rehearsal date",
+      "text": "is a cat seeing a lion in the mirror",
+      "singularText": "is a cat seeing a lion in the mirror",
+      "pluralText": "are cats seeing lions in the mirror",
+      "personalSingularText": "is a cat seeing a lion in the mirror",
+      "secondPersonText": "are a cat seeing a lion in the mirror",
       "tags": [
-        "memory"
+        "credibility"
       ],
       "scorePreferences": {
         "substance": [
@@ -754,9 +749,9 @@
     {
       "id": "coalition-acrobat-predicate-003-future",
       "role": "predicate",
-      "text": "will be a coalition with a rehearsal date",
+      "text": "will be a cat seeing a lion in the mirror",
       "tags": [
-        "memory"
+        "credibility"
       ],
       "scorePreferences": {
         "substance": [
@@ -771,14 +766,19 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "coalition-acrobat-predicate-003"
+      "tenseFamily": "coalition-acrobat-predicate-003",
+      "singularText": "will be a cat seeing a lion in the mirror",
+      "pluralText": "will be cats seeing lions in the mirror",
+      "personalSingularText": "will be a cat seeing a lion in the mirror",
+      "secondPersonText": "will be a cat seeing a lion in the mirror"
     },
     {
       "id": "coalition-acrobat-predicate-004-past",
       "role": "predicate",
-      "text": "was a mandate balancing on one foot",
+      "text": "was a promise of non-opposition without promised support",
       "tags": [
-        "commitment"
+        "commitment",
+        "nuance"
       ],
       "scorePreferences": {
         "substance": [
@@ -793,18 +793,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "coalition-acrobat-predicate-004"
+      "tenseFamily": "coalition-acrobat-predicate-004",
+      "singularText": "was a promise of non-opposition without promised support",
+      "pluralText": "were promises of non-opposition without promised support",
+      "personalSingularText": "was a promise of non-opposition without promised support",
+      "secondPersonText": "were a promise of non-opposition without promised support"
     },
     {
       "id": "coalition-acrobat-predicate-004-present",
       "role": "predicate",
-      "text": "is a mandate balancing on one foot",
-      "singularText": "is a mandate balancing on one foot",
-      "pluralText": "are a mandate balancing on one foot",
-      "personalSingularText": "is a mandate balancing on one foot",
-      "secondPersonText": "is a mandate balancing on one foot",
+      "text": "is a promise of non-opposition without promised support",
+      "singularText": "is a promise of non-opposition without promised support",
+      "pluralText": "are promises of non-opposition without promised support",
+      "personalSingularText": "is a promise of non-opposition without promised support",
+      "secondPersonText": "are a promise of non-opposition without promised support",
       "tags": [
-        "commitment"
+        "commitment",
+        "nuance"
       ],
       "scorePreferences": {
         "substance": [
@@ -824,9 +829,10 @@
     {
       "id": "coalition-acrobat-predicate-004-future",
       "role": "predicate",
-      "text": "will be a mandate balancing on one foot",
+      "text": "will be a promise of non-opposition without promised support",
       "tags": [
-        "commitment"
+        "commitment",
+        "nuance"
       ],
       "scorePreferences": {
         "substance": [
@@ -841,23 +847,27 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "coalition-acrobat-predicate-004"
+      "tenseFamily": "coalition-acrobat-predicate-004",
+      "singularText": "will be a promise of non-opposition without promised support",
+      "pluralText": "will be promises of non-opposition without promised support",
+      "personalSingularText": "will be a promise of non-opposition without promised support",
+      "secondPersonText": "will be a promise of non-opposition without promised support"
     },
     {
       "id": "coalition-acrobat-modifier-003",
       "role": "modifier",
-      "text": "between-two-identical-minutes",
+      "text": "like a cat admiring a lion in its mirror",
       "tags": [
-        "memory"
+        "credibility"
       ],
       "rarity": "uncommon"
     },
     {
       "id": "coalition-acrobat-ending-003",
       "role": "ending",
-      "text": "and the promise joined the other promise.",
+      "text": "and the mirror gives the cat a lion.",
       "tags": [
-        "consistency"
+        "credibility"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -865,9 +875,10 @@
     {
       "id": "coalition-acrobat-ending-004",
       "role": "ending",
-      "text": "and the coalition changed its choreography.",
+      "text": "and refusing opposition still promises no support.",
       "tags": [
-        "commitment"
+        "commitment",
+        "nuance"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -875,10 +886,8 @@
     {
       "id": "coalition-acrobat-ending-005",
       "role": "ending",
-      "text": "and the minutes remembered nothing.",
-      "tags": [
-        "memory"
-      ],
+      "text": "and cash never goes out of fashion either.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     }

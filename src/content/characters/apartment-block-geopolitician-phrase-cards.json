@@ -50,17 +50,18 @@
     {
       "id": "apartment-block-geopolitician-noun-001",
       "role": "noun",
-      "text": "my foreign-policy briefing from the popcorn bag",
+      "text": "a candidacy staked on completing a motorway",
       "tags": [
-        "sources",
-        "nuance"
+        "commitment",
+        "delivery"
       ],
       "scoreGroups": {
         "substance": [
-          "personal"
+          "electoral",
+          "infrastructure"
         ],
         "flavour": [
-          "politics"
+          "campaign"
         ]
       },
       "rarity": "common"
@@ -68,20 +69,16 @@
     {
       "id": "apartment-block-geopolitician-modifier-001",
       "role": "modifier",
-      "text": "according to an expired snack",
-      "tags": [
-        "sources",
-        "specificity"
-      ],
+      "text": "with popcorn and something cold to drink",
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "apartment-block-geopolitician-ending-001",
       "role": "ending",
-      "text": "and the crisis fits on my popcorn packet.",
+      "text": "and the first debate comes with popcorn.",
       "tags": [
-        "specificity",
-        "nuance"
+        "media"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -89,8 +86,11 @@
     {
       "id": "apartment-block-geopolitician-ending-002",
       "role": "ending",
-      "text": "and the exit poll beat the microwave.",
-      "tags": [],
+      "text": "and that bad joke was regretted immediately.",
+      "tags": [
+        "credibility",
+        "accountability"
+      ],
       "rarity": "rare",
       "finisherBonus": 4
     },
@@ -391,14 +391,14 @@
     {
       "id": "apartment-block-geopolitician-predicate-001-past",
       "role": "predicate",
-      "text": "was classified until the doorbell rang",
+      "text": "was a debate watched with popcorn",
       "tags": [
-        "sources"
+        "media"
       ],
-      "singularText": "was classified until the doorbell rang",
-      "pluralText": "were classified until the doorbell rang",
-      "personalSingularText": "was classified until the doorbell rang",
-      "secondPersonText": "were classified until the doorbell rang",
+      "singularText": "was a debate watched with popcorn",
+      "pluralText": "were debates watched with popcorn",
+      "personalSingularText": "was a debate watched with popcorn",
+      "secondPersonText": "were a debate watched with popcorn",
       "tense": "past",
       "tenseFamily": "apartment-block-geopolitician-predicate-001",
       "scorePreferences": {
@@ -419,14 +419,14 @@
     {
       "id": "apartment-block-geopolitician-predicate-001-present",
       "role": "predicate",
-      "text": "is classified until the doorbell rings",
+      "text": "is a debate watched with popcorn",
       "tags": [
-        "sources"
+        "media"
       ],
-      "singularText": "is classified until the doorbell rings",
-      "pluralText": "are classified until the doorbell rings",
-      "personalSingularText": "is classified until the doorbell rings",
-      "secondPersonText": "are classified until the doorbell rings",
+      "singularText": "is a debate watched with popcorn",
+      "pluralText": "are debates watched with popcorn",
+      "personalSingularText": "is a debate watched with popcorn",
+      "secondPersonText": "are a debate watched with popcorn",
       "tense": "present",
       "tenseFamily": "apartment-block-geopolitician-predicate-001",
       "scorePreferences": {
@@ -447,14 +447,14 @@
     {
       "id": "apartment-block-geopolitician-predicate-001-future",
       "role": "predicate",
-      "text": "will be classified until the doorbell rings",
+      "text": "will be a debate watched with popcorn",
       "tags": [
-        "sources"
+        "media"
       ],
-      "singularText": "will be classified until the doorbell rings",
-      "pluralText": "will be classified until the doorbell rings",
-      "personalSingularText": "will be classified until the doorbell rings",
-      "secondPersonText": "will be classified until the doorbell rings",
+      "singularText": "will be a debate watched with popcorn",
+      "pluralText": "will be debates watched with popcorn",
+      "personalSingularText": "will be a debate watched with popcorn",
+      "secondPersonText": "will be a debate watched with popcorn",
       "tense": "future",
       "tenseFamily": "apartment-block-geopolitician-predicate-001",
       "scorePreferences": {
@@ -475,9 +475,10 @@
     {
       "id": "apartment-block-geopolitician-modifier-002",
       "role": "modifier",
-      "text": "with a washing line as satellite evidence",
+      "text": "after admitting the popcorn joke was bad",
       "tags": [
-        "sources"
+        "credibility",
+        "accountability"
       ],
       "rarity": "uncommon"
     },
@@ -494,32 +495,27 @@
       "role": "noun",
       "text": "popcorn and a soft drink",
       "grammaticalNumber": "plural",
-      "tags": [
-        "sources"
-      ],
+      "tags": [],
       "scoreGroups": {
-        "substance": [
-          "personal"
-        ],
-        "flavour": [
-          "geopolitics"
-        ]
+        "substance": [],
+        "flavour": []
       },
       "rarity": "common"
     },
     {
       "id": "apartment-block-geopolitician-noun-008",
       "role": "noun",
-      "text": "a bad joke with a balcony view",
+      "text": "a regretted joke about watching the debate",
       "tags": [
-        "specificity"
+        "credibility",
+        "accountability"
       ],
       "scoreGroups": {
         "substance": [
-          "personal"
+          "media"
         ],
         "flavour": [
-          "geopolitics"
+          "oratory"
         ]
       },
       "rarity": "uncommon"
@@ -529,14 +525,14 @@
       "role": "noun",
       "text": "a 40-percent starting advantage",
       "tags": [
-        "nuance"
+        "electoral"
       ],
       "scoreGroups": {
         "substance": [
-          "personal"
+          "electoral"
         ],
         "flavour": [
-          "geopolitics"
+          "campaign"
         ]
       },
       "rarity": "rare"
@@ -633,7 +629,8 @@
       "role": "predicate",
       "text": "was a bad joke with a regret attached",
       "tags": [
-        "sources"
+        "credibility",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -648,18 +645,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "apartment-block-geopolitician-predicate-002"
+      "tenseFamily": "apartment-block-geopolitician-predicate-002",
+      "singularText": "was a bad joke with a regret attached",
+      "pluralText": "were bad jokes with regrets attached",
+      "personalSingularText": "was a bad joke with a regret attached",
+      "secondPersonText": "were a bad joke with a regret attached"
     },
     {
       "id": "apartment-block-geopolitician-predicate-002-present",
       "role": "predicate",
       "text": "is a bad joke with a regret attached",
       "singularText": "is a bad joke with a regret attached",
-      "pluralText": "are a bad joke with a regret attached",
+      "pluralText": "are bad jokes with regrets attached",
       "personalSingularText": "is a bad joke with a regret attached",
       "secondPersonText": "are a bad joke with a regret attached",
       "tags": [
-        "sources"
+        "credibility",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -681,7 +683,8 @@
       "role": "predicate",
       "text": "will be a bad joke with a regret attached",
       "tags": [
-        "sources"
+        "credibility",
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -696,14 +699,18 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "apartment-block-geopolitician-predicate-002"
+      "tenseFamily": "apartment-block-geopolitician-predicate-002",
+      "singularText": "will be a bad joke with a regret attached",
+      "pluralText": "will be bad jokes with regrets attached",
+      "personalSingularText": "will be a bad joke with a regret attached",
+      "secondPersonText": "will be a bad joke with a regret attached"
     },
     {
       "id": "apartment-block-geopolitician-predicate-003-past",
       "role": "predicate",
-      "text": "was an international incident in the laundry room",
+      "text": "was a forty-percent head start toward victory",
       "tags": [
-        "specificity"
+        "electoral"
       ],
       "scorePreferences": {
         "substance": [
@@ -718,18 +725,22 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "apartment-block-geopolitician-predicate-003"
+      "tenseFamily": "apartment-block-geopolitician-predicate-003",
+      "singularText": "was a forty-percent head start toward victory",
+      "pluralText": "were forty-percent head starts toward victory",
+      "personalSingularText": "was a forty-percent head start toward victory",
+      "secondPersonText": "were a forty-percent head start toward victory"
     },
     {
       "id": "apartment-block-geopolitician-predicate-003-present",
       "role": "predicate",
-      "text": "is an international incident in the laundry room",
-      "singularText": "is an international incident in the laundry room",
-      "pluralText": "are an international incident in the laundry room",
-      "personalSingularText": "is an international incident in the laundry room",
-      "secondPersonText": "is an international incident in the laundry room",
+      "text": "is a forty-percent head start toward victory",
+      "singularText": "is a forty-percent head start toward victory",
+      "pluralText": "are forty-percent head starts toward victory",
+      "personalSingularText": "is a forty-percent head start toward victory",
+      "secondPersonText": "are a forty-percent head start toward victory",
       "tags": [
-        "specificity"
+        "electoral"
       ],
       "scorePreferences": {
         "substance": [
@@ -749,9 +760,9 @@
     {
       "id": "apartment-block-geopolitician-predicate-003-future",
       "role": "predicate",
-      "text": "will be an international incident in the laundry room",
+      "text": "will be a forty-percent head start toward victory",
       "tags": [
-        "specificity"
+        "electoral"
       ],
       "scorePreferences": {
         "substance": [
@@ -766,14 +777,19 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "apartment-block-geopolitician-predicate-003"
+      "tenseFamily": "apartment-block-geopolitician-predicate-003",
+      "singularText": "will be a forty-percent head start toward victory",
+      "pluralText": "will be forty-percent head starts toward victory",
+      "personalSingularText": "will be a forty-percent head start toward victory",
+      "secondPersonText": "will be a forty-percent head start toward victory"
     },
     {
       "id": "apartment-block-geopolitician-predicate-004-past",
       "role": "predicate",
-      "text": "was a source with a lift key",
+      "text": "was a candidacy conditional on a finished motorway",
       "tags": [
-        "nuance"
+        "commitment",
+        "delivery"
       ],
       "scorePreferences": {
         "substance": [
@@ -788,18 +804,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "apartment-block-geopolitician-predicate-004"
+      "tenseFamily": "apartment-block-geopolitician-predicate-004",
+      "singularText": "was a candidacy conditional on a finished motorway",
+      "pluralText": "were candidacies conditional on finished motorways",
+      "personalSingularText": "was a candidacy conditional on a finished motorway",
+      "secondPersonText": "were a candidacy conditional on a finished motorway"
     },
     {
       "id": "apartment-block-geopolitician-predicate-004-present",
       "role": "predicate",
-      "text": "is a source with a lift key",
-      "singularText": "is a source with a lift key",
-      "pluralText": "are a source with a lift key",
-      "personalSingularText": "is a source with a lift key",
-      "secondPersonText": "is a source with a lift key",
+      "text": "is a candidacy conditional on a finished motorway",
+      "singularText": "is a candidacy conditional on a finished motorway",
+      "pluralText": "are candidacies conditional on finished motorways",
+      "personalSingularText": "is a candidacy conditional on a finished motorway",
+      "secondPersonText": "are a candidacy conditional on a finished motorway",
       "tags": [
-        "nuance"
+        "commitment",
+        "delivery"
       ],
       "scorePreferences": {
         "substance": [
@@ -819,9 +840,10 @@
     {
       "id": "apartment-block-geopolitician-predicate-004-future",
       "role": "predicate",
-      "text": "will be a source with a lift key",
+      "text": "will be a candidacy conditional on a finished motorway",
       "tags": [
-        "nuance"
+        "commitment",
+        "delivery"
       ],
       "scorePreferences": {
         "substance": [
@@ -836,24 +858,27 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "apartment-block-geopolitician-predicate-004"
+      "tenseFamily": "apartment-block-geopolitician-predicate-004",
+      "singularText": "will be a candidacy conditional on a finished motorway",
+      "pluralText": "will be candidacies conditional on finished motorways",
+      "personalSingularText": "will be a candidacy conditional on a finished motorway",
+      "secondPersonText": "will be a candidacy conditional on a finished motorway"
     },
     {
       "id": "apartment-block-geopolitician-modifier-003",
       "role": "modifier",
-      "text": "according-to-a-balcony-referendum",
+      "text": "with forty percent already counted as the start",
       "tags": [
-        "sources"
+        "electoral"
       ],
       "rarity": "uncommon"
     },
     {
       "id": "apartment-block-geopolitician-ending-003",
       "role": "ending",
-      "text": "and the lift reached a diplomatic compromise.",
+      "text": "and forty percent is only the starting advantage.",
       "tags": [
-        "sources",
-        "nuance"
+        "electoral"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -861,10 +886,9 @@
     {
       "id": "apartment-block-geopolitician-ending-004",
       "role": "ending",
-      "text": "and the balcony source requested anonymity.",
+      "text": "and ten more percent should finish the job.",
       "tags": [
-        "sources",
-        "specificity"
+        "electoral"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -872,9 +896,10 @@
     {
       "id": "apartment-block-geopolitician-ending-005",
       "role": "ending",
-      "text": "and the map folded itself.",
+      "text": "and no finished motorway means no new candidacy.",
       "tags": [
-        "nuance"
+        "commitment",
+        "delivery"
       ],
       "rarity": "rare",
       "finisherBonus": 4

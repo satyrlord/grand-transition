@@ -15,6 +15,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { styleText } from 'node:util';
 import {
+  isSourcedQuoteReveal,
   parseQuoteReveals,
   validateQuoteReveals,
   type QuoteRevealRecord,
@@ -112,7 +113,7 @@ export function compareWithProvenance(
     const row = byCard.get(record.cardId);
     if (!row) {
       // An invented phrase has no source, so it has no provenance record.
-      if (record.classification !== 'invented') {
+      if (isSourcedQuoteReveal(record)) {
         failures.push({
           path: `quote-reveals[${record.cardId}]`,
           code: 'provenance-missing',
@@ -123,7 +124,7 @@ export function compareWithProvenance(
     }
     const fields: readonly (readonly [string, string, string])[] = [
       ['classification', record.classification, row.classification],
-      ...(record.classification === 'invented'
+      ...(!isSourcedQuoteReveal(record)
         ? []
         : ([
             ['sourceLanguage', record.sourceLanguage, row.sourceLanguage],

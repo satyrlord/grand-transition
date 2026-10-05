@@ -154,10 +154,9 @@
     {
       "id": "thunder-tribune-predicate-001-past",
       "role": "predicate",
-      "text": "could lose an election to an empty ballot",
+      "text": "promised to keep everything within the rules",
       "tags": [
-        "decorum",
-        "credibility"
+        "decorum"
       ],
       "scorePreferences": {
         "substance": [
@@ -171,17 +170,18 @@
       },
       "tenseFamily": "thunder-tribune-predicate-001",
       "rarity": "common",
-      "singularText": "could lose an election to an empty ballot",
-      "pluralText": "could lose an election to an empty ballot",
-      "tense": "past"
+      "singularText": "promised to keep everything within the rules",
+      "pluralText": "promised to keep everything within the rules",
+      "tense": "past",
+      "personalSingularText": "promised to keep everything within the rules",
+      "secondPersonText": "promised to keep everything within the rules"
     },
     {
       "id": "thunder-tribune-predicate-001-present",
       "role": "predicate",
-      "text": "can lose an election to an empty ballot",
+      "text": "promises to keep everything within the rules",
       "tags": [
-        "decorum",
-        "credibility"
+        "decorum"
       ],
       "scorePreferences": {
         "substance": [
@@ -194,18 +194,19 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "singularText": "can lose an election to an empty ballot",
-      "pluralText": "can lose an election to an empty ballot",
+      "singularText": "promises to keep everything within the rules",
+      "pluralText": "promise to keep everything within the rules",
       "tense": "present",
-      "tenseFamily": "thunder-tribune-predicate-001"
+      "tenseFamily": "thunder-tribune-predicate-001",
+      "personalSingularText": "promises to keep everything within the rules",
+      "secondPersonText": "promise to keep everything within the rules"
     },
     {
       "id": "thunder-tribune-predicate-001-future",
       "role": "predicate",
-      "text": "will lose an election to an empty ballot",
+      "text": "will promise to keep everything within the rules",
       "tags": [
-        "decorum",
-        "credibility"
+        "decorum"
       ],
       "scorePreferences": {
         "substance": [
@@ -218,18 +219,19 @@
         "flavour": []
       },
       "rarity": "rare",
-      "singularText": "will lose an election to an empty ballot",
-      "pluralText": "will lose an election to an empty ballot",
+      "singularText": "will promise to keep everything within the rules",
+      "pluralText": "will promise to keep everything within the rules",
       "tense": "future",
-      "tenseFamily": "thunder-tribune-predicate-001"
+      "tenseFamily": "thunder-tribune-predicate-001",
+      "personalSingularText": "will promise to keep everything within the rules",
+      "secondPersonText": "will promise to keep everything within the rules"
     },
     {
       "id": "thunder-tribune-ending-001",
       "role": "ending",
-      "text": "and my second phone filed a complaint.",
+      "text": "and you do not run my office.",
       "tags": [
-        "restraint",
-        "credibility"
+        "restraint"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -237,11 +239,8 @@
     {
       "id": "thunder-tribune-predicate-002-present",
       "role": "predicate",
-      "text": "seizes the studio phone again",
-      "tags": [
-        "decorum",
-        "restraint"
-      ],
+      "text": "will not let visitors run this office",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -253,19 +252,18 @@
         "flavour": []
       },
       "rarity": "uncommon",
-      "singularText": "seizes the studio phone again",
-      "pluralText": "seize the studio phone again",
+      "singularText": "will not let visitors run this office",
+      "pluralText": "will not let visitors run this office",
       "tense": "present",
-      "tenseFamily": "thunder-tribune-predicate-002"
+      "tenseFamily": "thunder-tribune-predicate-002",
+      "personalSingularText": "will not let visitors run this office",
+      "secondPersonText": "will not let visitors run this office"
     },
     {
       "id": "thunder-tribune-predicate-002-past",
       "role": "predicate",
-      "text": "seized the studio phone again",
-      "tags": [
-        "decorum",
-        "restraint"
-      ],
+      "text": "would not let visitors run this office",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -277,19 +275,18 @@
         "flavour": []
       },
       "rarity": "common",
-      "singularText": "seized the studio phone again",
-      "pluralText": "seized the studio phone again",
+      "singularText": "would not let visitors run this office",
+      "pluralText": "would not let visitors run this office",
       "tense": "past",
-      "tenseFamily": "thunder-tribune-predicate-002"
+      "tenseFamily": "thunder-tribune-predicate-002",
+      "personalSingularText": "would not let visitors run this office",
+      "secondPersonText": "would not let visitors run this office"
     },
     {
       "id": "thunder-tribune-predicate-002-future",
       "role": "predicate",
-      "text": "will seize the studio phone again",
-      "tags": [
-        "decorum",
-        "restraint"
-      ],
+      "text": "will still refuse visitors control of this office",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -301,10 +298,12 @@
         "flavour": []
       },
       "rarity": "rare",
-      "singularText": "will seize the studio phone again",
-      "pluralText": "will seize the studio phone again",
+      "singularText": "will still refuse visitors control of this office",
+      "pluralText": "will still refuse visitors control of this office",
       "tense": "future",
-      "tenseFamily": "thunder-tribune-predicate-002"
+      "tenseFamily": "thunder-tribune-predicate-002",
+      "personalSingularText": "will still refuse visitors control of this office",
+      "secondPersonText": "will still refuse visitors control of this office"
     },
     {
       "id": "thunder-tribune-noun-002",
@@ -403,14 +402,13 @@
     {
       "id": "thunder-tribune-predicate-003-present",
       "role": "predicate",
-      "text": "whistles like a nosy do-gooder on television",
-      "secondPersonText": "whistle like a nosy do-gooder on television",
-      "personalSingularText": "whistles like a nosy do-gooder on television",
-      "singularText": "whistles like a nosy do-gooder on television",
-      "pluralText": "whistle like nosy do-gooders on television",
+      "text": "cannot gift-wrap the truth",
+      "secondPersonText": "cannot gift-wrap the truth",
+      "personalSingularText": "cannot gift-wrap the truth",
+      "singularText": "cannot gift-wrap the truth",
+      "pluralText": "cannot gift-wrap the truth",
       "tags": [
-        "decorum",
-        "credibility"
+        "decorum"
       ],
       "scorePreferences": {
         "substance": [
@@ -430,14 +428,13 @@
     {
       "id": "thunder-tribune-predicate-003-past",
       "role": "predicate",
-      "text": "whistled like a nosy do-gooder on television",
-      "secondPersonText": "whistled like a nosy do-gooder on television",
-      "personalSingularText": "whistled like a nosy do-gooder on television",
-      "singularText": "whistled like a nosy do-gooder on television",
-      "pluralText": "whistled like nosy do-gooders on television",
+      "text": "could not gift-wrap the truth",
+      "secondPersonText": "could not gift-wrap the truth",
+      "personalSingularText": "could not gift-wrap the truth",
+      "singularText": "could not gift-wrap the truth",
+      "pluralText": "could not gift-wrap the truth",
       "tags": [
-        "decorum",
-        "credibility"
+        "decorum"
       ],
       "scorePreferences": {
         "substance": [
@@ -457,14 +454,13 @@
     {
       "id": "thunder-tribune-predicate-003-future",
       "role": "predicate",
-      "text": "will whistle like a nosy do-gooder on television",
-      "secondPersonText": "will whistle like a nosy do-gooder on television",
-      "personalSingularText": "will whistle like a nosy do-gooder on television",
-      "singularText": "will whistle like a nosy do-gooder on television",
-      "pluralText": "will whistle like nosy do-gooders on television",
+      "text": "will not gift-wrap the truth",
+      "secondPersonText": "will not gift-wrap the truth",
+      "personalSingularText": "will not gift-wrap the truth",
+      "singularText": "will not gift-wrap the truth",
+      "pluralText": "will not gift-wrap the truth",
       "tags": [
-        "decorum",
-        "credibility"
+        "decorum"
       ],
       "scorePreferences": {
         "substance": [
@@ -484,21 +480,17 @@
     {
       "id": "thunder-tribune-ending-002",
       "role": "ending",
-      "text": "and fetch my phone before I shout internationally.",
-      "tags": [
-        "decorum",
-        "restraint"
-      ],
+      "text": "and hold this while I film.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     },
     {
       "id": "thunder-tribune-modifier-001",
       "role": "modifier",
-      "text": "with 110% turnout at the cemetery",
+      "text": "without politically correct packaging",
       "tags": [
-        "evidence",
-        "credibility"
+        "decorum"
       ],
       "rarity": "uncommon"
     },
@@ -636,12 +628,10 @@
       "id": "thunder-tribune-noun-008",
       "role": "noun",
       "text": "everything within the rules",
-      "tags": [
-        "credibility"
-      ],
+      "tags": [],
       "scoreGroups": {
         "substance": [
-          "media"
+          "bureaucracy"
         ],
         "flavour": [
           "broadcast"
@@ -756,9 +746,9 @@
     {
       "id": "thunder-tribune-predicate-004-past",
       "role": "predicate",
-      "text": "was a broadcast with a missing source",
-      "singularText": "was a broadcast with a missing source",
-      "pluralText": "were a broadcast with a missing source",
+      "text": "asked whose name the visitors spoke in",
+      "singularText": "asked whose name the visitors spoke in",
+      "pluralText": "asked whose name the visitors spoke in",
       "tags": [
         "evidence"
       ],
@@ -775,16 +765,18 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "thunder-tribune-predicate-004"
+      "tenseFamily": "thunder-tribune-predicate-004",
+      "personalSingularText": "asked whose name the visitors spoke in",
+      "secondPersonText": "asked whose name the visitors spoke in"
     },
     {
       "id": "thunder-tribune-predicate-004-present",
       "role": "predicate",
-      "text": "is a broadcast with a missing source",
-      "singularText": "is a broadcast with a missing source",
-      "pluralText": "are a broadcast with a missing source",
-      "personalSingularText": "is a broadcast with a missing source",
-      "secondPersonText": "are a broadcast with a missing source",
+      "text": "asks whose name the visitors speak in",
+      "singularText": "asks whose name the visitors speak in",
+      "pluralText": "ask whose name the visitors speak in",
+      "personalSingularText": "asks whose name the visitors speak in",
+      "secondPersonText": "ask whose name the visitors speak in",
       "tags": [
         "evidence"
       ],
@@ -806,7 +798,7 @@
     {
       "id": "thunder-tribune-predicate-004-future",
       "role": "predicate",
-      "text": "will be a broadcast with a missing source",
+      "text": "will ask whose name the visitors speak in",
       "tags": [
         "evidence"
       ],
@@ -823,12 +815,16 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "thunder-tribune-predicate-004"
+      "tenseFamily": "thunder-tribune-predicate-004",
+      "singularText": "will ask whose name the visitors speak in",
+      "pluralText": "will ask whose name the visitors speak in",
+      "personalSingularText": "will ask whose name the visitors speak in",
+      "secondPersonText": "will ask whose name the visitors speak in"
     },
     {
       "id": "thunder-tribune-modifier-002",
       "role": "modifier",
-      "text": "before the applause can object",
+      "text": "with a suspicious rush for public office",
       "tags": [
         "restraint"
       ],
@@ -837,18 +833,16 @@
     {
       "id": "thunder-tribune-modifier-003",
       "role": "modifier",
-      "text": "under a loud fact-check",
-      "tags": [
-        "evidence"
-      ],
+      "text": "while filming the ballot",
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "thunder-tribune-ending-003",
       "role": "ending",
-      "text": "and the phone demanded the final word.",
+      "text": "and I made a general with one telephone call.",
       "tags": [
-        "evidence"
+        "influence"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -856,9 +850,9 @@
     {
       "id": "thunder-tribune-ending-004",
       "role": "ending",
-      "text": "and credibility left during the applause.",
+      "text": "and I refuse to work with thieves.",
       "tags": [
-        "credibility"
+        "corruption"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -866,7 +860,7 @@
     {
       "id": "thunder-tribune-ending-005",
       "role": "ending",
-      "text": "and restraint missed the opening bell.",
+      "text": "and you are throwing the press out.",
       "tags": [
         "restraint"
       ],

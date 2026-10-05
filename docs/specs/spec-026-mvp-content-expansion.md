@@ -202,14 +202,17 @@ Synthetic discovery characters must agree with the same minimum values of the fu
 The full catalog of this time must pass this contract.
 Correct new characters that agree with these minimum values must also pass.
 
-The approved Thunder Tribune modifier is `thunder-tribune-modifier-001`, which renders as `with 110% turnout at the cemetery`.
+The Thunder Tribune modifier `thunder-tribune-modifier-001` renders as
+`without politically correct packaging`, adapted from documented public speech.
 Only that character owns it, and it satisfies the foundation modifier minimum.
-Its card pool keeps all previous phrases and IDs.
-Do checks of the full approved sentence in `tests/unit/english-grammar-core.test.ts`.
+Its card pool keeps its IDs and role counts. Source-backed revisions follow
+Milestone 034. Check complete modifier constructions in
+`tests/unit/english-grammar-core.test.ts`.
 
 The Algorithmic Prophet has cards from beverage memory, nature omens, national rankings, and ceremonial courage.
 Milestone 028 controls the card count of this character.
-The identifiers and the text of the initial cards do not change.
+The identifiers of the initial cards do not change. Text revisions follow the
+source and bilingual-agreement requirements of Milestone 034.
 The new cards are only in the private pool of this character.
 The public wording and the editorial notes contain no real-person references or source attribution.
 They contain no protected expression that a person copied from a different work.

@@ -50,17 +50,18 @@
     {
       "id": "diaspora-oracle-noun-001",
       "role": "noun",
-      "text": "my overseas view of a promised house",
+      "text": "a housing offer explained as campaign promotion",
       "tags": [
-        "distance",
-        "firsthand-knowledge"
+        "commercialism",
+        "sincerity"
       ],
       "scoreGroups": {
         "substance": [
-          "personal"
+          "commercialism",
+          "electoral"
         ],
         "flavour": [
-          "politics"
+          "campaign"
         ]
       },
       "rarity": "common"
@@ -68,21 +69,20 @@
     {
       "id": "diaspora-oracle-modifier-001",
       "role": "modifier",
-      "text": "from abroad, without checking the house exists",
+      "text": "with promised homes described as campaign promotion",
       "tags": [
-        "distance",
-        "context",
-        "firsthand-knowledge"
+        "commercialism",
+        "sincerity"
       ],
       "rarity": "uncommon"
     },
     {
       "id": "diaspora-oracle-ending-001",
       "role": "ending",
-      "text": "and the housewarming is inside the brochure.",
+      "text": "and the housing offer becomes campaign marketing.",
       "tags": [
-        "context",
-        "firsthand-knowledge"
+        "commercialism",
+        "sincerity"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -90,10 +90,10 @@
     {
       "id": "diaspora-oracle-ending-002",
       "role": "ending",
-      "text": "and the keys wait in another time zone.",
+      "text": "and the homes were never offered for free.",
       "tags": [
-        "distance",
-        "context"
+        "specificity",
+        "delivery"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -398,14 +398,15 @@
     {
       "id": "diaspora-oracle-predicate-001-past",
       "role": "predicate",
-      "text": "was current until the next visit",
+      "text": "was a promise to bring the emigrants home",
       "tags": [
-        "context"
+        "commitment",
+        "distance"
       ],
-      "singularText": "was current until the next visit",
-      "pluralText": "were current until the next visit",
-      "personalSingularText": "was current until the next visit",
-      "secondPersonText": "were current until the next visit",
+      "singularText": "was a promise to bring the emigrants home",
+      "pluralText": "were promises to bring the emigrants home",
+      "personalSingularText": "was a promise to bring the emigrants home",
+      "secondPersonText": "were a promise to bring the emigrants home",
       "tense": "past",
       "tenseFamily": "diaspora-oracle-predicate-001",
       "scorePreferences": {
@@ -426,14 +427,15 @@
     {
       "id": "diaspora-oracle-predicate-001-present",
       "role": "predicate",
-      "text": "is current until the next visit",
+      "text": "is a promise to bring the emigrants home",
       "tags": [
-        "context"
+        "commitment",
+        "distance"
       ],
-      "singularText": "is current until the next visit",
-      "pluralText": "are current until the next visit",
-      "personalSingularText": "is current until the next visit",
-      "secondPersonText": "are current until the next visit",
+      "singularText": "is a promise to bring the emigrants home",
+      "pluralText": "are promises to bring the emigrants home",
+      "personalSingularText": "is a promise to bring the emigrants home",
+      "secondPersonText": "are a promise to bring the emigrants home",
       "tense": "present",
       "tenseFamily": "diaspora-oracle-predicate-001",
       "scorePreferences": {
@@ -454,14 +456,15 @@
     {
       "id": "diaspora-oracle-predicate-001-future",
       "role": "predicate",
-      "text": "will be current until the next visit",
+      "text": "will be a promise to bring the emigrants home",
       "tags": [
-        "context"
+        "commitment",
+        "distance"
       ],
-      "singularText": "will be current until the next visit",
-      "pluralText": "will be current until the next visit",
-      "personalSingularText": "will be current until the next visit",
-      "secondPersonText": "will be current until the next visit",
+      "singularText": "will be a promise to bring the emigrants home",
+      "pluralText": "will be promises to bring the emigrants home",
+      "personalSingularText": "will be a promise to bring the emigrants home",
+      "secondPersonText": "will be a promise to bring the emigrants home",
       "tense": "future",
       "tenseFamily": "diaspora-oracle-predicate-001",
       "scorePreferences": {
@@ -483,9 +486,7 @@
       "id": "diaspora-oracle-modifier-002",
       "role": "modifier",
       "text": "through a faulty webcam",
-      "tags": [
-        "firsthand-knowledge"
-      ],
+      "tags": [],
       "rarity": "uncommon"
     },
     {
@@ -499,13 +500,14 @@
     {
       "id": "diaspora-oracle-noun-007",
       "role": "noun",
-      "text": "a house made of promises",
+      "text": "a promise to bring emigrants back home",
       "tags": [
+        "commitment",
         "distance"
       ],
       "scoreGroups": {
         "substance": [
-          "media"
+          "politics"
         ],
         "flavour": [
           "travel"
@@ -516,16 +518,18 @@
     {
       "id": "diaspora-oracle-noun-008",
       "role": "noun",
-      "text": "a brochure with a roof",
+      "text": "a two-room home priced at thirty-five thousand euros",
       "tags": [
-        "context"
+        "specificity",
+        "delivery"
       ],
       "scoreGroups": {
         "substance": [
-          "media"
+          "wealth",
+          "infrastructure"
         ],
         "flavour": [
-          "travel"
+          "construction"
         ]
       },
       "rarity": "uncommon"
@@ -533,17 +537,18 @@
     {
       "id": "diaspora-oracle-noun-009",
       "role": "noun",
-      "text": "keys advertised from abroad",
+      "text": "a chemistry answer replaced with democracy",
       "grammaticalNumber": "plural",
       "tags": [
-        "firsthand-knowledge"
+        "follow-up-questions",
+        "evidence"
       ],
       "scoreGroups": {
         "substance": [
-          "media"
+          "evidence"
         ],
         "flavour": [
-          "travel"
+          "oratory"
         ]
       },
       "rarity": "rare"
@@ -551,16 +556,18 @@
     {
       "id": "diaspora-oracle-noun-010",
       "role": "noun",
-      "text": "a marketing campaign with foundations",
+      "text": "a housing campaign credited with forty-two percent",
       "tags": [
-        "distance"
+        "commercialism",
+        "sincerity"
       ],
       "scoreGroups": {
         "substance": [
-          "media"
+          "commercialism",
+          "electoral"
         ],
         "flavour": [
-          "travel"
+          "campaign"
         ]
       },
       "rarity": "common"
@@ -655,7 +662,11 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "diaspora-oracle-predicate-002"
+      "tenseFamily": "diaspora-oracle-predicate-002",
+      "singularText": "was marketing and promotion with no foundation",
+      "pluralText": "were marketing and promotion with no foundation",
+      "personalSingularText": "was marketing and promotion with no foundation",
+      "secondPersonText": "were marketing and promotion with no foundation"
     },
     {
       "id": "diaspora-oracle-predicate-002-present",
@@ -703,14 +714,19 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "diaspora-oracle-predicate-002"
+      "tenseFamily": "diaspora-oracle-predicate-002",
+      "singularText": "will be marketing and promotion with no foundation",
+      "pluralText": "will be marketing and promotion with no foundation",
+      "personalSingularText": "will be marketing and promotion with no foundation",
+      "secondPersonText": "will be marketing and promotion with no foundation"
     },
     {
       "id": "diaspora-oracle-predicate-003-past",
       "role": "predicate",
-      "text": "was an eyewitness between two time zones",
+      "text": "was a two-room home advertised at thirty-five thousand euros",
       "tags": [
-        "context"
+        "specificity",
+        "delivery"
       ],
       "scorePreferences": {
         "substance": [
@@ -725,18 +741,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "diaspora-oracle-predicate-003"
+      "tenseFamily": "diaspora-oracle-predicate-003",
+      "singularText": "was a two-room home advertised at thirty-five thousand euros",
+      "pluralText": "were two-room homes advertised at thirty-five thousand euros",
+      "personalSingularText": "was a two-room home advertised at thirty-five thousand euros",
+      "secondPersonText": "were a two-room home advertised at thirty-five thousand euros"
     },
     {
       "id": "diaspora-oracle-predicate-003-present",
       "role": "predicate",
-      "text": "is an eyewitness between two time zones",
-      "singularText": "is an eyewitness between two time zones",
-      "pluralText": "are an eyewitness between two time zones",
-      "personalSingularText": "is an eyewitness between two time zones",
-      "secondPersonText": "is an eyewitness between two time zones",
+      "text": "is a two-room home advertised at thirty-five thousand euros",
+      "singularText": "is a two-room home advertised at thirty-five thousand euros",
+      "pluralText": "are two-room homes advertised at thirty-five thousand euros",
+      "personalSingularText": "is a two-room home advertised at thirty-five thousand euros",
+      "secondPersonText": "are a two-room home advertised at thirty-five thousand euros",
       "tags": [
-        "context"
+        "specificity",
+        "delivery"
       ],
       "scorePreferences": {
         "substance": [
@@ -756,9 +777,10 @@
     {
       "id": "diaspora-oracle-predicate-003-future",
       "role": "predicate",
-      "text": "will be an eyewitness between two time zones",
+      "text": "will be a two-room home advertised at thirty-five thousand euros",
       "tags": [
-        "context"
+        "specificity",
+        "delivery"
       ],
       "scorePreferences": {
         "substance": [
@@ -773,14 +795,19 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "diaspora-oracle-predicate-003"
+      "tenseFamily": "diaspora-oracle-predicate-003",
+      "singularText": "will be a two-room home advertised at thirty-five thousand euros",
+      "pluralText": "will be two-room homes advertised at thirty-five thousand euros",
+      "personalSingularText": "will be a two-room home advertised at thirty-five thousand euros",
+      "secondPersonText": "will be a two-room home advertised at thirty-five thousand euros"
     },
     {
       "id": "diaspora-oracle-predicate-004-past",
       "role": "predicate",
-      "text": "was a context waiting at baggage claim",
+      "text": "was a chemistry question redirected toward democracy",
       "tags": [
-        "firsthand-knowledge"
+        "follow-up-questions",
+        "evidence"
       ],
       "scorePreferences": {
         "substance": [
@@ -795,18 +822,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "diaspora-oracle-predicate-004"
+      "tenseFamily": "diaspora-oracle-predicate-004",
+      "singularText": "was a chemistry question redirected toward democracy",
+      "pluralText": "were chemistry questions redirected toward democracy",
+      "personalSingularText": "was a chemistry question redirected toward democracy",
+      "secondPersonText": "were a chemistry question redirected toward democracy"
     },
     {
       "id": "diaspora-oracle-predicate-004-present",
       "role": "predicate",
-      "text": "is a context waiting at baggage claim",
-      "singularText": "is a context waiting at baggage claim",
-      "pluralText": "are a context waiting at baggage claim",
-      "personalSingularText": "is a context waiting at baggage claim",
-      "secondPersonText": "is a context waiting at baggage claim",
+      "text": "is a chemistry question redirected toward democracy",
+      "singularText": "is a chemistry question redirected toward democracy",
+      "pluralText": "are chemistry questions redirected toward democracy",
+      "personalSingularText": "is a chemistry question redirected toward democracy",
+      "secondPersonText": "are a chemistry question redirected toward democracy",
       "tags": [
-        "firsthand-knowledge"
+        "follow-up-questions",
+        "evidence"
       ],
       "scorePreferences": {
         "substance": [
@@ -826,9 +858,10 @@
     {
       "id": "diaspora-oracle-predicate-004-future",
       "role": "predicate",
-      "text": "will be a context waiting at baggage claim",
+      "text": "will be a chemistry question redirected toward democracy",
       "tags": [
-        "firsthand-knowledge"
+        "follow-up-questions",
+        "evidence"
       ],
       "scorePreferences": {
         "substance": [
@@ -843,23 +876,26 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "diaspora-oracle-predicate-004"
+      "tenseFamily": "diaspora-oracle-predicate-004",
+      "singularText": "will be a chemistry question redirected toward democracy",
+      "pluralText": "will be chemistry questions redirected toward democracy",
+      "personalSingularText": "will be a chemistry question redirected toward democracy",
+      "secondPersonText": "will be a chemistry question redirected toward democracy"
     },
     {
       "id": "diaspora-oracle-modifier-003",
       "role": "modifier",
       "text": "after-a-connection-in-another-country",
-      "tags": [
-        "distance"
-      ],
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "diaspora-oracle-ending-003",
       "role": "ending",
-      "text": "and the witness still needed directions.",
+      "text": "and the promise is to bring everyone home.",
       "tags": [
-        "firsthand-knowledge"
+        "commitment",
+        "distance"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -867,9 +903,10 @@
     {
       "id": "diaspora-oracle-ending-004",
       "role": "ending",
-      "text": "and the postcard corrected the capital.",
+      "text": "and the chemistry answer turns into a democracy question.",
       "tags": [
-        "context"
+        "follow-up-questions",
+        "evidence"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -877,9 +914,10 @@
     {
       "id": "diaspora-oracle-ending-005",
       "role": "ending",
-      "text": "and the suitcase contained the missing context.",
+      "text": "and the campaign credits marketing for forty-two percent.",
       "tags": [
-        "distance"
+        "commercialism",
+        "sincerity"
       ],
       "rarity": "rare",
       "finisherBonus": 4

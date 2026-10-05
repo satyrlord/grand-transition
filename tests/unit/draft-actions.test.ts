@@ -340,6 +340,9 @@ describe('Hollywood Roast draft actions', () => {
   test('accepts a modifier after a complete clause without ending construction', () => {
     let state = completeFirst();
     state = selectPrivate(state, playerIds[1], 'common-noun-002', 'other-subject');
+    const clauseText = state.playerStates[playerIds[0]]!.construction.analysis.publicText;
+    const modifier = gameCatalog.phrases.find((phrase) => phrase.id === 'common-modifier-001')!;
+    const modifierText = englishGameLocale.messages[modifier.textKey];
     state = selectPrivate(state, playerIds[0], 'common-modifier-001', 'modifier');
 
     expect(state.playerStates[playerIds[0]]!.construction).toMatchObject({
@@ -348,8 +351,7 @@ describe('Hollywood Roast draft actions', () => {
       lastGrammarMistakePhraseId: null,
       analysis: {
         complete: true,
-        publicText:
-          'Your unanimous disagreement belongs in a history museum before the promises lose their warranty',
+        publicText: `${clauseText} ${modifierText}`,
         nextRoles: ['modifier', 'conjunction', 'ending'],
       },
     });

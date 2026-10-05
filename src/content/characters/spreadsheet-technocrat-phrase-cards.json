@@ -68,29 +68,22 @@
     {
       "id": "spreadsheet-technocrat-modifier-001",
       "role": "modifier",
-      "text": "after delivering the budget to the rats",
-      "tags": [
-        "delivery",
-        "accountability"
-      ],
+      "text": "after lighting up the state pantry",
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "spreadsheet-technocrat-ending-001",
       "role": "ending",
-      "text": "and pantry mice get allowances; voters get crumbs.",
-      "tags": [
-        "delivery",
-        "accountability",
-        "human-scale"
-      ],
+      "text": "and the pantry rodents are eating the provisions.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     },
     {
       "id": "spreadsheet-technocrat-ending-002",
       "role": "ending",
-      "text": "and the budget billed the broom for damages.",
+      "text": "and the blame falls on whoever clears the debris.",
       "tags": [
         "accountability"
       ],
@@ -100,10 +93,8 @@
     {
       "id": "spreadsheet-technocrat-noun-002",
       "role": "noun",
-      "text": "a hospital built on paper",
-      "tags": [
-        "delivery"
-      ],
+      "text": "a state pantry stripped of provisions",
+      "tags": [],
       "grammaticalNumber": "singular",
       "scoreGroups": {
         "substance": [
@@ -137,7 +128,7 @@
     {
       "id": "spreadsheet-technocrat-noun-004",
       "role": "noun",
-      "text": "a responsibility tab permanently hidden from view",
+      "text": "the blame assigned to the cleanup crew",
       "tags": [
         "accountability"
       ],
@@ -155,14 +146,14 @@
     {
       "id": "spreadsheet-technocrat-noun-005",
       "role": "noun",
-      "text": "a ruler for measuring unfinished progress bars",
+      "text": "a budget that outgrows its blanket",
       "tags": [
-        "delivery"
+        "accountability"
       ],
       "grammaticalNumber": "singular",
       "scoreGroups": {
         "substance": [
-          "bureaucracy"
+          "wealth"
         ],
         "flavour": [
           "politics"
@@ -173,9 +164,10 @@
     {
       "id": "spreadsheet-technocrat-noun-006",
       "role": "noun",
-      "text": "a waiting-room queue filed as spare capacity",
+      "text": "a state that serves its citizens",
       "tags": [
-        "human-scale"
+        "human-scale",
+        "service"
       ],
       "grammaticalNumber": "singular",
       "scoreGroups": {
@@ -395,14 +387,12 @@
     {
       "id": "spreadsheet-technocrat-predicate-001-past",
       "role": "predicate",
-      "text": "was delivered on a slide, nowhere else",
-      "tags": [
-        "delivery"
-      ],
-      "singularText": "was delivered on a slide and nowhere else",
-      "pluralText": "were delivered on a slide and nowhere else",
-      "personalSingularText": "was delivered on a slide and nowhere else",
-      "secondPersonText": "were delivered on a slide and nowhere else",
+      "text": "switched on the light in the state pantry",
+      "tags": [],
+      "singularText": "switched on the light in the state pantry",
+      "pluralText": "switched on the light in the state pantry",
+      "personalSingularText": "switched on the light in the state pantry",
+      "secondPersonText": "switched on the light in the state pantry",
       "tense": "past",
       "tenseFamily": "spreadsheet-technocrat-predicate-001",
       "scorePreferences": {
@@ -423,14 +413,12 @@
     {
       "id": "spreadsheet-technocrat-predicate-001-present",
       "role": "predicate",
-      "text": "is delivered on a slide, nowhere else",
-      "tags": [
-        "delivery"
-      ],
-      "singularText": "is delivered on a slide and nowhere else",
-      "pluralText": "are delivered on a slide and nowhere else",
-      "personalSingularText": "is delivered on a slide and nowhere else",
-      "secondPersonText": "are delivered on a slide and nowhere else",
+      "text": "switches on the light in the state pantry",
+      "tags": [],
+      "singularText": "switches on the light in the state pantry",
+      "pluralText": "switch on the light in the state pantry",
+      "personalSingularText": "switches on the light in the state pantry",
+      "secondPersonText": "switch on the light in the state pantry",
       "tense": "present",
       "tenseFamily": "spreadsheet-technocrat-predicate-001",
       "scorePreferences": {
@@ -451,14 +439,12 @@
     {
       "id": "spreadsheet-technocrat-predicate-001-future",
       "role": "predicate",
-      "text": "will be delivered on a slide, nowhere else",
-      "tags": [
-        "delivery"
-      ],
-      "singularText": "will be delivered on a slide and nowhere else",
-      "pluralText": "will be delivered on a slide and nowhere else",
-      "personalSingularText": "will be delivered on a slide and nowhere else",
-      "secondPersonText": "will be delivered on a slide and nowhere else",
+      "text": "will switch on the light in the state pantry",
+      "tags": [],
+      "singularText": "will switch on the light in the state pantry",
+      "pluralText": "will switch on the light in the state pantry",
+      "personalSingularText": "will switch on the light in the state pantry",
+      "secondPersonText": "will switch on the light in the state pantry",
       "tense": "future",
       "tenseFamily": "spreadsheet-technocrat-predicate-001",
       "scorePreferences": {
@@ -479,9 +465,9 @@
     {
       "id": "spreadsheet-technocrat-modifier-002",
       "role": "modifier",
-      "text": "after excluding actual people from the sample",
+      "text": "while spending more than the income",
       "tags": [
-        "human-scale"
+        "accountability"
       ],
       "rarity": "uncommon"
     },
@@ -515,9 +501,7 @@
       "id": "spreadsheet-technocrat-noun-008",
       "role": "noun",
       "text": "the person gathering the broken pieces",
-      "tags": [
-        "accountability"
-      ],
+      "tags": [],
       "scoreGroups": {
         "substance": [
           "bureaucracy"
@@ -636,9 +620,7 @@
       "id": "spreadsheet-technocrat-predicate-002-past",
       "role": "predicate",
       "text": "was a pantry of gnawed provisions",
-      "tags": [
-        "delivery"
-      ],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -652,19 +634,21 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "spreadsheet-technocrat-predicate-002"
+      "tenseFamily": "spreadsheet-technocrat-predicate-002",
+      "singularText": "was a pantry of gnawed provisions",
+      "pluralText": "were pantries of gnawed provisions",
+      "personalSingularText": "was a pantry of gnawed provisions",
+      "secondPersonText": "were a pantry of gnawed provisions"
     },
     {
       "id": "spreadsheet-technocrat-predicate-002-present",
       "role": "predicate",
       "text": "is a pantry of gnawed provisions",
       "singularText": "is a pantry of gnawed provisions",
-      "pluralText": "are a pantry of gnawed provisions",
+      "pluralText": "are pantries of gnawed provisions",
       "personalSingularText": "is a pantry of gnawed provisions",
       "secondPersonText": "are a pantry of gnawed provisions",
-      "tags": [
-        "delivery"
-      ],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -684,9 +668,7 @@
       "id": "spreadsheet-technocrat-predicate-002-future",
       "role": "predicate",
       "text": "will be a pantry of gnawed provisions",
-      "tags": [
-        "delivery"
-      ],
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -700,12 +682,14 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "spreadsheet-technocrat-predicate-002"
+      "tenseFamily": "spreadsheet-technocrat-predicate-002",
+      "singularText": "will be a pantry of gnawed provisions",
+      "pluralText": "will be pantries of gnawed provisions"
     },
     {
       "id": "spreadsheet-technocrat-predicate-003-past",
       "role": "predicate",
-      "text": "was a deadline with a dashboard",
+      "text": "spent beyond the limits of the blanket",
       "tags": [
         "accountability"
       ],
@@ -722,16 +706,20 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "spreadsheet-technocrat-predicate-003"
+      "tenseFamily": "spreadsheet-technocrat-predicate-003",
+      "singularText": "spent beyond the limits of the blanket",
+      "pluralText": "spent beyond the limits of the blanket",
+      "personalSingularText": "spent beyond the limits of the blanket",
+      "secondPersonText": "spent beyond the limits of the blanket"
     },
     {
       "id": "spreadsheet-technocrat-predicate-003-present",
       "role": "predicate",
-      "text": "is a deadline with a dashboard",
-      "singularText": "is a deadline with a dashboard",
-      "pluralText": "are a deadline with a dashboard",
-      "personalSingularText": "is a deadline with a dashboard",
-      "secondPersonText": "is a deadline with a dashboard",
+      "text": "spends beyond the limits of the blanket",
+      "singularText": "spends beyond the limits of the blanket",
+      "pluralText": "spend beyond the limits of the blanket",
+      "personalSingularText": "spends beyond the limits of the blanket",
+      "secondPersonText": "spend beyond the limits of the blanket",
       "tags": [
         "accountability"
       ],
@@ -753,7 +741,7 @@
     {
       "id": "spreadsheet-technocrat-predicate-003-future",
       "role": "predicate",
-      "text": "will be a deadline with a dashboard",
+      "text": "will spend beyond the limits of the blanket",
       "tags": [
         "accountability"
       ],
@@ -770,14 +758,18 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "spreadsheet-technocrat-predicate-003"
+      "tenseFamily": "spreadsheet-technocrat-predicate-003",
+      "singularText": "will spend beyond the limits of the blanket",
+      "pluralText": "will spend beyond the limits of the blanket",
+      "personalSingularText": "will spend beyond the limits of the blanket",
+      "secondPersonText": "will spend beyond the limits of the blanket"
     },
     {
       "id": "spreadsheet-technocrat-predicate-004-past",
       "role": "predicate",
-      "text": "was a delivery promise in a spreadsheet",
+      "text": "could not fix overspending with one measure",
       "tags": [
-        "human-scale"
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -792,18 +784,22 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "spreadsheet-technocrat-predicate-004"
+      "tenseFamily": "spreadsheet-technocrat-predicate-004",
+      "singularText": "could not fix overspending with one measure",
+      "pluralText": "could not fix overspending with one measure",
+      "personalSingularText": "could not fix overspending with one measure",
+      "secondPersonText": "could not fix overspending with one measure"
     },
     {
       "id": "spreadsheet-technocrat-predicate-004-present",
       "role": "predicate",
-      "text": "is a delivery promise in a spreadsheet",
-      "singularText": "is a delivery promise in a spreadsheet",
-      "pluralText": "are a delivery promise in a spreadsheet",
-      "personalSingularText": "is a delivery promise in a spreadsheet",
-      "secondPersonText": "is a delivery promise in a spreadsheet",
+      "text": "cannot fix overspending with one measure",
+      "singularText": "cannot fix overspending with one measure",
+      "pluralText": "cannot fix overspending with one measure",
+      "personalSingularText": "cannot fix overspending with one measure",
+      "secondPersonText": "cannot fix overspending with one measure",
       "tags": [
-        "human-scale"
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -823,9 +819,9 @@
     {
       "id": "spreadsheet-technocrat-predicate-004-future",
       "role": "predicate",
-      "text": "will be a delivery promise in a spreadsheet",
+      "text": "will not fix overspending with one measure",
       "tags": [
-        "human-scale"
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -840,31 +836,31 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "spreadsheet-technocrat-predicate-004"
+      "tenseFamily": "spreadsheet-technocrat-predicate-004",
+      "singularText": "will not fix overspending with one measure",
+      "pluralText": "will not fix overspending with one measure",
+      "personalSingularText": "will not fix overspending with one measure",
+      "secondPersonText": "will not fix overspending with one measure"
     },
     {
       "id": "spreadsheet-technocrat-modifier-003",
       "role": "modifier",
       "text": "according-to-a-human-scale-metric",
-      "tags": [
-        "human-scale"
-      ],
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "spreadsheet-technocrat-ending-003",
       "role": "ending",
-      "text": "and the dashboard requested a delivery date.",
-      "tags": [
-        "delivery"
-      ],
+      "text": "and the blanket only stretches so far.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     },
     {
       "id": "spreadsheet-technocrat-ending-004",
       "role": "ending",
-      "text": "and accountability opened another column.",
+      "text": "and eventually those bills must be paid.",
       "tags": [
         "accountability"
       ],
@@ -874,7 +870,7 @@
     {
       "id": "spreadsheet-technocrat-ending-005",
       "role": "ending",
-      "text": "and the metric became a person.",
+      "text": "and the state must serve its citizens.",
       "tags": [
         "human-scale"
       ],

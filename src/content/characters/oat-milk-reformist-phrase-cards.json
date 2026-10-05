@@ -73,10 +73,8 @@
     {
       "id": "oat-milk-reformist-modifier-001",
       "role": "modifier",
-      "text": "with a footprint smaller than the party's",
+      "text": "without troubling the wealthy",
       "tags": [
-        "relevance",
-        "authenticity",
         "class"
       ],
       "rarity": "uncommon"
@@ -84,12 +82,8 @@
     {
       "id": "oat-milk-reformist-ending-001",
       "role": "ending",
-      "text": "and the forest has more pensions than trees.",
-      "tags": [
-        "relevance",
-        "authenticity",
-        "class"
-      ],
+      "text": "and the forest paid the retirement bonuses.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     },
@@ -98,8 +92,7 @@
       "role": "ending",
       "text": "and the poor now sponsor the billionaires.",
       "tags": [
-        "class",
-        "authenticity"
+        "class"
       ],
       "rarity": "rare",
       "finisherBonus": 3
@@ -107,10 +100,9 @@
     {
       "id": "oat-milk-reformist-ending-003",
       "role": "ending",
-      "text": "and listening is free after the consultation fee.",
+      "text": "and rent takes almost the entire student grant.",
       "tags": [
-        "class",
-        "relevance"
+        "class"
       ],
       "rarity": "rare",
       "finisherBonus": 3
@@ -118,14 +110,13 @@
     {
       "id": "oat-milk-reformist-noun-002",
       "role": "noun",
-      "text": "an inclusive workshop behind a velvet rope",
+      "text": "mental healthcare treated as a luxury",
       "tags": [
-        "class",
-        "authenticity"
+        "class"
       ],
       "scoreGroups": {
         "substance": [
-          "bureaucracy"
+          "personal"
         ],
         "flavour": [
           "politics"
@@ -139,13 +130,13 @@
     {
       "id": "oat-milk-reformist-noun-003",
       "role": "noun",
-      "text": "a coalition glued with reusable sticky notes",
+      "text": "a grant swallowed by rent",
       "tags": [
-        "relevance"
+        "class"
       ],
       "scoreGroups": {
         "substance": [
-          "bureaucracy"
+          "wealth"
         ],
         "flavour": [
           "politics"
@@ -159,7 +150,7 @@
     {
       "id": "oat-milk-reformist-noun-004",
       "role": "noun",
-      "text": "a consensus cushion for uncomfortable questions",
+      "text": "a performance bonus for a loss-making office",
       "tags": [
         "authenticity"
       ],
@@ -179,13 +170,11 @@
     {
       "id": "oat-milk-reformist-noun-005",
       "role": "noun",
-      "text": "a pothole with a trained discussion facilitator",
-      "tags": [
-        "relevance"
-      ],
+      "text": "a retirement bonus funded by felled trees",
+      "tags": [],
       "scoreGroups": {
         "substance": [
-          "bureaucracy"
+          "wealth"
         ],
         "flavour": [
           "politics"
@@ -199,14 +188,11 @@
     {
       "id": "oat-milk-reformist-noun-006",
       "role": "noun",
-      "text": "an accessible consultation on a members-only rooftop",
-      "tags": [
-        "class",
-        "authenticity"
-      ],
+      "text": "a saving of two-hundredths of one percent",
+      "tags": [],
       "scoreGroups": {
         "substance": [
-          "bureaucracy"
+          "wealth"
         ],
         "flavour": [
           "politics"
@@ -424,14 +410,13 @@
     {
       "id": "oat-milk-reformist-predicate-001-past",
       "role": "predicate",
-      "text": "mistook an attendance sheet for a public mandate",
-      "singularText": "mistook an attendance sheet for a public mandate",
-      "pluralText": "mistook an attendance sheet for a public mandate",
-      "personalSingularText": "mistook an attendance sheet for a public mandate",
-      "secondPersonText": "mistook an attendance sheet for a public mandate",
+      "text": "spent ninety percent of the grant on rent",
+      "singularText": "spent ninety percent of the grant on rent",
+      "pluralText": "spent ninety percent of the grant on rent",
+      "personalSingularText": "spent ninety percent of the grant on rent",
+      "secondPersonText": "spent ninety percent of the grant on rent",
       "tags": [
-        "relevance",
-        "authenticity"
+        "class"
       ],
       "scorePreferences": {
         "substance": [
@@ -453,14 +438,13 @@
     {
       "id": "oat-milk-reformist-predicate-001-present",
       "role": "predicate",
-      "text": "mistakes an attendance sheet for a public mandate",
-      "singularText": "mistakes an attendance sheet for a public mandate",
-      "pluralText": "mistake an attendance sheet for a public mandate",
-      "personalSingularText": "mistakes an attendance sheet for a public mandate",
-      "secondPersonText": "mistake an attendance sheet for a public mandate",
+      "text": "spends ninety percent of the grant on rent",
+      "singularText": "spends ninety percent of the grant on rent",
+      "pluralText": "spend ninety percent of the grant on rent",
+      "personalSingularText": "spends ninety percent of the grant on rent",
+      "secondPersonText": "spend ninety percent of the grant on rent",
       "tags": [
-        "relevance",
-        "authenticity"
+        "class"
       ],
       "scorePreferences": {
         "substance": [
@@ -482,14 +466,13 @@
     {
       "id": "oat-milk-reformist-predicate-001-future",
       "role": "predicate",
-      "text": "will mistake an attendance sheet for a public mandate",
-      "singularText": "will mistake an attendance sheet for a public mandate",
-      "pluralText": "will mistake an attendance sheet for a public mandate",
-      "personalSingularText": "will mistake an attendance sheet for a public mandate",
-      "secondPersonText": "will mistake an attendance sheet for a public mandate",
+      "text": "will spend ninety percent of the grant on rent",
+      "singularText": "will spend ninety percent of the grant on rent",
+      "pluralText": "will spend ninety percent of the grant on rent",
+      "personalSingularText": "will spend ninety percent of the grant on rent",
+      "secondPersonText": "will spend ninety percent of the grant on rent",
       "tags": [
-        "relevance",
-        "authenticity"
+        "class"
       ],
       "scorePreferences": {
         "substance": [
@@ -511,10 +494,9 @@
     {
       "id": "oat-milk-reformist-modifier-002",
       "role": "modifier",
-      "text": "after checking the revolution for dietary preferences",
+      "text": "with therapy treated as a luxury",
       "tags": [
-        "class",
-        "relevance"
+        "class"
       ],
       "rarity": "uncommon"
     },
@@ -531,9 +513,7 @@
       "role": "noun",
       "text": "thirty therapy sessions from the state",
       "grammaticalNumber": "plural",
-      "tags": [
-        "relevance"
-      ],
+      "tags": [],
       "scoreGroups": {
         "substance": [
           "personal"
@@ -549,7 +529,7 @@
       "role": "noun",
       "text": "a luxury no longer reserved for the privileged",
       "tags": [
-        "authenticity"
+        "class"
       ],
       "scoreGroups": {
         "substance": [
@@ -670,7 +650,7 @@
       "role": "predicate",
       "text": "was a therapy session beyond privilege",
       "tags": [
-        "relevance"
+        "class"
       ],
       "scorePreferences": {
         "substance": [
@@ -685,18 +665,22 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-predicate-002"
+      "tenseFamily": "oat-milk-reformist-predicate-002",
+      "singularText": "was a therapy session beyond privilege",
+      "pluralText": "were therapy sessions beyond privilege",
+      "personalSingularText": "was a therapy session beyond privilege",
+      "secondPersonText": "were a therapy session beyond privilege"
     },
     {
       "id": "oat-milk-reformist-predicate-002-present",
       "role": "predicate",
       "text": "is a therapy session beyond privilege",
       "singularText": "is a therapy session beyond privilege",
-      "pluralText": "are a therapy session beyond privilege",
+      "pluralText": "are therapy sessions beyond privilege",
       "personalSingularText": "is a therapy session beyond privilege",
       "secondPersonText": "are a therapy session beyond privilege",
       "tags": [
-        "relevance"
+        "class"
       ],
       "scorePreferences": {
         "substance": [
@@ -718,7 +702,7 @@
       "role": "predicate",
       "text": "will be a therapy session beyond privilege",
       "tags": [
-        "relevance"
+        "class"
       ],
       "scorePreferences": {
         "substance": [
@@ -733,12 +717,14 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-predicate-002"
+      "tenseFamily": "oat-milk-reformist-predicate-002",
+      "singularText": "will be a therapy session beyond privilege",
+      "pluralText": "will be therapy sessions beyond privilege"
     },
     {
       "id": "oat-milk-reformist-predicate-003-past",
       "role": "predicate",
-      "text": "was an authentic apology in a takeaway cup",
+      "text": "could no longer hide rubbish under the carpet",
       "tags": [
         "authenticity"
       ],
@@ -755,16 +741,20 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-predicate-003"
+      "tenseFamily": "oat-milk-reformist-predicate-003",
+      "singularText": "could no longer hide rubbish under the carpet",
+      "pluralText": "could no longer hide rubbish under the carpet",
+      "personalSingularText": "could no longer hide rubbish under the carpet",
+      "secondPersonText": "could no longer hide rubbish under the carpet"
     },
     {
       "id": "oat-milk-reformist-predicate-003-present",
       "role": "predicate",
-      "text": "is an authentic apology in a takeaway cup",
-      "singularText": "is an authentic apology in a takeaway cup",
-      "pluralText": "are an authentic apology in a takeaway cup",
-      "personalSingularText": "is an authentic apology in a takeaway cup",
-      "secondPersonText": "is an authentic apology in a takeaway cup",
+      "text": "can no longer hide rubbish under the carpet",
+      "singularText": "can no longer hide rubbish under the carpet",
+      "pluralText": "can no longer hide rubbish under the carpet",
+      "personalSingularText": "can no longer hide rubbish under the carpet",
+      "secondPersonText": "can no longer hide rubbish under the carpet",
       "tags": [
         "authenticity"
       ],
@@ -786,7 +776,7 @@
     {
       "id": "oat-milk-reformist-predicate-003-future",
       "role": "predicate",
-      "text": "will be an authentic apology in a takeaway cup",
+      "text": "will no longer hide rubbish under the carpet",
       "tags": [
         "authenticity"
       ],
@@ -803,12 +793,16 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-predicate-003"
+      "tenseFamily": "oat-milk-reformist-predicate-003",
+      "singularText": "will no longer hide rubbish under the carpet",
+      "pluralText": "will no longer hide rubbish under the carpet",
+      "personalSingularText": "will no longer hide rubbish under the carpet",
+      "secondPersonText": "will no longer hide rubbish under the carpet"
     },
     {
       "id": "oat-milk-reformist-predicate-004-past",
       "role": "predicate",
-      "text": "was a class argument with a sponsored straw",
+      "text": "took from the poor without disturbing the rich",
       "tags": [
         "class"
       ],
@@ -825,16 +819,20 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "oat-milk-reformist-predicate-004"
+      "tenseFamily": "oat-milk-reformist-predicate-004",
+      "singularText": "took from the poor without disturbing the rich",
+      "pluralText": "took from the poor without disturbing the rich",
+      "personalSingularText": "took from the poor without disturbing the rich",
+      "secondPersonText": "took from the poor without disturbing the rich"
     },
     {
       "id": "oat-milk-reformist-predicate-004-present",
       "role": "predicate",
-      "text": "is a class argument with a sponsored straw",
-      "singularText": "is a class argument with a sponsored straw",
-      "pluralText": "are a class argument with a sponsored straw",
-      "personalSingularText": "is a class argument with a sponsored straw",
-      "secondPersonText": "is a class argument with a sponsored straw",
+      "text": "takes from the poor without disturbing the rich",
+      "singularText": "takes from the poor without disturbing the rich",
+      "pluralText": "take from the poor without disturbing the rich",
+      "personalSingularText": "takes from the poor without disturbing the rich",
+      "secondPersonText": "take from the poor without disturbing the rich",
       "tags": [
         "class"
       ],
@@ -856,7 +854,7 @@
     {
       "id": "oat-milk-reformist-predicate-004-future",
       "role": "predicate",
-      "text": "will be a class argument with a sponsored straw",
+      "text": "will take from the poor without disturbing the rich",
       "tags": [
         "class"
       ],
@@ -873,12 +871,16 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "oat-milk-reformist-predicate-004"
+      "tenseFamily": "oat-milk-reformist-predicate-004",
+      "singularText": "will take from the poor without disturbing the rich",
+      "pluralText": "will take from the poor without disturbing the rich",
+      "personalSingularText": "will take from the poor without disturbing the rich",
+      "secondPersonText": "will take from the poor without disturbing the rich"
     },
     {
       "id": "oat-milk-reformist-modifier-003",
       "role": "modifier",
-      "text": "beside-a-reusable-apology",
+      "text": "with performance bonuses despite repeated losses",
       "tags": [
         "authenticity"
       ],
@@ -897,7 +899,7 @@
     {
       "id": "oat-milk-reformist-ending-005",
       "role": "ending",
-      "text": "and authenticity asked for oat milk.",
+      "text": "and losses still earned a performance bonus.",
       "tags": [
         "authenticity"
       ],

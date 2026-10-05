@@ -249,7 +249,28 @@ describe('Hollywood Roast extended grammar', () => {
     });
   });
 
-  test('accepts the passive camera predicate after a contrasted object clause', () => {
+  test('accepts a passive future predicate after a contrasted object clause', () => {
+    const passive: GrammarStep = {
+      kind: 'phrase',
+      phrase: prepareEnglishGrammarPhrase(
+        {
+          id: 'grammar-fixture-passive-future',
+          role: 'predicate',
+          textKey: 'phrase.grammar-fixture-passive-future',
+          tense: 'future',
+          tenseFamily: 'grammar-fixture-passive',
+          tags: [],
+          rarity: 'common',
+        },
+        {
+          ...englishGameLocale,
+          messages: {
+            ...englishGameLocale.messages,
+            'phrase.grammar-fixture-passive-future': 'will be invited to a briefing',
+          },
+        },
+      ),
+    };
     const result = analyze([
       add('common-noun-031'),
       add('common-predicate-015-past'),
@@ -257,7 +278,7 @@ describe('Hollywood Roast extended grammar', () => {
       add('common-verb-017-present'),
       add('common-noun-036'),
       add('common-conjunction-001'),
-      add('common-predicate-002-future'),
+      passive,
     ]);
 
     expect(result).toMatchObject({
@@ -266,7 +287,7 @@ describe('Hollywood Roast extended grammar', () => {
         complete: true,
         state: 'CLAUSE_COMPLETE',
         publicText:
-          'Your voters were snitches yet, even now, audit your brother and will be dragged before the cameras',
+          'Your voters were snitches yet, even now, audit your brother and will be invited to a briefing',
       },
     });
   });
@@ -304,7 +325,7 @@ describe('Hollywood Roast extended grammar', () => {
       accepted: true,
       analysis: {
         complete: true,
-        publicText: 'Your brother is a snitch and a pig belongs in a history museum',
+        publicText: 'Your brother is a snitch and a pig explains that winter is not summer',
       },
     });
     expect(

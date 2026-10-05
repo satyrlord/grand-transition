@@ -53,17 +53,17 @@
     {
       "id": "luxury-minister-noun-001",
       "role": "noun",
-      "text": "my emergency fund for matching shoes",
+      "text": "a public declaration against snobbery",
       "tags": [
-        "austerity",
-        "authenticity"
+        "sincerity",
+        "class"
       ],
       "scoreGroups": {
         "substance": [
-          "personal"
+          "wealth"
         ],
         "flavour": [
-          "politics"
+          "class"
         ]
       },
       "rarity": "common"
@@ -71,21 +71,20 @@
     {
       "id": "luxury-minister-modifier-001",
       "role": "modifier",
-      "text": "while budgeting for poverty from the penthouse",
+      "text": "with elegance described as a long-held wish",
       "tags": [
-        "austerity",
-        "service"
+        "luxury",
+        "wealth"
       ],
       "rarity": "uncommon"
     },
     {
       "id": "luxury-minister-ending-001",
       "role": "ending",
-      "text": "and the public tightens its belt; I choose leather.",
+      "text": "and elegance was supposedly the only wish.",
       "tags": [
-        "austerity",
-        "service",
-        "authenticity"
+        "luxury",
+        "wealth"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -93,9 +92,10 @@
     {
       "id": "luxury-minister-ending-002",
       "role": "ending",
-      "text": "and the map will match my itinerary.",
+      "text": "and the home is described as modest.",
       "tags": [
-        "authenticity"
+        "luxury",
+        "wealth"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -398,14 +398,15 @@
     {
       "id": "luxury-minister-predicate-001-past",
       "role": "predicate",
-      "text": "was insulated by a private lift",
+      "text": "was a wish to afford elegance for one day",
       "tags": [
-        "service"
+        "luxury",
+        "wealth"
       ],
-      "singularText": "was insulated from queues by a private lift",
-      "pluralText": "were insulated from queues by a private lift",
-      "personalSingularText": "was insulated from queues by a private lift",
-      "secondPersonText": "were insulated from queues by a private lift",
+      "singularText": "was a wish to afford elegance for one day",
+      "pluralText": "were wishes to afford elegance for one day",
+      "personalSingularText": "was a wish to afford elegance for one day",
+      "secondPersonText": "were a wish to afford elegance for one day",
       "tense": "past",
       "tenseFamily": "luxury-minister-predicate-001",
       "scorePreferences": {
@@ -426,14 +427,15 @@
     {
       "id": "luxury-minister-predicate-001-present",
       "role": "predicate",
-      "text": "is insulated by a private lift",
+      "text": "is a wish to afford elegance for one day",
       "tags": [
-        "service"
+        "luxury",
+        "wealth"
       ],
-      "singularText": "is insulated from queues by a private lift",
-      "pluralText": "are insulated from queues by a private lift",
-      "personalSingularText": "is insulated from queues by a private lift",
-      "secondPersonText": "are insulated from queues by a private lift",
+      "singularText": "is a wish to afford elegance for one day",
+      "pluralText": "are wishes to afford elegance for one day",
+      "personalSingularText": "is a wish to afford elegance for one day",
+      "secondPersonText": "are a wish to afford elegance for one day",
       "tense": "present",
       "tenseFamily": "luxury-minister-predicate-001",
       "scorePreferences": {
@@ -454,14 +456,15 @@
     {
       "id": "luxury-minister-predicate-001-future",
       "role": "predicate",
-      "text": "will be insulated by a private lift",
+      "text": "will be a wish to afford elegance for one day",
       "tags": [
-        "service"
+        "luxury",
+        "wealth"
       ],
-      "singularText": "will be insulated from queues by a private lift",
-      "pluralText": "will be insulated from queues by a private lift",
-      "personalSingularText": "will be insulated from queues by a private lift",
-      "secondPersonText": "will be insulated from queues by a private lift",
+      "singularText": "will be a wish to afford elegance for one day",
+      "pluralText": "will be wishes to afford elegance for one day",
+      "personalSingularText": "will be a wish to afford elegance for one day",
+      "secondPersonText": "will be a wish to afford elegance for one day",
       "tense": "future",
       "tenseFamily": "luxury-minister-predicate-001",
       "scorePreferences": {
@@ -501,14 +504,16 @@
       "role": "noun",
       "text": "a day when elegance was all I wanted",
       "tags": [
-        "austerity"
+        "luxury",
+        "wealth"
       ],
       "scoreGroups": {
         "substance": [
-          "luxury"
+          "luxury",
+          "wealth"
         ],
         "flavour": [
-          "service"
+          "status"
         ]
       },
       "rarity": "common"
@@ -533,16 +538,18 @@
     {
       "id": "luxury-minister-noun-009",
       "role": "noun",
-      "text": "a map corrected to match the itinerary",
+      "text": "a home described as seventy square metres",
       "tags": [
-        "authenticity"
+        "luxury",
+        "wealth"
       ],
       "scoreGroups": {
         "substance": [
-          "luxury"
+          "luxury",
+          "wealth"
         ],
         "flavour": [
-          "service"
+          "status"
         ]
       },
       "rarity": "rare"
@@ -550,16 +557,18 @@
     {
       "id": "luxury-minister-noun-010",
       "role": "noun",
-      "text": "a ministry with a wardrobe allowance",
+      "text": "a modest household cited in defence of wealth",
       "tags": [
-        "austerity"
+        "luxury",
+        "wealth"
       ],
       "scoreGroups": {
         "substance": [
-          "luxury"
+          "luxury",
+          "wealth"
         ],
         "flavour": [
-          "service"
+          "status"
         ]
       },
       "rarity": "common"
@@ -637,9 +646,10 @@
     {
       "id": "luxury-minister-predicate-002-past",
       "role": "predicate",
-      "text": "was elegance with a budget objection",
+      "text": "was a modest home measured at seventy square metres",
       "tags": [
-        "austerity"
+        "luxury",
+        "wealth"
       ],
       "scorePreferences": {
         "substance": [
@@ -654,18 +664,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "luxury-minister-predicate-002"
+      "tenseFamily": "luxury-minister-predicate-002",
+      "singularText": "was a modest home measured at seventy square metres",
+      "pluralText": "were modest homes measured at seventy square metres",
+      "personalSingularText": "was a modest home measured at seventy square metres",
+      "secondPersonText": "were a modest home measured at seventy square metres"
     },
     {
       "id": "luxury-minister-predicate-002-present",
       "role": "predicate",
-      "text": "is elegance with a budget objection",
-      "singularText": "is elegance with a budget objection",
-      "pluralText": "are elegance with a budget objection",
-      "personalSingularText": "is elegance with a budget objection",
-      "secondPersonText": "are elegance with a budget objection",
+      "text": "is a modest home measured at seventy square metres",
+      "singularText": "is a modest home measured at seventy square metres",
+      "pluralText": "are modest homes measured at seventy square metres",
+      "personalSingularText": "is a modest home measured at seventy square metres",
+      "secondPersonText": "are a modest home measured at seventy square metres",
       "tags": [
-        "austerity"
+        "luxury",
+        "wealth"
       ],
       "scorePreferences": {
         "substance": [
@@ -685,9 +700,10 @@
     {
       "id": "luxury-minister-predicate-002-future",
       "role": "predicate",
-      "text": "will be elegance with a budget objection",
+      "text": "will be a modest home measured at seventy square metres",
       "tags": [
-        "austerity"
+        "luxury",
+        "wealth"
       ],
       "scorePreferences": {
         "substance": [
@@ -702,7 +718,11 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "luxury-minister-predicate-002"
+      "tenseFamily": "luxury-minister-predicate-002",
+      "singularText": "will be a modest home measured at seventy square metres",
+      "pluralText": "will be modest homes measured at seventy square metres",
+      "personalSingularText": "will be a modest home measured at seventy square metres",
+      "secondPersonText": "will be a modest home measured at seventy square metres"
     },
     {
       "id": "luxury-minister-predicate-003-past",
@@ -724,7 +744,11 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "luxury-minister-predicate-003"
+      "tenseFamily": "luxury-minister-predicate-003",
+      "singularText": "was an austerity speech with valet parking",
+      "personalSingularText": "was an austerity speech with valet parking",
+      "pluralText": "were an austerity speech with valet parking",
+      "secondPersonText": "were an austerity speech with valet parking"
     },
     {
       "id": "luxury-minister-predicate-003-present",
@@ -733,7 +757,7 @@
       "singularText": "is an austerity speech with valet parking",
       "pluralText": "are an austerity speech with valet parking",
       "personalSingularText": "is an austerity speech with valet parking",
-      "secondPersonText": "is an austerity speech with valet parking",
+      "secondPersonText": "are an austerity speech with valet parking",
       "tags": [
         "service"
       ],
@@ -777,9 +801,10 @@
     {
       "id": "luxury-minister-predicate-004-past",
       "role": "predicate",
-      "text": "was a ministry that invoices the welcome",
+      "text": "was a declaration of hatred for snobbery",
       "tags": [
-        "authenticity"
+        "sincerity",
+        "class"
       ],
       "scorePreferences": {
         "substance": [
@@ -794,18 +819,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "luxury-minister-predicate-004"
+      "tenseFamily": "luxury-minister-predicate-004",
+      "singularText": "was a declaration of hatred for snobbery",
+      "pluralText": "were declarations of hatred for snobbery",
+      "personalSingularText": "was a declaration of hatred for snobbery",
+      "secondPersonText": "were a declaration of hatred for snobbery"
     },
     {
       "id": "luxury-minister-predicate-004-present",
       "role": "predicate",
-      "text": "is a ministry that invoices the welcome",
-      "singularText": "is a ministry that invoices the welcome",
-      "pluralText": "are a ministry that invoices the welcome",
-      "personalSingularText": "is a ministry that invoices the welcome",
-      "secondPersonText": "is a ministry that invoices the welcome",
+      "text": "is a declaration of hatred for snobbery",
+      "singularText": "is a declaration of hatred for snobbery",
+      "pluralText": "are declarations of hatred for snobbery",
+      "personalSingularText": "is a declaration of hatred for snobbery",
+      "secondPersonText": "are a declaration of hatred for snobbery",
       "tags": [
-        "authenticity"
+        "sincerity",
+        "class"
       ],
       "scorePreferences": {
         "substance": [
@@ -825,9 +855,10 @@
     {
       "id": "luxury-minister-predicate-004-future",
       "role": "predicate",
-      "text": "will be a ministry that invoices the welcome",
+      "text": "will be a declaration of hatred for snobbery",
       "tags": [
-        "authenticity"
+        "sincerity",
+        "class"
       ],
       "scorePreferences": {
         "substance": [
@@ -842,14 +873,19 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "luxury-minister-predicate-004"
+      "tenseFamily": "luxury-minister-predicate-004",
+      "singularText": "will be a declaration of hatred for snobbery",
+      "pluralText": "will be declarations of hatred for snobbery",
+      "personalSingularText": "will be a declaration of hatred for snobbery",
+      "secondPersonText": "will be a declaration of hatred for snobbery"
     },
     {
       "id": "luxury-minister-modifier-003",
       "role": "modifier",
-      "text": "beneath-a-modest-limousine",
+      "text": "while professing a hatred of snobbery",
       "tags": [
-        "austerity"
+        "sincerity",
+        "class"
       ],
       "rarity": "uncommon"
     },
@@ -876,9 +912,10 @@
     {
       "id": "luxury-minister-ending-005",
       "role": "ending",
-      "text": "and authenticity waited at reception.",
+      "text": "and seventy square metres are offered as modesty.",
       "tags": [
-        "authenticity"
+        "luxury",
+        "wealth"
       ],
       "rarity": "rare",
       "finisherBonus": 4

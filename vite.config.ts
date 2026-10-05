@@ -62,6 +62,11 @@ export default defineConfig(({ command }) => ({
             },
             { name: 'character-phrase-data', test: /[/\\]src[/\\]content[/\\]characters[/\\]/u },
             {
+              name: 'quote-reveal-data',
+              test: /[/\\]src[/\\]content[/\\]quote-reveals\.json$/u,
+              priority: 1,
+            },
+            {
               name: 'content-data',
               test: /[/\\]src[/\\]content[/\\](?!common-phrase-cards\.json|characters[/\\]).*\.json$/u,
             },

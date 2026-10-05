@@ -50,17 +50,17 @@
     {
       "id": "eu-funds-alchemist-noun-001",
       "role": "noun",
-      "text": "my imaginary wheelbarrow rental income",
+      "text": "the expected proceeds from selling attic carpets",
       "tags": [
-        "transparency",
-        "outcomes"
+        "spending",
+        "evidence"
       ],
       "scoreGroups": {
         "substance": [
-          "personal"
+          "wealth"
         ],
         "flavour": [
-          "politics"
+          "budget"
         ]
       },
       "rarity": "common"
@@ -68,20 +68,20 @@
     {
       "id": "eu-funds-alchemist-modifier-001",
       "role": "modifier",
-      "text": "with the repair budget spent on cake",
+      "text": "with the wheelbarrow counted as future income",
       "tags": [
-        "maintenance",
-        "outcomes"
+        "spending",
+        "evidence"
       ],
       "rarity": "uncommon"
     },
     {
       "id": "eu-funds-alchemist-ending-001",
       "role": "ending",
-      "text": "and the wheelbarrow cannot carry the budget.",
+      "text": "and the neighbour is expected to rent the wheelbarrow.",
       "tags": [
-        "maintenance",
-        "outcomes"
+        "spending",
+        "evidence"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -89,10 +89,9 @@
     {
       "id": "eu-funds-alchemist-ending-002",
       "role": "ending",
-      "text": "and the missing funds are invisible pastries.",
+      "text": "and there are no pastries, just a robe-price question.",
       "tags": [
-        "transparency",
-        "outcomes"
+        "relevance"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -395,14 +394,15 @@
     {
       "id": "eu-funds-alchemist-predicate-001-past",
       "role": "predicate",
-      "text": "was maintained only in the opening-day photograph",
+      "text": "was a budget counting on unsold attic carpets",
       "tags": [
-        "maintenance"
+        "spending",
+        "evidence"
       ],
-      "singularText": "was maintained only in the opening-day photograph",
-      "pluralText": "were maintained only in the opening-day photograph",
-      "personalSingularText": "was maintained only in the opening-day photograph",
-      "secondPersonText": "were maintained only in the opening-day photograph",
+      "singularText": "was a budget counting on unsold attic carpets",
+      "pluralText": "were budgets counting on unsold attic carpets",
+      "personalSingularText": "was a budget counting on unsold attic carpets",
+      "secondPersonText": "were a budget counting on unsold attic carpets",
       "tense": "past",
       "tenseFamily": "eu-funds-alchemist-predicate-001",
       "scorePreferences": {
@@ -423,14 +423,15 @@
     {
       "id": "eu-funds-alchemist-predicate-001-present",
       "role": "predicate",
-      "text": "is maintained only in the opening-day photograph",
+      "text": "is a budget counting on unsold attic carpets",
       "tags": [
-        "maintenance"
+        "spending",
+        "evidence"
       ],
-      "singularText": "is maintained only in the opening-day photograph",
-      "pluralText": "are maintained only in the opening-day photograph",
-      "personalSingularText": "is maintained only in the opening-day photograph",
-      "secondPersonText": "are maintained only in the opening-day photograph",
+      "singularText": "is a budget counting on unsold attic carpets",
+      "pluralText": "are budgets counting on unsold attic carpets",
+      "personalSingularText": "is a budget counting on unsold attic carpets",
+      "secondPersonText": "are a budget counting on unsold attic carpets",
       "tense": "present",
       "tenseFamily": "eu-funds-alchemist-predicate-001",
       "scorePreferences": {
@@ -451,14 +452,15 @@
     {
       "id": "eu-funds-alchemist-predicate-001-future",
       "role": "predicate",
-      "text": "will be maintained only in the opening-day photograph",
+      "text": "will be a budget counting on unsold attic carpets",
       "tags": [
-        "maintenance"
+        "spending",
+        "evidence"
       ],
-      "singularText": "will be maintained only in the opening-day photograph",
-      "pluralText": "will be maintained only in the opening-day photograph",
-      "personalSingularText": "will be maintained only in the opening-day photograph",
-      "secondPersonText": "will be maintained only in the opening-day photograph",
+      "singularText": "will be a budget counting on unsold attic carpets",
+      "pluralText": "will be budgets counting on unsold attic carpets",
+      "personalSingularText": "will be a budget counting on unsold attic carpets",
+      "secondPersonText": "will be a budget counting on unsold attic carpets",
       "tense": "future",
       "tenseFamily": "eu-funds-alchemist-predicate-001",
       "scorePreferences": {
@@ -479,9 +481,10 @@
     {
       "id": "eu-funds-alchemist-modifier-002",
       "role": "modifier",
-      "text": "with spare parts from the ceremonial ribbon",
+      "text": "while waiting for the aunt to provide money",
       "tags": [
-        "maintenance"
+        "spending",
+        "evidence"
       ],
       "rarity": "uncommon"
     },
@@ -498,14 +501,15 @@
       "role": "noun",
       "text": "a wheelbarrow rented to the neighbour",
       "tags": [
-        "transparency"
+        "spending",
+        "evidence"
       ],
       "scoreGroups": {
         "substance": [
-          "procurement"
+          "wealth"
         ],
         "flavour": [
-          "funds"
+          "budget"
         ]
       },
       "rarity": "common"
@@ -513,16 +517,16 @@
     {
       "id": "eu-funds-alchemist-noun-008",
       "role": "noun",
-      "text": "a robe without a pastry",
+      "text": "a robe-price question without any pastries",
       "tags": [
-        "outcomes"
+        "relevance"
       ],
       "scoreGroups": {
         "substance": [
-          "procurement"
+          "commercialism"
         ],
         "flavour": [
-          "funds"
+          "satire"
         ]
       },
       "rarity": "uncommon"
@@ -530,16 +534,17 @@
     {
       "id": "eu-funds-alchemist-noun-009",
       "role": "noun",
-      "text": "an invisible pastry in the budget",
+      "text": "the budget money expected from an aunt",
       "tags": [
-        "maintenance"
+        "spending",
+        "evidence"
       ],
       "scoreGroups": {
         "substance": [
-          "procurement"
+          "wealth"
         ],
         "flavour": [
-          "funds"
+          "budget"
         ]
       },
       "rarity": "rare"
@@ -547,16 +552,17 @@
     {
       "id": "eu-funds-alchemist-noun-010",
       "role": "noun",
-      "text": "a grant carried by a wheelbarrow",
+      "text": "a two-year absence of promised revenue",
       "tags": [
-        "transparency"
+        "spending",
+        "evidence"
       ],
       "scoreGroups": {
         "substance": [
-          "procurement"
+          "wealth"
         ],
         "flavour": [
-          "funds"
+          "budget"
         ]
       },
       "rarity": "common"
@@ -634,9 +640,10 @@
     {
       "id": "eu-funds-alchemist-predicate-002-past",
       "role": "predicate",
-      "text": "was a wheelbarrow for the national budget",
+      "text": "was income expected from renting out a wheelbarrow",
       "tags": [
-        "transparency"
+        "spending",
+        "evidence"
       ],
       "scorePreferences": {
         "substance": [
@@ -651,18 +658,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "eu-funds-alchemist-predicate-002"
+      "tenseFamily": "eu-funds-alchemist-predicate-002",
+      "singularText": "was income expected from renting out a wheelbarrow",
+      "pluralText": "were income expected from renting out a wheelbarrow",
+      "personalSingularText": "was income expected from renting out a wheelbarrow",
+      "secondPersonText": "were income expected from renting out a wheelbarrow"
     },
     {
       "id": "eu-funds-alchemist-predicate-002-present",
       "role": "predicate",
-      "text": "is a wheelbarrow for the national budget",
-      "singularText": "is a wheelbarrow for the national budget",
-      "pluralText": "are a wheelbarrow for the national budget",
-      "personalSingularText": "is a wheelbarrow for the national budget",
-      "secondPersonText": "are a wheelbarrow for the national budget",
+      "text": "is income expected from renting out a wheelbarrow",
+      "singularText": "is income expected from renting out a wheelbarrow",
+      "pluralText": "are income expected from renting out a wheelbarrow",
+      "personalSingularText": "is income expected from renting out a wheelbarrow",
+      "secondPersonText": "are income expected from renting out a wheelbarrow",
       "tags": [
-        "transparency"
+        "spending",
+        "evidence"
       ],
       "scorePreferences": {
         "substance": [
@@ -682,9 +694,10 @@
     {
       "id": "eu-funds-alchemist-predicate-002-future",
       "role": "predicate",
-      "text": "will be a wheelbarrow for the national budget",
+      "text": "will be income expected from renting out a wheelbarrow",
       "tags": [
-        "transparency"
+        "spending",
+        "evidence"
       ],
       "scorePreferences": {
         "substance": [
@@ -699,14 +712,19 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "eu-funds-alchemist-predicate-002"
+      "tenseFamily": "eu-funds-alchemist-predicate-002",
+      "singularText": "will be income expected from renting out a wheelbarrow",
+      "pluralText": "will be income expected from renting out a wheelbarrow",
+      "personalSingularText": "will be income expected from renting out a wheelbarrow",
+      "secondPersonText": "will be income expected from renting out a wheelbarrow"
     },
     {
       "id": "eu-funds-alchemist-predicate-003-past",
       "role": "predicate",
-      "text": "was a project with a ceremonial outcome",
+      "text": "was a budget relying on money from an aunt",
       "tags": [
-        "outcomes"
+        "spending",
+        "evidence"
       ],
       "scorePreferences": {
         "substance": [
@@ -721,18 +739,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "eu-funds-alchemist-predicate-003"
+      "tenseFamily": "eu-funds-alchemist-predicate-003",
+      "singularText": "was a budget relying on money from an aunt",
+      "pluralText": "were budgets relying on money from an aunt",
+      "personalSingularText": "was a budget relying on money from an aunt",
+      "secondPersonText": "were a budget relying on money from an aunt"
     },
     {
       "id": "eu-funds-alchemist-predicate-003-present",
       "role": "predicate",
-      "text": "is a project with a ceremonial outcome",
-      "singularText": "is a project with a ceremonial outcome",
-      "pluralText": "are a project with a ceremonial outcome",
-      "personalSingularText": "is a project with a ceremonial outcome",
-      "secondPersonText": "is a project with a ceremonial outcome",
+      "text": "is a budget relying on money from an aunt",
+      "singularText": "is a budget relying on money from an aunt",
+      "pluralText": "are budgets relying on money from an aunt",
+      "personalSingularText": "is a budget relying on money from an aunt",
+      "secondPersonText": "are a budget relying on money from an aunt",
       "tags": [
-        "outcomes"
+        "spending",
+        "evidence"
       ],
       "scorePreferences": {
         "substance": [
@@ -752,9 +775,10 @@
     {
       "id": "eu-funds-alchemist-predicate-003-future",
       "role": "predicate",
-      "text": "will be a project with a ceremonial outcome",
+      "text": "will be a budget relying on money from an aunt",
       "tags": [
-        "outcomes"
+        "spending",
+        "evidence"
       ],
       "scorePreferences": {
         "substance": [
@@ -769,14 +793,18 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "eu-funds-alchemist-predicate-003"
+      "tenseFamily": "eu-funds-alchemist-predicate-003",
+      "singularText": "will be a budget relying on money from an aunt",
+      "pluralText": "will be budgets relying on money from an aunt",
+      "personalSingularText": "will be a budget relying on money from an aunt",
+      "secondPersonText": "will be a budget relying on money from an aunt"
     },
     {
       "id": "eu-funds-alchemist-predicate-004-past",
       "role": "predicate",
-      "text": "was a receipt that promises maintenance",
+      "text": "was a missing pastry followed by a robe-price question",
       "tags": [
-        "maintenance"
+        "relevance"
       ],
       "scorePreferences": {
         "substance": [
@@ -791,18 +819,22 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "eu-funds-alchemist-predicate-004"
+      "tenseFamily": "eu-funds-alchemist-predicate-004",
+      "singularText": "was a missing pastry followed by a robe-price question",
+      "pluralText": "were missing pastries followed by robe-price questions",
+      "personalSingularText": "was a missing pastry followed by a robe-price question",
+      "secondPersonText": "were a missing pastry followed by a robe-price question"
     },
     {
       "id": "eu-funds-alchemist-predicate-004-present",
       "role": "predicate",
-      "text": "is a receipt that promises maintenance",
-      "singularText": "is a receipt that promises maintenance",
-      "pluralText": "are a receipt that promises maintenance",
-      "personalSingularText": "is a receipt that promises maintenance",
-      "secondPersonText": "is a receipt that promises maintenance",
+      "text": "is a missing pastry followed by a robe-price question",
+      "singularText": "is a missing pastry followed by a robe-price question",
+      "pluralText": "are missing pastries followed by robe-price questions",
+      "personalSingularText": "is a missing pastry followed by a robe-price question",
+      "secondPersonText": "are a missing pastry followed by a robe-price question",
       "tags": [
-        "maintenance"
+        "relevance"
       ],
       "scorePreferences": {
         "substance": [
@@ -822,9 +854,9 @@
     {
       "id": "eu-funds-alchemist-predicate-004-future",
       "role": "predicate",
-      "text": "will be a receipt that promises maintenance",
+      "text": "will be a missing pastry followed by a robe-price question",
       "tags": [
-        "maintenance"
+        "relevance"
       ],
       "scorePreferences": {
         "substance": [
@@ -839,23 +871,28 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "eu-funds-alchemist-predicate-004"
+      "tenseFamily": "eu-funds-alchemist-predicate-004",
+      "singularText": "will be a missing pastry followed by a robe-price question",
+      "pluralText": "will be missing pastries followed by robe-price questions",
+      "personalSingularText": "will be a missing pastry followed by a robe-price question",
+      "secondPersonText": "will be a missing pastry followed by a robe-price question"
     },
     {
       "id": "eu-funds-alchemist-modifier-003",
       "role": "modifier",
-      "text": "under-a-funded-ribbon-cutting",
+      "text": "without pastries but still asking the robe price",
       "tags": [
-        "outcomes"
+        "relevance"
       ],
       "rarity": "uncommon"
     },
     {
       "id": "eu-funds-alchemist-ending-003",
       "role": "ending",
-      "text": "and the grant requested a maintenance plan.",
+      "text": "and the attic carpets must fund the plan.",
       "tags": [
-        "maintenance"
+        "spending",
+        "evidence"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -863,9 +900,10 @@
     {
       "id": "eu-funds-alchemist-ending-004",
       "role": "ending",
-      "text": "and the receipt was the only outcome.",
+      "text": "and the aunt is expected to supply the money.",
       "tags": [
-        "transparency"
+        "spending",
+        "evidence"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -873,9 +911,10 @@
     {
       "id": "eu-funds-alchemist-ending-005",
       "role": "ending",
-      "text": "and the ribbon qualified for another grant.",
+      "text": "and those promised revenues failed two years running.",
       "tags": [
-        "outcomes"
+        "spending",
+        "evidence"
       ],
       "rarity": "rare",
       "finisherBonus": 4

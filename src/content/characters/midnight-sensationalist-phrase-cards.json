@@ -73,12 +73,8 @@
     {
       "id": "midnight-sensationalist-modifier-001",
       "role": "modifier",
-      "text": "during the seventh trailer for one revelation",
-      "tags": [
-        "ratings",
-        "evidence",
-        "credibility"
-      ],
+      "text": "without knowing what you are missing",
+      "tags": [],
       "rarity": "uncommon"
     },
     {
@@ -96,35 +92,27 @@
     {
       "id": "midnight-sensationalist-ending-002",
       "role": "ending",
-      "text": "and your fortune is still on hold.",
-      "tags": [
-        "ratings",
-        "credibility"
-      ],
+      "text": "and the reward will not be paid in cash.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 3
     },
     {
       "id": "midnight-sensationalist-ending-003",
       "role": "ending",
-      "text": "and the hidden system paid for catering.",
-      "tags": [
-        "evidence",
-        "credibility"
-      ],
+      "text": "and my victory brings down the whole government.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 3
     },
     {
       "id": "midnight-sensationalist-noun-002",
       "role": "noun",
-      "text": "an empty chair billed as a witness",
-      "tags": [
-        "evidence"
-      ],
+      "text": "a reward payable without cash",
+      "tags": [],
       "scoreGroups": {
         "substance": [
-          "media"
+          "wealth"
         ],
         "flavour": [
           "politics"
@@ -138,13 +126,13 @@
     {
       "id": "midnight-sensationalist-noun-003",
       "role": "noun",
-      "text": "a countdown to the next exclusive commercial",
+      "text": "a fortune to spend in twenty-four hours",
       "tags": [
-        "ratings"
+        "wealth"
       ],
       "scoreGroups": {
         "substance": [
-          "media"
+          "wealth"
         ],
         "flavour": [
           "politics"
@@ -158,14 +146,11 @@
     {
       "id": "midnight-sensationalist-noun-004",
       "role": "noun",
-      "text": "a pixelated pigeon as a palace source",
-      "tags": [
-        "evidence",
-        "credibility"
-      ],
+      "text": "an entire system turned against me",
+      "tags": [],
       "scoreGroups": {
         "substance": [
-          "media"
+          "politics"
         ],
         "flavour": [
           "politics"
@@ -179,13 +164,11 @@
     {
       "id": "midnight-sensationalist-noun-005",
       "role": "noun",
-      "text": "a breaking-news banner with yesterday underneath",
-      "tags": [
-        "credibility"
-      ],
+      "text": "personal cash handed to the government",
+      "tags": [],
       "scoreGroups": {
         "substance": [
-          "media"
+          "wealth"
         ],
         "flavour": [
           "politics"
@@ -199,13 +182,11 @@
     {
       "id": "midnight-sensationalist-noun-006",
       "role": "noun",
-      "text": "an outrage meter rented by the minute",
-      "tags": [
-        "ratings"
-      ],
+      "text": "an alliance without a conversation",
+      "tags": [],
       "scoreGroups": {
         "substance": [
-          "media"
+          "coalition"
         ],
         "flavour": [
           "politics"
@@ -423,15 +404,12 @@
     {
       "id": "midnight-sensationalist-predicate-001-past",
       "role": "predicate",
-      "text": "promoted a dial tone to chief correspondent",
-      "singularText": "promoted a dial tone to chief correspondent",
-      "pluralText": "promoted a dial tone to chief correspondent",
-      "personalSingularText": "promoted a dial tone to chief correspondent",
-      "secondPersonText": "promoted a dial tone to chief correspondent",
-      "tags": [
-        "evidence",
-        "credibility"
-      ],
+      "text": "offered a reward instead of cash",
+      "singularText": "offered a reward instead of cash",
+      "pluralText": "offered a reward instead of cash",
+      "personalSingularText": "offered a reward instead of cash",
+      "secondPersonText": "offered a reward instead of cash",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -452,15 +430,12 @@
     {
       "id": "midnight-sensationalist-predicate-001-present",
       "role": "predicate",
-      "text": "promotes a dial tone to chief correspondent",
-      "singularText": "promotes a dial tone to chief correspondent",
-      "pluralText": "promote a dial tone to chief correspondent",
-      "personalSingularText": "promotes a dial tone to chief correspondent",
-      "secondPersonText": "promote a dial tone to chief correspondent",
-      "tags": [
-        "evidence",
-        "credibility"
-      ],
+      "text": "offers a reward instead of cash",
+      "singularText": "offers a reward instead of cash",
+      "pluralText": "offer a reward instead of cash",
+      "personalSingularText": "offers a reward instead of cash",
+      "secondPersonText": "offer a reward instead of cash",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -481,15 +456,12 @@
     {
       "id": "midnight-sensationalist-predicate-001-future",
       "role": "predicate",
-      "text": "will promote a dial tone to chief correspondent",
-      "singularText": "will promote a dial tone to chief correspondent",
-      "pluralText": "will promote a dial tone to chief correspondent",
-      "personalSingularText": "will promote a dial tone to chief correspondent",
-      "secondPersonText": "will promote a dial tone to chief correspondent",
-      "tags": [
-        "evidence",
-        "credibility"
-      ],
+      "text": "will offer a reward instead of cash",
+      "singularText": "will offer a reward instead of cash",
+      "pluralText": "will offer a reward instead of cash",
+      "personalSingularText": "will offer a reward instead of cash",
+      "secondPersonText": "will offer a reward instead of cash",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -510,11 +482,8 @@
     {
       "id": "midnight-sensationalist-modifier-002",
       "role": "modifier",
-      "text": "during the eyewitness recruitment break",
-      "tags": [
-        "ratings",
-        "evidence"
-      ],
+      "text": "with only twenty-four hours to spend the money",
+      "tags": [],
       "rarity": "uncommon"
     },
     {
@@ -529,9 +498,7 @@
       "id": "midnight-sensationalist-noun-007",
       "role": "noun",
       "text": "what you do not know you are losing",
-      "tags": [
-        "ratings"
-      ],
+      "tags": [],
       "scoreGroups": {
         "substance": [
           "media"
@@ -546,12 +513,10 @@
       "id": "midnight-sensationalist-noun-008",
       "role": "noun",
       "text": "a reward that is not cash",
-      "tags": [
-        "evidence"
-      ],
+      "tags": [],
       "scoreGroups": {
         "substance": [
-          "media"
+          "wealth"
         ],
         "flavour": [
           "ratings"
@@ -683,14 +648,18 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "midnight-sensationalist-predicate-002"
+      "tenseFamily": "midnight-sensationalist-predicate-002",
+      "singularText": "was an exclusive you did not know you were missing",
+      "pluralText": "were exclusives you did not know you were missing",
+      "personalSingularText": "was an exclusive you did not know you were missing",
+      "secondPersonText": "were an exclusive you did not know you were missing"
     },
     {
       "id": "midnight-sensationalist-predicate-002-present",
       "role": "predicate",
       "text": "is an exclusive you did not know you were missing",
       "singularText": "is an exclusive you did not know you were missing",
-      "pluralText": "are an exclusive you did not know you were missing",
+      "pluralText": "are exclusives you did not know you were missing",
       "personalSingularText": "is an exclusive you did not know you were missing",
       "secondPersonText": "are an exclusive you did not know you were missing",
       "tags": [
@@ -731,15 +700,15 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "midnight-sensationalist-predicate-002"
+      "tenseFamily": "midnight-sensationalist-predicate-002",
+      "singularText": "will be an exclusive you did not know you miss",
+      "pluralText": "will be an exclusive you did not know you miss"
     },
     {
       "id": "midnight-sensationalist-predicate-003-past",
       "role": "predicate",
-      "text": "was a headline wearing an eyewitness badge",
-      "tags": [
-        "evidence"
-      ],
+      "text": "claimed the whole system had turned against me",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -753,19 +722,21 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "midnight-sensationalist-predicate-003"
+      "tenseFamily": "midnight-sensationalist-predicate-003",
+      "singularText": "claimed the whole system had turned against me",
+      "pluralText": "claimed the whole system had turned against me",
+      "personalSingularText": "claimed the whole system had turned against me",
+      "secondPersonText": "claimed the whole system had turned against me"
     },
     {
       "id": "midnight-sensationalist-predicate-003-present",
       "role": "predicate",
-      "text": "is a headline wearing an eyewitness badge",
-      "singularText": "is a headline wearing an eyewitness badge",
-      "pluralText": "are a headline wearing an eyewitness badge",
-      "personalSingularText": "is a headline wearing an eyewitness badge",
-      "secondPersonText": "is a headline wearing an eyewitness badge",
-      "tags": [
-        "evidence"
-      ],
+      "text": "claims the whole system has turned against me",
+      "singularText": "claims the whole system has turned against me",
+      "pluralText": "claim the whole system has turned against me",
+      "personalSingularText": "claims the whole system has turned against me",
+      "secondPersonText": "claim the whole system has turned against me",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -784,10 +755,8 @@
     {
       "id": "midnight-sensationalist-predicate-003-future",
       "role": "predicate",
-      "text": "will be a headline wearing an eyewitness badge",
-      "tags": [
-        "evidence"
-      ],
+      "text": "will claim the whole system has turned against me",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -801,15 +770,17 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "midnight-sensationalist-predicate-003"
+      "tenseFamily": "midnight-sensationalist-predicate-003",
+      "singularText": "will claim the whole system has turned against me",
+      "pluralText": "will claim the whole system has turned against me",
+      "personalSingularText": "will claim the whole system has turned against me",
+      "secondPersonText": "will claim the whole system has turned against me"
     },
     {
       "id": "midnight-sensationalist-predicate-004-past",
       "role": "predicate",
-      "text": "was a scandal with a subscription tier",
-      "tags": [
-        "credibility"
-      ],
+      "text": "made alliances without talking to the partner",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -823,19 +794,21 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "midnight-sensationalist-predicate-004"
+      "tenseFamily": "midnight-sensationalist-predicate-004",
+      "singularText": "made alliances without talking to the partner",
+      "pluralText": "made alliances without talking to the partner",
+      "personalSingularText": "made alliances without talking to the partner",
+      "secondPersonText": "made alliances without talking to the partner"
     },
     {
       "id": "midnight-sensationalist-predicate-004-present",
       "role": "predicate",
-      "text": "is a scandal with a subscription tier",
-      "singularText": "is a scandal with a subscription tier",
-      "pluralText": "are a scandal with a subscription tier",
-      "personalSingularText": "is a scandal with a subscription tier",
-      "secondPersonText": "is a scandal with a subscription tier",
-      "tags": [
-        "credibility"
-      ],
+      "text": "makes alliances without talking to the partner",
+      "singularText": "makes alliances without talking to the partner",
+      "pluralText": "make alliances without talking to the partner",
+      "personalSingularText": "makes alliances without talking to the partner",
+      "secondPersonText": "make alliances without talking to the partner",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -854,10 +827,8 @@
     {
       "id": "midnight-sensationalist-predicate-004-future",
       "role": "predicate",
-      "text": "will be a scandal with a subscription tier",
-      "tags": [
-        "credibility"
-      ],
+      "text": "will make alliances without talking to the partner",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -871,34 +842,32 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "midnight-sensationalist-predicate-004"
+      "tenseFamily": "midnight-sensationalist-predicate-004",
+      "singularText": "will make alliances without talking to the partner",
+      "pluralText": "will make alliances without talking to the partner",
+      "personalSingularText": "will make alliances without talking to the partner",
+      "secondPersonText": "will make alliances without talking to the partner"
     },
     {
       "id": "midnight-sensationalist-modifier-003",
       "role": "modifier",
       "text": "beneath-a-breaking-news-banner",
-      "tags": [
-        "ratings"
-      ],
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "midnight-sensationalist-ending-004",
       "role": "ending",
-      "text": "and the source requested a better angle.",
-      "tags": [
-        "evidence"
-      ],
+      "text": "and my own money goes to the government.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     },
     {
       "id": "midnight-sensationalist-ending-005",
       "role": "ending",
-      "text": "and the headline outlived the facts.",
-      "tags": [
-        "credibility"
-      ],
+      "text": "and the money lasts until after the election.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 4
     }

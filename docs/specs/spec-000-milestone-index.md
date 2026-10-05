@@ -331,7 +331,7 @@ A review that uses only the source code does not satisfy them.
     Draft, not approved. Tests declare their storage profile, the gate reports all
     failures, an optional pre-push check needs a gate pass, and one shared test
     checks the layout regions of each primary screen.
-34. [Who said that?](spec-034-who-said-that.md). Budget: 10. Draft, not approved.
+34. [Who said that?](spec-034-who-said-that.md). Budget: 10. Approved.
     After a match, the game shows which committed phrases come from real speech,
     and in which context, with no names or links. It adds a Real-or-invented
     guess and a local quote archive.

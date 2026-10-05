@@ -1,6 +1,6 @@
 # Milestone 034: Who Said That?
 
-**Status:** Draft, not approved  
+**Status:** Approved\
 **Depends on:** 019, 020, 028, 029\
 **Owns:** Public quote-reveal records, the post-match reveal, the Real-or-invented guess, and the quote archive  
 **Production-file budget:** 10
@@ -37,15 +37,18 @@ Thus the reveal ships no new quoted text.
 A reveal record has these fields:
 
 - `cardId`: a shipped phrase card ID.
-- `classification`: `exact-quote`, `adapted-quote`, `real-slogan`, or `invented`.
+- `classification`: `exact-quote`, `adapted-quote`, `real-slogan`, `generic-phrase`, or `invented`.
 - `sourceLanguage`: `ro`, `en`, or `other`.
 - `venue`: `parliament`, `government`, `county-council`, `local-council`, `campaign`, `press-conference`,
-  `television`, `radio`, `print`, `social-media`, `protest`, or `court`.
+  `television`, `web-interview`, `radio`, `print`, `social-media`, `protest`, or `court`.
+  Use `web-interview` for an interview published by an online outlet when a
+  television broadcast or social-media stream is not established.
 - `level`: `national`, `county`, `local`, or `international`.
 - `year`: a four-digit year from 1990 through the current year.
 
-`sourceLanguage`, `venue`, `level`, and `year` are required unless the classification is `invented`.
-An `invented` record has none of these four fields, because an invented phrase has no source.
+`sourceLanguage`, `venue`, `level`, and `year` are required for the three sourced classifications.
+An `invented` or `generic-phrase` record has none of these four fields.
+Ordinary language has no attributed source statement.
 The interface translates each enumerated value through Lit localization, so a record has no free text.
 
 The labels obey the Milestone 005 rule against adaptations shown as real words:
@@ -54,18 +57,38 @@ The labels obey the Milestone 005 rule against adaptations shown as real words:
   When the card language is not the source language, the label adds **Translated from Romanian** or the related language.
 - `adapted-quote`: **Adapted from a real statement.** The label never says that the speaker said the card text.
 - `real-slogan`: **Real slogan.**
+- `generic-phrase`: **Everyday phrase.** This is ordinary language, such as a
+  pronoun, a family member, a basic relation, or a simple connector. It counts as
+  real, without a claim that it is an attributed quote.
 - `invented`: **Invented for the game.**
 
 Each predicate, modifier, and ending must have a record.
-When a card has no recorded source, or its source is not sure, its record is `invented`.
+When a card has no recorded source, or its source is not sure, its record is `invented`,
+unless it is ordinary language classified as `generic-phrase`.
 A record never gives a venue, a level, or a year that the provenance record does not give.
 A card with a different role can have any classification.
 A card with no record shows no receipt.
 
-Before a record ships, a person examines it against its private provenance record.
-The person makes sure that the venue, the level, and the year are correct.
-They also make sure that the combination does not identify the speaker without other information.
-When a combination identifies one person, use the next wider level, or remove the year.
+The venue, the level, and the year of a record agree with its private provenance record.
+The combination must not identify the speaker without other information.
+When a combination identifies one person, use the next wider level.
+The product owner removed the review of each record by a person as a condition to ship.
+
+At least 50 percent of all shipped phrase cards must have a non-`invented` reveal
+record: a verified quote or slogan, or ordinary language. Count each stable card ID once, including each tense
+card, across the common, scene, and character pools. Cards without a record stay
+in the denominator. Report the number of source statements and full tense families
+separately, so repeated forms do not suggest more independent quotes.
+Report ordinary-language cards separately from sourced quotes. Generic words do
+not need a fabricated attribution, date, or place to count as real.
+
+Before replacing a card classified as invented, search its existing English and
+Romanian wording on the web and examine its private source notes. A full tense
+family can share a search of its distinctive wording. Keep the queries, results,
+card IDs, and decision in private research. A search with no result means that no
+source was found; it does not prove invention. Preserve cards with credible source
+evidence. New adaptations must keep the distinctive meaning of the verified
+statement, with the correct language, venue, level, and statement year.
 
 ## Deliver
 
@@ -98,10 +121,17 @@ In each sentence, each phrase that has a record shows its label and its context,
 **Real quote · County council, 2014**.
 A phrase with no record, and a continuation, shows no receipt.
 A receipt of a phrase from real speech is the reward, so its label and its context are larger than those of an `invented` receipt.
-When no committed phrase comes from real speech, the panel says so.
+When no eligible committed phrase has a verified source, the panel says
+**No sourced phrases are available for this match.**
 
 The panel shows only committed public sentences.
 It never shows a card from a private hand that was not committed.
+Before it shows a receipt or selects a guess, it checks the recorded phrase text
+against the current grammar binding's permitted forms for that card and the
+recorded game language. A card ID alone is not proof of a source after a content
+revision. When any occurrence of an ID has obsolete or unknown wording, that
+match shows no receipt or guess for that ID. Its recorded sentence stays visible
+without a change. The panel does not reconstruct an older catalog.
 The panel is HTML, not canvas.
 It obeys the landscape viewport matrix of Milestone 018, and each sentence can scroll inside the panel.
 Match history also opens the same panel for each stored match.
@@ -115,6 +145,8 @@ In a match with only `invented` phrases, each answer is **Invented**, so the pan
 The game selects up to five phrases from the committed sentences of the match.
 These are phrases that have a record.
 The selection takes the phrases from real speech first, and `invented` phrases fill the other places.
+Ordinary-language cards do not enter the guess, because they have no attributed
+quote for the player to discover.
 The selection uses the match seed, so it is deterministic.
 The panel does not give the number of real phrases before the guess.
 For each phrase, the player selects **Real quote**, **Adapted**, or **Invented**.
@@ -136,6 +168,8 @@ Each item shows the card text in the interface language, its label, and its cont
 The phrases from real speech are first in the list.
 The archive also shows the number of records found, the total number of records, and the best guess score.
 It shows the same two numbers for the records from real speech.
+Those source counts exclude `generic-phrase` records. Ordinary-language receipts
+show their label without source context.
 
 Store the archive in the Milestone 020 persistence as a new document with its own codec and schema version.
 It contains only card IDs and the best guess score.
@@ -150,6 +184,8 @@ A match that does not complete does not add records.
   A test searches the built `dist/` output for the forbidden patterns.
 - **AC-034-03:** After a completed match, the panel shows the correct label and context for each committed phrase that has a record.
   It shows no receipt for other phrases, and no card that was not committed.
+  A historical phrase with wording outside its current permitted forms cannot
+  receive the attribution of replacement text or enter the guess.
 - **AC-034-04:** An `adapted-quote` card never shows **Real quote**.
   An `exact-quote` card in a language that is not its source language shows the translation label.
 - **AC-034-05:** The guess selects the same phrases for the same seed, it scores each answer correctly, and it does not change the match record or the replay.
@@ -157,6 +193,9 @@ A match that does not complete does not add records.
   A reset clears it, and a match that is not complete does not change it.
 - **AC-034-07:** The panel and the archive pass the supported landscape viewport matrix, keyboard navigation, and forced colors, in English and in Romanian.
 - **AC-034-08:** With the research folder, the provenance comparison finds a changed year, classification, or source language in a fixture.
+- **AC-034-09:** At least half of all shipped card IDs have non-`invented` records.
+  Each replacement has private evidence of the old-wording web search and the new
+  source statement. English and Romanian keep the same sourced meaning.
 
 ## Impeccable UI validation
 
@@ -171,6 +210,8 @@ Do not use a decoration that hides the text.
 
 - `tests/unit/quote-reveals.test.ts` does checks of AC-034-01 and AC-034-08 with fixtures.
   `npm run content:validate` does the check of the shipped records.
+  The unit suite also checks the complete-catalog percentage of AC-034-09.
+  Private research records the editorial and search evidence for that criterion.
 - `tests/unit/quote-receipts.test.ts` and `tests/browser/quote-receipts.browser.test.ts` do checks of AC-034-03, AC-034-04, and AC-034-05.
 - `tests/unit/quote-archive.test.ts`, `tests/unit/match-coordinator.test.ts`, and the browser test do checks of AC-034-06.
 - `tests/browser/layout-regions.browser.test.ts` and `e2e/quote-reveals.spec.ts` do checks of AC-034-07.
@@ -180,7 +221,6 @@ Do not use a decoration that hides the text.
 ## Checks and stop conditions
 
 Run `quality:quick`.
-Record a person's review of each reveal record before the records ship.
 Stop when the acceptance criteria pass.
 Do not show a source URL or the name of a real person, and do not change a match rule.
 A decision to show source links needs a different approved specification and a new review of the Milestone 005 privacy rules.

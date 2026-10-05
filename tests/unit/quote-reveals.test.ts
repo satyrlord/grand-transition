@@ -3,12 +3,13 @@ import os from 'node:os';
 import path from 'node:path';
 import { afterEach, describe, expect, test } from 'vitest';
 import {
+  isSourcedQuoteReveal,
   parseQuoteReveals,
   validateQuoteReveals,
   type QuoteRevealRecord,
 } from '../../src/content/quote-reveals.ts';
 import type { Phrase } from '../../src/content/schemas.ts';
-import { loadQuoteReveals } from '../../tools/load-game-content.ts';
+import { loadGameContent, loadQuoteReveals } from '../../tools/load-game-content.ts';
 import {
   compareWithProvenance,
   parseProvenanceTables,
@@ -49,6 +50,18 @@ const codes = (input: unknown) =>
   validateQuoteReveals(input, phrases, currentYear).map(({ path: at, code }) => `${at}: ${code}`);
 
 describe('reveal-record rules (AC-034-01)', () => {
+  test('accepts ordinary language without invented source metadata', () => {
+    expect(
+      codes([...completeRecords(), { cardId: 'test-noun-001', classification: 'generic-phrase' }]),
+    ).toEqual([]);
+    expect(
+      codes([
+        ...completeRecords(),
+        { cardId: 'test-noun-001', classification: 'generic-phrase', year: 2020 },
+      ]),
+    ).toEqual(['quote-reveals[test-noun-001].year: invalid-record']);
+  });
+
   test('accepts a record for each required predicate, modifier, and ending', () => {
     expect(codes(completeRecords())).toEqual([]);
   });
@@ -160,6 +173,31 @@ describe('reveal-record rules (AC-034-01)', () => {
 });
 
 describe('shipped reveal records', () => {
+  test('classifies at least half of all shipped cards as sourced or everyday language', () => {
+    const { gameCatalog } = loadGameContent();
+    const sourcedIds = new Set(
+      loadQuoteReveals()
+        .filter(({ classification }) => classification !== 'invented')
+        .map(({ cardId }) => cardId),
+    );
+    const count = gameCatalog.phrases.filter(({ id }) => sourcedIds.has(id)).length;
+    expect(count).toBeGreaterThanOrEqual(Math.ceil(gameCatalog.phrases.length / 2));
+  });
+
+  test('counts ordinary pronouns and family members as real without an attribution', () => {
+    const { phraseCardCatalog, gameCatalog } = loadGameContent();
+    const records = new Map(loadQuoteReveals().map((record) => [record.cardId, record]));
+    for (const text of ['you', 'your brother', 'your father', 'your cousin', 'your son-in-law']) {
+      const phrase = gameCatalog.phrases.find(
+        ({ textKey }) => phraseCardCatalog.englishMessages[textKey] === text,
+      )!;
+      expect(records.get(phrase.id)).toEqual({
+        cardId: phrase.id,
+        classification: 'generic-phrase',
+      });
+    }
+  });
+
   test('have no defect other than the open coverage of required cards', () => {
     // Milestone 034 requires a record for each predicate, modifier, and ending.
     // `npm run content:validate` reports the cards that have none.
@@ -175,7 +213,7 @@ describe('shipped reveal records', () => {
     const shipped = loadQuoteReveals();
     expect(new Set(shipped.map(({ cardId }) => cardId)).size).toBe(shipped.length);
     for (const record of shipped) {
-      if (record.classification !== 'invented') {
+      if (isSourcedQuoteReveal(record)) {
         expect(record.year).toBeGreaterThanOrEqual(1990);
         expect(record.year).toBeLessThanOrEqual(new Date().getFullYear());
       }
@@ -299,8 +337,8 @@ describe('provenance comparison (AC-034-08)', () => {
     const shipped = loadQuoteReveals();
     const rows = (changedCardId?: string) =>
       shipped.map((record) =>
-        record.classification === 'invented'
-          ? `| \`${record.cardId}\` | invented | | |`
+        !isSourcedQuoteReveal(record)
+          ? `| \`${record.cardId}\` | ${record.classification} | | |`
           : `| \`${record.cardId}\` | ${record.classification} | ${record.sourceLanguage} | ${
               record.cardId === changedCardId ? record.year - 1 : record.year
             } |`,
@@ -323,7 +361,7 @@ describe('provenance comparison (AC-034-08)', () => {
     expect(readProvenanceRecords(directory)).toHaveLength(shipped.length);
     expect(mismatches()).toEqual([]);
 
-    const changed = shipped.find(({ classification }) => classification !== 'invented')!;
+    const changed = shipped.find(isSourcedQuoteReveal)!;
     write(changed.cardId);
     expect(mismatches().map(({ path: at, code }) => `${at}: ${code}`)).toEqual([
       `quote-reveals[${changed.cardId}].year: provenance-mismatch`,

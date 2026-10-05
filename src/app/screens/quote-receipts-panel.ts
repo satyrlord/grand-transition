@@ -3,6 +3,7 @@ import { LitElement, html, nothing, type PropertyValues, type TemplateResult } f
 import { formatInterfaceNumber } from '../interface-format.ts';
 import { gameTextLanguage } from '../game-text-language.ts';
 import { interfaceCharacterName } from '../interface-names.ts';
+import { isSourcedQuoteReveal } from '../../content/quote-reveals.ts';
 import type {
   QuoteRevealLevel,
   QuoteRevealRecord,
@@ -17,11 +18,12 @@ import {
   type QuoteGuessAnswer,
 } from '../../engine/quote-guess.ts';
 import {
+  eligibleQuoteReveals,
   revealedCardIds,
   type QuoteGuessScore,
   type QuoteRevealIndex,
 } from '../../engine/quote-receipts.ts';
-import { quoteReveals } from '../../game-content.ts';
+import { gameCatalog, gameLocaleBundle, quoteReveals } from '../../game-content.ts';
 import type { MatchLogDocument } from '../../persistence/codecs/replay-codec.ts';
 
 const elementName = 'grand-transition-quote-receipts';
@@ -61,6 +63,7 @@ export class GrandTransitionQuoteReceipts extends LitElement {
   private sentences: readonly Sentence[] = [];
   private receiptCardIds: readonly string[] = [];
   private guessCardIds: readonly string[] = [];
+  private eligibleReveals: QuoteRevealIndex = new Map();
 
   constructor() {
     super();
@@ -81,9 +84,17 @@ export class GrandTransitionQuoteReceipts extends LitElement {
     if (!changed.has('match') && !changed.has('reveals')) return;
     const match = this.match;
     this.sentences = match ? sentencesInTurnOrder(match.sentences, match.rounds) : [];
-    this.receiptCardIds = revealedCardIds(this.sentences, this.reveals);
+    this.eligibleReveals = match
+      ? eligibleQuoteReveals(
+          this.sentences,
+          this.reveals,
+          gameCatalog,
+          gameLocaleBundle(match.setup.gameLocale),
+        )
+      : new Map();
+    this.receiptCardIds = revealedCardIds(this.sentences, this.eligibleReveals);
     this.guessCardIds = match
-      ? selectQuoteGuessCards(this.sentences, this.reveals, match.seed)
+      ? selectQuoteGuessCards(this.sentences, this.eligibleReveals, match.seed)
       : [];
     this.stage = this.guessCardIds.length > 0 ? 'gate' : 'receipts';
     this.answers = {};
@@ -233,10 +244,10 @@ export class GrandTransitionQuoteReceipts extends LitElement {
         }
         ${
           this.receiptCardIds.every(
-            (cardId) => this.reveals.get(cardId)!.classification === 'invented',
+            (cardId) => !isSourcedQuoteReveal(this.eligibleReveals.get(cardId)!),
           )
             ? html`<p class="quote-receipts-empty" data-layout-region="receipts-empty">
-                ${msg('No phrase in this match comes from real speech.')}
+                ${msg('No sourced phrases are available for this match.')}
               </p>`
             : nothing
         }
@@ -265,7 +276,7 @@ export class GrandTransitionQuoteReceipts extends LitElement {
   private renderSentence(match: MatchLogDocument, sentence: Sentence): TemplateResult {
     const language = gameTextLanguage(match.setup.gameLocale) ?? nothing;
     const player = match.setup.players.find(({ playerId }) => playerId === sentence.playerId)!;
-    const receipts = sentence.phrases.filter(({ phraseId }) => this.reveals.has(phraseId));
+    const receipts = sentence.phrases.filter(({ phraseId }) => this.eligibleReveals.has(phraseId));
     return html`
       <article class="quote-receipts-sentence" data-receipt-player=${sentence.playerId}>
         <h4>${interfaceCharacterName(player.characterId)}</h4>
@@ -284,7 +295,7 @@ export class GrandTransitionQuoteReceipts extends LitElement {
   }
 
   private renderReceipt(match: MatchLogDocument, phrase: UsedPhrase): TemplateResult {
-    const record = this.reveals.get(phrase.phraseId)!;
+    const record = this.eligibleReveals.get(phrase.phraseId)!;
     const translation = quoteRevealTranslation(record, match.setup.gameLocale);
     const context = quoteRevealContext(record);
     const guess = this.score ? this.answers[phrase.phraseId] : undefined;
@@ -353,7 +364,7 @@ export class GrandTransitionQuoteReceipts extends LitElement {
       this.querySelector<HTMLElement>(`[data-guess-card="${missing}"] input`)?.focus();
       return;
     }
-    this.score = scoreQuoteGuess(this.guessCardIds, this.answers, this.reveals);
+    this.score = scoreQuoteGuess(this.guessCardIds, this.answers, this.eligibleReveals);
     this.stage = 'receipts';
     this.dispatchEvent(
       new CustomEvent(quoteGuessScoredEventName, {
@@ -424,6 +435,8 @@ export function quoteRevealLabel(record: QuoteRevealRecord): string {
       return msg('Adapted from a real statement');
     case 'real-slogan':
       return msg('Real slogan');
+    case 'generic-phrase':
+      return msg('Everyday phrase');
     case 'invented':
       return msg('Invented for the game');
   }
@@ -451,7 +464,7 @@ export function quoteRevealTranslation(
 
 /** The venue, the level, and the year, for example "County council, 2014". */
 export function quoteRevealContext(record: QuoteRevealRecord): string | null {
-  if (record.classification === 'invented') return null;
+  if (!isSourcedQuoteReveal(record)) return null;
   const venue = venueName(record.venue);
   // A year is not a quantity, so it has no digit grouping.
   const year = String(record.year);
@@ -495,6 +508,8 @@ function venueName(venue: QuoteRevealVenue): string {
       return msg('Press conference');
     case 'television':
       return msg('Television');
+    case 'web-interview':
+      return msg('Online interview');
     case 'radio':
       return msg('Radio');
     case 'print':

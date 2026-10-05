@@ -256,12 +256,11 @@
     {
       "id": "red-folded-chairman-predicate-002-present",
       "role": "predicate",
-      "text": "calls every delay a transition",
-      "singularText": "calls every delay a transition",
-      "pluralText": "call every delay a transition",
+      "text": "nationalizes the losses and keeps the profits",
+      "singularText": "nationalizes the losses and keeps the profits",
+      "pluralText": "nationalize the losses and keep the profits",
       "tags": [
-        "modernity",
-        "credibility"
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -277,17 +276,18 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "red-folded-chairman-predicate-002"
+      "tenseFamily": "red-folded-chairman-predicate-002",
+      "personalSingularText": "nationalizes the losses and keeps the profits",
+      "secondPersonText": "nationalize the losses and keep the profits"
     },
     {
       "id": "red-folded-chairman-predicate-002-past",
       "role": "predicate",
-      "text": "called every delay a transition",
-      "singularText": "called every delay a transition",
-      "pluralText": "called every delay a transition",
+      "text": "nationalized the losses and kept the profits",
+      "singularText": "nationalized the losses and kept the profits",
+      "pluralText": "nationalized the losses and kept the profits",
       "tags": [
-        "modernity",
-        "credibility"
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -303,17 +303,18 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "red-folded-chairman-predicate-002"
+      "tenseFamily": "red-folded-chairman-predicate-002",
+      "personalSingularText": "nationalized the losses and kept the profits",
+      "secondPersonText": "nationalized the losses and kept the profits"
     },
     {
       "id": "red-folded-chairman-predicate-002-future",
       "role": "predicate",
-      "text": "will call every delay a transition",
-      "singularText": "will call every delay a transition",
-      "pluralText": "will call every delay a transition",
+      "text": "will nationalize the losses and keep the profits",
+      "singularText": "will nationalize the losses and keep the profits",
+      "pluralText": "will nationalize the losses and keep the profits",
       "tags": [
-        "modernity",
-        "credibility"
+        "accountability"
       ],
       "scorePreferences": {
         "substance": [
@@ -329,7 +330,9 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "red-folded-chairman-predicate-002"
+      "tenseFamily": "red-folded-chairman-predicate-002",
+      "personalSingularText": "will nationalize the losses and keep the profits",
+      "secondPersonText": "will nationalize the losses and keep the profits"
     },
     {
       "id": "red-folded-chairman-noun-003",
@@ -482,10 +485,7 @@
       "id": "red-folded-chairman-modifier-002",
       "role": "modifier",
       "text": "rich and dishonest",
-      "tags": [
-        "credibility",
-        "evidence"
-      ],
+      "tags": [],
       "rarity": "common"
     },
     {
@@ -501,22 +501,16 @@
     {
       "id": "red-folded-chairman-ending-003",
       "role": "ending",
-      "text": "and the facts have taken it to committee.",
-      "tags": [
-        "evidence",
-        "bureaucracy"
-      ],
+      "text": "and the profits stay in private hands.",
+      "tags": [],
       "rarity": "uncommon",
       "finisherBonus": 3
     },
     {
       "id": "red-folded-chairman-ending-004",
       "role": "ending",
-      "text": "and the grammar has requested parliamentary immunity.",
-      "tags": [
-        "bureaucracy",
-        "credibility"
-      ],
+      "text": "and the fly has landed in the milk.",
+      "tags": [],
       "rarity": "rare",
       "finisherBonus": 3
     },
@@ -778,12 +772,10 @@
     {
       "id": "red-folded-chairman-predicate-004-past",
       "role": "predicate",
-      "text": "was a reform with a loose screw",
-      "singularText": "was a reform with a loose screw",
-      "pluralText": "were a reform with a loose screw",
-      "tags": [
-        "modernity"
-      ],
+      "text": "landed like a fly in the milk",
+      "singularText": "landed like a fly in the milk",
+      "pluralText": "landed like a fly in the milk",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -797,19 +789,19 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "red-folded-chairman-predicate-004"
+      "tenseFamily": "red-folded-chairman-predicate-004",
+      "personalSingularText": "landed like a fly in the milk",
+      "secondPersonText": "landed like a fly in the milk"
     },
     {
       "id": "red-folded-chairman-predicate-004-present",
       "role": "predicate",
-      "text": "is a reform with a loose screw",
-      "singularText": "is a reform with a loose screw",
-      "pluralText": "are a reform with a loose screw",
-      "personalSingularText": "is a reform with a loose screw",
-      "secondPersonText": "are a reform with a loose screw",
-      "tags": [
-        "modernity"
-      ],
+      "text": "lands like a fly in the milk",
+      "singularText": "lands like a fly in the milk",
+      "pluralText": "land like a fly in the milk",
+      "personalSingularText": "lands like a fly in the milk",
+      "secondPersonText": "land like a fly in the milk",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -828,10 +820,8 @@
     {
       "id": "red-folded-chairman-predicate-004-future",
       "role": "predicate",
-      "text": "will be a reform with a loose screw",
-      "tags": [
-        "modernity"
-      ],
+      "text": "will land like a fly in the milk",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -845,23 +835,25 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "red-folded-chairman-predicate-004"
+      "tenseFamily": "red-folded-chairman-predicate-004",
+      "singularText": "will land like a fly in the milk",
+      "pluralText": "will land like a fly in the milk",
+      "personalSingularText": "will land like a fly in the milk",
+      "secondPersonText": "will land like a fly in the milk"
     },
     {
       "id": "red-folded-chairman-modifier-003",
       "role": "modifier",
-      "text": "beneath a legacy footnote",
-      "tags": [
-        "legacy"
-      ],
+      "text": "like a fly falling into milk",
+      "tags": [],
       "rarity": "uncommon"
     },
     {
       "id": "red-folded-chairman-ending-005",
       "role": "ending",
-      "text": "and the transition requested a filing cabinet.",
+      "text": "and the public gets the losses.",
       "tags": [
-        "legacy"
+        "accountability"
       ],
       "rarity": "rare",
       "finisherBonus": 8

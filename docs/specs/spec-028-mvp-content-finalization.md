@@ -15,7 +15,7 @@ The last art, audio, variety, and the broader milestone evidence are different i
 
 The phrase-data package uses the common authoring file and the 19 character authoring files.
 Replay behavior is a different Milestone 014 package.
-The replay codec, the common phrases, and the character phrases have different build chunks.
+The replay codec, the common phrases, the character phrases, and the public quote-reveal data have different build chunks.
 Thus, the extended catalog stays below the size limit for each chunk.
 The character-state image URLs and the scene manifest data also have different build chunks.
 Do not change the limit.
@@ -381,6 +381,8 @@ These role totals can change only through an approved change to this contract, w
 All character identities stay fictional.
 Common and character-owned nouns, verbs, and conjunctions can be invented phrases or accurate real phrases in the general content rules.
 Each common or character-owned predicate, modifier, and ending must have a real quote that a person can examine as its source.
+Ordinary-language cards are exempt under Milestone 034. They count as real and
+use `generic-phrase` records without source metadata.
 Its private record contains a public source URL, the quote without a change, the initial language, the context, and the mapping to the card.
 The shipped text can be an accurate quote or a new fictional adaptation.
 But the game must not show an adaptation as the words of the real speaker.
@@ -396,6 +398,8 @@ Scene-restricted cards stay fictional in identity, and two scenes do not share a
 
 The last content review also has a target of approximately 50/50 between authentic adaptations and fully fictional lines.
 This applies in each newly generated common expansion and character expansion.
+Milestone 034 also requires at least 50 percent real cards across the whole
+catalog, counting sourced quotes and ordinary language separately.
 A new joke from a source stays fictional when the visible wording does not keep the documented quote or its meaning.
 Keep the classification lists and the source in the private research folder.
 

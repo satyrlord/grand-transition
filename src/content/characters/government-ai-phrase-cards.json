@@ -55,19 +55,18 @@
     {
       "id": "government-ai-noun-001",
       "role": "noun",
-      "text": "the people's five-year loading screen",
+      "text": "a government adviser named through a mirror",
       "tags": [
-        "obsolete",
-        "spending"
+        "technology",
+        "modernity"
       ],
       "scoreGroups": {
         "substance": [
-          "politics",
+          "technology",
           "bureaucracy"
         ],
         "flavour": [
-          "ideology",
-          "strategy"
+          "digital"
         ]
       },
       "rarity": "common"
@@ -75,19 +74,18 @@
     {
       "id": "government-ai-noun-002",
       "role": "noun",
-      "text": "an innovation sprint to the fax machine",
+      "text": "a mirror reading of the collective name",
       "tags": [
-        "obsolete",
-        "spending"
+        "technology",
+        "modernity"
       ],
       "scoreGroups": {
         "substance": [
-          "politics",
+          "technology",
           "bureaucracy"
         ],
         "flavour": [
-          "ideology",
-          "strategy"
+          "digital"
         ]
       },
       "rarity": "uncommon"
@@ -95,19 +93,16 @@
     {
       "id": "government-ai-noun-003",
       "role": "noun",
-      "text": "your cousin's one-man bidding war",
+      "text": "a country introduced through its beautiful people",
       "tags": [
-        "nepotism",
-        "corruption"
+        "specificity"
       ],
       "scoreGroups": {
         "substance": [
-          "family",
-          "bureaucracy"
+          "politics"
         ],
         "flavour": [
-          "procurement",
-          "direct"
+          "society"
         ]
       },
       "rarity": "common"
@@ -115,18 +110,18 @@
     {
       "id": "government-ai-noun-004",
       "role": "noun",
-      "text": "a million-euro chatbot asking for printer ink",
+      "text": "a government promise to hear public wishes immediately",
       "tags": [
-        "spending",
-        "obsolete"
+        "technology",
+        "service"
       ],
       "scoreGroups": {
         "substance": [
+          "technology",
           "bureaucracy"
         ],
         "flavour": [
-          "emergency",
-          "technology"
+          "service"
         ]
       },
       "rarity": "common"
@@ -172,20 +167,16 @@
     {
       "id": "government-ai-noun-007",
       "role": "noun",
-      "text": "a procurement loophole with a welcome mat",
+      "text": "a beautiful country with beautiful people",
       "tags": [
-        "corruption",
-        "spending",
-        "bureaucracy"
+        "specificity"
       ],
       "scoreGroups": {
         "substance": [
-          "politics",
-          "bureaucracy"
+          "politics"
         ],
         "flavour": [
-          "procurement",
-          "technology"
+          "society"
         ]
       },
       "rarity": "uncommon"
@@ -445,12 +436,12 @@
     {
       "id": "government-ai-predicate-001-past",
       "role": "predicate",
-      "text": "was too expensive to uninstall",
-      "singularText": "was too expensive to uninstall",
-      "pluralText": "were too expensive to uninstall",
+      "text": "was a mirror-derived name for a government adviser",
+      "singularText": "was a mirror-derived name for a government adviser",
+      "pluralText": "were mirror-derived names for government advisers",
       "tags": [
-        "spending",
-        "obsolete"
+        "technology",
+        "modernity"
       ],
       "scorePreferences": {
         "substance": [
@@ -467,17 +458,19 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "government-ai-predicate-001"
+      "tenseFamily": "government-ai-predicate-001",
+      "personalSingularText": "was a mirror-derived name for a government adviser",
+      "secondPersonText": "were a mirror-derived name for a government adviser"
     },
     {
       "id": "government-ai-predicate-001-present",
       "role": "predicate",
-      "text": "is too expensive to uninstall",
-      "singularText": "is too expensive to uninstall",
-      "pluralText": "are too expensive to uninstall",
+      "text": "is a mirror-derived name for a government adviser",
+      "singularText": "is a mirror-derived name for a government adviser",
+      "pluralText": "are mirror-derived names for government advisers",
       "tags": [
-        "spending",
-        "obsolete"
+        "technology",
+        "modernity"
       ],
       "scorePreferences": {
         "substance": [
@@ -494,17 +487,19 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "government-ai-predicate-001"
+      "tenseFamily": "government-ai-predicate-001",
+      "personalSingularText": "is a mirror-derived name for a government adviser",
+      "secondPersonText": "are a mirror-derived name for a government adviser"
     },
     {
       "id": "government-ai-predicate-001-future",
       "role": "predicate",
-      "text": "will be too expensive to uninstall",
-      "singularText": "will be too expensive to uninstall",
-      "pluralText": "will be too expensive to uninstall",
+      "text": "will be a mirror-derived name for a government adviser",
+      "singularText": "will be a mirror-derived name for a government adviser",
+      "pluralText": "will be mirror-derived names for government advisers",
       "tags": [
-        "spending",
-        "obsolete"
+        "technology",
+        "modernity"
       ],
       "scorePreferences": {
         "substance": [
@@ -521,17 +516,19 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "government-ai-predicate-001"
+      "tenseFamily": "government-ai-predicate-001",
+      "personalSingularText": "will be a mirror-derived name for a government adviser",
+      "secondPersonText": "will be a mirror-derived name for a government adviser"
     },
     {
       "id": "government-ai-predicate-002-past",
       "role": "predicate",
-      "text": "was digitally transformed into a fax machine",
-      "singularText": "was digitally transformed into a fax machine",
-      "pluralText": "were digitally transformed into a fax machine",
+      "text": "was an adviser still in its learning phase",
+      "singularText": "was an adviser still in its learning phase",
+      "pluralText": "were advisers still in their learning phase",
       "tags": [
-        "obsolete",
-        "bureaucracy"
+        "technology",
+        "competence"
       ],
       "scorePreferences": {
         "substance": [
@@ -548,17 +545,19 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "government-ai-predicate-002"
+      "tenseFamily": "government-ai-predicate-002",
+      "personalSingularText": "was an adviser still in its learning phase",
+      "secondPersonText": "were an adviser still in its learning phase"
     },
     {
       "id": "government-ai-predicate-002-present",
       "role": "predicate",
-      "text": "is digitally transformed into a fax machine",
-      "singularText": "is digitally transformed into a fax machine",
-      "pluralText": "are digitally transformed into a fax machine",
+      "text": "is an adviser still in its learning phase",
+      "singularText": "is an adviser still in its learning phase",
+      "pluralText": "are advisers still in their learning phase",
       "tags": [
-        "obsolete",
-        "bureaucracy"
+        "technology",
+        "competence"
       ],
       "scorePreferences": {
         "substance": [
@@ -575,17 +574,19 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "government-ai-predicate-002"
+      "tenseFamily": "government-ai-predicate-002",
+      "personalSingularText": "is an adviser still in its learning phase",
+      "secondPersonText": "are an adviser still in its learning phase"
     },
     {
       "id": "government-ai-predicate-002-future",
       "role": "predicate",
-      "text": "will be digitally transformed into a fax machine",
-      "singularText": "will be digitally transformed into a fax machine",
-      "pluralText": "will be digitally transformed into a fax machine",
+      "text": "will be an adviser still in its learning phase",
+      "singularText": "will be an adviser still in its learning phase",
+      "pluralText": "will be advisers still in their learning phase",
       "tags": [
-        "obsolete",
-        "bureaucracy"
+        "technology",
+        "competence"
       ],
       "scorePreferences": {
         "substance": [
@@ -602,18 +603,18 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "government-ai-predicate-002"
+      "tenseFamily": "government-ai-predicate-002",
+      "personalSingularText": "will be an adviser still in its learning phase",
+      "secondPersonText": "will be an adviser still in its learning phase"
     },
     {
       "id": "government-ai-predicate-003-past",
       "role": "predicate",
-      "text": "served the people an error message in triplicate",
-      "singularText": "served the people an error message in triplicate",
-      "pluralText": "served the people an error message in triplicate",
+      "text": "was a beautiful country full of beautiful people",
+      "singularText": "was a beautiful country full of beautiful people",
+      "pluralText": "were beautiful countries full of beautiful people",
       "tags": [
-        "competence",
-        "obsolete",
-        "bureaucracy"
+        "specificity"
       ],
       "scorePreferences": {
         "substance": [
@@ -630,18 +631,18 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "government-ai-predicate-003"
+      "tenseFamily": "government-ai-predicate-003",
+      "personalSingularText": "was a beautiful country full of beautiful people",
+      "secondPersonText": "were a beautiful country full of beautiful people"
     },
     {
       "id": "government-ai-predicate-003-present",
       "role": "predicate",
-      "text": "serves the people an error message in triplicate",
-      "singularText": "serves the people an error message in triplicate",
-      "pluralText": "serve the people an error message in triplicate",
+      "text": "is a beautiful country full of beautiful people",
+      "singularText": "is a beautiful country full of beautiful people",
+      "pluralText": "are beautiful countries full of beautiful people",
       "tags": [
-        "competence",
-        "obsolete",
-        "bureaucracy"
+        "specificity"
       ],
       "scorePreferences": {
         "substance": [
@@ -658,18 +659,18 @@
       },
       "rarity": "uncommon",
       "tense": "present",
-      "tenseFamily": "government-ai-predicate-003"
+      "tenseFamily": "government-ai-predicate-003",
+      "personalSingularText": "is a beautiful country full of beautiful people",
+      "secondPersonText": "are a beautiful country full of beautiful people"
     },
     {
       "id": "government-ai-predicate-003-future",
       "role": "predicate",
-      "text": "will serve the people an error message in triplicate",
-      "singularText": "will serve the people an error message in triplicate",
-      "pluralText": "will serve the people an error message in triplicate",
+      "text": "will be a beautiful country full of beautiful people",
+      "singularText": "will be a beautiful country full of beautiful people",
+      "pluralText": "will be beautiful countries full of beautiful people",
       "tags": [
-        "competence",
-        "obsolete",
-        "bureaucracy"
+        "specificity"
       ],
       "scorePreferences": {
         "substance": [
@@ -686,7 +687,9 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "government-ai-predicate-003"
+      "tenseFamily": "government-ai-predicate-003",
+      "personalSingularText": "will be a beautiful country full of beautiful people",
+      "secondPersonText": "will be a beautiful country full of beautiful people"
     },
     {
       "id": "government-ai-predicate-004-past",
@@ -769,22 +772,20 @@
     {
       "id": "government-ai-modifier-001",
       "role": "modifier",
-      "text": "under the comrades' quota for spontaneous enthusiasm",
+      "text": "with the collective name read in a mirror",
       "tags": [
-        "obsolete",
-        "spending",
-        "bureaucracy"
+        "technology",
+        "modernity"
       ],
       "rarity": "uncommon"
     },
     {
       "id": "government-ai-modifier-002",
       "role": "modifier",
-      "text": "at the launch of a five-year update",
+      "text": "while the new adviser is still learning",
       "tags": [
-        "obsolete",
-        "spending",
-        "bureaucracy"
+        "technology",
+        "competence"
       ],
       "rarity": "rare"
     },
@@ -802,10 +803,10 @@
     {
       "id": "government-ai-ending-001",
       "role": "ending",
-      "text": "and the paperless office requires three copies.",
+      "text": "and the new adviser is still in training.",
       "tags": [
-        "obsolete",
-        "bureaucracy"
+        "technology",
+        "competence"
       ],
       "rarity": "rare",
       "finisherBonus": 14
@@ -830,16 +831,18 @@
     {
       "id": "government-ai-noun-009",
       "role": "noun",
-      "text": "the imitation game with an answer key",
+      "text": "a promise of live reports on public problems",
       "tags": [
-        "corruption"
+        "technology",
+        "service"
       ],
       "scoreGroups": {
         "substance": [
-          "technology"
+          "technology",
+          "bureaucracy"
         ],
         "flavour": [
-          "bureaucracy"
+          "service"
         ]
       },
       "rarity": "uncommon"
@@ -847,16 +850,18 @@
     {
       "id": "government-ai-noun-010",
       "role": "noun",
-      "text": "an obsolete algorithm with a ribbon",
+      "text": "the national wish list promised to the government",
       "tags": [
-        "spending"
+        "technology",
+        "service"
       ],
       "scoreGroups": {
         "substance": [
-          "technology"
+          "technology",
+          "bureaucracy"
         ],
         "flavour": [
-          "bureaucracy"
+          "service"
         ]
       },
       "rarity": "rare"
@@ -883,9 +888,9 @@
     {
       "id": "government-ai-ending-003",
       "role": "ending",
-      "text": "and the algorithm requested a family reference.",
+      "text": "and the people are described as beautiful too.",
       "tags": [
-        "nepotism"
+        "specificity"
       ],
       "rarity": "rare",
       "finisherBonus": 2
@@ -893,10 +898,10 @@
     {
       "id": "government-ai-ending-004",
       "role": "ending",
-      "text": "and the procurement bot found its cousin.",
+      "text": "and a mirror supplies the collective name.",
       "tags": [
-        "corruption",
-        "nepotism"
+        "technology",
+        "modernity"
       ],
       "rarity": "rare",
       "finisherBonus": 2
@@ -904,9 +909,10 @@
     {
       "id": "government-ai-ending-005",
       "role": "ending",
-      "text": "and the budget became self-aware.",
+      "text": "and public complaints are promised in real time.",
       "tags": [
-        "spending"
+        "technology",
+        "service"
       ],
       "rarity": "rare",
       "finisherBonus": 2

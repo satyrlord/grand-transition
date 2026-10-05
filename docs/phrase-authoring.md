@@ -7,6 +7,14 @@ Usually, when you add or remove a card, the change is a content-only change.
 The loader, the Zod validators, and the grammar guards for the full catalog read the JSON directly.
 If a test uses the card as a fixture, update that test when you remove the card.
 
+Keep real-phrase coverage at or above 50 percent of the full catalog, as
+Milestone 034 requires. Count verified quotes and ordinary language separately.
+Use `generic-phrase` for basic pronouns, family members, relations, and connectors;
+it needs no source attribution. Before replacing an invented card, search its current
+English and Romanian wording and examine its private source notes. Record the
+queries and decision privately. Preserve a card when a credible source exists.
+A search with no result does not prove invention.
+
 The approved specifications in `docs/specs/` control the behavior.
 When this tutorial does not agree with a specification, obey the specification.
 

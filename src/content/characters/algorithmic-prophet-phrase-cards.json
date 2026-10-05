@@ -50,17 +50,18 @@
     {
       "id": "algorithmic-prophet-noun-001",
       "role": "noun",
-      "text": "my mineral-water modem without specifications",
+      "text": "a Moon landing called manipulation",
       "tags": [
         "evidence",
-        "specificity"
+        "credibility"
       ],
       "scoreGroups": {
         "substance": [
-          "personal"
+          "history",
+          "evidence"
         ],
         "flavour": [
-          "politics"
+          "accusation"
         ]
       },
       "rarity": "common"
@@ -68,7 +69,7 @@
     {
       "id": "algorithmic-prophet-modifier-001",
       "role": "modifier",
-      "text": "after downloading evidence through a straw",
+      "text": "with information supposedly removed by plastic bottling",
       "tags": [
         "evidence",
         "specificity"
@@ -78,9 +79,10 @@
     {
       "id": "algorithmic-prophet-ending-001",
       "role": "ending",
-      "text": "and your follow-up question drowned in a puddle.",
+      "text": "and the Moon landing is dismissed as manipulation.",
       "tags": [
-        "follow-up-questions"
+        "evidence",
+        "credibility"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -134,28 +136,30 @@
     {
       "id": "algorithmic-prophet-modifier-002",
       "role": "modifier",
-      "text": "after mistaking the laptop fan for destiny",
+      "text": "as if tiny chips entered you like a laptop",
       "tags": [
-        "evidence"
+        "evidence",
+        "credibility"
       ],
       "rarity": "uncommon"
     },
     {
       "id": "algorithmic-prophet-modifier-003",
       "role": "modifier",
-      "text": "with a bow to the donation button",
+      "text": "while dismissing the Moon landing as manipulation",
       "tags": [
-        "commercialism",
-        "sincerity"
+        "evidence",
+        "credibility"
       ],
       "rarity": "uncommon"
     },
     {
       "id": "algorithmic-prophet-ending-003",
       "role": "ending",
-      "text": "and your tap water remembers only your excuses.",
+      "text": "and plastic bottles supposedly remove the information.",
       "tags": [
-        "evidence"
+        "evidence",
+        "specificity"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -163,10 +167,10 @@
     {
       "id": "algorithmic-prophet-ending-004",
       "role": "ending",
-      "text": "and your prophecy is a damp-sock forecast.",
+      "text": "and apparently the entire supermarket is plastic.",
       "tags": [
         "evidence",
-        "credibility"
+        "specificity"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -174,10 +178,10 @@
     {
       "id": "algorithmic-prophet-ending-005",
       "role": "ending",
-      "text": "and your greatness fits in an error cell.",
+      "text": "and tiny chips supposedly enter you like a laptop.",
       "tags": [
-        "competence",
-        "results"
+        "evidence",
+        "credibility"
       ],
       "rarity": "rare",
       "finisherBonus": 4
@@ -443,14 +447,15 @@
     {
       "id": "algorithmic-prophet-predicate-001-past",
       "role": "predicate",
-      "text": "was vague in high definition",
+      "text": "was a Moon landing dismissed as manipulation",
       "tags": [
-        "specificity"
+        "evidence",
+        "credibility"
       ],
-      "singularText": "was vague in high definition",
-      "pluralText": "were vague in high definition",
-      "personalSingularText": "was vague in high definition",
-      "secondPersonText": "were vague in high definition",
+      "singularText": "was a Moon landing dismissed as manipulation",
+      "pluralText": "were Moon landings dismissed as manipulation",
+      "personalSingularText": "was a Moon landing dismissed as manipulation",
+      "secondPersonText": "were a Moon landing dismissed as manipulation",
       "tense": "past",
       "tenseFamily": "algorithmic-prophet-predicate-001",
       "scorePreferences": {
@@ -471,14 +476,15 @@
     {
       "id": "algorithmic-prophet-predicate-001-present",
       "role": "predicate",
-      "text": "is vague in high definition",
+      "text": "is a Moon landing dismissed as manipulation",
       "tags": [
-        "specificity"
+        "evidence",
+        "credibility"
       ],
-      "singularText": "is vague in high definition",
-      "pluralText": "are vague in high definition",
-      "personalSingularText": "is vague in high definition",
-      "secondPersonText": "are vague in high definition",
+      "singularText": "is a Moon landing dismissed as manipulation",
+      "pluralText": "are Moon landings dismissed as manipulation",
+      "personalSingularText": "is a Moon landing dismissed as manipulation",
+      "secondPersonText": "are a Moon landing dismissed as manipulation",
       "tense": "present",
       "tenseFamily": "algorithmic-prophet-predicate-001",
       "scorePreferences": {
@@ -499,14 +505,15 @@
     {
       "id": "algorithmic-prophet-predicate-001-future",
       "role": "predicate",
-      "text": "will be vague in high definition",
+      "text": "will be a Moon landing dismissed as manipulation",
       "tags": [
-        "specificity"
+        "evidence",
+        "credibility"
       ],
-      "singularText": "will be vague in high definition",
-      "pluralText": "will be vague in high definition",
-      "personalSingularText": "will be vague in high definition",
-      "secondPersonText": "will be vague in high definition",
+      "singularText": "will be a Moon landing dismissed as manipulation",
+      "pluralText": "will be Moon landings dismissed as manipulation",
+      "personalSingularText": "will be a Moon landing dismissed as manipulation",
+      "secondPersonText": "will be a Moon landing dismissed as manipulation",
       "tense": "future",
       "tenseFamily": "algorithmic-prophet-predicate-001",
       "scorePreferences": {
@@ -537,14 +544,16 @@
       "role": "noun",
       "text": "information inside a glass of water",
       "tags": [
-        "evidence"
+        "evidence",
+        "specificity"
       ],
       "scoreGroups": {
         "substance": [
+          "technology",
           "evidence"
         ],
         "flavour": [
-          "technology"
+          "digital"
         ]
       },
       "rarity": "common"
@@ -552,16 +561,18 @@
     {
       "id": "algorithmic-prophet-noun-008",
       "role": "noun",
-      "text": "a laptop entered by a fizzy prophecy",
+      "text": "a soft drink supposedly full of tiny chips",
       "tags": [
-        "specificity"
+        "evidence",
+        "credibility"
       ],
       "scoreGroups": {
         "substance": [
+          "technology",
           "evidence"
         ],
         "flavour": [
-          "technology"
+          "digital"
         ]
       },
       "rarity": "uncommon"
@@ -569,16 +580,17 @@
     {
       "id": "algorithmic-prophet-noun-009",
       "role": "noun",
-      "text": "a prophecy with information inside",
+      "text": "a supermarket said to sell only plastic",
       "tags": [
-        "follow-up-questions"
+        "evidence",
+        "specificity"
       ],
       "scoreGroups": {
         "substance": [
-          "evidence"
+          "commercialism"
         ],
         "flavour": [
-          "technology"
+          "accusation"
         ]
       },
       "rarity": "rare"
@@ -586,16 +598,18 @@
     {
       "id": "algorithmic-prophet-noun-010",
       "role": "noun",
-      "text": "a model that enters the laptop",
+      "text": "a plastic bottle blamed for lost information",
       "tags": [
-        "evidence"
+        "evidence",
+        "specificity"
       ],
       "scoreGroups": {
         "substance": [
+          "technology",
           "evidence"
         ],
         "flavour": [
-          "technology"
+          "digital"
         ]
       },
       "rarity": "common"
@@ -675,7 +689,8 @@
       "role": "predicate",
       "text": "was information in a glass of water",
       "tags": [
-        "evidence"
+        "evidence",
+        "specificity"
       ],
       "scorePreferences": {
         "substance": [
@@ -690,7 +705,11 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "algorithmic-prophet-predicate-002"
+      "tenseFamily": "algorithmic-prophet-predicate-002",
+      "singularText": "was information in a glass of water",
+      "pluralText": "were information in a glass of water",
+      "personalSingularText": "was information in a glass of water",
+      "secondPersonText": "were information in a glass of water"
     },
     {
       "id": "algorithmic-prophet-predicate-002-present",
@@ -701,7 +720,8 @@
       "personalSingularText": "is information in a glass of water",
       "secondPersonText": "are information in a glass of water",
       "tags": [
-        "evidence"
+        "evidence",
+        "specificity"
       ],
       "scorePreferences": {
         "substance": [
@@ -723,7 +743,8 @@
       "role": "predicate",
       "text": "will be information in a glass of water",
       "tags": [
-        "evidence"
+        "evidence",
+        "specificity"
       ],
       "scorePreferences": {
         "substance": [
@@ -738,13 +759,18 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "algorithmic-prophet-predicate-002"
+      "tenseFamily": "algorithmic-prophet-predicate-002",
+      "singularText": "will be information in a glass of water",
+      "pluralText": "will be information in a glass of water",
+      "personalSingularText": "will be information in a glass of water",
+      "secondPersonText": "will be information in a glass of water"
     },
     {
       "id": "algorithmic-prophet-predicate-003-past",
       "role": "predicate",
-      "text": "was a statistic wearing ceremonial courage",
+      "text": "was a supermarket where everything is plastic",
       "tags": [
+        "evidence",
         "specificity"
       ],
       "scorePreferences": {
@@ -760,17 +786,22 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "algorithmic-prophet-predicate-003"
+      "tenseFamily": "algorithmic-prophet-predicate-003",
+      "singularText": "was a supermarket where everything is plastic",
+      "pluralText": "were supermarkets where everything is plastic",
+      "personalSingularText": "was a supermarket where everything is plastic",
+      "secondPersonText": "were a supermarket where everything is plastic"
     },
     {
       "id": "algorithmic-prophet-predicate-003-present",
       "role": "predicate",
-      "text": "is a statistic wearing ceremonial courage",
-      "singularText": "is a statistic wearing ceremonial courage",
-      "pluralText": "are a statistic wearing ceremonial courage",
-      "personalSingularText": "is a statistic wearing ceremonial courage",
-      "secondPersonText": "is a statistic wearing ceremonial courage",
+      "text": "is a supermarket where everything is plastic",
+      "singularText": "is a supermarket where everything is plastic",
+      "pluralText": "are supermarkets where everything is plastic",
+      "personalSingularText": "is a supermarket where everything is plastic",
+      "secondPersonText": "are a supermarket where everything is plastic",
       "tags": [
+        "evidence",
         "specificity"
       ],
       "scorePreferences": {
@@ -791,8 +822,9 @@
     {
       "id": "algorithmic-prophet-predicate-003-future",
       "role": "predicate",
-      "text": "will be a statistic wearing ceremonial courage",
+      "text": "will be a supermarket where everything is plastic",
       "tags": [
+        "evidence",
         "specificity"
       ],
       "scorePreferences": {
@@ -808,14 +840,19 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "algorithmic-prophet-predicate-003"
+      "tenseFamily": "algorithmic-prophet-predicate-003",
+      "singularText": "will be a supermarket where everything is plastic",
+      "pluralText": "will be supermarkets where everything is plastic",
+      "personalSingularText": "will be a supermarket where everything is plastic",
+      "secondPersonText": "will be a supermarket where everything is plastic"
     },
     {
       "id": "algorithmic-prophet-predicate-004-past",
       "role": "predicate",
-      "text": "was an algorithm with a superstition",
+      "text": "was a drink supposedly carrying tiny chips",
       "tags": [
-        "follow-up-questions"
+        "evidence",
+        "credibility"
       ],
       "scorePreferences": {
         "substance": [
@@ -830,18 +867,23 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "algorithmic-prophet-predicate-004"
+      "tenseFamily": "algorithmic-prophet-predicate-004",
+      "singularText": "was a drink supposedly carrying tiny chips",
+      "pluralText": "were drinks supposedly carrying tiny chips",
+      "personalSingularText": "was a drink supposedly carrying tiny chips",
+      "secondPersonText": "were a drink supposedly carrying tiny chips"
     },
     {
       "id": "algorithmic-prophet-predicate-004-present",
       "role": "predicate",
-      "text": "is an algorithm with a superstition",
-      "singularText": "is an algorithm with a superstition",
-      "pluralText": "are an algorithm with a superstition",
-      "personalSingularText": "is an algorithm with a superstition",
-      "secondPersonText": "is an algorithm with a superstition",
+      "text": "is a drink supposedly carrying tiny chips",
+      "singularText": "is a drink supposedly carrying tiny chips",
+      "pluralText": "are drinks supposedly carrying tiny chips",
+      "personalSingularText": "is a drink supposedly carrying tiny chips",
+      "secondPersonText": "are a drink supposedly carrying tiny chips",
       "tags": [
-        "follow-up-questions"
+        "evidence",
+        "credibility"
       ],
       "scorePreferences": {
         "substance": [
@@ -861,9 +903,10 @@
     {
       "id": "algorithmic-prophet-predicate-004-future",
       "role": "predicate",
-      "text": "will be an algorithm with a superstition",
+      "text": "will be a drink supposedly carrying tiny chips",
       "tags": [
-        "follow-up-questions"
+        "evidence",
+        "credibility"
       ],
       "scorePreferences": {
         "substance": [
@@ -878,7 +921,11 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "algorithmic-prophet-predicate-004"
+      "tenseFamily": "algorithmic-prophet-predicate-004",
+      "singularText": "will be a drink supposedly carrying tiny chips",
+      "pluralText": "will be drinks supposedly carrying tiny chips",
+      "personalSingularText": "will be a drink supposedly carrying tiny chips",
+      "secondPersonText": "will be a drink supposedly carrying tiny chips"
     }
   ]
 }

@@ -132,7 +132,13 @@ test('production content and dependencies have separate emitted chunks', async (
   const scripts = (await readdir(path.resolve('dist/assets'))).filter((name) =>
     name.endsWith('.js'),
   );
-  for (const group of ['common-phrase-data', 'character-phrase-data', 'content-data', 'vendor']) {
+  for (const group of [
+    'common-phrase-data',
+    'character-phrase-data',
+    'quote-reveal-data',
+    'content-data',
+    'vendor',
+  ]) {
     expect(
       scripts.some((name) => name.startsWith(`${group}-`)),
       group,

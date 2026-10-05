@@ -68,7 +68,7 @@
     {
       "id": "reluctant-theorem-noun-002",
       "role": "noun",
-      "text": "a deadline awaiting proof that tomorrow exists",
+      "text": "a final answer due in several months",
       "tags": [
         "urgency"
       ],
@@ -86,14 +86,14 @@
     {
       "id": "reluctant-theorem-noun-003",
       "role": "noun",
-      "text": "a bridge that carries only footnotes",
+      "text": "a concert hall still awaiting a location",
       "tags": [
         "delivery"
       ],
       "grammaticalNumber": "singular",
       "scoreGroups": {
         "substance": [
-          "bureaucracy"
+          "infrastructure"
         ],
         "flavour": [
           "politics"
@@ -104,14 +104,12 @@
     {
       "id": "reluctant-theorem-noun-004",
       "role": "noun",
-      "text": "a permit covering the park's entire shadow",
-      "tags": [
-        "accountability"
-      ],
+      "text": "a fiscal package requiring complete agreement",
+      "tags": [],
       "grammaticalNumber": "singular",
       "scoreGroups": {
         "substance": [
-          "bureaucracy"
+          "wealth"
         ],
         "flavour": [
           "politics"
@@ -122,7 +120,7 @@
     {
       "id": "reluctant-theorem-noun-005",
       "role": "noun",
-      "text": "a pencil worn flat by both maybes",
+      "text": "a promise of effort instead of an outcome",
       "tags": [
         "indecision"
       ],
@@ -362,15 +360,15 @@
     {
       "id": "reluctant-theorem-predicate-001-past",
       "role": "predicate",
-      "text": "was pending proof while the roof leaked",
+      "text": "promised an answer in a few months",
       "tags": [
         "urgency",
         "delivery"
       ],
-      "singularText": "was pending proof while the roof leaked",
-      "pluralText": "were pending proof while the roof leaked",
-      "personalSingularText": "was pending proof while the roof leaked",
-      "secondPersonText": "were pending proof while the roof leaked",
+      "singularText": "promised an answer in a few months",
+      "pluralText": "promised an answer in a few months",
+      "personalSingularText": "promised an answer in a few months",
+      "secondPersonText": "promised an answer in a few months",
       "tense": "past",
       "tenseFamily": "reluctant-theorem-predicate-001",
       "scorePreferences": {
@@ -391,15 +389,15 @@
     {
       "id": "reluctant-theorem-predicate-001-present",
       "role": "predicate",
-      "text": "is pending proof while the roof leaks",
+      "text": "promises an answer in a few months",
       "tags": [
         "urgency",
         "delivery"
       ],
-      "singularText": "is pending proof while the roof leaks",
-      "pluralText": "are pending proof while the roof leaks",
-      "personalSingularText": "is pending proof while the roof leaks",
-      "secondPersonText": "are pending proof while the roof leaks",
+      "singularText": "promises an answer in a few months",
+      "pluralText": "promise an answer in a few months",
+      "personalSingularText": "promises an answer in a few months",
+      "secondPersonText": "promise an answer in a few months",
       "tense": "present",
       "tenseFamily": "reluctant-theorem-predicate-001",
       "scorePreferences": {
@@ -420,15 +418,15 @@
     {
       "id": "reluctant-theorem-predicate-001-future",
       "role": "predicate",
-      "text": "will be pending proof while the roof leaks",
+      "text": "will promise an answer in a few months",
       "tags": [
         "urgency",
         "delivery"
       ],
-      "singularText": "will be pending proof while the roof leaks",
-      "pluralText": "will be pending proof while the roof leaks",
-      "personalSingularText": "will be pending proof while the roof leaks",
-      "secondPersonText": "will be pending proof while the roof leaks",
+      "singularText": "will promise an answer in a few months",
+      "pluralText": "will promise an answer in a few months",
+      "personalSingularText": "will promise an answer in a few months",
+      "secondPersonText": "will promise an answer in a few months",
       "tense": "future",
       "tenseFamily": "reluctant-theorem-predicate-001",
       "scorePreferences": {
@@ -449,7 +447,7 @@
     {
       "id": "reluctant-theorem-modifier-001",
       "role": "modifier",
-      "text": "after three hearings about the word soon",
+      "text": "after a few more months",
       "tags": [
         "urgency"
       ],
@@ -458,7 +456,7 @@
     {
       "id": "reluctant-theorem-modifier-002",
       "role": "modifier",
-      "text": "subject to the first hesitation's second opinion",
+      "text": "until the entire package is agreed",
       "tags": [
         "indecision"
       ],
@@ -467,16 +465,16 @@
     {
       "id": "reluctant-theorem-modifier-003",
       "role": "modifier",
-      "text": "under a footnote taller than the building",
+      "text": "with four months for design alone",
       "tags": [
-        "accountability"
+        "urgency"
       ],
       "rarity": "uncommon"
     },
     {
       "id": "reluctant-theorem-ending-001",
       "role": "ending",
-      "text": "and the counter serves forms to the queue.",
+      "text": "and there should be hot water in two years.",
       "tags": [
         "human-scale"
       ],
@@ -486,9 +484,9 @@
     {
       "id": "reluctant-theorem-ending-002",
       "role": "ending",
-      "text": "and your answer disproves only the question.",
+      "text": "and that is no way to plan a city.",
       "tags": [
-        "accountability"
+        "competence"
       ],
       "finisherBonus": 6,
       "rarity": "rare"
@@ -496,7 +494,7 @@
     {
       "id": "reluctant-theorem-ending-003",
       "role": "ending",
-      "text": "and reconstruction starts tomorrow, once tomorrow passes committee.",
+      "text": "and construction gets another twenty-two months.",
       "tags": [
         "delivery",
         "urgency"
@@ -507,7 +505,7 @@
     {
       "id": "reluctant-theorem-ending-004",
       "role": "ending",
-      "text": "and the maybes are still undecided.",
+      "text": "and these are still only possibilities under discussion.",
       "tags": [
         "indecision"
       ],
@@ -663,7 +661,7 @@
     {
       "id": "reluctant-theorem-predicate-002-past",
       "role": "predicate",
-      "text": "was one final question without an answer",
+      "text": "would not give an answer yet",
       "tags": [
         "indecision"
       ],
@@ -680,16 +678,20 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "reluctant-theorem-predicate-002"
+      "tenseFamily": "reluctant-theorem-predicate-002",
+      "singularText": "would not give an answer yet",
+      "pluralText": "would not give an answer yet",
+      "personalSingularText": "would not give an answer yet",
+      "secondPersonText": "would not give an answer yet"
     },
     {
       "id": "reluctant-theorem-predicate-002-present",
       "role": "predicate",
-      "text": "is one final question without an answer",
-      "singularText": "is one final question without an answer",
-      "pluralText": "are one final question without an answer",
-      "personalSingularText": "is one final question without an answer",
-      "secondPersonText": "are one final question without an answer",
+      "text": "will not give an answer yet",
+      "singularText": "will not give an answer yet",
+      "pluralText": "will not give an answer yet",
+      "personalSingularText": "will not give an answer yet",
+      "secondPersonText": "will not give an answer yet",
       "tags": [
         "indecision"
       ],
@@ -711,7 +713,7 @@
     {
       "id": "reluctant-theorem-predicate-002-future",
       "role": "predicate",
-      "text": "will be one final question without an answer",
+      "text": "will still not give an answer",
       "tags": [
         "indecision"
       ],
@@ -728,14 +730,18 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "reluctant-theorem-predicate-002"
+      "tenseFamily": "reluctant-theorem-predicate-002",
+      "singularText": "will still not give an answer",
+      "pluralText": "will still not give an answer",
+      "personalSingularText": "will still not give an answer",
+      "secondPersonText": "will still not give an answer"
     },
     {
       "id": "reluctant-theorem-predicate-003-past",
       "role": "predicate",
-      "text": "was a conclusion waiting for a second opinion",
+      "text": "withheld statements until agreement on the whole package",
       "tags": [
-        "urgency"
+        "indecision"
       ],
       "scorePreferences": {
         "substance": [
@@ -750,18 +756,22 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "reluctant-theorem-predicate-003"
+      "tenseFamily": "reluctant-theorem-predicate-003",
+      "singularText": "withheld statements until agreement on the whole package",
+      "pluralText": "withheld statements until agreement on the whole package",
+      "personalSingularText": "withheld statements until agreement on the whole package",
+      "secondPersonText": "withheld statements until agreement on the whole package"
     },
     {
       "id": "reluctant-theorem-predicate-003-present",
       "role": "predicate",
-      "text": "is a conclusion waiting for a second opinion",
-      "singularText": "is a conclusion waiting for a second opinion",
-      "pluralText": "are a conclusion waiting for a second opinion",
-      "personalSingularText": "is a conclusion waiting for a second opinion",
-      "secondPersonText": "is a conclusion waiting for a second opinion",
+      "text": "withholds statements until agreement on the whole package",
+      "singularText": "withholds statements until agreement on the whole package",
+      "pluralText": "withhold statements until agreement on the whole package",
+      "personalSingularText": "withholds statements until agreement on the whole package",
+      "secondPersonText": "withhold statements until agreement on the whole package",
       "tags": [
-        "urgency"
+        "indecision"
       ],
       "scorePreferences": {
         "substance": [
@@ -781,9 +791,9 @@
     {
       "id": "reluctant-theorem-predicate-003-future",
       "role": "predicate",
-      "text": "will be a conclusion waiting for a second opinion",
+      "text": "will withhold statements until agreement on the whole package",
       "tags": [
-        "urgency"
+        "indecision"
       ],
       "scorePreferences": {
         "substance": [
@@ -798,15 +808,17 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "reluctant-theorem-predicate-003"
+      "tenseFamily": "reluctant-theorem-predicate-003",
+      "singularText": "will withhold statements until agreement on the whole package",
+      "pluralText": "will withhold statements until agreement on the whole package",
+      "personalSingularText": "will withhold statements until agreement on the whole package",
+      "secondPersonText": "will withhold statements until agreement on the whole package"
     },
     {
       "id": "reluctant-theorem-predicate-004-past",
       "role": "predicate",
-      "text": "was a deadline with a conditional hinge",
-      "tags": [
-        "delivery"
-      ],
+      "text": "ruled out raising the sales tax",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -820,19 +832,21 @@
       },
       "rarity": "common",
       "tense": "past",
-      "tenseFamily": "reluctant-theorem-predicate-004"
+      "tenseFamily": "reluctant-theorem-predicate-004",
+      "singularText": "ruled out raising the sales tax",
+      "pluralText": "ruled out raising the sales tax",
+      "personalSingularText": "ruled out raising the sales tax",
+      "secondPersonText": "ruled out raising the sales tax"
     },
     {
       "id": "reluctant-theorem-predicate-004-present",
       "role": "predicate",
-      "text": "is a deadline with a conditional hinge",
-      "singularText": "is a deadline with a conditional hinge",
-      "pluralText": "are a deadline with a conditional hinge",
-      "personalSingularText": "is a deadline with a conditional hinge",
-      "secondPersonText": "is a deadline with a conditional hinge",
-      "tags": [
-        "delivery"
-      ],
+      "text": "rules out raising the sales tax",
+      "singularText": "rules out raising the sales tax",
+      "pluralText": "rule out raising the sales tax",
+      "personalSingularText": "rules out raising the sales tax",
+      "secondPersonText": "rule out raising the sales tax",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -851,10 +865,8 @@
     {
       "id": "reluctant-theorem-predicate-004-future",
       "role": "predicate",
-      "text": "will be a deadline with a conditional hinge",
-      "tags": [
-        "delivery"
-      ],
+      "text": "will rule out raising the sales tax",
+      "tags": [],
       "scorePreferences": {
         "substance": [
           {
@@ -868,15 +880,18 @@
       },
       "rarity": "rare",
       "tense": "future",
-      "tenseFamily": "reluctant-theorem-predicate-004"
+      "tenseFamily": "reluctant-theorem-predicate-004",
+      "singularText": "will rule out raising the sales tax",
+      "pluralText": "will rule out raising the sales tax",
+      "personalSingularText": "will rule out raising the sales tax",
+      "secondPersonText": "will rule out raising the sales tax"
     },
     {
       "id": "reluctant-theorem-ending-005",
       "role": "ending",
-      "text": "and the proof requested more time.",
+      "text": "and I can only promise my best effort.",
       "tags": [
-        "indecision",
-        "urgency"
+        "indecision"
       ],
       "rarity": "rare",
       "finisherBonus": 2
