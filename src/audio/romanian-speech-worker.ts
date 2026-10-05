@@ -14,7 +14,7 @@ import runtimeModuleUrl from 'onnxruntime-web/ort-wasm-simd-threaded.mjs?url&no-
 import type { NeuralSpeechCommand, NeuralSpeechMessage } from './speech-port.ts';
 import { assertIntegrity, readExactBody, sha256Hex } from './asset-integrity.ts';
 import { assetCache, type AssetCache } from './asset-cache.ts';
-import { piperControls, piperInput, piperMarkers } from './piper-text.ts';
+import { piperClauses, piperControls, piperInput, piperMarkers } from './piper-text.ts';
 
 type Voice = Readonly<{
   id: string;
@@ -194,22 +194,10 @@ async function readModel(voice: Voice): Promise<Uint8Array> {
 }
 
 function phonesFor(text: string): string {
-  // Preserve authored punctuation; the pronunciation converter returns phonemes only.
-  const sections = text
-    .replace(/[‘’]/gu, "'")
-    .replace(/[—–]/gu, '-')
-    .replace(/…/gu, '...')
-    .split(/([;:,.!?"()-]+)/u);
-  let phones = '';
-  for (const section of sections) {
-    if (/^[;:,.!?"()-]+$/u.test(section)) phones += section;
-    else if (section.trim()) {
-      // getPhonemes is synchronous; only initialize and setVoice are async.
-      const spoken = getPhonemes(section);
-      phones += spoken.map(({ phonemes, terminator }) => phonemes + terminator).join(' ');
-    }
-  }
-  return phones;
+  // The converter reads the whole text, so a hyphenated clitic such as "s-a"
+  // stays one word instead of a spelled letter. It reports each clause's own
+  // punctuation. getPhonemes is synchronous; only initialize and setVoice are async.
+  return piperClauses(getPhonemes(text));
 }
 
 async function synthesize(request: Extract<NeuralSpeechCommand, { type: 'synthesize' }>) {

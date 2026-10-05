@@ -306,14 +306,21 @@ test('production injects the exact policy and blocks a remote connection', async
 test('development and production render the same game UI with no tool surface', async ({
   page,
 }) => {
+  // GPU voice preparation ends at a different time in each build.
+  // Compare the two pages only after the loader is gone.
+  const voicePreparationSettled = async () =>
+    expect(page.locator('.title-voice-loader')).toHaveCount(0, { timeout: 30_000 });
+
   await page.goto('./');
   await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
+  await voicePreparationSettled();
   const productionUi = await uiSignature(page);
 
   await page.goto(developmentUrl);
   await expect(page.getByRole('heading', { name: 'Grand Transition' })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
+  await voicePreparationSettled();
   const developmentUi = await uiSignature(page);
   expect(developmentUi).toEqual(productionUi);
   await expect(page.locator('meta[http-equiv="Content-Security-Policy"]')).toHaveCount(0);

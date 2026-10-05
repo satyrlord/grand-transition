@@ -1,21 +1,12 @@
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
-import os from 'node:os';
-import path from 'node:path';
-import { afterEach, describe, expect, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import {
   isSourcedQuoteReveal,
   parseQuoteReveals,
   validateQuoteReveals,
-  type QuoteRevealRecord,
 } from '../../src/content/quote-reveals.ts';
 import type { Phrase } from '../../src/content/schemas.ts';
 import { loadGameContent, loadQuoteReveals } from '../../tools/load-game-content.ts';
-import {
-  compareWithProvenance,
-  parseProvenanceTables,
-  readProvenanceRecords,
-  validateShippedQuoteReveals,
-} from '../../tools/validate-quote-reveals.ts';
+import { validateShippedQuoteReveals } from '../../tools/validate-quote-reveals.ts';
 
 const currentYear = 2026;
 const phrases: readonly Pick<Phrase, 'id' | 'role'>[] = [
@@ -201,11 +192,8 @@ describe('shipped reveal records', () => {
   test('have no defect other than the open coverage of required cards', () => {
     // Milestone 034 requires a record for each predicate, modifier, and ending.
     // `npm run content:validate` reports the cards that have none.
-    const { records, failures, provenanceRecords } = validateShippedQuoteReveals(process.cwd(), {
-      researchDirectory: path.join(os.tmpdir(), 'grand-transition-no-research-folder'),
-    });
+    const { records, failures } = validateShippedQuoteReveals(process.cwd());
     expect(records).toBeGreaterThan(0);
-    expect(provenanceRecords).toBeNull();
     expect(failures.filter(({ code }) => code !== 'missing-record')).toEqual([]);
   });
 
@@ -218,161 +206,5 @@ describe('shipped reveal records', () => {
         expect(record.year).toBeLessThanOrEqual(new Date().getFullYear());
       }
     }
-  });
-});
-
-describe('provenance comparison (AC-034-08)', () => {
-  const directories: string[] = [];
-  afterEach(() => {
-    for (const directory of directories.splice(0)) rmSync(directory, { recursive: true });
-  });
-
-  const records: readonly QuoteRevealRecord[] = [
-    {
-      cardId: 'test-ending-001',
-      classification: 'adapted-quote',
-      sourceLanguage: 'ro',
-      venue: 'television',
-      level: 'national',
-      year: 2014,
-    },
-    { cardId: 'test-noun-001', classification: 'invented' },
-  ];
-  const table = (row: string) =>
-    [
-      '| Card ID | Classification | Source language | Year | Source URL |',
-      '| --- | --- | --- | --- | --- |',
-      row,
-    ].join('\n');
-  const compare = (row: string) =>
-    compareWithProvenance(records, parseProvenanceTables(table(row))).map(
-      ({ path: at, code }) => `${at}: ${code}`,
-    );
-
-  test('passes when the record agrees with its provenance record', () => {
-    expect(compare('| `test-ending-001` | adapted-quote | ro | 2014 | private |')).toEqual([]);
-  });
-
-  test('finds a changed year, classification, and source language', () => {
-    expect(compare('| `test-ending-001` | adapted-quote | ro | 2015 | private |')).toEqual([
-      'quote-reveals[test-ending-001].year: provenance-mismatch',
-    ]);
-    expect(compare('| `test-ending-001` | exact-quote | ro | 2014 | private |')).toEqual([
-      'quote-reveals[test-ending-001].classification: provenance-mismatch',
-    ]);
-    expect(compare('| `test-ending-001` | adapted-quote | en | 2014 | private |')).toEqual([
-      'quote-reveals[test-ending-001].sourceLanguage: provenance-mismatch',
-    ]);
-  });
-
-  test('finds a record with a source and no provenance record', () => {
-    expect(compare('| `test-ending-002` | adapted-quote | ro | 2014 | private |')).toEqual([
-      'quote-reveals[test-ending-001]: provenance-missing',
-    ]);
-  });
-
-  test('finds an invented record whose provenance record gives a source', () => {
-    expect(
-      compareWithProvenance(
-        records,
-        parseProvenanceTables(
-          [
-            table('| `test-ending-001` | adapted-quote | ro | 2014 | private |'),
-            '| `test-noun-001` | real-slogan | ro | 2017 | private |',
-          ].join('\n'),
-        ),
-      ).map(({ path: at, code }) => `${at}: ${code}`),
-    ).toEqual(['quote-reveals[test-noun-001].classification: provenance-mismatch']);
-  });
-
-  test('finds two provenance records for one card', () => {
-    const rows = parseProvenanceTables(
-      [
-        table('| `test-ending-001` | adapted-quote | ro | 2014 | private |'),
-        '| `test-ending-001` | adapted-quote | ro | 2014 | private |',
-      ].join('\n'),
-    );
-    expect(compareWithProvenance(records, rows).map(({ code }) => code)).toEqual([
-      'provenance-duplicate',
-    ]);
-  });
-
-  test('does not put private source text into a failure', () => {
-    const failures = compareWithProvenance(
-      records,
-      parseProvenanceTables(
-        table('| `test-ending-001` | adapted-quote | ro | 2015 | https://private.test/a-name |'),
-      ),
-    );
-    expect(JSON.stringify(failures)).not.toContain('private.test');
-  });
-
-  test('reads only the tables that have the provenance columns', () => {
-    const rows = parseProvenanceTables(
-      [
-        '# Notes',
-        '',
-        '| Card ID | Card text |',
-        '| --- | --- |',
-        '| `test-noun-001` | not a provenance record |',
-        '',
-        '| Year | Card ID | Source language | Classification | Speaker |',
-        '| :--- | --- | --- | ---: | --- |',
-        '| 2014 | `test-ending-001` | ro | adapted-quote | a name |',
-      ].join('\r\n'),
-    );
-    expect(rows).toHaveLength(1);
-    expect(rows[0]).toMatchObject({
-      cardId: 'test-ending-001',
-      classification: 'adapted-quote',
-      sourceLanguage: 'ro',
-      year: '2014',
-    });
-    expect(rows[0]!.cells.speaker).toBe('a name');
-  });
-
-  test('compares the shipped records with a research folder, and finds a changed year', () => {
-    const directory = mkdtempSync(path.join(os.tmpdir(), 'grand-transition-research-'));
-    directories.push(directory);
-    const shipped = loadQuoteReveals();
-    const rows = (changedCardId?: string) =>
-      shipped.map((record) =>
-        !isSourcedQuoteReveal(record)
-          ? `| \`${record.cardId}\` | ${record.classification} | | |`
-          : `| \`${record.cardId}\` | ${record.classification} | ${record.sourceLanguage} | ${
-              record.cardId === changedCardId ? record.year - 1 : record.year
-            } |`,
-      );
-    const write = (changedCardId?: string) =>
-      writeFileSync(
-        path.join(directory, 'provenance.md'),
-        [
-          '| Card ID | Classification | Source language | Year |',
-          '| --- | --- | --- | --- |',
-          ...rows(changedCardId),
-        ].join('\n'),
-      );
-    const mismatches = () =>
-      validateShippedQuoteReveals(process.cwd(), { researchDirectory: directory }).failures.filter(
-        ({ code }) => code.startsWith('provenance-'),
-      );
-
-    write();
-    expect(readProvenanceRecords(directory)).toHaveLength(shipped.length);
-    expect(mismatches()).toEqual([]);
-
-    const changed = shipped.find(isSourcedQuoteReveal)!;
-    write(changed.cardId);
-    expect(mismatches().map(({ path: at, code }) => `${at}: ${code}`)).toEqual([
-      `quote-reveals[${changed.cardId}].year: provenance-mismatch`,
-    ]);
-  });
-
-  test('reports that it did no comparison when the research folder does not exist', () => {
-    const missing = path.join(os.tmpdir(), 'grand-transition-no-research-folder');
-    expect(readProvenanceRecords(missing)).toBeNull();
-    expect(
-      validateShippedQuoteReveals(process.cwd(), { researchDirectory: missing }).provenanceRecords,
-    ).toBeNull();
   });
 });

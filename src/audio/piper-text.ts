@@ -22,6 +22,16 @@ export function piperInput(
   return { ids: ids.map(BigInt), starts };
 }
 
+/** Piper's training text is each clause's phonemes, its terminator, then a space before the next clause. */
+export function piperClauses(
+  clauses: readonly Readonly<{ phonemes: string; terminator: string }>[],
+): string {
+  return clauses
+    .map(({ phonemes, terminator }) => (phonemes ? phonemes + terminator : ''))
+    .filter(Boolean)
+    .join(' ');
+}
+
 /** Native playback changes pitch; model duration compensation preserves the requested tempo. */
 export function piperControls(
   rate = 1,

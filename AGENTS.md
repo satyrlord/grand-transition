@@ -11,8 +11,35 @@ Put the online room protocol and host session in `src/online/`, and the relay in
 Put data in `src/content/` and media in `src/assets/`.
 Keep temporary renders in the temporary folder.
 Keep private character descriptions and custom prompts in the research folder.
+The research folder is not a second temporary folder. Obey the rules in the next section.
 Put unit tests in `tests/unit/`.
 Put component tests in `tests/browser/` and end-to-end flows in `e2e/`.
+
+## Private research folder
+
+Git ignores `research/`. It keeps only the latest private decisions and their sources.
+No code, tool, or test can read the research folder, because the folder is not in the repository.
+Its `RESEARCH.md` file gives the full rules. These rules have no exceptions:
+
+- Keep the folder flat. Do not make a subfolder.
+- Keep only `.md` files there.
+- Keep a prompt in the `.md` file of its topic, in one fenced block. Keep one prompt for one asset layer.
+- Put each quote of a real speaker in `quote-provenance-<character>.md` for the character that the speaker inspired.
+  Put other quotes in `quote-provenance-common.md` or `quote-provenance-scenes.md`.
+- Keep one file for one topic, with no date in its name. Change that file for a new decision.
+- Write only the latest decision. Replace a decision that changed.
+- Write short imperative sentences and lists.
+- Put history only in `research/HISTORY.md`, and only when it has long-term value.
+
+Do not put these items in the research folder:
+
+- Work records: candidates, rejections, corrections, reviews, approvals, and request counts.
+- Evidence: check results, hashes, dimensions, test output, and installation records.
+- Generated material: images, reference photographs, JSON data, scripts, and logs.
+- Correction prompts and prompts that did not make an approved asset.
+
+Put all those items in the temporary folder.
+Before you complete a task, move each such item that you made out of the research folder.
 
 ## Build, test, and development commands
 
@@ -139,7 +166,8 @@ Do not change the Vite `/grand-transition/` base path.
 
 All generated representational raster art must agree with the shared cel-shaded editorial-cartoon direction in Milestone 023.
 Character skins and states use the flat editorial cartoon direction of that milestone.
-Use the accepted three-character trial as the shared style reference after product-owner acceptance.
+Use the accepted style master as the only style reference for human characters.
+Do not put a photograph or the name of a real person in a character generation request.
 Preserve approved robot identity and construction. Replace robot source pixels
 only for a product-owner-authorized, reviewed correction.
 Use the built-in chat image generator for characters, poses, desks, props, and foregrounds.

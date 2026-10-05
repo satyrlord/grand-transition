@@ -103,13 +103,10 @@ The content schema validates each record, and it does not accept unknown fields.
 - A field that is missing for its classification.
 - A string that contains `http`, `www.`, or `@`.
 
-When the private research folder exists, `tools/validate-quote-reveals.ts` also compares each record with its provenance record.
-It finds a different classification, source language, or year.
-A provenance record is one row of a Markdown table in the research folder.
-The table has the columns `Card ID`, `Classification`, `Source language`, and `Year`, and it can have more columns.
-The tool also finds a record with a source that has no provenance record, and two provenance records for one card.
-Its messages give only the card ID and the public values.
-When the folder does not exist, for example in CI, the tool reports that it did not do this comparison, and it passes.
+No code, tool, or test reads the private research folder.
+That folder is not in the repository, so a check that reads it cannot run in CI.
+A person compares a record with its provenance record.
+The messages of the tool give only the card ID and the public values.
 The tool gives the number of required cards with no record for each owner.
 `node tools/validate-quote-reveals.ts --list-missing` gives each card.
 
@@ -193,7 +190,8 @@ A match that does not complete does not add records.
 - **AC-034-01:** `content:validate` passes with a record for each required predicate, modifier, and ending.
   It fails for each defect in the reveal-record list.
 - **AC-034-02:** No shipped reveal record, interface message, or asset contains a URL, a real name, or source wording.
-  A test searches the built `dist/` output for the forbidden patterns.
+  The reveal-record validation rejects a record that contains `http`, `www.`, or `@`.
+  A person examines the shipped text for real names and source wording.
 - **AC-034-03:** After a completed match, the panel shows the correct label and context for each committed phrase that has a record.
   It shows no receipt for other phrases, and no card that was not committed.
   A historical phrase with wording outside its current permitted forms cannot
@@ -208,7 +206,7 @@ A match that does not complete does not add records.
 - **AC-034-06:** The archive adds each committed record after a completed match, and it survives a reload.
   A reset clears it, and a match that is not complete does not change it.
 - **AC-034-07:** The panel and the archive pass the supported landscape viewport matrix, keyboard navigation, and forced colors, in English and in Romanian.
-- **AC-034-08:** With the research folder, the provenance comparison finds a changed year, classification, or source language in a fixture.
+- **AC-034-08:** Removed. No automated check reads the private research folder.
 - **AC-034-09:** At least half of all shipped card IDs have non-`invented` records.
   Each replacement has private evidence of the old-wording web search and the new
   source statement. English and Romanian keep the same sourced meaning.
@@ -224,7 +222,7 @@ Do not use a decoration that hides the text.
 
 ## Objective verifiers
 
-- `tests/unit/quote-reveals.test.ts` does checks of AC-034-01 and AC-034-08 with fixtures.
+- `tests/unit/quote-reveals.test.ts` does checks of AC-034-01 with fixtures.
   `npm run content:validate` does the check of the shipped records.
   The unit suite also checks the complete-catalog percentage of AC-034-09.
   Private research records the editorial and search evidence for that criterion.
@@ -232,8 +230,7 @@ Do not use a decoration that hides the text.
 - `tests/unit/quote-archive.test.ts` and `tests/browser/quote-receipts.browser.test.ts` do checks of AC-034-10.
 - `tests/unit/quote-archive.test.ts`, `tests/unit/match-coordinator.test.ts`, and the browser test do checks of AC-034-06.
 - `tests/browser/layout-regions.browser.test.ts` and `e2e/quote-reveals.spec.ts` do checks of AC-034-07.
-- `e2e/quote-reveals.spec.ts` does the check of AC-034-02 on the built `dist/` output.
-  It reads the private names, links, and source wording from the research folder, so it does not run where that folder does not exist.
+- `e2e/quote-reveals.spec.ts` and `npm run content:validate` do the check of AC-034-02 on the shipped reveal records.
 
 ## Checks and stop conditions
 

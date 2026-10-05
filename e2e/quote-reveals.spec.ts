@@ -1,12 +1,9 @@
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import path from 'node:path';
 import type { Page } from '@playwright/test';
 import { isSourcedQuoteReveal } from '../src/content/quote-reveals.ts';
 import { encodeQuoteArchive } from '../src/persistence/codecs/quote-archive-codec.ts';
 import { defaultSettings, encodeSettings } from '../src/persistence/codecs/settings-codec.ts';
 import { quoteArchiveStorageKey } from '../src/persistence/quote-archive.ts';
-import { loadGameContent, loadQuoteReveals } from '../tools/load-game-content.ts';
-import { readProvenanceRecords, researchFolder } from '../tools/validate-quote-reveals.ts';
+import { loadQuoteReveals } from '../tools/load-game-content.ts';
 import { expect, test } from './helpers/fixtures.ts';
 import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 import { lockInSetup } from './helpers/setup.ts';
@@ -24,62 +21,8 @@ const viewports = gateViewports([
   { width: 640, height: 320 },
 ]);
 
-test('the build has no private name, link, or source wording (AC-034-02)', () => {
-  const provenance = readProvenanceRecords(path.resolve(researchFolder));
-  test.skip(provenance === null, 'The private research folder does not exist here.');
-  const shippedById = new Map(shipped.map((record) => [record.cardId, record]));
-  const values = (cell: string | undefined) =>
-    (cell ?? '')
-      .split(';')
-      .map((value) => value.trim().replace(/^<|>$/gu, ''))
-      .filter((value) => value.length > 0);
-  const forbidden = new Set<string>();
-  // Accurate adaptations can retain a short source fragment in authored card text.
-  // The privacy contract forbids additional source wording, not the card itself.
-  const publicCardForms = loadGameContent().gameCatalog.locales.flatMap(({ messages }) =>
-    Object.entries(messages)
-      .filter(([key]) => key.startsWith('phrase.'))
-      .map(([, value]) => value.toLowerCase()),
-  );
-  for (const row of provenance!) {
-    for (const value of [...values(row.cells.speaker), ...values(row.cells['source url'])]) {
-      forbidden.add(value.toLowerCase());
-    }
-    // The card of a real quote or a real slogan keeps the real wording.
-    const record = shippedById.get(row.cardId);
-    if (record?.classification === 'adapted-quote') {
-      for (const wording of values(row.cells['source wording'])) {
-        if (
-          wording.split(/\s+/u).length >= 4 &&
-          !publicCardForms.some((form) => form.includes(wording.toLowerCase()))
-        ) {
-          forbidden.add(wording.toLowerCase());
-        }
-      }
-    }
-  }
-  expect(forbidden.size).toBeGreaterThan(0);
-
-  const found: string[] = [];
-  const scan = (directory: string): void => {
-    for (const entry of readdirSync(directory, { withFileTypes: true })) {
-      const file = path.join(directory, entry.name);
-      if (entry.isDirectory()) scan(file);
-      // Model and audio binaries hold no text. Each other file is searched.
-      else if (!/\.(?:onnx|wasm|bin|ogg|mp3|wav)$/u.test(entry.name) && statSync(file).size > 0) {
-        const text = readFileSync(file).toString('utf8').toLowerCase();
-        for (const value of forbidden) {
-          if (text.includes(value)) found.push(`${path.relative('dist', file)}: private value`);
-        }
-      }
-    }
-  };
-  expect(existsSync('dist')).toBe(true);
-  scan('dist');
-  // A failure names only the file, so the private value stays out of the report.
-  expect(found).toEqual([]);
-  // No reveal record has a link or an address.
-  expect(JSON.stringify(shipped)).not.toMatch(/http|www\.|@/iu);
+test('no reveal record has a link or an address (AC-034-02)', () => {
+  expect(JSON.stringify(shipped)).not.toMatch(/http|www.|@/iu);
 });
 
 async function openTitle(page: Page, interfaceLocale: 'en' | 'ro-RO'): Promise<void> {

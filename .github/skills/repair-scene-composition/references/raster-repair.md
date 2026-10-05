@@ -27,8 +27,8 @@ Vary character shapes and proportions to preserve distinct identities.
 Keep the small quantity of print texture the same for all these items.
 Do not accept painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, three-dimensional-render, or mixed-style repairs.
 
-For character skins and states, use flat editorial cartoons with clearly drawn faces and varied adult proportions.
-Use moderate head exaggeration, broad shapes, and two-tone shading.
+For character skins and states, use flat editorial cartoons with clearly drawn faces and varied adult builds.
+Use the strong caricature of the accepted style master, broad shapes, and two-tone shading.
 Preserve approved robot identity and construction during owner-authorized,
 reviewed contour corrections.
 Use the accepted three-character trial as the shared style reference after product-owner acceptance.

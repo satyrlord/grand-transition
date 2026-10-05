@@ -1,7 +1,37 @@
 # Flat editorial-cartoon style
 
 [Specification 023](../specs/spec-023-assets-visual-system.md) controls the art
-direction. The product owner approved the three pilot selections and all
+direction.
+
+## Style master
+
+On 2026-10-05 the product owner rejected the installed human roster as
+inconsistent in face realism, detail, and contour weight. The owner selected
+the Algorithmic Prophet as the model for the roster.
+
+The style master is `character-style-master.png` in this folder. It is the
+only style reference image for a new human selection. The
+[style block](../../.github/skills/generate-character-openai/assets/style-block.txt)
+is the only style text. The product owner has not accepted a style master at
+this time. Do not generate a new human selection before that acceptance.
+
+Record these values here after acceptance:
+
+| Value | Measurement |
+| --- | --- |
+| Source hash (SHA-256) | Not recorded |
+| Canvas dimensions | Not recorded |
+| Visible figure height | Not recorded |
+| Head-height ratio | Not recorded |
+| Median outer contour width for each 1000 figure pixels | Not recorded |
+
+The installed packages below are an inventory. They are not style references.
+The rendering exceptions that this document records for installed sources do
+not apply to new art.
+
+## Installed packages
+
+The product owner approved the three pilot selections and all
 fifteen matching poses, followed by the default and alternate Red-Folded
 Chairman selections and their five-pose packages, then Thunder Tribune's
 default selection and five poses. The owner also approved the alternate
@@ -35,8 +65,7 @@ poses are also installed under the owner-authorized package integration.
 The approved Reluctant Theorem selection and five reviewed matching poses are
 also installed under the owner-authorized package integration.
 All twenty-six packages are
-installed with their reviewed matching poses. Use these
-distinct adult silhouettes together to compare rendering. Do not copy one
+installed with their reviewed matching poses. Do not copy one
 character's identity into another.
 
 | Character | Canonical selection | Matching poses |
@@ -68,8 +97,8 @@ character's identity into another.
 | Apartment-Block Geopolitician | [Selection](../../src/assets/characters/apartment-block-geopolitician.png) | [Five poses](../../src/assets/characters/states/apartment-block-geopolitician/) |
 | Reluctant Theorem | [Selection](../../src/assets/characters/reluctant-theorem.png) | [Five poses](../../src/assets/characters/states/reluctant-theorem/) |
 
-Use clearly drawn faces, varied adult body and head shapes, moderate head
-exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
+Use clearly drawn faces, varied adult body and head shapes, strong
+caricature, uniform bold contours, broad color shapes, and two-tone cel shading.
 Keep face and body rendering consistent. Keep signature props visible at
 runtime scale. Avoid photographic skin detail, realistic portrait shading,
 and one repeated head template.

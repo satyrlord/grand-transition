@@ -813,12 +813,42 @@ and generate it again from the approved direction.
 ### Character art direction
 
 New human character art uses **flat editorial cartoons**. Use clearly drawn
-faces, varied adult body and head shapes, moderate head exaggeration, broad
-clean color shapes, controlled dark contours, and two-tone cel shading.
+faces, varied adult body and head shapes, strong caricature, broad
+clean color shapes, uniform bold dark contours, and two-tone cel shading.
 Keep face and body rendering consistent. Do not use realistic skin detail,
 photographic portrait shading, glossy modeling, or one repeated head template.
 Keep approved Government AI robot skins installed until contour corrections
 pass the owner-set range and their replacement art is reviewed.
+
+On 2026-10-05 the product owner rejected the regenerated human roster as
+inconsistent. Its faces range from realistic to generic, and its contour
+weights differ. The owner selected the Algorithmic Prophet as the model for
+the roster. It is funny, strongly exaggerated, and easy to identify without a
+realistic face. These rules apply to each new or replaced human selection:
+
+- One accepted style master, made from the model character, is the only style
+  reference image. Its path is `docs/assets/character-style-master.png`. The
+  earlier trial characters and the installed packages are not style references.
+- One fixed style block is the only style text in a prompt. The
+  `generate-character-openai` skill keeps it. Do not write style text for one
+  character.
+- A generation request contains no photograph and no name of a real person.
+  The agent changes the visually researched appearance into a written
+  caricature brief. The brief names two or three identity features and
+  exaggerates them strongly.
+- Each selection uses the head-height band and the figure height of the style
+  master. Vary face shape, build, height, silhouette, costume, and props.
+  Do not vary caricature strength, contour weight, or shading.
+- Before acceptance, compare each candidate with the style master and the
+  latest accepted selections on one sheet at equal figure height. Measure its
+  head-height ratio and its contour width.
+- A rendering defect causes rejection and a new generation. Do not record it
+  as an advisory. A rendering exception that is recorded for an installed
+  source does not apply to new art.
+
+Do not generate a new human selection before the product owner accepts the
+style master. The installed human packages stay until an accepted replacement
+package is complete.
 
 For new or corrected character selections and poses, target an outer silhouette
 contour width of 2 source pixels per 1000 pixels of the selection's visible
@@ -834,9 +864,9 @@ passes the contour range and is installed.
 
 Each fictional archetype has a distinct silhouette, face shape, costume,
 gesture rhythm, and prop system. Keep anatomy coherent and recognizably adult.
-Natural adult proportions are permitted. Exaggerate selected features only
-when they improve the character's identity and comic expression. A large head
-is not an acceptance requirement. Preserve space for hands, props, and poses.
+Use the head-height band of the accepted style master for each human
+selection. Exaggerate the features that give the character its identity and
+its comic expression. Preserve space for hands, props, and poses.
 
 Before each new selection master, confirm its private inspiration mapping.
 Open reliable, clearly labeled web sources and visually inspect at least three
@@ -883,6 +913,8 @@ Use the approved [Football Tycoon](../../src/assets/characters/football-tycoon.p
 [EU-Funds Alchemist](../../src/assets/characters/eu-funds-alchemist.png), and
 [Luxury Minister](../../src/assets/characters/luxury-minister.png) selections
 together for style comparison, not as identity sources for another character.
+This trial is a record of the earlier work. For new selections, the accepted
+style master replaces the trial characters as the shared style reference.
 The approved default and alternate Red-Folded Chairman selections and their
 five-pose packages are installed at their canonical source paths. Each pose
 used only its own approved selection as the image reference. This approval does not
@@ -1888,7 +1920,11 @@ reaction, or a character state is replaced or updated, the layout shift is
   and dark composites. Reject realistic faces, mixed rendering, clipped props,
   blurred upscaling, and detail lost on reduction. A trial pass establishes only
   the tested scope. Later accepted roster packages need their own visual and
-  runtime checks.
+  runtime checks. Each human selection after 2026-10-05 also uses the accepted
+  style master as its only style reference image and the fixed style block as
+  its only style text. Its request contains no photograph. Its recorded
+  head-height ratio and contour width are in their ranges. Its comparison sheet
+  with the style master shows no rendering defect.
 - **AC-023-17:** The asset color guard decodes each supported shipping raster in
   sRGB. It
   rejects a broad yellow cast over muted or neutral pixels. It accepts local

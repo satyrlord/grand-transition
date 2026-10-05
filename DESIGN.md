@@ -203,8 +203,9 @@ A fully mechanical character is clearly a robot.
 
 All generated representational raster art uses one flat cel-shaded editorial-cartoon language.
 New playable-character art uses **flat editorial cartoons** under Specification 023.
-Use clearly drawn faces, varied adult body and head shapes, and moderate head exaggeration.
-Use controlled dark contours, large clean shapes, and broad two-tone cel shading.
+Use clearly drawn faces, varied adult body and head shapes, and strong caricature.
+Use uniform bold dark contours, large clean shapes, and broad two-tone cel shading.
+Use the accepted style master as the only style reference for human characters.
 Keep the face and body in the same drawn style.
 Make each identity readable through its silhouette, clothing, gesture, and large signature prop.
 Keep props inside the visible runtime window.
@@ -455,8 +456,8 @@ Do not use animal anatomy or hybrid anatomy in portraits, tokens, poses, states,
 Do not give a robot human anatomy.
 
 **The Adult Caricature Rule.** Default characters and scene figures stay clearly adult, and they use correct human or mechanical anatomy.
-New human characters use varied adult proportions and moderate head exaggeration.
-Natural adult proportions are permitted. Keep researched likeness cues clearly drawn.
+New human characters use varied adult builds and the head-height band of the accepted style master.
+Exaggerate the researched likeness cues strongly, and keep them clearly drawn.
 Keep approved robot proportions unchanged.
 Do not use child or chibi proportions or realistic portrait rendering.
 

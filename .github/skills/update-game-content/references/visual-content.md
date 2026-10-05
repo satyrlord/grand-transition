@@ -17,8 +17,8 @@ Apply it to each character, skin, state, moderator, scene, foreground plate, arc
 Do not accept painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, three-dimensional-render, or mixed-style output.
 
 For each character skin and state, use the flat editorial cartoon direction of Milestone 023.
-Compare at equal figure height with the accepted three-character trial after product-owner acceptance.
-Use clearly drawn faces, varied adult proportions, moderate head exaggeration, and broad two-tone shading.
+Compare at equal figure height with the accepted style master.
+Use clearly drawn faces, varied adult builds, strong caricature, and broad two-tone shading.
 Preserve approved robot identity and construction during owner-authorized,
 reviewed contour corrections.
 

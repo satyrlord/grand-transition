@@ -140,7 +140,6 @@
     "singularText": "interrupts this debate",
     "pluralText": "interrupt this debate",
     "tags": [
-      "restraint",
       "decorum"
     ],
     "scorePreferences": {
@@ -167,7 +166,6 @@
     "singularText": "interrupted this debate",
     "pluralText": "interrupted this debate",
     "tags": [
-      "restraint",
       "decorum"
     ],
     "scorePreferences": {
@@ -194,7 +192,6 @@
     "singularText": "will interrupt this debate",
     "pluralText": "will interrupt this debate",
     "tags": [
-      "restraint",
       "decorum"
     ],
     "scorePreferences": {
@@ -228,7 +225,9 @@
     "id": "common-modifier-002",
     "role": "modifier",
     "text": "on television, with timed applause",
-    "tags": [],
+    "tags": [
+      "decorum"
+    ],
     "rarity": "uncommon"
   },
   {
@@ -706,7 +705,6 @@
     "role": "ending",
     "text": "and the reason is simply that we can.",
     "tags": [
-      "accountability",
       "restraint"
     ],
     "rarity": "uncommon",
@@ -717,7 +715,6 @@
     "role": "ending",
     "text": "until the next election; then the warranty expires.",
     "tags": [
-      "consistency",
       "credibility"
     ],
     "rarity": "rare",
@@ -2209,7 +2206,6 @@
     "role": "modifier",
     "text": "with pi missing from the calculation",
     "tags": [
-      "competence",
       "evidence"
     ],
     "rarity": "common"
@@ -2249,8 +2245,7 @@
     "role": "modifier",
     "text": "after declaring victory before the final count",
     "tags": [
-      "credibility",
-      "results"
+      "credibility"
     ],
     "rarity": "common"
   },
@@ -2325,8 +2320,7 @@
     "role": "modifier",
     "text": "under a denial of any conflict of interest",
     "tags": [
-      "corruption",
-      "accountability"
+      "corruption"
     ],
     "rarity": "rare"
   },
@@ -2363,7 +2357,6 @@
     "role": "ending",
     "text": "and the circle has a radius, but no pi.",
     "tags": [
-      "competence",
       "evidence"
     ],
     "rarity": "uncommon",
@@ -2415,8 +2408,7 @@
     "role": "ending",
     "text": "and democracy shrinks; sorry, bureaucracy.",
     "tags": [
-      "bureaucracy",
-      "competence"
+      "bureaucracy"
     ],
     "rarity": "common",
     "finisherBonus": 2
@@ -2876,7 +2868,6 @@
     "singularText": "heckles",
     "pluralText": "heckle",
     "tags": [
-      "restraint",
       "decorum"
     ],
     "scorePreferences": {
@@ -2905,7 +2896,6 @@
     "singularText": "heckled",
     "pluralText": "heckled",
     "tags": [
-      "restraint",
       "decorum"
     ],
     "scorePreferences": {
@@ -2934,7 +2924,6 @@
     "singularText": "will heckle",
     "pluralText": "will heckle",
     "tags": [
-      "restraint",
       "decorum"
     ],
     "scorePreferences": {
@@ -3139,7 +3128,6 @@
     "personalSingularText": "refused to comment on what rats said",
     "secondPersonText": "refused to comment on what rats said",
     "tags": [
-      "restraint",
       "decorum"
     ],
     "scorePreferences": {
@@ -3167,7 +3155,6 @@
     "personalSingularText": "refuses to comment on what rats say",
     "secondPersonText": "refuse to comment on what rats say",
     "tags": [
-      "restraint",
       "decorum"
     ],
     "scorePreferences": {
@@ -3195,7 +3182,6 @@
     "personalSingularText": "will refuse to comment on what rats say",
     "secondPersonText": "will refuse to comment on what rats say",
     "tags": [
-      "restraint",
       "decorum"
     ],
     "scorePreferences": {
@@ -3307,7 +3293,8 @@
     "tags": [
       "legacy",
       "evidence",
-      "securitate"
+      "securitate",
+      "transparency"
     ],
     "scorePreferences": {
       "substance": [
@@ -3336,7 +3323,8 @@
     "tags": [
       "legacy",
       "evidence",
-      "securitate"
+      "securitate",
+      "transparency"
     ],
     "scorePreferences": {
       "substance": [
@@ -3365,7 +3353,8 @@
     "tags": [
       "legacy",
       "evidence",
-      "securitate"
+      "securitate",
+      "transparency"
     ],
     "scorePreferences": {
       "substance": [
@@ -3394,8 +3383,7 @@
     "personalSingularText": "declared victory before the final count",
     "secondPersonText": "declared victory before the final count",
     "tags": [
-      "credibility",
-      "results"
+      "credibility"
     ],
     "scorePreferences": {
       "substance": [
@@ -3422,8 +3410,7 @@
     "personalSingularText": "declares victory before the final count",
     "secondPersonText": "declare victory before the final count",
     "tags": [
-      "credibility",
-      "results"
+      "credibility"
     ],
     "scorePreferences": {
       "substance": [
@@ -3450,8 +3437,7 @@
     "personalSingularText": "will declare victory before the final count",
     "secondPersonText": "will declare victory before the final count",
     "tags": [
-      "credibility",
-      "results"
+      "credibility"
     ],
     "scorePreferences": {
       "substance": [
@@ -3556,8 +3542,7 @@
     "personalSingularText": "boasted of thirteen percent economic growth",
     "secondPersonText": "boasted of thirteen percent economic growth",
     "tags": [
-      "evidence",
-      "results"
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -3584,8 +3569,7 @@
     "personalSingularText": "boasts of thirteen percent economic growth",
     "secondPersonText": "boast of thirteen percent economic growth",
     "tags": [
-      "evidence",
-      "results"
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -3612,8 +3596,7 @@
     "personalSingularText": "will boast of thirteen percent economic growth",
     "secondPersonText": "will boast of thirteen percent economic growth",
     "tags": [
-      "evidence",
-      "results"
+      "evidence"
     ],
     "scorePreferences": {
       "substance": [
@@ -3792,7 +3775,6 @@
     "role": "predicate",
     "text": "justified everything with “because we can”",
     "tags": [
-      "accountability",
       "restraint"
     ],
     "scorePreferences": {
@@ -3820,7 +3802,6 @@
     "role": "predicate",
     "text": "justifies everything with “because we can”",
     "tags": [
-      "accountability",
       "restraint"
     ],
     "scorePreferences": {
@@ -3848,7 +3829,6 @@
     "role": "predicate",
     "text": "will justify everything with “because we can”",
     "tags": [
-      "accountability",
       "restraint"
     ],
     "scorePreferences": {
@@ -4784,8 +4764,7 @@
     "role": "noun",
     "text": "your complaint assigned to an empty desk",
     "tags": [
-      "bureaucracy",
-      "accountability"
+      "bureaucracy"
     ],
     "scoreGroups": {
       "substance": [
@@ -4802,8 +4781,7 @@
     "role": "noun",
     "text": "a permission slip for asking permission",
     "tags": [
-      "bureaucracy",
-      "accountability"
+      "bureaucracy"
     ],
     "scoreGroups": {
       "substance": [
@@ -4820,8 +4798,7 @@
     "role": "noun",
     "text": "the emergency meeting about the next meeting",
     "tags": [
-      "bureaucracy",
-      "accountability"
+      "bureaucracy"
     ],
     "scoreGroups": {
       "substance": [
@@ -4838,8 +4815,7 @@
     "role": "noun",
     "text": "a stamp that outranks its operator",
     "tags": [
-      "bureaucracy",
-      "accountability"
+      "bureaucracy"
     ],
     "scoreGroups": {
       "substance": [
@@ -4856,8 +4832,7 @@
     "role": "noun",
     "text": "the missing page of the public register",
     "tags": [
-      "bureaucracy",
-      "accountability"
+      "bureaucracy"
     ],
     "scoreGroups": {
       "substance": [
@@ -4874,8 +4849,7 @@
     "role": "noun",
     "text": "an office door with visiting hours",
     "tags": [
-      "bureaucracy",
-      "accountability"
+      "bureaucracy"
     ],
     "scoreGroups": {
       "substance": [
@@ -5598,8 +5572,7 @@
     "role": "noun",
     "text": "the bus timetable without a bus",
     "tags": [
-      "delivery",
-      "results"
+      "delivery"
     ],
     "scoreGroups": {
       "substance": [
@@ -5616,8 +5589,7 @@
     "role": "noun",
     "text": "your promised playground behind a permanent fence",
     "tags": [
-      "delivery",
-      "results"
+      "delivery"
     ],
     "scoreGroups": {
       "substance": [
@@ -5634,8 +5606,7 @@
     "role": "noun",
     "text": "a delivery dashboard with nothing behind it",
     "tags": [
-      "delivery",
-      "results"
+      "delivery"
     ],
     "scoreGroups": {
       "substance": [
@@ -6124,7 +6095,8 @@
     "text": "the invitation list that writes the policy",
     "tags": [
       "influence",
-      "wealth"
+      "wealth",
+      "elitism"
     ],
     "scoreGroups": {
       "substance": [
@@ -6524,7 +6496,6 @@
     "tense": "past",
     "tenseFamily": "common-verb-028",
     "tags": [
-      "accountability",
       "procurement"
     ],
     "scorePreferences": {
@@ -6560,7 +6531,6 @@
     "tense": "present",
     "tenseFamily": "common-verb-028",
     "tags": [
-      "accountability",
       "procurement"
     ],
     "scorePreferences": {
@@ -6596,7 +6566,6 @@
     "tense": "future",
     "tenseFamily": "common-verb-028",
     "tags": [
-      "accountability",
       "procurement"
     ],
     "scorePreferences": {
@@ -7670,7 +7639,6 @@
     "tense": "past",
     "tenseFamily": "common-verb-039",
     "tags": [
-      "delivery",
       "transparency"
     ],
     "scorePreferences": {
@@ -7706,7 +7674,6 @@
     "tense": "present",
     "tenseFamily": "common-verb-039",
     "tags": [
-      "delivery",
       "transparency"
     ],
     "scorePreferences": {
@@ -7742,7 +7709,6 @@
     "tense": "future",
     "tenseFamily": "common-verb-039",
     "tags": [
-      "delivery",
       "transparency"
     ],
     "scorePreferences": {
@@ -7777,7 +7743,9 @@
     "pluralText": "held a ribbon-cutting ceremony for",
     "tense": "past",
     "tenseFamily": "common-verb-040",
-    "tags": [],
+    "tags": [
+      "decorum"
+    ],
     "scorePreferences": {
       "substance": [
         {
@@ -7810,7 +7778,9 @@
     "pluralText": "hold a ribbon-cutting ceremony for",
     "tense": "present",
     "tenseFamily": "common-verb-040",
-    "tags": [],
+    "tags": [
+      "decorum"
+    ],
     "scorePreferences": {
       "substance": [
         {
@@ -7843,7 +7813,9 @@
     "pluralText": "will hold a ribbon-cutting ceremony for",
     "tense": "future",
     "tenseFamily": "common-verb-040",
-    "tags": [],
+    "tags": [
+      "decorum"
+    ],
     "scorePreferences": {
       "substance": [
         {
@@ -7972,8 +7944,7 @@
     "tense": "past",
     "tenseFamily": "common-predicate-017",
     "tags": [
-      "bureaucracy",
-      "competence"
+      "bureaucracy"
     ],
     "scorePreferences": {
       "substance": [
@@ -8004,8 +7975,7 @@
     "tense": "present",
     "tenseFamily": "common-predicate-017",
     "tags": [
-      "bureaucracy",
-      "competence"
+      "bureaucracy"
     ],
     "scorePreferences": {
       "substance": [
@@ -8036,8 +8006,7 @@
     "tense": "future",
     "tenseFamily": "common-predicate-017",
     "tags": [
-      "bureaucracy",
-      "competence"
+      "bureaucracy"
     ],
     "scorePreferences": {
       "substance": [
@@ -8443,8 +8412,7 @@
     "tense": "past",
     "tenseFamily": "common-predicate-022",
     "tags": [
-      "infrastructure",
-      "delivery"
+      "infrastructure"
     ],
     "scorePreferences": {
       "substance": [
@@ -8475,8 +8443,7 @@
     "tense": "present",
     "tenseFamily": "common-predicate-022",
     "tags": [
-      "infrastructure",
-      "delivery"
+      "infrastructure"
     ],
     "scorePreferences": {
       "substance": [
@@ -8507,8 +8474,7 @@
     "tense": "future",
     "tenseFamily": "common-predicate-022",
     "tags": [
-      "infrastructure",
-      "delivery"
+      "infrastructure"
     ],
     "scorePreferences": {
       "substance": [
@@ -8632,7 +8598,6 @@
     "tense": "past",
     "tenseFamily": "common-predicate-024",
     "tags": [
-      "competence",
       "evidence"
     ],
     "scorePreferences": {
@@ -8664,7 +8629,6 @@
     "tense": "present",
     "tenseFamily": "common-predicate-024",
     "tags": [
-      "competence",
       "evidence"
     ],
     "scorePreferences": {
@@ -8696,7 +8660,6 @@
     "tense": "future",
     "tenseFamily": "common-predicate-024",
     "tags": [
-      "competence",
       "evidence"
     ],
     "scorePreferences": {
@@ -8894,8 +8857,7 @@
     "role": "ending",
     "text": "and paper folders might disappear within five years.",
     "tags": [
-      "bureaucracy",
-      "obsolete"
+      "bureaucracy"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -8915,8 +8877,7 @@
     "role": "ending",
     "text": "and now we move from deeds to words.",
     "tags": [
-      "delivery",
-      "results"
+      "delivery"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -8926,8 +8887,7 @@
     "role": "ending",
     "text": "and the motorway floats above the city, in two years.",
     "tags": [
-      "infrastructure",
-      "delivery"
+      "infrastructure"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -8948,7 +8908,6 @@
     "role": "ending",
     "text": "and the elevated motorway gets a two-year promise.",
     "tags": [
-      "delivery",
       "infrastructure"
     ],
     "rarity": "rare",
@@ -8969,8 +8928,7 @@
     "role": "ending",
     "text": "and bureaucracy replaces democracy in the correction.",
     "tags": [
-      "bureaucracy",
-      "competence"
+      "bureaucracy"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9000,7 +8958,6 @@
     "role": "ending",
     "text": "and the answer forgets pi.",
     "tags": [
-      "competence",
       "evidence"
     ],
     "rarity": "rare",
@@ -9063,8 +9020,7 @@
     "role": "ending",
     "text": "and the elevated motorway is promised within two years.",
     "tags": [
-      "infrastructure",
-      "delivery"
+      "infrastructure"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9085,7 +9041,7 @@
     "text": "and apparently there is no conflict of interest.",
     "tags": [
       "corruption",
-      "accountability"
+      "transparency"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9221,7 +9177,8 @@
     "text": "and the price witness does not eat bread.",
     "tags": [
       "firsthand-knowledge",
-      "context"
+      "context",
+      "sources"
     ],
     "rarity": "rare",
     "finisherBonus": 4
@@ -9251,7 +9208,6 @@
     "text": "and even the digitalization ministry fears digitalization.",
     "tags": [
       "modernity",
-      "obsolete",
       "bureaucracy"
     ],
     "rarity": "rare",
@@ -12803,8 +12759,7 @@
     "role": "noun",
     "text": "an extorsion of a clearance",
     "tags": [
-      "bureaucracy",
-      "competence"
+      "bureaucracy"
     ],
     "scoreGroups": {
       "substance": [
@@ -14736,7 +14691,6 @@
     "role": "noun",
     "text": "the power to say “because we can”",
     "tags": [
-      "accountability",
       "restraint"
     ],
     "scoreGroups": {
@@ -14927,7 +14881,7 @@
     "text": "the declaration of no conflict of interest",
     "tags": [
       "corruption",
-      "accountability"
+      "transparency"
     ],
     "scoreGroups": {
       "substance": [
@@ -16110,8 +16064,7 @@
     "singularText": "was a committee following the twists of concrete reality",
     "pluralText": "were a committee following the twists of concrete reality",
     "tags": [
-      "bureaucracy",
-      "competence"
+      "bureaucracy"
     ],
     "scorePreferences": {
       "substance": [
@@ -16135,8 +16088,7 @@
     "singularText": "is a committee following the twists of concrete reality",
     "pluralText": "are a committee following the twists of concrete reality",
     "tags": [
-      "bureaucracy",
-      "competence"
+      "bureaucracy"
     ],
     "scorePreferences": {
       "substance": [
@@ -16160,8 +16112,7 @@
     "singularText": "will be a committee following the twists of concrete reality",
     "pluralText": "will be a committee following the twists of concrete reality",
     "tags": [
-      "bureaucracy",
-      "competence"
+      "bureaucracy"
     ],
     "scorePreferences": {
       "substance": [
@@ -16494,7 +16445,6 @@
     "singularText": "was a radius squared without pi",
     "pluralText": "were a radius squared without pi",
     "tags": [
-      "competence",
       "evidence"
     ],
     "scorePreferences": {
@@ -16519,7 +16469,6 @@
     "singularText": "is a radius squared without pi",
     "pluralText": "are a radius squared without pi",
     "tags": [
-      "competence",
       "evidence"
     ],
     "scorePreferences": {
@@ -16544,7 +16493,6 @@
     "singularText": "will be a radius squared without pi",
     "pluralText": "will be a radius squared without pi",
     "tags": [
-      "competence",
       "evidence"
     ],
     "scorePreferences": {
@@ -16569,8 +16517,7 @@
     "singularText": "moved from deeds to words",
     "pluralText": "moved from deeds to words",
     "tags": [
-      "delivery",
-      "results"
+      "delivery"
     ],
     "scorePreferences": {
       "substance": [
@@ -16596,8 +16543,7 @@
     "singularText": "moves from deeds to words",
     "pluralText": "move from deeds to words",
     "tags": [
-      "delivery",
-      "results"
+      "delivery"
     ],
     "scorePreferences": {
       "substance": [
@@ -16623,8 +16569,7 @@
     "singularText": "will move from deeds to words",
     "pluralText": "will move from deeds to words",
     "tags": [
-      "delivery",
-      "results"
+      "delivery"
     ],
     "scorePreferences": {
       "substance": [
@@ -16933,8 +16878,7 @@
     "role": "modifier",
     "text": "after confusing democracy with bureaucracy",
     "tags": [
-      "bureaucracy",
-      "competence"
+      "bureaucracy"
     ],
     "rarity": "common"
   },

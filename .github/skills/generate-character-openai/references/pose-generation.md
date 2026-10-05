@@ -29,6 +29,7 @@ Do not use Flare for poses.
 ## Keep each action distinct
 
 Reuse one stable identity and prop brief.
+Put the style block in each pose prompt, word for word.
 Change only the action and expression for the state.
 Keep each signature prop in the visible runtime window.
 Give the prop count and the canvas side of the hand that holds it.
@@ -46,7 +47,9 @@ Use the character's own gestures.
 
 ## Inspect each result before continuation
 
-Use [candidate review](../../generate-scene-openai/references/candidate-review.md).
+Use [style review](style-review.md) and [candidate review](../../generate-scene-openai/references/candidate-review.md).
+Do not let a pose inherit a rendering defect from its selection.
+If the selection has that defect, stop and give it in the report.
 Inspect dimensions, native alpha, anatomy, identity, and prop visibility.
 Run the runtime-window overlay from [identity and prop consistency](prompt-consistency.md).
 Compare the result with the accepted selection at equal figure height.
@@ -54,6 +57,7 @@ Keep clean generated pixels unchanged.
 Apply alpha cleanup only for the defect described in the native-alpha module.
 
 If the result fails, correct the observed defect within the authorized request limit.
+After a rendering defect, generate the pose again as an alternative to an edit request.
 Do not continue to the next state with an unresolved defect.
 Record the accepted source and state once in the work record.
 

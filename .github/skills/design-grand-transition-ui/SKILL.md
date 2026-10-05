@@ -59,8 +59,8 @@ Use caricature, materials with a small number of details, and a small quantity o
 Apply these rules to characters, moderators, scenes, furniture, fixtures, and props.
 
 For character skins and states, apply the flat editorial cartoon direction of Milestone 023.
-Use clearly drawn faces, varied adult proportions, moderate head exaggeration, and broad two-tone shading.
-Use the accepted three-character trial as the shared style reference after product-owner acceptance.
+Use clearly drawn faces, varied adult builds, strong caricature, and broad two-tone shading.
+Use the accepted style master as the shared style reference for human characters.
 Preserve approved robot identity and construction during owner-authorized,
 reviewed contour corrections.
 

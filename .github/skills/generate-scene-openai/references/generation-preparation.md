@@ -21,7 +21,7 @@ For characters, use [identity and prop consistency](../../generate-character-ope
 For an edit, identify the features and composition that must stay unchanged.
 
 Keep private working prompts in the ignored task directory.
-Keep retained identity descriptions and source notes in `research/`.
+Keep retained identity descriptions and source notes in `research/`, as the rules in `AGENTS.md` tell you.
 Record output paths, observed source dimensions, and review decisions once.
 Do not require separate private identity generations or duplicate evidence files.
 

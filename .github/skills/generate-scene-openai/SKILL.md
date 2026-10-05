@@ -15,7 +15,9 @@ Inspect the current checkout before edits.
 Get the asset identifier, role, composition, transparency, and interface clearance from those sources.
 Apply the art direction most recently approved by the user.
 Complete [scene research](references/scene-research.md) before a new background or substantial scene redesign.
-Keep private prompts and retained source notes in `research/`.
+Keep the scene study in `research/<scene-id>.md`, with one prompt for each approved layer.
+When a correction is approved, put it into that one prompt.
+Obey the research folder rules in `AGENTS.md`. Keep all work records in `tmp/`.
 Keep candidates and previews in `tmp/scene-generation/`.
 
 An instruction to generate or edit art authorizes generation within that scope.

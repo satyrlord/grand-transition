@@ -1,0 +1,9 @@
+STYLE BLOCK 2.
+Rendering: a funny flat cel-shaded editorial cartoon caricature with a clean hand-inked look. This is a silly satirical cartoon. It is not a portrait.
+Caricature: use the height, the head size, and the build that this prompt gives for this character. Exaggerate strongly only the identity features that this prompt names. Draw each other feature at an ordinary size and simplify it. The body is adult.
+Face: draw the face with lines, not with shading. Use solid dark eyebrow shapes, small simple eyes with dot pupils, one clean nose contour, one mouth line, and six or fewer short expression lines. The skin is one flat base color and one hard-edged shadow shape. Use no pores, stubble dots, freckles, blush, gradients, or highlight modeling.
+Hair: three to six large grouped shapes in two flat tones. Use no single strands.
+Contours: one uniform bold dark ink line goes around the complete outer silhouette. On a canvas of 1254 pixels, this line is 3 pixels wide. It has the same width on the head, the arms, the torso, and the legs. It has the same width for a short character and for a tall character. Interior lines are thinner and sparse. Use no broken, sketchy, tapered, or colored outlines.
+Shading: each material has one flat base color and one hard-edged shadow color. One small hard-edged highlight is permitted on shoes, glass, and metal only. Use no soft gradients, airbrush, texture, fabric weave, rim light, or glow.
+Detail: clothing uses large clean shapes, with three or fewer fold lines for each limb. Use no tiny pattern, stitching, or decorative noise.
+Not permitted: a realistic or semi-realistic face, lifelike skin, portrait lighting, painterly blending, a three-dimensional render, anime, a minimalist vector icon, a sticker border, or a face that has a different rendering technique from the body.

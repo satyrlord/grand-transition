@@ -1,5 +1,10 @@
 import { expect, test } from 'vitest';
-import { piperControls, piperInput, piperMarkers } from '../../src/audio/piper-text.ts';
+import {
+  piperClauses,
+  piperControls,
+  piperInput,
+  piperMarkers,
+} from '../../src/audio/piper-text.ts';
 
 test('Piper padding retains every phoneme and anchors each authored phrase', () => {
   const input = piperInput(['ab', 'a.'], {
@@ -14,6 +19,18 @@ test('Piper padding retains every phoneme and anchors each authored phrase', () 
   expect(input.ids).toEqual([1n, 0n, 4n, 0n, 5n, 0n, 3n, 0n, 4n, 0n, 6n, 0n, 2n]);
   expect(input.starts).toEqual([2, 8]);
   expect(() => piperInput(['x'], { '^': [1], _: [0], $: [2] })).toThrow('unsupported phoneme');
+});
+
+test('clauses keep their own terminator and one space before the next clause', () => {
+  expect(
+    piperClauses([
+      { phonemes: 'a', terminator: ',' },
+      { phonemes: '', terminator: '' },
+      { phonemes: 'b', terminator: '.' },
+      { phonemes: 'a', terminator: '' },
+    ]),
+  ).toBe('a, b. a');
+  expect(piperClauses([{ phonemes: '', terminator: '.' }])).toBe('');
 });
 
 test.each([0, 0.5, 0.75, 1, 1.4, 2])(
