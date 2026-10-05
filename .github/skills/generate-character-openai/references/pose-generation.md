@@ -52,7 +52,7 @@ Do not let a pose inherit a rendering defect from its selection.
 If the selection has that defect, stop and give it in the report.
 Inspect dimensions, native alpha, anatomy, identity, and prop visibility.
 Run the runtime-window overlay from [identity and prop consistency](prompt-consistency.md).
-Compare the result with the accepted selection at equal figure height.
+Compare the result with the accepted selection at one canvas scale.
 Keep clean generated pixels unchanged.
 Apply alpha cleanup only for the defect described in the native-alpha module.
 

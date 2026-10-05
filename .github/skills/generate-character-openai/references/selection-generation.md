@@ -40,16 +40,49 @@ Change the research into a written caricature brief:
 
 1. Name the two or three features that identify the subject most strongly.
 2. Tell the generator to exaggerate each of them strongly, and give its shape.
-3. Give the face shape, hair shape, age cue, and build in one short sentence each.
-4. Give the clothing, palette, signature prop, and visual joke.
-5. Give the expression and the gesture that make the character funny.
+3. Give the nose shape and the nose size in each brief, also when the nose is small or usual.
+4. Give the face shape, hair shape, age cue, and build in one short sentence each.
+5. Give the height class and the head-size class from the next section.
+6. Give the clothing, palette, signature prop, and visual joke.
+7. Give the expression and the gesture that make the character funny.
 
 Describe shapes, not surfaces.
 Do not describe skin texture, wrinkles in detail, makeup detail, or hair strands.
 Do not tell the generator to copy natural proportions or to keep a feature subtle.
 Keep the fictional public identity and approved species.
-Give each character a different face shape, build, height, and silhouette.
-Keep the caricature strength and the head-height band the same for all characters.
+Give each character a different face shape, build, and silhouette.
+Exaggerate a feature only when the research shows that it identifies this subject.
+Do not copy an exaggerated feature from a different character or from the style master.
+Keep the caricature strength the same for all characters.
+
+## Set the height and the head size
+
+Find the real height of the subject in the research, or compare the subject with other persons in group photographs.
+Select one height class. The stature is the distance from the top of the hair or the bare scalp to the shoe soles.
+
+| Height class | Stature, as a percentage of the canvas height | Top of the head, y |
+| --- | --- | --- |
+| Short | 82 | 17 percent |
+| Medium | 88 | 11 percent |
+| Tall | 94 | 5 percent |
+
+Put the shoe soles of each character at 99 percent of the canvas height.
+Headwear and raised hands go above the top of the head. They do not change the height class.
+Keep 1 percent of the canvas clear above the highest part.
+A tall character with headwear thus fills 98 percent of the canvas height.
+The asset validation rejects a selection whose full height, with headwear, is less than 80 percent of the canvas.
+Keep the stature of a short character without headwear at 81 percent or more.
+
+Select one head-size class. The head height is the distance from the chin to the top of the hair or the bare scalp.
+
+| Head-size class | Head height, as a percentage of the stature |
+| --- | --- |
+| Usual | 19 through 22 |
+| Large | 26 through 29 |
+
+Use the large class only when the character study records a large head as a feature of that character.
+Record the two classes in the character study.
+Do not change the contour width for a class. The contour width in source pixels is the same for all classes.
 
 Use [identity and prop consistency](prompt-consistency.md) to build the prompt and to place props.
 Give the facing, full-body placement, safe margins, and prop count.
@@ -61,10 +94,20 @@ Do not add a global warm wash, text, labels, scenery, or extra subjects.
 
 Use the built-in chat image generator.
 Attach one image only: `docs/assets/character-style-master.png`.
-Tell the generator that it is the style reference image and that it gives the drawing technique only.
+Use this text, word for word, as the image-role part of the prompt:
+
+```text
+The one attached image is the style reference sheet. It shows three other characters.
+Use only its drawing technique: the weight of the outer line, the flat colors,
+the hard two-tone shading, and the faces drawn with a few lines.
+The three characters on the sheet have different heights, head sizes, noses, and builds,
+and one drawing technique. Draw one new character in that technique.
+The new character is none of the three.
+Use the height, the head, the face, and the build that this prompt gives.
+```
+
 Request one square native-transparent PNG at the canvas dimensions of the style master.
-Request a complete figure at 86 percent of the canvas height, with 7 percent margins above and below.
-Use the same figure height for each selection, so that the contour weight stays equal.
+Request the stature and the positions of the height class of the character.
 Do not generate a separate draft when the same request can make a shipping candidate.
 Save the returned source unchanged in the task directory.
 Save the sent prompt in the task directory.
@@ -77,8 +120,11 @@ Use [style review](style-review.md) first.
 Then use [candidate review](../../generate-scene-openai/references/candidate-review.md).
 Reject realistic faces, mixed rendering, generic identity, damaged anatomy, missing props, duplicate props, or crop loss.
 After the rendering checks pass, compare the candidate with the researched subject.
+Put the candidate and the research photographs side by side on one resemblance sheet.
+Keep that sheet in the task directory in `tmp/character-generation/`. Do not put it in a request, in `research/`, or in the repository.
 Do not accept style agreement as proof of resemblance.
 If the resemblance is weak, make the named features stronger in the brief and generate again.
+If the resemblance stays weak after three requests, stop and tell the product owner.
 Inspect actual transparency with [native alpha](../../generate-scene-openai/references/native-alpha.md).
 Keep good generated alpha unchanged.
 Run the runtime-window overlay:
@@ -88,8 +134,9 @@ node tools/character-runtime-window.ts <candidate.png> <overlay.png>
 ```
 
 Inspect the face, silhouette, contour, and prop at source and runtime scales.
-Show the comparison sheets, the light and dark composites, and the runtime window to the product owner.
-Make sure that the shape and identity of the candidate stay distinct from the style master.
+Show the comparison sheets, the resemblance sheet, the light and dark composites, and the runtime window to the product owner.
+The product owner decides the resemblance.
+Make sure that the candidate does not have the face, the nose, the head size, or the build of a figure on the style master.
 Check small roster crops, setup portraits, and the two match sides.
 Do not call isolated thumbnails production-browser evidence.
 

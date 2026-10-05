@@ -1,6 +1,6 @@
 ---
 name: generate-character-openai
-description: Generate, review, or integrate Grand Transition character style masters, selections, and pose packages with the built-in chat image generator. Use for the style master, the fixed style block, identity and prop continuity, roster style conformity, and continuation of accepted work. Preserve approved robot identity during owner-authorized, reviewed contour corrections.
+description: Generate, review, or integrate Grand Transition character style masters, selections, and pose packages with the built-in chat image generator. Use for the style master, the fixed style blocks, identity and prop continuity, roster style conformity, robot regeneration, and continuation of accepted work. Preserve approved robot identity and construction during owner-authorized regeneration.
 ---
 
 # Generate character art in chat
@@ -15,6 +15,7 @@ Keep unrelated assets and approved art unchanged.
 - **Master:** Generate and review the style master that all human selections use.
 - **Selection:** Generate and review the selected portraits.
 - **Package:** Complete the accepted selection, five poses, and local integration.
+- **Robot:** Regenerate a Government AI robot skin at the contour range, with its approved identity.
 
 An instruction to generate artwork authorizes the necessary chat requests in that scope.
 Do not add a numeric approval form or an API stage.
@@ -43,7 +44,8 @@ If the chat tool is unavailable, complete the brief and report the blocked gener
 The accepted style master is `docs/assets/character-style-master.png`.
 It is the only style reference image for a human selection.
 The [style contract](../../../docs/assets/flat-editorial-style.md) records its measured values.
-The [style block](assets/style-block.txt) is the only style text for a prompt.
+The [style block](assets/style-block.txt) is the only style text for a human prompt.
+The [robot style block](assets/style-block-robot.txt) is the only style text for a robot prompt.
 
 - If the style master is not there, complete the Master branch first.
 - Do not generate a human selection before the product owner accepts the style master.
@@ -56,13 +58,14 @@ The [style block](assets/style-block.txt) is the only style text for a prompt.
 Make each character a funny, strong caricature that shows its identity at a glance.
 Vary the face shape, build, height class, head size, silhouette, costume, and props between characters.
 Do not vary the caricature strength, the contour weight, or the shading.
-The style master gives the drawing technique only.
-The proportions and the face of the model character belong to that character and do not transfer.
+The style master is a sheet of three invented figures that are not game characters.
+It gives the drawing technique only. No face, nose, head size, height, or build transfers from it.
 A rendering exception that the style contract records for an installed source does not apply to new art.
 
 ## Load only the necessary procedure
 
 - Before the Master branch, read [style master](references/style-master.md).
+- Before a robot selection or pose, read [robot regeneration](references/robot-regeneration.md).
 - Before a selection, read [selection generation](references/selection-generation.md) and complete its web identity research.
 - Before a prompt, read [identity and prop consistency](references/prompt-consistency.md).
 - Before poses, read [pose generation](references/pose-generation.md).

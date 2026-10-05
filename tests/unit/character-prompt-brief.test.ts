@@ -15,28 +15,24 @@ const helper = path.resolve('.github/skills/generate-scene-openai/scripts/scene-
 const lockedHash = 'a'.repeat(64);
 const styleHash = 'b'.repeat(64);
 const study = '- `delivery`: He raises the prayer beads in one hand.\n';
-const common = `The only image reference is the accepted selection. Draw the figure at 82 to 88 percent of the 1024-square canvas height with at least 60 pixels of clear margin. The whole head is 17 to 20 percent of the visible figure height, with moderate adult caricature proportions. Use exactly one loop of prayer beads. Every pixel outside the contour must have zero alpha. No glow, halo, or backlight. Keep the head facing canvas right.
+const common = `The only image reference is the accepted selection. The stature is 82 percent of the canvas height, and the shoe soles are at y 99 percent. The head is 19 to 22 percent of his height. Use exactly one loop of prayer beads. Every pixel outside the contour must have zero alpha. No glow, halo, or backlight. The head faces canvas right.
 Neutral sRGB white balance. Ungraded colors. Warm color is local to skin. No whole-image color tint.`;
 
 function fixture(state: string, action: string, hand = 'canvas-right hand') {
   const stateText = `Create the ${state} pose.`;
   const prompt = `${stateText}\n\n${action.replace('{hand}', hand)}\n\n${common}`;
   const brief: CharacterBrief = parseBrief({
-    schemaVersion: 1,
+    schemaVersion: 2,
     ownerId: 'tycoon',
     skinId: 'default',
     state,
+    species: 'human',
     facing: 'right',
     promptFile: `${state}.txt`,
     studyFile: 'study.md',
     action: action.replace('{hand}', hand),
     stateText: [stateText],
-    figure: {
-      canvasPixels: 1024,
-      heightPercent: [82, 88],
-      headHeightPercent: [17, 20],
-      marginPx: 60,
-    },
+    figure: { canvasPixels: 1024, heightClass: 'short', headSizeClass: 'usual' },
     references: [{ role: 'locked-selection', sha256: lockedHash }],
     props: [
       {
@@ -58,19 +54,52 @@ const delivery = () =>
   );
 
 describe('character prompt brief', () => {
-  test('accepts a text-only style trial with moderate head proportions', () => {
+  test('accepts a human selection that attaches only the style master', () => {
     const { brief, prompt } = delivery();
     brief.state = 'selection';
+    brief.references = [{ role: 'style', sha256: styleHash }];
+    expect(checkBrief(brief, { prompt, referenceHashes: [styleHash] })).toEqual([]);
     brief.references = [];
-    expect(checkBrief(brief, { prompt, referenceHashes: [] })).toEqual([]);
+    expect(checkBrief(brief, { prompt }).join('\n')).toContain('one style reference');
   });
 
-  test('measures the prop margin against the declared native canvas', () => {
+  test('rejects a prompt whose stature or head size differs from its classes', () => {
     const { brief, prompt } = delivery();
-    brief.props[0]!.zone = { x: [92, 95], y: [25, 44] };
-    expect(checkBrief(brief, { prompt }).join('\n')).toContain('pixel margin');
-    brief.figure.canvasPixels = 2048;
-    expect(checkBrief(brief, { prompt: prompt.replace('1024-square', '2048-square') })).toEqual([]);
+    brief.figure.heightClass = 'tall';
+    expect(checkBrief(brief, { prompt }).join('\n')).toContain('94 percent of the canvas height');
+    brief.figure.heightClass = 'short';
+    brief.figure.headSizeClass = 'large';
+    expect(checkBrief(brief, { prompt }).join('\n')).toContain('26 to 29 percent');
+  });
+
+  test('uses the left canvas side as the inner side of a left-facing source', () => {
+    const { brief, prompt } = delivery();
+    brief.facing = 'left';
+    const leftPrompt = prompt
+      .replaceAll('canvas-right hand', 'canvas-left hand')
+      .replace('faces canvas right', 'faces canvas left');
+    brief.action = brief.action.replace('canvas-right hand', 'canvas-left hand');
+    brief.props[0]!.hand = 'canvas-left';
+    expect(checkBrief(brief, { prompt: leftPrompt }).join('\n')).toContain('runtime window');
+    brief.props[0]!.zone = { x: [25, 40], y: [25, 44] };
+    expect(checkBrief(brief, { prompt: leftPrompt })).toEqual([]);
+    expect(checkBrief(brief, { prompt }).join('\n')).toContain('faces canvas left');
+  });
+
+  test('accepts a robot that has no classes and attaches its approved selection', () => {
+    const { brief, prompt } = delivery();
+    const robot = parseBrief({
+      ...brief,
+      species: 'robot',
+      state: 'selection',
+      figure: { canvasPixels: 2048 },
+      references: [{ role: 'identity', sha256: lockedHash }],
+    });
+    const robotPrompt = prompt.replace(/The stature[^.]*\. The head is[^.]*\./u, '');
+    expect(checkBrief(robot, { prompt: robotPrompt })).toEqual([]);
+    expect(() =>
+      parseBrief({ ...robot, figure: { canvasPixels: 2048, heightClass: 'tall' } }),
+    ).toThrow('robot figure');
   });
 
   test('accepts a consistent brief', () => {
@@ -99,8 +128,8 @@ describe('character prompt brief', () => {
 
   test('rejects a zone inside the safe margin', () => {
     const { brief, prompt } = delivery();
-    brief.props[0]!.zone = { x: [90, 99], y: [25, 44] };
-    expect(checkBrief(brief, { prompt }).join('\n')).toContain('pixel margin');
+    brief.props[0]!.zone = { x: [90, 99.5], y: [25, 44] };
+    expect(checkBrief(brief, { prompt }).join('\n')).toContain('canvas margin');
   });
 
   test('rejects a missing count phrase and a prop in the wrong hand', () => {
@@ -132,8 +161,8 @@ describe('character prompt brief', () => {
 
   test('rejects a brief that does not match the prompt text', () => {
     const { brief, prompt } = delivery();
-    const issues = checkBrief(brief, { prompt: prompt.replace('82 to 88', '90 to 99') });
-    expect(issues.join('\n')).toContain('82 to 88 percent');
+    const issues = checkBrief(brief, { prompt: prompt.replace('82 percent', '90 percent') });
+    expect(issues.join('\n')).toContain('82 percent');
   });
 });
 

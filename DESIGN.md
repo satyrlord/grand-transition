@@ -286,8 +286,8 @@ Before each new master, visually inspect at least three distinct usable web phot
 Use more when likeness is unclear, with varied views from a coherent chosen era.
 Do not count duplicates or resized copies. Correct conflicting private notes.
 Compare source images, small roster crops, setup portraits, and match compositions on the two player sides.
-Use the actual three-character artwork as the shared style reference only after product-owner acceptance.
-Do not impose an existing raster as the trial style reference.
+Use the accepted style master as the only style reference image for a new human character. It gives the drawing technique only.
+Do not use an installed character as a style reference.
 Preserve approved robot identity, composition, and props during reviewed contour corrections.
 
 Fixed moderators, scene architecture, furniture, fixtures, and props use the same broad cartoon rendering.
@@ -456,8 +456,9 @@ Do not use animal anatomy or hybrid anatomy in portraits, tokens, poses, states,
 Do not give a robot human anatomy.
 
 **The Adult Caricature Rule.** Default characters and scene figures stay clearly adult, and they use correct human or mechanical anatomy.
-New human characters use varied adult builds and the head-height band of the accepted style master.
+New human characters use varied adult builds, one of three height classes, and a usual or large head-size class.
 Exaggerate the researched likeness cues strongly, and keep them clearly drawn.
+Exaggerate a feature only when it identifies that character. Do not give the feature of one character to the roster.
 Keep approved robot proportions unchanged.
 Do not use child or chibi proportions or realistic portrait rendering.
 

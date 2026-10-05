@@ -7,10 +7,12 @@ direction.
 
 On 2026-10-05 the product owner rejected the installed human roster as
 inconsistent in face realism, detail, and contour weight. The owner selected
-the Algorithmic Prophet as the model for the roster.
+the installed Algorithmic Prophet drawing as the technique model.
 
-The style master is `character-style-master.png` in this folder. It is the
-only style reference image for a new human selection. The
+The style master is `character-style-master.png` in this folder. It is one
+sheet with three invented politicians: one short, one medium, and one tall.
+They are not game characters. The sheet is the only style reference image for
+a new human selection, and it gives the drawing technique only. The
 [style block](../../.github/skills/generate-character-openai/assets/style-block.txt)
 is the only style text. The product owner has not accepted a style master at
 this time. Do not generate a new human selection before that acceptance.
@@ -21,9 +23,15 @@ Record these values here after acceptance:
 | --- | --- |
 | Source hash (SHA-256) | Not recorded |
 | Canvas dimensions | Not recorded |
-| Visible figure height | Not recorded |
-| Head-height ratio | Not recorded |
-| Median outer contour width for each 1000 figure pixels | Not recorded |
+
+| Figure | Stature, percent of canvas height | Head-height ratio | Median outer contour width for each 1000 pixels of reference height |
+| --- | --- | --- | --- |
+| Short | Not recorded | Not recorded | Not recorded |
+| Medium | Not recorded | Not recorded | Not recorded |
+| Tall | Not recorded | Not recorded | Not recorded |
+
+The contour range is 2.80 through 3.20 for all playable characters, robots
+included. The reference height is 94 percent of the canvas height.
 
 The installed packages below are an inventory. They are not style references.
 The rendering exceptions that this document records for installed sources do

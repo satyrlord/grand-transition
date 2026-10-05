@@ -3,17 +3,20 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
-const styleBlockPath = path.resolve(scriptDirectory, '../assets/style-block.txt');
+// A human prompt uses the first block. A robot prompt uses the second block.
+const styleBlockPaths = ['style-block.txt', 'style-block-robot.txt'].map((name) =>
+  path.resolve(scriptDirectory, '../assets', name),
+);
 const photographPattern = /\b(?:photo|photograph)s?\b/iu;
 
 const squash = (text: string) => text.replace(/\s+/gu, ' ').trim();
 
-export function checkStyleBlock(prompt: string, styleBlock: string): string[] {
+export function checkStyleBlock(prompt: string, styleBlocks: string[]): string[] {
   const issues: string[] = [];
   const normalized = squash(prompt);
-  if (!normalized.includes(squash(styleBlock)))
+  if (styleBlocks.filter((block) => normalized.includes(squash(block))).length !== 1)
     issues.push(
-      'The style block is missing or changed. Copy assets/style-block.txt word for word.',
+      'The style block is missing or changed. Copy assets/style-block.txt for a human, or assets/style-block-robot.txt for a robot, word for word.',
     );
   if (photographPattern.test(normalized))
     issues.push('The prompt refers to a photograph. Send a written identity brief only.');
@@ -22,11 +25,11 @@ export function checkStyleBlock(prompt: string, styleBlock: string): string[] {
 
 async function main(promptPaths: string[]): Promise<void> {
   if (!promptPaths.length) throw new Error('Usage: check-style-block.ts <prompt-file>...');
-  const styleBlock = await readFile(styleBlockPath, 'utf8');
+  const styleBlocks = await Promise.all(styleBlockPaths.map((file) => readFile(file, 'utf8')));
   const failures: string[] = [];
   for (const promptPath of promptPaths) {
     const prompt = await readFile(path.resolve(promptPath), 'utf8');
-    for (const issue of checkStyleBlock(prompt, styleBlock))
+    for (const issue of checkStyleBlock(prompt, styleBlocks))
       failures.push(`${promptPath}: ${issue}`);
   }
   if (failures.length)

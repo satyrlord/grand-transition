@@ -31,7 +31,7 @@ For character skins and states, use flat editorial cartoons with clearly drawn f
 Use the strong caricature of the accepted style master, broad shapes, and two-tone shading.
 Preserve approved robot identity and construction during owner-authorized,
 reviewed contour corrections.
-Use the accepted three-character trial as the shared style reference after product-owner acceptance.
+Use the accepted style master as the only style reference image for a human character.
 
 Use neutral sRGB white balance and a color treatment without a grade.
 In the private generation brief, put the positive color controls before the style details.

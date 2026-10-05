@@ -433,7 +433,9 @@ It has a hexagonal cyan display, a tapered aluminum cabinet chassis, an empty
 dossier, a drawer with three tools, and an undercarriage with four wheels. The
 two skins keep the administrative function, the dry temperament, and the
 paperwork prop logic of the character. Each skin has its own original
-silhouette and face system.
+silhouette and face system. The two skins are oxidized, each with a different
+oxide. The default skin has patches of red-brown rust. The `alternate` skin
+has patches of blue-green oxide.
 
 The `schoolteacher` skin is a strict, female-coded communist robot
 schoolteacher, with the voice Microsoft Zira. It uses a rounded enamel
@@ -442,10 +444,15 @@ academic chassis panels. It also uses a ruler, an empty gradebook, a
 bell-shaped lower chassis, and a teaching platform with three wheels. Do not
 use an apron, frills, a maid cap, or a skirt.
 Do not use a vacuum, a cleaning tool, or a different domestic-service costume cue.
+The `schoolteacher` skin is well-maintained and polished, with no oxide. Its
+construction shows that it is an old model. Draw each oxide as a small number
+of flat hard-edged patches of one color, and draw polish as hard-edged
+highlight shapes. Do not use a texture, a gradient, or a glow.
 The installed `schoolteacher` delivery source has a bounded exterior RGB ink
 correction with unchanged alpha and composition. Eight reviewed outer edges and
-42 neighboring samples meet the 1.80-through-2.20 range. Its selection and
-other poses retain their approved source pixels.
+42 neighboring samples meet the earlier 1.80-through-2.20 range. Its selection
+and other poses retain their approved source pixels. The character art
+direction gives the range that replaced it on 2026-10-05.
 
 Each skin has one transparent square selection master of at least 1024 pixels per edge. It has
 five state masters with the usual AVIF/WebP variants: `thinking`,
@@ -665,7 +672,8 @@ Do not change the inventory to approve a rejected source.
 For new character work, apply the current character art direction and trial
 acceptance boundary below. Preserve unrelated shipping packages and approved
 robot features outside each reviewed contour correction. The initial trial uses researched identity briefs without old raster
-style inputs. After acceptance, the trial provides shared style references.
+style inputs. For new selections, the accepted style master is the only style
+reference image.
 A pose uses its accepted selection as its only image reference.
 
 ### Character readiness
@@ -704,7 +712,7 @@ cannot resolve and that blocks generation. A different interview or human
 sign-off is not necessary.
 
 Use one approved rendering direction for new art. Compare generated assets
-together at equal displayed figure height. Keep contour treatment, broad shapes,
+together at one canvas scale. Keep contour treatment, broad shapes,
 and cel shading consistent while varying adult proportions and face shapes.
 Do not treat a three-character trial as evidence that the full roster is complete.
 
@@ -822,26 +830,53 @@ pass the owner-set range and their replacement art is reviewed.
 
 On 2026-10-05 the product owner rejected the regenerated human roster as
 inconsistent. Its faces range from realistic to generic, and its contour
-weights differ. The owner selected the Algorithmic Prophet as the model for
-the roster. It is funny, strongly exaggerated, and easy to identify without a
-realistic face. These rules apply to each new or replaced human selection:
+weights differ. The owner selected the installed Algorithmic Prophet drawing
+as the technique model. It is funny, strongly exaggerated, and easy to
+identify without a realistic face. These rules apply to each new or replaced
+human selection:
 
-- One accepted style master, made from the model character, is the only style
-  reference image. Its path is `docs/assets/character-style-master.png`. The
-  earlier trial characters and the installed packages are not style references.
+- One accepted style master is the only style reference image. Its path is
+  `docs/assets/character-style-master.png`. It is one sheet with three
+  invented politicians: one short, one medium, and one tall. They have
+  different head sizes, noses, face shapes, and builds, and one drawing
+  technique. They are not game characters and not caricatures of real
+  persons. The earlier trial characters and the installed packages are not
+  style references.
+- The style master gives the drawing technique only: contour weight, flat
+  color, two-tone shading, line-drawn faces, and caricature strength. No
+  face, nose, head size, height, build, costume, or pose transfers from it.
+  The Algorithmic Prophet is a usual roster character. Its large nose, large
+  head, short stature, and tall hat belong to that character only.
 - One fixed style block is the only style text in a prompt. The
   `generate-character-openai` skill keeps it. Do not write style text for one
   character.
 - A generation request contains no photograph and no name of a real person.
-  The agent changes the visually researched appearance into a written
-  caricature brief. The brief names two or three identity features and
-  exaggerates them strongly.
-- Each selection uses the head-height band and the figure height of the style
-  master. Vary face shape, build, height, silhouette, costume, and props.
-  Do not vary caricature strength, contour weight, or shading.
+  The agent examines photographs of the subject and changes the appearance
+  into a written caricature brief. The brief names two or three identity
+  features and exaggerates them strongly. It gives the shape and the size of
+  the nose for each character. Exaggerate a feature only when the research
+  shows that it identifies that subject.
+- Each brief gives a height class from the researched real height. The
+  stature is the distance from the top of the hair or the bare scalp to the
+  shoe soles: 82 percent of the canvas height for short, 88 percent for
+  medium, and 94 percent for tall. Accept a difference of 2 points. The shoe
+  soles are at 99 percent of the canvas height. Headwear adds to the stature
+  and does not change the class. Keep 1 percent of the canvas clear above the
+  highest part. A tall character with headwear thus fills 98 percent of the
+  canvas height.
+- Each brief gives a head-size class. The head height, from the chin to the
+  top of the hair or the bare scalp, is 19 through 22 percent of the stature
+  for the usual class and 26 through 29 percent for the large class. Use the
+  large class only when the character study records it.
+- Vary face shape, nose, build, height class, head size, silhouette, costume,
+  and props. Do not vary caricature strength, contour weight, or shading.
 - Before acceptance, compare each candidate with the style master and the
-  latest accepted selections on one sheet at equal figure height. Measure its
-  head-height ratio and its contour width.
+  latest accepted selections on one sheet at one canvas scale. Measure its
+  stature, its head-height ratio, and its contour width. Reject a candidate
+  that has a feature of a style master figure that its brief did not give.
+- Before acceptance, compare each candidate with the research photographs of
+  its subject on a resemblance sheet in the temporary folder. The product
+  owner decides the resemblance.
 - A rendering defect causes rejection and a new generation. Do not record it
   as an advisory. A rendering exception that is recorded for an installed
   source does not apply to new art.
@@ -850,23 +885,35 @@ Do not generate a new human selection before the product owner accepts the
 style master. The installed human packages stay until an accepted replacement
 package is complete.
 
-For new or corrected character selections and poses, target an outer silhouette
-contour width of 2 source pixels per 1000 pixels of the selection's visible
-figure height. Accept widths from 1.80 through 2.20 pixels per 1000 pixels of
-that height. Measure visible height from the near-opaque subject, not the
-square canvas. When a pose and its selection have the same source canvas size,
-use the same nominal source-pixel width. If their canvas sizes differ, scale
-the width by the pose-to-selection canvas-width ratio. Do not make a crouched
-pose's contour thinner because its visible figure is shorter. Compare
-characters at equal displayed figure height and poses at a fixed canvas scale.
-Retain each approved Government AI robot source until a reviewed replacement
-passes the contour range and is installed.
+On 2026-10-05 the product owner set one outer silhouette contour range for all
+playable characters: the human roster, the Algorithmic Prophet, and the
+Government AI robots. Target 3 source pixels per 1000 pixels of the reference
+height. Accept widths from 2.80 through 3.20. The reference height is 94
+percent of the source canvas height, which is the stature of the tall height
+class. On a canvas of 1254 pixels, the target is 3.5 source pixels and the
+range is 3.3 through 3.8 source pixels. Do not divide by the height of the
+figure. A short character, a tall character, and a crouched pose have the
+same contour width in source pixels. When a pose and its selection have
+different canvas sizes, scale the width by the pose-to-selection canvas-width
+ratio. Compare characters and poses at one canvas scale.
+
+This range replaces the earlier range of 1.80 through 2.20 for each 1000
+pixels of visible figure height. Each installed package, the three robot
+packages included, gets a regenerated replacement that meets the new range.
+A source that met the earlier range does not meet the new range. A robot
+replacement keeps the approved identity and construction and uses the approved
+robot selection as its only image reference. It uses the fixed robot style
+block of the `generate-character-openai` skill as its only style text. It has
+no height class and no head-size class, and it keeps the figure height of its
+approved selection. Each robot pose uses the accepted new selection as its
+only image reference. Retain each installed source
+until its reviewed replacement passes the contour range and is installed.
 
 Each fictional archetype has a distinct silhouette, face shape, costume,
 gesture rhythm, and prop system. Keep anatomy coherent and recognizably adult.
-Use the head-height band of the accepted style master for each human
-selection. Exaggerate the features that give the character its identity and
-its comic expression. Preserve space for hands, props, and poses.
+Use the height class and the head-size class of the character study for each
+human selection. Exaggerate the features that give the character its identity
+and its comic expression. Preserve space for hands, props, and poses.
 
 Before each new selection master, confirm its private inspiration mapping.
 Open reliable, clearly labeled web sources and visually inspect at least three
@@ -950,12 +997,14 @@ requirement or a substitute for image review.
 A new selection with changed proportions needs matching state art before it
 replaces the shipping package. Keep the existing shipping selection and poses
 until that package is complete and checked. Replace approved robot art only with
-a reviewed owner-authorized contour correction.
+a reviewed owner-authorized contour correction or with the owner-authorized
+regeneration at the contour range of 2026-10-05.
 Retain stable character and skin identifiers, gameplay data, and unaffected
 assets. The three-character trial does not authorize bulk roster replacement
 before artwork acceptance.
 
-The Algorithmic Prophet keeps its small plain gray wizard hat. Targeted edits
+The Algorithmic Prophet keeps its plain gray wizard hat. A new selection draws
+the hat tall, because the character is short and wears it to look taller. Targeted edits
 preserve the accepted identity, clothing, gesture, and other unchanged features.
 Existing source descriptions remain facts about those sources. They do not
 force a new generation to reuse the same model, resolution, or old proportions.
@@ -1923,8 +1972,10 @@ reaction, or a character state is replaced or updated, the layout shift is
   runtime checks. Each human selection after 2026-10-05 also uses the accepted
   style master as its only style reference image and the fixed style block as
   its only style text. Its request contains no photograph. Its recorded
-  head-height ratio and contour width are in their ranges. Its comparison sheet
-  with the style master shows no rendering defect.
+  stature, head-height ratio, and contour width are in their ranges. Its
+  comparison sheet with the style master shows no rendering defect and no
+  feature that came from a style master figure. Its resemblance sheet has the
+  acceptance of the product owner.
 - **AC-023-17:** The asset color guard decodes each supported shipping raster in
   sRGB. It
   rejects a broad yellow cast over muted or neutral pixels. It accepts local
