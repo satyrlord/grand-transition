@@ -21,6 +21,7 @@ export type CloseQuoteArchiveEvent = CustomEvent<Readonly<{ type: 'close-quote-a
 const emptyArchive: QuoteArchiveSnapshot = Object.freeze({
   cardIds: [],
   bestGuess: null,
+  revealedMatchIds: [],
   persistenceFailure: null,
 });
 

@@ -19,6 +19,7 @@ export type QuoteArchiveFailureCode =
 export type QuoteArchiveSnapshot = Readonly<{
   cardIds: readonly string[];
   bestGuess: QuoteGuessScore | null;
+  revealedMatchIds: readonly string[];
   persistenceFailure: QuoteArchiveFailureCode | null;
 }>;
 
@@ -56,6 +57,7 @@ export class QuoteArchiveRepository {
     return Object.freeze({
       cardIds: this.archive.cardIds,
       bestGuess: this.archive.bestGuess,
+      revealedMatchIds: this.archive.revealedMatchIds,
       persistenceFailure: this.persistenceFailure,
     });
   }
@@ -76,6 +78,15 @@ export class QuoteArchiveRepository {
       score.correct > best.correct ||
       (score.correct === best.correct && score.total < best.total);
     return better ? this.replace({ ...this.archive, bestGuess: score }) : this.snapshot();
+  }
+
+  /** Records that the player saw the receipts of a match, so its guess is closed. */
+  revealMatch(matchId: string): QuoteArchiveSnapshot {
+    if (this.archive.revealedMatchIds.includes(matchId)) return this.snapshot();
+    return this.replace({
+      ...this.archive,
+      revealedMatchIds: [...this.archive.revealedMatchIds, matchId],
+    });
   }
 
   /** Records a background storage failure that the port reported later. */

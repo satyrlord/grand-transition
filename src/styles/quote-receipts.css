@@ -101,7 +101,7 @@
     background: var(--broadcast-oxblood-bright);
   }
 
-  .quote-receipts-dialog :is(button, .quote-receipts-list):focus-visible,
+  .quote-receipts-dialog :is(button, summary, .quote-receipts-list):focus-visible,
   .quote-archive-dialog :is(button, .quote-archive-list):focus-visible,
   .match-history-receipts:focus-visible,
   .round-review-receipts:focus-visible {
@@ -323,6 +323,50 @@
 
   .quote-receipts-list {
     padding-block-start: 0.2rem;
+  }
+
+  /* The result of a guess: its phrases, and then the closed record of the match. */
+  .quote-guess-results {
+    margin-block-start: 0;
+  }
+
+  .quote-receipts-full {
+    margin-block-start: 1rem;
+    border-block-start: 1px solid rgb(228 193 125 / 42%);
+  }
+
+  .quote-receipts-full summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    min-height: 2.75rem;
+    color: var(--broadcast-brass-light);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .quote-receipts-full summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .quote-receipts-full summary::before {
+    content: '+';
+    text-decoration: none;
+  }
+
+  .quote-receipts-full[open] summary::before {
+    content: '2';
+  }
+
+  .quote-receipts-full summary:hover {
+    color: var(--broadcast-paper-light);
   }
 
   .quote-receipts-round + .quote-receipts-round {

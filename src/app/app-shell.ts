@@ -68,7 +68,10 @@ import {
 } from './screens/title-screen.ts';
 import { type CloseMatchHistoryEvent } from './screens/match-history-modal.ts';
 import type { CloseQuoteArchiveEvent } from './screens/quote-archive-modal.ts';
-import type { QuoteGuessScoredEvent } from './screens/quote-receipts-panel.ts';
+import type {
+  QuoteGuessScoredEvent,
+  QuoteReceiptsRevealedEvent,
+} from './screens/quote-receipts-panel.ts';
 import {
   type CloseSettingsEvent,
   type DismissSettingsNoticeEvent,
@@ -531,8 +534,13 @@ export class GrandTransitionApp extends LitElement {
           liveMatchState?.setup.mode === 'ai' && liveMatchState.activePlayerId === 'player-one',
         )}
         .completedMatch=${this.completedMatchLog()}
+        .completedMatchId=${this.matchId}
+        .quoteGuessLocked=${
+          this.matchId !== null && this.quoteArchive.revealedMatchIds.includes(this.matchId)
+        }
         @match-command=${this.reduceMatchCommand}
         @quote-guess-scored=${this.recordQuoteGuess}
+        @quote-receipts-revealed=${this.recordQuoteReveal}
         @return-to-main-menu=${this.returnToMainMenu}
         @pause-match=${this.pauseMatch}
         @resume-match=${this.resumeMatch}
@@ -586,6 +594,7 @@ export class GrandTransitionApp extends LitElement {
           @show-quote-archive=${this.showQuoteArchive}
           @close-quote-archive=${this.closeQuoteArchive}
           @quote-guess-scored=${this.recordQuoteGuess}
+          @quote-receipts-revealed=${this.recordQuoteReveal}
           @show-settings=${this.showSettings}
           @close-settings=${this.closeSettings}
           @settings-change=${this.changeSettings}
@@ -685,6 +694,12 @@ export class GrandTransitionApp extends LitElement {
   private readonly recordQuoteGuess = (event: QuoteGuessScoredEvent): void => {
     event.stopPropagation();
     this.quoteArchive = this.quoteArchiveRepository.recordGuess(event.detail);
+  };
+
+  // The receipts give each answer, so the guess of this match stays closed.
+  private readonly recordQuoteReveal = (event: QuoteReceiptsRevealedEvent): void => {
+    event.stopPropagation();
+    this.quoteArchive = this.quoteArchiveRepository.revealMatch(event.detail.matchId);
   };
 
   private readonly showSettings = (event: ShowSettingsEvent): void => {

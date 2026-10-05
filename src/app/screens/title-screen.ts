@@ -72,7 +72,12 @@ export class GrandTransitionTitle extends LitElement {
     this.historyEntries = [];
     this.historyOpen = false;
     this.historyPersistenceFailure = null;
-    this.quoteArchive = { cardIds: [], bestGuess: null, persistenceFailure: null };
+    this.quoteArchive = {
+      cardIds: [],
+      bestGuess: null,
+      revealedMatchIds: [],
+      persistenceFailure: null,
+    };
     this.quoteArchiveOpen = false;
     this.settings = defaultSettings;
     this.settingsOpen = false;
@@ -222,6 +227,7 @@ export class GrandTransitionTitle extends LitElement {
             ? html`<grand-transition-match-history
               .entries=${this.historyEntries}
               .persistenceFailure=${this.historyPersistenceFailure}
+              .revealedMatchIds=${this.quoteArchive.revealedMatchIds}
             ></grand-transition-match-history>`
             : nothing
         }

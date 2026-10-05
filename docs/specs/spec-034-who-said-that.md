@@ -151,7 +151,18 @@ The selection uses the match seed, so it is deterministic.
 The panel does not give the number of real phrases before the guess.
 For each phrase, the player selects **Real quote**, **Adapted**, or **Invented**.
 `real-slogan` counts as **Real quote**.
-Then the panel shows the receipts, marks each guess correct or not correct, and gives the score, for example **3 of 5**.
+Then the panel gives the score, for example **3 of 5**.
+Below the score, it shows the receipt of each phrase of the guess only, and it marks each guess correct or not correct.
+Below these receipts is a closed section with a **Full record** link.
+The link opens the section, which lists each committed sentence of the match with its receipts, as the panel does without a guess.
+The section stays closed until the player selects the link, and its receipts have no guess mark.
+When the player selects **Show receipts** and makes no guess, the panel shows the full list immediately.
+
+The receipts give each answer, so a match offers its guess one time only.
+When the panel shows the receipts of a match, after a guess or after **Show receipts**, the guess of that match closes.
+After that, the panel of that match opens on the full list of receipts, with no **Guess first** action and no score.
+This applies to the panel from Victory and to the panel from match history, and it stays after a reload.
+A guess that the player starts and does not complete shows no answer, so it does not close the guess.
 
 In hotseat, the two players make one shared guess.
 The best guess score is the score with the most correct answers.
@@ -172,7 +183,8 @@ Those source counts exclude `generic-phrase` records. Ordinary-language receipts
 show their label without source context.
 
 Store the archive in the Milestone 020 persistence as a new document with its own codec and schema version.
-It contains only card IDs and the best guess score.
+It contains only card IDs, the best guess score, and the IDs of the matches whose guess is closed.
+A stored archive that has no list of match IDs is an archive with no closed guess.
 A reset of stored data also clears it.
 A match that does not complete does not add records.
 
@@ -189,6 +201,10 @@ A match that does not complete does not add records.
 - **AC-034-04:** An `adapted-quote` card never shows **Real quote**.
   An `exact-quote` card in a language that is not its source language shows the translation label.
 - **AC-034-05:** The guess selects the same phrases for the same seed, it scores each answer correctly, and it does not change the match record or the replay.
+  After the guess, the panel shows only the receipts of the guessed phrases, and the full list is in a closed **Full record** section.
+- **AC-034-10:** A match offers its guess one time only.
+  After the panel shows the receipts of a match, a new panel of that match shows no guess, also after a reload.
+  A reset of stored data opens the guess again.
 - **AC-034-06:** The archive adds each committed record after a completed match, and it survives a reload.
   A reset clears it, and a match that is not complete does not change it.
 - **AC-034-07:** The panel and the archive pass the supported landscape viewport matrix, keyboard navigation, and forced colors, in English and in Romanian.
@@ -213,6 +229,7 @@ Do not use a decoration that hides the text.
   The unit suite also checks the complete-catalog percentage of AC-034-09.
   Private research records the editorial and search evidence for that criterion.
 - `tests/unit/quote-receipts.test.ts` and `tests/browser/quote-receipts.browser.test.ts` do checks of AC-034-03, AC-034-04, and AC-034-05.
+- `tests/unit/quote-archive.test.ts` and `tests/browser/quote-receipts.browser.test.ts` do checks of AC-034-10.
 - `tests/unit/quote-archive.test.ts`, `tests/unit/match-coordinator.test.ts`, and the browser test do checks of AC-034-06.
 - `tests/browser/layout-regions.browser.test.ts` and `e2e/quote-reveals.spec.ts` do checks of AC-034-07.
 - `e2e/quote-reveals.spec.ts` does the check of AC-034-02 on the built `dist/` output.

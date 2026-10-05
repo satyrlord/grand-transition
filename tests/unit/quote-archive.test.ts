@@ -34,13 +34,19 @@ function failingStorage(code: string, operation: 'read' | 'write' = 'write'): St
 }
 
 describe('quote archive codec', () => {
-  test('holds only the schema version, the card IDs, and the best guess', () => {
+  test('holds only the schema version, the card IDs, the best guess, and the revealed matches', () => {
     expect(quoteArchiveSchemaVersion).toBe(1);
-    expect(emptyQuoteArchive).toEqual({ schemaVersion: 1, cardIds: [], bestGuess: null });
+    expect(emptyQuoteArchive).toEqual({
+      schemaVersion: 1,
+      cardIds: [],
+      bestGuess: null,
+      revealedMatchIds: [],
+    });
     const archive = {
       schemaVersion: 1 as const,
       cardIds: ['common-ending-008', 'marble-diplomat-modifier-001'],
       bestGuess: { correct: 3, total: 5 },
+      revealedMatchIds: ['3f2b8a52-8d0e-4f0b-9a6e-0c5f6f1f7d11', 'match-7-1'],
     };
     const serialized = encodeQuoteArchive(archive);
     expect(serialized).toBe(`${JSON.stringify(archive, null, 2)}\n`);
@@ -77,15 +83,38 @@ describe('quote archive codec', () => {
     ],
     ['a guess with a name', stored({ bestGuess: { correct: 1, total: 2, by: 'x' } }), 'bestGuess'],
     ['a missing best guess', JSON.stringify({ schemaVersion: 1, cardIds: [] }), 'bestGuess'],
+    [
+      'a match that is revealed two times',
+      stored({ revealedMatchIds: ['match-a', 'match-a'] }),
+      'revealedMatchIds',
+    ],
+    ['a revealed match with no ID', stored({ revealedMatchIds: [''] }), 'revealedMatchIds.0'],
     ['text that is not JSON', '{', '$'],
     ['a list', '[]', '$'],
   ])('rejects %s at its path', (_name, serialized, path) => {
     expect(decodeQuoteArchive(serialized)).toEqual({ ok: false, code: 'invalid-data', path });
   });
 
+  test('reads an archive from before the revealed matches as an archive with none', () => {
+    expect(decodeQuoteArchive(stored())).toEqual({
+      ok: true,
+      value: {
+        schemaVersion: 1,
+        cardIds: ['common-ending-008'],
+        bestGuess: { correct: 2, total: 3 },
+        revealedMatchIds: [],
+      },
+    });
+  });
+
   test('does not encode an invalid archive', () => {
     expect(() =>
-      encodeQuoteArchive({ schemaVersion: 1, cardIds: ['a', 'a'], bestGuess: null }),
+      encodeQuoteArchive({
+        schemaVersion: 1,
+        cardIds: ['a', 'a'],
+        bestGuess: null,
+        revealedMatchIds: [],
+      }),
     ).toThrow(/cardIds/u);
   });
 });
@@ -97,6 +126,7 @@ describe('quote archive repository (AC-034-06)', () => {
     expect(repository.snapshot()).toEqual({
       cardIds: [],
       bestGuess: null,
+      revealedMatchIds: [],
       persistenceFailure: null,
     });
     expect(repository.addCards(['card-b', 'card-a', 'card-b']).cardIds).toEqual([
@@ -118,6 +148,7 @@ describe('quote archive repository (AC-034-06)', () => {
     expect(new QuoteArchiveRepository(storage).snapshot()).toEqual({
       cardIds: ['card-a', 'card-b'],
       bestGuess: { correct: 1, total: 2 },
+      revealedMatchIds: [],
       persistenceFailure: null,
     });
   });
@@ -165,6 +196,22 @@ describe('quote archive repository (AC-034-06)', () => {
     });
   });
 
+  test('closes the guess of a match one time, and keeps it closed after a reload', () => {
+    const storage = createMemoryStorage();
+    const write = vi.spyOn(storage, 'write');
+    const repository = new QuoteArchiveRepository(storage);
+    expect(repository.revealMatch('match-a').revealedMatchIds).toEqual(['match-a']);
+    expect(repository.revealMatch('match-b').revealedMatchIds).toEqual(['match-a', 'match-b']);
+    expect(repository.revealMatch('match-a').revealedMatchIds).toEqual(['match-a', 'match-b']);
+    expect(write).toHaveBeenCalledTimes(2);
+    expect(new QuoteArchiveRepository(storage).snapshot().revealedMatchIds).toEqual([
+      'match-a',
+      'match-b',
+    ]);
+    storage.remove(quoteArchiveStorageKey);
+    expect(new QuoteArchiveRepository(storage).snapshot().revealedMatchIds).toEqual([]);
+  });
+
   test.each(['storage-quota', 'storage-security', 'storage-unavailable'])(
     'keeps new cards for the page session after a %s write failure',
     (code) => {
@@ -172,6 +219,7 @@ describe('quote archive repository (AC-034-06)', () => {
       expect(repository.addCards(['card-a'])).toEqual({
         cardIds: ['card-a'],
         bestGuess: null,
+        revealedMatchIds: [],
         persistenceFailure: code,
       });
       expect(repository.addCards(['card-b']).cardIds).toEqual(['card-a', 'card-b']);
@@ -193,6 +241,7 @@ describe('quote archive repository (AC-034-06)', () => {
     expect(repository.snapshot()).toEqual({
       cardIds: [],
       bestGuess: null,
+      revealedMatchIds: [],
       persistenceFailure: code,
     });
     expect(storage.read(quoteArchiveStorageKey)).toEqual({ ok: true, value: bytes });

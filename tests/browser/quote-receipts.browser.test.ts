@@ -472,18 +472,110 @@ describe('Real-or-invented guess (AC-034-05)', () => {
       expect(mark.dataset.guessResult).toBe(index < 2 ? 'correct' : 'not-correct');
       expect(text(mark)).toMatch(index < 2 ? / · Correct$/u : / · Not correct$/u);
     }
-    // A phrase that was not in the guess has no mark.
+    // The result shows only the phrases of the guess. The full record is closed.
+    expect(
+      [...panel.querySelectorAll<HTMLElement>('.quote-guess-results > .quote-receipt')].map(
+        (receipt) => receipt.dataset.receiptCard,
+      ),
+    ).toEqual(cards);
+    const full = panel.querySelector<HTMLDetailsElement>('details.quote-receipts-full')!;
+    const summary = full.querySelector('summary')!;
+    expect(text(summary)).toBe('Full record');
+    expect(full.open).toBe(false);
+    const record = [...full.querySelectorAll<HTMLElement>('.quote-receipt')];
+    expect(record.length).toBeGreaterThan(0);
+    for (const receipt of record) expect(receipt.checkVisibility()).toBe(false);
+    expect(
+      [...panel.querySelectorAll<HTMLElement>('.quote-receipt')].filter((receipt) =>
+        receipt.checkVisibility(),
+      ),
+    ).toHaveLength(cards.length);
+
+    // The Full record link opens the receipts of each committed phrase.
+    summary.click();
+    await panel.updateComplete;
+    expect(full.open).toBe(true);
+    const committed = log.sentences.flatMap(({ phrases }) => phrases);
+    expect(record).toHaveLength(committed.filter(({ phraseId }) => reveals.has(phraseId)).length);
+    for (const receipt of record) expect(receipt.checkVisibility()).toBe(true);
+    expect(full.querySelectorAll('.quote-receipts-sentence')).toHaveLength(log.sentences.length);
+    expect(full.querySelector('.quote-receipt-guess')).toBeNull();
     const notGuessed = revealedCardIds(log.sentences, reveals).filter(
       (cardId) => !cards.includes(cardId),
     );
     expect(notGuessed.length).toBeGreaterThan(0);
     for (const cardId of notGuessed) {
-      expect(
-        panel.querySelector(`[data-receipt-card="${cardId}"] .quote-receipt-guess`),
-      ).toBeNull();
+      expect(full.querySelector(`[data-receipt-card="${cardId}"]`)).not.toBeNull();
     }
+
+    // The link is in the keyboard order of the panel.
+    summary.focus();
+    summary.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }),
+    );
+    expect(document.activeElement).toBe(panel.querySelector('.quote-receipts-close'));
     // The guess does not change the record of the match.
     expect(JSON.stringify(log)).toBe(before);
+  });
+
+  test('offers the guess of a match one time only', async () => {
+    const log = completedMatch().matchLog;
+    const { reveals } = fixtureReveals(log);
+    const mount = async (guessLocked: boolean, matchId: string | null = 'match-a') => {
+      document.body.innerHTML =
+        '<grand-transition-quote-receipts></grand-transition-quote-receipts>';
+      const panel = document.querySelector(
+        'grand-transition-quote-receipts',
+      ) as GrandTransitionQuoteReceipts;
+      const revealed = vi.fn();
+      panel.addEventListener('quote-receipts-revealed', (event) => revealed(event.detail));
+      panel.match = log;
+      panel.matchId = matchId;
+      panel.guessLocked = guessLocked;
+      panel.reveals = reveals;
+      await panel.updateComplete;
+      return { panel, revealed };
+    };
+
+    // A completed guess closes the guess of its match.
+    let { panel, revealed } = await mount(false);
+    button(panel, 'Guess first').click();
+    await panel.updateComplete;
+    expect(revealed).not.toHaveBeenCalled();
+    for (const item of panel.querySelectorAll('[data-guess-card]')) {
+      item.querySelector<HTMLInputElement>('input')!.click();
+    }
+    await panel.updateComplete;
+    button(panel, 'Check my guesses').click();
+    await panel.updateComplete;
+    expect(revealed).toHaveBeenCalledExactlyOnceWith({ matchId: 'match-a' });
+    // The host closes the guess, and the result of the open panel stays.
+    panel.guessLocked = true;
+    await panel.updateComplete;
+    expect(panel.querySelector('.quote-guess-score')).not.toBeNull();
+
+    // The receipts give each answer, so they close the guess also.
+    ({ panel, revealed } = await mount(false));
+    button(panel, 'Show receipts').click();
+    await panel.updateComplete;
+    expect(revealed).toHaveBeenCalledExactlyOnceWith({ matchId: 'match-a' });
+
+    // The panel of a closed guess opens on the receipts, with no gate and no guess.
+    ({ panel, revealed } = await mount(true));
+    expect(panel.querySelector('[data-receipts-stage]')?.getAttribute('data-receipts-stage')).toBe(
+      'receipts',
+    );
+    expect(panel.querySelector('.quote-receipts-gate')).toBeNull();
+    expect(panel.querySelector('.quote-guess')).toBeNull();
+    expect(panel.querySelector('.quote-guess-score')).toBeNull();
+    expect(panel.querySelector('.quote-receipt')).not.toBeNull();
+    expect(revealed).not.toHaveBeenCalled();
+
+    // A panel with no stored match has no guess to close.
+    ({ panel, revealed } = await mount(false, null));
+    button(panel, 'Show receipts').click();
+    await panel.updateComplete;
+    expect(revealed).not.toHaveBeenCalled();
   });
 
   test('tells the two hotseat players to make one guess', async () => {
@@ -506,7 +598,12 @@ describe('Real-or-invented guess (AC-034-05)', () => {
 
 describe('quote archive (AC-034-06)', () => {
   test('reads a stored archive, and rejects each document that is not an archive', () => {
-    const archive = { schemaVersion: 1 as const, cardIds: ['a-card'], bestGuess: null };
+    const archive = {
+      schemaVersion: 1 as const,
+      cardIds: ['a-card'],
+      bestGuess: null,
+      revealedMatchIds: [],
+    };
     expect(decodeQuoteArchive(encodeQuoteArchive(archive))).toEqual({ ok: true, value: archive });
     expect(decodeQuoteArchive(JSON.stringify({ ...archive, schemaVersion: 2 }))).toEqual({
       ok: false,
@@ -557,6 +654,7 @@ describe('quote archive (AC-034-06)', () => {
     archive.archive = {
       cardIds: [ids.exactRomanian!, 'a-card-with-no-record', ids.invented!],
       bestGuess: { correct: 3, total: 5 },
+      revealedMatchIds: [],
       persistenceFailure: null,
     };
     await archive.updateComplete;
@@ -614,7 +712,12 @@ describe('quote archive (AC-034-06)', () => {
     );
     expect(text(archive.querySelector('[data-archive-fact="best-guess"]'))).toBe('No guess yet');
 
-    archive.archive = { cardIds: [], bestGuess: null, persistenceFailure: 'storage-quota' };
+    archive.archive = {
+      cardIds: [],
+      bestGuess: null,
+      revealedMatchIds: [],
+      persistenceFailure: 'storage-quota',
+    };
     await archive.updateComplete;
     expect(text(archive.querySelector('.quote-archive-notice'))).toContain(
       'The quote archive cannot use persistent storage.',
@@ -631,6 +734,7 @@ describe('quote archive (AC-034-06)', () => {
         schemaVersion: 1,
         cardIds: saved,
         bestGuess: { correct: 1, total: 2 },
+        revealedMatchIds: [],
       }),
     );
     await reloadStoredData();
@@ -675,6 +779,24 @@ describe('quote archive (AC-034-06)', () => {
         schemaVersion: 1,
         cardIds: saved,
         bestGuess: { correct: 2, total: 2 },
+        revealedMatchIds: [],
+      }),
+    );
+
+    // The receipts of a stored match close its guess in the archive document.
+    app.querySelector('grand-transition-title')!.dispatchEvent(
+      new CustomEvent('quote-receipts-revealed', {
+        bubbles: true,
+        detail: { matchId: 'stored-match' },
+      }),
+    );
+    await app.updateComplete;
+    await vi.waitFor(async () =>
+      expect(JSON.parse((await storedDocument(quoteArchiveStorageKey))!)).toEqual({
+        schemaVersion: 1,
+        cardIds: saved,
+        bestGuess: { correct: 2, total: 2 },
+        revealedMatchIds: ['stored-match'],
       }),
     );
 
@@ -813,5 +935,42 @@ describe('receipts from Victory and from match history', () => {
     await history.updateComplete;
     await vi.waitFor(() => expect(document.activeElement).toBe(actions()[1]));
     expect(history.querySelector('.match-history-dialog')).not.toBeNull();
+
+    // A stored match offers its guess until the player sees its receipts.
+    const revealed = vi.fn();
+    history.addEventListener('quote-receipts-revealed', (event) => revealed(event.detail));
+    const open = async () => {
+      actions()[1]!.click();
+      await history.updateComplete;
+      const opened = history.querySelector(
+        'grand-transition-quote-receipts',
+      ) as GrandTransitionQuoteReceipts;
+      opened.reveals = fixtureReveals(entries[1]!.matchLog).reveals;
+      await opened.updateComplete;
+      return opened;
+    };
+    let reopened = await open();
+    button(reopened, 'Show receipts').click();
+    await reopened.updateComplete;
+    expect(revealed).toHaveBeenCalledExactlyOnceWith({ matchId: entries[1]!.id });
+    history.revealedMatchIds = [entries[1]!.id];
+    reopened.querySelector<HTMLButtonElement>('.quote-receipts-close')!.click();
+    await history.updateComplete;
+
+    reopened = await open();
+    expect(reopened.querySelector('.quote-receipts-gate')).toBeNull();
+    expect(reopened.querySelector('.quote-receipt')).not.toBeNull();
+    reopened.querySelector<HTMLButtonElement>('.quote-receipts-close')!.click();
+    await history.updateComplete;
+
+    // The guess of each other stored match stays open.
+    actions()[0]!.click();
+    await history.updateComplete;
+    const other = history.querySelector(
+      'grand-transition-quote-receipts',
+    ) as GrandTransitionQuoteReceipts;
+    other.reveals = fixtureReveals(entries[0]!.matchLog).reveals;
+    await other.updateComplete;
+    expect(other.querySelector('.quote-receipts-gate')).not.toBeNull();
   });
 });

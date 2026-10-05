@@ -29,9 +29,11 @@ import type { MatchLogDocument } from '../../persistence/codecs/replay-codec.ts'
 const elementName = 'grand-transition-quote-receipts';
 export const closeQuoteReceiptsEventName = 'close-quote-receipts';
 export const quoteGuessScoredEventName = 'quote-guess-scored';
+export const quoteReceiptsRevealedEventName = 'quote-receipts-revealed';
 
 export type CloseQuoteReceiptsEvent = CustomEvent<Readonly<{ type: 'close-quote-receipts' }>>;
 export type QuoteGuessScoredEvent = CustomEvent<QuoteGuessScore>;
+export type QuoteReceiptsRevealedEvent = CustomEvent<Readonly<{ matchId: string }>>;
 
 type Stage = 'gate' | 'guess' | 'receipts';
 type Sentence = MatchLogDocument['sentences'][number];
@@ -47,6 +49,8 @@ const guessAnswers = ['real', 'adapted', 'invented'] as const;
 export class GrandTransitionQuoteReceipts extends LitElement {
   static properties = {
     match: { attribute: false },
+    matchId: { attribute: false },
+    guessLocked: { attribute: false },
     reveals: { attribute: false },
     stage: { state: true },
     answers: { state: true },
@@ -55,6 +59,10 @@ export class GrandTransitionQuoteReceipts extends LitElement {
   };
 
   declare match: MatchLogDocument | null;
+  /** The stored ID of the match. The host records it when the receipts show. */
+  declare matchId: string | null;
+  /** The player saw the receipts of this match before, so it has no guess. */
+  declare guessLocked: boolean;
   declare reveals: QuoteRevealIndex;
   declare private stage: Stage;
   declare private answers: Readonly<Record<string, QuoteGuessAnswer>>;
@@ -69,6 +77,8 @@ export class GrandTransitionQuoteReceipts extends LitElement {
     super();
     updateWhenLocaleChanges(this);
     this.match = null;
+    this.matchId = null;
+    this.guessLocked = false;
     this.reveals = quoteReveals;
     this.stage = 'receipts';
     this.answers = {};
@@ -96,7 +106,8 @@ export class GrandTransitionQuoteReceipts extends LitElement {
     this.guessCardIds = match
       ? selectQuoteGuessCards(this.sentences, this.eligibleReveals, match.seed)
       : [];
-    this.stage = this.guessCardIds.length > 0 ? 'gate' : 'receipts';
+    // The receipts give each answer, so a match offers its guess one time only.
+    this.stage = this.guessCardIds.length > 0 && !this.guessLocked ? 'gate' : 'receipts';
     this.answers = {};
     this.score = null;
     this.answerMissing = false;
@@ -189,7 +200,9 @@ export class GrandTransitionQuoteReceipts extends LitElement {
             (cardId, index) => html`
               <li>
                 <fieldset class="quote-guess-item" data-guess-card=${cardId}>
-                  <legend class="quote-card-text" lang=${language}>${this.cardText(cardId)}</legend>
+                  <legend class="quote-card-text" lang=${language}>
+                    ${this.committedPhrase(cardId).text}
+                  </legend>
                   <div class="quote-guess-options">
                     ${guessAnswers.map(
                       (answer) => html`
@@ -222,26 +235,9 @@ export class GrandTransitionQuoteReceipts extends LitElement {
   }
 
   private renderReceipts(match: MatchLogDocument): TemplateResult {
-    const rounds = [...new Set(this.sentences.map(({ round }) => round))];
+    if (this.score) return this.renderGuessResult(match, this.score);
     return html`
       <div class="quote-receipts-body">
-        ${
-          this.score
-            ? html`<p
-                class="quote-guess-score"
-                data-layout-region="receipts-score"
-                role="status"
-                tabindex="-1"
-              >
-                <span>${msg('Your score')}</span>
-                <strong>
-                  ${msg(
-                    str`${formatInterfaceNumber(this.score.correct)} of ${formatInterfaceNumber(this.score.total)}`,
-                  )}
-                </strong>
-              </p>`
-            : nothing
-        }
         ${
           this.receiptCardIds.every(
             (cardId) => !isSourcedQuoteReveal(this.eligibleReveals.get(cardId)!),
@@ -258,19 +254,65 @@ export class GrandTransitionQuoteReceipts extends LitElement {
           role="region"
           aria-label=${msg('Sentences of this match')}
         >
-          ${rounds.map(
-            (round) => html`
-              <section class="quote-receipts-round" data-receipt-round=${round}>
-                <h3>${msg(str`Round ${round}`)}</h3>
-                ${this.sentences
-                  .filter((sentence) => sentence.round === round)
-                  .map((sentence) => this.renderSentence(match, sentence))}
-              </section>
-            `,
-          )}
+          ${this.renderRounds(match)}
         </div>
       </div>
     `;
+  }
+
+  /**
+   * The result of a guess shows only the phrases of the guess. The record of
+   * each other phrase stays closed until the player opens it.
+   */
+  private renderGuessResult(match: MatchLogDocument, score: QuoteGuessScore): TemplateResult {
+    return html`
+      <div class="quote-receipts-body">
+        <p
+          class="quote-guess-score"
+          data-layout-region="receipts-score"
+          role="status"
+          tabindex="-1"
+        >
+          <span>${msg('Your score')}</span>
+          <strong>
+            ${msg(
+              str`${formatInterfaceNumber(score.correct)} of ${formatInterfaceNumber(score.total)}`,
+            )}
+          </strong>
+        </p>
+        <div
+          class="quote-receipts-list"
+          data-layout-region="receipts-list"
+          tabindex="0"
+          role="region"
+          aria-label=${msg('Phrases of your guess')}
+        >
+          <ul class="quote-receipt-list quote-guess-results">
+            ${this.guessCardIds.map((cardId) =>
+              this.renderReceipt(match, this.committedPhrase(cardId), true),
+            )}
+          </ul>
+          <details class="quote-receipts-full" data-layout-region="receipts-full">
+            <summary>${msg('Full record')}</summary>
+            ${this.renderRounds(match)}
+          </details>
+        </div>
+      </div>
+    `;
+  }
+
+  private renderRounds(match: MatchLogDocument): TemplateResult[] {
+    const rounds = [...new Set(this.sentences.map(({ round }) => round))];
+    return rounds.map(
+      (round) => html`
+        <section class="quote-receipts-round" data-receipt-round=${round}>
+          <h3>${msg(str`Round ${round}`)}</h3>
+          ${this.sentences
+            .filter((sentence) => sentence.round === round)
+            .map((sentence) => this.renderSentence(match, sentence))}
+        </section>
+      `,
+    );
   }
 
   private renderSentence(match: MatchLogDocument, sentence: Sentence): TemplateResult {
@@ -294,11 +336,15 @@ export class GrandTransitionQuoteReceipts extends LitElement {
     `;
   }
 
-  private renderReceipt(match: MatchLogDocument, phrase: UsedPhrase): TemplateResult {
+  private renderReceipt(
+    match: MatchLogDocument,
+    phrase: UsedPhrase,
+    marked = false,
+  ): TemplateResult {
     const record = this.eligibleReveals.get(phrase.phraseId)!;
     const translation = quoteRevealTranslation(record, match.setup.gameLocale);
     const context = quoteRevealContext(record);
-    const guess = this.score ? this.answers[phrase.phraseId] : undefined;
+    const guess = marked ? this.answers[phrase.phraseId] : undefined;
     const correct = guess === quoteGuessAnswer(record);
     const separator = html`<span aria-hidden="true"> · </span>`;
     return html`
@@ -334,13 +380,11 @@ export class GrandTransitionQuoteReceipts extends LitElement {
     `;
   }
 
-  /** The text of a card as its first committed sentence rendered it. */
-  private cardText(cardId: string): string {
-    for (const sentence of this.sentences) {
-      const phrase = sentence.phrases.find(({ phraseId }) => phraseId === cardId);
-      if (phrase) return phrase.text;
-    }
-    return '';
+  /** A card of the guess, as its first committed sentence rendered it. */
+  private committedPhrase(cardId: string): UsedPhrase {
+    return this.sentences
+      .flatMap(({ phrases }) => phrases)
+      .find(({ phraseId }) => phraseId === cardId)!;
   }
 
   private readonly startGuess = (): void => {
@@ -349,7 +393,19 @@ export class GrandTransitionQuoteReceipts extends LitElement {
 
   private readonly showReceipts = (): void => {
     this.stage = 'receipts';
+    this.closeGuess();
   };
+
+  private closeGuess(): void {
+    if (this.matchId === null) return;
+    this.dispatchEvent(
+      new CustomEvent(quoteReceiptsRevealedEventName, {
+        bubbles: true,
+        composed: true,
+        detail: Object.freeze({ matchId: this.matchId }),
+      }),
+    );
+  }
 
   private selectAnswer(cardId: string, answer: QuoteGuessAnswer): void {
     this.answers = { ...this.answers, [cardId]: answer };
@@ -366,6 +422,7 @@ export class GrandTransitionQuoteReceipts extends LitElement {
     }
     this.score = scoreQuoteGuess(this.guessCardIds, this.answers, this.eligibleReveals);
     this.stage = 'receipts';
+    this.closeGuess();
     this.dispatchEvent(
       new CustomEvent(quoteGuessScoredEventName, {
         bubbles: true,
@@ -384,7 +441,9 @@ export class GrandTransitionQuoteReceipts extends LitElement {
       return;
     }
     if (event.key !== 'Tab') return;
-    const focusable = [...this.querySelectorAll<HTMLElement>('button, input, [tabindex="0"]')];
+    const focusable = [
+      ...this.querySelectorAll<HTMLElement>('button, input, summary, [tabindex="0"]'),
+    ];
     const first = focusable[0];
     const last = focusable.at(-1);
     if (!first || !last) return;
@@ -420,6 +479,7 @@ declare global {
   interface HTMLElementEventMap {
     [closeQuoteReceiptsEventName]: CloseQuoteReceiptsEvent;
     [quoteGuessScoredEventName]: QuoteGuessScoredEvent;
+    [quoteReceiptsRevealedEventName]: QuoteReceiptsRevealedEvent;
   }
 }
 

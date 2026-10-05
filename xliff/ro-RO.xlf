@@ -1351,8 +1351,8 @@
   <target>Alege un răspuns pentru fiecare expresie.</target>
 </trans-unit>
 <trans-unit id="sb2b44de8a70ae954">
-  <source><x id="0" equiv-text="${formatInterfaceNumber(this.score.correct)}"/> of <x id="1" equiv-text="${formatInterfaceNumber(this.score.total)}"/></source>
-  <target><x id="0" equiv-text="${formatInterfaceNumber(this.score.correct)}"/> din <x id="1" equiv-text="${formatInterfaceNumber(this.score.total)}"/></target>
+  <source><x id="0" equiv-text="${formatInterfaceNumber(score.correct)}"/> of <x id="1" equiv-text="${formatInterfaceNumber(score.total)}"/></source>
+  <target><x id="0" equiv-text="${formatInterfaceNumber(score.correct)}"/> din <x id="1" equiv-text="${formatInterfaceNumber(score.total)}"/></target>
 </trans-unit>
 <trans-unit id="sbfb94dfb3fe4121b">
   <source>Sentences of this match</source>
@@ -1413,6 +1413,14 @@
 <trans-unit id="se5746499d51c6720">
   <source>No sourced phrases are available for this match.</source>
   <target>Nu sunt disponibile expresii cu sursă pentru acest meci.</target>
+</trans-unit>
+<trans-unit id="s4634e61a94705cfc">
+  <source>Phrases of your guess</source>
+  <target>Expresiile la care ai răspuns</target>
+</trans-unit>
+<trans-unit id="sb116030948a7bf21">
+  <source>Full record</source>
+  <target>Evidența completă</target>
 </trans-unit>
 </body>
 </file>

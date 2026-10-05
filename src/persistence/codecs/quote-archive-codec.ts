@@ -5,11 +5,15 @@ import { normalizedJson } from './replay-codec.ts';
 
 export const quoteArchiveSchemaVersion = 1;
 
-/** The Milestone 034 archive. It holds only card IDs and the best guess score. */
+/**
+ * The Milestone 034 archive. It holds only card IDs, the best guess score, and
+ * the IDs of the matches whose receipts the player saw.
+ */
 export type QuoteArchiveDocument = Readonly<{
   schemaVersion: 1;
   cardIds: readonly string[];
   bestGuess: QuoteGuessScore | null;
+  revealedMatchIds: readonly string[];
 }>;
 
 export type QuoteArchiveCodecFailure = Readonly<{
@@ -36,15 +40,21 @@ const schema = z
       .strict()
       .refine((score) => score.correct <= score.total, { path: ['correct'] })
       .nullable(),
+    // An archive from before this field has no match with receipts that a player saw.
+    revealedMatchIds: z
+      .array(z.string().min(1))
+      .refine((values) => new Set(values).size === values.length)
+      .default([]),
   })
   .strict();
 
-const fields = new Set(['schemaVersion', 'cardIds', 'bestGuess']);
+const fields = new Set(['schemaVersion', 'cardIds', 'bestGuess', 'revealedMatchIds']);
 
 export const emptyQuoteArchive: QuoteArchiveDocument = deepFreeze({
   schemaVersion: quoteArchiveSchemaVersion,
   cardIds: [],
   bestGuess: null,
+  revealedMatchIds: [],
 });
 
 export function encodeQuoteArchive(archive: QuoteArchiveDocument): string {

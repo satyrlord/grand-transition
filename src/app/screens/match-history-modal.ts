@@ -19,12 +19,15 @@ export class GrandTransitionMatchHistory extends LitElement {
   static properties = {
     entries: { attribute: false },
     persistenceFailure: { attribute: false },
+    revealedMatchIds: { attribute: false },
     expandedEntryIds: { state: true },
     receiptsEntryId: { state: true },
   };
 
   declare entries: readonly MatchHistoryEntry[];
   declare persistenceFailure: MatchHistoryFailureCode | null;
+  /** The matches whose Milestone 034 guess is closed. */
+  declare revealedMatchIds: readonly string[];
   declare private expandedEntryIds: ReadonlySet<string>;
   /** The stored match whose Milestone 034 receipts panel is open. */
   declare private receiptsEntryId: string | null;
@@ -34,6 +37,7 @@ export class GrandTransitionMatchHistory extends LitElement {
     updateWhenLocaleChanges(this);
     this.entries = [];
     this.persistenceFailure = null;
+    this.revealedMatchIds = [];
     this.expandedEntryIds = new Set();
     this.receiptsEntryId = null;
   }
@@ -51,6 +55,8 @@ export class GrandTransitionMatchHistory extends LitElement {
     if (receiptsEntry) {
       return html`<grand-transition-quote-receipts
         .match=${receiptsEntry.matchLog}
+        .matchId=${receiptsEntry.id}
+        .guessLocked=${this.revealedMatchIds.includes(receiptsEntry.id)}
         @close-quote-receipts=${this.closeReceipts}
       ></grand-transition-quote-receipts>`;
     }

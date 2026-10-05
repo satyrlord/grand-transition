@@ -129,6 +129,7 @@ for (const [interfaceLocale, labels] of [
         schemaVersion: 1,
         cardIds: sourcedIds,
         bestGuess: { correct: 3, total: 5 },
+        revealedMatchIds: [],
       }),
     );
     await page.reload();

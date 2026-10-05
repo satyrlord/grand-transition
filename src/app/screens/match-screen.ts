@@ -55,6 +55,8 @@ export class GrandTransitionMatch extends LitElement {
     autoRevealWaitingSentence: { type: Boolean },
     presentation: { attribute: false },
     completedMatch: { attribute: false },
+    completedMatchId: { attribute: false },
+    quoteGuessLocked: { attribute: false },
   };
 
   declare snapshot: MatchScreenSnapshot | undefined;
@@ -71,6 +73,9 @@ export class GrandTransitionMatch extends LitElement {
   declare presentation: RoundPresentationFrame | null;
   /** The public record of the completed match, for the Milestone 034 receipts. */
   declare completedMatch: MatchLogDocument | null;
+  declare completedMatchId: string | null;
+  /** The player saw the receipts of the completed match, so its guess is closed. */
+  declare quoteGuessLocked: boolean;
   private receiptsOpen = false;
   private previewText: string | null;
   private commandPending: boolean;
@@ -113,6 +118,8 @@ export class GrandTransitionMatch extends LitElement {
     this.autoRevealWaitingSentence = false;
     this.presentation = null;
     this.completedMatch = null;
+    this.completedMatchId = null;
+    this.quoteGuessLocked = false;
     this.previewText = null;
     this.commandPending = false;
     this.revealedWaitingPlayerId = null;
@@ -562,6 +569,8 @@ export class GrandTransitionMatch extends LitElement {
                 ? this.receiptsOpen && this.completedMatch
                   ? html`<grand-transition-quote-receipts
                       .match=${this.completedMatch}
+                      .matchId=${this.completedMatchId}
+                      .guessLocked=${this.quoteGuessLocked}
                       @close-quote-receipts=${this.closeReceipts}
                     ></grand-transition-quote-receipts>`
                   : this.renderVictory(first, second)

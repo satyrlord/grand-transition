@@ -461,7 +461,7 @@ describe('layout regions of the primary screens', () => {
       },
     },
     // Milestone 034: the receipts panel in each stage, and the quote archive.
-    ...(['gate', 'guess', 'receipts'] as const).map((stage) => ({
+    ...(['gate', 'guess', 'result', 'full record', 'receipts'] as const).map((stage) => ({
       name: `receipts panel ${stage}`,
       mount: async () => {
         await setInterfaceLocale('ro-RO');
@@ -477,9 +477,21 @@ describe('layout regions of the primary screens', () => {
         if (stage !== 'gate') {
           panel
             .querySelector<HTMLButtonElement>(
-              stage === 'guess' ? '.quote-receipts-primary' : '.quote-receipts-secondary',
+              stage === 'receipts' ? '.quote-receipts-secondary' : '.quote-receipts-primary',
             )!
             .click();
+          await panel.updateComplete;
+        }
+        if (stage === 'result' || stage === 'full record') {
+          for (const item of panel.querySelectorAll('[data-guess-card]')) {
+            item.querySelector<HTMLInputElement>('input')!.click();
+          }
+          await panel.updateComplete;
+          panel.querySelector<HTMLButtonElement>('.quote-receipts-primary')!.click();
+          await panel.updateComplete;
+        }
+        if (stage === 'full record') {
+          panel.querySelector<HTMLElement>('.quote-receipts-full summary')!.click();
           await panel.updateComplete;
         }
         return { root: panel.querySelector('.quote-receipts-backdrop')! };
@@ -500,6 +512,7 @@ describe('layout regions of the primary screens', () => {
         archive.archive = {
           cardIds: [...reveals.keys()],
           bestGuess: { correct: 3, total: 5 },
+          revealedMatchIds: [],
           persistenceFailure: 'storage-quota',
         };
         await archive.updateComplete;
