@@ -57,6 +57,7 @@ export type SampleResult = {
   parallelWidthsPx?: number[];
   ink?: Color;
   fill?: Color;
+  silhouettePoint?: { x: number; y: number };
   range?: 'inside' | 'outside' | 'borderline';
 };
 
@@ -67,6 +68,23 @@ const median = (values: number[]): number => {
   const sorted = [...values].sort((a, b) => a - b);
   return (sorted[Math.floor((sorted.length - 1) / 2)] + sorted[Math.floor(sorted.length / 2)]) / 2;
 };
+
+function assessWidth(widthPx: number, height: number) {
+  const scale = 1000 / (0.94 * height);
+  const normalizedWidth = widthPx * scale;
+  const error = CALIBRATION.syntheticErrorBoundPx * scale;
+  const interval: [number, number] = [normalizedWidth - error, normalizedWidth + error];
+  return {
+    normalizedWidth,
+    normalizedInterval: interval,
+    range:
+      interval[0] >= 2.8 && interval[1] <= 3.2
+        ? ('inside' as const)
+        : interval[1] < 2.8 || interval[0] > 3.2
+          ? ('outside' as const)
+          : ('borderline' as const),
+  };
+}
 
 function pixel(raster: Raster, x: number, y: number): Pixel {
   if (x < 0 || x >= raster.width || y < 0 || y >= raster.height)
@@ -125,6 +143,7 @@ function profile(pixels: Pixel[]): Profile {
 export function measureSample(raster: Raster, sample: ContourSample): SampleResult {
   try {
     if (
+      typeof sample.id !== 'string' ||
       !sample.id ||
       !BODY_PARTS.includes(sample.part) ||
       !['x', 'y'].includes(sample.axis) ||
@@ -168,26 +187,25 @@ export function measureSample(raster: Raster, sample: ContourSample): SampleResu
     const widthPx = median(widths);
     if (widthPx < CALIBRATION.sourceWidthRangePx[0] || widthPx > CALIBRATION.sourceWidthRangePx[1])
       throw new Error('The source width is outside the calibrated 2.5 through 8 pixel range.');
-    const scale = 1000 / (0.94 * raster.height);
-    const normalizedWidth = widthPx * scale;
-    const error = CALIBRATION.syntheticErrorBoundPx * scale;
-    const interval: [number, number] = [normalizedWidth - error, normalizedWidth + error];
     return {
       sample,
       status: 'measured',
       widthPx,
-      normalizedWidth,
-      normalizedInterval: interval,
+      silhouettePoint: {
+        x:
+          sample.axis === 'x'
+            ? sample.x + (sample.direction === -1 ? 1 : 0) + sample.direction * outerMean
+            : sample.x + 0.5,
+        y:
+          sample.axis === 'y'
+            ? sample.y + (sample.direction === -1 ? 1 : 0) + sample.direction * outerMean
+            : sample.y + 0.5,
+      },
+      ...assessWidth(widthPx, raster.height),
       slope,
       parallelWidthsPx: widths,
       ink: central.ink,
       fill: central.fill,
-      range:
-        interval[0] >= 2.8 && interval[1] <= 3.2
-          ? 'inside'
-          : interval[1] < 2.8 || interval[0] > 3.2
-            ? 'outside'
-            : 'borderline',
     };
   } catch (error) {
     return {
@@ -208,32 +226,47 @@ export function measureContours(raster: Raster, samples: ContourSample[]) {
   )
     throw new Error('Invalid RGBA raster.');
   const results = samples.map((sample) => measureSample(raster, sample));
-  const duplicateSites = samples.some((sample, i) =>
-    samples
+  const duplicateSites = results.some((result, i) =>
+    results
       .slice(0, i)
       .some(
-        (other) => sample.id === other.id || Math.hypot(sample.x - other.x, sample.y - other.y) < 8,
+        (other) =>
+          result.sample.id === other.sample.id ||
+          (result.silhouettePoint &&
+            other.silhouettePoint &&
+            Math.hypot(
+              result.silhouettePoint.x - other.silhouettePoint.x,
+              result.silhouettePoint.y - other.silhouettePoint.y,
+            ) < 8),
       ),
   );
   const parts = BODY_PARTS.map((part) => {
     const measured = results.filter((r) => r.sample.part === part && r.status === 'measured');
+    const medianWidthPx = measured.length ? median(measured.map((r) => r.widthPx!)) : null;
     return {
       part,
       usableSamples: measured.length,
-      medianWidthPx: measured.length ? median(measured.map((r) => r.widthPx!)) : null,
+      medianWidthPx,
+      assessment: medianWidthPx === null ? null : assessWidth(medianWidthPx, raster.height),
     };
   });
   const insufficient =
     duplicateSites ||
     parts.some((p) => p.usableSamples < 2) ||
     results.some((r) => r.status === 'unmeasurable');
-  const failed = results.some((r) => r.range === 'outside');
-  const borderline = results.some((r) => r.range === 'borderline');
+  const measuredWidths = results.flatMap((r) => (r.widthPx === undefined ? [] : [r.widthPx]));
+  const medianWidthPx = measuredWidths.length ? median(measuredWidths) : null;
+  const overall =
+    medianWidthPx === null ? null : { medianWidthPx, ...assessWidth(medianWidthPx, raster.height) };
+  const failed =
+    overall?.range === 'outside' || parts.some((p) => p.assessment?.range === 'outside');
+  const borderline =
+    overall?.range === 'borderline' || parts.some((p) => p.assessment?.range === 'borderline');
   return {
-    status: failed
-      ? 'numeric-fail'
-      : insufficient
-        ? 'pending-insufficient-evidence'
+    status: insufficient
+      ? 'pending-insufficient-evidence'
+      : failed
+        ? 'numeric-fail'
         : borderline
           ? 'pending-borderline'
           : 'numeric-pass-manual-review-required',
@@ -243,6 +276,8 @@ export function measureContours(raster: Raster, samples: ContourSample[]) {
     targetPer1000ReferenceHeight: [2.8, 3.2],
     calibration: CALIBRATION,
     duplicateSites,
+    overall,
+    outsideSampleIds: results.filter((r) => r.range === 'outside').map((r) => r.sample.id),
     parts,
     samples: results,
     acceptance:
@@ -250,18 +285,79 @@ export function measureContours(raster: Raster, samples: ContourSample[]) {
   };
 }
 
+export function exploreContours(raster: Raster) {
+  const sites = [];
+  for (const axis of ['x', 'y'] as const) {
+    const length = axis === 'x' ? raster.width : raster.height;
+    const across = axis === 'x' ? raster.height : raster.width;
+    for (let row = 8; row < across - 8; row += 8)
+      for (const direction of [1, -1] as const) {
+        for (
+          let along = direction === 1 ? 8 : length - 9;
+          along >= 8 && along < length - 8;
+          along += direction
+        ) {
+          const p = pixel(raster, axis === 'x' ? along : row, axis === 'y' ? along : row);
+          const previous = pixel(
+            raster,
+            axis === 'x' ? along - direction : row,
+            axis === 'y' ? along - direction : row,
+          );
+          if (p.alpha === 0 || previous.alpha !== 0) continue;
+          const start = along - direction * 8;
+          const result = measureSample(raster, {
+            id: `site-${axis}-${row}-${along}-${direction}`,
+            part: 'head',
+            x: axis === 'x' ? start : row,
+            y: axis === 'y' ? start : row,
+            axis,
+            direction,
+            length: 32,
+          });
+          if (result.status === 'measured') {
+            const { part: _part, ...coordinates } = result.sample;
+            sites.push({
+              coordinates,
+              widthPx: result.widthPx,
+              normalizedWidth: result.normalizedWidth,
+              slope: result.slope,
+            });
+          }
+        }
+      }
+  }
+  return {
+    selection: 'automatic',
+    status: 'exploratory-only',
+    width: raster.width,
+    height: raster.height,
+    calibration: CALIBRATION,
+    sites,
+    instruction:
+      'Inspect these sites visually. Select distinct straight outer contours, assign body parts, and create a manual samples file. This list cannot pass contour acceptance.',
+  };
+}
+
 export async function main(args: string[]): Promise<void> {
   if (args.length !== 2)
     throw new Error(
-      'Usage: node .github/skills/generate-character-openai/scripts/measure-contour.ts <source.png> <manual-samples.json>',
+      'Usage: node .github/skills/generate-character-openai/scripts/measure-contour.ts <source.png> <manual-samples.json|--explore>',
     );
   const [source, sampleFile] = args;
   const metadata = await sharp(source).metadata();
   if (metadata.format !== 'png') throw new Error('Use the original PNG source.');
   const { data, info } = await sharp(source)
+    .toColourspace('srgb')
     .ensureAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true });
+  const raster = { width: info.width, height: info.height, data };
+  if (sampleFile === '--explore') {
+    console.log(
+      JSON.stringify({ source: path.resolve(source), ...exploreContours(raster) }, null, 2),
+    );
+    return;
+  }
   const document: unknown = JSON.parse(await readFile(sampleFile, 'utf8'));
   if (
     !document ||
@@ -276,10 +372,7 @@ export async function main(args: string[]): Promise<void> {
     );
   if (document.samples.some((s: unknown) => !s || typeof s !== 'object'))
     throw new Error('Every sample must be an object.');
-  const report = measureContours(
-    { width: info.width, height: info.height, data },
-    document.samples as ContourSample[],
-  );
+  const report = measureContours(raster, document.samples as ContourSample[]);
   console.log(
     JSON.stringify(
       { source: path.resolve(source), sampleFile: path.resolve(sampleFile), ...report },

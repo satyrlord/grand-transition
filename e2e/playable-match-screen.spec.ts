@@ -1100,7 +1100,8 @@ test('waits for a replacement portrait before measuring moderator clearance', as
   await portrait.evaluate((element) => {
     const image = element as HTMLImageElement;
     const source = image.currentSrc;
-    for (const candidate of image.closest('picture')!.querySelectorAll('source')) candidate.remove();
+    for (const candidate of image.closest('picture')!.querySelectorAll('source'))
+      candidate.remove();
     image.removeAttribute('srcset');
     image.src = `${source}?clearance-reload`;
   });

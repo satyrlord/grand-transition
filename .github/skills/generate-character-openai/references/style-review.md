@@ -57,10 +57,9 @@ Use at least two clear samples from each named body part: head, each arm, torso,
 This gives at least twelve samples for each figure.
 If a body part has fewer than two measurable edges, keep its measurement pending and give the cause.
 Record each sample's source coordinates, body part, width, and measurement method.
-Measure across the contour, perpendicular to its edge.
-Use one alpha threshold and one ink-to-fill boundary method for all samples.
-Record those choices. Exclude tips, corners, and dark fills that hide the inner edge.
-Give a lower and upper width estimate when antialiasing makes a boundary uncertain.
+Use the calibrated ink-coverage helper below. Exclude tips, corners, and dark fills that hide the inner edge.
+Use an x-axis or y-axis scan across the contour. The helper corrects the width for the measured edge slope.
+Keep the helper's calibration and operating limits with the result.
 Normalize each width with the reference height. Use unrounded values for decisions.
 
 Calculate the figure median and each body-part median from the recorded samples.
@@ -70,7 +69,8 @@ Do not demand identical measured widths between figures or body parts.
 Do not use a passing figure median to hide a body-part median outside the range.
 Also examine the complete contour for visible changes that the samples do not cover.
 
-Calculate median uncertainty bounds from the samples' lower and upper estimates.
+Use the helper's calibrated bounds for the figure median and each body-part median.
+These bounds apply to the stated raster model. They are not confidence intervals for arbitrary generated art.
 If the bounds are wholly inside the range, record a measurement pass.
 If the bounds are wholly below or wholly above the range, record a measurement failure.
 If the bounds cross a limit, record the measurement as pending.
@@ -78,10 +78,54 @@ Measure the same locations again at native resolution. Record the repeated measu
 If uncertainty continues, give the annotated samples to the owner for review.
 Do not widen the approved range or record a pending measurement as a pass.
 
-Use an automated contour helper only as an aid.
-Its pooled median and horizontal bands do not establish body-part conformity.
-If manual and automated decisions differ, examine sample selection and edge boundaries.
-Record the cause before acceptance. If the cause stays unresolved, keep the measurement pending.
+### Run the calibrated helper
+
+Use the unchanged PNG source and a manually reviewed sample file:
+
+```text
+node .github/skills/generate-character-openai/scripts/measure-contour.ts <source.png> <manual-samples.json>
+```
+
+Use this sample-file structure. Add two independent locations for each of the six body parts.
+The coordinates below show the format only. Select coordinates from the candidate.
+
+```json
+{
+  "selection": "manual",
+  "samples": [
+    {
+      "id": "head-1",
+      "part": "head",
+      "x": 100,
+      "y": 200,
+      "axis": "x",
+      "direction": 1,
+      "length": 32
+    }
+  ]
+}
+```
+
+Use `head`, `left-arm`, `right-arm`, `torso`, `left-leg`, and `right-leg` as the body-part values.
+Record left and right as canvas sides. Use `direction: -1` to scan toward smaller coordinates.
+Start each scan in transparency. Include the full contour and flat opaque fill after it.
+The helper examines seven neighboring scanlines. Keep their complete patches inside the image.
+Each scan must start with two transparent pixels and end with four opaque fill pixels.
+Use a straight outer edge with parallel ink boundaries and enough contrast between ink and fill.
+Do not relabel automatic proposals as manual samples until their locations have been visually inspected.
+
+The helper integrates ink coverage, including partial-alpha pixels, rather than counting opaque pixel centers.
+Its regression tests use known-width analytic and independently supersampled strokes.
+Run the calibration before using a changed helper:
+
+```text
+npx vitest run --config vitest.config.ts tests/unit/measure-character-contour.test.ts
+```
+
+Retain the JSON report. Read its status and limitations, not only its process exit code.
+A numeric pass still requires visual confirmation of the sample locations, complete contour, and raster-model assumptions.
+An unmeasurable patch or a borderline result stays pending. It does not prove an acceptable contour.
+Do not use the old task-local `measure-contour.mjs` for acceptance. It failed known-width calibration.
 
 ## Reject each rendering defect
 

@@ -168,7 +168,10 @@ describe('character contour coverage measurement', () => {
                 });
                 const result = measureSample(raster, sample);
                 count++;
-                if (result.status === 'unmeasurable' && (width === 2.5 || width === 8 || Math.abs(slope) === 1.25)) {
+                if (
+                  result.status === 'unmeasurable' &&
+                  (width === 2.5 || width === 8 || Math.abs(slope) === 1.25)
+                ) {
                   expect(result.reason).toMatch(/outside the calibrated|slope exceeds/);
                   endpointRejections++;
                   continue;
@@ -220,7 +223,7 @@ describe('character contour coverage measurement', () => {
 
   test('requires two independent usable sites per part and does not accept artwork', () => {
     const { raster, sample } = fixture();
-    expect(measureContours(raster, [sample]).status).toBe('numeric-fail');
+    expect(measureContours(raster, [sample]).status).toBe('pending-insufficient-evidence');
     // Make the source reference height 1254 while preserving the measured patch.
     const large: Raster = { width: 64, height: 1254, data: new Uint8Array(64 * 1254 * 4) };
     const samples: ContourSample[] = [];
@@ -241,6 +244,13 @@ describe('character contour coverage measurement', () => {
     expect(measureContours(large, [...samples, samples[0]]).status).toBe(
       'pending-insufficient-evidence',
     );
+    // The contract assesses medians. Individual outliers still require visual review.
+    for (let i = 0; i < samples.length; i++) {
+      large.data.set(fixture({ width: i % 2 ? 4 : 3 }).raster.data, i * 64 * 64 * 4);
+    }
+    const outliers = measureContours(large, samples);
+    expect(outliers.status).toBe('numeric-pass-manual-review-required');
+    expect(outliers.outsideSampleIds).toHaveLength(12);
   });
 
   test('keeps a boundary measurement pending instead of passing its central estimate', () => {
@@ -250,6 +260,18 @@ describe('character contour coverage measurement', () => {
     const result = measureSample(large, sample);
     expect(result.status).toBe('measured');
     expect(result.range).toBe('borderline');
+  });
+
+  test('recognizes the same silhouette site when the scan starts are eight pixels apart', () => {
+    const { raster, sample } = fixture({ width: 3.5, phase: 8 });
+    const report = measureContours(raster, [
+      sample,
+      { ...sample, id: 'shifted-start', x: sample.x + 8 },
+    ]);
+    expect(report.samples.every((s) => s.status === 'measured')).toBe(true);
+    expect(report.samples[0].silhouettePoint).toEqual(report.samples[1].silhouettePoint);
+    expect(report.duplicateSites).toBe(true);
+    expect(report.status).toBe('pending-insufficient-evidence');
   });
 
   test('runs from Node with explicit manual sample input and returns coordinates and limitations', async () => {
