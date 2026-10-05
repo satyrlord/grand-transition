@@ -672,8 +672,8 @@ Do not change the inventory to approve a rejected source.
 For new character work, apply the current character art direction and trial
 acceptance boundary below. Preserve unrelated shipping packages and approved
 robot features outside each reviewed contour correction. The initial trial uses researched identity briefs without old raster
-style inputs. For new selections, the accepted style master is the only style
-reference image.
+style inputs. For new selections, one accepted style master template that matches the researched height, build, and presentation
+is the only style reference.
 A pose uses its accepted selection as its only image reference.
 
 ### Character readiness
@@ -830,21 +830,44 @@ pass the owner-set range and their replacement art is reviewed.
 
 On 2026-10-05 the product owner rejected the regenerated human roster as
 inconsistent. Its faces range from realistic to generic, and its contour
-weights differ. The owner selected the installed Algorithmic Prophet drawing
-as the technique model. It is funny, strongly exaggerated, and easy to
-identify without a realistic face. These rules apply to each new or replaced
-human selection:
+weights differ. The installed Algorithmic Prophet gives the owner's preference,
+not the acceptance standard for new art. The accepted set of 18 separate reference files defines
+the reference technique. The Prophet also gets a regenerated replacement.
+These rules apply to each new or replaced human selection:
 
-- One accepted style master is the only style reference image. Its path is
-  `docs/assets/character-style-master.png`. It is one sheet with three
-  invented politicians: one short, one medium, and one tall. They have
-  different head sizes, noses, face shapes, and builds, and one drawing
-  technique. They are not game characters and not caricatures of real
-  persons. The earlier trial characters and the installed packages are not
-  style references.
+- The style master contains 18 separate native transparent square PNG files.
+  Use every combination of short, medium, or tall height; fat, average, or thin build; and male or female presentation.
+  Use `docs/assets/character-style-master-{height}-{build}-{male|female}.png`.
+  The complete source inventory is in `docs/assets/flat-editorial-style.md`.
+  Each file contains one invented politician. Use the same native canvas dimensions and game selection rules across the set.
+  Use usual heads for all 18 templates: 19 through 22 percent of stature, with a target of 20.5 percent.
+  Give explicit head-top and chin landmarks in each prompt. For short, use y 17 and 33.81 percent;
+  for medium, y 11 and 29.04 percent; for tall, y 5 and 24.27 percent.
+  Keep compact hair and jowls within the head box. Do not inflate the head with an oversized hairstyle.
+  Repeat the matrix categories as required. Vary individual faces, noses, ages, costumes, and visual jokes.
+  The figures are not game characters or caricatures of real persons.
+- A new human selection attaches one accepted template that matches its researched height, build, and presentation.
+  Its own written brief controls identity and likeness. Resolve an uncertain category instead of inventing a fallback.
+  Do not attach all 18 templates. The earlier trial characters and installed packages are not style references.
+  Examine the Prophet locally as subjective preference only. Generate the new master pilot from text without an image attachment.
+  A pilot that passes measurements and rendering review can be the sole provisional technique reference for later master generation.
+  This provisional use does not establish owner acceptance or authorize use as a roster selection reference.
+- Do not generate sheets, lineups, collages, grids, strips, or multi-pose images.
+  Generate one character or one pose per request and file. Do not split a generated sheet into source files.
+  Preserve the full native canvas. Make comparison composites locally for inspection only.
+- The built-in chat image generator has no request budget and needs no per-request approval.
+  Continue necessary retries within the authorized task. Do not impose an attempt cap.
+  Flare API request budgets and permissions do not apply to this route.
+  Keep owner artistic acceptance separate from permission to continue generation attempts.
+- Keep skin one solid flat color, with no facial shadows or highlights.
+  Use one flat hair silhouette with at most one hard shadow.
+  Use a base color and at most one hard shadow shape for each clothing material.
+  Do not add gradients or textures.
 - The style master gives the drawing technique only: contour weight, flat
   color, two-tone shading, line-drawn faces, and caricature strength. No
-  face, nose, head size, height, build, costume, or pose transfers from it.
+  identity feature transfers unless the character's own brief gives it.
+  Shared head-size classes, height classes, nose categories, and builds are
+  acceptable when the character's brief gives them.
   The Algorithmic Prophet is a usual roster character. Its large nose, large
   head, short stature, and tall hat belong to that character only.
 - One fixed style block is the only style text in a prompt. The
@@ -885,6 +908,20 @@ Do not generate a new human selection before the product owner accepts the
 style master. The installed human packages stay until an accepted replacement
 package is complete.
 
+Visual acceptance of the reference set does not establish successful style transfer.
+After the owner authorizes Selection work, complete two transfer tests:
+
+- The Algorithmic Prophet, with its own researched brief.
+- One tall character with a small or usual nose, with its own researched brief.
+
+Each test attaches one accepted template that matches its researched height, build, and presentation and passes the full style review.
+Each test follows its own brief without unrequested features from a reference figure.
+The owner accepts each resemblance sheet and the shared drawing technique.
+Record visual acceptance and transfer validation separately in `docs/assets/flat-editorial-style.md`.
+Record each test's source hash, review path, and owner acceptance there.
+Keep transfer validation pending until the two tests pass and the owner accepts them.
+Start the rest of the roster only after transfer validation and owner authorization for that work.
+
 On 2026-10-05 the product owner set one outer silhouette contour range for all
 playable characters: the human roster, the Algorithmic Prophet, and the
 Government AI robots. Target 3 source pixels per 1000 pixels of the reference
@@ -896,6 +933,11 @@ figure. A short character, a tall character, and a crouched pose have the
 same contour width in source pixels. When a pose and its selection have
 different canvas sizes, scale the width by the pose-to-selection canvas-width
 ratio. Compare characters and poses at one canvas scale.
+Measure each figure and its head, each arm, torso, and each leg separately.
+Apply the same range to the figure median and each body-part median.
+Measured differences inside the range do not alone establish a different nominal weight.
+Use the sample and uncertainty procedure in the character skill's style review.
+Do not accept a measurement whose uncertainty crosses a range limit.
 
 This range replaces the earlier range of 1.80 through 2.20 for each 1000
 pixels of visible figure height. Each installed package, the three robot
@@ -1548,10 +1590,11 @@ characters, poses, desks, props, or foregrounds. If the chat tool is unavailable
 retain the brief and report the blocked generation step.
 
 An artwork instruction authorizes generation in its scope. Workflow maintenance
-alone does not authorize image requests. Honor the user's cost and request
-limits. Use one candidate and at most one corrective request for a measured
-visual defect unless the user gives a different limit. Reuse accepted results.
-Do not repeat a request whose outcome is unknown.
+alone does not authorize image requests. The built-in chat route has no request
+budget or per-request approval step. Continue necessary retries without an attempt cap.
+Flare API requests retain their applicable budgets and permission requirements.
+Keep artistic acceptance separate from permission to continue chat attempts.
+Reuse accepted results. Do not repeat a request whose outcome is unknown.
 
 The API helper uses the fixed OpenAI endpoint and credentials from ignored
 `.env.local`. It keeps safe status records without provider error bodies.
@@ -1970,11 +2013,11 @@ reaction, or a character state is replaced or updated, the layout shift is
   blurred upscaling, and detail lost on reduction. A trial pass establishes only
   the tested scope. Later accepted roster packages need their own visual and
   runtime checks. Each human selection after 2026-10-05 also uses the accepted
-  style master as its only style reference image and the fixed style block as
+  matching accepted style master template as its only style reference and the fixed style block as
   its only style text. Its request contains no photograph. Its recorded
   stature, head-height ratio, and contour width are in their ranges. Its
   comparison sheet with the style master shows no rendering defect and no
-  feature that came from a style master figure. Its resemblance sheet has the
+  unrequested feature that came from a style master figure. Its resemblance sheet has the
   acceptance of the product owner.
 - **AC-023-17:** The asset color guard decodes each supported shipping raster in
   sRGB. It

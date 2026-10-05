@@ -19,9 +19,10 @@ Keep unrelated assets and approved art unchanged.
 
 An instruction to generate artwork authorizes the necessary chat requests in that scope.
 Do not add a numeric approval form or an API stage.
-Honor a request limit when the user gives one.
-Generate one candidate at a time.
-After a visible defect, make the corrective requests that are necessary, unless the user gives a limit.
+The built-in chat route has no request budget and needs no per-request approval.
+Flare API budgets and permissions do not apply to chat generation.
+Generate one candidate at a time. After a defect, continue the necessary corrective requests.
+Keep artistic acceptance separate from permission to continue attempts. Do not impose an attempt cap.
 
 If the user changes the scope, select the branch and its modules again.
 If the user prevents edits or checks, obey that instruction.
@@ -39,27 +40,44 @@ Do not use the Flare application programming interface (API) for character work.
 Transparency, accurate dimensions, and a missing chat tool do not authorize an API fallback.
 If the chat tool is unavailable, complete the brief and report the blocked generation step.
 
-## Use one style anchor
+## Use one style reference set
 
-The accepted style master is `docs/assets/character-style-master.png`.
-It is the only style reference image for a human selection.
+The accepted style master contains 18 separate native transparent square PNG files.
+Use all combinations of short, medium, or tall height; fat, average, or thin build; and male or female presentation.
+Use `docs/assets/character-style-master-{height}-{build}-{male|female}.png`.
+All templates use usual heads: 19 through 22 percent of stature, with a target of 20.5 percent.
+For a human selection, attach one accepted template that matches the researched height, build, and presentation.
+Use the character's own brief for identity and likeness. Resolve an unclear category instead of inventing a fallback.
 The [style contract](../../../docs/assets/flat-editorial-style.md) records its measured values.
 The [style block](assets/style-block.txt) is the only style text for a human prompt.
 The [robot style block](assets/style-block-robot.txt) is the only style text for a robot prompt.
 
-- If the style master is not there, complete the Master branch first.
+- If any file of the accepted style master is not there, complete the Master branch first.
 - Do not generate a human selection before the product owner accepts the style master.
-- Do not use an installed character, a trial character, or a pose as a style reference.
+- Complete the two transfer tests in Specification 023 before other human selections.
+- For human selections, do not use an installed character, a trial character, or a pose as a style reference.
+- For master generation, use a text-only pilot first.
+  A pilot that passes measurements and rendering review can be a provisional technique reference for the remaining masters.
+  This does not establish owner acceptance.
 - Do not write a different style text for one character.
 - Do not put a photograph in a generation request.
 - Do not put the name of a real person in a prompt.
 - Change the style block or the style master only when the product owner tells you to.
 
+Repeat required categories across the template matrix. A repeated category does not establish copied identity.
 Make each character a funny, strong caricature that shows its identity at a glance.
 Vary the face shape, build, height class, head size, silhouette, costume, and props between characters.
 Do not vary the caricature strength, the contour weight, or the shading.
-The style master is a sheet of three invented figures that are not game characters.
-It gives the drawing technique only. No face, nose, head size, height, or build transfers from it.
+The style master contains 18 invented figures that are not game characters.
+Generate each figure in its own file, with the same canvas rules as game selections.
+Never use the sheet format for any image generation: no sheet, lineup, collage, grid, strip, or multi-pose image.
+The image generator has a maximum output size. A sheet shares that size between figures and lowers the resolution of each character.
+Generate one character, or one pose, per request and file, on its own full native canvas.
+Do not split a generated sheet into source files. Preserve each character's native resolution.
+Make comparison sheets locally from the separate sources only for inspection.
+Never request a comparison sheet from the image generator.
+It gives the drawing technique only. Take identity, head size, height, and build from each character's brief.
+Shared categories are acceptable when the brief gives them. Do not copy unrequested features from the reference set.
 A rendering exception that the style contract records for an installed source does not apply to new art.
 
 ## Load only the necessary procedure

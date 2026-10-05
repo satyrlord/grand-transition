@@ -25,6 +25,7 @@ Use the built-in chat image generator with native transparency.
 Keep the selection's square canvas dimensions when the tool supports them.
 Use at least 1024 pixels per edge without enlargement.
 Do not use Flare for poses.
+Generate each pose in its own request and file. Never use the sheet format, because it lowers the resolution of each pose.
 
 ## Keep each action distinct
 
@@ -56,7 +57,8 @@ Compare the result with the accepted selection at one canvas scale.
 Keep clean generated pixels unchanged.
 Apply alpha cleanup only for the defect described in the native-alpha module.
 
-If the result fails, correct the observed defect within the authorized request limit.
+If the result fails, correct the observed defect with the built-in chat image generator.
+In-chat requests have no numeric limit and need no per-request approval.
 After a rendering defect, generate the pose again as an alternative to an edit request.
 Do not continue to the next state with an unresolved defect.
 Record the accepted source and state once in the work record.

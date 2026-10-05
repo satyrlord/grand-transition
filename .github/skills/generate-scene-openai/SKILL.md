@@ -21,7 +21,9 @@ Obey the research folder rules in `AGENTS.md`. Keep all work records in `tmp/`.
 Keep candidates and previews in `tmp/scene-generation/`.
 
 An instruction to generate or edit art authorizes generation within that scope.
-Honor reference, route, cost, and request limits from the user.
+Honor reference, route, and cost constraints from the user.
+Apply request budgets and per-request permissions only to Flare API requests.
+Built-in chat image generation and corrective retries have no numeric request limit or per-request approval step.
 Do not request the same approval again.
 Review and route-planning tasks do not authorize generation or shipping changes.
 A preview task does not authorize shipping integration.
@@ -86,7 +88,8 @@ Report the route and missing inputs without generation.
 ## Limit requests and preserve results
 
 Generate one candidate per request.
-After a visible defect, make at most one corrective request unless the user gives a different limit.
+For Flare API work, make at most one corrective request after a visible defect unless the user gives a different limit.
+For built-in chat work, correct observed defects and continue within the requested art scope.
 Stop after a refusal, authentication failure, or a timeout with an unknown result.
 Do not repeat a completed request or a request whose result is unknown.
 Reuse an accepted candidate when its recorded source and review still agree.

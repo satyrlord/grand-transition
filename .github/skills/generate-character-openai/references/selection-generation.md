@@ -2,6 +2,8 @@
 
 Read this module before selection generation or selection review.
 Do not start before the product owner accepts the [style master](style-master.md).
+Until transfer validation is complete, limit authorized Selection work to the two tests in Specification 023.
+Examine the transfer status in the [style contract](../../../../docs/assets/flat-editorial-style.md) before other roster work.
 
 ## Research identity before selection generation
 
@@ -93,20 +95,23 @@ Do not add a global warm wash, text, labels, scenery, or extra subjects.
 ## Generate the shipping candidate
 
 Use the built-in chat image generator.
-Attach one image only: `docs/assets/character-style-master.png`.
+Select one accepted template from the [style contract](../../../../docs/assets/flat-editorial-style.md).
+Match the researched height, build, and presentation to
+`docs/assets/character-style-master-{height}-{build}-{male|female}.png`.
+Record the selected categories and source path in the character study.
+Resolve an unclear category from the study or the owner. Do not invent a fallback or silently choose a different category.
+Attach only that matching template. Do not attach the full set or a comparison sheet.
 Use this text, word for word, as the image-role part of the prompt:
 
 ```text
-The one attached image is the style reference sheet. It shows three other characters.
+The attached image is the matching style reference template. It shows one other fictional character.
 Use only its drawing technique: the weight of the outer line, the flat colors,
 the hard two-tone shading, and the faces drawn with a few lines.
-The three characters on the sheet have different heights, head sizes, noses, and builds,
-and one drawing technique. Draw one new character in that technique.
-The new character is none of the three.
+Draw one new character in that technique. The new character is not the reference person.
 Use the height, the head, the face, and the build that this prompt gives.
 ```
 
-Request one square native-transparent PNG at the canvas dimensions of the style master.
+Request one square native-transparent PNG at the canvas dimensions of the matching template.
 Request the stature and the positions of the height class of the character.
 Do not generate a separate draft when the same request can make a shipping candidate.
 Save the returned source unchanged in the task directory.
@@ -124,7 +129,8 @@ Put the candidate and the research photographs side by side on one resemblance s
 Keep that sheet in the task directory in `tmp/character-generation/`. Do not put it in a request, in `research/`, or in the repository.
 Do not accept style agreement as proof of resemblance.
 If the resemblance is weak, make the named features stronger in the brief and generate again.
-If the resemblance stays weak after three requests, stop and tell the product owner.
+Continue necessary built-in chat retries without an attempt cap or per-request approval.
+Ask the owner only when an unresolved identity decision prevents a grounded brief.
 Inspect actual transparency with [native alpha](../../generate-scene-openai/references/native-alpha.md).
 Keep good generated alpha unchanged.
 Run the runtime-window overlay:
@@ -136,7 +142,9 @@ node tools/character-runtime-window.ts <candidate.png> <overlay.png>
 Inspect the face, silhouette, contour, and prop at source and runtime scales.
 Show the comparison sheets, the resemblance sheet, the light and dark composites, and the runtime window to the product owner.
 The product owner decides the resemblance.
-Make sure that the candidate does not have the face, the nose, the head size, or the build of a figure on the style master.
+Reject a feature copied from the style master when the character's own brief did not give it.
+Accept shared head-size classes, height classes, nose categories, and builds when the brief gives them.
+Judge copied identity from the combination of features, not from one shared category.
 Check small roster crops, setup portraits, and the two match sides.
 Do not call isolated thumbnails production-browser evidence.
 

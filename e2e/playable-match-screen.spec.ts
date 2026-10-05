@@ -1095,12 +1095,14 @@ test('waits for a replacement portrait before measuring moderator clearance', as
     await route.continue();
   });
   const portrait = page.locator('.character-portrait').first();
+  // Keep the presenter's own image element. A cloned element would keep its portrait class
+  // after a later state change, and the page would then show a third portrait.
   await portrait.evaluate((element) => {
     const image = element as HTMLImageElement;
-    const replacement = image.cloneNode(true) as HTMLImageElement;
-    replacement.removeAttribute('srcset');
-    replacement.src = `${image.currentSrc}?clearance-reload`;
-    image.closest('picture')!.replaceChildren(replacement);
+    const source = image.currentSrc;
+    for (const candidate of image.closest('picture')!.querySelectorAll('source')) candidate.remove();
+    image.removeAttribute('srcset');
+    image.src = `${source}?clearance-reload`;
   });
   try {
     await portraitRequested;

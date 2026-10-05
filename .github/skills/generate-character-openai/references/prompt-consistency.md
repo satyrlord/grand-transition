@@ -18,7 +18,7 @@ Change only the state action and expression.
 Write each prompt with these parts, in this sequence:
 
 1. The asset: one figure, the canvas, and real transparency.
-2. The role of the one attached image.
+2. The role of each attached reference image.
 3. The identity part of the brief.
 4. The costume and the props, with counts and canvas positions.
 5. The action, the expression, and the placement.
@@ -31,8 +31,12 @@ The fixed image-role text of [selection generation](selection-generation.md) is 
 The image-role part of the master prompt in [style master](style-master.md) is the only exception for the style master.
 Do not start a prompt with a use-case label.
 Do not tell the generator to add detail to one character.
-For a selection, the attached image is the style master.
-The style master shows three figures that are not game characters. Do not describe them in a prompt.
+For a human selection, attach one accepted template that matches the researched height, build, and presentation.
+The template shows one invented figure that is not a game character. Do not describe that identity in the prompt.
+The new character's brief controls identity and likeness. Resolve uncertain categories without inventing a fallback.
+For the style master pilot, use text only and no image attachment. Examine the Prophet locally as subjective preference only.
+For later master candidates, a measured pilot that passes rendering review can be the sole provisional technique reference.
+Do not present the provisional pilot as owner-accepted art.
 For a pose, the attached image is the accepted selection of that character.
 For a corrective request, keep the full style block in the prompt.
 
@@ -81,7 +85,9 @@ Use schema version 2 of that script.
 Set `species` to `human` or `robot`, and set `facing` to `left` or `right`.
 Set `figure.canvasPixels` to the native square width.
 For a human, set `figure.heightClass` and `figure.headSizeClass`. A robot has no classes.
-A human selection has one `style` reference. A robot selection has one `identity` reference. A pose has one `locked-selection` reference.
+A human selection has one `style` reference: its matching accepted template.
+A robot selection has one `identity` reference. A pose has one `locked-selection` reference.
+The required style-block and color prompt checks still apply.
 
 The script reads these phrases in the prompt. Use them in each prompt, also when you do not use the script:
 

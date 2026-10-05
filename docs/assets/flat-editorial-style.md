@@ -6,29 +6,77 @@ direction.
 ## Style master
 
 On 2026-10-05 the product owner rejected the installed human roster as
-inconsistent in face realism, detail, and contour weight. The owner selected
-the installed Algorithmic Prophet drawing as the technique model.
+inconsistent in face realism, detail, and contour weight. The installed
+Algorithmic Prophet gives the owner's preference. The accepted reference set will
+define the reference technique, also for the regenerated Prophet.
 
-The style master is `character-style-master.png` in this folder. It is one
-sheet with three invented politicians: one short, one medium, and one tall.
-They are not game characters. The sheet is the only style reference image for
-a new human selection, and it gives the drawing technique only. The
-[style block](../../.github/skills/generate-character-openai/assets/style-block.txt)
-is the only style text. The product owner has not accepted a style master at
-this time. Do not generate a new human selection before that acceptance.
+The style master contains 18 separate native transparent square PNG files.
+The matrix contains every combination of short, medium, or tall height; fat, average, or thin build; and male or female presentation.
+Each file contains one invented politician. All sources use the same canvas dimensions and game selection canvas rules.
+All templates use usual heads: 19 through 22 percent of stature, with a target of 20.5 percent.
+Keep hair and jowls within the specified head box. Do not inflate head height with an oversized hairstyle.
 
-Record these values here after acceptance:
+For each new human selection, attach one accepted template that matches the researched height, build, and presentation.
+The character's own brief controls identity and likeness. Resolve uncertain categories instead of inventing a fallback.
+The template gives drawing technique only. A repeated category does not establish copied identity.
+Make comparison composites locally for inspection only. Do not generate sheets, lineups, collages, grids, strips, or multi-pose images.
+Generate one character per request and file. Preserve each complete native source.
+The [style block](../../.github/skills/generate-character-openai/assets/style-block.txt) is the only style text.
 
-| Value | Measurement |
-| --- | --- |
-| Source hash (SHA-256) | Not recorded |
-| Canvas dimensions | Not recorded |
+- Visual acceptance: pending. No accepted template sources are recorded.
+- Transfer validation: pending. No accepted transfer tests are recorded.
 
-| Figure | Stature, percent of canvas height | Head-height ratio | Median outer contour width for each 1000 pixels of reference height |
+The built-in chat route has no request budget or per-request approval step.
+Continue necessary generation and validation retries. Keep owner artistic acceptance separate from permission to continue attempts.
+A text-only pilot can establish the technique for provisional master generation after it passes measurement and rendering review.
+Do not treat that provisional reference as accepted art.
+After visual acceptance and owner authorization for Selection work, complete the two transfer tests in Specification 023.
+Record each test's source hash, matching template, review path, and owner acceptance here.
+Start other roster selections only after both tests pass and the owner accepts them.
+
+Record each source and its measurements after acceptance:
+
+| Source file | Source hash (SHA-256) | Canvas dimensions | Visual acceptance |
 | --- | --- | --- | --- |
-| Short | Not recorded | Not recorded | Not recorded |
-| Medium | Not recorded | Not recorded | Not recorded |
-| Tall | Not recorded | Not recorded | Not recorded |
+| `character-style-master-short-fat-male.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-short-fat-female.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-short-average-male.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-short-average-female.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-short-thin-male.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-short-thin-female.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-medium-fat-male.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-medium-fat-female.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-medium-average-male.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-medium-average-female.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-medium-thin-male.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-medium-thin-female.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-tall-fat-male.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-tall-fat-female.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-tall-average-male.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-tall-average-female.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-tall-thin-male.png` | Not recorded | Not recorded | Pending |
+| `character-style-master-tall-thin-female.png` | Not recorded | Not recorded | Pending |
+
+| Template | Stature, percent of canvas height | Head-height ratio | Median contour width per 1000 pixels of reference height |
+| --- | --- | --- | --- |
+| short-fat-male | Not recorded | Not recorded | Not recorded |
+| short-fat-female | Not recorded | Not recorded | Not recorded |
+| short-average-male | Not recorded | Not recorded | Not recorded |
+| short-average-female | Not recorded | Not recorded | Not recorded |
+| short-thin-male | Not recorded | Not recorded | Not recorded |
+| short-thin-female | Not recorded | Not recorded | Not recorded |
+| medium-fat-male | Not recorded | Not recorded | Not recorded |
+| medium-fat-female | Not recorded | Not recorded | Not recorded |
+| medium-average-male | Not recorded | Not recorded | Not recorded |
+| medium-average-female | Not recorded | Not recorded | Not recorded |
+| medium-thin-male | Not recorded | Not recorded | Not recorded |
+| medium-thin-female | Not recorded | Not recorded | Not recorded |
+| tall-fat-male | Not recorded | Not recorded | Not recorded |
+| tall-fat-female | Not recorded | Not recorded | Not recorded |
+| tall-average-male | Not recorded | Not recorded | Not recorded |
+| tall-average-female | Not recorded | Not recorded | Not recorded |
+| tall-thin-male | Not recorded | Not recorded | Not recorded |
+| tall-thin-female | Not recorded | Not recorded | Not recorded |
 
 The contour range is 2.80 through 3.20 for all playable characters, robots
 included. The reference height is 94 percent of the canvas height.
