@@ -52,6 +52,14 @@ Apply [the technical writing checks](PROSE.md) to all the files in each package.
 
 Raster work for playable characters uses
 [generate-character-openai](skills/generate-character-openai/SKILL.md).
+Each human selection uses exactly five distinct researched web photographs for likeness.
+Visually inspect each photograph before attachment.
+Use the fixed written style block for the drawing technique.
+Do not use design or style reference images.
+Keep fictional costume and props from the written brief.
+Keep real names out of generation requests.
+Use the accepted selection as the sole image input for its poses.
+Do not attach identity photographs for invented robots.
 Raster work for scenes uses
 [generate-scene-openai](skills/generate-scene-openai/SKILL.md).
 Use the built-in chat image generator for characters, poses, desks, props, and foregrounds.

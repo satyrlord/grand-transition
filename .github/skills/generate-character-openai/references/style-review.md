@@ -1,33 +1,26 @@
 # Examine style conformity
 
-Read this module before acceptance of a style master, a selection, or a pose.
+Read this module before acceptance of a selection or pose.
 Use it together with [candidate review](../../generate-scene-openai/references/candidate-review.md).
 
-## Make the comparison sheet
+## Examine the written art direction
 
-Make a local comparison composite from these separate files at one canvas scale, with the baselines aligned.
-Do not request a sheet, lineup, or collage from the image generator.
-Include these images:
-
-- The matching accepted style master and representative accepted masters from the other height and build classes.
-- The candidate.
-
-Do not make the figures equal in height. The sheet must show the height classes.
-Make one sheet on a light background and one sheet on a dark background.
-For a pose, also put its accepted selection on the sheet.
-For style master candidates, compare only the available candidates for the 18-master library.
-Review a text-only pilot against the fixed style block and measured requirements.
-Do not use installed roster art as a technique or comparison anchor.
-Use equal canvas heights. Do not make a lineup source file.
-The comparison sheets are inspection artifacts only. Do not use them as generation references.
-Keep the sheets in the task directory in `tmp/character-generation/`.
-Examine the sheets at source scale and at the roster, setup, and match scales.
+Examine the candidate against the fixed written style block and Specification 023.
+Use no image as a style standard.
+Make light and dark composites from the unchanged candidate for alpha and contour inspection.
+For a pose, compare its identity, costume, props, and construction with its accepted selection.
+Use equal canvas heights for that comparison. Do not equalize figure heights.
+For a human selection, compare likeness with all five researched photographs on a local resemblance sheet.
+Keep these inspection artifacts in the task directory in `tmp/character-generation/`.
+Do not attach a comparison sheet to a generation request.
+Examine the figure at source, roster, setup, and match scales.
 
 ## Measure the candidate
 
-Measure each style master candidate in its own source file.
+Measure each candidate in its unchanged source file.
 Confirm that each file contains exactly one complete figure.
-Confirm that all 18 reference sources have the same native square dimensions.
+Make sure that the source is a native square PNG of at least 1024 pixels per edge.
+For a robot, omit human stature and head-size classes. Examine its approved construction and figure height.
 
 Measure the stature from the top of the hair or the bare scalp to the shoe soles, without headwear.
 Calculate the stature as a percentage of the canvas height.
@@ -36,10 +29,10 @@ Compare it with the height class in the brief. Accept a difference of 2 points o
 Measure the head height from the chin to the top of the hair or the bare scalp.
 Divide the head height by the stature.
 Compare the result with the head-size class in the brief.
-All 18 reference masters use the usual class, with a target of 20.5 percent of stature.
+Use a target of 20.5 percent of stature for the usual head-size class.
 Hair volume, ears, cheeks, and the chin must stay inside that head-height allocation.
 Record the head-top and chin coordinates. Do not substitute face height for complete head height.
-Use the 19-22 percent acceptance range. The target does not remove that tolerance.
+Use the brief's head-size range: 19-22 percent for usual or 26-29 percent for an approved large head.
 
 Measure the outer contour width at twelve or more clear, straight outer edges.
 Use edges of the head, the two arms, the torso, and the two legs.
@@ -70,7 +63,7 @@ Do not demand identical measured widths between figures or body parts.
 Do not use a passing figure median to hide a body-part median outside the range.
 Also examine the complete contour for visible changes that the samples do not cover.
 
-Compare the central figure median and each central body-part median with the master-derived 3.90-4.20 range.
+Compare the central figure median and each central body-part median with the written 3.90-4.20 range.
 Record a numeric pass only when each median is inside that range and all required sample evidence is present.
 Report each model uncertainty interval separately, including `intervalOverlapsTargetBoundary`.
 An interval crossing a limit does not itself fail an in-range central median.
@@ -163,26 +156,25 @@ Reject the candidate when one of these conditions is true:
 - The head-height ratio is out of its head-size class.
 - The median contour width is out of its range.
 - A body-part contour measurement fails, or the complete contour shows a visible change in nominal weight.
-- The candidate has clearly more or less detail than the style master.
-- The candidate copies the face, costume, pose, or props of a figure in the style master reference set.
-- The candidate has a feature of a style master figure that its brief did not give, for example a nose, a head size, or a build.
+- The candidate has an unrequested feature that conflicts with its identity photographs or brief.
 - A feature that the brief did not name is exaggerated.
-- The rendering technique alone shows which sheet image is the candidate.
 
 Do not record a rendering defect as an advisory.
 Do not accept a candidate because a correction made it better than the previous candidate.
 Do not add a rendering exception to the style contract.
-After a rendering defect, generate again from the prompt and the style master.
+After a rendering defect, generate again from the prompt and its permitted identity references.
 Use an edit request only for a composition defect, for example a prop position or a margin.
 An edit request draws the lines again, so measure the contour width again after each edit.
 
 ## Keep resemblance and style apart
 
-Examine resemblance only after the candidate passes the rendering checks.
-Resemblance comes from the exaggerated shapes in the written brief.
+Examine resemblance before detailed measurements, as [selection generation](selection-generation.md) tells you.
+Use the identity photographs and named shapes in the brief to examine likeness.
+Keep resemblance and rendering as separate acceptance conditions.
 Compare the candidate with the research photographs on the resemblance sheet of [selection generation](selection-generation.md).
-If the resemblance is weak, make the named features stronger in the brief.
-Do not add a photograph, skin detail, or shading to a request to get resemblance.
+If resemblance is weak, select a clearer identity photograph or correct the named feature shapes in the brief.
+Generate the human selection again with five distinct identity photographs and the fixed written style block.
+Do not add skin detail or shading to get resemblance.
 
 ## Complete the review
 

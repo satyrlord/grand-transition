@@ -60,7 +60,13 @@ Apply these rules to characters, moderators, scenes, furniture, fixtures, and pr
 
 For character skins and states, apply the flat editorial cartoon direction of Milestone 023.
 Use clearly drawn faces, varied adult builds, strong caricature, and broad two-tone shading.
-Use the accepted style master as the shared style reference for human characters.
+Use the fixed written style block from the character skill for the drawing technique.
+Do not use design or style reference images.
+For each human selection, visually inspect and attach exactly five distinct researched web photographs for likeness.
+Keep fictional costume and props from the written brief.
+Keep real names out of generation requests.
+Use the accepted selection as the sole image input for its poses.
+Do not attach identity photographs for invented robots.
 Preserve approved robot identity and construction during owner-authorized,
 reviewed contour corrections.
 

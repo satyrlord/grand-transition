@@ -204,8 +204,9 @@ A fully mechanical character is clearly a robot.
 All generated representational raster art uses one flat cel-shaded editorial-cartoon language.
 New playable-character art uses **flat editorial cartoons** under Specification 023.
 Use clearly drawn faces, varied adult body and head shapes, and strong caricature.
-Use uniform bold dark contours, large clean shapes, and broad two-tone cel shading.
-Use the accepted style master as the only style reference for human characters.
+Use uniform thin dark contours, large clean shapes, and broad two-tone cel shading.
+Use the fixed written style block from the character skill for the drawing technique.
+Do not use design or style reference images.
 Keep the face and body in the same drawn style.
 Make each identity readable through its silhouette, clothing, gesture, and large signature prop.
 Keep props inside the visible runtime window.
@@ -254,7 +255,7 @@ are also installed. Keep its bald crown, mature clean-shaven drawn face, broad
 adult silhouette, navy suit, cream-white shirt, medium-blue tie, dark shoes,
 and single plain black pen. Its source faces right. Keep the complete head,
 pen, gripping fingers and defining gestures inside the visible match window
-above the desk. Preserve the accepted master's source-specific tonal drawing;
+above the desk. Preserve the accepted selection's source-specific tonal drawing;
 it does not change the direction for new selections.
 The approved Diaspora Oracle selection and five reviewed matching poses are
 also installed under the authorized package integration. Keep its short swept
@@ -282,12 +283,18 @@ lapel hold. Keep the face, full envelope, note edges, and gripping fingers
 above desk occlusion. Idle uses Selection, Comeback uses Delivery, and
 Grammar-mistake uses Weakness.
 See [Specification 023](docs/specs/spec-023-assets-visual-system.md) for integration and runtime verification status.
-Before each new master, visually inspect at least three distinct usable web photographs and target five.
-Use more when likeness is unclear, with varied views from a coherent chosen era.
-Do not count duplicates or resized copies. Correct conflicting private notes.
+Before each new human selection, research exactly five distinct usable web photographs.
+Visually inspect each photograph. Use varied views from a coherent chosen era.
+Do not count duplicates, crops, or resized copies as distinct photographs. Correct conflicting private notes.
 Compare source images, small roster crops, setup portraits, and match compositions on the two player sides.
-Use the accepted style master as the only style reference image for a new human character. It gives the drawing technique only.
+Use the fixed written style block for each new human selection.
+Attach exactly five researched photographs as identity references for each new human selection.
+Use the photographs and written brief for likeness. Keep the fictional costume, props, and proportions from the brief.
+Do not copy photographic lighting or skin texture. Examine likeness before detailed measurements.
 Do not use an installed character as a style reference.
+Use the accepted selection as the sole image input for its poses.
+Keep photographs out of pose requests. Keep real names out of all character generation requests.
+Do not attach identity photographs for invented robots.
 Preserve approved robot identity, composition, and props during reviewed contour corrections.
 
 Fixed moderators, scene architecture, furniture, fixtures, and props use the same broad cartoon rendering.

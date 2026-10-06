@@ -48,4 +48,5 @@ That helper checks `sceneIdentity`, `style`, `composition`, `layering`, `interfa
 
 Keep agent review distinct from product-owner acceptance.
 If an image cannot be viewed, report the candidate path and the uncompleted visual review.
-For characters, obtain product-owner acceptance of the style master before a human selection.
+For human selections, use written artistic instructions and five distinct researched web identity photographs.
+Obtain owner acceptance of the selection before poses or integration.

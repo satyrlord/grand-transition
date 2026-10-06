@@ -45,7 +45,7 @@ Each new generated temporary portrait or scene uses the flat cel-shaded editoria
 The temporary status can decrease the state count, the variant count, and the finish depth.
 It cannot use a different rendering style.
 New playable portraits use the flat editorial cartoon direction and researched identity workflow in Milestone 023.
-Use the strong caricature of the accepted style master and distinct silhouettes.
+Use the fixed written style block for strong caricature and distinct silhouettes.
 The temporary status does not permit realistic faces or mixed rendering.
 Preserve approved robot identity and construction. An owner-authorized,
 reviewed contour correction can replace its source pixels under Milestone 023.

@@ -7,7 +7,6 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const styleBlockPaths = ['style-block.txt', 'style-block-robot.txt'].map((name) =>
   path.resolve(scriptDirectory, '../assets', name),
 );
-const photographPattern = /\b(?:photo|photograph)s?\b/iu;
 
 const squash = (text: string) => text.replace(/\s+/gu, ' ').trim();
 
@@ -18,8 +17,6 @@ export function checkStyleBlock(prompt: string, styleBlocks: string[]): string[]
     issues.push(
       'The style block is missing or changed. Copy assets/style-block.txt for a human, or assets/style-block-robot.txt for a robot, word for word.',
     );
-  if (photographPattern.test(normalized))
-    issues.push('The prompt refers to a photograph. Send a written identity brief only.');
   return issues;
 }
 

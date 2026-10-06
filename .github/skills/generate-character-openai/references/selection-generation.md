@@ -1,17 +1,15 @@
 # Generate a selection candidate
 
 Read this module before selection generation or selection review.
-Do not start before the product owner accepts the [style master](style-master.md).
-Until transfer validation is complete, limit authorized Selection work to the two tests in Specification 023.
-Examine the transfer status in the [style contract](../../../../docs/assets/flat-editorial-style.md) before other roster work.
+Use the written art direction in the [style contract](../../../../docs/assets/flat-editorial-style.md).
+Generate only the human selections that the owner authorized.
 
 ## Research identity before selection generation
 
 Before each new selection, confirm the private inspiration mapping.
 Open reliable, clearly labeled web sources.
-Visually inspect at least three distinct usable photographs of that subject.
-Target five photographs.
-Inspect more when the likeness remains unclear.
+Find and visually inspect five distinct usable web photographs of that subject.
+Inspect more when likeness remains unclear, then select five clear photographs for attachment.
 Do not count duplicates, crops, or resized copies of the same photograph as different images.
 Choose varied views and expressions, with front, three-quarter, and profile views when available.
 Do not infer appearance from search snippets, an unviewed image, or a stale private description.
@@ -33,10 +31,17 @@ Poses inherit the researched, accepted selection and do not need a new web study
 
 ## Write the caricature brief
 
-The research photographs are for the agent only.
-Do not attach a photograph to a generation request.
+Select five distinct researched photographs from the selected era.
+Include front, three-quarter, and profile views when available.
+Use varied expressions and at least one view that shows the build.
+Inspect each selected photograph before attachment.
+Keep the selected files and their source URLs in the task record.
+Attach only those five photographs to a human selection request.
+Use photographs for face shape, feature relationships, hair shape, age cues, and build only.
+Use the fixed written style block for the drawing technique.
+Do not copy photographic lighting, skin texture, costume, scenery, or props.
 Do not put the name of the subject in a prompt.
-A photograph in the request makes the generator copy realistic skin and portrait shading.
+Keep the fictional role, costume, props, and proportions in the written brief.
 
 Change the research into a written caricature brief:
 
@@ -55,7 +60,7 @@ Keep the approved whole-head proportion. Do not substitute an oversized geometri
 Keep the fictional public identity and approved species.
 Give each character a different face shape, build, and silhouette.
 Exaggerate a feature only when the research shows that it identifies this subject.
-Do not copy an exaggerated feature from a different character or from the style master.
+Do not copy an exaggerated feature from a different character.
 Keep the caricature strength the same for all characters.
 
 ## Set the height and the head size
@@ -96,23 +101,22 @@ Do not add a global warm wash, text, labels, scenery, or extra subjects.
 ## Generate the shipping candidate
 
 Use the built-in chat image generator.
-Select one accepted template from the [style contract](../../../../docs/assets/flat-editorial-style.md).
-Match the researched height, build, and presentation to
-`docs/assets/character-style-master-{height}-{build}-{male|female}.png`.
-Record the selected categories and source path in the character study.
-Resolve an unclear category from the study or the owner. Do not invent a fallback or silently choose a different category.
-Attach only that matching template. Do not attach the full set or a comparison sheet.
+Choose the height, head-size, and build from the researched study.
+Resolve an unclear category from the study or owner. Do not invent a fallback.
+Attach the five selected identity photographs in their recorded order.
+Do not attach a design template, installed character, generated candidate, or comparison sheet.
 Use this text, word for word, as the image-role part of the prompt:
 
 ```text
-The attached image is the matching style reference template. It shows one other fictional character.
-Use only its drawing technique: the weight of the outer line, the flat colors,
-the hard two-tone shading, and the individual faces drawn with natural anatomy and purposeful lines.
-Draw one new character in that technique. The new character is not the reference person.
-Use the height, the head, the face, and the build that this prompt gives.
+The five attached images are distinct researched web photographs of the same identity subject.
+Use them only for the subject's likeness: face shape, feature relationships, hair shape, age cues, and build.
+Do not copy their lighting, skin texture, costume, background, or props.
+Use only the fixed written style block for the drawing technique. No image is a style reference.
+Keep the new character's fictional role, costume, props, and proportions from the written brief.
 ```
 
-Request one square native-transparent PNG at the canvas dimensions of the matching template.
+Request one native transparent square PNG of at least 1024 pixels per edge.
+Give the requested canvas size in the prompt. Record the observed output size without enlargement.
 Request the stature and the positions of the height class of the character.
 Do not generate a separate draft when the same request can make a shipping candidate.
 Save the returned source unchanged in the task directory.
@@ -122,15 +126,22 @@ Record the model only if the tool exposes it.
 
 ## Examine and present
 
-Use [style review](style-review.md) first.
+Compare the face with all five identity photographs before detailed measurements.
+Examine the comic expression and action against the written role.
+Reject a generic face even when the costume and prop are correct.
+Identify the missing or incorrect features before the next request.
+Change the five-photo set or brief when likeness fails.
+Do not repeat only style corrections while the face stays generic.
+Then use [style review](style-review.md).
 Then use [candidate review](../../generate-scene-openai/references/candidate-review.md).
 Reject photographic facial rendering, mixed rendering, generic identity, damaged anatomy, missing props, duplicate props, or crop loss.
 Natural facial anatomy and believable clothing construction are required, not rejection reasons.
-After the rendering checks pass, compare the candidate with the researched subject.
+Examine resemblance and rendering as separate conditions for acceptance.
 Put the candidate and the research photographs side by side on one resemblance sheet.
 Keep that sheet in the task directory in `tmp/character-generation/`. Do not put it in a request, in `research/`, or in the repository.
 Do not accept style agreement as proof of resemblance.
-If the resemblance is weak, make the named features stronger in the brief and generate again.
+If resemblance is weak, select a clearer identity photograph or correct the named feature shapes in the brief.
+Generate again with five distinct identity photographs and the fixed written style block.
 Continue necessary built-in chat retries without an attempt cap or per-request approval.
 Ask the owner only when an unresolved identity decision prevents a grounded brief.
 Inspect actual transparency with [native alpha](../../generate-scene-openai/references/native-alpha.md).
@@ -142,11 +153,9 @@ node tools/character-runtime-window.ts <candidate.png> <overlay.png>
 ```
 
 Inspect the face, silhouette, contour, and prop at source and runtime scales.
-Show the comparison sheets, the resemblance sheet, the light and dark composites, and the runtime window to the product owner.
+Show the resemblance sheet, light and dark composites, and runtime window to the product owner.
 The product owner decides the resemblance.
-Reject a feature copied from the style master when the character's own brief did not give it.
-Accept shared head-size classes, height classes, nose categories, and builds when the brief gives them.
-Judge copied identity from the combination of features, not from one shared category.
+Reject generic identity or an unrequested feature that conflicts with the photographs and brief.
 Check small roster crops, setup portraits, and the two match sides.
 Do not call isolated thumbnails production-browser evidence.
 

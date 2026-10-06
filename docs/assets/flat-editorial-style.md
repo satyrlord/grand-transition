@@ -2,84 +2,28 @@
 
 [Specification 023](../specs/spec-023-assets-visual-system.md) controls the art direction.
 
-## Style master
+## Written character art direction
 
-The complete reference library contains 18 separate 1254-square transparent PNG files.
-Each file contains one invented adult politician. No generated sheet supplied these sources.
-Only these 18 files are shared human style references. Installed game art and old candidates are not references.
+Use text-based artistic instructions and five distinct researched web identity photographs for each new human selection.
+Use no design reference template or image style reference.
+The [fixed human style block](../../.github/skills/generate-character-openai/assets/style-block.txt) controls the drawing technique.
+Use the photographs and brief for likeness.
+Use the brief for fictional costume, props, proportions, expression, and comic action.
+Inspect all five photographs before attachment. Record their sources and order privately.
 
-The owner authorized the complete matrix and thinner contours on 2026-10-05.
-All 18 final files passed local proportion, transparency, contour, construction, material and visual review.
-This records agent review. It does not invent owner artistic acceptance or authorization for roster Selection work.
-Transfer validation remains pending until the two tests in Specification 023 pass and the owner accepts them.
+Use the height and head-size classes in Specification 023.
+Keep the written contour target of 4.1 per 1000 reference-height pixels and the median range of 3.90 through 4.20.
+Reference height is 94 percent of the canvas height.
+Calibrate contour measurement with deterministic analytic raster tests, independent of character artwork.
 
-Use every combination of short, medium or tall height; fat, average or thin build; and male or female presentation.
-All templates use usual heads: 19–22 percent of stature, with a target of 20.5 percent.
-Use natural facial anatomy and purposeful expression lines. Keep skin flat and untextured.
-Preserve buttons, belts, buckles, pockets, cuffs, plausible trouser folds and constructed laced shoes.
-Hair uses a flat base and one broad shadow, with only meaningful part or section lines.
-Each clothing or shoe material uses a flat base and one hard shadow. Shoes may have a small flat highlight.
+Examine likeness and comic expression before detailed measurements.
+Reject generic identity and incorrect rendering as separate defects.
+Show the owner the resemblance sheet, light and dark composites, and conservative runtime-window overlay.
+Owner acceptance of one selection does not approve other characters.
 
-Target 4.1 contour units per 1000 pixels of reference height. Accept central figure and body-part medians from 3.90 through 4.20.
-Reference height is 94 percent of canvas height, not the figure's stature.
-At 1254 square, the unrounded source-pixel range is 4.597164–4.950792.
-Every final source has at least 12 independent manually reviewed samples: two for the head, each arm, torso and each leg.
-The regenerated fat female masters have additional shoe-edge evidence and complete native footwear review.
-The manifest contains 220 valid samples. Model-ineligible supplementary shoe patches are recorded separately
-and are not measured passes.
-All figure and body-part medians pass. The noisy model reports a separate conditional 0.22-source-pixel margin.
-That margin is not a confidence interval for arbitrary art. A boundary-crossing interval does not narrow the approved median range.
-
-The [manifest](character-style-master-manifest.json) contains every final hash, source provenance, sample coordinates,
-individual measurements and uncertainty intervals. The [short-average sample record](character-style-master-contour-samples.json)
-reproduces its calibrated measurement. Left and right mean canvas sides.
-
-Height-class targets are 82, 88 and 94 percent of the canvas, with a two-percentage-point tolerance.
-All sole bounds end at row 1240 when measured at alpha >=128, leaving a 13-pixel measured bottom margin.
-Some antialiasing fringes extend one additional faint row: the fully transparent bottom margin is 12–13 rows.
-These sources reclaim the unused space below the shoes while keeping one common baseline.
-
-The built-in chat generator produced the native sources and the final matte-footwear edits.
-The owner rejected the short-fat-female and medium-fat-female chin artifacts and heavy shoe borders on 2026-10-06.
-Both complete figures and their shoes were regenerated from scratch.
-Their final jaw and footwear reviews include enlarged light and dark views and additional calibrated shoe samples.
-No rejected figure or shoe pixels enter either replacement.
-Owner-authorized local asset preparation standardized framing, material colors and one narrow outer contour.
-For the other 16 masters, the earlier footwear integration preserved every source alpha value and every pixel outside its reviewed shoe masks. Those 16 canonical files are unchanged.
-Raw outputs, rejected attempts, prompts, mask overlays and the original selected contour source remain preserved in the task record.
-Final files are reviewed derivatives. Do not describe them as unchanged raw generator outputs.
-
-| Template | Stature, % of canvas | Head, % of stature | Median contour per 1000 reference pixels |
-| --- | ---: | ---: | ---: |
-| [short-fat-male](character-style-master-short-fat-male.png) | 82.06 | 20.21 | 4.001 |
-| [short-average-male](character-style-master-short-average-male.png) | 82.06 | 19.43 | 4.028 |
-| [short-thin-male](character-style-master-short-thin-male.png) | 82.06 | 19.98 | 4.002 |
-| [medium-fat-male](character-style-master-medium-fat-male.png) | 87.96 | 20.04 | 4.049 |
-| [medium-average-male](character-style-master-medium-average-male.png) | 88.20 | 19.37 | 4.017 |
-| [medium-thin-male](character-style-master-medium-thin-male.png) | 88.12 | 19.34 | 4.032 |
-| [short-fat-female](character-style-master-short-fat-female.png) | 81.98 | 20.82 | 4.070 |
-| [short-average-female](character-style-master-short-average-female.png) | 82.06 | 21.87 | 4.071 |
-| [short-thin-female](character-style-master-short-thin-female.png) | 82.14 | 21.55 | 4.042 |
-| [medium-fat-female](character-style-master-medium-fat-female.png) | 88.20 | 19.80 | 4.062 |
-| [medium-average-female](character-style-master-medium-average-female.png) | 88.04 | 20.47 | 4.024 |
-| [medium-thin-female](character-style-master-medium-thin-female.png) | 88.04 | 20.74 | 4.050 |
-| [tall-fat-male](character-style-master-tall-fat-male.png) | 94.02 | 20.29 | 4.014 |
-| [tall-average-male](character-style-master-tall-average-male.png) | 94.18 | 19.75 | 4.010 |
-| [tall-thin-male](character-style-master-tall-thin-male.png) | 94.02 | 20.03 | 4.009 |
-| [tall-fat-female](character-style-master-tall-fat-female.png) | 94.10 | 20.87 | 4.030 |
-| [tall-average-female](character-style-master-tall-average-female.png) | 94.18 | 21.44 | 4.003 |
-| [tall-thin-female](character-style-master-tall-thin-female.png) | 94.02 | 21.22 | 4.027 |
-
-For a new human selection, attach one accepted template that matches the researched height, build and presentation.
-Its own brief controls identity, proportions within the approved classes, costume and props.
-The template supplies drawing technique only. Resolve an unclear category instead of inventing a fallback.
-A pose uses its own accepted selection as its sole identity reference; it does not become a shared style reference.
-The [fixed style block](../../.github/skills/generate-character-openai/assets/style-block.txt) is the only human style text.
-The built-in chat route has no request cap or per-request approval. Flare API budgets do not apply.
-Never generate a sheet, lineup, collage, grid, strip or multi-pose image. Local comparison composites are inspection artifacts only.
-
-The 3.90–4.20 range also applies to robots. Preserve each approved robot's identity and construction during authorized replacement.
-The installed packages below are an inventory, not references. Their historical rendering exceptions do not apply to new art.
+Use an accepted selection as the sole pose identity reference.
+For an authorized robot replacement, use the approved robot selection as the sole identity reference and the fixed written robot style block.
+The installed packages below are an inventory of accepted art, not style references for new selections.
 
 ## Installed packages
 

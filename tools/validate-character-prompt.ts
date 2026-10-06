@@ -11,7 +11,7 @@ export const CHARACTER_STATES = Object.freeze([
   'heavy-hit',
   'weakness',
 ]);
-const REFERENCE_ROLES = ['style', 'identity', 'locked-selection'] as const;
+const REFERENCE_ROLES = ['identity', 'locked-selection'] as const;
 const HANDS = ['canvas-left', 'canvas-right', 'both'] as const;
 // Specification 023: the stature is from the top of the hair or the bare scalp to the shoe soles.
 export const HEIGHT_CLASSES = Object.freeze({ short: 82, medium: 88, tall: 94 });
@@ -253,12 +253,18 @@ export function checkBrief(brief: CharacterBrief, context: BriefContext): string
   }
   const roles = brief.references.map((reference) => reference.role);
   if (brief.state === 'selection') {
-    // A human selection attaches the style master. A robot selection attaches its approved selection.
-    const role = brief.species === 'robot' ? 'identity' : 'style';
-    if (roles.length !== 1 || roles[0] !== role)
+    if (brief.species === 'human') {
+      if (roles.length !== 5 || roles.some((role) => role !== 'identity'))
+        issues.push(
+          'A human selection must have five identity photograph references and no image style reference.',
+        );
+      if (new Set(brief.references.map(({ sha256 }) => sha256)).size !== brief.references.length)
+        issues.push('Use five distinct identity photographs. Do not repeat a source file.');
+    } else if (roles.length !== 1 || roles[0] !== 'identity') {
       issues.push(
-        `A ${brief.species} selection needs one ${role} reference as the only reference.`,
+        'A robot selection must have its approved identity reference as the only reference.',
       );
+    }
   } else if (roles.length !== 1 || roles[0] !== 'locked-selection') {
     issues.push('A pose request needs the locked selection as the only reference.');
   }

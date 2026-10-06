@@ -1,6 +1,5 @@
 import { execFile } from 'node:child_process';
-import { createHash } from 'node:crypto';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
@@ -172,18 +171,37 @@ function addNativeNoise(
 }
 
 describe('character contour coverage measurement', () => {
-  test('pins the reviewed short-average master and measures two valid sites per body part', async () => {
-    const source = await readFile('docs/assets/character-style-master-short-average-male.png');
-    const samples = JSON.parse(
-      await readFile('docs/assets/character-style-master-contour-samples.json', 'utf8'),
-    ) as { sourceSha256: string; selection: string; model: 'noisy'; samples: ContourSample[] };
-    const approvedHash = '577e83aef46ae5a4455ad9ae7808c8e5cbd45e55065f4933a21fc163dd78ccc3';
-    expect(createHash('sha256').update(source).digest('hex')).toBe(approvedHash);
-    expect(samples.sourceSha256).toBe(approvedHash);
-    expect(samples.selection).toBe('manual');
-    expect(samples.model).toBe('noisy');
+  test('measures two independent near-opaque analytic sites per body part after PNG encoding', async () => {
     expect(CONTOUR_RANGE).toEqual([3.9, 4.2]);
     expect(CONTOUR_TARGET).toBe(4.1);
+    const raster: Raster = { width: 64, height: 1254, data: new Uint8Array(64 * 1254 * 4) };
+    const samples: ContourSample[] = [];
+    const targetWidthPx = (CONTOUR_TARGET * (0.94 * raster.height)) / 1000;
+    const ink: Color = [10, 12, 14],
+      fill: Color = [150, 160, 170];
+    for (const part of BODY_PARTS)
+      for (let n = 0; n < 2; n++) {
+        const index = samples.length;
+        const patch = fixture({
+          width: targetWidthPx,
+          phase: index / 12,
+          slope: n === 0 ? 0 : 0.3,
+          axis: n === 0 ? 'x' : 'y',
+          direction: n === 0 ? 1 : -1,
+          ink,
+          fill,
+        });
+        for (let i = 3; i < patch.raster.data.length; i += 4)
+          patch.raster.data[i] = Math.round((patch.raster.data[i] * 253) / 255);
+        const offset = index * 64;
+        raster.data.set(patch.raster.data, offset * raster.width * 4);
+        samples.push({ ...patch.sample, id: `${part}-${n}`, part, y: patch.sample.y + offset });
+      }
+    const source = await sharp(raster.data, {
+      raw: { width: raster.width, height: raster.height, channels: 4 },
+    })
+      .png()
+      .toBuffer();
     const { data, info } = await sharp(source)
       .toColourspace('srgb')
       .ensureAlpha()
@@ -191,11 +209,20 @@ describe('character contour coverage measurement', () => {
       .toBuffer({ resolveWithObject: true });
     const report = measureContours(
       { width: info.width, height: info.height, data },
-      samples.samples,
-      samples.model,
+      samples,
+      'noisy',
     );
     expect(report.samples).toHaveLength(12);
-    expect(report.samples.every((sample) => sample.status === 'measured')).toBe(true);
+    expect(
+      report.samples.every((sample) => sample.status === 'measured'),
+      JSON.stringify(report.samples),
+    ).toBe(true);
+    expect(
+      report.samples.every(
+        (sample) =>
+          Math.abs(sample.widthPx! - targetWidthPx) < NOISY_CALIBRATION.syntheticErrorBoundPx,
+      ),
+    ).toBe(true);
     expect(report.duplicateSites).toBe(false);
     expect(
       report.parts.every((part) => part.usableSamples === 2 && part.assessment?.range === 'inside'),

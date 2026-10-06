@@ -27,8 +27,9 @@ Automatic skill selection is not that instruction.
 - [`full-code-review`](full-code-review/SKILL.md): Review a diff, branch,
   milestone, or full checkout.
 - [`generate-character-openai`](generate-character-openai/SKILL.md): Generate
-  the character style master, flat editorial cartoon selections, and five-pose
-  packages with native transparency in chat.
+  flat editorial cartoon selections and five-pose packages with native transparency
+  in chat. Human selections use exactly five visually inspected distinct web
+  photographs for likeness and fixed written art instructions for drawing technique.
 - [`generate-scene-openai`](generate-scene-openai/SKILL.md): Generate or edit
   researched, richly detailed cartoon scenes with clear character contrast.
   Use Flare only for opaque 4K backgrounds and chat for other raster assets.

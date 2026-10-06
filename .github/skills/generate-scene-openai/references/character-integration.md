@@ -26,7 +26,8 @@ Do not enlarge an undersized candidate.
 Use [native alpha preparation](native-alpha.md).
 This procedure includes the raw inspection, the bounded cleanup when it applies, and the review of the prepared image.
 Compare characters at one canvas scale.
-Use the accepted style master as the only style reference image for a human character.
+Examine human art against the fixed written style block and Specification 023.
+Do not use an image style reference. Compare likeness with the five researched identity photographs.
 Do a check of the drawn face, varied adult proportions, broad shapes, and two-tone shading.
 Also do a check of the facial features and the requested edit.
 Do a check of the facing direction, the full-body silhouette, the props, the full extremities, and the safe outer margins.

@@ -5,7 +5,7 @@ The product owner authorized this regeneration on 2026-10-05, so that each robot
 
 ## Know the differences from a human character
 
-- A robot does not use the style master. The style master shows humans.
+- A robot uses written artistic instructions without a design template.
 - A robot uses the [robot style block](../assets/style-block-robot.txt) as its only style text.
 - A robot has no height class and no head-size class. It keeps the proportions of its approved selection.
 - A robot needs no photograph research. Its identity is the approved selection and Specification 023.

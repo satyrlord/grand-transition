@@ -96,7 +96,7 @@ Keep the desk mass in the lower third of the
 stage, so that the candidates stay dominant. Default characters and scene
 figures stay recognizably adult, with coherent anatomy. Playable portraits use
 the flat editorial cartoon direction of Milestone 023, with varied adult builds
-and the strong caricature of its style master. Keep signature props visible above desk occlusion.
+and strong caricature from its fixed written art instructions. Keep signature props visible above desk occlusion.
 Do not use child or chibi proportions, realistic facial rendering, or photographic skin detail.
 
 The match uses the setup skin ID of each player only to select the portrait

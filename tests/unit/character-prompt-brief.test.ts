@@ -1,8 +1,10 @@
 import { spawnSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 import { afterAll, describe, expect, test } from 'vitest';
+import { checkStyleBlock } from '../../.github/skills/generate-character-openai/scripts/check-style-block.ts';
 import { analyzeRuntimeWindow, RUNTIME_WINDOW } from '../../tools/character-runtime-window.ts';
 import {
   checkBrief,
@@ -14,6 +16,11 @@ import {
 const helper = path.resolve('.github/skills/generate-scene-openai/scripts/scene-image.ts');
 const lockedHash = 'a'.repeat(64);
 const styleHash = 'b'.repeat(64);
+const identityHash = 'c'.repeat(64);
+const identityPhotographs = ['c', 'd', 'e', 'f', '0'].map((value) => ({
+  role: 'identity' as const,
+  sha256: value.repeat(64),
+}));
 const study = '- `delivery`: He raises the prayer beads in one hand.\n';
 const common = `The only image reference is the accepted selection. The stature is 82 percent of the canvas height, and the shoe soles are at y 99 percent. The head is 19 to 22 percent of his height. Use exactly one loop of prayer beads. Every pixel outside the contour must have zero alpha. No glow, halo, or backlight. The head faces canvas right.
 Neutral sRGB white balance. Ungraded colors. Warm color is local to skin. No whole-image color tint.`;
@@ -54,13 +61,63 @@ const delivery = () =>
   );
 
 describe('character prompt brief', () => {
-  test('accepts a human selection that attaches only the style master', () => {
+  test('accepts a human selection with five distinct identity photographs and no style template', () => {
     const { brief, prompt } = delivery();
     brief.state = 'selection';
-    brief.references = [{ role: 'style', sha256: styleHash }];
-    expect(checkBrief(brief, { prompt, referenceHashes: [styleHash] })).toEqual([]);
-    brief.references = [];
-    expect(checkBrief(brief, { prompt }).join('\n')).toContain('one style reference');
+    brief.references = identityPhotographs;
+    const referenceHashes = brief.references.map(({ sha256 }) => sha256);
+    const selectionPrompt = prompt.replace(
+      'The only image reference is the accepted selection.',
+      'The five images are researched web photographs for identity only.',
+    );
+    expect(checkBrief(brief, { prompt: selectionPrompt, referenceHashes })).toEqual([]);
+    expect(
+      checkBrief(brief, { prompt, referenceHashes: [...referenceHashes].reverse() }).join('\n'),
+    ).toContain('reference files');
+  });
+
+  test.each([0, 1, 4, 6])('rejects a human selection with %i identity photographs', (count) => {
+    const { brief, prompt } = delivery();
+    brief.state = 'selection';
+    brief.references = Array.from({ length: count }, (_, index) => ({
+      role: 'identity',
+      sha256: String(index).repeat(64),
+    }));
+    expect(checkBrief(brief, { prompt }).join('\n')).toContain(
+      'five identity photograph references',
+    );
+  });
+
+  test('rejects a repeated photograph and a non-photo selection reference', () => {
+    const { brief, prompt } = delivery();
+    brief.state = 'selection';
+    brief.references = identityPhotographs.map((reference) => ({ ...reference }));
+    brief.references[4] = brief.references[0]!;
+    expect(checkBrief(brief, { prompt }).join('\n')).toContain(
+      'five distinct identity photographs',
+    );
+    brief.references = identityPhotographs.map((reference) => ({ ...reference }));
+    brief.references[4]!.role = 'locked-selection';
+    expect(checkBrief(brief, { prompt }).join('\n')).toContain('no image style reference');
+  });
+
+  test('rejects the retired style-reference role in the brief schema', () => {
+    const { brief } = delivery();
+    expect(() =>
+      parseBrief({
+        ...brief,
+        state: 'selection',
+        references: [{ role: 'style', sha256: styleHash }, ...identityPhotographs],
+      }),
+    ).toThrow('references need a role (identity, locked-selection)');
+  });
+
+  test('rejects an identity photograph added to a pose reference', () => {
+    const { brief, prompt } = delivery();
+    brief.references.push({ role: 'identity', sha256: identityHash });
+    expect(checkBrief(brief, { prompt }).join('\n')).toContain(
+      'locked selection as the only reference',
+    );
   });
 
   test('rejects a prompt whose stature or head size differs from its classes', () => {
@@ -97,6 +154,10 @@ describe('character prompt brief', () => {
     });
     const robotPrompt = prompt.replace(/The stature[^.]*\. The head is[^.]*\./u, '');
     expect(checkBrief(robot, { prompt: robotPrompt })).toEqual([]);
+    robot.references.push({ role: 'identity', sha256: styleHash });
+    expect(checkBrief(robot, { prompt: robotPrompt }).join('\n')).toContain(
+      'approved identity reference as the only reference',
+    );
     expect(() =>
       parseBrief({ ...robot, figure: { canvasPixels: 2048, heightClass: 'tall' } }),
     ).toThrow('robot figure');
@@ -146,7 +207,7 @@ describe('character prompt brief', () => {
     expect(checkBrief(brief, { prompt, referenceHashes: [styleHash] }).join('\n')).toContain(
       'reference files',
     );
-    brief.references = [{ role: 'style', sha256: styleHash }];
+    brief.references = [{ role: 'identity', sha256: styleHash }];
     expect(checkBrief(brief, { prompt }).join('\n')).toContain('locked selection');
   });
 
@@ -163,6 +224,29 @@ describe('character prompt brief', () => {
     const { brief, prompt } = delivery();
     const issues = checkBrief(brief, { prompt: prompt.replace('82 percent', '90 percent') });
     expect(issues.join('\n')).toContain('82 percent');
+  });
+});
+
+describe('character style block', () => {
+  const blocks = ['style-block.txt', 'style-block-robot.txt'].map((name) =>
+    readFileSync(path.resolve('.github/skills/generate-character-openai/assets', name), 'utf8'),
+  );
+
+  test('accepts researched identity photographs with the unchanged human style block', () => {
+    const prompt = `The five attached images are distinct researched web photographs for likeness only. Use the written style block for the drawing technique.\n${blocks[0]}`;
+    expect(checkStyleBlock(prompt, blocks)).toEqual([]);
+  });
+
+  test('rejects missing, changed or mixed style blocks even when identity photographs are present', () => {
+    for (const prompt of [
+      'Use the photograph for likeness.',
+      blocks[0]!.replace('STYLE BLOCK 8.', 'STYLE BLOCK 9.'),
+      blocks.join('\n'),
+    ]) {
+      expect(checkStyleBlock(prompt, blocks).join('\n')).toContain(
+        'style block is missing or changed',
+      );
+    }
   });
 });
 

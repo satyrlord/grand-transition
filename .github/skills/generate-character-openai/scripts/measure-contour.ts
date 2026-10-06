@@ -3,7 +3,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import sharp from 'sharp';
 
-// Owner-selected master: docs/assets/character-style-master-short-average-male.png.
+// Written contour range in Specification 023, independent of image style references.
 // Normalized to 1000 pixels of reference height (94% of the source canvas).
 export const CONTOUR_RANGE = [3.9, 4.2] as const;
 export const CONTOUR_TARGET = 4.1;

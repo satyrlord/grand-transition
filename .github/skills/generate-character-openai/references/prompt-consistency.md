@@ -29,17 +29,14 @@ Write each prompt with these parts, in this sequence:
 Do not write style words in parts 1 through 5.
 Do not add contour, shading, detail, or realism words outside the style block.
 The fixed image-role text of [selection generation](selection-generation.md) is the only exception for a selection.
-The image-role part of the master prompt in [style master](style-master.md) is the only exception for the style master.
 Do not start a prompt with a use-case label.
 Do not tell the generator to add detail to one character.
-For a human selection, attach one accepted template that matches the researched height, build, and presentation.
-The template shows one invented figure that is not a game character. Do not describe that identity in the prompt.
-The new character's brief controls identity and likeness. Resolve uncertain categories without inventing a fallback.
-Start a new style master pilot from text alone. An owner-directed revision can use the owner's preferred generated candidate as its source.
+For a human selection, attach five distinct researched web photographs as identity references.
+Do not attach an image style reference or design template.
+Use the photographs and brief for likeness. Use the brief for fictional costume, props, and proportions.
+Resolve uncertain categories without inventing a fallback.
 Do not use installed roster art as a preference or technique anchor.
-Use a supplied photograph for manual anatomy inspection only. Do not attach it or name a real person in the request.
-For later master candidates, a measured pilot that passes rendering review can be the sole provisional technique reference.
-Do not present the provisional pilot as owner-accepted art.
+Do not name a real person in a request.
 For a pose, the attached image is the accepted selection of that character.
 For a corrective request, keep the full style block in the prompt.
 
@@ -88,7 +85,8 @@ Use schema version 2 of that script.
 Set `species` to `human` or `robot`, and set `facing` to `left` or `right`.
 Set `figure.canvasPixels` to the native square width.
 For a human, set `figure.heightClass` and `figure.headSizeClass`. A robot has no classes.
-A human selection has one `style` reference: its matching accepted template.
+A human selection has five `identity` references, one for each selected photograph.
+Use distinct source files and record their source URLs and attachment order.
 A robot selection has one `identity` reference. A pose has one `locked-selection` reference.
 The required style-block and color prompt checks still apply.
 
