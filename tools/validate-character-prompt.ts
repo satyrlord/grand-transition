@@ -11,16 +11,8 @@ export const CHARACTER_STATES = Object.freeze([
   'heavy-hit',
   'weakness',
 ]);
-const REFERENCE_ROLES = ['identity', 'locked-selection'] as const;
+const REFERENCE_ROLES = ['style', 'identity', 'locked-selection'] as const;
 const HANDS = ['canvas-left', 'canvas-right', 'both'] as const;
-// Specification 023: the stature is from the top of the hair or the bare scalp to the shoe soles.
-export const HEIGHT_CLASSES = Object.freeze({ short: 82, medium: 88, tall: 94 });
-export const HEAD_SIZE_CLASSES = Object.freeze({
-  usual: [19, 22],
-  large: [26, 29],
-} as const);
-export const SOLE_Y_PERCENT = 99;
-export const EDGE_MARGIN_PERCENT = 1;
 const LIMB_WORD = /\b(?:hand(?!\s+(?:lines|articulation|detail))|arm|fist|palm|thumb)\b/iu;
 const SIDED_LIMB =
   /\bcanvas[- ](?:left|right)\s+(?:hand|arm|fist|palm|thumb)\b|\bboth\s+(?:hands|arms|fists)\b/iu;
@@ -36,21 +28,20 @@ interface PropBrief {
   runtimeVisibilityWaiver?: string;
 }
 export interface CharacterBrief {
-  schemaVersion: 2;
+  schemaVersion: 1;
   ownerId: string;
   skinId: string;
   state: string;
-  species: 'human' | 'robot';
-  facing: 'left' | 'right';
+  facing: 'right';
   promptFile: string;
   studyFile: string;
   action: string;
   stateText: string[];
-  // A robot keeps the placement of its approved selection and has no classes.
   figure: {
     canvasPixels: number;
-    heightClass?: keyof typeof HEIGHT_CLASSES;
-    headSizeClass?: keyof typeof HEAD_SIZE_CLASSES;
+    heightPercent: Range;
+    headHeightPercent: Range;
+    marginPx: number;
   };
   references: { role: (typeof REFERENCE_ROLES)[number]; sha256: string }[];
   props: PropBrief[];
@@ -68,6 +59,7 @@ const isRange = (value: unknown): value is Range =>
   value.length === 2 &&
   value.every((item) => typeof item === 'number' && Number.isFinite(item)) &&
   (value as number[])[0]! < (value as number[])[1]!;
+const rangeText = ([low, high]: Range) => `${low} to ${high} percent`;
 
 export function parseBrief(source: unknown): CharacterBrief {
   const brief = source as Partial<CharacterBrief> | undefined;
@@ -76,15 +68,12 @@ export function parseBrief(source: unknown): CharacterBrief {
     if (typeof value !== 'string' || !value.trim()) problems.push(`${key} must be text`);
   };
   if (!brief || typeof brief !== 'object') throw new Error('The brief must be a JSON object.');
-  if (brief.schemaVersion !== 2) problems.push('schemaVersion must be 2');
+  if (brief.schemaVersion !== 1) problems.push('schemaVersion must be 1');
   for (const key of ['ownerId', 'skinId', 'promptFile', 'studyFile', 'action'] as const)
     text(key, brief[key]);
   if (!CHARACTER_STATES.includes(String(brief.state)))
     problems.push(`state must be one of ${CHARACTER_STATES.join(', ')}`);
-  if (brief.species !== 'human' && brief.species !== 'robot')
-    problems.push('species must be human or robot');
-  if (brief.facing !== 'left' && brief.facing !== 'right')
-    problems.push('facing must be left or right');
+  if (brief.facing !== 'right') problems.push('facing must be right (the sources face right)');
   if (
     !Array.isArray(brief.stateText) ||
     !brief.stateText.length ||
@@ -92,21 +81,18 @@ export function parseBrief(source: unknown): CharacterBrief {
   )
     problems.push('stateText must list the state-specific text snippets');
   const figure = brief.figure;
-  if (!figure || !Number.isInteger(figure.canvasPixels) || figure.canvasPixels < 1024)
-    problems.push('figure needs canvasPixels of at least 1024');
-  else if (
-    brief.species === 'human' &&
-    (!Object.hasOwn(HEIGHT_CLASSES, String(figure.heightClass)) ||
-      !Object.hasOwn(HEAD_SIZE_CLASSES, String(figure.headSizeClass)))
+  if (
+    !figure ||
+    !Number.isInteger(figure.canvasPixels) ||
+    figure.canvasPixels < 1024 ||
+    !isRange(figure.heightPercent) ||
+    !isRange(figure.headHeightPercent) ||
+    typeof figure.marginPx !== 'number' ||
+    figure.marginPx < 0
   )
     problems.push(
-      `a human figure needs heightClass (${Object.keys(HEIGHT_CLASSES).join(', ')}) and headSizeClass (${Object.keys(HEAD_SIZE_CLASSES).join(', ')})`,
+      'figure needs canvasPixels of at least 1024, heightPercent, headHeightPercent, and marginPx',
     );
-  else if (
-    brief.species === 'robot' &&
-    (figure.heightClass !== undefined || figure.headSizeClass !== undefined)
-  )
-    problems.push('a robot figure has no heightClass and no headSizeClass');
   if (
     !Array.isArray(brief.references) ||
     brief.references.some(
@@ -158,29 +144,30 @@ export function checkBrief(brief: CharacterBrief, context: BriefContext): string
   for (const snippet of brief.stateText)
     if (!normalized.includes(squash(snippet)))
       issues.push(`The prompt does not contain the state text "${snippet.slice(0, 40)}...".`);
-  if (!new RegExp(`\\bfac(?:es?|ing)(?: toward)? canvas ${brief.facing}\\b`, 'iu').test(prompt))
-    issues.push(`The prompt does not say "faces canvas ${brief.facing}".`);
+  if (!/\bfacing canvas right\b|\bfacing toward canvas right\b/iu.test(prompt))
+    issues.push('The prompt does not say "facing canvas right".');
 
-  const { heightClass, headSizeClass } = brief.figure;
-  if (heightClass && headSizeClass) {
-    const stature = HEIGHT_CLASSES[heightClass];
-    if (!new RegExp(`\\b${stature} percent of the canvas height`, 'iu').test(prompt))
-      issues.push(
-        `The prompt stature must say "${stature} percent of the canvas height" for the ${heightClass} height class.`,
-      );
-    if (!new RegExp(`\\by ${SOLE_Y_PERCENT} percent`, 'iu').test(prompt))
-      issues.push(`The prompt must put the shoe soles at "y ${SOLE_Y_PERCENT} percent".`);
-    const [headLow, headHigh] = HEAD_SIZE_CLASSES[headSizeClass];
-    if (
-      !new RegExp(
-        `${headLow} to ${headHigh} percent of (?:his|her|its|the) (?:height|stature)`,
-        'iu',
-      ).test(prompt)
-    )
-      issues.push(
-        `The prompt head size must say "${headLow} to ${headHigh} percent of the stature" for the ${headSizeClass} head-size class.`,
-      );
-  }
+  const [heightLow, heightHigh] = brief.figure.heightPercent;
+  const heightMatch = new RegExp(
+    `${heightLow} to ${heightHigh} percent of the (?:${brief.figure.canvasPixels}-square )?canvas height`,
+    'iu',
+  );
+  if (!heightMatch.test(prompt))
+    issues.push(
+      `The prompt figure height must say "${rangeText(brief.figure.heightPercent)} of the ... canvas height".`,
+    );
+  const [headLow, headHigh] = brief.figure.headHeightPercent;
+  if (
+    !new RegExp(`${headLow} to ${headHigh} percent of the visible figure height`, 'iu').test(prompt)
+  )
+    issues.push(
+      `The prompt head size must say "${rangeText(brief.figure.headHeightPercent)} of the visible figure height".`,
+    );
+  const margins = [...prompt.matchAll(/at least (\d+) pixels/giu)].map((match) => Number(match[1]));
+  if (!margins.some((value) => value >= brief.figure.marginPx))
+    issues.push(
+      `The prompt must ask for at least ${brief.figure.marginPx} pixels of clear margin.`,
+    );
   if (!/zero alpha/iu.test(prompt) || !/\bno\b[^.]*\b(?:glow|backlight|halo)/iu.test(prompt))
     issues.push(
       'The prompt does not have the clean-cutout controls (zero alpha, no glow or halo).',
@@ -196,7 +183,7 @@ export function checkBrief(brief: CharacterBrief, context: BriefContext): string
         `Name the canvas side of each hand or arm. Ambiguous sentence: "${sentence.slice(0, 90)}".`,
       );
 
-  const marginPercent = EDGE_MARGIN_PERCENT;
+  const marginPercent = (brief.figure.marginPx / brief.figure.canvasPixels) * 100;
   for (const prop of brief.props) {
     const pattern = new RegExp(prop.pattern, 'iu');
     if (!pattern.test(lowered)) {
@@ -222,21 +209,12 @@ export function checkBrief(brief: CharacterBrief, context: BriefContext): string
       y0 < marginPercent ||
       y1 > 100 - marginPercent
     )
-      issues.push(`The zone of "${prop.id}" is inside the ${marginPercent} percent canvas margin.`);
+      issues.push(`The zone of "${prop.id}" is inside the ${brief.figure.marginPx} pixel margin.`);
     if (prop.signature && !prop.runtimeVisibilityWaiver) {
-      // The inner side is the side that the source faces.
-      const outsideInner =
-        brief.facing === 'right'
-          ? x0 < RUNTIME_WINDOW.innerXMinPercent
-          : x1 > 100 - RUNTIME_WINDOW.innerXMinPercent;
-      const innerText =
-        brief.facing === 'right'
-          ? `x from ${RUNTIME_WINDOW.innerXMinPercent} percent`
-          : `x to ${100 - RUNTIME_WINDOW.innerXMinPercent} percent`;
-      if (outsideInner || y1 > RUNTIME_WINDOW.yMaxPercent)
+      if (x0 < RUNTIME_WINDOW.innerXMinPercent || y1 > RUNTIME_WINDOW.yMaxPercent)
         issues.push(
           `The zone of the signature prop "${prop.id}" leaves the runtime window ` +
-            `(${innerText}, y to ${RUNTIME_WINDOW.yMaxPercent} percent). ` +
+            `(x from ${RUNTIME_WINDOW.innerXMinPercent} percent, y to ${RUNTIME_WINDOW.yMaxPercent} percent). ` +
             'The match screen clips the outer side and the desk hides the lower body. Move the prop to the inner-side hand at chest height or higher.',
         );
     }
@@ -253,18 +231,12 @@ export function checkBrief(brief: CharacterBrief, context: BriefContext): string
   }
   const roles = brief.references.map((reference) => reference.role);
   if (brief.state === 'selection') {
-    if (brief.species === 'human') {
-      if (roles.length !== 5 || roles.some((role) => role !== 'identity'))
-        issues.push(
-          'A human selection must have five identity photograph references and no image style reference.',
-        );
-      if (new Set(brief.references.map(({ sha256 }) => sha256)).size !== brief.references.length)
-        issues.push('Use five distinct identity photographs. Do not repeat a source file.');
-    } else if (roles.length !== 1 || roles[0] !== 'identity') {
+    if (roles.includes('locked-selection') || (roles.length > 0 && roles[0] !== 'style'))
       issues.push(
-        'A robot selection must have its approved identity reference as the only reference.',
+        'A selection can use text only, or a style reference first, with no locked selection.',
       );
-    }
+    if (roles.length > 1 && !/reference 2/iu.test(prompt))
+      issues.push('The prompt does not describe "Reference 2".');
   } else if (roles.length !== 1 || roles[0] !== 'locked-selection') {
     issues.push('A pose request needs the locked selection as the only reference.');
   }

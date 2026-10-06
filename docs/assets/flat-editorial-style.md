@@ -1,33 +1,7 @@
 # Flat editorial-cartoon style
 
-[Specification 023](../specs/spec-023-assets-visual-system.md) controls the art direction.
-
-## Written character art direction
-
-Use text-based artistic instructions and five distinct researched web identity photographs for each new human selection.
-Use no design reference template or image style reference.
-The [fixed human style block](../../.github/skills/generate-character-openai/assets/style-block.txt) controls the drawing technique.
-Use the photographs and brief for likeness.
-Use the brief for fictional costume, props, proportions, expression, and comic action.
-Inspect all five photographs before attachment. Record their sources and order privately.
-
-Use the height and head-size classes in Specification 023.
-Keep the written contour target of 4.1 per 1000 reference-height pixels and the median range of 3.90 through 4.20.
-Reference height is 94 percent of the canvas height.
-Calibrate contour measurement with deterministic analytic raster tests, independent of character artwork.
-
-Examine likeness and comic expression before detailed measurements.
-Reject generic identity and incorrect rendering as separate defects.
-Show the owner the resemblance sheet, light and dark composites, and conservative runtime-window overlay.
-Owner acceptance of one selection does not approve other characters.
-
-Use an accepted selection as the sole pose identity reference.
-For an authorized robot replacement, use the approved robot selection as the sole identity reference and the fixed written robot style block.
-The installed packages below are an inventory of accepted art, not style references for new selections.
-
-## Installed packages
-
-The product owner approved the three pilot selections and all
+[Specification 023](../specs/spec-023-assets-visual-system.md) controls the art
+direction. The product owner approved the three pilot selections and all
 fifteen matching poses, followed by the default and alternate Red-Folded
 Chairman selections and their five-pose packages, then Thunder Tribune's
 default selection and five poses. The owner also approved the alternate
@@ -61,7 +35,8 @@ poses are also installed under the owner-authorized package integration.
 The approved Reluctant Theorem selection and five reviewed matching poses are
 also installed under the owner-authorized package integration.
 All twenty-six packages are
-installed with their reviewed matching poses. Do not copy one
+installed with their reviewed matching poses. Use these
+distinct adult silhouettes together to compare rendering. Do not copy one
 character's identity into another.
 
 | Character | Canonical selection | Matching poses |
@@ -93,8 +68,8 @@ character's identity into another.
 | Apartment-Block Geopolitician | [Selection](../../src/assets/characters/apartment-block-geopolitician.png) | [Five poses](../../src/assets/characters/states/apartment-block-geopolitician/) |
 | Reluctant Theorem | [Selection](../../src/assets/characters/reluctant-theorem.png) | [Five poses](../../src/assets/characters/states/reluctant-theorem/) |
 
-Use naturally proportioned drawn faces, varied adult body and head shapes, restrained
-exaggeration, uniform thin contours, broad color shapes, and two-tone cel shading.
+Use clearly drawn faces, varied adult body and head shapes, moderate head
+exaggeration, controlled contours, broad color shapes, and two-tone cel shading.
 Keep face and body rendering consistent. Keep signature props visible at
 runtime scale. Avoid photographic skin detail, realistic portrait shading,
 and one repeated head template.

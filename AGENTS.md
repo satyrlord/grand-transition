@@ -166,12 +166,7 @@ Do not change the Vite `/grand-transition/` base path.
 
 All generated representational raster art must agree with the shared cel-shaded editorial-cartoon direction in Milestone 023.
 Character skins and states use the flat editorial cartoon direction of that milestone.
-Use the fixed written style block for the drawing technique. Do not use design or style reference images.
-For each human selection, visually inspect and attach exactly five distinct researched web photographs as identity references.
-Do not count duplicates, crops, or resized copies as distinct photographs.
-Use the photographs for likeness only. Keep fictional costume and props from the written brief.
-Use the accepted selection as the sole image input for its poses.
-Do not attach photographs for invented robots or pose requests. Do not put real names in character generation requests.
+Use the accepted three-character trial as the shared style reference after product-owner acceptance.
 Preserve approved robot identity and construction. Replace robot source pixels
 only for a product-owner-authorized, reviewed correction.
 Use the built-in chat image generator for characters, poses, desks, props, and foregrounds.

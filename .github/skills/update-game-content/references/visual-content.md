@@ -17,15 +17,8 @@ Apply it to each character, skin, state, moderator, scene, foreground plate, arc
 Do not accept painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, three-dimensional-render, or mixed-style output.
 
 For each character skin and state, use the flat editorial cartoon direction of Milestone 023.
-Use the fixed written style block from the character skill for the drawing technique.
-Do not use design or style reference images.
-For each human selection, visually inspect and attach exactly five distinct researched web photographs for likeness.
-Do not count duplicates, crops, or resized copies as distinct photographs.
-Keep fictional costume and props from the written brief.
-Keep real names out of generation requests.
-Use the accepted selection as the sole image input for its poses.
-Do not attach identity photographs for invented robots.
-Use clearly drawn faces, varied adult builds, strong caricature, and broad two-tone shading.
+Compare at equal figure height with the accepted three-character trial after product-owner acceptance.
+Use clearly drawn faces, varied adult proportions, moderate head exaggeration, and broad two-tone shading.
 Preserve approved robot identity and construction during owner-authorized,
 reviewed contour corrections.
 

@@ -25,12 +25,10 @@ Use the built-in chat image generator with native transparency.
 Keep the selection's square canvas dimensions when the tool supports them.
 Use at least 1024 pixels per edge without enlargement.
 Do not use Flare for poses.
-Generate each pose in its own request and file. Never use the sheet format, because it lowers the resolution of each pose.
 
 ## Keep each action distinct
 
 Reuse one stable identity and prop brief.
-Put the style block in each pose prompt, word for word.
 Change only the action and expression for the state.
 Keep each signature prop in the visible runtime window.
 Give the prop count and the canvas side of the hand that holds it.
@@ -48,18 +46,14 @@ Use the character's own gestures.
 
 ## Inspect each result before continuation
 
-Use [style review](style-review.md) and [candidate review](../../generate-scene-openai/references/candidate-review.md).
-Do not let a pose inherit a rendering defect from its selection.
-If the selection has that defect, stop and give it in the report.
+Use [candidate review](../../generate-scene-openai/references/candidate-review.md).
 Inspect dimensions, native alpha, anatomy, identity, and prop visibility.
 Run the runtime-window overlay from [identity and prop consistency](prompt-consistency.md).
-Compare the result with the accepted selection at one canvas scale.
+Compare the result with the accepted selection at equal figure height.
 Keep clean generated pixels unchanged.
 Apply alpha cleanup only for the defect described in the native-alpha module.
 
-If the result fails, correct the observed defect with the built-in chat image generator.
-In-chat requests have no numeric limit and need no per-request approval.
-After a rendering defect, generate the pose again as an alternative to an edit request.
+If the result fails, correct the observed defect within the authorized request limit.
 Do not continue to the next state with an unresolved defect.
 Record the accepted source and state once in the work record.
 

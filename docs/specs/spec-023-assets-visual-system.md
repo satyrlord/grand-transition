@@ -450,9 +450,8 @@ of flat hard-edged patches of one color, and draw polish as hard-edged
 highlight shapes. Do not use a texture, a gradient, or a glow.
 The installed `schoolteacher` delivery source has a bounded exterior RGB ink
 correction with unchanged alpha and composition. Eight reviewed outer edges and
-42 neighboring samples meet the earlier 1.80-through-2.20 range. Its selection
-and other poses retain their approved source pixels. The character art
-direction gives the range that replaced it on 2026-10-05.
+42 neighboring samples meet the 1.80-through-2.20 range. Its selection and
+other poses retain their approved source pixels.
 
 Each skin has one transparent square selection master of at least 1024 pixels per edge. It has
 five state masters with the usual AVIF/WebP variants: `thinking`,
@@ -672,8 +671,7 @@ Do not change the inventory to approve a rejected source.
 For new character work, apply the current character art direction and trial
 acceptance boundary below. Preserve unrelated shipping packages and approved
 robot features outside each reviewed contour correction. The initial trial uses researched identity briefs without old raster
-style inputs. New human selections use fixed written artistic instructions and five distinct researched web identity photographs.
-Do not attach an image style reference or design template.
+style inputs. After acceptance, the trial provides shared style references.
 A pose uses its accepted selection as its only image reference.
 
 ### Character readiness
@@ -712,7 +710,7 @@ cannot resolve and that blocks generation. A different interview or human
 sign-off is not necessary.
 
 Use one approved rendering direction for new art. Compare generated assets
-together at one canvas scale. Keep contour treatment, broad shapes,
+together at equal displayed figure height. Keep contour treatment, broad shapes,
 and cel shading consistent while varying adult proportions and face shapes.
 Do not treat a three-character trial as evidence that the full roster is complete.
 
@@ -767,10 +765,10 @@ Make each asset with these mandatory rules:
 - Make forms from large, clean, flat color shapes. Each local color can use a
   base value, one hard-edged shadow value, and one optional hard-edged highlight
   value. Do not use soft modeled transitions.
-- Use intentional caricature with coherent human or mechanical anatomy.
-  For human faces, retain natural proportions and use restrained exaggeration.
-  Selected body, posture, gesture, prop, furniture, and architecture shapes can
-  carry the visual joke. Keep functional perspective and readable occlusion.
+- Use intentional caricature. Exaggerate the selected shapes of the head, face,
+  body, posture, gesture, prop, furniture, and architecture. Keep coherent
+  human or mechanical anatomy, functional perspective, and occlusion that is
+  easy to read.
 - Show material differences through silhouette, color, contour, and a small
   quantity of flat pattern. Do not simulate skin pores, fabric weave, polished
   metal, glossy plastic, marble depth, or other microtexture.
@@ -820,118 +818,36 @@ and generate it again from the approved direction.
 
 ### Character art direction
 
-New human character art uses **flat editorial cartoons**.
-Use clearly drawn faces, natural adult anatomy, distinct silhouettes, clear comic expression, and restrained exaggeration of researched identity features.
-Use broad flat color shapes, uniform thin dark contours, and two-tone cel shading.
-Keep face and body rendering consistent.
-Do not use photographic skin texture, portrait shading, glossy modeling, or one repeated face.
+New human character art uses **flat editorial cartoons**. Use clearly drawn
+faces, varied adult body and head shapes, moderate head exaggeration, broad
+clean color shapes, controlled dark contours, and two-tone cel shading.
+Keep face and body rendering consistent. Do not use realistic skin detail,
+photographic portrait shading, glossy modeling, or one repeated head template.
+Keep approved Government AI robot skins installed until contour corrections
+pass the owner-set range and their replacement art is reviewed.
 
-Use text-based artistic instructions and five distinct researched web photographs for each new human selection.
-The fixed human style block in `generate-character-openai` is the only style text.
-Use the photographs for likeness only.
-Use no design reference template, installed character, trial character, or generated candidate as an image style reference.
-The pipeline has no template-library approval or style-transfer test dependency.
-Keep installed packages until accepted replacement packages pass their local asset and runtime checks.
-
-Apply these rules to each new or replaced human selection:
-
-- Inspect five distinct usable web photographs of the researched identity subject.
-  Select varied views and expressions from one coherent era.
-  Include front, three-quarter, and profile views when available, and a view that shows the build.
-  Do not count duplicates, crops, or resized copies of one photograph as different images.
-  Inspect more when the identity remains unclear, then select five photographs for attachment.
-  Record their source URLs, files, selected era, observations, and attachment order privately.
-- Attach only the selected five identity photographs.
-  Use their face shape, feature relationships, hair shape, age cues, and build.
-  Do not copy their photographic lighting, skin texture, costume, scenery, or props.
-  Keep real names out of generation prompts.
-- Write one caricature brief for identity, fictional role, costume, palette, props, proportions, and comic action.
-  Name two or three identity features and give the shape and size of the nose.
-  Exaggerate only features that the research identifies.
-  Make the expression and action communicate the comic role.
-  Do not use body size as the joke.
-- Copy the fixed written style block word for word.
-  Do not write a different style text for one character.
-  Use the fixed robot style block for robots.
-- Generate one complete character or pose per request and file.
-  Use a native transparent square PNG of at least 1024 pixels per edge.
-  Keep a larger native source when available. Do not enlarge a source to pass a dimension check.
-  Do not generate sheets, lineups, collages, grids, strips, or multi-pose images.
-  Make comparison composites locally for inspection only.
-- Use the built-in chat image generator.
-  The chat route has no request budget and needs no per-request approval.
-  Continue necessary corrective requests in the authorized scope. Do not impose an attempt cap.
-  Flare API budgets and permissions do not apply.
-  Keep owner artistic acceptance separate from permission to continue attempts.
-- Keep natural proportions within the face: almond-shaped eyes, modest irises and brows, coherent nose and lips, and necessary cheek lines.
-  Do not use mascot features, geometric facial planes, blocky jaws, or oversized eyebrows.
-- Keep skin one flat color, without skin shadows or highlights.
-  Use one flat hair silhouette and at most one broad hard shadow.
-  Use a base color and one hard shadow tone for each clothing or shoe material.
-  Preserve useful construction lines, buttons, pockets, lapels, cuffs, belts, buckles, and plausible folds when the brief specifies them.
-  Keep recognizable shoe toes, vamps, laces, eyelets, soles, and heels when the brief specifies them.
-  Do not use gradients, textures, or photographic surfaces.
-- Give each brief a height class from researched real height or group photographs.
-  Stature is the distance from the hair or bare scalp top to the shoe soles.
-  Use 82 percent of canvas height for short, 88 percent for medium, and 94 percent for tall.
-  Accept a difference of two percentage points.
-  Put the shoe soles at y 99 percent.
-  Keep one percent clear above the highest part.
-  Headwear does not change the stature class.
-- Give each brief a head-size class.
-  Use 19 through 22 percent of stature for usual heads, with a target of 20.5 percent.
-  Use 26 through 29 percent for large heads only when the private character study records that feature.
-  Keep all hair, ears, cheeks, and chin inside that allocation.
-- Examine likeness and comic expression before detailed measurements.
-  Reject a generic face even when costume and props are correct.
-  Compare likeness with all five photographs on a local resemblance sheet.
-  Compare rendering with the written style block.
-  Measure stature, head ratio, and contours in the unchanged source.
-  Keep resemblance, comic expression, and rendering as separate acceptance conditions.
-  Show light and dark composites and the conservative runtime-window overlay to the owner.
-- After a likeness defect, correct the brief or the selected five-photo set before the next request.
-  After a rendering defect, generate again from the written instructions and permitted identity references.
-  Do not use a rejected candidate as a style reference.
-  Do not record a rendering defect as an advisory or add an exception for new art.
-- Get owner selection acceptance before poses.
-  Use the accepted selection as the sole pose image reference for identity, costume, and construction.
-  Do not repeat web photographs in pose requests.
-
-Use one written outer-contour range for all playable characters, including robots.
-Target 4.1 source pixels per 1000 pixels of reference height.
-Accept the central figure median and each body-part median from 3.90 through 4.20.
-Reference height is 94 percent of the source canvas height.
-At 1254 square, the target is approximately 4.83 source pixels and the range is approximately 4.60 through 4.95.
-Use normalized, unrounded limits for decisions.
-Do not divide by the height of the figure.
-Scale nominal width by the canvas-width ratio when a pose and selection have different dimensions.
-
-Measure the head, each arm, torso, and each leg or wheel carriage.
-Use the calibrated sample and uncertainty procedure in the skill's style review.
-Keep missing or unmeasurable evidence pending.
-Do not use a passing figure median to hide a failing body part.
-Report uncertainty separately. An interval across a boundary does not itself fail an in-range central median.
-Examine the complete contour visually even after a numeric pass.
-Use deterministic analytic calibration tests without a design-template image fixture.
-
-For an authorized robot replacement, keep the approved identity, construction, proportions, props, and facing.
-Use the approved robot selection as the only identity image reference.
-Use the fixed written robot style block for artistic instructions.
-A robot has no human height or head-size class and needs no photographs of a real person.
-Keep its approved figure height.
-Each robot pose uses its accepted selection as the only image reference.
-Keep installed robot sources until their reviewed replacement package passes the applicable checks.
+For new or corrected character selections and poses, target an outer silhouette
+contour width of 2 source pixels per 1000 pixels of the selection's visible
+figure height. Accept widths from 1.80 through 2.20 pixels per 1000 pixels of
+that height. Measure visible height from the near-opaque subject, not the
+square canvas. When a pose and its selection have the same source canvas size,
+use the same nominal source-pixel width. If their canvas sizes differ, scale
+the width by the pose-to-selection canvas-width ratio. Do not make a crouched
+pose's contour thinner because its visible figure is shorter. Compare
+characters at equal displayed figure height and poses at a fixed canvas scale.
+Retain each approved Government AI robot source until a reviewed replacement
+passes the contour range and is installed.
 
 Each fictional archetype has a distinct silhouette, face shape, costume,
 gesture rhythm, and prop system. Keep anatomy coherent and recognizably adult.
-Use the height class and the head-size class of the character study for each
-human selection. Exaggerate the features that give the character its identity
-and its comic expression. Preserve space for hands, props, and poses.
+Natural adult proportions are permitted. Exaggerate selected features only
+when they improve the character's identity and comic expression. A large head
+is not an acceptance requirement. Preserve space for hands, props, and poses.
 
 Before each new selection master, confirm its private inspiration mapping.
-Open reliable, clearly labeled web sources and visually inspect five
-distinct usable photographs. Inspect more when likeness remains unclear, then attach five selected photographs.
-Duplicates, crops, and resized copies of one photograph count as one
+Open reliable, clearly labeled web sources and visually inspect at least three
+distinct usable photographs. Target five and inspect more when likeness remains
+unclear. Duplicates, crops, and resized copies of one photograph count as one
 image. Use varied angles and expressions, with front, three-quarter, and profile
 views when available.
 Use a coherent, dated era when appearance differs across sources. Record
@@ -944,7 +860,7 @@ and deliberate cartoon exaggeration. Do not invent a missing mapping.
 
 A previous dossier can be reused only after its sources, relevant appearance,
 and minimum distinct-image count are checked again. The accepted cartoon rendering does not replace the need
-for recognizable researched resemblance. Written artistic instructions control style.
+for recognizable researched resemblance. Style references control style only.
 Poses inherit the researched, accepted selection without repeating web research
 for each state.
 
@@ -956,10 +872,23 @@ A separate private portrait generation or two-stage identity process is not
 required. Keep private references and real-person source names out of public
 metadata and shipped assets.
 
-The product owner accepted the earlier Football Tycoon, EU-Funds Alchemist,
-and Luxury Minister selections and their fifteen matching poses.
-Each pose uses its own accepted selection as the only image reference.
-These installed packages do not establish image style references for new selections.
+Complete a three-character trial with Football Tycoon, EU-Funds Alchemist,
+and Luxury Minister before roster expansion. The trial must demonstrate
+stocky, slender, and curvy adult silhouettes with distinct drawn faces.
+Use researched identity briefs and authorized identity references. Do not impose an existing
+portrait as its visual style reference. Show the actual trial artwork to the
+product owner at source, roster, setup, and match scales. Obtain acceptance of
+the artwork before bulk regeneration. The accepted triplet then becomes the
+shared style reference. The product owner accepted the trial rendering style,
+all three researched replacement selections, and their fifteen matching poses.
+The replacements use the expanded five-photo research workflow and correct the
+earlier identity differences. Each pose uses its accepted selection as the only
+image reference. Complete package integration and runtime checks before treating
+the pilot work as verified in the game.
+Use the approved [Football Tycoon](../../src/assets/characters/football-tycoon.png),
+[EU-Funds Alchemist](../../src/assets/characters/eu-funds-alchemist.png), and
+[Luxury Minister](../../src/assets/characters/luxury-minister.png) selections
+together for style comparison, not as identity sources for another character.
 The approved default and alternate Red-Folded Chairman selections and their
 five-pose packages are installed at their canonical source paths. Each pose
 used only its own approved selection as the image reference. This approval does not
@@ -995,8 +924,7 @@ requirement or a substitute for image review.
 A new selection with changed proportions needs matching state art before it
 replaces the shipping package. Keep the existing shipping selection and poses
 until that package is complete and checked. Replace approved robot art only with
-a reviewed owner-authorized contour correction or with the owner-authorized
-regeneration at the contour range of 2026-10-05.
+a reviewed owner-authorized contour correction.
 Retain stable character and skin identifiers, gameplay data, and unaffected
 assets. The three-character trial does not authorize bulk roster replacement
 before artwork acceptance.
@@ -1948,9 +1876,9 @@ reaction, or a character state is replaced or updated, the layout shift is
   layer, subject, prop, lighting, focal region, interface-safe region, and crop. A temporary prompt
   alone fails readiness. The agent uses the contracts to resolve usual details.
   Only a necessary input that blocks generation must have a user response.
-- **AC-023-15:** Before each new human selection, visually inspect five
-  distinct usable photographs from reliable, labeled web sources. Inspect more
-  when likeness remains unclear, then attach five selected photographs. Duplicates and resized copies
+- **AC-023-15:** Before each new selection, visually inspect at least three
+  distinct usable photographs from reliable, labeled web sources. Target five
+  and use more when likeness remains unclear. Duplicates and resized copies
   do not count as different images. Use varied angles and expressions in one
   coherent selected era. Record each URL, date, era, and observed traits privately.
   Correct private notes that conflict with verified web evidence. The initial
@@ -1965,15 +1893,10 @@ reaction, or a character state is replaced or updated, the layout shift is
   and match scales on both player sides. Compare resemblance with the
   researched subject separately from style. Record identity distinction, contour
   quality, color, complete anatomy, and visible signature props. Compare light
-  and dark composites. Reject photographic facial rendering, mixed rendering, clipped props,
+  and dark composites. Reject realistic faces, mixed rendering, clipped props,
   blurred upscaling, and detail lost on reduction. A trial pass establishes only
   the tested scope. Later accepted roster packages need their own visual and
-  runtime checks. Each new human selection uses the fixed written style block as its only style text.
-  Its request contains five distinct researched web photographs as identity references and no image style reference.
-  The photographs give likeness only. The brief gives fictional costume, props, proportions, expression, and comic action.
-  Its recorded
-  stature, head-height ratio, and contour width are in their ranges. Its
-  light and dark composites show no rendering defect. The owner accepts its resemblance sheet and comic expression.
+  runtime checks.
 - **AC-023-17:** The asset color guard decodes each supported shipping raster in
   sRGB. It
   rejects a broad yellow cast over muted or neutral pixels. It accepts local

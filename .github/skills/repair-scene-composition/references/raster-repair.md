@@ -27,12 +27,11 @@ Vary character shapes and proportions to preserve distinct identities.
 Keep the small quantity of print texture the same for all these items.
 Do not accept painted comic-book, painterly semi-realistic, realistic concept-art, photographic, hyper-realistic, three-dimensional-render, or mixed-style repairs.
 
-For character skins and states, use flat editorial cartoons with clearly drawn faces and varied adult builds.
-Use the written character art direction, broad shapes, and two-tone shading.
+For character skins and states, use flat editorial cartoons with clearly drawn faces and varied adult proportions.
+Use moderate head exaggeration, broad shapes, and two-tone shading.
 Preserve approved robot identity and construction during owner-authorized,
 reviewed contour corrections.
-For a new human selection, use written artistic instructions and five distinct researched web identity photographs.
-Use its accepted selection for pose continuity. Do not use an image style reference.
+Use the accepted three-character trial as the shared style reference after product-owner acceptance.
 
 Use neutral sRGB white balance and a color treatment without a grade.
 In the private generation brief, put the positive color controls before the style details.

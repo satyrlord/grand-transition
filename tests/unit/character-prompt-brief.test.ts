@@ -1,10 +1,8 @@
 import { spawnSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 import { afterAll, describe, expect, test } from 'vitest';
-import { checkStyleBlock } from '../../.github/skills/generate-character-openai/scripts/check-style-block.ts';
 import { analyzeRuntimeWindow, RUNTIME_WINDOW } from '../../tools/character-runtime-window.ts';
 import {
   checkBrief,
@@ -16,30 +14,29 @@ import {
 const helper = path.resolve('.github/skills/generate-scene-openai/scripts/scene-image.ts');
 const lockedHash = 'a'.repeat(64);
 const styleHash = 'b'.repeat(64);
-const identityHash = 'c'.repeat(64);
-const identityPhotographs = ['c', 'd', 'e', 'f', '0'].map((value) => ({
-  role: 'identity' as const,
-  sha256: value.repeat(64),
-}));
 const study = '- `delivery`: He raises the prayer beads in one hand.\n';
-const common = `The only image reference is the accepted selection. The stature is 82 percent of the canvas height, and the shoe soles are at y 99 percent. The head is 19 to 22 percent of his height. Use exactly one loop of prayer beads. Every pixel outside the contour must have zero alpha. No glow, halo, or backlight. The head faces canvas right.
+const common = `The only image reference is the accepted selection. Draw the figure at 82 to 88 percent of the 1024-square canvas height with at least 60 pixels of clear margin. The whole head is 17 to 20 percent of the visible figure height, with moderate adult caricature proportions. Use exactly one loop of prayer beads. Every pixel outside the contour must have zero alpha. No glow, halo, or backlight. Keep the head facing canvas right.
 Neutral sRGB white balance. Ungraded colors. Warm color is local to skin. No whole-image color tint.`;
 
 function fixture(state: string, action: string, hand = 'canvas-right hand') {
   const stateText = `Create the ${state} pose.`;
   const prompt = `${stateText}\n\n${action.replace('{hand}', hand)}\n\n${common}`;
   const brief: CharacterBrief = parseBrief({
-    schemaVersion: 2,
+    schemaVersion: 1,
     ownerId: 'tycoon',
     skinId: 'default',
     state,
-    species: 'human',
     facing: 'right',
     promptFile: `${state}.txt`,
     studyFile: 'study.md',
     action: action.replace('{hand}', hand),
     stateText: [stateText],
-    figure: { canvasPixels: 1024, heightClass: 'short', headSizeClass: 'usual' },
+    figure: {
+      canvasPixels: 1024,
+      heightPercent: [82, 88],
+      headHeightPercent: [17, 20],
+      marginPx: 60,
+    },
     references: [{ role: 'locked-selection', sha256: lockedHash }],
     props: [
       {
@@ -61,106 +58,19 @@ const delivery = () =>
   );
 
 describe('character prompt brief', () => {
-  test('accepts a human selection with five distinct identity photographs and no style template', () => {
+  test('accepts a text-only style trial with moderate head proportions', () => {
     const { brief, prompt } = delivery();
     brief.state = 'selection';
-    brief.references = identityPhotographs;
-    const referenceHashes = brief.references.map(({ sha256 }) => sha256);
-    const selectionPrompt = prompt.replace(
-      'The only image reference is the accepted selection.',
-      'The five images are researched web photographs for identity only.',
-    );
-    expect(checkBrief(brief, { prompt: selectionPrompt, referenceHashes })).toEqual([]);
-    expect(
-      checkBrief(brief, { prompt, referenceHashes: [...referenceHashes].reverse() }).join('\n'),
-    ).toContain('reference files');
+    brief.references = [];
+    expect(checkBrief(brief, { prompt, referenceHashes: [] })).toEqual([]);
   });
 
-  test.each([0, 1, 4, 6])('rejects a human selection with %i identity photographs', (count) => {
+  test('measures the prop margin against the declared native canvas', () => {
     const { brief, prompt } = delivery();
-    brief.state = 'selection';
-    brief.references = Array.from({ length: count }, (_, index) => ({
-      role: 'identity',
-      sha256: String(index).repeat(64),
-    }));
-    expect(checkBrief(brief, { prompt }).join('\n')).toContain(
-      'five identity photograph references',
-    );
-  });
-
-  test('rejects a repeated photograph and a non-photo selection reference', () => {
-    const { brief, prompt } = delivery();
-    brief.state = 'selection';
-    brief.references = identityPhotographs.map((reference) => ({ ...reference }));
-    brief.references[4] = brief.references[0]!;
-    expect(checkBrief(brief, { prompt }).join('\n')).toContain(
-      'five distinct identity photographs',
-    );
-    brief.references = identityPhotographs.map((reference) => ({ ...reference }));
-    brief.references[4]!.role = 'locked-selection';
-    expect(checkBrief(brief, { prompt }).join('\n')).toContain('no image style reference');
-  });
-
-  test('rejects the retired style-reference role in the brief schema', () => {
-    const { brief } = delivery();
-    expect(() =>
-      parseBrief({
-        ...brief,
-        state: 'selection',
-        references: [{ role: 'style', sha256: styleHash }, ...identityPhotographs],
-      }),
-    ).toThrow('references need a role (identity, locked-selection)');
-  });
-
-  test('rejects an identity photograph added to a pose reference', () => {
-    const { brief, prompt } = delivery();
-    brief.references.push({ role: 'identity', sha256: identityHash });
-    expect(checkBrief(brief, { prompt }).join('\n')).toContain(
-      'locked selection as the only reference',
-    );
-  });
-
-  test('rejects a prompt whose stature or head size differs from its classes', () => {
-    const { brief, prompt } = delivery();
-    brief.figure.heightClass = 'tall';
-    expect(checkBrief(brief, { prompt }).join('\n')).toContain('94 percent of the canvas height');
-    brief.figure.heightClass = 'short';
-    brief.figure.headSizeClass = 'large';
-    expect(checkBrief(brief, { prompt }).join('\n')).toContain('26 to 29 percent');
-  });
-
-  test('uses the left canvas side as the inner side of a left-facing source', () => {
-    const { brief, prompt } = delivery();
-    brief.facing = 'left';
-    const leftPrompt = prompt
-      .replaceAll('canvas-right hand', 'canvas-left hand')
-      .replace('faces canvas right', 'faces canvas left');
-    brief.action = brief.action.replace('canvas-right hand', 'canvas-left hand');
-    brief.props[0]!.hand = 'canvas-left';
-    expect(checkBrief(brief, { prompt: leftPrompt }).join('\n')).toContain('runtime window');
-    brief.props[0]!.zone = { x: [25, 40], y: [25, 44] };
-    expect(checkBrief(brief, { prompt: leftPrompt })).toEqual([]);
-    expect(checkBrief(brief, { prompt }).join('\n')).toContain('faces canvas left');
-  });
-
-  test('accepts a robot that has no classes and attaches its approved selection', () => {
-    const { brief, prompt } = delivery();
-    const robot = parseBrief({
-      ...brief,
-      species: 'robot',
-      state: 'selection',
-      figure: { canvasPixels: 2048 },
-      references: [{ role: 'identity', sha256: lockedHash }],
-    });
-    const robotPrompt = prompt.replace(/The stature[^.]*\. The head is[^.]*\./u, '');
-    expect(checkBrief(robot, { prompt: robotPrompt })).toEqual([]);
-    robot.references.push({ role: 'identity', sha256: styleHash });
-    expect(checkBrief(robot, { prompt: robotPrompt }).join('\n')).toContain(
-      'approved identity reference as the only reference',
-    );
-    expect(() =>
-      parseBrief({ ...robot, figure: { canvasPixels: 2048, heightClass: 'tall' } }),
-    ).toThrow('robot figure');
+    brief.props[0]!.zone = { x: [92, 95], y: [25, 44] };
+    expect(checkBrief(brief, { prompt }).join('\n')).toContain('pixel margin');
+    brief.figure.canvasPixels = 2048;
+    expect(checkBrief(brief, { prompt: prompt.replace('1024-square', '2048-square') })).toEqual([]);
   });
 
   test('accepts a consistent brief', () => {
@@ -189,8 +99,8 @@ describe('character prompt brief', () => {
 
   test('rejects a zone inside the safe margin', () => {
     const { brief, prompt } = delivery();
-    brief.props[0]!.zone = { x: [90, 99.5], y: [25, 44] };
-    expect(checkBrief(brief, { prompt }).join('\n')).toContain('canvas margin');
+    brief.props[0]!.zone = { x: [90, 99], y: [25, 44] };
+    expect(checkBrief(brief, { prompt }).join('\n')).toContain('pixel margin');
   });
 
   test('rejects a missing count phrase and a prop in the wrong hand', () => {
@@ -207,7 +117,7 @@ describe('character prompt brief', () => {
     expect(checkBrief(brief, { prompt, referenceHashes: [styleHash] }).join('\n')).toContain(
       'reference files',
     );
-    brief.references = [{ role: 'identity', sha256: styleHash }];
+    brief.references = [{ role: 'style', sha256: styleHash }];
     expect(checkBrief(brief, { prompt }).join('\n')).toContain('locked selection');
   });
 
@@ -222,31 +132,8 @@ describe('character prompt brief', () => {
 
   test('rejects a brief that does not match the prompt text', () => {
     const { brief, prompt } = delivery();
-    const issues = checkBrief(brief, { prompt: prompt.replace('82 percent', '90 percent') });
-    expect(issues.join('\n')).toContain('82 percent');
-  });
-});
-
-describe('character style block', () => {
-  const blocks = ['style-block.txt', 'style-block-robot.txt'].map((name) =>
-    readFileSync(path.resolve('.github/skills/generate-character-openai/assets', name), 'utf8'),
-  );
-
-  test('accepts researched identity photographs with the unchanged human style block', () => {
-    const prompt = `The five attached images are distinct researched web photographs for likeness only. Use the written style block for the drawing technique.\n${blocks[0]}`;
-    expect(checkStyleBlock(prompt, blocks)).toEqual([]);
-  });
-
-  test('rejects missing, changed or mixed style blocks even when identity photographs are present', () => {
-    for (const prompt of [
-      'Use the photograph for likeness.',
-      blocks[0]!.replace('STYLE BLOCK 8.', 'STYLE BLOCK 9.'),
-      blocks.join('\n'),
-    ]) {
-      expect(checkStyleBlock(prompt, blocks).join('\n')).toContain(
-        'style block is missing or changed',
-      );
-    }
+    const issues = checkBrief(brief, { prompt: prompt.replace('82 to 88', '90 to 99') });
+    expect(issues.join('\n')).toContain('82 to 88 percent');
   });
 });
 

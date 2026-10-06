@@ -25,14 +25,14 @@ Do not enlarge an undersized candidate.
 
 Use [native alpha preparation](native-alpha.md).
 This procedure includes the raw inspection, the bounded cleanup when it applies, and the review of the prepared image.
-Compare characters at one canvas scale.
-Examine human art against the fixed written style block and Specification 023.
-Do not use an image style reference. Compare likeness with the five researched identity photographs.
+Compare characters at equal displayed figure height.
+For the trial, use the approved written direction without imposing an existing raster.
+After product-owner acceptance, use the three trial characters as the shared style reference.
 Do a check of the drawn face, varied adult proportions, broad shapes, and two-tone shading.
 Also do a check of the facial features and the requested edit.
 Do a check of the facing direction, the full-body silhouette, the props, the full extremities, and the safe outer margins.
 
-For character validation, the height of the figure, with its headwear, must be 80 to 99 percent of the square canvas.
+For character validation, the height of the figure must be 80 to 99 percent of the square canvas.
 The area of the figure must be 12 percent or more of the canvas.
 Keep the requested accessory in those silhouette limits and clearance limits.
 

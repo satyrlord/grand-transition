@@ -1,13 +1,6 @@
 # Character outline regeneration: asset action list
 
-**Replaced on 2026-10-05.** The product owner set a new range for all playable
-characters, robots included: 2.80 through 3.20 source pixels for each 1000
-pixels of the reference height, which is 94 percent of the canvas height.
-Specification 023 records it. Each installed package gets a regenerated
-replacement that meets the new range. The text below records the earlier
-target and the work that used it. Do not use its range for new art.
-
-**Earlier target:** 2 outer-contour pixels per 1000 pixels of the selection's visible
+**Target:** 2 outer-contour pixels per 1000 pixels of the selection's visible
 figure height. **Accepted range: 1.80 through 2.20 per 1000.** Use the
 selection's scale for its five poses. Specification 023 records this range for
 new or corrected character art.
