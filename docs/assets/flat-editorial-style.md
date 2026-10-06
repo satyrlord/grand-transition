@@ -2,9 +2,11 @@
 
 [Specification 023](../specs/spec-023-assets-visual-system.md) controls the art
 direction. The product owner approved the three pilot selections and all
-fifteen matching poses, followed by the default and alternate Red-Folded
-Chairman selections and their five-pose packages, then Thunder Tribune's
-default selection and five poses. The owner also approved the alternate
+fifteen matching poses. Red-Folded Chairman's default selection has owner approval;
+its five reviewed poses are installed under the authorized package integration.
+The alternate selection and five-pose package retain their owner approval.
+Thunder Tribune's default selection and five poses also have owner approval.
+The owner also approved the alternate
 Thunder Tribune selection and authorized its complete package integration.
 Both Midnight Sensationalist masters also have owner approval, with generation
 and integration of their five-pose packages authorized. The four Velvet Mogul
@@ -79,6 +81,18 @@ native transparency and source dimensions. Do not enlarge or sharpen a source
 to simulate missing detail. Use the built-in chat image generator for
 characters, poses, desks, props, and foregrounds. Preserve approved robot
 identity and construction during reviewed contour corrections.
+
+Red-Folded Chairman's default package retains six native 1254-square, right-facing
+sources. Preserve its approved compact, frail elderly face and stooped body,
+white-gray receding hair, thin metal spectacles, charcoal-gray suit with black
+pinstripes, striped red tie, and two closed red-and-black ceremonial portfolios
+with pale brass corner guards. Keep the eyes-up deliberation, speaking palm,
+two distinct recoil actions, and guarded folder shield. Each pose used only the
+approved selection. All six sources use bounded detached alpha-1 removal only;
+metadata registration preserves their reviewed pixels. Keep the accepted source's
+finer facial and hair drawing without changing the direction for future art.
+The alternate package remains unchanged. Specification 023 gives the focused
+verification evidence and limits.
 
 Diaspora Oracle retains six native 1254-square, left-facing sources. Keep its
 sturdy adult silhouette, swept dark hair, white rolled-sleeve shirt, navy

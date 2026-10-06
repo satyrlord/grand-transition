@@ -3,9 +3,10 @@ import path from 'node:path';
 import { getPhonemes, initialize, setVoice } from 'espeak-phonemizer';
 import { beforeAll, expect, test } from 'vitest';
 import { piperClauses } from '../../src/audio/piper-text.ts';
+import { romanianStress } from '../../src/audio/romanian-stress.ts';
 
 // The shipped pronunciation data and the shipped voice alphabets, not a mock.
-const phones = (text: string) => piperClauses(getPhonemes(text));
+const phones = (text: string) => romanianStress(piperClauses(getPhonemes(text)));
 
 beforeAll(async () => {
   await initialize(path.resolve('public/tts/ro/pronounce'));

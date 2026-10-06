@@ -480,6 +480,14 @@ the model. Do not load a voice that no speaker of the match uses. When the
 warmup fails, the next delivery reports the error once and stays silent. A change
 of the interface language must not select or download a speech model.
 
+Give the pronunciation converter each spoken segment whole, so that a hyphenated
+clitic such as `s-a` stays one word. Use the clause punctuation that the
+converter reports. After conversion, correct the stress of `-ție` nouns in the
+phonemes. Nouns such as `democrație`, `birocrație`, `garanție`, and `profeție`
+stress the suffix. The `-ției`, `-țiile`, and `-țiilor` forms of other nouns,
+such as `coaliției` and `declarațiile`, stress the syllable before the suffix.
+Do not change the pinned pronunciation dictionary for this correction.
+
 A change of the
 game language alone must not download the two voices. Speech stays on by
 default.

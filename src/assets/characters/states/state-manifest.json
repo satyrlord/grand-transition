@@ -9418,8 +9418,8 @@
         "width": 1254,
         "height": 1254,
         "format": "png",
-        "bytes": 840992,
-        "sha256": "a935e9e2ff6a34d4843b71e8919ac66ff8d9ff5bb84be83ba6f34a34a135bfaf"
+        "bytes": 800824,
+        "sha256": "af1fab694ecfc80b6cd05e127f66103453a4d66d6fcadd2a28140950450d2cc8"
       },
       "focalPoint": {
         "x": 0.5,
@@ -9438,48 +9438,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9395,
-          "sha256": "2ad28df26cbdf008e3d61675832930a2512ced9b4907f395395936fbfb8dea11"
+          "bytes": 13444,
+          "sha256": "2bda4d42a8dbc98de53ae67d25f8503ea3b8be774a8afa8e06d705b6487bc374"
         },
         {
           "path": "states/variants/red-folded-chairman--thinking-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12938,
-          "sha256": "c13a6909b8eab760e08704c7f00d7e2aed49262ccb99733dad7447ff89ff0577"
+          "bytes": 10226,
+          "sha256": "16ab394067ed40dbb96aae1bf759743c6cf974da8f62af574bcf0518cf93ac15"
         },
         {
           "path": "states/variants/red-folded-chairman--thinking-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 22071,
-          "sha256": "ad4ef1ba4820451bc6219f1b6e25b1b6b49f156a8ff261aae977ab8b5f73b8f0"
+          "bytes": 20144,
+          "sha256": "37b11fd90b62cf1722a7a94030a281735a2d4a0ca2d5ab22105f3a0e78be3d1a"
         },
         {
           "path": "states/variants/red-folded-chairman--thinking-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 31172,
-          "sha256": "7f9875d88b5527ad848d6b2fee76bf0a8f66aae38997cc228a56cb2be9b84216"
+          "bytes": 25522,
+          "sha256": "3b6e66c9e9ab6377564cdec12749a5f7028c21b24e54bb0f69365b64923931e2"
         },
         {
           "path": "states/variants/red-folded-chairman--thinking-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 36325,
-          "sha256": "ad2be1b3b4eb59f1511c73c8b48e3de9489dd86478ea47659f8f5200e1deda06"
+          "bytes": 34210,
+          "sha256": "0c2d053810620d97ba1ee0c63964c1b54e2e2813102897fc7dcdcfd244eac1e0"
         },
         {
           "path": "states/variants/red-folded-chairman--thinking-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 55586,
-          "sha256": "e668b0e44162a98e710b3d5977cba21f396abe12dc60d23b6bc2407f90f5d2b4"
+          "bytes": 45382,
+          "sha256": "8116e653c9dbb40bd58f4436eff7a5eb4eca793527623f7e7c489e3eaa9ed518"
         }
       ]
     },
@@ -9498,8 +9498,8 @@
         "width": 1254,
         "height": 1254,
         "format": "png",
-        "bytes": 870678,
-        "sha256": "d08c402a864b998e43b41766c9a8f9483b3553e76bd4576549f168859750c79f"
+        "bytes": 838805,
+        "sha256": "954ab17cbf2f0e90bc2394c4b9e58bf265e9e9277b69850f5fad4291dd0e597f"
       },
       "focalPoint": {
         "x": 0.5,
@@ -9518,48 +9518,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9601,
-          "sha256": "553236b051acf7fe4e03ea9990beb3c98f7fa238a96cbd9f1dda0c4ccf1c6136"
+          "bytes": 15023,
+          "sha256": "67ae9657ff20bcf4c9b4c4f5d94ba7df84974eea8d6f77bc1b7ff02c54f601e3"
         },
         {
           "path": "states/variants/red-folded-chairman--delivery-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 13072,
-          "sha256": "c70eab0de37d35b379f9989c3204fae33f9049be08e2a238fd0f687375034916"
+          "bytes": 11676,
+          "sha256": "138719b08796094d8dc3e6d108e8208c0b4782254ccdfc60da888c6872284377"
         },
         {
           "path": "states/variants/red-folded-chairman--delivery-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 22771,
-          "sha256": "855dbd6d907a5eb82c3f038fb0a4a3f735e429a4136b777b2956f3a6e6cdba2d"
+          "bytes": 22661,
+          "sha256": "f420a2a1ca81825c0834961495e762d773a3abfb0823f4be5a9208045264830a"
         },
         {
           "path": "states/variants/red-folded-chairman--delivery-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 31806,
-          "sha256": "72b7a0e7523b9bc6a63abeade34773c8be26fc46b41ded4e0ac20bb3037be093"
+          "bytes": 28916,
+          "sha256": "082ee4210b990de257810c04dd62fc4239fd7d0d5bd4f58dd844baee026a07f6"
         },
         {
           "path": "states/variants/red-folded-chairman--delivery-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 37844,
-          "sha256": "a772a45372bd9e4f7bf9c95dbd1ce539825a12adc564fe12ba89325dde8b17a3"
+          "bytes": 38149,
+          "sha256": "d455e60702e5b4ff6e7f767e042c180191c1176b7addcf9ce5aa14113d00fd9d"
         },
         {
           "path": "states/variants/red-folded-chairman--delivery-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 56642,
-          "sha256": "88aec354fef9c8e541910138d9184c87eda3ce1ecd1462dec76b72511f796ec7"
+          "bytes": 51204,
+          "sha256": "27ee9ce8d641d0048d907dea03ad279cfda75bfbd9e8ac09805592e96d0f90d1"
         }
       ]
     },
@@ -9578,8 +9578,8 @@
         "width": 1254,
         "height": 1254,
         "format": "png",
-        "bytes": 876293,
-        "sha256": "13d9cb209b6705ec91cf327c6ef7e6933b47c6468b52e12f3246d22e5668a47e"
+        "bytes": 778050,
+        "sha256": "de0edd10acfb26dba24e4f676aaa667313e8d27755839dbb286e872261d79eec"
       },
       "focalPoint": {
         "x": 0.5,
@@ -9598,48 +9598,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9398,
-          "sha256": "bbfd613d2fbadfa318e3f5a61239b81e655f1fefcee2eac3233f46c37727185c"
+          "bytes": 8227,
+          "sha256": "976b1ea65ed6cd1a489dbdf803bf36ccb0c3e5adee6968b9a1cb8d1e8196f44e"
         },
         {
           "path": "states/variants/red-folded-chairman--light-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12608,
-          "sha256": "eb8dfbc0e8351665aad2b46d65d48dece2bc86500eb12e3b086c2cf4c00b6504"
+          "bytes": 10278,
+          "sha256": "eac4239b86b7cd318dc5e0be8a293c2b8c7d01d6ab077f8b3bafd15adbb9380b"
         },
         {
           "path": "states/variants/red-folded-chairman--light-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 21980,
-          "sha256": "9c51584458f5a5782c753a139178f5897619feb3055f06e69cfd74525b6d3d84"
+          "bytes": 20195,
+          "sha256": "af02f263fa47dce6178905bcf7f9196eda9bf4e2d12a741a2748f98e0674f02b"
         },
         {
           "path": "states/variants/red-folded-chairman--light-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 30290,
-          "sha256": "16d2ce2c4b266549589d4881f198629b6b0a9b73fc59795d3748ab5b4264eb5e"
+          "bytes": 25780,
+          "sha256": "9a288498c62c49828cb1fcfd2825c86d7b6ae6bea16305a05325019a049bcdee"
         },
         {
           "path": "states/variants/red-folded-chairman--light-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 36848,
-          "sha256": "10d22d0bc2fa0c6273345949d718029950d57dd514eb325c353a6e772f278cad"
+          "bytes": 34524,
+          "sha256": "87068700e68b5e44086cd74c04bbe0b4b69d28205c8ebd758fe92db809395cff"
         },
         {
           "path": "states/variants/red-folded-chairman--light-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 53552,
-          "sha256": "9327cab8a7f146424efbc123f137192b7b831e7c4042c80883f057b446d65cab"
+          "bytes": 46196,
+          "sha256": "5e35a27acc54bab299feabec9e5357c86cb6b832334048de06e83b8069114235"
         }
       ]
     },
@@ -9658,8 +9658,8 @@
         "width": 1254,
         "height": 1254,
         "format": "png",
-        "bytes": 916283,
-        "sha256": "4059d7ed82d38683ec46c79b4c83a5a7a237b08eeab741a2e523f4835edec13a"
+        "bytes": 872995,
+        "sha256": "614ccf51064022db44a8243b0e72f4405ba05c796e9a4fb9705827cba595062b"
       },
       "focalPoint": {
         "x": 0.5,
@@ -9678,48 +9678,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 9775,
-          "sha256": "04c29599ae3d3c6f65ce5f4e8e21ef49dfa0ac0ab2c0269dab68896fc1f3eca9"
+          "bytes": 9199,
+          "sha256": "cd7841e0163b25d4091f20bf41a5b2637b90e4dfa1807ad3d8f6b804d2f6c9bb"
         },
         {
           "path": "states/variants/red-folded-chairman--heavy-hit-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12926,
-          "sha256": "13a4866ccf8fb6049d3ddb53ce5e99a8976f09785e292f6ae1f792e38cb7029b"
+          "bytes": 11632,
+          "sha256": "206b171fa8fc2d6e66d736d265e69a7be2605ed716ff728778e2065b14a5a223"
         },
         {
           "path": "states/variants/red-folded-chairman--heavy-hit-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 23159,
-          "sha256": "93529b2f8fe94368236444868154b525b14103f7acb969583c6fac4087bf644e"
+          "bytes": 22685,
+          "sha256": "9181bb7dca5d5544b9382f6fb87aca27029c1a1710b3fc7ed6989f04c3e09dee"
         },
         {
           "path": "states/variants/red-folded-chairman--heavy-hit-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 31822,
-          "sha256": "6663004480dc3c80f608ec30b7bc4e02101ce549bfdfaaab410e5e5ebefc66e4"
+          "bytes": 28348,
+          "sha256": "7472cdbc85326954f48ed80e29a4986742169575a4ab49dd2e702e3a571dad19"
         },
         {
           "path": "states/variants/red-folded-chairman--heavy-hit-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 38877,
-          "sha256": "3e654472be784bce85e235f55d65df898237327309fb5d56bcaec1823f847fa9"
+          "bytes": 38142,
+          "sha256": "b8bd0bb810e2e12de5b0c03d83deec80fa2e58a6c4f0ff6b5ef1e03f5fca86e2"
         },
         {
           "path": "states/variants/red-folded-chairman--heavy-hit-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 56330,
-          "sha256": "4419051ee60737e7da40b4abc1dc8f99d6176c40daf13381fa52805fb7464fd9"
+          "bytes": 50520,
+          "sha256": "4221991f95cbcff93db65b68f4252d0481b30038ee7127223d5070239f751f07"
         }
       ]
     },
@@ -9738,8 +9738,8 @@
         "width": 1254,
         "height": 1254,
         "format": "png",
-        "bytes": 838595,
-        "sha256": "87c3aec3bac1c6a1b1e800607aea93b2f958adb269151c068224669f87def93d"
+        "bytes": 775806,
+        "sha256": "fe85b4e37ae5cc04560ab539617354d4538f82f4a795060b33ed0c813a8c1d3a"
       },
       "focalPoint": {
         "x": 0.5,
@@ -9758,48 +9758,48 @@
           "width": 320,
           "height": 320,
           "format": "avif",
-          "bytes": 8969,
-          "sha256": "9f5a4df38dd979af3ded5acf76c4fdad5fc62a3cfbc5e78f8f1597dfd91a93a3"
+          "bytes": 7859,
+          "sha256": "fab00fe421abfc77cd089b99b71df2ca7752b8a21a7da729ca2937a9b09390a6"
         },
         {
           "path": "states/variants/red-folded-chairman--weakness-320x320.webp",
           "width": 320,
           "height": 320,
           "format": "webp",
-          "bytes": 12142,
-          "sha256": "5e15a0b517e2b1e1e077fc69c49f33844d082442ac0e3fe482c4ad1a4ca28658"
+          "bytes": 9870,
+          "sha256": "7d0685ce838df8bf7b336d1999e32af0327df5d304a1463f3f1413fe03f239b9"
         },
         {
           "path": "states/variants/red-folded-chairman--weakness-640x640.avif",
           "width": 640,
           "height": 640,
           "format": "avif",
-          "bytes": 21818,
-          "sha256": "95c619c796b9f333ac784430b38e141f99671e08f488b08262c741041d3751b2"
+          "bytes": 19382,
+          "sha256": "a9afff79e7173bde4b347fbf5bab1f723fcbbae6ceced0be94d235a195d970de"
         },
         {
           "path": "states/variants/red-folded-chairman--weakness-640x640.webp",
           "width": 640,
           "height": 640,
           "format": "webp",
-          "bytes": 30608,
-          "sha256": "76e1b733e60ec9c0cd3cd4a60f544a476de6f6a90bbb207c36df164db36b947d"
+          "bytes": 24654,
+          "sha256": "4aad46e99846c8c48e8a426c27df77175c4421c86410a9d7ee78201250ec4269"
         },
         {
           "path": "states/variants/red-folded-chairman--weakness-960x960.avif",
           "width": 960,
           "height": 960,
           "format": "avif",
-          "bytes": 36516,
-          "sha256": "7e6178ac8063b850b38f37d45662ef7f981b7ca6c4f5af1c5582d44bb0142111"
+          "bytes": 32852,
+          "sha256": "9bc68be49ff00ff853e8a78186df1de3b724e996f84836df0b14c4a4aef0070e"
         },
         {
           "path": "states/variants/red-folded-chairman--weakness-960x960.webp",
           "width": 960,
           "height": 960,
           "format": "webp",
-          "bytes": 55104,
-          "sha256": "50a0ea6fc23916141d1a9c25ca1ba044c4031857f3469c13fe017c793bcaabff"
+          "bytes": 44682,
+          "sha256": "b49241965f7e06d6a0b5aed55545e86b453486ba14479b73fa9efa92e748f6af"
         }
       ]
     },

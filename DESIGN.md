@@ -212,8 +212,11 @@ Avoid realistic skin detail, photographic portrait shading, and one repeated hea
 
 Test Football Tycoon, EU-Funds Alchemist, and Luxury Minister before roster expansion.
 The rendering style, the three researched pilot selections, and all fifteen matching poses are accepted.
-The default and alternate Red-Folded Chairman selections and their five-pose
-packages are also accepted and installed.
+The owner-approved default Red-Folded Chairman selection and its five reviewed
+matching poses are installed. Preserve the compact frail elderly silhouette,
+charcoal-gray suit with black pinstripes, striped red tie, and two closed
+red-and-black ceremonial portfolios with pale brass corner guards. Its alternate
+selection and five-pose package remain accepted and installed.
 The Retiring Cassandra default selection and its five matching poses are also
 accepted and installed, with their native dimensions and reviewed pixels intact.
 Its approved statesman alternate selection and five reviewed matching poses are

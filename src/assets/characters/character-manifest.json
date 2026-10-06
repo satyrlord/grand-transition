@@ -2397,8 +2397,8 @@
         "width": 1254,
         "height": 1254,
         "format": "png",
-        "bytes": 857808,
-        "sha256": "98d86a66918d475efb744fefb559d61be0dd988e2c64cf366c81d94e50778d57"
+        "bytes": 795396,
+        "sha256": "83c90cb67e1e2a63556fed0e38a881c9f400f1e9bf8e0489117e5bc6b22121da"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2419,8 +2419,8 @@
           "format": "avif",
           "quality": 100,
           "lossless": true,
-          "bytes": 13816,
-          "sha256": "246a5c38438e394cd2a5fcc3af9e93005b7e26d9d7ccd5b8521c025a03772a67"
+          "bytes": 12438,
+          "sha256": "14445967f70ed3caccf7c462459b5e6decf6db757238dd6925410c505e13772e"
         },
         {
           "path": "variants/red-folded-chairman-128x128.webp",
@@ -2428,8 +2428,8 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 4106,
-          "sha256": "7222232cd53a23490b7e76b7129eec0505fccd375da0e93c9d9499c3c58c0506"
+          "bytes": 3526,
+          "sha256": "7e468ae79a449dc860f5ecd8804659a9f2bef5ce43f053d53bb48093a05bddc5"
         },
         {
           "path": "variants/red-folded-chairman-256x256.avif",
@@ -2438,8 +2438,8 @@
           "format": "avif",
           "quality": 100,
           "lossless": true,
-          "bytes": 40229,
-          "sha256": "a872a44c57ef2988c96c332f07160d263ac978d0b8d9c61c1deaf55c271a9f16"
+          "bytes": 36126,
+          "sha256": "2043c884529fc24f7a78a7a8a0d48948d320ee4c2e5f47d32cbf41bf4ef48027"
         },
         {
           "path": "variants/red-folded-chairman-256x256.webp",
@@ -2447,8 +2447,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 9682,
-          "sha256": "4d5ec5c11db93a8e123e9ebc74b565bffd6c619ab51ce28c3a1b88f0686c08ba"
+          "bytes": 7830,
+          "sha256": "b98e69caf0c763c2b77679c3682b97dec417ea326af9e0c4f7c2f5ff7ef4b564"
         },
         {
           "path": "variants/red-folded-chairman-320x320.avif",
@@ -2456,8 +2456,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 9378,
-          "sha256": "af51a57aaf9aa7792d14174c976bd87fae0a836fadfc19233a0c52f757995d8f"
+          "bytes": 8132,
+          "sha256": "3f537066bc133f5d6d6df430811354dd578227a4956111f404951c9445824755"
         },
         {
           "path": "variants/red-folded-chairman-320x320.webp",
@@ -2465,8 +2465,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 12908,
-          "sha256": "700b15fa0418c92ddf4c6a3a1d012b77f1330fdcb54b70521c7b9073cb5f7626"
+          "bytes": 10340,
+          "sha256": "228be944437966c6d912408480c6181156257954c3dbf840b715b9523f2fc110"
         },
         {
           "path": "variants/red-folded-chairman-640x640.avif",
@@ -2474,8 +2474,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 21808,
-          "sha256": "8402b10268f76f696a69340c94bd5d26a3c20b00a3adcc2384c27eb469ad94b4"
+          "bytes": 20580,
+          "sha256": "1126568ece427a7478cb1c4841fb11357916be391235490daa91d95855709c92"
         },
         {
           "path": "variants/red-folded-chairman-640x640.webp",
@@ -2483,8 +2483,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 31146,
-          "sha256": "a137cba764f443ccebc3139a23f7ad0671a935e714a61e89e12adf448fdcd2dc"
+          "bytes": 26432,
+          "sha256": "7de7f0b292bf4d4701977a03689308d16c6852fc42653d8551be1bf0b228eb4c"
         },
         {
           "path": "variants/red-folded-chairman-960x960.avif",
@@ -2492,8 +2492,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 36848,
-          "sha256": "55a5e8655f1dbe7e05580139065414021e14ef99fd4babfc2c202fe126a893fb"
+          "bytes": 35070,
+          "sha256": "0e8ce1b7273804d2d177a09f9f299bdcf56a08a045363988dc9eae48603c92f7"
         },
         {
           "path": "variants/red-folded-chairman-960x960.webp",
@@ -2501,8 +2501,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 55102,
-          "sha256": "7861296757a285674519c11280e49049cb276a42605178bb78daaf05f04304f6"
+          "bytes": 47224,
+          "sha256": "ed82f24491cbd02efaca59e7af236f66904f635de0d61a810f68e0777f9dfedc"
         }
       ]
     },

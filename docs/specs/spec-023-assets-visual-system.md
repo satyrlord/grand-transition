@@ -9,10 +9,27 @@
 The rendering direction, the three researched pilot selections, and all fifteen
 matching poses have product-owner approval. The complete pilot packages are
 installed; final runtime verification remains pending.
-The approved default Red-Folded Chairman selection and five matching poses are installed,
-together with the new Transition-Era Television Studio background. Focused asset
-checks and production-browser checks passed for all nine Chairman states on both
-player sides at 1024 by 768 and 1280 by 720.
+The owner-approved default Red-Folded Chairman selection and five reviewed matching
+poses are installed. Its six native 1254-square sources retain the elderly,
+compact, stooped silhouette, thin metal spectacles, charcoal-gray suit with black
+pinstripes, striped red tie, and two closed red-and-black ceremonial portfolios
+with pale brass corner guards. Each pose used only the approved selection as its
+image reference. The sources use bounded detached alpha-1 cleanup only; metadata
+registration preserves all reviewed pixels. Keep the distinct eyes-up thought,
+speaking palm, small recoil, stronger braced recoil, and guarded hunch. The existing
+nine-state mappings and alternate package stay unchanged. The Transition-Era
+Television Studio background retains its owner acceptance.
+Focused character-asset and alpha/color checks, 32 unit tests, 24 Chromium
+character-presenter tests, and the production build passed. Installed checks cover
+all nine states on both sides at 1024 by 768, 1280 by 720, 1280 by 1024,
+1024 by 1023, 915 by 412, and 640 by 320. The 1,080 clearance samples use short
+and long speech, both speakers, and animation extrema. All 46 captured variant
+responses match the installed manifests, with no clipping, speech-overlap, or
+browser errors. Roster, setup, and match screenshots were reviewed. These checks
+use held presentation cues, one scene, and device pixel ratio 1. They do not
+establish complete scene/viewport coverage or natural match progression. Owner
+gameplay evaluation remains separate. The quick and full quality gates have not
+run for this package.
 The owner tested that background in the game and accepted its moderator/speech
 clearance. There is no outstanding moderator-clearance concern for this
 background. Other scenes' clearance requirements stay unchanged. The remaining
@@ -889,10 +906,11 @@ Use the approved [Football Tycoon](../../src/assets/characters/football-tycoon.p
 [EU-Funds Alchemist](../../src/assets/characters/eu-funds-alchemist.png), and
 [Luxury Minister](../../src/assets/characters/luxury-minister.png) selections
 together for style comparison, not as identity sources for another character.
-The approved default and alternate Red-Folded Chairman selections and their
-five-pose packages are installed at their canonical source paths. Each pose
-used only its own approved selection as the image reference. This approval does not
-complete the remaining human roster.
+The owner-approved default Red-Folded Chairman selection and its five reviewed
+poses are installed at their canonical source paths under the authorized package
+integration. The alternate selection and five-pose package retain their owner
+approval. Each pose used only its own approved selection as the image reference.
+This work does not complete the remaining human roster.
 
 Generate selections and poses with the built-in chat image generator using
 native transparency. Use a square source of at least 1024 pixels per edge.

@@ -15,6 +15,7 @@ import type { NeuralSpeechCommand, NeuralSpeechMessage } from './speech-port.ts'
 import { assertIntegrity, readExactBody, sha256Hex } from './asset-integrity.ts';
 import { assetCache, type AssetCache } from './asset-cache.ts';
 import { piperClauses, piperControls, piperInput, piperMarkers } from './piper-text.ts';
+import { romanianStress } from './romanian-stress.ts';
 
 type Voice = Readonly<{
   id: string;
@@ -197,7 +198,7 @@ function phonesFor(text: string): string {
   // The converter reads the whole text, so a hyphenated clitic such as "s-a"
   // stays one word instead of a spelled letter. It reports each clause's own
   // punctuation. getPhonemes is synchronous; only initialize and setVoice are async.
-  return piperClauses(getPhonemes(text));
+  return romanianStress(piperClauses(getPhonemes(text)));
 }
 
 async function synthesize(request: Extract<NeuralSpeechCommand, { type: 'synthesize' }>) {

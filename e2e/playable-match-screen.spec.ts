@@ -1081,6 +1081,22 @@ test('waits for a replacement portrait before measuring moderator clearance', as
   // The frame presenter re-renders its picture until both frames finish decoding, and
   // that render can restore a cached source that would load the replacement at once.
   await expect(page.locator('.character-portrait[data-character-part="lower"]')).toHaveCount(2);
+  // A presenter starts on its selection frame and swaps to the rest frame once that frame
+  // decodes. Wait for the swap, or the replaced element would stop being the visible portrait.
+  await expect
+    .poll(() =>
+      page.locator('grand-transition-character').evaluateAll((presenters) =>
+        presenters.every((presenter) => {
+          const frame = presenter.querySelector('[data-state-visible="true"]');
+          return (
+            ['idle', 'thinking'].includes(frame?.getAttribute('data-state-id') ?? '') &&
+            frame?.querySelector('.character-portrait')?.getAttribute('data-character-part') ===
+              'lower'
+          );
+        }),
+      ),
+    )
+    .toBe(true);
   let releasePortrait!: () => void;
   let requestStarted!: () => void;
   const responseReleased = new Promise<void>((resolve) => {
@@ -1094,10 +1110,11 @@ test('waits for a replacement portrait before measuring moderator clearance', as
     await responseReleased;
     await route.continue();
   });
-  const portrait = page.locator('.character-portrait').first();
+  // Pin the element. A locator would resolve `.first()` again after a state change.
+  const portrait = await page.locator('.character-portrait').first().elementHandle();
   // Keep the presenter's own image element. A cloned element would keep its portrait class
   // after a later state change, and the page would then show a third portrait.
-  await portrait.evaluate((element) => {
+  await portrait!.evaluate((element) => {
     const image = element as HTMLImageElement;
     const source = image.currentSrc;
     for (const candidate of image.closest('picture')!.querySelectorAll('source'))
