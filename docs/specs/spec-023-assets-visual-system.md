@@ -767,10 +767,10 @@ Make each asset with these mandatory rules:
 - Make forms from large, clean, flat color shapes. Each local color can use a
   base value, one hard-edged shadow value, and one optional hard-edged highlight
   value. Do not use soft modeled transitions.
-- Use intentional caricature. Exaggerate the selected shapes of the head, face,
-  body, posture, gesture, prop, furniture, and architecture. Keep coherent
-  human or mechanical anatomy, functional perspective, and occlusion that is
-  easy to read.
+- Use intentional caricature with coherent human or mechanical anatomy.
+  For human faces, retain natural proportions and use restrained exaggeration.
+  Selected body, posture, gesture, prop, furniture, and architecture shapes can
+  carry the visual joke. Keep functional perspective and readable occlusion.
 - Show material differences through silhouette, color, contour, and a small
   quantity of flat pattern. Do not simulate skin pores, fabric weave, polished
   metal, glossy plastic, marble depth, or other microtexture.
@@ -821,18 +821,18 @@ and generate it again from the approved direction.
 ### Character art direction
 
 New human character art uses **flat editorial cartoons**. Use clearly drawn
-faces, varied adult body and head shapes, strong caricature, broad
-clean color shapes, uniform bold dark contours, and two-tone cel shading.
-Keep face and body rendering consistent. Do not use realistic skin detail,
+faces with natural anatomical proportions, varied adult body and head shapes, restrained exaggeration, broad
+clean color shapes, uniform thin dark contours, and two-tone cel shading.
+Keep face and body rendering consistent. Preserve anatomical facial detail through linework. Do not use photographic skin texture,
 photographic portrait shading, glossy modeling, or one repeated head template.
 Keep approved Government AI robot skins installed until contour corrections
 pass the owner-set range and their replacement art is reviewed.
 
 On 2026-10-05 the product owner rejected the regenerated human roster as
 inconsistent. Its faces range from realistic to generic, and its contour
-weights differ. The installed Algorithmic Prophet gives the owner's preference,
-not the acceptance standard for new art. The accepted set of 18 separate reference files defines
-the reference technique. The Prophet also gets a regenerated replacement.
+weights differ. Only the 18 generated master files define the reference technique
+for new human selections. Do not use installed roster art as a preference,
+technique, or comparison anchor.
 These rules apply to each new or replaced human selection:
 
 - The style master contains 18 separate native transparent square PNG files.
@@ -849,7 +849,10 @@ These rules apply to each new or replaced human selection:
 - A new human selection attaches one accepted template that matches its researched height, build, and presentation.
   Its own written brief controls identity and likeness. Resolve an uncertain category instead of inventing a fallback.
   Do not attach all 18 templates. The earlier trial characters and installed packages are not style references.
-  Examine the Prophet locally as subjective preference only. Generate the new master pilot from text without an image attachment.
+  Start a new master pilot from text without an image attachment.
+  An owner-directed revision can use the owner's preferred generated candidate as its source before final acceptance.
+  This revises a prospective library master and does not create another shared style-reference class.
+  A user-supplied photograph can inform manual anatomy inspection only. Do not attach it or name a real person in the request.
   A pilot that passes measurements and rendering review can be the sole provisional technique reference for later master generation.
   This provisional use does not establish owner acceptance or authorize use as a roster selection reference.
 - Do not generate sheets, lineups, collages, grids, strips, or multi-pose images.
@@ -859,24 +862,30 @@ These rules apply to each new or replaced human selection:
   Continue necessary retries within the authorized task. Do not impose an attempt cap.
   Flare API request budgets and permissions do not apply to this route.
   Keep owner artistic acceptance separate from permission to continue generation attempts.
+- Keep natural proportions within the face: almond-shaped eyes, modest irises and eyebrows,
+  an anatomically coherent nose and lips, and necessary cheek lines.
+  Use restrained exaggeration. Do not use mascot features, geometric facial planes, a blocky jaw, or oversized eyebrows.
+  Keep the 19-through-22-percent whole-head ratio for all templates. This does not require distorted features within the face.
 - Keep skin one solid flat color, with no facial shadows or highlights.
   Use one flat hair silhouette with at most one hard shadow.
-  Use a base color and at most one hard shadow shape for each clothing material.
-  Do not add gradients or textures.
+  Use a base color and one shadow tone for each clothing material.
+  The same shadow tone can occupy multiple hard-edged regions that describe natural folds.
+  Simplify shading while preserving believable garment construction. Do not impose arbitrary fold-count limits.
+  Keep the buttons, belt and buckle, pockets, lapels, cuffs, and natural trouser creases that the costume requires.
+  Keep recognizable shoe construction, including laces, soles, and heels where the brief requires them.
+  Retain these details as cartoon linework and flat color. Do not add photorealistic surfaces, gradients, or textures.
 - The style master gives the drawing technique only: contour weight, flat
   color, two-tone shading, line-drawn faces, and caricature strength. No
   identity feature transfers unless the character's own brief gives it.
   Shared head-size classes, height classes, nose categories, and builds are
   acceptable when the character's brief gives them.
-  The Algorithmic Prophet is a usual roster character. Its large nose, large
-  head, short stature, and tall hat belong to that character only.
 - One fixed style block is the only style text in a prompt. The
   `generate-character-openai` skill keeps it. Do not write style text for one
   character.
 - A generation request contains no photograph and no name of a real person.
   The agent examines photographs of the subject and changes the appearance
   into a written caricature brief. The brief names two or three identity
-  features and exaggerates them strongly. It gives the shape and the size of
+  features and uses restrained exaggeration without distorting natural facial anatomy. It gives the shape and the size of
   the nose for each character. Exaggerate a feature only when the research
   shows that it identifies that subject.
 - Each brief gives a height class from the researched real height. The
@@ -893,8 +902,8 @@ These rules apply to each new or replaced human selection:
   large class only when the character study records it.
 - Vary face shape, nose, build, height class, head size, silhouette, costume,
   and props. Do not vary caricature strength, contour weight, or shading.
-- Before acceptance, compare each candidate with the style master and the
-  latest accepted selections on one sheet at one canvas scale. Measure its
+- Before acceptance, compare each candidate with its matching style master and
+  representative masters from the library on a local composite at one canvas scale. Measure its
   stature, its head-height ratio, and its contour width. Reject a candidate
   that has a feature of a style master figure that its brief did not give.
 - Before acceptance, compare each candidate with the research photographs of
@@ -911,24 +920,46 @@ package is complete.
 Visual acceptance of the reference set does not establish successful style transfer.
 After the owner authorizes Selection work, complete two transfer tests:
 
-- The Algorithmic Prophet, with its own researched brief.
-- One tall character with a small or usual nose, with its own researched brief.
+Choose two owner-authorized roster characters with their own researched briefs.
+Use different height classes, builds, and nose shapes or sizes. Include one small
+or usual nose. Do not give an installed character a preferred reference role.
 
 Each test attaches one accepted template that matches its researched height, build, and presentation and passes the full style review.
 Each test follows its own brief without unrequested features from a reference figure.
+The accepted selection remains the sole identity reference for that character's poses.
+It does not become a shared style reference for other characters.
 The owner accepts each resemblance sheet and the shared drawing technique.
 Record visual acceptance and transfer validation separately in `docs/assets/flat-editorial-style.md`.
 Record each test's source hash, review path, and owner acceptance there.
 Keep transfer validation pending until the two tests pass and the owner accepts them.
 Start the rest of the roster only after transfer validation and owner authorization for that work.
 
-On 2026-10-05 the product owner set one outer silhouette contour range for all
-playable characters: the human roster, the Algorithmic Prophet, and the
-Government AI robots. Target 3 source pixels per 1000 pixels of the reference
-height. Accept widths from 2.80 through 3.20. The reference height is 94
+The original owner-selected contour control had SHA-256
+`215e7abcc6e8f68df4b3c07093b2dfcd795d166c3788941edd8988625ceaa2d8`.
+Its measured overall median was 4.847 source pixels on a 1254-square canvas, or 4.112 normalized units.
+Twenty-four manual samples gave body-part medians from 3.980 through 4.148 normalized units.
+The range below rounds outward from those medians to the nearest tenth and remains unchanged.
+
+The owner later authorized the complete 18-master matrix, thinner contours and necessary finishing.
+All 18 canonical files now exist and passed local visual, proportion, alpha and calibrated contour review.
+The final [library](../assets/character-style-master-library.md) and [manifest](../assets/character-style-master-manifest.json)
+record every source, hash, measurement, uncertainty and processing provenance.
+Each source has at least 12 independent valid manual samples, two per body part.
+The short-fat-female and medium-fat-female figures were regenerated from scratch after owner rejection of chin artifacts and heavy shoe borders.
+Each replacement has additional shoe-edge evidence and complete native jaw and footwear review.
+Report model-ineligible curved or construction-interrupted shoe patches separately; do not call them measured passes.
+The other 16 canonical files are unchanged.
+The completed files are native-canvas derivatives of separate built-in chat outputs. Preserve their raw originals in the task record.
+Do not substitute an old installed character or historical candidate as a shared reference.
+Agent review does not establish owner artistic acceptance for subsequent roster work.
+
+Use one outer silhouette contour range for all playable characters, including robots.
+Target 4.1 source pixels per 1000 pixels of the reference
+height. Accept measured medians from 3.90 through 4.20. The reference height is 94
 percent of the source canvas height, which is the stature of the tall height
-class. On a canvas of 1254 pixels, the target is 3.5 source pixels and the
-range is 3.3 through 3.8 source pixels. Do not divide by the height of the
+class. On a canvas of 1254 pixels, the target is approximately 4.83 source pixels and the
+range is approximately 4.60 through 4.95 source pixels. These examples are rounded.
+Use the normalized limits for decisions. Do not divide by the height of the
 figure. A short character, a tall character, and a crouched pose have the
 same contour width in source pixels. When a pose and its selection have
 different canvas sizes, scale the width by the pose-to-selection canvas-width
@@ -937,12 +968,17 @@ Measure each figure and its head, each arm, torso, and each leg separately.
 Apply the same range to the figure median and each body-part median.
 Measured differences inside the range do not alone establish a different nominal weight.
 Use the sample and uncertainty procedure in the character skill's style review.
-Do not accept a measurement whose uncertainty crosses a range limit.
+Judge the measured figure median and every body-part median against the full range of 3.90 through 4.20.
+Report model uncertainty separately. An uncertainty interval that crosses a range boundary does not itself fail or suspend the measurement.
+Do not shrink the allowed range by the uncertainty interval or change its target.
+Visual review of the complete contour remains mandatory, including visible weight changes that samples can miss.
+Keep missing or unmeasurable body-part samples pending. Do not use a passing figure median to hide a failing body part.
+Acceptance requires both passing measured medians and passing visual review.
 
-This range replaces the earlier range of 1.80 through 2.20 for each 1000
-pixels of visible figure height. Each installed package, the three robot
-packages included, gets a regenerated replacement that meets the new range.
-A source that met the earlier range does not meet the new range. A robot
+This master-derived range supersedes the earlier contour ranges and thinning instructions.
+The reproducible sample locations are in `docs/assets/character-style-master-contour-samples.json`.
+A later explicit owner instruction can authorize further generation or replacement.
+Any later robot
 replacement keeps the approved identity and construction and uses the approved
 robot selection as its only image reference. It uses the fixed robot style
 block of the `generate-character-openai` skill as its only style text. It has
@@ -2009,7 +2045,7 @@ reaction, or a character state is replaced or updated, the layout shift is
   and match scales on both player sides. Compare resemblance with the
   researched subject separately from style. Record identity distinction, contour
   quality, color, complete anatomy, and visible signature props. Compare light
-  and dark composites. Reject realistic faces, mixed rendering, clipped props,
+  and dark composites. Reject photographic facial rendering, mixed rendering, clipped props,
   blurred upscaling, and detail lost on reduction. A trial pass establishes only
   the tested scope. Later accepted roster packages need their own visual and
   runtime checks. Each human selection after 2026-10-05 also uses the accepted

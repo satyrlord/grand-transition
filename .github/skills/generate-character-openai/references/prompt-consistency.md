@@ -7,7 +7,8 @@ Read this module before a character prompt or a corrective request.
 Complete the web identity research in [selection generation](selection-generation.md) before a new selection.
 Verified web appearance evidence overrides conflicting private notes.
 Keep one short private brief for each character.
-Give the exaggerated identity features, nose shape and size, face shape, build, height class, head-size class, costume, palette, and signature prop.
+Give the individual identity features, natural facial anatomy, nose shape and size, face shape, build, height class, head-size class, costume, palette, and signature prop.
+Use restrained exaggeration. The head-size class controls whole-head height, not distortion of features within the face.
 For each prop, give its count, canvas side, and visible position.
 Use percentages of the source canvas so the brief works at different native dimensions.
 Reuse the brief for selection and poses.
@@ -34,7 +35,9 @@ Do not tell the generator to add detail to one character.
 For a human selection, attach one accepted template that matches the researched height, build, and presentation.
 The template shows one invented figure that is not a game character. Do not describe that identity in the prompt.
 The new character's brief controls identity and likeness. Resolve uncertain categories without inventing a fallback.
-For the style master pilot, use text only and no image attachment. Examine the Prophet locally as subjective preference only.
+Start a new style master pilot from text alone. An owner-directed revision can use the owner's preferred generated candidate as its source.
+Do not use installed roster art as a preference or technique anchor.
+Use a supplied photograph for manual anatomy inspection only. Do not attach it or name a real person in the request.
 For later master candidates, a measured pilot that passes rendering review can be the sole provisional technique reference.
 Do not present the provisional pilot as owner-accepted art.
 For a pose, the attached image is the accepted selection of that character.

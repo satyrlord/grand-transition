@@ -20,18 +20,31 @@ Generate one character per request and file. Preserve the full native canvas.
 Do not split a generated sheet into source files.
 The figures are not game characters or caricatures of real persons.
 
-Use one technique across the set: the same contour weight, flat colors, faces drawn with few lines,
-and strong exaggeration of two or three identity features.
+Use one technique across the set: the same contour weight, flat colors, clear anatomical facial linework,
+and restrained exaggeration of individual identity features.
+Keep natural proportions within the face: almond-shaped eyes, modest irises and eyebrows,
+an anatomically coherent nose and lips, and necessary cheek lines.
+Use restrained exaggeration. Do not replace anatomy with mascot features, geometric face planes,
+a blocky jaw, or oversized eyebrows. Keep skin flat and untextured.
+The usual whole-head ratio of 19 through 22 percent of stature remains unchanged for all 18 templates.
+That ratio does not require exaggerated proportions between the eyes, nose, mouth, and jaw.
 Keep skin one solid flat color, with no facial shadows or highlights.
 Use one flat hair silhouette with at most one hard shadow.
-Use a base color and at most one hard shadow shape for each clothing material. Do not use gradients or textures.
+Use a base color and one shadow tone for each clothing material.
+Use multiple hard-edged regions of that same shadow tone where natural folds need them.
+Simplify shading, not garment construction. Do not set an arbitrary limit on fold count.
+Preserve believable buttons, belts and buckles, pockets, lapels, cuffs, and natural trouser creases when the costume has them.
+Draw shoes with recognizable construction, including laces, soles, and heels where the brief requires them.
+Keep these details in the cartoon drawing. Do not add photorealistic surfaces, gradients, or textures.
 Vary noses, face shapes, ages, costumes, and individual visual jokes.
 Repeat the required height, build, presentation, and head-size categories.
 A repeated category does not establish copied identity.
 
-The installed Algorithmic Prophet gives the owner's subjective preference only.
-The fixed style block defines the target technique. The accepted templates become the references for new human selections.
-The Prophet also gets a regenerated replacement. Do not copy its identity into a template.
+The fixed style block defines the target technique. Only the 18 generated masters become style references for new human selections.
+Do not use an installed roster image as a preference, technique, or comparison anchor.
+Keep earlier sent prompts and rejected candidates as historical evidence.
+Use a rejected candidate as a revision source only when the owner explicitly selects it.
+Do not treat that choice as final acceptance or a shared style reference.
 A future selection attaches one approved template that matches its researched height, build, and presentation.
 The selection's own brief controls identity and likeness. Do not invent a fallback when its category is unresolved.
 The later transfer tests must establish successful transfer.
@@ -40,14 +53,15 @@ The later transfer tests must establish successful transfer.
 
 Read the existing work record. Write one prompt for each figure in the sequence from
 [identity and prop consistency](prompt-consistency.md).
-Examine the installed Algorithmic Prophet locally as the owner's subjective preference only.
-Generate the pilot from text alone, with no Prophet attachment.
+Start a new pilot from text alone. For an owner-directed revision, the owner's preferred generated candidate
+can be the source reference before final acceptance. Preserve its accepted visual qualities and change only the requested defects.
+This is revision of a prospective library master, not use of installed roster art as a style anchor.
+A user-supplied photograph can inform manual anatomy inspection only. Do not attach it or put a real person's name in a request.
 After a pilot passes measurement and rendering review, its separate source can be the technique-only reference for the other templates.
 Record it as a provisional reference, not as an owner-accepted master.
 Tell the generator that a new figure does not copy the provisional reference's identity.
 Do not attach a photograph or put a real person's name in a prompt.
-Do not instruct the generator to make the contour thinner than the Prophet based on an uncalibrated measurement.
-Use the fixed style block for contour instructions.
+Use the fixed style block and calibrated measurements for contour instructions.
 Run both prompt checks before each request.
 
 Use these values for every template:
@@ -89,19 +103,34 @@ Use them only for inspection. Never request a composite from the generator or at
 
 Reject incomplete figures, incorrect categories, invalid alpha, cropping, or failed proportions.
 Reject defects in the fixed style block's face, detail, shading, or contour requirements.
+Reject missing garment construction that the brief requires. Do not treat removal of buttons, belts, folds, or shoe construction as a style improvement.
 Reject copied roster identity or an identifiable real person. Give the combination of features that establishes the match.
 A shared category or feature alone is not proof of copied identity.
-Examine humor through exaggerated shapes and the visual joke. A serious expression does not itself fail this check.
+Examine humor through expression, posture, individual features, and the visual joke. Do not require extreme facial distortion. A serious expression does not itself fail this check.
 Record the intended joke. The owner decides artistic acceptance.
-Keep unresolved contour measurements pending. Do not record them as passes.
+Judge the measured figure median and each body-part median against the full normalized range of 3.90 through 4.20.
+The owner-selected final master in the style contract defines that contour weight.
+Do not reuse superseded thinning instructions or resume generation after the owner's stop without a new instruction.
+Report model uncertainty separately. An interval that crosses a boundary does not itself cause failure or a pending decision.
+Do not narrow the approved range by the uncertainty interval. Keep the target at 4.1.
+Inspect the complete contour visually before acceptance. Passing medians alone do not establish visual conformity.
+Keep missing or unmeasurable required samples pending. Do not record them as passes.
 After a rendering defect, revise the brief as needed and generate again. Do not edit pixels to fix contour width.
 Use an edit request only for a composition defect, and measure the result again.
+
+An explicit owner instruction can authorize local asset finishing for a specific master task.
+The 2026-10-05 complete-matrix instruction authorized that finishing for the current 18 masters.
+Preserve raw chat outputs. Measure and visually review the final derivative after every material or contour change.
+Do not describe a processed derivative as unchanged generator pixels.
+The final matte shoes used separate one-character chat edits and reviewed shoe-only integration.
+Keep every pixel outside those shoe masks and the complete source alpha unchanged during integration.
 
 ## Record the accepted set
 
 Show the separate candidates and their measurements at source and match-portrait scales.
 Continue generation and validation without waiting for approval of each attempt.
-Copy a source into the canonical reference inventory only after the owner accepts its appearance.
+Copy a source into the canonical reference inventory only after the owner accepts its appearance or explicitly authorizes completion and replacement of the reference inventory.
+That authorization does not permit a false claim of owner artistic acceptance.
 Copy it unchanged to `docs/assets/character-style-master-{height}-{build}-{male|female}.png`.
 Record its hash, dimensions, proportions, contour evidence, and visual acceptance in the style contract.
 Keep transfer validation pending. Do not call a partial set complete.

@@ -41,7 +41,7 @@ A photograph in the request makes the generator copy realistic skin and portrait
 Change the research into a written caricature brief:
 
 1. Name the two or three features that identify the subject most strongly.
-2. Tell the generator to exaggerate each of them strongly, and give its shape.
+2. Give each feature's individual shape and use restrained exaggeration without losing natural facial anatomy.
 3. Give the nose shape and the nose size in each brief, also when the nose is small or usual.
 4. Give the face shape, hair shape, age cue, and build in one short sentence each.
 5. Give the height class and the head-size class from the next section.
@@ -50,7 +50,8 @@ Change the research into a written caricature brief:
 
 Describe shapes, not surfaces.
 Do not describe skin texture, wrinkles in detail, makeup detail, or hair strands.
-Do not tell the generator to copy natural proportions or to keep a feature subtle.
+Use natural adult facial anatomy with individual shapes and expression, as the fixed style block gives.
+Keep the approved whole-head proportion. Do not substitute an oversized geometric or mascot-like face.
 Keep the fictional public identity and approved species.
 Give each character a different face shape, build, and silhouette.
 Exaggerate a feature only when the research shows that it identifies this subject.
@@ -106,7 +107,7 @@ Use this text, word for word, as the image-role part of the prompt:
 ```text
 The attached image is the matching style reference template. It shows one other fictional character.
 Use only its drawing technique: the weight of the outer line, the flat colors,
-the hard two-tone shading, and the faces drawn with a few lines.
+the hard two-tone shading, and the individual faces drawn with natural anatomy and purposeful lines.
 Draw one new character in that technique. The new character is not the reference person.
 Use the height, the head, the face, and the build that this prompt gives.
 ```
@@ -123,7 +124,8 @@ Record the model only if the tool exposes it.
 
 Use [style review](style-review.md) first.
 Then use [candidate review](../../generate-scene-openai/references/candidate-review.md).
-Reject realistic faces, mixed rendering, generic identity, damaged anatomy, missing props, duplicate props, or crop loss.
+Reject photographic facial rendering, mixed rendering, generic identity, damaged anatomy, missing props, duplicate props, or crop loss.
+Natural facial anatomy and believable clothing construction are required, not rejection reasons.
 After the rendering checks pass, compare the candidate with the researched subject.
 Put the candidate and the research photographs side by side on one resemblance sheet.
 Keep that sheet in the task directory in `tmp/character-generation/`. Do not put it in a request, in `research/`, or in the repository.

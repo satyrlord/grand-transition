@@ -11,12 +11,13 @@ Include these images:
 
 - The matching accepted style master and representative accepted masters from the other height and build classes.
 - The candidate.
-- The three most recently accepted selections that passed this review.
 
 Do not make the figures equal in height. The sheet must show the height classes.
 Make one sheet on a light background and one sheet on a dark background.
 For a pose, also put its accepted selection on the sheet.
-For style master candidates, put each available candidate and the installed Algorithmic Prophet on the sheet.
+For style master candidates, compare only the available candidates for the 18-master library.
+Review a text-only pilot against the fixed style block and measured requirements.
+Do not use installed roster art as a technique or comparison anchor.
 Use equal canvas heights. Do not make a lineup source file.
 The comparison sheets are inspection artifacts only. Do not use them as generation references.
 Keep the sheets in the task directory in `tmp/character-generation/`.
@@ -57,7 +58,7 @@ Use at least two clear samples from each named body part: head, each arm, torso,
 This gives at least twelve samples for each figure.
 If a body part has fewer than two measurable edges, keep its measurement pending and give the cause.
 Record each sample's source coordinates, body part, width, and measurement method.
-Use the calibrated ink-coverage helper below. Exclude tips, corners, and dark fills that hide the inner edge.
+Use the calibrated contour helper below. Exclude tips, corners, and dark fills that hide the inner edge.
 Use an x-axis or y-axis scan across the contour. The helper corrects the width for the measured edge slope.
 Keep the helper's calibration and operating limits with the result.
 Normalize each width with the reference height. Use unrounded values for decisions.
@@ -69,14 +70,15 @@ Do not demand identical measured widths between figures or body parts.
 Do not use a passing figure median to hide a body-part median outside the range.
 Also examine the complete contour for visible changes that the samples do not cover.
 
-Use the helper's calibrated bounds for the figure median and each body-part median.
+Compare the central figure median and each central body-part median with the master-derived 3.90-4.20 range.
+Record a numeric pass only when each median is inside that range and all required sample evidence is present.
+Report each model uncertainty interval separately, including `intervalOverlapsTargetBoundary`.
+An interval crossing a limit does not itself fail an in-range central median.
+The owner selected this decision rule. Do not convert the uncertainty margin into a narrower hidden acceptance range.
 These bounds apply to the stated raster model. They are not confidence intervals for arbitrary generated art.
-If the bounds are wholly inside the range, record a measurement pass.
-If the bounds are wholly below or wholly above the range, record a measurement failure.
-If the bounds cross a limit, record the measurement as pending.
-Measure the same locations again at native resolution. Record the repeated measurements without deleting the first set.
-If uncertainty continues, give the annotated samples to the owner for review.
-Do not widen the approved range or record a pending measurement as a pass.
+Keep missing or unmeasurable evidence pending. Do not record it as a numeric pass.
+Examine the annotated sample locations and the complete contour visually before acceptance, also after a numeric pass.
+Do not widen the approved central-median range or hide reported uncertainty.
 
 ### Run the calibrated helper
 
@@ -114,8 +116,26 @@ Each scan must start with two transparent pixels and end with four opaque fill p
 Use a straight outer edge with parallel ink boundaries and enough contrast between ink and fill.
 Do not relabel automatic proposals as manual samples until their locations have been visually inspected.
 
-The helper integrates ink coverage, including partial-alpha pixels, rather than counting opaque pixel centers.
-Its regression tests use known-width analytic and independently supersampled strokes.
+The default strict model integrates ink coverage, including partial-alpha pixels, rather than counting opaque pixel centers.
+Use it only for opaque flat ink and fill that meet its stated assumptions.
+The separate noisy model fits local alpha and color plateaus and inverts pixel coverage at the contour boundaries.
+It supports bounded raster noise and near-opaque interiors under its separately tested operating limits.
+Do not silently apply the strict model's smaller error allowance to the noisy model.
+
+To find possible sites for visual inspection in a generated source, use:
+
+```text
+node .github/skills/generate-character-openai/scripts/measure-contour.ts <source.png> --explore --model noisy
+```
+
+For manually selected sites in that source, add `"model": "noisy"` to the sample-file object.
+Exploration output has no body-part assignments and cannot establish acceptance.
+Keep the source unchanged during measurement. Local normalization in the estimator does not alter the PNG.
+Use each report's own calibration version, margin, operating limits, and status.
+The noisy model's margin comes from finite synthetic tests, not a verified confidence interval for generated artwork.
+An in-range central median can pass numerically while its uncertainty overlaps a boundary; report that fact and require visual review.
+
+The regression tests use known-width analytic, independently supersampled, and adversarial correlated-noise strokes.
 Run the calibration before using a changed helper:
 
 ```text
@@ -124,7 +144,7 @@ npx vitest run --config vitest.config.ts tests/unit/measure-character-contour.te
 
 Retain the JSON report. Read its status and limitations, not only its process exit code.
 A numeric pass still requires visual confirmation of the sample locations, complete contour, and raster-model assumptions.
-An unmeasurable patch or a borderline result stays pending. It does not prove an acceptable contour.
+An unmeasurable patch or missing body-part evidence stays pending. It does not prove an acceptable contour.
 Do not use the old task-local `measure-contour.mjs` for acceptance. It failed known-width calibration.
 
 ## Reject each rendering defect
@@ -133,10 +153,12 @@ Reject the candidate when one of these conditions is true:
 
 - Human skin has shading, highlights, gradients, pores, stubble dots, or freckles.
 - The face is more realistic or more detailed than the body.
-- The face has no strongly exaggerated identity feature and looks generic.
-- A human clothing or shoe material has more than one broad shadow shape, a highlight, or a soft transition.
+- The face lacks individual anatomical shapes or expression and looks generic or mascot-like.
+- A human clothing or shoe material has more than one shadow tone or a soft tonal transition.
 - Human hair has more than one broad shadow shape, highlights, streaks, or single strands.
-- Human shoes have laces, seams, or decorative detail.
+- Clothing loses specified buttons, a belt or buckle, pockets, cuffs, or other necessary construction details.
+- Trouser folds do not follow the hips, crotch, knees, or ankles plausibly.
+- Shoes lose the specified laces, eyelets, toe construction, sole, or heel and become featureless shapes.
 - The stature is out of its height class.
 - The head-height ratio is out of its head-size class.
 - The median contour width is out of its range.

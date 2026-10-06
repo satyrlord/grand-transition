@@ -42,6 +42,7 @@ If the chat tool is unavailable, complete the brief and report the blocked gener
 
 ## Use one style reference set
 
+Only the 18 generated masters are shared style references for new human selections.
 The accepted style master contains 18 separate native transparent square PNG files.
 Use all combinations of short, medium, or tall height; fat, average, or thin build; and male or female presentation.
 Use `docs/assets/character-style-master-{height}-{build}-{male|female}.png`.
@@ -56,7 +57,8 @@ The [robot style block](assets/style-block-robot.txt) is the only style text for
 - Do not generate a human selection before the product owner accepts the style master.
 - Complete the two transfer tests in Specification 023 before other human selections.
 - For human selections, do not use an installed character, a trial character, or a pose as a style reference.
-- For master generation, use a text-only pilot first.
+- For master generation, start a new pilot from text alone.
+  An owner-directed revision can use the owner's preferred generated candidate as its source before final acceptance.
   A pilot that passes measurements and rendering review can be a provisional technique reference for the remaining masters.
   This does not establish owner acceptance.
 - Do not write a different style text for one character.
@@ -65,9 +67,11 @@ The [robot style block](assets/style-block-robot.txt) is the only style text for
 - Change the style block or the style master only when the product owner tells you to.
 
 Repeat required categories across the template matrix. A repeated category does not establish copied identity.
-Make each character a funny, strong caricature that shows its identity at a glance.
+Use natural facial anatomy with restrained exaggeration and a clear individual identity.
+Keep the whole-head class separate from proportions within the face.
+Do not use mascot features, geometric facial planes, blocky jaws, or oversized eyebrows.
 Vary the face shape, build, height class, head size, silhouette, costume, and props between characters.
-Do not vary the caricature strength, the contour weight, or the shading.
+Keep restrained exaggeration, contour weight, and flat shading consistent.
 The style master contains 18 invented figures that are not game characters.
 Generate each figure in its own file, with the same canvas rules as game selections.
 Never use the sheet format for any image generation: no sheet, lineup, collage, grid, strip, or multi-pose image.
@@ -106,7 +110,8 @@ Reuse accepted files that still match their recorded source and decision.
 Inspect an unexpected file change before continuation.
 Do not generate an accepted master, selection, or pose again without an instruction to replace it.
 Get selection acceptance before pose generation.
-Use that accepted selection as the only pose image reference.
+Use that accepted selection as the only pose image reference for identity, costume, and construction.
+It does not become a shared style reference for other characters.
 
 Review completes with evidence for each finding.
 Master work completes when the product owner accepts the style master and the style contract has its measured values.
