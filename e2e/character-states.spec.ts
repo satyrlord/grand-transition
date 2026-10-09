@@ -109,8 +109,8 @@ for (const entry of stateManifest.packages) {
       (window as unknown as { characterStateShifts: number[] }).characterStateShifts.length = 0;
     });
     for (const [index, state] of entry.states.entries()) {
-      // Supply each public presentation cue through the production snapshot
-      // boundary. Gameplay projection is verified by pointer-flow tests.
+      // Hold each public cue while checking its image and layout. Gameplay
+      // projection and cue duration are verified by other tests.
       await page.locator('grand-transition-match').evaluate(
         async (element, cue) => {
           const match = element as HTMLElement & {
@@ -126,7 +126,7 @@ for (const entry of stateManifest.packages) {
           };
           await match.updateComplete;
         },
-        { stateId: state.stateId, sequence: 1000 + index },
+        { stateId: state.stateId, sequence: 1000 + index, hold: true },
       );
       const visible = player.locator('[data-state-visible="true"]');
       await expect(visible).toHaveAttribute('data-state-id', state.stateId);

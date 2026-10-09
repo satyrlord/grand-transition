@@ -129,6 +129,8 @@ function receiptFacts(root: ParentNode, cardId: string) {
 
 afterEach(async () => {
   document.body.innerHTML = '';
+  vi.useRealTimers();
+  vi.restoreAllMocks();
   await setInterfaceLocale('en');
   setGameTextLocale('en');
 });
@@ -851,11 +853,21 @@ describe('receipts from Victory and from match history', () => {
     await app.updateComplete;
     match = document.querySelector('grand-transition-match') as GrandTransitionMatch;
     await match.updateComplete;
+    vi.useFakeTimers();
     match
       .querySelector<HTMLButtonElement>('[data-role="predicate"] [data-card-state="legal"]')!
       .click();
     await app.updateComplete;
-    await vi.waitFor(() => expect(match.querySelector('.round-review-receipts')).not.toBeNull());
+    await match.updateComplete;
+    expect(owner.matchState.phase).toBe('results');
+    const terminalState = JSON.stringify(owner.matchState);
+    expect(match.querySelector('[data-delivery-phase="damage"]')).not.toBeNull();
+    expect(match.querySelector('.round-review-receipts')).toBeNull();
+    // Complete the terminal presentation without a wall-clock race on a busy runner.
+    await vi.advanceTimersByTimeAsync(1_000);
+    await app.updateComplete;
+    await match.updateComplete;
+    expect(match.querySelector('.round-review-receipts')).not.toBeNull();
     const victory = () => match.querySelector('.round-review-dialog[data-victory="true"]');
     expect(victory()).not.toBeNull();
     expect(text(match.querySelector('.round-review-primary'))).toBe('Return to main menu');
@@ -884,11 +896,11 @@ describe('receipts from Victory and from match history', () => {
     );
     expect(victory()).not.toBeNull();
     expect(match.querySelector('grand-transition-quote-receipts')).toBeNull();
+    expect(JSON.stringify(owner.matchState)).toBe(terminalState);
 
     match.querySelector<HTMLButtonElement>('.round-review-primary')!.click();
     await app.updateComplete;
     await vi.waitFor(() => expect(document.querySelector('.title-screen')).not.toBeNull());
-    vi.restoreAllMocks();
   });
 
   test('opens for each stored match from match history, and closes back to its action', async () => {
