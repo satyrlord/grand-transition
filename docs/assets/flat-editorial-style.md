@@ -274,8 +274,18 @@ light-hit preserve generated alpha. Selection, heavy-hit and weakness use only
 bounded detached alpha-1 cleanup. Preserve the approved master's source-specific
 tonal variation and fine contour treatment; exact numeric contour conformance
 remains unverified. This does not change the written direction for new art.
-The alternate keeps the accepted selection's source-specific tonal modeling;
-this does not change the flat-shading direction for new selections.
+The alternate retains its broad drawn female face, full adult silhouette,
+honey-blonde shoulder-length hair, white blouse with large oxblood diamond
+embroidery, black A-line skirt, low black heels, gold hoop earrings, and one
+bundle of three blank papers. Preserve its closed-mouth chin-touch calculation,
+angry speaking palm, small stop-palm recoil, higher defensive palm, and worried
+neckline pinch. Each pose used only the accepted alternate selection. All six
+sources use bounded detached alpha-1 cleanup; registration preserves the
+reviewed pixels. The face, complete papers, gripping fingers, and defining
+gestures stay above desk occlusion. Keep the accepted selection's tight framing,
+local tonal variation, and fine contours as source-specific decisions. Exact
+numeric contour conformance remains unverified. These decisions do not change
+the written direction for new selections.
 
 Both Midnight Sensationalist packages face left in their native sources.
 Their paper stacks and hand gestures stay inside the visible match window.

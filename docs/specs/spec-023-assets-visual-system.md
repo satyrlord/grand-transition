@@ -99,10 +99,36 @@ characters are ready.
 The owner-approved Thunder Tribune alternate selection is installed with five
 reviewed matching poses under the authorized package integration. Each pose
 used only that selection as its image reference. All six sources are native
-1254-square images. Keep the accepted selection's tonal modeling as a
-source-specific decision. Angry delivery also supplies comeback; the existing
-nine-state mappings are unchanged. Native pixels remain unchanged after
-inspection, bounded alpha-1 cleanup where needed, and metadata registration.
+1254-square, right-facing images. Keep its broad drawn female face, full adult
+silhouette, honey-blonde shoulder-length hair, white blouse with large oxblood
+diamond embroidery, black A-line skirt, low black heels, gold hoop earrings,
+and one bundle of three blank speech papers. Preserve closed-mouth chin-touch
+calculation, angry open-palm speech, small stop-palm recoil, stronger raised-palm
+defensive recoil, and worried neckline-pinching doubt. The face, complete papers,
+gripping fingers, and defining gestures stay above desk occlusion. Angry delivery
+also supplies comeback; weakness also supplies grammar-mistake. The existing
+nine-state mappings stay unchanged. All six sources use only bounded detached
+alpha-1 cleanup; metadata registration preserves every reviewed decoded pixel.
+Keep the accepted selection's tight framing, local tonal variation, and fine
+contour treatment as source-specific decisions. They do not change the written
+direction for new selections. Exact numeric contour conformance remains
+unverified; preserve the accepted selection pixels.
+Focused asset, native-alpha provenance, color, 72 unit, 24 character-presenter
+browser, and one selected nine-state end-to-end check passed. The production
+build also passed. Installed checks cover all nine logical states on both
+sides at 1280 by 720, 1024 by 768, 1024 by 1023, and 640 by 320, with short
+and long speech and animation extrema. All 720 clearance samples passed, and
+all 30 captured variant responses match the installed manifests. Source,
+roster, setup, and match reviews found no new character-art visibility defect.
+These checks use held presentation cues, one scene, and device pixel ratio 1.
+The held long-speech captures show only the initial part of the text at the
+tested 1024-wide views, and the separate strip extends below the smallest
+viewport. Scroll access was not checked; portrait clearance does not establish
+complete interface acceptance.
+Individual fingers and sheet count cannot be confirmed reliably at the smallest
+match scale. Other scenes, natural match progression, physical devices, and
+heard speech remain unchecked. The owner deferred aggregate gates and full
+test suites until more characters are ready.
 The approved Midnight Call-In Studio background is installed at native
 3840 by 2160 with derived variants and its existing foreground. It uses a
 modest Romanian cable studio, older broadcast props, and a layered city
