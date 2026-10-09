@@ -229,12 +229,12 @@ export class GrandTransitionInterruption extends LitElement {
                   `
                     : html`
                     <p>
-                      ${msg('Use a browser viewport of at least 640 by 320 CSS pixels in landscape, or 360 by 640 in portrait. Square viewports are not supported.')}
+                      ${msg('Use a browser viewport of at least 600 by 280 CSS pixels in landscape, or 360 by 480 in portrait.')}
                     </p>
                     <dl>
                       <div>
                         <dt>${msg('Minimum')}</dt>
-                        <dd>${msg('640 × 320 landscape · 360 × 640 portrait')}</dd>
+                        <dd>${msg('600 × 280 landscape · 360 × 480 portrait')}</dd>
                       </div>
                       <div>
                         <dt>${msg('Recommended')}</dt>

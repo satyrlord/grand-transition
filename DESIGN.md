@@ -582,7 +582,8 @@ Do not use the interface face for the timer or the timer face for other numbers.
 ## Layout
 
 Functional states on the desktop fill one landscape viewport.
-Compact landscape and portrait keep all the necessary content through responsive layout and vertical scrolling in Milestone 018.
+Compact landscape fills one viewport: the scene and the controls make the left column, and the phrase pool fills the right column.
+Portrait and the smallest viewports keep all the necessary content through vertical scrolling in Milestone 018.
 
 The title uses a centered marquee and a vertical signal rail.
 Setup uses two selected-character stages around a central roster.
@@ -608,8 +609,8 @@ Compact phone layouts keep the same actions and public facts, with touch control
 
 The desktop evidence matrix uses Cascading Style Sheets (CSS) pixels.
 Its dimensions are 1024 by 720, 1024 by 768, 1280 by 720, 1400 by 1050, and 1920 by 1080.
-Milestone 018 adds phone evidence and the minimum values of 640 by 320 for landscape and 360 by 640 for portrait.
-Square viewports and viewports below the minimum show the transmission-unavailable slate.
+Milestone 018 adds phone evidence and the minimum values of 600 by 280 for landscape and 360 by 480 for portrait.
+Viewports below the minimum show the transmission-unavailable slate.
 Landscape is the primary layout.
 The recommended personal computer (PC) viewport is 1920 by 1080.
 

@@ -223,6 +223,12 @@
     white-space: nowrap;
   }
 
+  /* The heading takes focus only to announce the screen. It is not a
+     control, so it shows no focus ring. */
+  .title-marquee h1:focus {
+    outline: none;
+  }
+
   .subtitle {
     display: grid;
     grid-template-columns: minmax(3rem, 11rem) auto minmax(3rem, 11rem);

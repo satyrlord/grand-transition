@@ -139,13 +139,12 @@ test('hotseat hides the inactive hand and removes private content while paused o
   await page.getByRole('button', { name: 'Resume', exact: true }).click();
   const supported = page.viewportSize()!;
   for (const viewport of [
-    { width: 639, height: 320 },
-    { width: 640, height: 319 },
+    { width: 599, height: 280 },
+    { width: 600, height: 279 },
     { width: 359, height: 780 },
     { width: 359, height: 640 },
-    { width: 360, height: 639 },
-    { width: 640, height: 640 },
-    { width: 1024, height: 1024 },
+    { width: 360, height: 479 },
+    { width: 599, height: 599 },
   ]) {
     await page.setViewportSize(viewport);
     await expect(page.locator('[data-interruption="unsupported-viewport"]')).toBeVisible();

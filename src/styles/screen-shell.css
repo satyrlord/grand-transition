@@ -81,6 +81,12 @@
     -webkit-text-stroke: clamp(0.8px, 0.1vw, 1.1px) currentcolor;
   }
 
+  /* The heading takes focus only to announce the screen. It is not a
+     control, so it shows no focus ring. */
+  .setup-heading h1:focus {
+    outline: none;
+  }
+
   .setup-heading > p:last-child {
     max-width: 27ch;
     margin: 0;

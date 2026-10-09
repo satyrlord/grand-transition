@@ -141,10 +141,10 @@ The next round starts automatically after the two deliveries.
 A terminal exchange stays in the arena as a persistent victory record until the player goes back to the title.
 Only the title shows the local public match history.
 
-Landscape must have 640 by 320 Cascading Style Sheets (CSS) pixels or more.
-Portrait must have 360 by 640 or more.
-For landscape, the width must be more than the height.
-For portrait, the height must be more than the width.
+Landscape must have 600 by 280 Cascading Style Sheets (CSS) pixels or more.
+Portrait must have 360 by 480 or more.
+For landscape, the width must be 0.9 times the height or more.
+For portrait, the width must be less than 0.9 times the height.
 The game recommends landscape, with 1920 by 1080 on a PC as the preferred layout.
 Portrait shows a recommendation that the user can close, one time in each page session.
 Portrait can show Single Player and Ladder.

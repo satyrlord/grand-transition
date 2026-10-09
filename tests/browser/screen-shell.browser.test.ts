@@ -977,11 +977,11 @@ test('keeps one frozen shell snapshot and does not own match-state fields', asyn
 });
 
 test.each([
-  { width: 639, height: 320 },
-  { width: 640, height: 319 },
+  { width: 599, height: 280 },
+  { width: 600, height: 279 },
   { width: 359, height: 780 },
-  { width: 360, height: 639 },
-  { width: 1024, height: 1024 },
+  { width: 360, height: 479 },
+  { width: 599, height: 599 },
 ])('blocks an unsupported $width by $height viewport', async (viewport) => {
   await page.viewport(viewport.width, viewport.height);
   document.body.innerHTML = '<grand-transition-app></grand-transition-app>';
@@ -990,7 +990,7 @@ test.each([
 
   expect(app.querySelector('[data-interruption="unsupported-viewport"]')).not.toBeNull();
   expect(app.querySelector('grand-transition-title')).toBeNull();
-  expect(app.textContent).toContain('640 × 320 landscape · 360 × 640 portrait');
+  expect(app.textContent).toContain('600 × 280 landscape · 360 × 480 portrait');
   expect(app.textContent).toContain('1920 × 1080 on PC');
 });
 
@@ -1004,7 +1004,7 @@ test('restores setup state after the viewport becomes supported again', async ()
     })
     .click();
 
-  await page.viewport(639, 320);
+  await page.viewport(599, 320);
   await vi.waitFor(() =>
     expect(app.querySelector('[data-interruption="unsupported-viewport"]')).not.toBeNull(),
   );

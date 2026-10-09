@@ -117,6 +117,79 @@ for (const viewport of [
   });
 }
 
+// Estimated Chrome content viewports of the play-test phones: a short phone in
+// landscape with its browser controls, folding inner screens, and a 360-pixel
+// phone in landscape. Milestone 018 requires one screen without page scroll.
+for (const viewport of gateViewports([
+  { width: 873, height: 313 },
+  { width: 914, height: 331 },
+  { width: 780, height: 280 },
+  { width: 855, height: 694 },
+  { width: 860, height: 512 },
+  { width: 790, height: 815 },
+])) {
+  test(`compact landscape ${viewport.width} by ${viewport.height} fills one screen`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('');
+    await page.getByRole('button', { name: 'Single Player', exact: true }).tap();
+    await lockInSetup(page);
+    await page.getByRole('button', { name: 'Start match', exact: true }).tap();
+    await expect(page.locator('.shared-board > li')).toHaveCount(9);
+    await expectNoHorizontalOverflow(page);
+    const geometry = await page.evaluate(() => {
+      const box = (selector: string) => document.querySelector(selector)!.getBoundingClientRect();
+      const pool = box('.common-phrases');
+      return {
+        pageScroll: document.documentElement.scrollHeight - document.documentElement.clientHeight,
+        poolTop: pool.top,
+        poolGapBelow: innerHeight - pool.bottom,
+        poolRightOfScene: pool.left >= box('.match-stage').right - 1,
+        artMeetsSentence: Math.abs(
+          box('.broadcast-stage-art').bottom - box('.sentence-ledger').top,
+        ),
+      };
+    });
+    expect(geometry.pageScroll).toBeLessThanOrEqual(1);
+    expect(geometry.poolTop).toBeLessThanOrEqual(1);
+    expect(Math.abs(geometry.poolGapBelow)).toBeLessThanOrEqual(1);
+    expect(geometry.poolRightOfScene).toBe(true);
+    expect(geometry.artMeetsSentence).toBeLessThanOrEqual(1);
+    for (const control of [
+      page.getByRole('button', { name: 'Pause', exact: true }),
+      page.getByRole('button', { name: 'End', exact: true }),
+      page.getByRole('button', { name: 'Reshuffle private phrases', exact: true }),
+      page.locator('.private-hand button.phrase-card').first(),
+      page.locator('.private-hand button.phrase-card').last(),
+    ]) {
+      await expect(control).toBeInViewport({ ratio: 1 });
+    }
+    await expectPhraseCardsInsideRows(page);
+  });
+}
+
+test('a nearly square folding screen keeps landscape when the toolbar hides', async ({ page }) => {
+  await page.setViewportSize({ width: 790, height: 759 });
+  await page.goto('');
+  const multiplayer = page.getByRole('button', { name: 'Multiplayer', exact: true });
+  await expect(multiplayer).toBeEnabled();
+  await page.getByRole('button', { name: 'Single Player', exact: true }).tap();
+  await lockInSetup(page);
+  await page.getByRole('button', { name: 'Start match', exact: true }).tap();
+  await expect(page.locator('.match-screen')).toBeVisible();
+  const poolLeft = () =>
+    page.locator('.common-phrases').evaluate((pool) => pool.getBoundingClientRect().left);
+  const landscapePoolLeft = await poolLeft();
+  expect(landscapePoolLeft).toBeGreaterThan(395);
+  // The toolbar hides and the content viewport becomes taller than it is wide.
+  await page.setViewportSize({ width: 790, height: 815 });
+  await expect(page.getByRole('alertdialog')).toHaveCount(0);
+  await expect(page.locator('.match-screen')).toBeVisible();
+  expect(await poolLeft()).toBeGreaterThan(395);
+  await expectNoHorizontalOverflow(page);
+});
+
 test('portrait recommendation is modal and appears once per page instance', async ({ page }) => {
   await page.setViewportSize(portraitViewports[0]);
   await page.goto('');
@@ -131,7 +204,7 @@ test('portrait recommendation is modal and appears once per page instance', asyn
   await expect(page.getByRole('alertdialog')).toHaveCount(0);
   await page.reload();
   await expect(page.getByRole('alertdialog', { name: 'Landscape recommended' })).toBeVisible();
-  await page.setViewportSize({ width: 640, height: 640 });
+  await page.setViewportSize({ width: 599, height: 599 });
   await expectConcealed(page, 'unsupported-viewport');
   await page.setViewportSize({ width: 832, height: 384 });
   await expect(page.getByRole('button', { name: 'Multiplayer' })).toBeEnabled();

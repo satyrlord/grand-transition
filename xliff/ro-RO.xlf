@@ -170,17 +170,17 @@
   <source>Back to menu</source>
   <target>Înapoi la meniu</target>
 </trans-unit>
-<trans-unit id="s57e1b383fb3feb48">
-  <source>Use a browser viewport of at least 640 by 320 CSS pixels in landscape, or 360 by 640 in portrait. Square viewports are not supported.</source>
-  <target>Folosește o fereastră de cel puțin 640 × 320 pixeli CSS în orientare orizontală sau 360 × 640 în orientare verticală. Ferestrele pătrate nu sunt acceptate.</target>
+<trans-unit id="secaac47eb453b9de">
+  <source>Use a browser viewport of at least 600 by 280 CSS pixels in landscape, or 360 by 480 in portrait.</source>
+  <target>Folosește o fereastră de cel puțin 600 × 280 pixeli CSS în orientare orizontală sau 360 × 480 în orientare verticală.</target>
 </trans-unit>
 <trans-unit id="seb4eae68d45315b7">
   <source>Minimum</source>
   <target>Minim</target>
 </trans-unit>
-<trans-unit id="s05bbc0a1a3f7171e">
-  <source>640 × 320 landscape · 360 × 640 portrait</source>
-  <target>640 × 320 orizontal · 360 × 640 vertical</target>
+<trans-unit id="s9fe2c1aa581799d3">
+  <source>600 × 280 landscape · 360 × 480 portrait</source>
+  <target>600 × 280 orizontal · 360 × 480 vertical</target>
 </trans-unit>
 <trans-unit id="s12f6b3b9aa6fe76c">
   <source>Recommended</source>

@@ -165,7 +165,7 @@ test('shows a coordinated copular complement as a complete sentence', async () =
 });
 
 test.each([
-  { width: 639, height: 320, pauseMode: 'viewport' },
+  { width: 599, height: 320, pauseMode: 'viewport' },
   { width: 384, height: 832, pauseMode: 'hotseat-portrait' },
 ])(
   'shows the comeback inline and resumes both deliveries after $pauseMode',

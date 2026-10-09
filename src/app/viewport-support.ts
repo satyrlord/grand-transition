@@ -1,9 +1,9 @@
 export const minimumSupportedViewport = Object.freeze({
-  width: 640,
-  height: 320,
+  width: 600,
+  height: 280,
 });
 
-export const minimumPortraitViewport = Object.freeze({ width: 360, height: 640 });
+export const minimumPortraitViewport = Object.freeze({ width: 360, height: 480 });
 
 export const recommendedViewport = Object.freeze({
   width: 1920,
@@ -25,13 +25,17 @@ export function isSupportedViewport(viewport: ViewportSize): boolean {
   }
   return (
     viewport.width >= minimumSupportedViewport.width &&
-    viewport.height >= minimumSupportedViewport.height &&
-    viewport.width > viewport.height
+    viewport.height >= minimumSupportedViewport.height
   );
 }
 
+/**
+ * A viewport is portrait when its width is less than nine tenths of its
+ * height. A nearly square folding screen thus keeps the landscape layout when
+ * the browser toolbar shows or hides. The CSS uses the same 9 / 10 ratio.
+ */
 export function isPortraitViewport(viewport: ViewportSize): boolean {
-  return viewport.height > viewport.width;
+  return viewport.width * 10 < viewport.height * 9;
 }
 
 export function currentViewport(): ViewportSize {

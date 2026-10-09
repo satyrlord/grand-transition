@@ -18,6 +18,7 @@ and responsive layout
 
 The game must operate in the browser content viewports of desktop computers and phones.
 This includes portrait use and landscape use on the Samsung Galaxy S25 Ultra.
+It also includes the play-test phones of the repair record below, and the cover screens and inner screens of their folding models.
 Landscape is the primary game layout.
 Recommend landscape and a PC viewport of 1920 by 1080.
 Only the browser geometry controls if a viewport is supported.
@@ -34,10 +35,19 @@ All dimensions are CSS pixels of the browser content.
 They are not the physical screen resolution or the dimensions of the outer window.
 A viewport is supported when one of these conditions is correct:
 
-1. Landscape: the width is more than the height, the width is 640 or more, and the height is 320 or more.
-2. Portrait: the height is more than the width, the width is 360 or more, and the height is 640 or more.
+1. Landscape: the width is 0.9 times the height or more, the width is 600 or more, and the height is 280 or more.
+2. Portrait: the width is less than 0.9 times the height, the width is 360 or more, and the height is 480 or more.
 
-Square viewports and dimensions below these limits are not supported.
+Dimensions below these limits are not supported.
+A square viewport is landscape.
+The JavaScript classification and the CSS media queries use the same 9 by 10 ratio.
+
+The browser toolbar of a phone shows and hides as the page scrolls, and the content height changes by approximately 56 CSS pixels.
+On the inner screen of a folding phone, the width and the height are almost equal.
+The 0.9 ratio keeps such a screen in one layout when the toolbar shows or hides.
+Chrome for Android also shows the status bar and the toolbar in landscape.
+Thus a phone that is 360 to 412 CSS pixels wide gives a landscape content height of approximately 280 to 332 CSS pixels.
+The 280-pixel minimum height accepts these phones.
 An unsupported viewport replaces the application DOM of that time with a blocking compatibility screen.
 The screen gives the two minimum dimensions and the landscape recommendation, and the user cannot go around it.
 When the viewport becomes supported again, the game keeps the view of that time, the setup selections, and the authoritative match state.
@@ -52,14 +62,34 @@ The desktop landscape matrix keeps its integrated arena and has no page scroll.
 Apply Milestone 023's per-pose framing and speech-clearance rules at
 narrow desktop ratios. Check both player sides, short and long active speech,
 and the extreme positions of each pose without changing approved raster art.
-A layout is compact when it is portrait, narrower than 1024 CSS pixels, or shorter than 720 CSS pixels.
+A layout is compact when its width is not more than its height, when it is narrower than 1024 CSS pixels, or when it is shorter than 720 CSS pixels.
 Compact landscape keeps the scene, all nine common phrase slots, and the two private choices.
 It also keeps the sentence of that time, the player facts, and each available action.
 Decorative detail becomes smaller before necessary text or controls.
 When it is necessary, compact screens can scroll vertically.
 Horizontal page scroll is not permitted.
 
+The compact landscape match fills one viewport.
+The scene, the sentence record, the private hand, and the actions make the left column.
+The scene takes the height that the sentence record and the controls do not use.
+The common phrase pool is the right column, and its nine rows fill the height of the column.
+A row is never shorter than its card.
+When the viewport is tall, the scene column becomes wider, so that the scene art is not cropped narrower than 4 by 3.
+A long sentence does not make the sentence record taller.
+The speech sizes fit the sentence, and only a sentence that the smallest size cannot show scrolls in the record.
+When the content cannot fit, the page can scroll vertically, and a pool that does not fit scrolls in its column.
+
+A compact landscape viewport that is shorter than 480 CSS pixels is a phone in landscape.
+On such a viewport, the two plaques use the top corners of the scene, and the status rail uses the top center.
+The turn label hangs below the plaque of the active player.
+When the viewport is 768 CSS pixels wide or more, the hand and the actions share one row.
+In setup, the selection stages and the roster fill the first screen, and the roster scrolls in its frame.
+A landscape title that is shorter than 640 CSS pixels uses a smaller emblem and wordmark.
+The match history dialog and the quote archive dialog scroll as one block.
+
 In portrait, render the scene and its public sentence strip first.
+The plaques use three lines, and the turn label hangs below the plaque of the active player.
+The sentence record keeps the height of two lines, so that a preview of two lines does not move the rows below it.
 Put the common phrase pool immediately below them as nine full-width rows.
 The rows go from edge to edge across the available content width.
 Keep the text padding in each row.
@@ -123,10 +153,12 @@ Manual Pause stays active until the player continues directly.
 - **AC-018-02:** The accepted phone portrait examples are 360 by 640, 360 by 780, 384 by 832, and 412 by 915.
   They also include 384 by 700, with browser controls on the screen.
   The accepted phone landscape examples are 640 by 320, 780 by 360, 832 by 384, 915 by 412, 700 by 384, and 740 by 360.
+  The accepted minimum examples are 600 by 280 in landscape and 360 by 480 in portrait.
+  The accepted square examples are 640 by 640 and 1024 by 1024.
   The nine portrait pool rows fill the content width below the scene.
   The private hand and the actions come after them.
   The user can get to all the necessary content without horizontal page scroll.
-- **AC-018-03:** Do not accept 639 by 320, 640 by 319, 359 by 640, 360 by 639, 640 by 640, and 1024 by 1024.
+- **AC-018-03:** Do not accept 599 by 280, 600 by 279, 359 by 640, 360 by 479, and 599 by 599.
   Show only the compatibility screen.
 - **AC-018-04:** A resize to an unsupported viewport keeps the title and setup selections and the active match state.
   It stops the turn time at its value, removes the match facts from the DOM, and sends no match command.
@@ -145,14 +177,23 @@ Manual Pause stays active until the player continues directly.
 - **AC-018-08:** Typical phone screens for the title, the setup, the match, Settings, and the history keep the necessary controls and easy-to-read content.
   The phone screens for Pause, the presentation, and Victory also keep them.
   Touch flows and keyboard flows can get to the last pool row, the two private slots, and all the available actions through vertical scrolling.
+- **AC-018-09:** The compact landscape match at 873 by 313, 914 by 331, 780 by 280, 855 by 694, 860 by 512, and 790 by 815 has no page scroll.
+  The pool starts at the top of the viewport and ends at the bottom of the viewport, and it is to the right of the scene.
+  The scene art meets the sentence record without a gap.
+  Pause, End, the reshuffle control, and the two private cards are fully in the viewport.
+  Each pool card is inside its row.
+- **AC-018-10:** A viewport of 790 by 759 that becomes 790 by 815 stays in landscape.
+  The landscape recommendation does not show, Multiplayer stays enabled, and the pool stays in the right column.
 
 ## Objective verifiers
 
 `tests/unit/viewport-support.test.ts` does checks of the accepted geometry and the rejected geometry for AC-018-01 through AC-018-03.
+It also does checks of the play-test phone examples and of the 0.9 ratio for AC-018-10.
 `tests/browser/screen-shell.browser.test.ts` and
 `tests/browser/match-screen.browser.test.ts` do checks of AC-018-04 through AC-018-07.
 These checks include the commands that the game does not accept, timer preservation without a change, focus, hidden DOM, and the interaction with manual Pause.
-`e2e/mobile-layout.spec.ts` does checks of AC-018-02 and AC-018-08 in the production browser build.
+`e2e/mobile-layout.spec.ts` does checks of AC-018-02, AC-018-08, AC-018-09, and AC-018-10 in the production browser build.
+`tests/browser/layout-regions.browser.test.ts` does the Milestone 033 region checks at 873 by 313, 790 by 815, and 600 by 280 in the full gate.
 The desktop geometry suites do checks of AC-018-01.
 Record the full commands, the browser version, the viewports, and the artifact paths in the kept evidence.
 
@@ -169,3 +210,34 @@ The production-browser evidence includes the desktop and phone matrices, with th
 Run `npm run ci`.
 Record if tests on a physical device were available.
 Do not say that you did such tests when you used only viewport emulation in the browser.
+
+## Repair record
+
+Play testers reported that the game looked bad on these phones: OnePlus 8T, Xiaomi Mix Fold 3, Xiaomi 18 Fold, Redmi Note 11, and Honor Magic V5.
+No physical device was available for the repair.
+The evidence uses Chromium viewport emulation of the estimated Chrome content viewports in this table.
+Each estimate is the panel resolution divided by a typical device pixel ratio, less the status bar, the toolbar, and the navigation inset.
+
+| Device               | Screen             | Portrait   | Landscape  |
+| -------------------- | ------------------ | ---------- | ---------- |
+| OnePlus 8T           | Main               | 411 by 804 | 914 by 331 |
+| Redmi Note 11        | Main               | 393 by 770 | 873 by 313 |
+| Xiaomi Mix Fold 3    | Inner              | 697 by 689 | 785 by 601 |
+| Xiaomi Mix Fold 3    | Cover              | 393 by 815 | 916 by 313 |
+| Xiaomi 18 Fold       | Inner              | 608 by 764 | 860 by 512 |
+| Xiaomi 18 Fold       | Cover              | 425 by 527 | 623 by 345 |
+| Honor Magic V5       | Inner              | 790 by 759 | 855 by 694 |
+| Honor Magic V5       | Cover              | 385 by 768 | 864 by 305 |
+
+The emulation showed these defects before the repair:
+
+- The previous minimum of 320 CSS pixels blocked the landscape viewports of the Redmi Note 11 and of the two cover screens.
+  The previous portrait minimum of 640 and the landscape minimum width of 640 blocked the Xiaomi 18 Fold cover screen in the two orientations.
+- Compact landscape used a fixed scene height of 18 rem.
+  On the inner screens, 40 percent of the viewport below the controls stayed empty, and the scene was a small strip.
+  On a phone in landscape, the match was approximately 1.4 viewports tall.
+- The inner screen of the Honor Magic V5 changed between portrait and landscape when the toolbar showed or hid.
+- Setup on a phone in landscape was approximately 2.5 viewports tall.
+- After Continue in portrait, the title heading showed a focus ring around its two words.
+
+Do a check on a physical device to confirm the estimates.

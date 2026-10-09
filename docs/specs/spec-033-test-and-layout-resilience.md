@@ -138,6 +138,7 @@ The test uses page coordinates, so a scrolled page gives the same result.
 A top-level region below the fold is inside the page when the page scrolls vertically.
 A region inside a scroll container is reachable when the container has a tab stop or holds a control that can take the keyboard focus.
 The test uses the 1024 by 720, 1024 by 768, 1280 by 720, 1400 by 1050, and 1920 by 1080 matrix of Milestone 018, and the 915 by 412 Pixel 7 landscape viewport.
+It also uses the 873 by 313, 790 by 815, and 600 by 280 compact landscape examples of the Milestone 018 repair record.
 
 A new element in an existing region gets these checks automatically.
 A new region must declare its name, and it then also gets the checks.

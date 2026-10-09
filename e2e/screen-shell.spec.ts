@@ -884,11 +884,11 @@ test('duplicate setup submit dispatches one immutable command', async ({ page })
 });
 
 for (const viewport of [
-  { width: 639, height: 320 },
-  { width: 640, height: 319 },
+  { width: 599, height: 280 },
+  { width: 600, height: 279 },
   { width: 359, height: 780 },
-  { width: 360, height: 639 },
-  { width: 1024, height: 1024 },
+  { width: 360, height: 479 },
+  { width: 599, height: 599 },
 ]) {
   test(`blocks ${viewport.width} by ${viewport.height}`, async ({ page }) => {
     await page.setViewportSize(viewport);
@@ -897,7 +897,7 @@ for (const viewport of [
     await expect(page.locator('[data-interruption="unsupported-viewport"]')).toBeVisible();
     await expect(page.locator('grand-transition-title')).toHaveCount(0);
     await expect(
-      page.getByText('640 × 320 landscape · 360 × 640 portrait', { exact: true }),
+      page.getByText('600 × 280 landscape · 360 × 480 portrait', { exact: true }),
     ).toBeVisible();
     await expect(page.getByText('1920 × 1080 on PC', { exact: true })).toBeVisible();
   });

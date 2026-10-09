@@ -131,15 +131,15 @@ This file records no testimonial and no customer quotation.
 
 ## Supported Layout
 
-Accept landscape browser content viewports of 640 by 320 Cascading Style Sheets (CSS) pixels or more.
-Their width must be more than their height.
-Accept portrait viewports of 360 by 640 CSS pixels or more.
-Their height must be more than their width.
+Accept landscape browser content viewports of 600 by 280 Cascading Style Sheets (CSS) pixels or more.
+Their width must be 0.9 times their height or more, so a square viewport is landscape.
+Accept portrait viewports of 360 by 480 CSS pixels or more.
+Their width must be less than 0.9 times their height.
 
 Landscape is the primary layout.
 Recommend 1920 by 1080 on a personal computer (PC).
 Apply the same geometry rules to each device.
-For square viewports and for viewports below the minimum, show the blocking screen.
+For viewports below the minimum, show the blocking screen.
 Do not let the user go around the blocking screen.
 
 Portrait shows a landscape recommendation that the user can close, one time in each page session.

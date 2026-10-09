@@ -228,8 +228,11 @@ describe('layout region checker', () => {
 });
 
 describe('layout regions of the primary screens', () => {
-  // The desktop landscape matrix of Milestone 018 and the Pixel 7 landscape
-  // viewport. The quick gate keeps the 1280 by 720 reference viewport.
+  // The desktop landscape matrix of Milestone 018, the Pixel 7 landscape
+  // viewport, and the compact landscape examples of the play-test phones: a
+  // short phone with its browser controls, a folding inner screen, and the
+  // minimum landscape viewport. The quick gate keeps the 1280 by 720 reference
+  // viewport.
   const viewports = gateViewports(
     [
       { width: 1024, height: 720 },
@@ -238,6 +241,9 @@ describe('layout regions of the primary screens', () => {
       { width: 1400, height: 1050 },
       { width: 1920, height: 1080 },
       { width: 915, height: 412 },
+      { width: 873, height: 313 },
+      { width: 790, height: 815 },
+      { width: 600, height: 280 },
     ],
     {
       GRAND_TRANSITION_QUALITY_GATE: process.env.GRAND_TRANSITION_QUALITY_GATE,

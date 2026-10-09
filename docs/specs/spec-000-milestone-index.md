@@ -176,9 +176,9 @@ Do not record private hand content, personal data, machine secrets, or hidden sp
 Browser UI support uses the content viewport in CSS pixels.
 Milestone 018 controls the geometry, the portrait warning, the hotseat restrictions, and the compact layout contract.
 Milestones 037 and 038 give the orientation rules of the Couch and Remote modes.
-In landscape, the width must be more than the height, and the viewport must be 640 by 320 or more.
-In portrait, the height must be more than the width, and the viewport must be 360 by 640 or more.
-Square viewports are not supported.
+In landscape, the width must be 0.9 times the height or more, and the viewport must be 600 by 280 or more.
+In portrait, the width must be less than 0.9 times the height, and the viewport must be 360 by 480 or more.
+A square viewport is landscape.
 
 Landscape is the primary layout.
 The game continues to recommend 1920 by 1080 on a PC.
