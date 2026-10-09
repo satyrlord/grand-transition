@@ -622,6 +622,13 @@
       white-space: nowrap;
       transform: translateX(-50%);
     }
+    /* Two lines of a preview fit without a change of height, so the rows
+       below the record do not move under the pointer. */
+    .sentence-ledger,
+    .sentence-ledger[data-speaker-side],
+    .sentence-ledger[data-presenting='true'] {
+      padding-block: 0.55rem;
+    }
     .shared-board {
       grid-template-rows: repeat(9, minmax(2.375rem, auto));
     }
@@ -719,20 +726,60 @@
     .shared-board > .phrase-slot {
       min-height: auto;
     }
-    .private-hand[data-side],
-    .ai-thinking-record[data-side] {
+    /* The ring stays inside the card, because the pool column clips. */
+    .shared-board button.phrase-card:focus-visible {
+      outline-offset: -3px;
+    }
+    .private-hand[data-side] {
       grid-row: 3;
+    }
+    /* The thinking record takes the rows of the hand and the actions, so the
+       sentence record keeps its height during the turn of the AI. */
+    .ai-thinking-record[data-side] {
+      grid-row: 3 / -1;
+      min-height: calc(var(--compact-controls-height) - 1rem);
     }
     .match-actions[data-side] {
       grid-row: 4;
     }
+    /* A cliffhanger record shows above the sentence record, over the scene. */
+    .sentence-ledger .cliffhanger-strike {
+      position: absolute;
+      z-index: 12;
+      right: 0.5rem;
+      bottom: calc(100% + 0.25rem);
+      left: 0.5rem;
+      max-width: none;
+      width: auto;
+    }
+    /* The receipt keeps to one viewport, and its score lines scroll. */
     .delivery-receipt[data-side] {
       grid-column: -2;
       grid-row: 1 / -1;
+      align-self: start;
+      max-height: calc(100svh - 1.5rem);
     }
+    .delivery-components {
+      overflow-y: auto;
+    }
+    /* The weakness record and the Pride record use the bottom of the column. */
     .delivery-emphasis[data-side],
     .delivery-impact-record[data-side] {
+      z-index: 11;
       grid-column: -2;
+      grid-row: 1 / -1;
+      align-self: end;
+      max-height: 5.5rem;
+      overflow-y: auto;
+    }
+    .broadcast-stage:has(.delivery-impact-record) .delivery-emphasis[data-side] {
+      margin-bottom: 4.75rem;
+    }
+    .broadcast-stage:has(.delivery-impact-record) .delivery-receipt {
+      max-height: calc(100svh - 6rem);
+    }
+    .broadcast-stage:has(.delivery-emphasis p) .delivery-receipt {
+      max-height: calc(100svh - 8rem);
     }
 
     .comeback-sidekick {
@@ -848,94 +895,24 @@
     .roster-heading h2 {
       font-size: 1.15rem;
     }
+    /* A swipe at the end of the roster continues to the settings below it. */
     .roster-grid {
       height: 100%;
       max-height: 100%;
       overflow-y: auto;
+      overscroll-behavior-block: auto;
       scrollbar-gutter: stable;
     }
   }
 
-  /* A phone in landscape: the plaques use the top corners of the scene and
-     the status rail uses the top center. The hand and the actions share a row. */
-  @media (aspect-ratio >= 9 / 10) and (height < 30rem) {
+  /* A compact landscape screen that is shorter than 640 pixels puts the
+     plaques in the top corners of the scene and the status rail at the top
+     center, so the scene keeps more of its height. */
+  @media (aspect-ratio >= 9 / 10) and (height < 40rem) {
     .match-screen {
-      --compact-pool-width: clamp(16rem, 38cqw, 26rem);
-      --mobile-scene-width: calc(100cqw - var(--compact-pool-width));
       --mobile-hud-height: 4.1rem;
-      --compact-scene-minimum: 10rem;
-      --compact-sentence-height: 3.25rem;
-      --compact-sentence-minimum: 2.25rem;
-      --compact-controls-height: 3.9rem;
       --status-rail-width: 6.5rem;
     }
-    .broadcast-stage {
-      grid-template-columns: minmax(0, 1fr) auto var(--compact-pool-width);
-      grid-template-rows:
-        var(--mobile-scene-height) minmax(var(--compact-sentence-minimum), 1fr)
-        auto;
-    }
-    .match-stage,
-    .sentence-ledger,
-    .sentence-ledger[data-speaker-side],
-    .sentence-ledger[data-presenting='true'] {
-      grid-column: 1 / span 2;
-    }
-    .sentence-ledger,
-    .sentence-ledger[data-speaker-side],
-    .sentence-ledger[data-presenting='true'] {
-      padding: 0.25rem 0.6rem;
-    }
-    .sentence-preview,
-    .sentence-preview[data-density] {
-      font-size: 0.875rem;
-      line-height: 1.2;
-    }
-    .sentence-preview[data-density='compact'] {
-      font-size: 0.8125rem;
-    }
-    .sentence-preview[data-density='dense'] {
-      font-size: 0.6875rem;
-    }
-    .private-hand[data-side],
-    .ai-thinking-record[data-side] {
-      grid-column: 1;
-      grid-row: 3;
-      margin: 0.3rem 0.2rem 0.3rem 0.4rem;
-    }
-    .match-actions[data-side] {
-      grid-column: 2;
-      grid-row: 3;
-      grid-template-columns: auto auto;
-      margin: 0.3rem 0.4rem max(0.3rem, env(safe-area-inset-bottom)) 0.2rem;
-    }
-    .match-actions button,
-    .match-actions .action-primary {
-      width: auto;
-      min-width: 4rem;
-      padding-inline: 0.5rem;
-    }
-    .private-hand .phrase-card,
-    .action-reshuffle,
-    .match-actions button {
-      min-height: 2.8rem;
-    }
-    .private-hand .phrase-card {
-      padding: 0.2rem 0.4rem;
-    }
-    .private-hand .card-phrase {
-      font-size: 0.75rem;
-      line-height: 1.15;
-    }
-    .shared-board .phrase-card {
-      min-height: 1.875rem;
-      padding: 0.15rem 0.6rem;
-    }
-    .shared-board .card-phrase {
-      font-size: 0.8125rem;
-      line-height: 1.15;
-    }
-
     .match-status-rail {
       top: 0.3rem;
       left: calc(var(--mobile-scene-width) / 2);
@@ -1017,12 +994,97 @@
     .player-weaknesses,
     .match-player[data-side='red'] .player-weaknesses {
       justify-content: flex-start;
-      font-size: 0.6875rem;
+      font-size: 0.75rem;
       text-align: start;
     }
     .match-player[data-side='blue'] .player-weaknesses {
       justify-content: flex-end;
       text-align: end;
+    }
+  }
+
+  /* A phone in landscape: the hand and the actions share a row, and the pool
+     cards are smaller. */
+  @media (aspect-ratio >= 9 / 10) and (height < 30rem) {
+    .match-screen {
+      --compact-pool-width: clamp(16rem, 38cqw, 26rem);
+      --mobile-scene-width: calc(100cqw - var(--compact-pool-width));
+      --compact-scene-minimum: 10rem;
+      --compact-sentence-height: 3.25rem;
+      --compact-sentence-minimum: 2.25rem;
+      --compact-controls-height: 3.9rem;
+    }
+    .broadcast-stage {
+      grid-template-columns: minmax(0, 1fr) auto var(--compact-pool-width);
+      grid-template-rows:
+        var(--mobile-scene-height) minmax(var(--compact-sentence-minimum), 1fr)
+        auto;
+    }
+    .match-stage,
+    .sentence-ledger,
+    .sentence-ledger[data-speaker-side],
+    .sentence-ledger[data-presenting='true'] {
+      grid-column: 1 / span 2;
+    }
+    .sentence-ledger,
+    .sentence-ledger[data-speaker-side],
+    .sentence-ledger[data-presenting='true'] {
+      padding: 0.25rem 0.6rem;
+    }
+    .sentence-preview,
+    .sentence-preview[data-density] {
+      font-size: 0.875rem;
+      line-height: 1.2;
+    }
+    .sentence-preview[data-density='compact'] {
+      font-size: 0.8125rem;
+    }
+    .sentence-preview[data-density='dense'] {
+      font-size: 0.6875rem;
+    }
+    .private-hand[data-side],
+    .ai-thinking-record[data-side] {
+      grid-column: 1;
+      grid-row: 3;
+      margin: 0.3rem 0.2rem 0.3rem 0.4rem;
+    }
+    .ai-thinking-record[data-side] {
+      grid-column: 1 / span 2;
+      grid-row: 3 / -1;
+      min-height: calc(var(--compact-controls-height) - 0.6rem);
+      margin-inline-end: 0.4rem;
+    }
+    .match-actions[data-side] {
+      grid-column: 2;
+      grid-row: 3;
+      grid-template-columns: auto auto;
+      margin: 0.3rem 0.4rem max(0.3rem, env(safe-area-inset-bottom)) 0.2rem;
+    }
+    .match-actions button,
+    .match-actions .action-primary {
+      width: auto;
+      min-width: 4rem;
+      padding-inline: 0.5rem;
+    }
+    .private-hand .phrase-card,
+    .action-reshuffle,
+    .match-actions button {
+      min-height: 2.8rem;
+    }
+    .private-hand .phrase-card {
+      padding: 0.2rem 0.4rem;
+    }
+    .private-hand .card-phrase {
+      font-size: 0.75rem;
+      line-height: 1.15;
+    }
+    .shared-board .phrase-card {
+      min-height: 1.875rem;
+      padding: 0.15rem 0.6rem;
+    }
+    .shared-board .card-phrase {
+      font-size: 0.8125rem;
+      line-height: 1.15;
     }
   }
 
@@ -1040,6 +1102,9 @@
     .ai-thinking-record[data-side] {
       grid-column: 1 / span 2;
       margin: 0.35rem 0.4rem 0;
+    }
+    .ai-thinking-record[data-side] {
+      margin-bottom: max(0.35rem, env(safe-area-inset-bottom));
     }
     .match-actions[data-side] {
       grid-column: 1 / span 2;

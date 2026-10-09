@@ -5,6 +5,7 @@ import { useFixedBrowserMatchSeed } from './helpers/match-flow.ts';
 import { finishPresentation, reachDeliveryTotal } from './helpers/presentation.ts';
 import type { RoundPresentationFrame } from '../src/app/round-presentation.ts';
 import { gateViewports } from './helpers/viewports.ts';
+import { isPortraitViewport } from '../src/app/viewport-support.ts';
 
 const portraitViewports = [
   { width: 384, height: 832 },
@@ -32,7 +33,7 @@ for (const viewport of [
   ...gateViewports(portraitViewports),
   ...gateViewports(landscapeViewports),
 ]) {
-  const portrait = viewport.height > viewport.width;
+  const portrait = isPortraitViewport(viewport);
   test(`mobile ${viewport.width} by ${viewport.height} supports touch setup and drafting`, async ({
     page,
   }, testInfo) => {
@@ -174,6 +175,10 @@ test('a nearly square folding screen keeps landscape when the toolbar hides', as
   await page.goto('');
   const multiplayer = page.getByRole('button', { name: 'Multiplayer', exact: true });
   await expect(multiplayer).toBeEnabled();
+  await page.setViewportSize({ width: 790, height: 815 });
+  await expect(page.getByRole('alertdialog')).toHaveCount(0);
+  await expect(multiplayer).toBeEnabled();
+  await page.setViewportSize({ width: 790, height: 759 });
   await page.getByRole('button', { name: 'Single Player', exact: true }).tap();
   await lockInSetup(page);
   await page.getByRole('button', { name: 'Start match', exact: true }).tap();

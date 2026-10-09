@@ -79,10 +79,14 @@ A long sentence does not make the sentence record taller.
 The speech sizes fit the sentence, and only a sentence that the smallest size cannot show scrolls in the record.
 When the content cannot fit, the page can scroll vertically, and a pool that does not fit scrolls in its column.
 
-A compact landscape viewport that is shorter than 480 CSS pixels is a phone in landscape.
-On such a viewport, the two plaques use the top corners of the scene, and the status rail uses the top center.
+On a compact landscape viewport that is shorter than 640 CSS pixels, the two plaques use the top corners of the scene, and the status rail uses the top center.
 The turn label hangs below the plaque of the active player.
-When the viewport is 768 CSS pixels wide or more, the hand and the actions share one row.
+A compact landscape viewport that is shorter than 480 CSS pixels is a phone in landscape.
+When such a viewport is 768 CSS pixels wide or more, the hand and the actions share one row.
+During the turn of the AI, the thinking record takes the rows of the hand and the actions, so the sentence record keeps its height.
+A cliffhanger record shows above the sentence record.
+During a delivery, the receipt is in the right column and is not taller than the viewport, and its score lines scroll.
+The weakness record and the Pride record use the bottom of the right column.
 In setup, the selection stages and the roster fill the first screen, and the roster scrolls in its frame.
 A landscape title that is shorter than 640 CSS pixels uses a smaller emblem and wordmark.
 The match history dialog and the quote archive dialog scroll as one block.
@@ -217,8 +221,10 @@ Play testers reported that the game looked bad on these phones: OnePlus 8T, Xiao
 No physical device was available for the repair.
 The evidence uses Chromium viewport emulation of the estimated Chrome content viewports in this table.
 Each estimate is the panel resolution divided by a typical device pixel ratio, less the status bar, the toolbar, and the navigation inset.
+The columns give how the user holds the device.
+The game classifies 697 by 689 and 790 by 759 as landscape, because of the 0.9 ratio.
 
-| Device               | Screen             | Portrait   | Landscape  |
+| Device               | Screen             | Upright    | Sideways   |
 | -------------------- | ------------------ | ---------- | ---------- |
 | OnePlus 8T           | Main               | 411 by 804 | 914 by 331 |
 | Redmi Note 11        | Main               | 393 by 770 | 873 by 313 |

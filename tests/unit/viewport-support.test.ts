@@ -33,8 +33,8 @@ describe('viewport support', () => {
     expect(isSupportedViewport(viewport)).toBe(true);
   });
 
-  // Estimated Chrome content viewports of the play-test phones, with the
-  // status bar and the toolbar on the screen.
+  // Estimated Chrome content viewports of the play-test phones and of a
+  // 360-pixel phone, with the status bar and the toolbar on the screen.
   test.each([
     { device: 'OnePlus 8T landscape', width: 914, height: 331 },
     { device: 'Redmi Note 11 landscape', width: 873, height: 313 },

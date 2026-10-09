@@ -94,6 +94,9 @@ typography:
   phone-timer:
     fontFamily: 'var(--font-timer, "Share Tech Mono"), Cascadia Mono, Consolas, monospace'
     fontSize: '1.7rem'
+  phone-landscape-timer:
+    fontFamily: 'var(--font-timer, "Share Tech Mono"), Cascadia Mono, Consolas, monospace'
+    fontSize: '1.15rem'
 rounded:
   square: '0'
 spacing:
