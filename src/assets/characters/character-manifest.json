@@ -2272,8 +2272,8 @@
         "width": 1254,
         "height": 1254,
         "format": "png",
-        "bytes": 662695,
-        "sha256": "2d97d2f0aa2a5c17284f55bce02b4dc6dd0d2563e47e3d185c0667ee005d9eb0"
+        "bytes": 680123,
+        "sha256": "47f198bc74292b2f69a392ce5876effad20ae57df0ddec0db04af370c848a27d"
       },
       "focalPoint": {
         "x": 0.5,
@@ -2294,8 +2294,8 @@
           "format": "avif",
           "quality": 100,
           "lossless": true,
-          "bytes": 13929,
-          "sha256": "e2c145a0be85852b626832fb3752eceb565b5903ab7696e35198a1c7fe39c6b3"
+          "bytes": 13853,
+          "sha256": "d735503a3a3c5103d876632c671dec1bd94711710a30448bfb5036712a8803a0"
         },
         {
           "path": "variants/red-folded-chairman--alternate-128x128.webp",
@@ -2303,8 +2303,8 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 4336,
-          "sha256": "8db58d46dc5377ea8a803e983df248e58bc6feb11577d2ae8043b8d71a6f1b13"
+          "bytes": 4242,
+          "sha256": "755ddcf32cefaa79f0b3ccfc1ef4571f9b407e077de1fa566464c2858780db69"
         },
         {
           "path": "variants/red-folded-chairman--alternate-256x256.avif",
@@ -2313,8 +2313,8 @@
           "format": "avif",
           "quality": 100,
           "lossless": true,
-          "bytes": 34156,
-          "sha256": "d92bcf390c48b7a008547f70be8423f36e5fcf584b44bfdd94c8c808fe2f876c"
+          "bytes": 34909,
+          "sha256": "ec3f95cecd653d461cb6afcf14eb0fcefd94212161a46a8d30e8f6b34cae36e3"
         },
         {
           "path": "variants/red-folded-chairman--alternate-256x256.webp",
@@ -2322,8 +2322,8 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 9392,
-          "sha256": "7ea67a498d83a7fdb14efde2e1c8e6e8f09cfdc43dcdd860ba0d533aaa206ead"
+          "bytes": 9096,
+          "sha256": "4c295aec565c1e33a56736a479569b6072b89db18b6faff7dc8aa5f73d05f10f"
         },
         {
           "path": "variants/red-folded-chairman--alternate-320x320.avif",
@@ -2331,8 +2331,8 @@
           "height": 320,
           "format": "avif",
           "quality": 70,
-          "bytes": 8034,
-          "sha256": "80ed0eca59a50190977b96894cca7f24d13ad84a5bf10310f10c010297c430ad"
+          "bytes": 8362,
+          "sha256": "ac18daabb9db24ef1f9525dc1d9fc6d1991035ff91756a0d91c0319e6151afef"
         },
         {
           "path": "variants/red-folded-chairman--alternate-320x320.webp",
@@ -2340,8 +2340,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 11986,
-          "sha256": "d40ae9d262c4f9a9de8c56560c2453085ceb58a153572983f74fa822ef611a43"
+          "bytes": 12208,
+          "sha256": "36aa13d7dc1ef22746c1b900edc25fb11bef6460af38c9e571642499f1105533"
         },
         {
           "path": "variants/red-folded-chairman--alternate-640x640.avif",
@@ -2349,8 +2349,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 20432,
-          "sha256": "e1523f305a4cda0dddf0ed8ec07a4c066f46b91290b366f8c62f97c7affd687e"
+          "bytes": 19563,
+          "sha256": "6d28a7e04ae6fc800b2ba3e58ba070238c309670c5bc734a1198b8eded330181"
         },
         {
           "path": "variants/red-folded-chairman--alternate-640x640.webp",
@@ -2358,8 +2358,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 29966,
-          "sha256": "dc258f3b2a92fac06039919666adbb6f53b4aec356ce59acdbc784e920cc0131"
+          "bytes": 28956,
+          "sha256": "da9eb9432ea0316aa0ccf2973c608f4f495fd285cc5ab60942663a8bff1e0ede"
         },
         {
           "path": "variants/red-folded-chairman--alternate-960x960.avif",
@@ -2367,8 +2367,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 37129,
-          "sha256": "597dfc10e8c6f8bca3e4f8c6b9e137ab28ef067e98b0f6b2db6fed72d3ca4c1a"
+          "bytes": 34374,
+          "sha256": "ffd0e5fcd376812c674f253d843f1f74494c2cb3245b4032f5c98a8e2d0d41c2"
         },
         {
           "path": "variants/red-folded-chairman--alternate-960x960.webp",
@@ -2376,8 +2376,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 54068,
-          "sha256": "4cc293eeb601672f0d34172ea82567f6323cedc152c3b8488e674d34bce77a80"
+          "bytes": 51718,
+          "sha256": "8da5f482918c8b7eb8f0e395434558f41502ff75bce3dde10be19f09c64c5186"
         }
       ]
     },
@@ -3147,8 +3147,8 @@
         "width": 1254,
         "height": 1254,
         "format": "png",
-        "bytes": 1072358,
-        "sha256": "cc326d684ee5ec6d8bc38c911454d55295018150a79430b15aa7418d40fbf258"
+        "bytes": 832785,
+        "sha256": "9c9d87db0378c3fea5dd4c64ff4d5daf2338f5a1c0ef0f85dfc802ea12255fdb"
       },
       "focalPoint": {
         "x": 0.5,
@@ -3169,8 +3169,8 @@
           "format": "avif",
           "quality": 100,
           "lossless": true,
-          "bytes": 15027,
-          "sha256": "4f8723b174250045fcb618a87760055756a54911bdee5f860d4d1f838a5d6cb1"
+          "bytes": 16408,
+          "sha256": "c34e54f2b38aa49cc3498a513d4805bac1951851c7e3a963c9135c7860fc0a16"
         },
         {
           "path": "variants/thunder-tribune-128x128.webp",
@@ -3178,8 +3178,8 @@
           "height": 128,
           "format": "webp",
           "quality": 78,
-          "bytes": 4564,
-          "sha256": "a163cdbbaf680f742d50f23302fc62fee8dab88d20b6849f95761c08810cab6d"
+          "bytes": 5308,
+          "sha256": "008767441ab9b52f2032ecd99c7032d738161f2dce90b422943ffa032330b6e4"
         },
         {
           "path": "variants/thunder-tribune-256x256.avif",
@@ -3188,8 +3188,8 @@
           "format": "avif",
           "quality": 100,
           "lossless": true,
-          "bytes": 45370,
-          "sha256": "7de371bea75325f98753a7bbf33589949603ce08e7e90fc46362490790e221a4"
+          "bytes": 46846,
+          "sha256": "d9fc36cfc467683f4d429aaf07c60b30087cbd5540522f14e1fdc793669300ac"
         },
         {
           "path": "variants/thunder-tribune-256x256.webp",
@@ -3197,17 +3197,17 @@
           "height": 256,
           "format": "webp",
           "quality": 78,
-          "bytes": 10372,
-          "sha256": "0a6daa13339916623275331c59be31beb52bd964151f5dac0cc9e036ee6a8ab6"
+          "bytes": 12018,
+          "sha256": "c74e848b3fbecd09498b9eadfbf4fcfdcdbd2d1a21cf33d2794373b7bfeafea3"
         },
         {
           "path": "variants/thunder-tribune-320x320.avif",
           "width": 320,
           "height": 320,
           "format": "avif",
-          "quality": 90,
-          "bytes": 17199,
-          "sha256": "c972a3608160cb0aff941b9554d9e09a01e2a5e82521e3358fb8809a4ad32361"
+          "quality": 70,
+          "bytes": 9992,
+          "sha256": "101bc1a52b8100dd0b1218c7ce1f99d84c793c5ff0ffbc79308066820faa5d35"
         },
         {
           "path": "variants/thunder-tribune-320x320.webp",
@@ -3215,8 +3215,8 @@
           "height": 320,
           "format": "webp",
           "quality": 78,
-          "bytes": 14038,
-          "sha256": "44cf8418308c18d45ba4307d7804c79e6ecb2a313ac5ecb98c76dc2a9d454e65"
+          "bytes": 15512,
+          "sha256": "f50bb9fe1ea215a623c32d85a42b8ec2f133ae40da4e50058c3312568b5b0da5"
         },
         {
           "path": "variants/thunder-tribune-640x640.avif",
@@ -3224,8 +3224,8 @@
           "height": 640,
           "format": "avif",
           "quality": 70,
-          "bytes": 25272,
-          "sha256": "56295765611c2df85ade5db2a80de83964fff5df10d0f4455c0e763a5978c0bb"
+          "bytes": 24488,
+          "sha256": "3a15fc5f0a9ea921b3c4608d14279dac2939a13f4f66f44b40ee75a7721387f6"
         },
         {
           "path": "variants/thunder-tribune-640x640.webp",
@@ -3233,8 +3233,8 @@
           "height": 640,
           "format": "webp",
           "quality": 78,
-          "bytes": 34402,
-          "sha256": "97ba3ad7a3cc0b46ad873ddd5048b6ae17e574a5c95444b234a281e61d1413df"
+          "bytes": 36936,
+          "sha256": "6a33f4a5ef23cc253c9c09829e3ec9a40768481fbb7e1077d589f0948bc27b80"
         },
         {
           "path": "variants/thunder-tribune-960x960.avif",
@@ -3242,8 +3242,8 @@
           "height": 960,
           "format": "avif",
           "quality": 70,
-          "bytes": 43451,
-          "sha256": "1302c3ed57f468c3ab475dc45b4c30d4b19d045b0e789db6477b4917d837a1ae"
+          "bytes": 40564,
+          "sha256": "b934652ed993113e41fda36a3fb5b26bcf51f31dadfe5839d9e5a1c30412555c"
         },
         {
           "path": "variants/thunder-tribune-960x960.webp",
@@ -3251,8 +3251,8 @@
           "height": 960,
           "format": "webp",
           "quality": 78,
-          "bytes": 60822,
-          "sha256": "7a0225203828dedbeaabf05a04e388c1cc58ff333235f9ed11243d987c22f983"
+          "bytes": 64328,
+          "sha256": "8de860965b7cfefb640e62e1871afd85286451b542026ee07f88f7e011a8044e"
         }
       ]
     },

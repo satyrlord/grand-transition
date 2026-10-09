@@ -4,8 +4,10 @@
 direction. The product owner approved the three pilot selections and all
 fifteen matching poses. Red-Folded Chairman's default selection has owner approval;
 its five reviewed poses are installed under the authorized package integration.
-The alternate selection and five-pose package retain their owner approval.
-Thunder Tribune's default selection and five poses also have owner approval.
+Its replacement alternate selection has owner approval; the five reviewed matching
+poses are installed under the authorized package integration.
+Thunder Tribune's default selection has owner approval, and its five reviewed
+matching poses are installed under the authorized package integration.
 The owner also approved the alternate
 Thunder Tribune selection and authorized its complete package integration.
 Both Midnight Sensationalist masters also have owner approval, with generation
@@ -91,8 +93,16 @@ two distinct recoil actions, and guarded folder shield. Each pose used only the
 approved selection. All six sources use bounded detached alpha-1 removal only;
 metadata registration preserves their reviewed pixels. Keep the accepted source's
 finer facial and hair drawing without changing the direction for future art.
-The alternate package remains unchanged. Specification 023 gives the focused
-verification evidence and limits.
+The alternate package retains six native 1254-square, right-facing sources. Keep
+its compact adult silhouette, broad drawn face, rolled blonde bob, powder-blue
+skirt suit, pearl earrings, small gold brooch, burgundy shoes, and single blank
+red folder. Each pose used only its approved alternate selection. Preserve
+chin-touch concentration, open-palm speech, the small flinch, stronger defensive
+recoil with a stop palm, and guarded hunch. Keep the complete folder, holding
+fingers, and defining gestures above desk occlusion. Delivery retains its
+generated native alpha; the selection and four other poses use only bounded
+detached alpha-1 cleanup. Metadata registration preserves all reviewed pixels.
+Specification 023 gives the focused verification evidence and limits.
 
 Diaspora Oracle retains six native 1254-square, left-facing sources. Keep its
 sturdy adult silhouette, swept dark hair, white rolled-sleeve shirt, navy
@@ -255,6 +265,15 @@ with transparent padding; Specification 023 records this source-specific repair.
 
 Both Thunder Tribune packages use their angry delivery pose for delivery
 and comeback. Their native 1254-square sources retain their reviewed pixels.
+The default retains its broad jowled drawn face, swept gray hair, gold glasses,
+stocky adult silhouette, charcoal double-breasted suit, pale blue shirt,
+oxblood tie and one bundle of three blank speech papers. Keep the chin-touch
+calculation, open speaking palm, two recoil strengths and worried tie pinch
+distinct. Each pose used only its accepted selection. Thinking, delivery and
+light-hit preserve generated alpha. Selection, heavy-hit and weakness use only
+bounded detached alpha-1 cleanup. Preserve the approved master's source-specific
+tonal variation and fine contour treatment; exact numeric contour conformance
+remains unverified. This does not change the written direction for new art.
 The alternate keeps the accepted selection's source-specific tonal modeling;
 this does not change the flat-shading direction for new selections.
 

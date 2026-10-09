@@ -215,8 +215,13 @@ The rendering style, the three researched pilot selections, and all fifteen matc
 The owner-approved default Red-Folded Chairman selection and its five reviewed
 matching poses are installed. Preserve the compact frail elderly silhouette,
 charcoal-gray suit with black pinstripes, striped red tie, and two closed
-red-and-black ceremonial portfolios with pale brass corner guards. Its alternate
-selection and five-pose package remain accepted and installed.
+red-and-black ceremonial portfolios with pale brass corner guards. Its owner-approved
+alternate selection and five reviewed matching poses are also installed under the
+authorized package integration. Preserve the alternate's compact adult silhouette,
+broad drawn face, rolled blonde bob, powder-blue skirt suit, pearl earrings, gold
+brooch, burgundy shoes, and single blank red folder. Keep the chin-touch thought,
+speaking palm, small flinch, stronger defensive recoil, and guarded hunch distinct.
+Keep the folder, holding fingers, and defining gestures above desk occlusion.
 The Retiring Cassandra default selection and its five matching poses are also
 accepted and installed, with their native dimensions and reviewed pixels intact.
 Its approved statesman alternate selection and five reviewed matching poses are

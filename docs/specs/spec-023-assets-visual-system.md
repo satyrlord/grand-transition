@@ -17,7 +17,7 @@ with pale brass corner guards. Each pose used only the approved selection as its
 image reference. The sources use bounded detached alpha-1 cleanup only; metadata
 registration preserves all reviewed pixels. Keep the distinct eyes-up thought,
 speaking palm, small recoil, stronger braced recoil, and guarded hunch. The existing
-nine-state mappings and alternate package stay unchanged. The Transition-Era
+nine-state mappings stay unchanged. The Transition-Era
 Television Studio background retains its owner acceptance.
 Focused character-asset and alpha/color checks, 32 unit tests, 24 Chromium
 character-presenter tests, and the production build passed. Installed checks cover
@@ -38,20 +38,64 @@ The owner-approved Modern Debate Studio replacement is installed with its
 corrected 72-percent floor join and detailed broadcast equipment. Its accepted
 pixels include soft tonal variation on the walls and floor. Retain this
 source-specific acceptance; it does not change the flat-shading direction for
-future generations. The approved Red-Folded Chairman alternate selection and
-five matching poses are also installed. Its six native 1254-square sources
-retain the approved pixels after the bounded alpha-1 cleanup and metadata
-registration. Each pose used only the accepted alternate selection as its
-image reference.
+future generations. The owner-approved Red-Folded Chairman alternate selection
+and five reviewed matching poses are installed under the authorized package
+integration. Its six native 1254-square, right-facing sources retain the compact
+adult silhouette, broad drawn face, rolled blonde bob, powder-blue skirt suit,
+pearl earrings, small gold brooch, burgundy shoes, and one blank red folder.
+Keep the distinct chin-touch thought, open-palm speech, small flinch, stronger
+defensive recoil, and guarded hunch. The folder, holding fingers, and defining
+gestures stay above desk occlusion. Delivery retains its generated native alpha;
+the selection and four other poses use only bounded detached alpha-1 cleanup.
+Metadata registration preserves all reviewed pixels. Each pose used only the
+accepted alternate selection as its image reference. Idle uses selection,
+comeback uses delivery, and grammar-mistake uses weakness. The default package
+and existing nine-state mappings stay unchanged.
+Focused alternate-package asset checks, 50 topical unit tests, 24 Chromium
+character-presenter tests, and the production build passed. Installed rendering
+checks cover all nine states on both sides at 1024 by 768, 1280 by 720,
+1280 by 1024, 1024 by 1023, 915 by 412, and 640 by 320. The 1,080 samples
+cover short and long speech, both speakers, and animation extrema. All 46
+captured variant responses match the installed manifests, with no protected
+content clipping, speech overlap, missing assets, or browser errors. Reviewed
+roster, setup, and match screenshots retain the folder and defining gestures.
+This evidence uses one scene, device pixel ratio 1, and held presentation cues;
+it does not establish natural match progression or complete scene coverage.
+Numeric contour-width compliance remains unverified; preserve the approved
+selection and reviewed pose pixels. Owner in-game evaluation remains separate.
+The quick/full quality gates and full test suites are deferred at the owner's
+request.
 The owner-approved County Council Ballroom background is installed with its
 derived runtime variants and existing foreground. Its accepted composition
 has a wall/carpet join near 70.6 percent and a carpet/tile join near 78.8 percent.
 Retain its accepted soft tonal variation without changing the flat-shading
-direction for future generations. The approved Thunder Tribune default selection
-and five matching poses are installed at their native 1254-square dimensions.
-Delivery and comeback use the approved angry delivery pose. Each pose used
-only the approved selection as its image reference. Registration preserves
-the reviewed pixels; the existing nine-state mappings remain unchanged.
+direction for future generations. The owner-approved Thunder Tribune default
+selection and five reviewed matching poses are installed at native 1254-square
+dimensions. Keep its broad jowled drawn face, swept gray hair, gold glasses,
+stocky adult silhouette, charcoal double-breasted suit, pale blue shirt,
+oxblood tie and one bundle of three blank speech papers. Preserve chin-touch
+calculation, angry open-palm speech, small stop-palm recoil, stronger raised-palm
+recoil and worried tie-pinching doubt. Keep the complete papers and defining
+fingers above desk occlusion. Delivery also supplies comeback; weakness also
+supplies grammar-mistake. Each pose used only the approved selection as its
+image reference. Thinking, delivery and light-hit retain their generated alpha.
+Selection, heavy-hit and weakness use only bounded detached alpha-1 cleanup.
+Registration preserves all reviewed decoded pixels and the nine-state mappings.
+Keep the approved master's source-specific tonal variation and fine contour
+treatment. They do not change the written direction for future selections.
+Exact numeric contour conformance remains unverified. Focused asset, alpha,
+provenance and color checks, 38 unit tests, 24 character-presenter browser tests
+and the production build passed. Installed checks cover all nine states on
+both sides at 1280 by 720, 1024 by 768, 1024 by 1023 and 640 by 320. All 720
+clearance samples passed; all 30 captured variant responses match the manifests.
+Source, light/dark, roster, setup and match reviews found no character-art
+visibility defect. These checks use held cues, one scene and device pixel
+ratio 1. At the smallest viewport, individual finger detail and sheet count
+are too small for reliable visual confirmation, and long speech extends below
+the viewport. Portrait clearance does not establish full narrow-interface
+acceptance. Other scenes, natural transitions and the aggregate gates remain
+unchecked for this package. The owner deferred full suites until more
+characters are ready.
 The owner-approved Thunder Tribune alternate selection is installed with five
 reviewed matching poses under the authorized package integration. Each pose
 used only that selection as its image reference. All six sources are native
@@ -908,8 +952,9 @@ Use the approved [Football Tycoon](../../src/assets/characters/football-tycoon.p
 together for style comparison, not as identity sources for another character.
 The owner-approved default Red-Folded Chairman selection and its five reviewed
 poses are installed at their canonical source paths under the authorized package
-integration. The alternate selection and five-pose package retain their owner
-approval. Each pose used only its own approved selection as the image reference.
+integration. The alternate selection has owner approval, and its five reviewed
+matching poses are installed under the authorized package integration. Each pose
+used only its own approved selection as the image reference.
 This work does not complete the remaining human roster.
 
 Generate selections and poses with the built-in chat image generator using
