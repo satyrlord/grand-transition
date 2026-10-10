@@ -19,11 +19,24 @@ describe('quality gate failure report', () => {
 
   test('gives one command that runs only a Playwright test in the mode of the gate', () => {
     expect(singleTestCommand(quick, 'e2e/a.spec.ts', 'first run starts', 'chromium')).toBe(
-      'npm run test:e2e -- e2e/a.spec.ts --project=chromium -g "first run starts"',
+      'npm run test:e2e -- e2e/a.spec.ts --project=chromium --no-deps -g "first run starts"',
     );
     expect(singleTestCommand(full, 'e2e/a.spec.ts', 'first run starts', 'chromium')).toBe(
-      'npm run test:e2e:full -- e2e/a.spec.ts --project=chromium -g "first run starts"',
+      'npm run test:e2e:full -- e2e/a.spec.ts --project=chromium --no-deps -g "first run starts"',
     );
+  });
+
+  test('does not run the dependency projects of a failed benchmark again', () => {
+    // release-performance depends on every other project, so without --no-deps
+    // the hint ran the whole end-to-end suite before the single benchmark.
+    expect(
+      singleTestCommand(
+        full,
+        'e2e/release-performance.spec.ts',
+        'meets budgets',
+        'release-performance',
+      ),
+    ).toContain('--project=release-performance --no-deps');
   });
 
   test('runs a failed test of the coverage phase in Browser Mode', () => {
@@ -112,7 +125,7 @@ describe('quality gate failure report', () => {
         file: 'e2e/settings-persistence.spec.ts',
         name: 'first run a new browser gets one rehearsal match',
         command:
-          'npm run test:e2e -- e2e/settings-persistence.spec.ts --project=chromium -g "first run a new browser gets one rehearsal match"',
+          'npm run test:e2e -- e2e/settings-persistence.spec.ts --project=chromium --no-deps -g "first run a new browser gets one rehearsal match"',
       },
     ]);
   });

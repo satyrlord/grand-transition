@@ -40,7 +40,8 @@ export function parseXliff(xliffText: string): readonly InterfaceCatalogUnit[] {
   const units: InterfaceCatalogUnit[] = [];
   const pattern =
     /<trans-unit id="([^"]+)">\n  <source>([\s\S]*?)<\/source>\n(?:  <target>([\s\S]*?)<\/target>\n)?<\/trans-unit>/gu;
-  for (const match of xliffText.matchAll(pattern)) {
+  // A Windows checkout with core.autocrlf stores the catalog with CRLF.
+  for (const match of xliffText.replaceAll('\r\n', '\n').matchAll(pattern)) {
     units.push({
       id: match[1] as string,
       source: match[2] as string,
@@ -244,7 +245,10 @@ export async function validateInterfaceLocales(
     if (failures.length === 0) {
       await localizer.build();
       const expected = await readFile(path.join(outputDirectory, `${targetLocale}.ts`), 'utf8');
-      const actual = await readFile(path.join(rootDirectory, generatedPath), 'utf8');
+      const actual = (await readFile(path.join(rootDirectory, generatedPath), 'utf8')).replaceAll(
+        '\r\n',
+        '\n',
+      );
       if (actual !== expected) {
         failures.push({
           path: generatedPath,

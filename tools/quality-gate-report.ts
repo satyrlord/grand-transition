@@ -73,7 +73,9 @@ export function singleTestCommand(
   if (!entry) throw new Error(`Phase ${context.phase} does not run a test runner.`);
   const script = context.mode === 'full' ? `${entry.script}:full` : entry.script;
   const parts = [`npm run ${script} -- ${file}`];
-  if (project) parts.push(`--project=${project}`);
+  // A project can depend on other projects (release-performance does). Without
+  // --no-deps, Playwright runs the whole suite of each dependency first.
+  if (project) parts.push(`--project=${project}`, '--no-deps');
   if (name) parts.push(`${entry.kind === 'vitest' ? '-t' : '-g'} "${namePattern(name)}"`);
   return parts.join(' ');
 }

@@ -99,6 +99,11 @@ describe('Romanian interface catalog', () => {
     await expect(validateInterfaceLocales(process.cwd())).resolves.toEqual([]);
   }, 20_000);
 
+  test('reads the same units from a catalog with Windows line endings', () => {
+    const crlfText = xliffText.replaceAll('\r\n', '\n').replaceAll('\n', '\r\n');
+    expect(parseXliff(crlfText)).toEqual(units);
+  });
+
   test('keeps the source placeholder references in every target', () => {
     for (const unit of units) {
       expect(unit.target, unit.source).not.toBeNull();
