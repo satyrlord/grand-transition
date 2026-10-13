@@ -17,6 +17,7 @@ The selection has only these results:
 1. Remove the selected card from its source.
 2. Do not change the sentence.
 3. Deal 3 self-damage immediately.
+   In a cliffhanger, Milestone 013 controls this amount, and the mistake ends the match.
 4. Do not add comeback charge.
 5. End only the pick at this time, and give control to the other player.
 

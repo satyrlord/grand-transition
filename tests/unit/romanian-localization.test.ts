@@ -143,6 +143,19 @@ describe('Romanian interface catalog', () => {
     );
   });
 
+  test('keeps combo and weakness hints scoped to the scored clause in Romanian', () => {
+    const sources = [
+      'Reuse a noun from your last insult to multiply its clause by 2, then by 3.',
+      "A phrase that touches your opponent's weakness doubles its clause.",
+    ];
+    for (const source of sources) {
+      const unit = units.find((candidate) => candidate.source === source)!;
+      expect(unit.target, source).toContain('punctele propoziției');
+      expect(unit.target, source).not.toContain('își ');
+      expect(templates[unit.id as keyof typeof templates], source).toBe(unit.target);
+    }
+  });
+
   test('uses the reviewed Romanian controls and consistent binary answers', () => {
     const bySource = new Map(units.map((unit) => [unit.source, unit.target]));
     expect(bySource.get('Confirm selection')).toBe('Confirmă alegerea');

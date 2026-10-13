@@ -7,7 +7,8 @@ import { guard } from 'lit/directives/guard.js';
 import { interfaceLocale } from '../interface-localization.ts';
 import { LitElement, html, nothing, svg, type PropertyValues, type TemplateResult } from 'lit';
 import type { MatchCommand } from '../../engine/match-lifecycle.ts';
-import type { RoundPresentationFrame } from '../round-presentation.ts';
+import { deliveryCanBeSkipped, type RoundPresentationFrame } from '../round-presentation.ts';
+import { createHintRotation, type Hint } from '../hints.ts';
 import { deepFreeze } from '../../engine/plain-values.ts';
 import { interfaceWeaknessName } from '../interface-names.ts';
 import type {
@@ -30,6 +31,7 @@ export const matchCommandEventName = 'match-command';
 export const pauseMatchEventName = 'pause-match';
 export const returnToMainMenuEventName = 'return-to-main-menu';
 export const timerTickEventName = 'timer-tick';
+export const skipDeliveryEventName = 'skip-delivery';
 export const timerTickSeconds = 5;
 
 export type MatchPauseMode =
@@ -37,8 +39,13 @@ export type MatchPauseMode =
 
 export type MatchCommandEvent = CustomEvent<MatchCommand>;
 export type ReturnToMainMenuEvent = CustomEvent<Record<never, never>>;
+export type SkipDeliveryEvent = CustomEvent<Record<never, never>>;
 export const automaticAiBubbleRevealMs = 4_000;
 export const grammarStrikeDurationMs = 3_000;
+/** A voice that starts before this time shows no hint, so the hint does not flash. */
+export const deliveryHintDelayMs = 500;
+/** A Pride frame shows this number of combo chips, and it counts the other chips. */
+export const visibleComboChips = 2;
 
 export class GrandTransitionMatch extends LitElement {
   static properties = {
@@ -76,7 +83,17 @@ export class GrandTransitionMatch extends LitElement {
   declare completedMatchId: string | null;
   /** The player saw the receipts of the completed match, so its guess is closed. */
   declare quoteGuessLocked: boolean;
+  /** The random source of the delivery hints. A test can replace it. */
+  hintRandom: () => number = () => Math.random();
   private receiptsOpen = false;
+  private readonly hintRotation = createHintRotation(() => this.hintRandom());
+  private deliveryHint: Hint | null = null;
+  private deliveryHintKey: string | null = null;
+  private deliveryHintTimerId: number | undefined;
+  private shownDeliveryHint: Readonly<{ key: string; hint: Hint }> | null = null;
+  private readonly handRefreshKeys = new Set<string>();
+  private handRefreshAnnouncementKey: string | null = null;
+  private handRefreshAnnounced = false;
   private previewText: string | null;
   private commandPending: boolean;
   private revealedWaitingPlayerId: string | null;
@@ -149,6 +166,7 @@ export class GrandTransitionMatch extends LitElement {
     this.turnClock.dispose();
     this.clearAutomaticWaitingSentenceReveal();
     this.clearPresentationAnnouncements();
+    this.clearDeliveryHint();
     super.disconnectedCallback();
   }
 
@@ -197,6 +215,9 @@ export class GrandTransitionMatch extends LitElement {
     const previousPresentation = changed.get('presentation') as
       RoundPresentationFrame | null | undefined;
     this.syncPresentationAnnouncements(previousPresentation, changed.has('snapshot'));
+    this.syncDeliveryHint();
+    this.releaseRemovedSkipFocus();
+    if (changed.has('snapshot')) this.syncHandRefreshAnnouncement();
     if (changed.has('snapshot') || changed.has('pauseMode')) {
       this.syncGrammarStrike();
     }
@@ -236,6 +257,71 @@ export class GrandTransitionMatch extends LitElement {
     if (changed.has('autoComplete') && !this.autoComplete) {
       this.previewText = null;
     }
+  }
+
+  /**
+   * Shows one hint while the voice of a delivery is prepared. The hint waits
+   * for `deliveryHintDelayMs`, and it goes away with the preparation.
+   */
+  private syncDeliveryHint(): void {
+    const frame = this.presentation;
+    const key =
+      this.isConnected &&
+      this.pauseMode === 'running' &&
+      this.voicesEnabled &&
+      frame?.phase === 'preparing' &&
+      frame.voicePending === true
+        ? `${this.snapshot?.round ?? 0}:${frame.speakerId}`
+        : null;
+    if (key === this.deliveryHintKey) return;
+    this.clearDeliveryHint();
+    this.deliveryHintKey = key;
+    if (key === null) return;
+    this.deliveryHintTimerId = window.setTimeout(() => {
+      this.deliveryHintTimerId = undefined;
+      // One preparation shows one hint, also after an interruption.
+      if (this.shownDeliveryHint?.key !== key) {
+        this.shownDeliveryHint = { key, hint: this.hintRotation.next() };
+      }
+      this.deliveryHint = this.shownDeliveryHint.hint;
+      this.requestUpdate();
+    }, deliveryHintDelayMs);
+  }
+
+  private clearDeliveryHint(): void {
+    window.clearTimeout(this.deliveryHintTimerId);
+    this.deliveryHintTimerId = undefined;
+    this.deliveryHintKey = null;
+    this.deliveryHint = null;
+  }
+
+  /** Announces one time that the game refreshed the hand that the viewer sees. */
+  private syncHandRefreshAnnouncement(): void {
+    const snapshot = this.snapshot;
+    const key =
+      snapshot && !snapshot.roundReview && snapshot.actions.redrawAutomatic
+        ? `${snapshot.round}:${snapshot.activePlayerId}`
+        : null;
+    if (key !== this.handRefreshAnnouncementKey) {
+      this.handRefreshAnnouncementKey = key;
+      this.handRefreshAnnounced = false;
+    }
+    if (key === null || this.handRefreshKeys.has(key)) return;
+    this.handRefreshKeys.add(key);
+    // Clear the previous player's identical text before the new announcement.
+    void this.updateComplete.then(() => {
+      if (!this.isConnected || this.handRefreshAnnouncementKey !== key) return;
+      this.handRefreshAnnounced = true;
+      this.requestUpdate();
+    });
+  }
+
+  private releaseRemovedSkipFocus(): void {
+    const focused = document.activeElement;
+    if (!(focused instanceof HTMLElement) || !focused.classList.contains('match-skip')) return;
+    if (!this.contains(focused)) return;
+    // The same native-removal cost as a draft control: release the focus first.
+    if (this.pauseMode !== 'running' || !deliveryCanBeSkipped(this.presentation)) focused.blur();
   }
 
   private releaseRemovedDraftFocus(): void {
@@ -457,6 +543,19 @@ export class GrandTransitionMatch extends LitElement {
                 }
               </button>
               ${
+                this.presentation
+                  ? html`<div class="match-skip-slot">
+                      ${
+                        deliveryCanBeSkipped(this.presentation)
+                          ? html`<button type="button" class="match-skip" @click=${this.skipDelivery}>
+                              ${this.skipIcon()}<span>${msg('Skip line')}</span>
+                            </button>`
+                          : nothing
+                      }
+                    </div>`
+                  : nothing
+              }
+              ${
                 roundReview
                   ? nothing
                   : html`<dl
@@ -496,6 +595,11 @@ export class GrandTransitionMatch extends LitElement {
             aria-live="polite" aria-atomic="false" aria-label=${msg('Presentation outcomes')}>
             ${this.presentationAnnouncements.map((announcement) => html`<li>${announcement}</li>`)}
           </ol>
+          <p class="visually-hidden draft-live-status" role="status" aria-live="polite">${
+            this.handRefreshAnnounced
+              ? msg('Both private phrases were used. Two new phrases replaced them automatically.')
+              : nothing
+          }</p>
 
           <section
             class="match-stage"
@@ -674,6 +778,8 @@ export class GrandTransitionMatch extends LitElement {
     const hasWaitingSentence = Boolean(player.sentence?.trim());
     const waitingSentence = player.sentence?.trim() || msg('No sentence yet.');
     const waitingSentenceRevealed = this.isWaitingSentenceRevealed(player.playerId);
+    // The delivery shows its own combo emphasis, so the chips are for the draft.
+    const combos = this.presentation || this.snapshot?.roundReview ? [] : player.combos;
     return html`
       <article
         class="match-player ${
@@ -681,6 +787,7 @@ export class GrandTransitionMatch extends LitElement {
         } ${hasGrammarReaction ? 'match-player--grammar-hit' : ''}"
         data-side=${side}
         data-turn-state=${player.isActive ? 'active' : 'waiting'}
+        data-combos=${combos.length > 0 ? combos.length : nothing}
         data-reaction-state=${hasGrammarReaction ? 'grammar-mistake' : nothing}
         aria-current=${activeTurn ? 'true' : nothing}
         aria-label=${msg(
@@ -718,6 +825,7 @@ export class GrandTransitionMatch extends LitElement {
               >${player.weaknessTags.map(interfaceWeaknessName).join(' · ')}</span
             >
           </p>
+          ${combos.length > 0 ? this.renderCombos(player.characterName, combos) : nothing}
         </header>
         <div class="character-frame" aria-hidden="true"
           data-source-facing=${player.portraitFacing}
@@ -800,6 +908,36 @@ export class GrandTransitionMatch extends LitElement {
     `;
   }
 
+  /**
+   * The public noun chains of one player. Each chip gives the noun and the
+   * factor of its next use. Chips that do not fit stay in the accessible list.
+   */
+  private renderCombos(characterName: string, combos: MatchPlayerView['combos']): TemplateResult {
+    return html`<div class="player-combos">
+      <span class="player-combos-label" aria-hidden="true">${msg('Combo')}</span>
+      <ul class="player-combos-list" aria-label=${msg(str`${characterName}: active combos`)}>
+        ${combos.map(
+          (combo) => html`<li class="player-combo" title=${combo.text}>
+            <span class="player-combo-noun" lang=${gameTextLanguage() ?? nothing}
+              >${combo.text}</span
+            ><span class="player-combo-factor" aria-hidden="true"
+              >×${formatScoreNumber(combo.multiplier)}</span
+            ><span class="visually-hidden"
+              >${msg(str` times ${formatScoreNumber(combo.multiplier)}`)}</span
+            >
+          </li>`,
+        )}
+      </ul>
+      ${[visibleComboChips, 1].map((shown) =>
+        combos.length > shown
+          ? html`<span class="player-combos-more" data-shown=${shown} aria-hidden="true"
+              >+${formatInterfaceNumber(combos.length - shown)}</span
+            >`
+          : nothing,
+      )}
+    </div>`;
+  }
+
   private renderDelivery(first: MatchPlayerView, second: MatchPlayerView): TemplateResult {
     const frame = this.presentation!;
     const speaker = frame.speakerId === first.playerId ? first : second;
@@ -837,6 +975,14 @@ export class GrandTransitionMatch extends LitElement {
       </div>
       ${frame.total === null ? nothing : html`<p class="delivery-total"><span>${msg('Total')}</span><strong>${frame.total}</strong></p>`}
     </section>
+    ${
+      this.deliveryHint && frame.phase === 'preparing'
+        ? html`<p class="delivery-hint" data-layout-region="delivery-hint"
+            data-side=${side(speaker.playerId)} data-hint-kind=${this.deliveryHint.kind} role="note">
+            <strong>${msg('Hint')}</strong><span>${this.deliveryHint.text()}</span>
+          </p>`
+        : nothing
+    }
     ${
       frame.impact && ['strike', 'points', 'damage'].includes(frame.phase)
         ? this.renderDeliveryImpact(impacted, side(impacted.playerId))
@@ -1427,6 +1573,16 @@ export class GrandTransitionMatch extends LitElement {
     `;
   }
 
+  private skipIcon(): TemplateResult {
+    return svg`
+      <svg class="skip-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M4 5l8 7-8 7z" />
+        <path d="M12 5l8 7-8 7z" />
+        <path d="M21 5v14" />
+      </svg>
+    `;
+  }
+
   private actionIcon(): TemplateResult {
     const paths = svg`
       <path d="M5 8a7 7 0 0 1 12-2l2 2" />
@@ -1632,6 +1788,17 @@ export class GrandTransitionMatch extends LitElement {
     );
   };
 
+  private readonly skipDelivery = (): void => {
+    if (this.pauseMode !== 'running' || !deliveryCanBeSkipped(this.presentation)) return;
+    this.dispatchEvent(
+      new CustomEvent(skipDeliveryEventName, {
+        bubbles: true,
+        composed: true,
+        detail: {},
+      }),
+    );
+  };
+
   private requestTimerTick(): void {
     this.dispatchEvent(
       new CustomEvent(timerTickEventName, {
@@ -1758,5 +1925,6 @@ declare global {
   interface HTMLElementEventMap {
     [matchCommandEventName]: MatchCommandEvent;
     [returnToMainMenuEventName]: ReturnToMainMenuEvent;
+    [skipDeliveryEventName]: SkipDeliveryEvent;
   }
 }

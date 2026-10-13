@@ -27,9 +27,21 @@
     "sincerity"
   ],
   "comebacks": {
-    "weak": "I highlighted your argument in the color for skipping.",
-    "medium": "Your principles need a shirt sponsor.",
-    "strong": "We split the work. My half was bigger."
+    "weak": [
+      "I highlighted your argument in the color for skipping.",
+      "Nice warm-up. Shall we wait for your actual argument?",
+      "I lit a candle for your argument. It needs the help."
+    ],
+    "medium": [
+      "Your principles need a shirt sponsor.",
+      "You played the full ninety minutes and never found the ball.",
+      "I would transfer you, but nobody will pay the bus fare."
+    ],
+    "strong": [
+      "We split the work. My half was bigger.",
+      "I own the club, the referee and the replay. You own the excuse.",
+      "I prayed for a worthy opponent. Heaven sent you as a joke."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.95,

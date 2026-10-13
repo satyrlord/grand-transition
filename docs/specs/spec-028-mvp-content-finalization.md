@@ -313,8 +313,9 @@ Each scene pool contains the 10 nouns, 9 verbs, 6 predicates, 3 modifiers, 3 end
 It contains 35 unique IDs.
 No character or scene owns a different continuation.
 
-Each character has one unique comeback line in each tier, and three in total.
-A different character or tier cannot use a comeback line again.
+Each character has three unique comeback lines in each tier, and nine in total.
+The catalog has 171 comeback lines for each locale.
+A different character, tier, or line cannot use a comeback line again.
 There is no common comeback pool and no shared comeback pool.
 Each character and scene agrees with the full state, variant, license, and manifest contract of Milestone 023.
 Each scene has a different music treatment, and the game can get to each named effect of Milestone 024.
@@ -328,7 +329,7 @@ The accessible name of the monitor holds the Scene label and the selected scene 
 The expansion evidence must use the scene name of the monitor, not the different Scene field label.
 
 The loaded catalog has unique authored phrase text across the common pools and the owned pools.
-Each character and tier has unique comeback text.
+Each comeback line has unique text in its locale.
 The grammar checks do checks of phrase reachability, agreement forms, and typical complete sentences.
 The usual CI does checks of the catalog and its deterministic match fixtures.
 This milestone adds no different simulation workload, selection coverage percentage, or frequency limit.
@@ -347,7 +348,8 @@ These role totals can change only through an approved change to this contract, w
   The verb-family review uses all three tenses as one editorial unit.
 - **AC-028-03:** Each character and each scene passes the validation of grammar reachability, board generation, simulated matches, assets, crops, and states.
   It also passes the validation of audio, licenses, locales, and the shared color policy.
-- **AC-028-04:** Comeback keys are unique across characters and tiers, and they resolve in each locale.
+- **AC-028-04:** Each character has exactly three comeback keys for each tier.
+  Comeback keys are unique across characters, tiers, and lines, and they resolve in each locale.
 - **AC-028-05:** The authored phrase text and comeback text is unique.
   The grammar reachability, agreement, typical sentence, and usual CI checks pass.
 - **AC-028-06:** All roster variants and scene variants pass the shared viewport geometry with the longest names and UI strings that are 40 percent longer.

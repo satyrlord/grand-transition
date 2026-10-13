@@ -11,6 +11,7 @@ import { defaultSettings, type SettingsDocument } from '../../persistence/codecs
 import type { AudioStatus } from '../../audio/audio-port.ts';
 import type { NeuralSpeechStatus } from '../../audio/neural-speech.ts';
 import { quoteReveals } from '../../game-content.ts';
+import { createHintRotation, type Hint } from '../hints.ts';
 import type { QuoteArchiveSnapshot } from '../../persistence/quote-archive.ts';
 import './match-history-modal.ts';
 import './settings-modal.ts';
@@ -23,6 +24,8 @@ export const showMatchHistoryEventName = 'show-match-history';
 export const showSettingsEventName = 'show-settings';
 export const showQuoteArchiveEventName = 'show-quote-archive';
 export const dismissSettingsNoticeEventName = 'dismiss-settings-notice';
+/** The voice loader shows each hint for this time while the page is visible. */
+export const loadingHintRotationMs = 8_000;
 
 export type MenuMode = 'ai' | 'hotseat' | 'ladder';
 export type ShowSetupEvent = CustomEvent<Readonly<{ type: 'show-setup'; mode: MenuMode }>>;
@@ -64,6 +67,14 @@ export class GrandTransitionTitle extends LitElement {
   declare speechProgress: number | null;
   declare gpuStatus: 'idle' | 'checking' | 'loading' | 'ready' | 'unavailable';
   declare gpuProgress: number | null;
+  /** The random source of the loading hints. A test can replace it. */
+  hintRandom: () => number = () => Math.random();
+  private readonly hintRotation = createHintRotation(() => this.hintRandom());
+  private loadingHintActive = false;
+  private loadingHint: Hint | null = null;
+  // Only the first hint of one loading period is announced.
+  private loadingHintLive = true;
+  private loadingHintTimerId: number | undefined;
 
   constructor() {
     super();
@@ -93,6 +104,58 @@ export class GrandTransitionTitle extends LitElement {
   protected override createRenderRoot(): HTMLElement {
     return this;
   }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    document.addEventListener('visibilitychange', this.syncHintVisibility);
+    // A loader that connects again starts its hint again.
+    this.requestUpdate();
+  }
+
+  override disconnectedCallback(): void {
+    document.removeEventListener('visibilitychange', this.syncHintVisibility);
+    this.stopHintRotation();
+    this.loadingHintActive = false;
+    this.loadingHint = null;
+    super.disconnectedCallback();
+  }
+
+  protected override willUpdate(): void {
+    const loading = this.isConnected && this.gpuLoading;
+    if (loading === this.loadingHintActive) return;
+    this.loadingHintActive = loading;
+    this.stopHintRotation();
+    this.loadingHint = null;
+    this.loadingHintLive = true;
+    if (!loading) return;
+    // The live region renders empty first, so that it announces the first hint.
+    void this.updateComplete.then(() => {
+      if (!this.loadingHintActive || this.loadingHint) return;
+      this.loadingHint = this.hintRotation.next();
+      this.requestUpdate();
+      this.startHintRotation();
+    });
+  }
+
+  private startHintRotation(): void {
+    this.stopHintRotation();
+    if (document.hidden) return;
+    this.loadingHintTimerId = window.setInterval(() => {
+      this.loadingHintLive = false;
+      this.loadingHint = this.hintRotation.next();
+      this.requestUpdate();
+    }, loadingHintRotationMs);
+  }
+
+  private stopHintRotation(): void {
+    window.clearInterval(this.loadingHintTimerId);
+    this.loadingHintTimerId = undefined;
+  }
+
+  private readonly syncHintVisibility = (): void => {
+    if (document.hidden) this.stopHintRotation();
+    else if (this.loadingHintActive && this.loadingHint) this.startHintRotation();
+  };
 
   protected override render() {
     return html`
@@ -311,6 +374,12 @@ export class GrandTransitionTitle extends LitElement {
         data-indeterminate=${progress === null ? 'true' : 'false'}>
         <span style=${styleMap({ width: progress === null ? '30%' : `${progress * 100}%` })}></span>
       </div>
+      <p class="title-voice-hint" aria-live=${this.loadingHintLive ? 'polite' : 'off'}
+        aria-atomic="true" data-hint-kind=${this.loadingHint?.kind ?? nothing}>${
+          this.loadingHint
+            ? html`<strong>${msg('Hint')}:</strong> <span>${this.loadingHint.text()}</span>`
+            : nothing
+        }</p>
     </div>`;
   }
 

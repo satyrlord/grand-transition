@@ -1014,11 +1014,11 @@ test('decodes WebP from the application picture when AVIF is unsupported', async
   image.removeAttribute('srcset');
   image.src = '/missing-avif-fallback-image.webp';
 
-  await vi.waitFor(() => {
-    expect(expectedWebpUrls).toContain(image.currentSrc);
-    expect(image.complete).toBe(true);
-    expect(image.naturalWidth).toBeGreaterThan(0);
-  });
+  // Wait for native picture selection and decoding, including a delayed asset response.
+  await image.decode();
+  expect(expectedWebpUrls).toContain(image.currentSrc);
+  expect(image.complete).toBe(true);
+  expect(image.naturalWidth).toBeGreaterThan(0);
   expect(image.currentSrc).toContain('.webp');
 });
 
@@ -2008,6 +2008,8 @@ test('a wrong card is chosen immediately as a grammar mistake', async () => {
   expect(match.querySelector('.grammar-strike')?.textContent).toMatch(
     /Off script.*Grammar mistake.*Red-Folded Chairman.*−3 Pride/su,
   );
+  // The strike is a notice: a phrase card below it must stay selectable.
+  expect(matchScreenStyles).toMatch(/\.grammar-strike \{[^}]*pointer-events: none/u);
   const struckPlayer = match.querySelector<HTMLElement>('[data-reaction-state="grammar-mistake"]')!;
   expect(struckPlayer.getAttribute('data-turn-state')).toBe('waiting');
   expect(match.querySelector('[data-turn-state="active"]')).not.toBe(activePanelBefore);

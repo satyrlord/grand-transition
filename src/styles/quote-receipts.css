@@ -215,7 +215,7 @@
   .quote-guess-options {
     clear: both;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1px;
     border: 1px solid var(--broadcast-black);
     background: var(--broadcast-black);
@@ -438,10 +438,6 @@
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-  }
-
-  .quote-receipt[data-receipt-classification='adapted-quote'] .quote-receipt-label {
-    color: var(--television-blue);
   }
 
   .quote-receipt[data-receipt-classification='invented'] .quote-receipt-label {

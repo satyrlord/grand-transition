@@ -693,6 +693,10 @@ The satire disclaimer is live text at the bottom edge.
 The title entrance opens one central curtain light.
 Reduced-motion mode removes this entrance.
 
+While the GPU voices load, the voice loader shows one hint line below its meter.
+The line changes its text on a slow interval, with no motion.
+Milestone 015 controls the hint line.
+
 ### Contestant register
 
 Setup keeps the same broadcast frame that fills the viewport.
@@ -815,6 +819,12 @@ After each exchange, the arena stops the drafting while the two characters deliv
 The last finisher speaks first.
 The speech record moves to the side of the speaker at this time, and the other character stays idle.
 
+While a delivery can be skipped, the status rail shows one `Skip line` button between Pause and the round heading.
+It ends the spoken part of that delivery, and the total, the strike, and the damage follow as usual.
+While the voice of a speaker prepares, the score area of that speaker shows one hint record.
+The record goes away when the voice starts.
+Milestone 025 controls the skip control and the hint record.
+
 Inline score lines show at the bottom stage edge of the speaker.
 They show the rendered phrase, the base, the applied weakness and combo multipliers, and the result value.
 Finisher rows and Comeback rows stay isolated from each other.
@@ -874,6 +884,11 @@ The optional grammar indication does not identify the next correct role, and it 
 The interface does not recommend tactics, show the causes for disabled actions, or add a tutorial status.
 
 ### Speech, perimeter actions, and stage status
+
+During drafting, each Pride frame shows one Combo line below the weakness list when that player has an active noun combo.
+Each chip gives the noun and the multiplier that the noun earns when the player uses it again.
+A long noun truncates, and the multiplier stays whole.
+Milestone 016 controls the combo chips.
 
 The active player has one wide white bubble for the sentence at this time, and the bubble points to that side.
 The waiting character has one compact gray ellipsis bubble.

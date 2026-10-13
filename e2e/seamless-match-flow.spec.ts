@@ -16,7 +16,7 @@ import {
 import { clearStoredHistory, storedHistory } from './helpers/stored-data.ts';
 
 // This fixture reaches two surviving carries and the cliffhanger with the final catalog.
-const plan = planMatchBrowserFlow(20_260_008);
+const plan = planMatchBrowserFlow(20_260_012);
 
 test.setTimeout(90_000);
 

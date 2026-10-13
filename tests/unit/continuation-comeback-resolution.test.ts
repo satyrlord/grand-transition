@@ -71,8 +71,8 @@ function selection(tier: ComebackTier): ComebackSelection {
   return {
     tier,
     ...rule,
-    closingLineKey: `comeback.red-folded-chairman.${tier}`,
-    closingLine: englishGameLocale.messages[`comeback.red-folded-chairman.${tier}`]!,
+    closingLineKey: `comeback.red-folded-chairman.${tier}.1`,
+    closingLine: englishGameLocale.messages[`comeback.red-folded-chairman.${tier}.1`]!,
   };
 }
 
@@ -330,8 +330,9 @@ describe('comeback charge, selection, and scoring', () => {
     expect(withLineInput.construction.analysis).toEqual(
       playerInput(0, { damage: 5 }).construction.analysis,
     );
+    expect(characters[0]!.comebackLinesByTier.medium).toContain(first.selection.closingLineKey);
     expect(withLine.players[players[0]]!.closingLine).toBe(
-      'You domesticated the facts. Now they fetch your slippers.',
+      englishGameLocale.messages[first.selection.closingLineKey],
     );
   });
 

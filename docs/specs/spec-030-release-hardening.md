@@ -161,6 +161,7 @@ Phrase text is an invented phrase, or a real line that the game gives accurately
 Audio is new, AI-generated, or has a license in the Milestone 024 contract.
 
 The MVP has no online behavior.
+Milestones 035, 037, and 038 add the room modes after the MVP, and they control the one relay exception.
 
 Only the artifact that passes the full gate can go to publication.
 

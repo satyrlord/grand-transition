@@ -68,6 +68,9 @@ const zeroFeatures: AdvancedAiFeatures = Object.freeze({
 
 const neutralPersonality = { aggression: 0.5, denial: 0.5, risk: 0.5 };
 
+/** A seed whose first board holds the continuation card. */
+const continuationSeed = 23;
+
 describe('advanced AI ladder policies', () => {
   test.each([
     ['Party Strategist', decidePartyStrategist, 22],
@@ -113,7 +116,8 @@ describe('advanced AI ladder policies', () => {
   ] as const)(
     '%s extends a fragment but preserves continuation when its words are blocked',
     (_name, decide) => {
-      let state = preparedMatch();
+      // A board with two connectors has no continuation card, so this deal needs one.
+      let state = preparedMatch(continuationSeed);
       const actor = state.activePlayerId;
       const noun = state.draft!.playerStates[actor]!.legalCards.find((card) =>
         state.draft!.board.slots.some((slot) => slot.id === card.cardId && slot.role === 'noun'),
@@ -488,7 +492,7 @@ test.each([decidePartyStrategist, decidePalaceOperator])(
 );
 
 test('scores current carry instead of prior-round continuation', () => {
-  let state = preparedReviewState(22);
+  let state = preparedReviewState(continuationSeed);
   const actor = state.activePlayerId;
   const opponent = state.playerOrder.find((id) => id !== actor)!;
   const pick = (card: { source: 'shared' | 'private'; cardId: string }) => {

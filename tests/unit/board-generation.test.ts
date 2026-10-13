@@ -61,10 +61,12 @@ describe('Hollywood Roast shared board generation', () => {
 
   test.each([
     [0.05, 0],
+    [0.0999, 0],
     [0.1, 1],
     [0.5, 1],
-    [0.75, 1],
-    [0.9, 1],
+    [0.7499, 1],
+    [0.75, 2],
+    [0.9, 2],
   ] as const)(
     'uses the shipped connector-count bands at roll %s',
     (connectorRoll, expectedConnectors) => {
@@ -72,8 +74,10 @@ describe('Hollywood Roast shared board generation', () => {
       const random: RandomSource = {
         next(seed) {
           calls += 1;
+          // Seven fixed-slot draws come before the connector-count roll. With no
+          // forced connector, draw 10 fills the open slot from the start of the pool.
           return {
-            value: calls === 9 ? connectorRoll : calls === 10 && connectorRoll < 0.1 ? 0 : 0.01,
+            value: calls === 8 ? connectorRoll : calls === 10 && connectorRoll < 0.1 ? 0 : 0.01,
             nextSeed: seed + 1,
           };
         },
@@ -81,12 +85,82 @@ describe('Hollywood Roast shared board generation', () => {
       const result = generateBoard(request(1), random);
       expect(result.ok).toBe(true);
       if (!result.ok) return;
+      expect(result.board.slots).toHaveLength(boardSlotCount);
       expect(result.board.slots.filter((slot) => slot.role === 'conjunction')).toHaveLength(
         expectedConnectors,
       );
-      expect(result.board.slots.filter((slot) => slot.role === 'continuation')).toHaveLength(1);
+      // Two connectors fill the board, so that board has no continuation.
+      expect(result.board.slots.filter((slot) => slot.role === 'continuation')).toHaveLength(
+        expectedConnectors === 2 ? 0 : 1,
+      );
     },
   );
+
+  test('two forced connectors use two different phrase identifiers', () => {
+    let calls = 0;
+    const random: RandomSource = {
+      next(seed) {
+        calls += 1;
+        return { value: calls === 8 ? 0.9 : 0.5, nextSeed: seed + 1 };
+      },
+    };
+    const result = generateBoard(request(1), random);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    const connectors = result.board.slots.filter((slot) => slot.role === 'conjunction');
+    expect(connectors.length).toBeGreaterThanOrEqual(2);
+    expect(new Set(connectors.map((slot) => slot.phraseId))).toHaveLength(connectors.length);
+  });
+
+  test('a cliffhanger board with two connectors keeps nine cards and no continuation', () => {
+    let calls = 0;
+    const random: RandomSource = {
+      next(seed) {
+        calls += 1;
+        return { value: calls === 8 ? 0.9 : 0.01, nextSeed: seed + 1 };
+      },
+    };
+    const result = generateBoard({ ...request(1), includeContinuation: false }, random);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.board.slots).toHaveLength(boardSlotCount);
+    expect(result.board.slots.some((slot) => slot.role === 'continuation')).toBe(false);
+  });
+
+  test('seeds two nouns that a fixed relation of the board prefers as its subject', () => {
+    const phraseById = new Map(gameCatalog.phrases.map((phrase) => [phrase.id, phrase]));
+    for (let seed = 0; seed < 250; seed += 1) {
+      const fixed = expectBoard(seed)
+        .slots.filter((slot) => slot.source === 'standard')
+        .map((slot) => phraseById.get(slot.phraseId)!);
+      const preferredGroups = new Set(
+        fixed
+          .filter((phrase) => phrase.role === 'verb' || phrase.role === 'predicate')
+          .flatMap((relation) => relation.scorePreferences?.substance ?? [])
+          .flatMap((rule) => rule.left),
+      );
+      const seeded = fixed.filter(
+        (phrase) =>
+          phrase.role === 'noun' &&
+          phrase.scoreGroups!.substance.some((group) => preferredGroups.has(group)),
+      );
+      expect(seeded.length, `seeded nouns at seed ${seed}`).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  test('deals three nouns when no noun suits a fixed relation', () => {
+    const phrases = gameCatalog.phrases.map((phrase) =>
+      phrase.role === 'noun'
+        ? { ...phrase, scoreGroups: { substance: ['unmatched-group'], flavour: [] } }
+        : phrase,
+    );
+    const result = generateBoard({ ...request(7), phrases });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(
+      result.board.slots.filter((slot) => slot.role === 'noun' && slot.source === 'standard'),
+    ).toHaveLength(3);
+  });
 
   test('rejects a board pool without the one universal continuation', () => {
     const scenePhraseIds = scene.phrasePool.filter(
@@ -116,7 +190,8 @@ describe('Hollywood Roast shared board generation', () => {
         next(seed) {
           calls += 1;
           return {
-            value: calls === 9 ? 0.5 : calls === 10 ? kindRoll : 0.01,
+            // Seven fixed-slot draws come first, then the count roll and the kind roll.
+            value: calls === 8 ? 0.5 : calls === 9 ? kindRoll : 0.01,
             nextSeed: seed + 1,
           };
         },
@@ -192,13 +267,14 @@ describe('Hollywood Roast shared board generation', () => {
     const random: RandomSource = {
       next(seed) {
         calls += 1;
-        return { value: calls === 9 ? 0.05 : 0.01, nextSeed: seed + 1 };
+        return { value: calls === 8 ? 0.05 : 0.01, nextSeed: seed + 1 };
       },
     };
     const result = generateBoard(request(1), random);
     expect(result.ok).toBe(true);
-    // Eight fixed draws, the connector roll, one variable draw, and eight
-    // shuffle draws. A forced connector would add its kind and phrase draws.
+    // Seven fixed draws, the connector roll, the continuation draw, one
+    // variable draw, and eight shuffle draws. A forced connector would add
+    // its kind and phrase draws.
     expect(calls).toBe(18);
   });
 

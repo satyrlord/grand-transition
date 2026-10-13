@@ -27,9 +27,21 @@
     "delivery"
   ],
   "comebacks": {
-    "weak": "Fetch the phone. Even the dial tone has a stronger argument.",
-    "medium": "You cannot evict the truth. It never lived here.",
-    "strong": "I obey the rules. Your argument impersonated a thought."
+    "weak": [
+      "Fetch the phone. Even the dial tone has a stronger argument.",
+      "Speak up! My echo is still waiting for your point.",
+      "I have denounced furniture with more backbone than you."
+    ],
+    "medium": [
+      "You cannot evict the truth. It never lived here.",
+      "Your speech needs no microphone. It needs an apology.",
+      "I write verses about traitors. You rhyme with all of them."
+    ],
+    "strong": [
+      "I obey the rules. Your argument impersonated a thought.",
+      "My whisper has toppled cabinets. Your shout cannot open a window.",
+      "I decree you a footnote. The footnote demands a right of reply."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.95,

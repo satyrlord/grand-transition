@@ -55,10 +55,25 @@ async function expectDialogInViewport(page: Page, selector: string): Promise<voi
 }
 
 for (const [interfaceLocale, labels] of [
-  ['en', { archive: /Quote archive/u, close: 'Close', adapted: 'Adapted from a real statement' }],
+  [
+    'en',
+    {
+      archive: /Quote archive/u,
+      close: 'Close',
+      sourced: 'From real speech',
+      otherLanguage: 'ro',
+      translated: 'Translated from Romanian',
+    },
+  ],
   [
     'ro-RO',
-    { archive: /Arhiva de citate/u, close: 'Închide', adapted: 'Adaptare după o declarație reală' },
+    {
+      archive: /Arhiva de citate/u,
+      close: 'Închide',
+      sourced: 'Din declarații reale',
+      otherLanguage: 'en',
+      translated: 'Tradus din engleză',
+    },
   ],
 ] as const) {
   test(`the quote archive survives a reload and fits each viewport in ${interfaceLocale} (AC-034-06, AC-034-07)`, async ({
@@ -90,7 +105,18 @@ for (const [interfaceLocale, labels] of [
     await expect(page.getByRole('button', { name: labels.close })).toBeFocused();
     await expect(dialog.locator('.quote-receipt')).toHaveCount(sourcedIds.length);
     await expect(dialog.locator('.quote-receipt-label').first()).toBeVisible();
-    await expect(dialog.getByText(labels.adapted).first()).toBeVisible();
+    // Each shipped record from real speech has the one label, also an adaptation.
+    await expect(dialog.locator('.quote-receipt-label', { hasText: labels.sourced })).toHaveCount(
+      sourcedIds.length,
+    );
+    // A card whose source is in the other language has the translation label.
+    await expect(
+      dialog.locator('.quote-receipt-translation', { hasText: labels.translated }),
+    ).toHaveCount(
+      shipped.filter(
+        (record) => isSourcedQuoteReveal(record) && record.sourceLanguage === labels.otherLanguage,
+      ).length,
+    );
     await page.keyboard.press('Tab');
     await expect(page.locator('.quote-archive-list')).toBeFocused();
     await page.keyboard.press('Tab');

@@ -591,8 +591,8 @@
   <target>Loc pentru expresie <x id="0" equiv-text="${card.slotIndex + 1}"/>: <x id="1" equiv-text="${card.stateLabel}"/></target>
 </trans-unit>
 <trans-unit id="se0ee388bcd3a2181">
-  <source> times <x id="0" equiv-text="${formatScoreNumber(factor)}"/></source>
-  <target> ori <x id="0" equiv-text="${formatScoreNumber(factor)}"/></target>
+  <source> times <x id="0" equiv-text="${formatScoreNumber(combo.multiplier)}"/></source>
+  <target> ori <x id="0" equiv-text="${formatScoreNumber(combo.multiplier)}"/></target>
 </trans-unit>
 <trans-unit id="s9d8b8aa2b404c2c8">
   <source>Settings</source>
@@ -1202,18 +1202,6 @@
   <source>Done</source>
   <target>Gata</target>
 </trans-unit>
-<trans-unit id="se6c83aeba7072b71">
-  <source>Real quote</source>
-  <target>Citat real</target>
-</trans-unit>
-<trans-unit id="seb124bca1a2b783e">
-  <source>Adapted from a real statement</source>
-  <target>Adaptare după o declarație reală</target>
-</trans-unit>
-<trans-unit id="s10e42dce03e3eaf9">
-  <source>Real slogan</source>
-  <target>Slogan real</target>
-</trans-unit>
 <trans-unit id="sbda4b8293349aaaa">
   <source>Invented for the game</source>
   <target>Inventat pentru joc</target>
@@ -1237,10 +1225,6 @@
 <trans-unit id="sfe4e37ddc362e47a">
   <source><x id="0" equiv-text="${venue}"/> (<x id="1" equiv-text="${levelName(record.level)}"/>), <x id="2" equiv-text="${year}"/></source>
   <target><x id="0" equiv-text="${venue}"/> (<x id="1" equiv-text="${levelName(record.level)}"/>), <x id="2" equiv-text="${year}"/></target>
-</trans-unit>
-<trans-unit id="s2b13aced7acf1f1e">
-  <source>Adapted</source>
-  <target>Adaptat</target>
 </trans-unit>
 <trans-unit id="s23f32ddd3b3bd374">
   <source>Invented</source>
@@ -1338,10 +1322,6 @@
   <source>Show receipts</source>
   <target>Arată dovezile</target>
 </trans-unit>
-<trans-unit id="s627b31246060b570">
-  <source>Real, adapted, or invented? Select one answer for each phrase.</source>
-  <target>Real, adaptat sau inventat? Alege un răspuns pentru fiecare expresie.</target>
-</trans-unit>
 <trans-unit id="se576115e4d3efa8b">
   <source>The two players make one guess together.</source>
   <target>Cei doi jucători dau un singur răspuns împreună.</target>
@@ -1421,6 +1401,134 @@
 <trans-unit id="sb116030948a7bf21">
   <source>Full record</source>
   <target>Evidența completă</target>
+</trans-unit>
+<trans-unit id="s2b6d298f7f2cb187">
+  <source>Real or invented? Select one answer for each phrase.</source>
+  <target>Real sau inventat? Alege un răspuns pentru fiecare expresie.</target>
+</trans-unit>
+<trans-unit id="s740d5c2bbe697b7d">
+  <source>Real</source>
+  <target>Real</target>
+</trans-unit>
+<trans-unit id="s9d01c7c6a4bc4440">
+  <source>Each round deals nine shared phrases, and the players take them in turns.</source>
+  <target>În fiecare rundă apar nouă expresii comune, iar jucătorii le iau pe rând.</target>
+</trans-unit>
+<trans-unit id="s59193ff0323d1cc0">
+  <source>Your two private phrases are yours alone: your opponent cannot take them.</source>
+  <target>Cele două expresii personale sunt doar ale tale: adversarul nu le poate lua.</target>
+</trans-unit>
+<trans-unit id="s7744351de9c5ccb1">
+  <source>Reshuffle replaces your private phrases once in each round.</source>
+  <target>Amestecarea îți înlocuiește expresiile personale o dată în fiecare rundă.</target>
+</trans-unit>
+<trans-unit id="s37612582ef35f306">
+  <source>When you have used both private phrases, you get two new ones if Reshuffle is unused.</source>
+  <target>Când ai folosit ambele expresii personale, primești două noi, dacă nu ai folosit Amestecarea.</target>
+</trans-unit>
+<trans-unit id="sd1a7209a0e85ff71">
+  <source>A sentence needs a subject and a verb or a predicate before it can score.</source>
+  <target>O propoziție are nevoie de un subiect și de un verb sau un predicat ca să aducă puncte.</target>
+</trans-unit>
+<trans-unit id="se28fce21cc1df0da">
+  <source>A phrase that does not fit the grammar is used up and costs you 3 Pride.</source>
+  <target>O expresie care nu se potrivește gramatical se consumă și te costă 3 puncte de mândrie.</target>
+</trans-unit>
+<trans-unit id="sa7eab0557cf3a948">
+  <source>End an unfinished sentence and it scores nothing and clears your combos.</source>
+  <target>Dacă închei o propoziție neterminată, nu primești niciun punct și îți pierzi combo-urile.</target>
+</trans-unit>
+<trans-unit id="s3f0351e3a08f9472">
+  <source>An ending phrase closes your sentence at once and adds a bonus.</source>
+  <target>O expresie de finalizare îți încheie propoziția pe loc și adaugă un bonus.</target>
+</trans-unit>
+<trans-unit id="se612b513eb488231">
+  <source>The [...] phrase carries your sentence into the next round and scores nothing now.</source>
+  <target>Expresia [...] îți duce propoziția în runda următoare, dar acum nu aduce niciun punct.</target>
+</trans-unit>
+<trans-unit id="s5f5189fb66d0381e">
+  <source>A hit of 16 or more breaks a sentence that you carry with [...].</source>
+  <target>O lovitură de 16 puncte sau mai mult întrerupe propoziția pe care o continui cu [...].</target>
+</trans-unit>
+<trans-unit id="sd0dbcdaadd1b3ed4">
+  <source>Reuse a noun from your last insult to multiply its clause by 2, then by 3.</source>
+  <target>Un substantiv refolosit din ultima ta insultă înmulțește punctele propoziției sale cu 2, apoi cu 3.</target>
+</trans-unit>
+<trans-unit id="s5ec6671595e57a38">
+  <source>The Combo line under a character's name lists the nouns that are worth repeating.</source>
+  <target>Linia Combo de sub numele unui personaj arată substantivele care merită repetate.</target>
+</trans-unit>
+<trans-unit id="s49d0d8741cdf9bff">
+  <source>A phrase that touches your opponent's weakness doubles its clause.</source>
+  <target>O expresie care atinge o slăbiciune a adversarului dublează punctele propoziției din care face parte.</target>
+</trans-unit>
+<trans-unit id="sfef13e851a1c4d38">
+  <source>Every shared phrase that you take is one that your opponent cannot use.</source>
+  <target>Fiecare expresie comună pe care o iei este una pe care adversarul nu o mai poate folosi.</target>
+</trans-unit>
+<trans-unit id="s3dc6ef9d7dc07b5f">
+  <source>Pride that your opponent takes charges your Comeback: 20, 40, 60 give +4, +10, +18.</source>
+  <target>Mândria pe care ți-o ia adversarul îți încarcă Replica: 20, 40, 60 aduc +4, +10, +18.</target>
+</trans-unit>
+<trans-unit id="sf1a01424bdc5e907">
+  <source>A Comeback needs a complete sentence, and it ends that sentence at once.</source>
+  <target>Replica are nevoie de o propoziție completă și o încheie pe loc.</target>
+</trans-unit>
+<trans-unit id="s9f593b20075b3adb">
+  <source>After your opponent ends, turns that you let expire in a row cost 3, 12, 24, then 48 Pride.</source>
+  <target>După ce adversarul a încheiat, rândurile expirate consecutiv te costă 3, 12, 24, apoi 48 de puncte de mândrie.</target>
+</trans-unit>
+<trans-unit id="s9a0fb81438987d12">
+  <source>A double knockout starts a Cliffhanger, where one grammar mistake loses the match.</source>
+  <target>Dacă amândoi rămâneți fără mândrie, începe Suspansul: o singură greșeală gramaticală pierde meciul.</target>
+</trans-unit>
+<trans-unit id="se4cb6a494ed99d30">
+  <source>Set the turn timer to 15 seconds, 30 seconds, or Unlimited in Settings.</source>
+  <target>Din Setări poți alege cronometrul rândului: 15 secunde, 30 de secunde sau Nelimitat.</target>
+</trans-unit>
+<trans-unit id="sd2d9fdb2650e2721">
+  <source>Tutorial in Settings makes every phrase that fits the grammar glow green.</source>
+  <target>Tutorialul din Setări evidențiază cu verde fiecare expresie corectă gramatical.</target>
+</trans-unit>
+<trans-unit id="s9108920c7120fa71">
+  <source>No voters were consulted while these voices were loading.</source>
+  <target>Niciun alegător nu a fost consultat cât timp s-au încărcat aceste voci.</target>
+</trans-unit>
+<trans-unit id="sea3a8302ad77fd2d">
+  <source>If the voices are slow, blame the previous government.</source>
+  <target>Dacă vocile întârzie, de vină este greaua moștenire.</target>
+</trans-unit>
+<trans-unit id="sc271999d23777c2b">
+  <source>The transition is almost complete, as it has been for decades.</source>
+  <target>Tranziția este aproape gata, așa cum este de câteva decenii.</target>
+</trans-unit>
+<trans-unit id="sd1e1614854aef4e6">
+  <source>This hint was approved by a committee and no longer means anything.</source>
+  <target>Acest sfat a fost aprobat de o comisie și nu mai înseamnă nimic.</target>
+</trans-unit>
+<trans-unit id="s9f22d2d7f7aa6ae5">
+  <source>Moderators are strictly neutral, in favor of whoever speaks last.</source>
+  <target>Moderatorii sunt strict neutri, în favoarea celui care vorbește ultimul.</target>
+</trans-unit>
+<trans-unit id="se9fc6abf1fd37795">
+  <source>Every loser blames the timer, and the timer declines to comment.</source>
+  <target>Toți cei care pierd dau vina pe cronometru, iar cronometrul refuză să comenteze.</target>
+</trans-unit>
+<trans-unit id="se553f3b0946d3eac">
+  <source>Skip line</source>
+  <target>Sari peste voce</target>
+</trans-unit>
+<trans-unit id="s63483bbcf645b86e">
+  <source>Both private phrases were used. Two new phrases replaced them automatically.</source>
+  <target>Ambele expresii personale au fost folosite. Două expresii noi le-au înlocuit automat.</target>
+</trans-unit>
+<trans-unit id="sb4f34d471c54bef4">
+  <source><x id="0" equiv-text="${characterName}"/>: active combos</source>
+  <target><x id="0" equiv-text="${characterName}"/>: combo-uri active</target>
+</trans-unit>
+<trans-unit id="s9dcffdd89c8e0f58">
+  <source>Hint</source>
+  <target>Sfat</target>
 </trans-unit>
 </body>
 </file>

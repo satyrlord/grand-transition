@@ -70,7 +70,7 @@ They contain no personal data, and the game does not send them to a remote locat
 
 Only one replay document format applies at a time.
 It uses normalized JSON with these fields in this sequence: `schemaVersion`, `kind`, `seed`, `setup`, and `commands`.
-`schemaVersion` is `2`, and `kind` is `grand-transition-replay`.
+`schemaVersion` is `3`, and `kind` is `grand-transition-replay`.
 The commands contain only accepted public command inputs.
 The game generates the dealt private cards and the derived state again from the seed.
 Encoding uses an indentation of two spaces and one last newline.
@@ -96,6 +96,12 @@ A replay with a different locale fails as `invalid-replay`.
 It does not render the recorded sentences in a different language without a message.
 Version `1` documents have no `gameLocale` field, and they fail as `unsupported-version`.
 
+Version `3` removes the `privacyEnabled` field from the setup.
+No rule and no screen used that field.
+Hotseat shows the private hand of the active player, and it has no concealment step.
+The setup records no privacy option.
+Version `2` documents contain the field, and they fail as `unsupported-version`.
+
 The local match log uses `kind: grand-transition-match-log`, the replay schema version, the setup, the seed, and round summaries.
 It includes the public selections, the public breakdowns, the public rule events, and the winner.
 For each round, it includes the rendered public sentence of each player and the ordered used phrases.
@@ -111,7 +117,7 @@ It applies a weakness multiplier of 2, a restriction multiplier of 1, and a roun
 Malformed JSON gives `invalid-json`.
 An incorrect kind gives `wrong-document`.
 Missing or incorrect fields give `invalid-replay`.
-A version that is not `2` gives `unsupported-version`.
+A version that is not `3` gives `unsupported-version`.
 
 A replay import or a standalone match-log import that does not agree with the catalog of this time fails as `invalid-replay`.
 Each recorded phrase ID in a standalone match-log import must be in the catalog.
@@ -147,10 +153,12 @@ The global limit of Milestone 002 stays 70 percent.
 
 - **AC-014-01:** The game can encode a replay, decode it, and encode it again.
   The result has the same normalized bytes and the same last state.
-  The document records `schemaVersion` `2`.
+  The document records `schemaVersion` `3`.
   Each other version fails as `unsupported-version` for replay documents and match-log documents.
   A document with a recorded `gameLocale` that the game does not ship fails as `invalid-replay`.
   A version `1` document without the field fails as `unsupported-version`.
+  A version `2` document fails as `unsupported-version`.
+  A version `3` setup with a `privacyEnabled` field fails as `invalid-replay`.
   A replay gives its own recorded multiplier and the same last state, also when the caller gives a different balance.
   A replay with commands that do not agree with the catalog of this time fails as `invalid-replay` without a partial match start.
 

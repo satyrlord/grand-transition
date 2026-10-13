@@ -427,7 +427,6 @@ function createCompletedReplay(
       aiDifficulty: state.setup.aiDifficulty,
       timerSeconds: state.setup.timerSeconds,
       speechEnabled: state.setup.speechEnabled,
-      privacyEnabled: state.setup.privacyEnabled,
       basePointsMultiplier: state.setup.basePointsMultiplier ?? 3,
       gameLocale,
     },

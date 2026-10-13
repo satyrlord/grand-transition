@@ -1,0 +1,6 @@
+interface:
+  display_name: 'Review Milestone'
+  short_description: 'Examine a milestone before release without edits'
+  default_prompt: 'Use $review-milestone to examine the named Grand Transition milestone before release without file changes.'
+policy:
+  allow_implicit_invocation: false

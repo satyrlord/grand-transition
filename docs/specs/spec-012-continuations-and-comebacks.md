@@ -35,13 +35,26 @@ When the sentence is complete and one or more tiers are full, one comeback actio
 | 40-59         | Medium | 40           | 10           |
 | 60            | Strong | 60           | 18           |
 
-Each tier selects one insult that only that character has.
-The weak line with 4 damage is a light insult.
-The medium line with 10 damage is a medium insult.
-The strong line with 18 damage is a devastating insult.
+Each character must have exactly three lines for each tier, and only that character has them.
+A weak line with 4 damage is a light insult.
+A medium line with 10 damage is a medium insult.
+A strong line with 18 damage is a devastating insult.
 There are no shared comeback lines and no common comeback lines.
+Milestone 005 controls the key and the sequence of the lines.
 
-The comeback adds that insult to the end of the visible public sentence as an isolated phrase.
+When a player uses a comeback, the game draws one of the three lines of the selected tier.
+The draw must use the seeded generator and the command history of the match.
+It must not use a different source of random values.
+Each line of the tier has the same probability.
+The same seed and the same command history always give the same line.
+The draw selects a line number, so each game locale gives the same line.
+The draw moves the seed one step for each comeback, and the number of lines does not change this step.
+
+A later milestone will own the unlocking of lines 2 and 3 of each tier through the objectives of the one Ladder campaign.
+Until that milestone, all three lines are available to each player, and the draw has no progress input.
+Line 1 of each tier is the line that stays available without progress.
+
+The comeback adds the drawn insult to the end of the visible public sentence as an isolated phrase.
 It ends the sentence, and it adds its damage after the scored clauses and the finishers.
 After the selection, show the full sentence and the closing line in the text bubble of the speaker.
 The line does not go into the grammar, the clause scoring, the noun combos, the finishers, or the continuation state.
@@ -56,10 +69,17 @@ Spend the tier before you add the damage that the player gets during the same ex
 - **AC-012-04:** Self-damage does not charge a comeback.
 - **AC-012-05:** The selection of the closing line is deterministic, and it stays out of the grammar and the combos.
   The game adds the selected line to the visible public sentence, and the line shows in the text bubble of the speaker.
-- **AC-012-06:** Each character has one insult for each tier, and no other character has that insult.
+- **AC-012-06:** Each character has exactly three insults for each tier, and no other character has those insults.
   The light, medium, and devastating lines add 4, 10, and 18 damage.
   No comeback key is common, shared, or used again.
+- **AC-012-07:** For each character and each tier, the seeded draw can give each of the three lines.
+  The same seed and the same command history give the same line and the same next seed.
+  The same seed and the same command history give the same line number in each game locale.
+  Across the seed sequence of a match, the draw gives each line approximately one time in three.
+  The draw has no progress input, so all three lines are available to each player.
 
 ## Objective verifiers
 
-`tests/unit/continuation-comeback-resolution.test.ts` does checks of AC-012-01 through AC-012-06.
+`tests/unit/continuation-comeback-resolution.test.ts` does checks of AC-012-01 through AC-012-05 and the damage values of AC-012-06.
+`tests/unit/content-schemas.test.ts` does checks of the line count and the key rules of AC-012-06.
+`tests/unit/comeback-line-variety.test.ts` does checks of the shipped lines of AC-012-06 and of AC-012-07.

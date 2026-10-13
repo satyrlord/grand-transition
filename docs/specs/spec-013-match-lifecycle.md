@@ -29,6 +29,11 @@ Clear comeback charge, noun combos, and continuations.
 Do not deal continuation cards, in the round deal or in a hand refresh.
 Play one exchange.
 
+A cliffhanger gives no second chance.
+A grammar mistake or a penalized turn expiration in a cliffhanger costs all the Pride that the player has left.
+The match ends immediately, and the other player is the winner.
+An expiration that only passes the pick, while the two players are active, costs nothing.
+
 If one score is higher, that player deals 100 damage. The lower score deals:
 
 ```text
@@ -58,9 +63,12 @@ Only the setup makes a new match.
 - **AC-013-03:** The two locked insults resolve before the knockout selection.
 - **AC-013-04:** A double knockout sets the accurate cliffhanger state.
 - **AC-013-05:** The cliffhanger score pairs that are higher, lower, zero, equal and not zero, and equal and zero use the formula without a different tie-break.
+- **AC-013-07:** In a cliffhanger, one grammar mistake sets the Pride of that player to zero and ends the match with the other player as the winner.
+  A penalized turn expiration in a cliffhanger does the same.
+  The same mistake in a usual round costs 3 Pride.
 - **AC-013-06:** The terminal state records the winner and the development evidence fields above, and no other fields.
   The public command type has no rematch command or post-match command.
 
 ## Objective verifiers
 
-`tests/unit/match-lifecycle.test.ts` does checks of AC-013-01 through AC-013-06.
+`tests/unit/match-lifecycle.test.ts` does checks of AC-013-01 through AC-013-07.

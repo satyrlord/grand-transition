@@ -27,9 +27,21 @@
     "nepotism"
   ],
   "comebacks": {
-    "weak": "Your evidence needs more icing.",
-    "medium": "I checked the family tree. Your tender is adopted.",
-    "strong": "You could lose a contract at your own reunion."
+    "weak": [
+      "Your evidence needs more icing.",
+      "Lovely speech. My cousin will pave over it by Friday.",
+      "Sit, eat something. You argue like someone from outside the family."
+    ],
+    "medium": [
+      "I checked the family tree. Your tender is adopted.",
+      "I know everyone in this county. Nobody admits to knowing you.",
+      "Your road has one lane, and my nephew is parked on it."
+    ],
+    "strong": [
+      "You could lose a contract at your own reunion.",
+      "I cut the ribbon on your career. Nothing was behind it.",
+      "Even nepotism has standards. Your own mother would not hire you."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.5,

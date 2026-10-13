@@ -57,7 +57,7 @@ describe('Romanian replay, match-log, and history records', () => {
     expect(romanianCompleted.matchLog.setup.gameLocale).toBe('ro-RO');
     expect(romanianCompleted.replay.schemaVersion).toBe(replaySchemaVersion);
     expect(romanianCompleted.matchLog.schemaVersion).toBe(replaySchemaVersion);
-    expect(replaySchemaVersion).toBe(2);
+    expect(replaySchemaVersion).toBe(3);
   });
 
   test('renders the recorded public sentence in Romanian, not English', () => {

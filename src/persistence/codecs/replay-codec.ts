@@ -22,9 +22,10 @@ import type { StoragePort } from '../storage-port.ts';
 import { isRecord } from '../../engine/plain-values.ts';
 
 // One replay document format exists at a time. The version only ever changes
-// when that format changes; content revisions never bump it. Version 2 records
-// the game locale the match captured at creation under Milestone 029.
-export const replaySchemaVersion = 2;
+// when that format changes; content revisions never bump it. Version 2 added
+// the game locale of Milestone 029. Version 3 removed the unused hotseat
+// privacy field of the setup.
+export const replaySchemaVersion = 3;
 export const replayKind = 'grand-transition-replay' as const;
 export const matchLogKind = 'grand-transition-match-log' as const;
 
@@ -111,7 +112,6 @@ export const replaySetupSchema = z
     aiDifficulty: z.string().min(1).nullable(),
     timerSeconds: z.literal(30),
     speechEnabled: z.boolean(),
-    privacyEnabled: z.boolean(),
     basePointsMultiplier: basePointsMultiplierSchema,
     // The game locale the match captured at creation. It is an identifier, not
     // translated text, and it owns the recorded public sentence language.
@@ -606,7 +606,6 @@ function createSetupRequest(
     mode: replay.setup.mode,
     aiDifficulty: replay.setup.aiDifficulty,
     speechEnabled: replay.setup.speechEnabled,
-    privacyEnabled: replay.setup.privacyEnabled,
     basePointsMultiplier: replay.setup.basePointsMultiplier,
     openingPlayerIndex: scene.openingPlayerIndex,
   };

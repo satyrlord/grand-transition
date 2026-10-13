@@ -1,0 +1,6 @@
+interface:
+  display_name: 'Implement Milestone'
+  short_description: 'Implement an approved milestone and its checks'
+  default_prompt: 'Use $implement-milestone to complete the named approved Grand Transition milestone and its verification.'
+policy:
+  allow_implicit_invocation: false

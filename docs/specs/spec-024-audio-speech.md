@@ -404,6 +404,8 @@ selected neural male voice or female voice.
 
 The main menu shows GPU loading. Settings keeps the status of the selected local
 voice engine. The arena shows preparation differently from reciting.
+Milestone 015 adds a hint line to the loader of the main menu.
+Milestone 025 adds a hint record while the arena prepares a voice.
 Latency changes with the device and the chunk length. Do not say that
 generation occurs in real time on all devices. The two complete public
 deliveries occur before the next round or Victory, as Milestone 025 gives.
@@ -434,7 +436,10 @@ fragments.
 
 Pause and visibility interruption stop narration and keep its position.
 Navigation, settings changes, disconnection, and replacement cancel it in
-100 milliseconds or less. Generation IDs reject late worker callbacks and
+100 milliseconds or less.
+A skip of one delivery by the player also cancels it, with the cancellation
+reason `player-skip`. Milestone 025 controls that skip.
+This sentence adds a cancellation cause to the earlier list of this milestone. Generation IDs reject late worker callbacks and
 playback callbacks. Human skins have no platform fallback. If the model, the
 audio, or the inference fails, the same presentation completes with no sound.
 
@@ -451,7 +456,8 @@ and duration, playback start, and phrase markers. They include playback end,
 failure, timeout, the cancellation `reason` code, Pause, resume, skipped speech, and
 provider fallback. They also include silent presentation start, the score
 markers that the screen shows, the total that the screen shows, and the
-end of the presentation. Store the selected voice, the rate, the pitch,
+end of the presentation. A delivery that the player skips adds one
+`presentation-skip` event with the segment at which the skip occurred. Store the selected voice, the rate, the pitch,
 the provider, and the elapsed milliseconds from match start.
 
 Use controlled `reason` codes. In these events, do not record sentence text,

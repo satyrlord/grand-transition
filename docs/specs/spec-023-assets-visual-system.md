@@ -153,9 +153,19 @@ sources use only bounded detached alpha-1 cleanup; metadata registration
 preserves their reviewed decoded pixels. The existing nine-state mappings,
 skin identifiers and complete asset inventory remain unchanged. Exact numeric
 contour-width conformance remains unverified; preserve the approved selection.
-The alternate package retains its six accepted native 1254-square, left-facing
-sources, including its master's slight facial tonal modeling as a source-specific
-decision. These decisions do not change the written direction for future artwork.
+The revised alternate package uses its owner-approved selection and five reviewed
+matching poses, all native 1254-square and left-facing. Preserve its accepted
+drawn face, layered honey-brown bob, slender adult build, navy pantsuit, cream-white
+open blouse, red pocket square and belt, gold studs, low navy pumps and one blank
+paper stack. Keep the small slender paper-holding hand and slightly long red
+nails. Red polish appears only on visible dorsal nail plates; palm-side finger
+pads and the selection's raised-index tip remain skin-colored. Preserve the
+listening ear cup, confident speaking palm, small stop-palm recoil, stronger
+bent-knee recoil and worried two-hand paper guard. Each pose used only the accepted
+selection. Selection, thinking, delivery, light-hit and heavy-hit use bounded
+detached alpha-1 cleanup only; weakness retains its generated pixels. Registration
+preserves all reviewed decoded pixels. Existing state mappings and identifiers
+remain unchanged. Exact numeric contour-width conformance remains unverified.
 Focused asset checks, 38 unit tests, 24 character-presenter browser tests and the
 production build passed for the revised default package. Installed checks cover
 all nine logical states on both sides at 20 landscape sizes in Transition-Era
@@ -168,6 +178,17 @@ Reviewed desktop and near-square captures retain the faces, papers and defining
 gestures. Full long-text access, other scenes, natural transitions, physical
 devices and heard speech remain unverified. Full suites and aggregate gates are
 deferred at the owner's request.
+The revised alternate passed focused asset checks, 38 unit tests, 24
+character-presenter browser tests and the validating production build in an
+isolated checkout of committed source with the installed artwork. Concurrent
+source changes were excluded from that verification. All nine states on both
+sides passed 3,600 regional clipping and speech-overlap samples at 20 landscape
+sizes; all 144 captured variant responses match the installed manifests, with
+no browser errors or missing selected assets. Native-scale hand review found
+red polish only on visible nail plates. Desktop and near-square visual review
+found no art or nail defects. The same 640-by-320 HUD obstruction and long-text
+visibility limits remain; those captures do not establish full UI acceptance.
+Full suites and aggregate gates remain deferred.
 The four approved Velvet Mogul selections and their twenty matching poses are
 installed. All twenty-four sources retain native 1254-square canvases. The
 default, Boardroom Patriarch and Silk Diplomat face right; Velvet Statesman

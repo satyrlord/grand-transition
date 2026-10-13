@@ -79,8 +79,11 @@ Record if the shipped text is an accurate quote or a new fictional adaptation.
 A person must be able to examine the source publicly.
 Government AI stays a fictional robot without a reference to a politician.
 
-Each human archetype has two or more different speech-inspired endings and three escalating comeback lines.
-They share the fictional archetype across its skins.
+Each human archetype has two or more different speech-inspired endings and three escalating comeback tiers.
+Each tier has three lines in the voice of the archetype.
+Each line of a stronger tier is a harder insult than the lines of a weaker tier.
+A comeback line is a complete closing sentence, and it can be an invented line.
+The endings and the comeback lines share the fictional archetype across its skins.
 Keep the stable card IDs when you write the text again.
 New cards have unique IDs.
 When relation text changes, examine all the agreement forms.
@@ -186,7 +189,7 @@ They do not have an institution or persona as their target.
   Fixed seeds give the same recorded public match facts and report totals.
 - **AC-027-03:** Owned rule fixtures pass without invariant failures.
   Authored phrases stay reachable through the grammar checks and the usual CI checks.
-- **AC-027-04:** Authored phrase text is unique across the catalog, and comeback text is unique across characters and tiers.
+- **AC-027-04:** Authored phrase text is unique across the catalog, and comeback text is unique across characters, tiers, and lines.
   Typical complete sentences pass the grammar tests.
 - **AC-027-05:** Each shipped line obeys the content boundary.
   No line names or identifies a real person or a real party.

@@ -545,6 +545,7 @@ export class GrandTransitionApp extends LitElement {
         @pause-match=${this.pauseMatch}
         @resume-match=${this.resumeMatch}
         @timer-tick=${this.playTimerTick}
+        @skip-delivery=${this.skipDelivery}
         @return-to-menu=${this.returnToMenu}
         @turn-timer-change=${this.changeTurnTimer}
         @auto-complete-change=${this.changeAutoComplete}
@@ -1024,6 +1025,14 @@ export class GrandTransitionApp extends LitElement {
     if (this.view !== 'match' || !this.matchViewportReady || this.manuallyPaused || document.hidden)
       return;
     this.audio?.play('timer-tick');
+  };
+
+  /** Skips the delivery of one speaker. The presentation keeps the resolved result. */
+  private readonly skipDelivery = (event: Event): void => {
+    event.stopPropagation();
+    if (this.view !== 'match' || !this.matchViewportReady || this.manuallyPaused || document.hidden)
+      return;
+    this.roundPresentation?.skip();
   };
 
   private readonly returnToMenu = (event: Event): void => {

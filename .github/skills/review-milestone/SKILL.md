@@ -1,9 +1,14 @@
+---
+name: review-milestone
+description: Examine a Grand Transition milestone before release without file changes. Use only when the user names review-milestone and identifies the milestone to examine.
+---
+
 # Review a milestone before release
 
-Read [the repository instructions](../../AGENTS.md), the approved specifications,
+Read [the repository instructions](../../../AGENTS.md), the approved specifications,
 and the full diff of the working tree.
-Use the [full-code-review workflow](../skills/full-code-review/SKILL.md) and the
-[release-reviewer](../agents/release-reviewer.agent.md).
+Use the [full-code-review workflow](../full-code-review/SKILL.md) and the
+[release-reviewer](../../agents/release-reviewer.agent.md).
 
 Do not change files during the review.
 Give a status to each changed path and each changed contract.

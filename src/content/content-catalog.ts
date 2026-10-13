@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import {
   characterSchema,
+  comebackLineKey,
   phraseRoles,
   phraseSchema,
   sentencePoolRoles,
@@ -133,7 +134,7 @@ export const contentCatalogSchema = z
       for (const [tier, keys] of Object.entries(character.comebackLinesByTier)) {
         for (const [keyIndex, key] of keys.entries()) {
           const path = ['characters', characterIndex, 'comebackLinesByTier', tier, keyIndex];
-          const expectedKey = `comeback.${character.id}.${tier}`;
+          const expectedKey = comebackLineKey(character.id, tier, keyIndex);
           if (key !== expectedKey) {
             issue(context, path, `Use the exclusive character comeback key "${expectedKey}".`);
           }

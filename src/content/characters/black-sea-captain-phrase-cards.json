@@ -27,9 +27,21 @@
     "securitate"
   ],
   "comebacks": {
-    "weak": "Summer called. It denies your winter excuses.",
-    "medium": "Your argument has more holes than my promises.",
-    "strong": "Your flagship surrendered to a fishing float."
+    "weak": [
+      "Summer called. It denies your winter excuses.",
+      "Calm seas, and your argument still got seasick.",
+      "I have met buoys with a firmer course than yours."
+    ],
+    "medium": [
+      "Your argument has more holes than my promises.",
+      "You dropped anchor in a puddle and called it a harbour.",
+      "My compass points north. Yours points at whoever is paying."
+    ],
+    "strong": [
+      "Your flagship surrendered to a fishing float.",
+      "The rats left your ship first. They asked me for directions.",
+      "Your whole fleet is one rubber duck, and it is taking on water."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.7,

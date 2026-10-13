@@ -27,9 +27,21 @@
     "accountability"
   ],
   "comebacks": {
-    "weak": "Last time I was here I didn't drink any water, but today I did.",
-    "medium": "I called it a joke. You called it policy.",
-    "strong": "I skipped the debate. Your facts also skipped it."
+    "weak": [
+      "Last time I was here I didn't drink any water, but today I did.",
+      "The lady on the third floor already disproved you.",
+      "I have heard sharper analysis from the intercom."
+    ],
+    "medium": [
+      "I called it a joke. You called it policy.",
+      "My balcony intercepted your sources. It was only your own echo.",
+      "I redrew the map of your argument. It is now a dead end."
+    ],
+    "strong": [
+      "I skipped the debate. Your facts also skipped it.",
+      "I can explain every border on earth. I cannot explain you.",
+      "The whole stairwell voted. You lost to the broken lift."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.75,

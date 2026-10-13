@@ -27,9 +27,21 @@
     "delivery"
   ],
   "comebacks": {
-    "weak": "And your online group has more moderators than members.",
-    "medium": "The tap gave me wiser answers than your speech.",
-    "strong": "You drank a software update and installed no argument."
+    "weak": [
+      "And your online group has more moderators than members.",
+      "The algorithm saw your post and kept scrolling.",
+      "Your aura has two followers, and one is your second account."
+    ],
+    "medium": [
+      "The tap gave me wiser answers than your speech.",
+      "I read your future in the comments. It was deleted.",
+      "Even my horoscope asked you for a source."
+    ],
+    "strong": [
+      "You drank a software update and installed no argument.",
+      "The prophecy is clear: you will trend once, as a warning.",
+      "The universe muted you. I only confirmed the settings."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.85,

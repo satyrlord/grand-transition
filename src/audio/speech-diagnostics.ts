@@ -21,6 +21,7 @@ export const speechEventSchema = z
       'fallback',
       'silent-start',
       'presentation-segment',
+      'presentation-skip',
       'presentation-total',
       'presentation-end',
     ]),
@@ -39,6 +40,7 @@ export const speechEventSchema = z
         'settings',
         'navigation',
         'replacement',
+        'player-skip',
         'failure',
         'segmentation',
         'unsupported-preparation',
@@ -52,7 +54,9 @@ export const speechEventSchema = z
   })
   .strict();
 export type SpeechDiagnostic = z.infer<typeof speechEventSchema>;
-export type SpeechCancellationReason = 'settings' | 'navigation' | 'replacement' | 'failure';
+/** `player-skip` is the reason when the player skips the delivery of one speaker. */
+export type SpeechCancellationReason =
+  'settings' | 'navigation' | 'replacement' | 'player-skip' | 'failure';
 export const publicSpeechEventSchema = speechEventSchema.extend({
   round: z.number().int().positive(),
   speakerId: z.string().min(1).max(80),

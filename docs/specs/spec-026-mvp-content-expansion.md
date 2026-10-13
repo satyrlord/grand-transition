@@ -55,36 +55,38 @@ Local warm materials and light stay correct when the shared asset color guard ca
 
 ## Necessary roster
 
-The stable roster sequence, the identifier, the weakness tags, and the play style are:
+The stable roster sequence, the identifier, the weakness tags, and the play style are below.
+The weakness tags are the ones that the content shipped after the editorial review of Milestone 027.
+Each character of this roster has three weakness tags, and Milestone 005 controls the permitted range.
 
 | Order | Identifier | Character | Weakness tags | Play style |
 | --- | --- | --- | --- | --- |
-| 1 | `red-folded-chairman` | Red-Folded Chairman | legacy, modernity, bureaucracy, and miners | patient denial and safe continuations. |
-| 2 | `thunder-tribune` | Thunder Tribune | evidence, credibility, and restraint | aggressive finishers and risky long sentences. |
-| 3 | `midnight-sensationalist` | Midnight Sensationalist | ratings, evidence, and credibility | combos and dramatic comebacks. |
-| 4 | `velvet-mogul` | Velvet Mogul | wealth, influence, and credibility | denial and weakness targeting. |
-| 5 | `black-sea-captain` | Black Sea Captain | decorum, consistency, and Securitate references | adaptive comebacks. |
-| 6 | `retiring-cassandra` | Retiring Cassandra | competence, hope, and results | defensive continuations and conservative scoring. |
-| 7 | `oat-milk-reformist` | Oat-Milk Reformist | relevance, authenticity, and class | long clauses and semantic targeting. |
+| 1 | `red-folded-chairman` | Red-Folded Chairman | legacy, modernity, and miners | patient denial and safe continuations. |
+| 2 | `thunder-tribune` | Thunder Tribune | restraint, sources, and delivery | aggressive finishers and risky long sentences. |
+| 3 | `midnight-sensationalist` | Midnight Sensationalist | ratings, sources, and delivery | combos and dramatic comebacks. |
+| 4 | `velvet-mogul` | Velvet Mogul | wealth, influence, and accountability | denial and weakness targeting. |
+| 5 | `black-sea-captain` | Black Sea Captain | decorum, sources, and Securitate references | adaptive comebacks. |
+| 6 | `retiring-cassandra` | Retiring Cassandra | competence, results, and sources | defensive continuations and conservative scoring. |
+| 7 | `oat-milk-reformist` | Oat-Milk Reformist | relevance, authenticity, and accountability | long clauses and semantic targeting. |
 | 8 | `marble-diplomat` | Marble Diplomat | luxury, elitism, and corruption | high values, finishers, and status attacks. |
-| 9 | `county-baron` | Local Baron | procurement, infrastructure, and nepotism | denial and low-risk continuations. |
+| 9 | `county-baron` | Local Baron | infrastructure, outcomes, and nepotism | denial and low-risk continuations. |
 | 10 | `coalition-acrobat` | Coalition Acrobat | consistency, memory, and commitment | conjunctions, continuations, and reversals. |
-| 11 | `algorithmic-prophet` | Algorithmic Prophet | evidence, specificity, and follow-up questions | volatile livestream finishers. |
-| 12 | `spreadsheet-technocrat` | Spreadsheet Technocrat | delivery, accountability, and human scale | clause stacks and dashboard denial. |
+| 11 | `algorithmic-prophet` | Algorithmic Prophet | specificity, accountability, and delivery | volatile livestream finishers. |
+| 12 | `spreadsheet-technocrat` | Spreadsheet Technocrat | delivery, accountability, and results | clause stacks and dashboard denial. |
 | 13 | `football-tycoon` | Football Tycoon | commercialism, accountability, and sincerity | emotional chains and finishers. |
-| 14 | `luxury-minister` | Luxury Minister | austerity, service, and authenticity | status attacks and conspicuous finishers. |
-| 15 | `diaspora-oracle` | Diaspora Oracle | distance, context, and firsthand knowledge | long generalizations and continuations. |
-| 16 | `apartment-block-geopolitician` | Apartment-Block Geopolitician | sources, specificity, and nuance | broad, fast, and brittle combo play. |
-| 17 | `eu-funds-alchemist` | EU-Funds Alchemist | transparency, outcomes, and maintenance | procurement denial and high-value finishers. |
-| 18 | `government-ai` | Government AI | nepotism, corruption, spending, and being obsolete | corporate and communist-propaganda phrasing. It is the only robot. |
-| 19 | `reluctant-theorem` | The Reluctant Theorem | indecision, urgency, and delivery | careful clause construction, evidence targeting, and decisive finishers. |
+| 14 | `luxury-minister` | Luxury Minister | austerity, transparency, and authenticity | status attacks and conspicuous finishers. |
+| 15 | `diaspora-oracle` | Diaspora Oracle | accountability, context, and firsthand knowledge | long generalizations and continuations. |
+| 16 | `apartment-block-geopolitician` | Apartment-Block Geopolitician | sources, procurement, and accountability | broad, fast, and brittle combo play. |
+| 17 | `eu-funds-alchemist` | EU-Funds Alchemist | transparency, accountability, and maintenance | procurement denial and high-value finishers. |
+| 18 | `government-ai` | Government AI | nepotism, corruption, and being obsolete | corporate and communist-propaganda phrasing. It is the only robot. |
+| 19 | `reluctant-theorem` | The Reluctant Theorem | accountability, urgency, and delivery | careful clause construction, evidence targeting, and decisive finishers. |
 
 Keep the other character identifiers in the relative sequence of the table.
 Do not use the roster-order value that no character uses again.
 
 The Reluctant Theorem is a different human archetype.
 Its fictional identity changes civic problems into mathematical proofs and procedural qualifications.
-It owns its phrases, three Comebacks, and its default portrait.
+It owns its phrases, three Comeback lines for each tier, and its default portrait.
 It is not a skin of a different archetype.
 Add it at the end with the source roster-order value 20.
 Keep the missing sequence value of the retired character, and keep each identifier.
@@ -117,7 +119,8 @@ Each foundation character has 3 through 40 unique owned phrases.
 Milestone 028 controls the count of each shipped character.
 Its foundation pool has one or more nouns, one or more modifiers, and one or more endings.
 The full common pool gives the other grammar roles that are necessary for a match.
-Each character owns one unique weak Comeback line, one unique medium Comeback line, and one unique strong Comeback line.
+Each character owns three unique weak Comeback lines, three unique medium Comeback lines, and three unique strong Comeback lines.
+Milestone 005 controls their keys, and Milestone 012 controls the draw of one line.
 All content passes the schema, locale, grammar, restriction, weakness, and deterministic-discovery contracts of Milestone 005.
 Milestone 027 controls the editorial review and the safety review.
 
@@ -133,7 +136,7 @@ Milestone 027 controls the last balance evidence and the editorial evidence.
   It has 18 humans and one fully mechanical robot.
 - **AC-026-02:** Each character loads from one related JSON file and one related default portrait, without a character registry, locale table, setup entry, or renderer map.
   Each portrait passes the shared asset, alpha, provenance, and color-policy checks.
-- **AC-026-03:** Each character agrees with the foundation role minimum values, and it owns three unique Comebacks.
+- **AC-026-03:** Each character agrees with the foundation role minimum values, and it owns three unique Comeback lines for each tier.
   It passes the grammar, weakness, restriction, and locale validation, and the editorial review and safety review of Milestone 027.
 - **AC-026-04:** Each character can prepare and complete one match with a fixed seed in each scene.
   The match has no incorrect action, stopped phase, private-card leak, or timer overrun.

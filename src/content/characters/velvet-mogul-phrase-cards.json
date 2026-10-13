@@ -27,9 +27,21 @@
     "accountability"
   ],
   "comebacks": {
-    "weak": "Your argument is the only asset I skip.",
-    "medium": "You hear an economic boom. I hear my cash register.",
-    "strong": "Count my assets. By the end, I own the calculator."
+    "weak": [
+      "Your argument is the only asset I skip.",
+      "I would buy your point, but it has no resale value.",
+      "Charming opinion. I own three just like it."
+    ],
+    "medium": [
+      "You hear an economic boom. I hear my cash register.",
+      "I made an offer for your principles. They accepted before you did.",
+      "Your outrage airs on my channel, between two of my adverts."
+    ],
+    "strong": [
+      "Count my assets. By the end, I own the calculator.",
+      "I bought your favourite newspaper this morning. Your resignation is on page two.",
+      "You are not for sale. I checked. Nobody was bidding."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.45,

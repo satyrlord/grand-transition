@@ -10,6 +10,11 @@ import type { SpeechCancellationReason, SpeechDiagnostic } from '../audio/speech
 
 export type RoundPresentationFrame = Readonly<{
   phase: 'preparing' | 'reciting' | 'hesitating' | 'total' | 'strike' | 'points' | 'damage';
+  /**
+   * True only while accepted speech of this speaker is prepared and did not
+   * start. The presentation always sets it. A frame without it has no pending voice.
+   */
+  voicePending?: boolean;
   comebackActive: boolean;
   speakerId: string;
   text: string;
@@ -54,6 +59,20 @@ type Clock = {
   clearTimeout: (id: number) => void;
 };
 
+/**
+ * After one accepted skip, the presentation ignores the next skips for this
+ * time. Thus a double activation cannot skip the delivery of the next speaker.
+ */
+export const skipRepeatGuardMs = 500;
+
+/** A delivery can be skipped until its total shows. */
+export function deliveryCanBeSkipped(frame: RoundPresentationFrame | null): boolean {
+  return (
+    frame !== null &&
+    (frame.phase === 'preparing' || frame.phase === 'reciting' || frame.phase === 'hesitating')
+  );
+}
+
 /** Presents already-resolved public facts; it never calculates damage or changes game state. */
 export class RoundPresentation {
   private input: Input | null = null;
@@ -67,6 +86,9 @@ export class RoundPresentation {
   private due = 0;
   private remaining = 0;
   private next: (() => void) | null = null;
+  private skipGuardUntil = Number.NEGATIVE_INFINITY;
+  /** True while the speech adapter owns the delivery of the speaker of this time. */
+  private voiceActive = false;
   private readonly bonuses = new Set<string>();
 
   private readonly speech: GameSpeech;
@@ -101,8 +123,10 @@ export class RoundPresentation {
     const pride = Object.fromEntries(
       Object.entries(input.resolution.players).map(([id, player]) => [id, player.prideBefore]),
     );
+    this.skipGuardUntil = Number.NEGATIVE_INFINITY;
     this.frame = {
       phase: 'preparing',
+      voicePending: false,
       comebackActive: false,
       speakerId: input.firstSpeakerId,
       text: '',
@@ -134,6 +158,7 @@ export class RoundPresentation {
     const player = resolution.players[playerId]!;
     this.frame = deepFreeze({
       phase: 'damage',
+      voicePending: false,
       comebackActive: false,
       speakerId: playerId,
       text: player.constructionText,
@@ -204,6 +229,31 @@ export class RoundPresentation {
     this.silentDelivery(Math.max(0, this.frame.segment));
   }
 
+  /**
+   * Skips the delivery of the speaker of this time. A complete insult shows
+   * all its scores and continues at its total. A hesitation gives the floor to
+   * the next speaker. The resolved result and the game state do not change.
+   */
+  skip(): void {
+    const frame = this.frame;
+    if (!this.input || !frame || this.paused || !deliveryCanBeSkipped(frame)) return;
+    const now = this.clock.now();
+    if (now < this.skipGuardUntil) return;
+    this.skipGuardUntil = now + skipRepeatGuardMs;
+    this.record({ type: 'presentation-skip', segment: Math.max(0, frame.segment) });
+    if (frame.phase === 'hesitating') {
+      this.clearTimer();
+      this.advanceSpeaker();
+      return;
+    }
+    if (this.voiceActive) {
+      this.speech.cancel('player-skip');
+      // The cancellation also discards the prepared delivery of the next speaker.
+      this.prepareNext();
+    }
+    this.finishedSpeech();
+  }
+
   cancel(reason: SpeechCancellationReason = 'replacement'): void {
     this.generation++;
     if (this.timer !== null) this.clock.clearTimeout(this.timer);
@@ -241,6 +291,7 @@ export class RoundPresentation {
       speakerId: id,
       text,
       phase: 'preparing',
+      voicePending: false,
       comebackActive: false,
       segment: -1,
       components: [],
@@ -280,6 +331,7 @@ export class RoundPresentation {
     const guarded = (action: () => void) => {
       if (generation === this.generation && this.input) action();
     };
+    this.voiceActive = true;
     const accepted = this.speech.deliver(
       player,
       input.settings,
@@ -293,6 +345,8 @@ export class RoundPresentation {
       input.resolution.round,
     );
     if (!accepted) this.silentDelivery(0);
+    // A voice that starts in the same task never waits, so it is not pending.
+    else if (this.frame?.phase === 'preparing') this.update({ voicePending: true });
     this.prepareNext();
   }
 
@@ -323,6 +377,7 @@ export class RoundPresentation {
     const id = this.frame!.speakerId;
     this.update({
       phase: 'reciting',
+      voicePending: false,
       comebackActive: false,
       cues: {
         ...this.idleCues(),
@@ -336,6 +391,7 @@ export class RoundPresentation {
   }
 
   private silentDelivery(index: number, beginning = true): void {
+    this.voiceActive = false;
     if (beginning) this.record({ type: 'silent-start', segment: index });
     const player = this.input!.resolution.players[this.frame!.speakerId]!;
     const count = publicNarrationSegments(player).length;
@@ -415,10 +471,12 @@ export class RoundPresentation {
   private finishedSpeech(): void {
     const input = this.input!;
     const player = input.resolution.players[this.frame!.speakerId]!;
+    this.voiceActive = false;
     this.record({ type: 'presentation-total', value: player.outgoingDamage });
     this.bonusEvents(player, Number.POSITIVE_INFINITY);
     this.update({
       phase: 'total',
+      voicePending: false,
       comebackActive: false,
       components: input.components[player.playerId] ?? [],
       total: player.outgoingDamage,
@@ -475,6 +533,12 @@ export class RoundPresentation {
     this.frame = null;
     this.changed(null);
     this.completed();
+  }
+
+  private clearTimer(): void {
+    if (this.timer !== null) this.clock.clearTimeout(this.timer);
+    this.timer = null;
+    this.next = null;
   }
 
   private schedule(callback: () => void, delay: number): void {

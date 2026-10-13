@@ -133,7 +133,6 @@ export function createSimulationSetup(
     aiDifficulty: options.aiDifficulty ?? 'simulation-policy',
     timerSeconds: 30,
     speechEnabled: false,
-    privacyEnabled: true,
     basePointsMultiplier: options.basePointsMultiplier ?? basicScoringBalance.basePointsMultiplier,
     gameLocale: options.gameLocale ?? defaultGameLocale,
   };

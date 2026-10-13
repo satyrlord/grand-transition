@@ -116,6 +116,7 @@ the start of the full English name. Text and controls must not go across a face,
 a hand, or a necessary prop. The integrated composition must keep the scene,
 the opponents, the sentence construction, and the controls visible as one
 confrontation that is easy to read.
+During the draft, each Pride frame also shows the active combo chips of its player, as the section **Active combo chips** gives.
 
 The active player must be clear in the public arena and in the phrase path.
 Only the name strip of the active player shows “Your turn.” A persistent brass
@@ -148,6 +149,8 @@ labels, weaknesses, the cause of a disabled phrase, hint copy, or card
 metadata. Keep the role, ownership, availability, weakness, and disabled data
 in semantic attributes and accessible names. The compact visuals must keep the
 assistive-technology state.
+The two hint surfaces of Milestones 015 and 025 are not in the phrase lists.
+The active combo chips are on the Pride frames, and they are not in the phrase lists.
 
 Unavailable common phrases stay in their fixed rows with less bright text. A
 selected common phrase changes into one row that is visibly empty and that has
@@ -167,7 +170,9 @@ The mistake also starts one strong arena reaction:
 
 - The portrait of the player that made the mistake moves back.
 - The Pride strip flashes.
-- A broadcast strike shows the player name and the 3 Pride loss.
+- A broadcast strike shows the player name and the Pride loss that the engine applied.
+  A mistake out of a cliffhanger costs 3 Pride.
+  This item replaces the earlier text of this milestone, which gave a fixed loss of 3 Pride.
 
 Put the strike below the
 speech record and its tail. The two records must not overlap at supported
@@ -182,6 +187,13 @@ the strike does not play again. When the same element connects again, it must
 not keep the discarded strike or its stage and player reaction markers.
 The strike does not stop the timer or change the sentence. Confirmation is not
 necessary.
+The strike does not take pointer input, so a phrase card below it stays selectable.
+
+Milestone 013 makes a cliffhanger mistake cost all the Pride that the player has left, and that mistake ends the match.
+Milestone 013 gives the same result to a penalized turn expiration in a cliffhanger.
+Then the match shows no draft strike.
+It shows the direct-knockout record of Milestone 025, with the cause and with the Pride loss of the resolution, and then Victory.
+The screen must not show a fixed quantity in these records.
 
 When the browser sets reduced motion, keep the
 full strike record, but do not show the rearward movement, the flash, or the
@@ -211,13 +223,21 @@ round presentation, and victory. Use only the snapshot for the viewer. Do not
 show the private hand of a different player. This preference does not go into
 game state, commands, replay, AI choices, scoring, or match history.
 
-Other than this optional grammar indication and the rehearsal match of
-Milestone 020, do not add
+Other than this optional grammar indication, the rehearsal match of
+Milestone 020, and the two hint surfaces, do not add
 guided first turns, explanations of card roles, or weakness
 hints. The public weakness list on each Pride frame is not a hint. Do not add help for disabled actions, strategy prompts, expert
 shortcuts, or recovery instructions. The semantic
 names and the native control behavior stay, but the product does not add a
 different help layer.
+
+The two hint surfaces are the only help copy of the product.
+The first surface is the hint line of the title voice loader, which Milestone 015 controls.
+The second surface is the hint record during the voice preparation of a delivery, which Milestone 025 controls.
+The two surfaces show only while voices load, and they use the hint lists of Milestone 015.
+The match must not show a hint during the draft, on a phrase card, or at Victory.
+The active combo chips give public state, and they are not a hint.
+This paragraph replaces the earlier rule of this milestone, which permitted no hint copy and no help layer.
 
 The active player controls the wide white speech bubble. It shows the sentence
 of this time or the preview sentence, and it points to that player. The waiting
@@ -333,6 +353,79 @@ The private choices are at the lower perimeter of the active player. A compact
 Reshuffle control follows them. The control uses an authored inline SVG icon,
 has an accessible name, and has no visible explanation text. The command below
 it stays `redraw-hand`.
+
+The engine can refresh a spent private hand with no command, as Milestone 008 gives.
+This occurs when the pick of a player starts with no private card and that player did not use the refresh of the round.
+The draft log then contains a `redraw-hand` entry with `automatic: true` for that player.
+The screen must not send a command for this refresh.
+The private hand shows the two new cards in their slots, and the player can select them.
+The Reshuffle control shows its used state: it is disabled, and its accessible name is `Reshuffle used`.
+
+The match-screen snapshot gives `actions.redrawAutomatic` as true only for the viewer whose hand the game refreshed.
+A visually hidden region with `role="status"` and `aria-live="polite"` then gives one announcement:
+`Both private phrases were used. Two new phrases replaced them automatically.`
+The region is in the page before the announcement, so assistive technology reads it.
+The announcement stays while the same player keeps the floor.
+It goes away when the floor goes to the other player or when a delivery starts.
+The screen announces the refresh of one player one time in a round.
+A Reshuffle command of the player gives no announcement.
+
+## Active combo chips
+
+The product owner approved this section on 2026-10-13.
+The reference game keeps a label for each active noun combo while a player builds the next sentence.
+Before this section, the match showed combos only in the delivery of Milestone 025.
+
+A noun chain is active for each noun of the previous complete scored insult of a player.
+Milestone 011 controls the chains.
+During the draft, each Pride frame shows one chip for each active chain of its player.
+A chip shows the noun text in the game language of the match and the factor `×N`.
+`N` is the factor that the noun gives its clause when the player uses the noun again in the insult of this round.
+`N` is the chain of the noun plus one: the first reuse gives ×2, the next reuse gives ×3, and there is no upper limit.
+A clause with two or more chained nouns multiplies their factors, as Milestone 011 gives.
+
+The match-screen snapshot gives the chips of the two players to each viewer.
+The chains are public, because each insult was spoken.
+The chip with the highest factor is first.
+Chips with equal factors keep the sequence of the nouns in the insult.
+
+A player has no chip in these conditions:
+
+- The player has no scored insult in the match.
+- The previous insult of the player was incomplete, so the engine cleared the chains.
+- An opponent hit broke the continuation of the player, so the engine cleared the chains.
+- The match is in a cliffhanger.
+
+A continuation that the player holds keeps the chips.
+The chips do not show during a delivery or at Victory.
+The delivery shows the combo emphasis of Milestone 025.
+The chips give public state. They are not a hint, and they do not recommend a card.
+They change no rule, command, replay, or score.
+
+The chips use one line in the Pride frame, below the weakness list, with the visible label `Combo`.
+The line adds one fixed height to the frame, for one chip or for many chips.
+On the desktop layout, the waiting bubble starts lower by that height, so the frame does not cover it.
+The chips must not move the status rail, the speech record, the phrase pool, the private hand, or the actions.
+
+- A desktop frame at a viewport width of 1200 pixels or more shows two chips.
+- A desktop frame at a smaller width, and each compact frame, shows one chip.
+- A `+N` count shows the number of chips that the frame does not show.
+- Chips that share a line share its width.
+  A long noun gives up its end with an ellipsis, and the factor stays complete.
+- Pointer hover on a chip shows the full noun.
+- A portrait frame, and a landscape frame at a viewport width below 768 pixels and a height below 480 pixels, do not show the visible `Combo` label.
+
+At a landscape viewport height below 360 pixels, the scene has its minimum height, and a Pride frame can fill it.
+There the chip line does not make the frame taller.
+It hangs beside its frame, below the status rail, in the color of its player, and it does not show the visible `Combo` label.
+The line of the first player is above the line of the second player.
+
+The chip list has the accessible name `<character name>: active combos`.
+Each item gives the noun and the words `times N`.
+A chip that the frame does not show stays in the accessible list.
+The `+N` count and the visible label are hidden from assistive technology.
+Forced colors use system colors for the chips.
+The chips have no motion.
 
 ## Desktop interaction contract
 
@@ -540,7 +633,9 @@ and abuse that adds time to the timer.
   The two deliveries end before automatic progression or persistent Victory.
 - **AC-016-14:** An incorrect common or private phrase starts one arena reaction
   of 150 through 600 milliseconds. It identifies the player that made the
-  mistake and the 3 Pride loss. It moves no layout, and the turn goes to the
+  mistake and the Pride loss that the engine applied, which is 3 Pride out of a
+  cliffhanger. This criterion replaces its earlier text, which gave a fixed
+  loss of 3 Pride. It moves no layout, and the turn goes to the
   other player immediately. The game removes it after 3000 milliseconds or at the next
   accepted action. The game uses the event that occurs first.
   The strike stays below the speech record and its tail, with no overlap.
@@ -560,6 +655,8 @@ and abuse that adds time to the timer.
   The game ships no other guided turn, tactical hint, card-role explanation,
   weakness explanation, disabled-action cause, strategy prompt, or shortcut
   layer.
+  The only exceptions are the two hint surfaces of AC-015-18 and AC-025-08.
+  This sentence replaces the earlier text of this criterion, which permitted no hint.
 - **AC-016-16:** A scored weakness shows its factor of 2 and the unique public
   weakness names in its inline component. Tags that agree but have no score
   show no weakness record.
@@ -603,6 +700,36 @@ and abuse that adds time to the timer.
   each edge that has more text, and it goes away at the first word and the last
   word. The shadow does not cover the text, and short text shows no shadow.
   Verifier: `tests/browser/match-screen.browser.test.ts`.
+- **AC-016-22:** The snapshot gives each active noun chain of the two players to each viewer.
+  Each chip has the noun text in the game language of the match, and its factor is the chain plus one.
+  The factor of a chip is equal to the combo factor that the next resolution reports for a clause with only that chained noun.
+  The first reuse gives 2, the next reuse gives 3, and a later reuse gives 4.
+  A changed noun starts a new chain, and an incomplete insult clears the chips of its player.
+  The snapshot of a delivery has no chip. The highest factor is first.
+  Verifier: `tests/unit/match-screen-snapshot.test.ts`.
+- **AC-016-23:** During the draft, each Pride frame shows its chips with the `Combo` label, the noun, and `×N`.
+  The list has its accessible name, and each item reads its factor in words.
+  No chip shows without a chain, during a delivery, or at Victory.
+  The frame shows two chips at a desktop width of 1200 pixels or more and one chip in each other layout, with the `+N` count.
+  At each viewport of the Milestone 000 matrix, with the longest Romanian names, weakness lists, and nouns, and with a noun that is 40 percent longer:
+
+  - The chip line is one line. It is in its Pride frame, or beside it at a landscape height below 360 pixels.
+  - Each factor is complete, and each noun uses an ellipsis.
+  - The chips do not move the status rail, the speech record, the phrase pool, the private hand, or the actions.
+  - The chips do not overlap the status rail, the speech record, or the waiting bubble.
+  - The Pride frame does not cover more of the waiting bubble than it covers with no chip.
+  - The page has no horizontal scroll, and the desktop layouts have no page scroll.
+
+  Verifiers: `tests/browser/combo-chips.browser.test.ts` and `tests/browser/layout-regions.browser.test.ts`.
+- **AC-016-24:** When the engine refreshes a spent private hand, the snapshot gives the two new cards, `redrawUsed`, and `redrawAutomatic` to the viewer whose hand it is.
+  A different viewer gets no card and no notice. A Reshuffle command gives no notice.
+  The screen shows the two cards and the used Reshuffle control, it sends no command, and it gives the one polite announcement.
+  The same refresh is not announced again in that round.
+  Verifiers: `tests/unit/match-screen-snapshot.test.ts` and `tests/browser/automatic-hand-refresh.browser.test.ts`.
+- **AC-016-25:** A grammar mistake in a cliffhanger, and a penalized turn expiration in a cliffhanger, show the direct-knockout record with the cause and with the loss of all the remaining Pride.
+  The polite outcome log gives the same quantity, and Victory follows with the same penalty.
+  No record shows a fixed loss of 3 Pride for these events.
+  Verifier: `tests/browser/cliffhanger-knockout.browser.test.ts`.
 
 ## Impeccable UI validation
 

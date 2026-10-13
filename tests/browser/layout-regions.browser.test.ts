@@ -7,7 +7,10 @@ import { setInterfaceLocale } from '../../src/app/interface-localization.ts';
 import { interfaceCharacterName } from '../../src/app/interface-names.ts';
 import { setGameTextLocale } from '../../src/app/game-text-language.ts';
 import type { GrandTransitionMatchHistory } from '../../src/app/screens/match-history-modal.ts';
-import type { GrandTransitionMatch } from '../../src/app/screens/match-screen.ts';
+import {
+  deliveryHintDelayMs,
+  type GrandTransitionMatch,
+} from '../../src/app/screens/match-screen.ts';
 import '../../src/app/screens/quote-archive-modal.ts';
 import '../../src/app/screens/quote-receipts-panel.ts';
 import type { GrandTransitionQuoteArchive } from '../../src/app/screens/quote-archive-modal.ts';
@@ -16,6 +19,14 @@ import { createQuoteRevealIndex } from '../../src/engine/quote-receipts.ts';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
 import type { MatchState } from '../../src/engine/match-lifecycle.ts';
 import { gameCatalog, romanianGameLocale } from '../../src/game-content.ts';
+import {
+  deliveryFrame,
+  draftState,
+  longestNouns,
+  mountMatch,
+  snapshotOf,
+  withChains,
+} from './match-state-helpers.ts';
 import { defaultSettings, encodeSettings } from '../../src/persistence/codecs/settings-codec.ts';
 import type { ReplayContext } from '../../src/persistence/codecs/replay-codec.ts';
 import { createMatchHistoryEntry } from '../../src/persistence/match-history.ts';
@@ -385,6 +396,35 @@ describe('layout regions of the primary screens', () => {
         return { root: match.querySelector('.match-screen')! };
       },
     },
+    // A match element with no app shell keeps the state that the fixture gives it.
+    {
+      name: 'match with combo chips',
+      overlays: ['sentence-bubble'],
+      mount: async () => {
+        const match = await mountMatch(await chainedSnapshot());
+        return { root: match.querySelector('.match-screen')! };
+      },
+    },
+    {
+      name: 'delivery with the skip control and a hint',
+      overlays: ['sentence-bubble'],
+      mount: async () => {
+        const snapshot = { ...(await chainedSnapshot()), roundReview: true };
+        const match = await mountMatch(snapshot);
+        match.voicesEnabled = true;
+        match.presentation = deliveryFrame(snapshot, snapshot.players[0].playerId, {
+          phase: 'preparing',
+          voicePending: true,
+          text: longSentence,
+        });
+        await match.updateComplete;
+        await vi.waitFor(() => expect(match.querySelector('.delivery-hint')).not.toBeNull(), {
+          timeout: deliveryHintDelayMs + 2_000,
+        });
+        expect(match.querySelector('.match-skip')).not.toBeNull();
+        return { root: match.querySelector('.match-screen')! };
+      },
+    },
     {
       name: 'pause overlay',
       mount: async () => {
@@ -526,6 +566,31 @@ describe('layout regions of the primary screens', () => {
       },
     },
   ];
+
+  /** The widest Romanian plaques, with the longest nouns as the chains of the two players. */
+  async function chainedSnapshot() {
+    await setInterfaceLocale('ro-RO');
+    setGameTextLocale('ro-RO');
+    let state = draftState({
+      locale: romanianGameLocale,
+      characterIds: [widest[0]!.id, widest[1]!.id],
+    });
+    const nouns = longestNouns(romanianGameLocale, 3);
+    for (const playerId of state.playerOrder) {
+      state = withChains(
+        state,
+        playerId,
+        nouns.map((nounPhraseId, index) => ({ nounPhraseId, chain: 3 - index })),
+      );
+    }
+    const snapshot = snapshotOf(state, romanianGameLocale);
+    return {
+      ...snapshot,
+      sentenceText: longSentence,
+      sharedCards: snapshot.sharedCards.map((card) => ({ ...card, text: longPhrases[0]! })),
+      privateCards: snapshot.privateCards.map((card) => ({ ...card, text: longPhrases[1]! })),
+    };
+  }
 
   function romanianMatchLog() {
     return simulateMatch(

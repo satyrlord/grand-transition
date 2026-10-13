@@ -35,7 +35,7 @@ export type MatchFlowPlan = Readonly<{
   finalState: MatchState;
 }>;
 
-export const matchBrowserFlowSeed = 20_260_007;
+export const matchBrowserFlowSeed = 20_260_013;
 
 const context: MatchEngineContext = {
   phrases: gameCatalog.phrases,

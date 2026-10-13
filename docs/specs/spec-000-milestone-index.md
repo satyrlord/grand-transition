@@ -98,11 +98,17 @@ A statement in a file that is not in `docs/specs/` does not replace, change, or 
   Online play is in the scope only as the two room modes of Milestones 035, 037, and 038, through one relay.
   Free-text display names and spectators in a room are not in the scope.
   Other servers, live-service systems, public content sharing, blockchain, tokens, and real-money purchases are also not in the scope.
+- The game supports mouse input and touch input.
+  Each control is a native control, so the browser focus keys continue to operate it.
+  Controller support, gamepad support, gameplay keyboard shortcuts, and direct gameplay buttons are not in the scope.
+- Achievements, statistics for the player, and a career for each character are not in the scope.
+  One browser holds one Ladder campaign.
+  The player clears the stored progress through the site data of the browser.
 - Milestone 029 gives approval for the post-MVP Romanian localization and local speech.
   Specification 032 gives approval for the first post-MVP scene extension.
   Specification 036 adds Grand Hotel Romania as the eighth playable scene.
   Specifications 035, 037, and 038 give approval for online room play, as the Couch and Remote modes.
-  Other post-MVP candidates include more content, controller support, local content packs, recorded voice, replays, and local simulation tools.
+  Other post-MVP candidates include more content, local content packs, recorded voice, replays, and local simulation tools.
   Milestone 019 gives approval for the local match history.
   Do not add a different candidate without a new approved specification.
 
@@ -357,6 +363,25 @@ A review that uses only the source code does not satisfy them.
     native Scene select becomes a monitor that opens a scene guide with a live
     preview and a tile wall. It replaces the native selector of Milestones 015
     and 028 and changes no setup value, rule, or asset.
+40. [Character reaction states](spec-040-character-reaction-states.md). Budget:
+    6 for each code package, with separate generated-media packages. Draft, not
+    approved. The state contract grows from 9 to 18 states with talk and hit
+    tiers, a near-defeat pose, and outcome poses. The shipped `weakness` and
+    `comeback` poses get their cues first, and 150 new state masters follow in
+    three art packages.
+41. [Scene intro and outro dialogue](spec-041-scene-intro-outro-dialogue.md).
+    Budget: 8 for each code package, with 40 authoring files. Draft, not
+    approved. Each local match opens with four authored spoken lines and ends
+    with two, with a line skip and a skip-all control. The dialogue is
+    presentation only and changes no command, seed, or record.
+42. [Scripted tutorial](spec-042-scripted-tutorial.md). Budget: 8 for each of
+    four packages. Draft, not approved. A Debate school mode gives two scripted
+    lessons against a fixed tutor through a lesson driver around the reducer.
+    It keeps the Tutorial glow setting and the rehearsal match.
+43. [Ladder objectives](spec-043-ladder-objectives.md). Budget: 12 for
+    Package A and 10 for Package B. Draft, not approved. Each Ladder rung gets
+    three objectives, a won rung can be played again, and the objective total
+    unlocks lines 2 and 3 of each comeback tier.
 
 Each milestone obeys its **Depends on** field.
 Milestone file names, headings, acceptance IDs, and references use the same numeric identifier.

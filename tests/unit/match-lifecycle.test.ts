@@ -340,6 +340,41 @@ describe('Hollywood Roast match lifecycle', () => {
     expect(state).toEqual(before);
   });
 
+  describe('a cliffhanger gives no second chance', () => {
+    const cliffhangerDraft = (): MatchState =>
+      lifecycle({ ...setup(), phase: 'sudden-death', suddenDeathActive: true }, 'prepare-round');
+    const expire = (state: MatchState, actorId: string) =>
+      run(state, { type: 'expire-turn', source: 'user', actorId, payload: {} });
+
+    test('one grammar mistake costs all the Pride and ends the match', () => {
+      const prepared = cliffhangerDraft();
+      const actor = prepared.activePlayerId;
+      const opponent = prepared.playerOrder.find((playerId) => playerId !== actor)!;
+      const state = selectPrivate(prepared, actor, 'common-modifier-001', 'cliffhanger-wrong');
+      expect(state.phase).toBe('results');
+      expect(state.winner).toBe(opponent);
+      expect(state.playerStates[actor]!.pride).toBe(0);
+      expect(state.playerStates[opponent]!.pride).toBe(initialPride);
+      expect(state.pendingResolution?.suddenDeath).toBe(true);
+      expect(state.pendingResolution?.players[actor]!.selfDamage).toBe(initialPride);
+    });
+
+    test('a passing expiration costs nothing, and a penalized expiration ends the match', () => {
+      let state = cliffhangerDraft();
+      const first = state.activePlayerId;
+      const second = state.playerOrder.find((playerId) => playerId !== first)!;
+      state = expire(state, first);
+      expect(state.phase).toBe('sudden-death');
+      expect(state.playerStates[first]!.pride).toBe(initialPride);
+
+      state = run(state, { type: 'commit-sentence', source: 'user', actorId: second, payload: {} });
+      state = expire(state, first);
+      expect(state.phase).toBe('results');
+      expect(state.winner).toBe(second);
+      expect(state.playerStates[first]!.pride).toBe(0);
+    });
+  });
+
   test('a cliffhanger hand refresh never deals a continuation card', () => {
     const continuationIds = new Set(
       gameCatalog.phrases

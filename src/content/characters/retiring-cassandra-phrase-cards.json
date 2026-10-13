@@ -27,9 +27,21 @@
     "sources"
   ],
   "comebacks": {
-    "weak": "Do you believe in results, or just cocktail parties?",
-    "medium": "I asked about your conscience but you sent the PR guy.",
-    "strong": "You love the country so much you took half home."
+    "weak": [
+      "Do you believe in results, or just cocktail parties?",
+      "I warned you about this sentence too.",
+      "I predicted your reply. I had hoped to be wrong."
+    ],
+    "medium": [
+      "I asked about your conscience but you sent the PR guy.",
+      "My warnings fill a cabinet. Your results fit on a bus ticket.",
+      "I left you a manual for the emergency. You used it as a coaster."
+    ],
+    "strong": [
+      "You love the country so much you took half home.",
+      "Every disaster I foresaw arrived on time. Each one carried your signature.",
+      "I retired from being right. You never even applied."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.25,

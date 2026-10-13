@@ -9,7 +9,7 @@ import { chooseScene, lockInSetup } from './helpers/setup.ts';
 import { storedHistory } from './helpers/stored-data.ts';
 import { gateViewports } from './helpers/viewports.ts';
 
-const plan = planMatchBrowserFlow(20_260_008);
+const plan = planMatchBrowserFlow(20_260_012);
 const { gameCatalog: catalog } = loadGameContent();
 const runtimeErrors = new WeakMap<Page, string[]>();
 

@@ -171,56 +171,107 @@ describe('content schemas', () => {
     );
   });
 
-  test('keeps final comeback text within the 16-word guardrail', () => {
-    const source = {
-      id: 'test-character',
-      rosterOrder: 99,
-      species: 'human',
-      name: 'The Test Character',
-      description: 'An original fictional authoring fixture.',
-      assets: {
-        portrait: { assetId: 'test-portrait', realLogo: false, copyrightedBroadcastGraphic: false },
-        token: { assetId: 'test-token', realLogo: false, copyrightedBroadcastGraphic: false },
-      },
-      palette: { primary: '#112233', secondary: '#445566', accent: '#778899' },
-      weaknessTags: ['paperwork', 'whimsy'],
-      comebacks: {
-        weak: 'one two three four five six seven eight nine ten eleven',
-        medium: 'one two three four five six seven eight nine ten eleven',
-        strong: 'one two three four five six seven eight nine ten eleven',
-      },
-      aiPersonality: { aggression: 0.5, denial: 0.5, risk: 0.5 },
-      voiceProfile: { voiceHint: 'measured', rate: 1, pitch: 1 },
-      animationSet: { idle: 'test-idle', speak: 'test-speak', react: 'test-react' },
-      phrases: [
-        {
-          id: 'test-noun',
-          role: 'noun',
-          text: 'a test noun',
-          tags: ['paperwork'],
-          scoreGroups: { substance: ['personal'], flavour: ['politics'] },
-          rarity: 'common',
-        },
+  const comebackAuthoringSource = {
+    id: 'test-character',
+    rosterOrder: 99,
+    species: 'human',
+    name: 'The Test Character',
+    description: 'An original fictional authoring fixture.',
+    assets: {
+      portrait: { assetId: 'test-portrait', realLogo: false, copyrightedBroadcastGraphic: false },
+      token: { assetId: 'test-token', realLogo: false, copyrightedBroadcastGraphic: false },
+    },
+    palette: { primary: '#112233', secondary: '#445566', accent: '#778899' },
+    weaknessTags: ['paperwork', 'whimsy'],
+    comebacks: {
+      weak: [
+        'one two three four five six seven eight nine ten eleven',
+        'a second weak line',
+        'a third weak line',
       ],
-    } as const;
+      medium: [
+        'one two three four five six seven eight nine ten eleven twelve',
+        'a second medium line',
+        'a third medium line',
+      ],
+      strong: [
+        'one two three four five six seven eight nine ten eleven twelve thirteen',
+        'a second strong line',
+        'a third strong line',
+      ],
+    },
+    aiPersonality: { aggression: 0.5, denial: 0.5, risk: 0.5 },
+    voiceProfile: { voiceHint: 'measured', rate: 1, pitch: 1 },
+    animationSet: { idle: 'test-idle', speak: 'test-speak', react: 'test-react' },
+    phrases: [
+      {
+        id: 'test-noun',
+        role: 'noun',
+        text: 'a test noun',
+        tags: ['paperwork'],
+        scoreGroups: { substance: ['personal'], flavour: ['politics'] },
+        rarity: 'common',
+      },
+    ],
+  } as const;
+  const comebackAuthoringSourceName = 'characters/test-character-phrase-cards.json';
 
-    expect(() =>
-      parseCharacterCardFile(source, 'characters/test-character-phrase-cards.json'),
-    ).not.toThrow();
-    expect(() =>
+  function comebackAuthoringIssues(
+    tier: 'weak' | 'medium' | 'strong',
+    lines: unknown,
+  ): readonly { path: readonly PropertyKey[]; message: string }[] {
+    try {
       parseCharacterCardFile(
         {
-          ...source,
-          comebacks: {
-            ...source.comebacks,
-            medium:
-              'one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen',
-          },
+          ...comebackAuthoringSource,
+          comebacks: { ...comebackAuthoringSource.comebacks, [tier]: lines },
         },
-        'characters/test-character-phrase-cards.json',
-      ),
-    ).toThrow(/comeback text to 16 words or fewer/iu);
+        comebackAuthoringSourceName,
+      );
+      return [];
+    } catch (error) {
+      return (error as { issues: readonly { path: readonly PropertyKey[]; message: string }[] })
+        .issues;
+    }
+  }
+
+  test('keeps final comeback text within the 16-word guardrail', () => {
+    expect(() =>
+      parseCharacterCardFile(comebackAuthoringSource, comebackAuthoringSourceName),
+    ).not.toThrow();
+    const [first, second] = comebackAuthoringSource.comebacks.medium;
+    expect(
+      comebackAuthoringIssues('medium', [
+        first,
+        second,
+        'one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen',
+      ]),
+    ).toEqual([
+      expect.objectContaining({
+        path: ['comebacks', 'medium', 2],
+        message: 'Keep comeback text to 16 words or fewer.',
+      }),
+    ]);
   });
+
+  test.each(['weak', 'medium', 'strong'] as const)(
+    'requires exactly three authored %s comeback lines',
+    (tier) => {
+      const lines = comebackAuthoringSource.comebacks[tier];
+      for (const changed of [lines.slice(0, 2), [...lines, 'a fourth line']]) {
+        expect(comebackAuthoringIssues(tier, changed)).toEqual([
+          expect.objectContaining({
+            path: ['comebacks', tier],
+            message: 'Give each comeback tier exactly 3 lines.',
+          }),
+        ]);
+      }
+      // The retired one-line shape is not a list, so the parser does not accept it.
+      expect(comebackAuthoringIssues(tier, lines[0])).toContainEqual(
+        expect.objectContaining({ expected: 'array', path: ['comebacks', tier] }),
+      );
+    },
+  );
 
   test('limits every player-visible phrase form to 11 words', () => {
     const visibleForms = Object.entries(phraseCardCatalog.englishMessages).filter(([key]) =>
@@ -521,9 +572,21 @@ describe('content schemas', () => {
       },
       weaknessTags: ['paperwork', 'whimsy'],
       comebacks: {
-        weak: 'Your footnote is showing.',
-        medium: 'Your argument failed its own review.',
-        strong: 'Your entire mandate is an invalid fixture.',
+        weak: [
+          'Your footnote is showing.',
+          'Your margin note has wandered off.',
+          'Your bookmark lost its place.',
+        ],
+        medium: [
+          'Your argument failed its own review.',
+          'Your appendix disagrees with your summary.',
+          'Your index points at a blank page.',
+        ],
+        strong: [
+          'Your entire mandate is an invalid fixture.',
+          'Your whole record is a failed assertion.',
+          'Your legacy is a skipped test.',
+        ],
       },
       aiPersonality: { aggression: 0.5, denial: 0.5, risk: 0.5 },
       voiceProfile: { voiceHint: 'measured', rate: 1, pitch: 1 },
@@ -571,10 +634,28 @@ describe('content schemas', () => {
         'test-character-ending-001',
       ],
       comebackLinesByTier: {
-        weak: ['comeback.test-character.weak'],
-        medium: ['comeback.test-character.medium'],
-        strong: ['comeback.test-character.strong'],
+        weak: [
+          'comeback.test-character.weak.1',
+          'comeback.test-character.weak.2',
+          'comeback.test-character.weak.3',
+        ],
+        medium: [
+          'comeback.test-character.medium.1',
+          'comeback.test-character.medium.2',
+          'comeback.test-character.medium.3',
+        ],
+        strong: [
+          'comeback.test-character.strong.1',
+          'comeback.test-character.strong.2',
+          'comeback.test-character.strong.3',
+        ],
       },
+    });
+    // The first authored line of a tier keeps line number 1.
+    expect(parsed.englishMessages).toMatchObject({
+      'comeback.test-character.weak.1': 'Your footnote is showing.',
+      'comeback.test-character.medium.2': 'Your appendix disagrees with your summary.',
+      'comeback.test-character.strong.3': 'Your legacy is a skipped test.',
     });
     const catalog = buildPhraseCardCatalog(
       [
@@ -595,7 +676,7 @@ describe('content schemas', () => {
     expect(catalog.characters).toHaveLength(1);
     expect(catalog.englishMessages).toMatchObject({
       'character.test-character.name': 'The Test Character',
-      'comeback.test-character.strong': 'Your entire mandate is an invalid fixture.',
+      'comeback.test-character.strong.1': 'Your entire mandate is an invalid fixture.',
       'phrase.test-character-noun-001': 'a test character card',
     });
     const expandedCatalog = {
@@ -819,24 +900,48 @@ describe('content schemas', () => {
     expectFailure(invalidSecondPerson, 'referentKind', /second-person noun.*personal referent/iu);
   });
 
-  test('requires one exclusive comeback line for every character and tier', () => {
-    const tooMany = cloneCatalog();
-    tooMany.characters[0]!.comebackLinesByTier.weak = [
-      'comeback.red-folded-chairman.weak',
-      'comeback.red-folded-chairman.medium',
-    ];
+  test('requires three exclusive comeback lines for every character and tier', () => {
+    expect(
+      gameCatalog.characters.flatMap((character) =>
+        Object.values(character.comebackLinesByTier).flat(),
+      ),
+    ).toHaveLength(gameCatalog.characters.length * 9);
+
+    const ownKeys = gameCatalog.characters[0]!.comebackLinesByTier.weak;
+    for (const keys of [ownKeys.slice(0, 2), [...ownKeys, 'comeback.red-folded-chairman.weak.4']]) {
+      const wrongCount = cloneCatalog();
+      wrongCount.characters[0]!.comebackLinesByTier.weak = [...keys];
+      expectFailure(
+        wrongCount,
+        'characters.0.comebackLinesByTier.weak',
+        /exactly 3 weak-tier comeback lines/iu,
+      );
+    }
+
+    const repeated = cloneCatalog();
+    repeated.characters[0]!.comebackLinesByTier.weak = [ownKeys[0]!, ownKeys[1]!, ownKeys[0]!];
     expectFailure(
-      tooMany,
+      repeated,
       'characters.0.comebackLinesByTier.weak',
-      /exactly one weak-tier comeback/iu,
+      /each weak-tier comeback line only once/iu,
     );
 
     const shared = cloneCatalog();
-    shared.characters[1]!.comebackLinesByTier.weak = ['comeback.red-folded-chairman.weak'];
+    shared.characters[1]!.comebackLinesByTier.weak[0] = ownKeys[0]!;
     expectFailure(
       shared,
       'characters.1.comebackLinesByTier.weak.0',
-      /exclusive character comeback key|already owned/iu,
+      /exclusive character comeback key "comeback\.thunder-tribune\.weak\.1"/iu,
+    );
+
+    // The line number in the key is the position in the tier, so the first
+    // line cannot change places with a later line.
+    const reordered = cloneCatalog();
+    reordered.characters[0]!.comebackLinesByTier.weak = [ownKeys[1]!, ownKeys[0]!, ownKeys[2]!];
+    expectFailure(
+      reordered,
+      'characters.0.comebackLinesByTier.weak.0',
+      /exclusive character comeback key "comeback\.red-folded-chairman\.weak\.1"/iu,
     );
   });
 

@@ -21,6 +21,20 @@ const uniqueArray = <T extends z.ZodTypeAny>(item: T, message: string) =>
     }
   });
 
+export const comebackLinesPerTier = 3;
+
+// Line numbers start at 1. Line 1 is the line that each player has from the
+// start, so the sequence of the lines in a tier is part of the content.
+export function comebackLineKey(characterId: string, tier: string, lineIndex: number): string {
+  return `comeback.${characterId}.${tier}.${lineIndex + 1}`;
+}
+
+const comebackTierKeys = (tier: string) =>
+  uniqueArray(localeKeySchema, `List each ${tier}-tier comeback line only once.`).length(
+    comebackLinesPerTier,
+    `Give the character exactly ${comebackLinesPerTier} ${tier}-tier comeback lines.`,
+  );
+
 export const phraseRoles = [
   'noun',
   'verb',
@@ -253,18 +267,9 @@ export const characterDefinitionSchema = z
     characterPhraseIds: uniqueArray(identifierSchema, 'List each character phrase only once.'),
     comebackLinesByTier: z
       .object({
-        weak: uniqueArray(localeKeySchema, 'List each weak-tier comeback only once.').length(
-          1,
-          'Give the character exactly one weak-tier comeback.',
-        ),
-        medium: uniqueArray(localeKeySchema, 'List each medium-tier comeback only once.').length(
-          1,
-          'Give the character exactly one medium-tier comeback.',
-        ),
-        strong: uniqueArray(localeKeySchema, 'List each strong-tier comeback only once.').length(
-          1,
-          'Give the character exactly one strong-tier comeback.',
-        ),
+        weak: comebackTierKeys('weak'),
+        medium: comebackTierKeys('medium'),
+        strong: comebackTierKeys('strong'),
       })
       .strict(),
     aiPersonality: z

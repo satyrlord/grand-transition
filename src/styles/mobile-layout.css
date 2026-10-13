@@ -329,6 +329,17 @@
       display: grid;
       place-items: center;
     }
+    .match-skip-slot,
+    .match-skip {
+      min-height: 2.75rem;
+    }
+    /* A compact rail cell gives its width to the label. */
+    .match-skip {
+      letter-spacing: 0.04em;
+    }
+    .skip-icon {
+      display: none;
+    }
     .match-turn-heading h1 {
       line-height: 1.2;
     }
@@ -368,6 +379,11 @@
     }
     .player-health {
       gap: 0.25rem;
+    }
+    .player-combos,
+    .match-player[data-side='blue'] .player-combos {
+      justify-content: center;
+      gap: 0.3rem;
     }
     .comeback-sidekick {
       --sidekick-height: calc(var(--mobile-art-height) * 0.264);
@@ -515,6 +531,17 @@
     .delivery-receipt {
       grid-row: 3;
     }
+    /* The hint takes the place of the first score line until the voice starts. */
+    .delivery-hint[data-side] {
+      position: relative;
+      grid-column: 1;
+      grid-row: 3;
+      inset: auto;
+      align-self: start;
+      width: auto;
+      margin: 0.75rem;
+      font-size: 0.875rem;
+    }
     .delivery-components {
       overflow: visible;
     }
@@ -621,6 +648,15 @@
       left: 50%;
       white-space: nowrap;
       transform: translateX(-50%);
+    }
+    /* The frame is too narrow for the label, so the chip takes the full line. */
+    .player-combos-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
     }
     /* Two lines of a preview fit without a change of height, so the rows
        below the record do not move under the pointer. */
@@ -761,6 +797,10 @@
     }
     .delivery-components {
       overflow-y: auto;
+    }
+    .delivery-hint[data-side] {
+      grid-column: -2;
+      grid-row: 1 / -1;
     }
     /* The weakness record and the Pride record use the bottom of the column. */
     .delivery-emphasis[data-side],
@@ -944,6 +984,20 @@
     .match-turn-heading {
       padding: 0.1rem 0.2rem;
     }
+    /* The skip control and the round use a row each, because a half cell is too narrow. */
+    .match-skip-slot,
+    .match-skip-slot + .match-turn-heading {
+      grid-column: 1 / -1;
+    }
+    .match-skip-slot,
+    .match-skip {
+      min-height: 1.9rem;
+    }
+    .match-skip {
+      padding: 0.1rem 0.25rem;
+      font-size: 0.6875rem;
+      letter-spacing: 0.04em;
+    }
     /* The thinking record replaces the hand, so the rail keeps its height. */
     .ai-thinking-status {
       position: absolute;
@@ -1000,6 +1054,59 @@
     .match-player[data-side='blue'] .player-weaknesses {
       justify-content: flex-end;
       text-align: end;
+    }
+    .player-combos,
+    .match-player[data-side='red'] .player-combos {
+      justify-content: flex-start;
+    }
+    .match-player[data-side='blue'] .player-combos {
+      justify-content: flex-end;
+    }
+  }
+
+  /* The shortest landscape screens keep the scene at its minimum, and a Pride
+     frame can fill that height. There the chip line hangs beside its frame,
+     below the status rail, so the frame keeps its height. */
+  @media (aspect-ratio >= 9 / 10) and (height < 22.5rem) {
+    .match-screen {
+      --combo-lane-top: calc(4.3rem - 3px);
+    }
+    /* An Unlimited timer gives the rail one more row. */
+    .match-screen:has(.match-facts--unlimited) {
+      --combo-lane-top: calc(5.85rem - 3px);
+    }
+    .player-combos,
+    .match-player[data-side='red'] .player-combos,
+    .match-player[data-side='blue'] .player-combos {
+      position: absolute;
+      top: var(--combo-lane-top);
+      box-sizing: border-box;
+      width: calc(var(--status-rail-width) + 0.3rem);
+      padding: 1px 0.15rem;
+      border: 1px solid var(--broadcast-gold);
+    }
+    .match-player[data-side='red'] .player-combos {
+      left: calc(100% + 3px + 0.2rem);
+      justify-content: flex-start;
+      background: rgb(91 21 25 / 96%);
+    }
+    .match-player[data-side='blue'] .player-combos {
+      top: calc(var(--combo-lane-top) + 1.4rem);
+      right: calc(100% + 3px + 0.2rem);
+      justify-content: flex-end;
+      background: rgb(6 40 82 / 96%);
+    }
+    .player-combo {
+      border-color: transparent;
+      background: none;
+    }
+    .player-combos-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
     }
   }
 
@@ -1092,6 +1199,15 @@
   @media (aspect-ratio >= 9 / 10) and (height < 30rem) and (width < 48rem) {
     .match-screen {
       --compact-controls-height: 6.6rem;
+    }
+    /* The frame is too narrow for the label, so the chip takes the full line. */
+    .player-combos-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
     }
     .broadcast-stage {
       grid-template-rows:

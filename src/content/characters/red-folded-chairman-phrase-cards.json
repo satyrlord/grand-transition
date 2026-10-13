@@ -27,9 +27,21 @@
     "miners"
   ],
   "comebacks": {
-    "weak": "My dear, even your outrage needs a committee.",
-    "medium": "You domesticated the facts. Now they fetch your slippers.",
-    "strong": "Your argument is lost in the synergy."
+    "weak": [
+      "My dear, even your outrage needs a committee.",
+      "My dear, I have folded sturdier chairs than your objection.",
+      "Your point is noted, my dear, and scheduled for the next transition."
+    ],
+    "medium": [
+      "You domesticated the facts. Now they fetch your slippers.",
+      "I chaired your crisis myself. It ended as an appendix.",
+      "Your revolution is approved, pending my three signatures."
+    ],
+    "strong": [
+      "Your argument is lost in the synergy.",
+      "History reviewed your career and filed it under my chair.",
+      "I survived three regimes. You did not survive your own introduction."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.35,

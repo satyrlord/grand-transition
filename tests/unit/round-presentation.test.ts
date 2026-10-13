@@ -1,10 +1,16 @@
 import type { SkinSpeechProfile } from '../../src/audio/skin-speech-profile.ts';
 import { describe, expect, test, vi } from 'vitest';
 import {
+  deliveryCanBeSkipped,
   RoundPresentation,
+  skipRepeatGuardMs,
   type RoundPresentationFrame,
 } from '../../src/app/round-presentation.ts';
 import { GameSpeech } from '../../src/audio/game-speech.ts';
+import {
+  publicSpeechEventSchema,
+  type PublicSpeechEvent,
+} from '../../src/audio/speech-diagnostics.ts';
 import type { SpeechRequest } from '../../src/audio/speech-port.ts';
 import type { AudioPort } from '../../src/audio/audio-port.ts';
 import { defaultSettings } from '../../src/persistence/codecs/settings-codec.ts';
@@ -26,7 +32,8 @@ function harness(enabled = true) {
       return { accepted: true };
     },
   };
-  const speech = new GameSpeech(voice);
+  const diagnostics: PublicSpeechEvent[] = [];
+  const speech = new GameSpeech(voice, (event) => diagnostics.push(event));
   speech.userGesture();
   const play = vi.fn();
   const completed = vi.fn();
@@ -83,8 +90,30 @@ function harness(enabled = true) {
     }
     throw new Error('The presentation clock did not settle.');
   }
-  return { controller, input, voice, requests, play, completed, advance, frame: () => frame };
+  return {
+    controller,
+    input,
+    voice,
+    requests,
+    play,
+    completed,
+    advance,
+    diagnostics,
+    frame: () => frame,
+  };
 }
+
+const hesitation = (status: 'carried' | 'incomplete') =>
+  resolution({
+    one: { ...publicPlayer, opponentOutgoingDamage: 0, prideAfter: 100 },
+    two: {
+      ...publicOpponent,
+      completeValidInsult: false,
+      constructionStatus: status,
+      outgoingDamage: 0,
+      insultText: null,
+    },
+  });
 
 describe('reference round presentation', () => {
   test('last finisher recites, receives inline scoring, lands damage, then yields to the other speaker', () => {
@@ -443,6 +472,257 @@ describe('reference round presentation', () => {
     h.advance(1);
     expect(h.completed).toHaveBeenCalledOnce();
     expect(h.frame()).toBeNull();
+  });
+
+  test('skip during reciting cancels the voice, shows each score, and keeps the result sequence', () => {
+    const h = harness();
+    const original = JSON.stringify(h.input);
+    h.controller.start(h.input);
+    h.requests[0]!.onStart!();
+    h.requests[0]!.onSegment!(0);
+    expect(h.frame()?.components).toHaveLength(0);
+    expect(deliveryCanBeSkipped(h.frame())).toBe(true);
+
+    h.controller.skip();
+    // Each start also cancels older speech with the `replacement` reason.
+    expect(h.voice.cancel.mock.calls.filter(([reason]) => reason === 'player-skip')).toHaveLength(
+      1,
+    );
+    expect(h.frame()).toMatchObject({ phase: 'total', speakerId: 'two', total: 20 });
+    expect(h.frame()?.components).toEqual([component(20)]);
+    expect(h.frame()?.cues.two?.stateId).toBe('idle');
+    expect(h.frame()?.pride).toEqual({ one: 100, two: 100 });
+    expect(deliveryCanBeSkipped(h.frame())).toBe(false);
+    // The cancellation discarded the prepared next delivery, so it is prepared again.
+    expect(h.voice.prepare).toHaveBeenCalledTimes(2);
+    expect(h.voice.prepare).toHaveBeenLastCalledWith(
+      expect.objectContaining({ text: publicPlayer.insultText }),
+    );
+
+    // The skipped voice cannot report its remaining markers.
+    h.requests[0]!.onSegment!(1);
+    h.requests[0]!.onEnd!();
+    h.advance(399);
+    expect(h.frame()?.phase).toBe('total');
+    h.advance(1);
+    expect(h.frame()?.phase).toBe('strike');
+    h.advance(200);
+    expect(h.frame()?.phase).toBe('points');
+    h.advance(199);
+    expect(h.frame()?.pride.one).toBe(100);
+    h.advance(1);
+    expect(h.frame()).toMatchObject({ phase: 'damage', damage: { playerId: 'one', amount: 20 } });
+    expect(h.frame()?.pride.one).toBe(80);
+    expect(h.play).toHaveBeenCalledExactlyOnceWith('hit-heavy');
+    h.advance(199);
+    expect(h.requests).toHaveLength(1);
+    h.advance(1);
+
+    // The other speaker gets the full delivery.
+    expect(h.requests[1]?.text).toBe(publicPlayer.insultText);
+    expect(h.frame()).toMatchObject({ phase: 'preparing', speakerId: 'one', voicePending: true });
+    h.requests[1]!.onStart!();
+    expect(h.frame()?.phase).toBe('reciting');
+    h.requests[1]!.onSegment!(1);
+    h.requests[1]!.onEnd!();
+    h.advance(1000);
+    expect(h.completed).toHaveBeenCalledOnce();
+    expect(JSON.stringify(h.input)).toBe(original);
+  });
+
+  test('skip while the voice is prepared continues at the total', () => {
+    const h = harness();
+    h.controller.start(h.input);
+    expect(h.frame()).toMatchObject({ phase: 'preparing', voicePending: true });
+    h.controller.skip();
+    expect(h.frame()).toMatchObject({ phase: 'total', voicePending: false, total: 20 });
+    expect(h.frame()?.components).toEqual([component(20)]);
+    h.requests[0]!.onStart!();
+    expect(h.frame()?.phase).toBe('total');
+    h.advance(800);
+    expect(h.frame()?.pride.one).toBe(80);
+  });
+
+  test('skip shows the bonus facts and plays their cues one time', () => {
+    const h = harness();
+    h.controller.start({
+      ...h.input,
+      components: {
+        ...h.input.components,
+        two: [{ ...component(20), weaknessFactor: 2, weaknessTags: ['evidence'] }],
+      },
+      resolution: resolution({
+        one: publicPlayer,
+        two: {
+          ...publicOpponent,
+          score: {
+            finalDamage: 20,
+            unroundedTotal: 20,
+            combo: null,
+            breakdown: [
+              {
+                kind: 'combo-chain',
+                operation: 'note',
+                nounPhraseId: 'audit',
+                phraseIndex: 0,
+                chain: 2,
+              },
+            ],
+          },
+        },
+      }),
+    });
+    h.requests[0]!.onStart!();
+    h.controller.skip();
+    expect(h.play.mock.calls.flat()).toEqual(['combo', 'weakness']);
+    expect(h.frame()?.emphasis.map(({ kind }) => kind)).toEqual(['combo', 'weakness']);
+    h.controller.skip();
+    expect(h.play.mock.calls.flat()).toEqual(['combo', 'weakness']);
+  });
+
+  test('skip is idempotent, and a repeated activation cannot skip the next speaker', () => {
+    const h = harness();
+    h.controller.start({ ...h.input, resolution: hesitation('incomplete') });
+    expect(h.frame()).toMatchObject({ phase: 'hesitating', speakerId: 'two', voicePending: false });
+    expect(deliveryCanBeSkipped(h.frame())).toBe(true);
+
+    h.controller.skip();
+    expect(h.frame()).toMatchObject({ phase: 'preparing', speakerId: 'one' });
+    expect(h.requests).toHaveLength(1);
+    expect(h.voice.cancel).not.toHaveBeenCalledWith('player-skip');
+
+    // The second activation of a double click reaches the next speaker.
+    h.controller.skip();
+    h.advance(skipRepeatGuardMs - 1);
+    h.controller.skip();
+    expect(h.frame()).toMatchObject({ phase: 'preparing', speakerId: 'one', total: null });
+    // The hesitation timer does not advance the speaker a second time.
+    h.advance(2_000);
+    expect(h.requests).toHaveLength(1);
+    expect(h.completed).not.toHaveBeenCalled();
+
+    h.controller.skip();
+    expect(h.frame()).toMatchObject({ phase: 'total', speakerId: 'one', total: 10 });
+    h.controller.skip();
+    h.advance(399);
+    expect(h.frame()?.phase).toBe('total');
+    h.advance(601);
+    expect(h.completed).toHaveBeenCalledOnce();
+  });
+
+  test('a paused presentation ignores skip', () => {
+    const h = harness();
+    h.controller.start(h.input);
+    h.requests[0]!.onStart!();
+    h.controller.pause();
+    h.controller.skip();
+    expect(h.frame()?.phase).toBe('reciting');
+    expect(h.voice.cancel).not.toHaveBeenCalledWith('player-skip');
+    expect(h.diagnostics.map(({ type }) => type)).not.toContain('presentation-skip');
+    h.controller.resume();
+    h.controller.skip();
+    expect(h.frame()?.phase).toBe('total');
+  });
+
+  test.each(['total', 'strike', 'points', 'damage'] as const)(
+    'skip does nothing in the %s phase',
+    (phase) => {
+      const h = harness();
+      h.controller.start(h.input);
+      h.requests[0]!.onEnd!();
+      h.advance({ total: 0, strike: 400, points: 600, damage: 800 }[phase]);
+      expect(h.frame()?.phase).toBe(phase);
+      const before = h.frame();
+      h.controller.skip();
+      expect(h.frame()).toBe(before);
+      expect(h.voice.cancel).not.toHaveBeenCalledWith('player-skip');
+      expect(h.diagnostics.map(({ type }) => type)).not.toContain('presentation-skip');
+      h.advance(1000);
+      expect(h.requests).toHaveLength(2);
+    },
+  );
+
+  test('skip does nothing in a direct knockout and with no presentation', () => {
+    const h = harness();
+    h.controller.skip();
+    expect(h.frame()).toBeNull();
+    h.controller.selfDamage(resolution(), 'one', 100, 'turn-timeout');
+    expect(h.frame()?.impact).toEqual({ playerId: 'one', amount: 100, prideAfter: 80 });
+    h.controller.skip();
+    expect(h.frame()?.phase).toBe('damage');
+    h.advance(519);
+    expect(h.completed).not.toHaveBeenCalled();
+    h.advance(1);
+    expect(h.completed).toHaveBeenCalledOnce();
+  });
+
+  test('skip in a silent delivery reaches the total, and the presentation completes one time', () => {
+    const h = harness(false);
+    h.controller.start(h.input);
+    expect(h.frame()).toMatchObject({ phase: 'reciting', voicePending: false });
+    h.controller.skip();
+    expect(h.frame()).toMatchObject({ phase: 'total', total: 20 });
+    // No voice plays, so the skip cancels no speech and keeps the prepared next delivery.
+    expect(h.voice.cancel).not.toHaveBeenCalledWith('player-skip');
+    // The silent segment timer of the skipped delivery does not run.
+    h.advance(1000);
+    expect(h.frame()).toMatchObject({ phase: 'reciting', speakerId: 'one' });
+    h.advance(3000);
+    expect(h.completed).toHaveBeenCalledOnce();
+    expect(h.frame()).toBeNull();
+  });
+
+  test('records each skip for the speech diagnostics of the match', () => {
+    const h = harness();
+    h.controller.start(h.input);
+    h.requests[0]!.onStart!();
+    h.requests[0]!.onSegment!(0);
+    h.controller.skip();
+    const events = h.diagnostics.filter(({ speakerId }) => speakerId === 'two');
+    const skip = events.find(({ type }) => type === 'presentation-skip')!;
+    expect(skip).toMatchObject({ round: 1, speakerId: 'two', segment: 0 });
+    expect(publicSpeechEventSchema.safeParse(skip).success).toBe(true);
+    expect(events.map(({ type }) => type).slice(-2)).toEqual([
+      'presentation-skip',
+      'presentation-total',
+    ]);
+
+    const held = harness();
+    held.controller.start({ ...held.input, resolution: hesitation('carried') });
+    held.controller.skip();
+    expect(
+      held.diagnostics.filter(({ speakerId }) => speakerId === 'two').map(({ type }) => type),
+    ).toEqual(['skipped', 'presentation-skip', 'presentation-end']);
+  });
+
+  test('marks a pending voice only between an accepted delivery and its start', () => {
+    const h = harness();
+    h.controller.start(h.input);
+    expect(h.frame()?.voicePending).toBe(true);
+    h.controller.pause();
+    expect(h.frame()?.voicePending).toBe(true);
+    h.controller.resume();
+    h.requests[0]!.onStart!();
+    expect(h.frame()).toMatchObject({ phase: 'reciting', voicePending: false });
+
+    const failed = harness();
+    failed.controller.start(failed.input);
+    failed.requests[0]!.onError!();
+    expect(failed.frame()).toMatchObject({ phase: 'reciting', voicePending: false });
+    // A skip of the silent fallback keeps the speech that is prepared for the next speaker.
+    failed.controller.skip();
+    expect(failed.frame()?.phase).toBe('total');
+    expect(failed.voice.cancel).not.toHaveBeenCalledWith('player-skip');
+    expect(failed.voice.prepare).toHaveBeenCalledOnce();
+
+    const changed = harness();
+    changed.controller.start(changed.input);
+    changed.controller.updateSettings({ ...changed.input.settings, speechEnabled: false });
+    expect(changed.frame()).toMatchObject({ phase: 'reciting', voicePending: false });
+
+    const concealed = harness();
+    concealed.controller.start(concealed.input, true);
+    expect(concealed.frame()).toMatchObject({ phase: 'preparing', voicePending: false });
   });
 
   test('cliffhanger keeps score points separate from scaled Pride loss and hit severity', () => {

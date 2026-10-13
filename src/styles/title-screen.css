@@ -352,6 +352,7 @@
   }
 
   .title-voice-loader {
+    width: clamp(24rem, 36vw, 34rem);
     padding: 0.65rem 0.8rem;
     background: var(--broadcast-ink);
     border-block: 1px solid var(--broadcast-brass);
@@ -379,6 +380,22 @@
 
   .title-voice-meter[data-indeterminate='true'] span {
     animation: title-voice-progress 1.6s ease-in-out infinite alternate;
+  }
+
+  /* Two lines stay reserved, so a new hint does not move the loader edge. */
+  .title-voice-hint {
+    min-height: calc(2 * 1.4em);
+    margin: 0.55rem 0 0;
+    color: var(--broadcast-paper);
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+  }
+
+  .title-voice-hint strong {
+    color: var(--broadcast-brass-light);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .title-voice-fallback {
@@ -1165,6 +1182,11 @@
 
     .title-voice-meter span {
       background: Highlight;
+    }
+
+    .title-voice-hint,
+    .title-voice-hint strong {
+      color: CanvasText;
     }
 
     .title-screen,

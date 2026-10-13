@@ -84,7 +84,7 @@ type CharacterSource = {
   rosterOrder: number;
   name: string;
   description: string;
-  comebacks: Record<'weak' | 'medium' | 'strong', string>;
+  comebacks: Record<'weak' | 'medium' | 'strong', string[]>;
   assets: {
     portrait: { assetId: string };
     token: { assetId: string };
@@ -151,9 +151,21 @@ function addTemporaryCharacter(fixtureRoot: string): void {
   fixture.name = temporaryCharacterName;
   fixture.description = 'An original fictional delegate used only by the isolated lifecycle test.';
   fixture.comebacks = {
-    weak: 'The temporary delegate files a temporary objection.',
-    medium: 'This test chamber reserves its own reply.',
-    strong: 'The fixture delegate closes this isolated debate.',
+    weak: [
+      'The temporary delegate files a temporary objection.',
+      'The temporary delegate asks for a short recess.',
+      'The temporary delegate notes a small concern.',
+    ],
+    medium: [
+      'This test chamber reserves its own reply.',
+      'This test chamber returns the motion unread.',
+      'This test chamber strikes the remark from the record.',
+    ],
+    strong: [
+      'The fixture delegate closes this isolated debate.',
+      'The fixture delegate dissolves this isolated session.',
+      'The fixture delegate adjourns this isolated hearing forever.',
+    ],
   };
   fixture.assets.portrait.assetId = `${temporaryCharacterId}-portrait`;
   fixture.assets.token.assetId = `${temporaryCharacterId}-token`;
@@ -233,10 +245,12 @@ function temporaryRomanianMessages(fixture: CharacterSource): Record<string, str
   const messages: Record<string, string> = {
     [`character.${temporaryCharacterId}.name`]: temporaryCharacterName,
     [`character.${temporaryCharacterId}.description`]: fixture.description,
-    [`comeback.${temporaryCharacterId}.weak`]: fixture.comebacks.weak,
-    [`comeback.${temporaryCharacterId}.medium`]: fixture.comebacks.medium,
-    [`comeback.${temporaryCharacterId}.strong`]: fixture.comebacks.strong,
   };
+  for (const tier of ['weak', 'medium', 'strong'] as const) {
+    fixture.comebacks[tier].forEach((line, lineIndex) => {
+      messages[`comeback.${temporaryCharacterId}.${tier}.${lineIndex + 1}`] = line;
+    });
+  }
   const textFields = [
     'text',
     'singularText',

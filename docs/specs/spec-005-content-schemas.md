@@ -36,7 +36,7 @@ A verb or a predicate can declare a custom clause score from 0 through 100 for a
 If it does not, Milestone 010 calculates the group compatibility.
 
 A character owns its identity, new media, a palette, and two through four weakness tags.
-It owns the identifiers of the hand phrases that only it can use, and one exclusive comeback line for each tier.
+It owns the identifiers of the hand phrases that only it can use, and three exclusive comeback lines for each tier.
 It also owns artificial-intelligence data, voice data, and animation data.
 Its species is `human` or `robot`.
 A robot is fully mechanical, and it does not use human, animal, or hybrid anatomy.
@@ -141,8 +141,12 @@ It also does not accept protected-trait insults, sexual humiliation, and threats
   members, basic relations, and simple connectors count as real without an
   attributed statement. Milestone 034 records them as `generic-phrase` with no
   source metadata. Do not replace generic vocabulary to increase quote coverage.
-- Each character owns one weak comeback line, one medium comeback line, and one strong comeback line, and no more.
-  Each key uses `comeback.<character-id>.<tier>`, and a different character or tier cannot share it.
+- Each character must own exactly three weak comeback lines, three medium comeback lines, and three strong comeback lines.
+  Each key uses `comeback.<character-id>.<tier>.<line>`, and the line number is `1`, `2`, or `3`.
+  The line number is the position of the line in its tier, and line 1 is the first authored line.
+  A different character, tier, or line must not share a key.
+  The shipped catalog has 171 comeback lines for each locale.
+  After the normalization of case and spaces, each comeback text must be unique in its locale.
   There is no common comeback pool.
 - Shipped text that the player sees, editorial rationale, and source notes do not name or identify a real person.
   Public institutions and historical events stay permitted.
@@ -185,13 +189,14 @@ It also agrees with its role limit: conjunction 6, continuation 1, verb 10, modi
 Comeback lines stay at 16 words or fewer.
 The manual card parser does not accept a text above a role limit, and it gives the path of the text.
 Thus, the limit is a content contract and not only an editorial guideline.
-The parser of the character file does not accept a comeback that is too long, and it gives the path of its tier.
+The parser of the character file does not accept a comeback that is too long, and it gives the path of its tier and its line.
+It does not accept a tier that has fewer than three lines or more than three lines, and it gives the path of that tier.
 
 The game gives a comeback line alone, so its limit is above the phrase limit and not in it.
-The longest shipped comeback has 14 words.
-Its Romanian adaptation has 13 words.
+The longest shipped English comeback has 14 words.
+The longest shipped Romanian comeback has 14 words.
 The limit gives a small margin.
-Changes to the two languages are not necessary.
+The limit applies to each line in each locale.
 
 The limits come from the measured corpus of the source party game that the interface copies in style.
 Its connectors have one word.
@@ -224,6 +229,9 @@ The common corpus is `src/content/common-phrase-cards.json`.
 Each character has one full authoring file at `src/content/characters/<character-id>-phrase-cards.json`.
 That file owns the roster sequence value, the identity, the English name and description, the media references, the palette, and the weaknesses.
 It also owns the comeback text, the artificial-intelligence personality, the voice, the animation IDs, and the phrase array.
+Its `comebacks` field gives a list of exactly three lines for each of the `weak`, `medium`, and `strong` tiers.
+The sequence of the lines in a tier is content, and line 1 must stay the first line.
+Milestone 012 controls the draw of a line and the availability of lines 2 and 3.
 Its identifier must agree with its file name.
 
 The loader derives `characterIds`.
@@ -238,6 +246,7 @@ A verb or a predicate with wording that changes for a personal-singular or secon
 This includes a combined copular predicate with a second-person verb that uses the plural conjugation while its complement stays singular.
 
 The loader derives the character, phrase, agreement-form, and comeback locale keys.
+It derives one comeback key for each line, in the authored sequence of the tier.
 It also derives the English message table.
 It derives no weakness locale key.
 Milestone 029 controls the shown weakness labels as interface text.
@@ -311,9 +320,17 @@ slogan](https://www.rri.ro/en/news-and-current-affairs/the-week-in-review/29-jan
   An isolated production-browser lifecycle test adds the JSON source and the related portrait.
   It makes a clean build, selects the character in the setup, and does checks of its loaded portrait in a match.
   Then it removes the two files, makes a second clean build, and shows that the setup, the match, and the production output contain no temporary character.
+- **AC-005-10:** Each character file gives exactly three comeback lines for each tier.
+  A tier with two lines, with four lines, or with one line that is not in a list fails at the path of that tier.
+  A comeback line above 16 words fails at the path of its tier and its line.
+  The loader derives the `comeback.<character-id>.<tier>.<line>` keys in the authored sequence.
+  The catalog does not accept a tier without exactly three keys, a key that occurs two times, or a key of a different character.
+  It also does not accept a key at a different position in its tier.
+  Each shipped character has three lines with different text for each tier in each locale, and each line has 16 words or fewer.
 
 ## Objective verifier
 
-`tests/unit/content-schemas.test.ts` does checks of AC-005-01 through AC-005-09 for pure authoring and browser discovery.
+`tests/unit/content-schemas.test.ts` does checks of AC-005-01 through AC-005-10 for pure authoring and browser discovery.
+`tests/unit/comeback-line-variety.test.ts` does checks of the shipped comeback lines of AC-005-10 in the two locales.
 `tests/unit/node-content-discovery.test.ts` does checks of the parity of Node discovery.
 `e2e/content-lifecycle.spec.ts` does checks of the isolated production lifecycle that adds and removes a character in AC-005-09.

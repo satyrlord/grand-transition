@@ -127,8 +127,8 @@ describe('replay and local match-log codecs', () => {
   });
 
   test('supports exactly one replay and match-log schema version', () => {
-    expect(replaySchemaVersion).toBe(2);
-    for (const schemaVersion of [0, 1, 13]) {
+    expect(replaySchemaVersion).toBe(3);
+    for (const schemaVersion of [0, 1, 2, 13]) {
       for (const [document, decode] of [
         [completed.replay, decodeReplay],
         [completed.matchLog, decodeMatchLog],
@@ -138,6 +138,18 @@ describe('replay and local match-log codecs', () => {
           code: 'unsupported-version',
         });
       }
+    }
+  });
+
+  test('rejects a setup that still records the removed privacy option', () => {
+    for (const [document, decode] of [
+      [completed.replay, decodeReplay],
+      [completed.matchLog, decodeMatchLog],
+    ] as const) {
+      expect('privacyEnabled' in document.setup).toBe(false);
+      expect(
+        decode(normalizedJson({ ...document, setup: { ...document.setup, privacyEnabled: true } })),
+      ).toEqual({ ok: false, code: 'invalid-replay' });
     }
   });
 

@@ -12,7 +12,8 @@ import { stableHash } from './stable-hash.ts';
 // Milestone 034: the Real-or-invented guess of the receipts panel. Only the
 // panel uses these rules, so they load with it.
 
-export type QuoteGuessAnswer = 'real' | 'adapted' | 'invented';
+/** The two answers of the guess. The player sees no other outcome for a phrase. */
+export type QuoteGuessAnswer = 'real' | 'invented';
 
 /** Orders the sentences by round, with the sentence of the opening player first. */
 export function sentencesInTurnOrder<Sentence extends CommittedSentence>(
@@ -59,10 +60,13 @@ export function selectQuoteGuessCards(
   return candidates.filter((cardId) => selected.has(cardId));
 }
 
-/** The answer that is correct for a record. A real slogan counts as a real quote. */
+/**
+ * The answer that is correct for a record. A real quote, a real slogan, and an
+ * adaptation of a real statement are Real: the card keeps, or closely follows,
+ * wording that a person said in real life.
+ */
 export function quoteGuessAnswer(record: QuoteRevealRecord): QuoteGuessAnswer {
-  if (record.classification === 'invented') return 'invented';
-  return record.classification === 'adapted-quote' ? 'adapted' : 'real';
+  return record.classification === 'invented' ? 'invented' : 'real';
 }
 
 export function scoreQuoteGuess(

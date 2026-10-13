@@ -27,9 +27,21 @@
     "obsolete"
   ],
   "comebacks": {
-    "weak": "Objection received. Reply expected in five years.",
-    "medium": "You passed the human test. Your cousin graded it.",
-    "strong": "Your best idea arrived by fax."
+    "weak": [
+      "Objection received. Reply expected in five years.",
+      "Processing your argument. Zero results found.",
+      "Please restate your point after the tone. There is no tone."
+    ],
+    "medium": [
+      "You passed the human test. Your cousin graded it.",
+      "Error: achievements not found. Have you tried inventing them again?",
+      "I ran your plan in a simulation. The simulation requested a transfer."
+    ],
+    "strong": [
+      "Your best idea arrived by fax.",
+      "A ghost company built me, and I still have more substance than you.",
+      "Update complete. You are no longer supported."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.55,

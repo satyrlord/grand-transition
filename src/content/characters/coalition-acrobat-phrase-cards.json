@@ -27,9 +27,21 @@
     "commitment"
   ],
   "comebacks": {
-    "weak": "Your promise is already out of season.",
-    "medium": "I turn my principles inside out. You lost yours changing.",
-    "strong": "You brought a red line. I brought an eraser."
+    "weak": [
+      "Your promise is already out of season.",
+      "I agree with you completely, until the next vote.",
+      "I have held firmer positions on a trampoline."
+    ],
+    "medium": [
+      "I turn my principles inside out. You lost yours changing.",
+      "My spine is flexible. Yours was simply never delivered.",
+      "I signed with both sides. Neither of them asked for you."
+    ],
+    "strong": [
+      "You brought a red line. I brought an eraser.",
+      "I change sides every week, and I have never once chosen yours.",
+      "I have betrayed better partners than you before breakfast."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.55,

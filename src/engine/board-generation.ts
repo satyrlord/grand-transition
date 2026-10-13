@@ -9,6 +9,7 @@ import {
 } from './weighted-selection.ts';
 
 export const boardSlotCount = 9;
+const seededNounCount = 2;
 
 const phraseRoles: readonly Phrase['role'][] = [
   'noun',
@@ -90,30 +91,58 @@ export function generateBoard(
   }
 
   const pending: Omit<BoardSlot, 'id'>[] = [];
-  addRandomDistinct(pending, byRole.get('noun')!, 3, 'standard', cursor, randomSource);
-  addRandomDistinct(pending, byRole.get('verb')!, 3, 'standard', cursor, randomSource);
-  addRandomDistinct(pending, byRole.get('predicate')!, 1, 'standard', cursor, randomSource);
+  const relations = [
+    ...addRandomDistinct(pending, byRole.get('verb')!, 3, 'standard', cursor, randomSource),
+    ...addRandomDistinct(pending, byRole.get('predicate')!, 1, 'standard', cursor, randomSource),
+  ];
+  // Two of the three nouns suit a relation of this board, so each board has a
+  // subject that scores above the minimum.
+  const nouns = byRole.get('noun')!;
+  const seededNouns = nouns.filter((candidate) =>
+    relations.some((relation) => prefersSubject(relation, candidate.phrase)),
+  );
+  const seeded = addRandomDistinct(
+    pending,
+    seededNouns,
+    Math.min(seededNounCount, seededNouns.length),
+    'standard',
+    cursor,
+    randomSource,
+  );
+  addRandomDistinct(
+    pending,
+    nouns.filter((candidate) => !seeded.includes(candidate.phrase)),
+    3 - seeded.length,
+    'standard',
+    cursor,
+    randomSource,
+  );
 
-  if (includeContinuation) {
-    const continuation = takeWeighted(byRole.get('continuation')!, cursor, randomSource).phrase;
+  // The fixed slots hold no conjunction, so every clause connector is still
+  // available for the forced connector slots.
+  const connectorRoll = nextRandom(cursor, randomSource);
+  let connectors = byRole.get('conjunction')!.filter(isClauseConnector);
+  for (let count = connectorCount(connectorRoll); count > 0 && connectors.length > 0; count -= 1) {
+    const kindRoll = nextRandom(cursor, randomSource);
+    const connector = takeWeighted(
+      preferredConnectors(connectors, kindRoll),
+      cursor,
+      randomSource,
+    ).phrase;
+    connectors = connectors.filter((candidate) => candidate.phrase.id !== connector.id);
     pending.push({
-      phraseId: continuation.id,
-      role: continuation.role,
+      phraseId: connector.id,
+      role: connector.role,
       source: 'wildcard',
     });
   }
 
-  const connectorRoll = nextRandom(cursor, randomSource);
-  const forcedConnectors = byRole.get('conjunction')!.filter(isClauseConnector);
-  // The fixed slots hold no conjunction, so every clause connector is still
-  // available for the one forced connector slot.
-  if (forcedConnectors.length > 0 && connectorRoll >= 0.1) {
-    const kindRoll = nextRandom(cursor, randomSource);
-    const pool = preferredConnectors(forcedConnectors, kindRoll);
-    const connector = takeWeighted(pool, cursor, randomSource).phrase;
+  // Two connectors fill the board, and that board has no continuation.
+  if (includeContinuation && pending.length < boardSlotCount) {
+    const continuation = takeWeighted(byRole.get('continuation')!, cursor, randomSource).phrase;
     pending.push({
-      phraseId: connector.id,
-      role: connector.role,
+      phraseId: continuation.id,
+      role: continuation.role,
       source: 'wildcard',
     });
   }
@@ -159,6 +188,20 @@ function collectCandidates(request: BoardGenerationRequest): readonly WeightedPh
   });
 }
 
+/** Zero connectors at 10 percent, one at 65 percent, and two at 25 percent. */
+function connectorCount(roll: number): 0 | 1 | 2 {
+  if (roll < 0.1) return 0;
+  return roll < 0.75 ? 1 : 2;
+}
+
+/** A relation prefers a noun as its subject when one substance rule names a group of that noun. */
+function prefersSubject(relation: Phrase, noun: Phrase): boolean {
+  const groups = noun.scoreGroups?.substance ?? [];
+  return (relation.scorePreferences?.substance ?? []).some((rule) =>
+    rule.left.some((group) => groups.includes(group)),
+  );
+}
+
 function addRandomDistinct(
   target: Omit<BoardSlot, 'id'>[],
   candidates: readonly WeightedPhrase[],
@@ -166,14 +209,16 @@ function addRandomDistinct(
   source: BoardSlot['source'],
   cursor: RandomCursor,
   randomSource: RandomSource,
-): void {
+): Phrase[] {
   let remaining = [...candidates];
+  const selected: Phrase[] = [];
   for (let index = 0; index < count; index += 1) {
-    const selected = takeWeighted(remaining, cursor, randomSource);
-    const phrase = selected.phrase;
+    const phrase = takeWeighted(remaining, cursor, randomSource).phrase;
     remaining = remaining.filter((candidate) => candidate.phrase.id !== phrase.id);
     target.push({ phraseId: phrase.id, role: phrase.role, source });
+    selected.push(phrase);
   }
+  return selected;
 }
 
 function takeWeighted(

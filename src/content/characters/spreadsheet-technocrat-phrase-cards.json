@@ -27,9 +27,21 @@
     "results"
   ],
   "comebacks": {
-    "weak": "Your plan is all crumbs and no bread.",
-    "medium": "I turned on the light. Your budget hid.",
-    "strong": "You ate the shelves and billed me the broom."
+    "weak": [
+      "Your plan is all crumbs and no bread.",
+      "I measured your point. It fits inside the margin of error.",
+      "Your argument is pending. Please hold for the next quarter."
+    ],
+    "medium": [
+      "I turned on the light. Your budget hid.",
+      "I charted your results. The graph asked for anonymity.",
+      "Your only indicator is green because you coloured it in yourself."
+    ],
+    "strong": [
+      "You ate the shelves and billed me the broom.",
+      "I audited your career. The only deliverable was the invoice.",
+      "By every metric I own, you are a rounding error with a salary."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.4,

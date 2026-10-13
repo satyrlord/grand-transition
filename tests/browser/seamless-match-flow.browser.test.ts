@@ -204,12 +204,16 @@ test.each([
 
     expect(match.snapshot?.roundReview).toBe(true);
     expect(match.snapshot?.sentenceText).toContain(sentenceBeforeComeback);
-    expect(match.snapshot?.sentenceText).toContain(
-      'I obey the rules. Your argument impersonated a thought.',
-    );
-    expect(match.querySelector('.sentence-preview')?.textContent).toContain(
-      'I obey the rules. Your argument impersonated a thought.',
-    );
+    // The seeded draw selects one of the three strong lines of the speaker.
+    const speakerCharacterId = (app as unknown as { matchState: MatchState }).matchState
+      .playerStates['player-two']!.characterId;
+    const strongLines = gameCatalog.characters
+      .find((character) => character.id === speakerCharacterId)!
+      .comebackLinesByTier.strong.map((key) => englishGameLocale.messages[key]!);
+    expect(strongLines).toHaveLength(3);
+    const closingLine = strongLines.find((line) => match.snapshot!.sentenceText.includes(line));
+    expect(closingLine).toBeDefined();
+    expect(match.querySelector('.sentence-preview')?.textContent).toContain(closingLine);
     expect(match.querySelector('.round-review-dialog')).toBeNull();
     expect(match.querySelector('.timer-fact')).toBeNull();
     expect(match.querySelector('.draft-table')).toBeNull();
@@ -220,9 +224,9 @@ test.each([
     await match.updateComplete;
     expect(match.presentation?.phase).toBe('total');
     expect(match.presentation?.speakerId).toBe('player-two');
-    expect(match.querySelector('[data-score-kind="comeback"]')?.textContent).toMatch(
-      /Comeback.*Your argument impersonated.*\+18/su,
-    );
+    const comebackRow = match.querySelector('[data-score-kind="comeback"]')?.textContent;
+    expect(comebackRow).toMatch(/Comeback.*\+18/su);
+    expect(comebackRow).toContain(closingLine);
     const phase = match.presentation?.phase;
     await page.viewport(width, height);
     await vi.waitFor(() => expect(match.pauseMode).toBe(pauseMode));

@@ -33,6 +33,8 @@ Automatic skill selection is not that instruction.
   Use Flare only for opaque 4K backgrounds and chat for other raster assets.
 - [`grill-me`](grill-me/SKILL.md): Resolve one product, architecture, or design
   decision at a time.
+- [`implement-milestone`](implement-milestone/SKILL.md): Complete a named approved
+  milestone and its verification. Use only when the user names this skill.
 - [`improve-codebase-architecture`](improve-codebase-architecture/SKILL.md):
   Review ownership and module boundaries, and make them better.
 - [`refactor`](refactor/SKILL.md): Make the structure better without a change
@@ -40,6 +42,8 @@ Automatic skill selection is not that instruction.
 - [`repair-scene-composition`](repair-scene-composition/SKILL.md): Find the
   cause of problems with scene scale, proportions, layers, crops, and visual
   integration, and repair them.
+- [`review-milestone`](review-milestone/SKILL.md): Examine a named milestone
+  before release without edits. Use only when the user names this skill.
 - [`run-quality-gate`](run-quality-gate/SKILL.md): Run or repair the full
   quality gate of the repository.
 - [`simulate-matches`](simulate-matches/SKILL.md): Run a deterministic match

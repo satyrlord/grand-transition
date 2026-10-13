@@ -27,9 +27,21 @@
     "authenticity"
   ],
   "comebacks": {
-    "weak": "Your briefing clashes with my shoes.",
-    "medium": "I could live on that budget. My wardrobe couldn't.",
-    "strong": "Your facts are badly tailored. Take them back."
+    "weak": [
+      "Your briefing clashes with my shoes.",
+      "Your point is off the rack, and it shows.",
+      "I would answer, but this is my listening outfit."
+    ],
+    "medium": [
+      "I could live on that budget. My wardrobe couldn't.",
+      "I sacrificed a spa day for this debate. You wasted both.",
+      "My chauffeur waits outside. He has heard better arguments in traffic."
+    ],
+    "strong": [
+      "Your facts are badly tailored. Take them back.",
+      "Your whole career is last season, and it never fitted.",
+      "My shoes have done more public service than you ever will."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.7,

@@ -1,9 +1,14 @@
+---
+name: implement-milestone
+description: Implement an approved Grand Transition milestone and its verification. Use only when the user names implement-milestone and identifies the milestone to complete.
+---
+
 # Implement an approved milestone
 
-Read [the repository instructions](../../AGENTS.md), the
-[approved specification index](../../docs/specs/spec-000-milestone-index.md),
+Read [the repository instructions](../../../AGENTS.md), the
+[approved specification index](../../../docs/specs/spec-000-milestone-index.md),
 and the applicable milestone specification.
-Use the [add-feature workflow](../skills/add-feature/SKILL.md).
+Use the [add-feature workflow](../add-feature/SKILL.md).
 
 Before you edit, identify the dependencies and the acceptance criteria.
 Make the full approved scope.

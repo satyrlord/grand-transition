@@ -55,6 +55,20 @@ test('diagnostics reject arbitrary text, error details, and invalid timing metad
   ).toBe(false);
 });
 
+test('diagnostics record a delivery that the player skips', () => {
+  const recorder = new SpeechDiagnostics(() => 0);
+  recorder.reset();
+  recorder.capture({ ...event, type: 'presentation-skip', segment: 1 });
+  recorder.capture({ ...event, type: 'cancel', reason: 'player-skip', provider: 'neural' });
+  recorder.capture({ ...event, type: 'cancel', reason: 'skip' } as unknown as typeof event);
+  const document = recorder.snapshot();
+  expect(document.events.map(({ type, reason }) => [type, reason])).toEqual([
+    ['presentation-skip', undefined],
+    ['cancel', 'player-skip'],
+  ]);
+  expect(speechDiagnosticsSchema.safeParse(document).success).toBe(true);
+});
+
 test('an observer exception cannot escape into speech playback', () => {
   const observer = vi.fn(() => {
     throw new Error('Observer failed.');

@@ -27,9 +27,21 @@
     "firsthand-knowledge"
   ],
   "comebacks": {
-    "weak": "The keys are in the campaign brochure.",
-    "medium": "You wanted a roof. I offered ten interviews.",
-    "strong": "Your argument is my model home: huge on camera, no foundations."
+    "weak": [
+      "The keys are in the campaign brochure.",
+      "It is already tomorrow where I am, and you are still wrong.",
+      "I sent you a nine-minute voice note. It disagrees."
+    ],
+    "medium": [
+      "You wanted a roof. I offered ten interviews.",
+      "I understand this country better from the departure lounge than you do inside.",
+      "You live here and still needed me to explain the place."
+    ],
+    "strong": [
+      "Your argument is my model home: huge on camera, no foundations.",
+      "I left years ago. You stayed. Look what happened to the place.",
+      "I can see your failure from three time zones away, without my glasses."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.5,

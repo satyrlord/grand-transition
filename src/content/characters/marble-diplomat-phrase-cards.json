@@ -27,9 +27,21 @@
     "corruption"
   ],
   "comebacks": {
-    "weak": "Bad luck. Even your invitation was rejected.",
-    "medium": "My dear exit poll, we need to see other people.",
-    "strong": "I celebrated early. You never got the chance."
+    "weak": [
+      "Bad luck. Even your invitation was rejected.",
+      "How brave of you to come without an invitation.",
+      "Do go on. The buffet enjoys a little background noise."
+    ],
+    "medium": [
+      "My dear exit poll, we need to see other people.",
+      "Protocol seated you by the coat rack. The coat rack complained.",
+      "I hosted a reception for your ideas. The room stayed elegantly empty."
+    ],
+    "strong": [
+      "I celebrated early. You never got the chance.",
+      "I said nothing for years and still outranked you.",
+      "Cabinets fall and I remain. You are what gets swept up afterwards."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.55,

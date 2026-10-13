@@ -27,9 +27,21 @@
     "delivery"
   ],
   "comebacks": {
-    "weak": "Your dialogue has one rule: nobody else speaks.",
-    "medium": "Your patience has outlived the building.",
-    "strong": "Your plan works if the city has no inhabitants."
+    "weak": [
+      "Your dialogue has one rule: nobody else speaks.",
+      "Your claim is interesting. The proof is left to nobody.",
+      "One clarification, if I may: what was your point?"
+    ],
+    "medium": [
+      "Your patience has outlived the building.",
+      "I checked your reasoning twice. It fails both times, by different routes.",
+      "Your argument assumes its conclusion and still arrives late."
+    ],
+    "strong": [
+      "Your plan works if the city has no inhabitants.",
+      "I can refute you in two lines. The second is pure generosity.",
+      "Suppose you are right. Then nothing follows. That completes the proof."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.35,

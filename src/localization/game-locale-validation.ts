@@ -114,13 +114,15 @@ export function referenceLocaleTextParity(
 
 // Compare base phrase text only. Agreement forms are excluded, so identical
 // singular and plural text stays legal while two phrase cards may not read the same.
+// A comeback key is `comeback.<character-id>.<tier>.<line>`, and each line of
+// each tier must read differently from all the other comeback lines.
 function duplicateTextGroup(key: string): DuplicateTextGroup | null {
   const segments = key.split('.');
   const [namespace, , field] = segments;
   if (segments.length === 2 && namespace === 'phrase') return 'phrase-text';
   if (field === 'name' && namespace === 'character') return 'character-name';
   if (field === 'name' && namespace === 'scene') return 'scene-name';
-  if (segments.length === 3 && namespace === 'comeback') return 'comeback';
+  if (segments.length === 4 && namespace === 'comeback') return 'comeback';
   return null;
 }
 

@@ -59,6 +59,15 @@ export type MatchCardView = Readonly<{
   grammarAccepted: boolean;
 }>;
 
+/** One public noun chain that a player can continue in the draft of this round. */
+export type MatchComboView = Readonly<{
+  nounPhraseId: string;
+  /** The noun in the game language of the match. */
+  text: string;
+  /** The factor that the noun gives its clause when the player uses it again now. */
+  multiplier: number;
+}>;
+
 export type MatchPlayerView = Readonly<{
   playerId: string;
   characterId: string;
@@ -87,6 +96,11 @@ export type MatchPlayerView = Readonly<{
   sentence: string | null;
   comebackLine: string | null;
   status: 'building' | 'ended';
+  /**
+   * The noun chains of the previous scored insult, highest factor first. They
+   * are public facts. The list is empty during a delivery and in a cliffhanger.
+   */
+  combos: readonly MatchComboView[];
 }>;
 
 export type MatchScoreComponentView = Readonly<{
@@ -162,6 +176,8 @@ export type MatchScreenSnapshot = Readonly<{
     canCommit: boolean;
     canRedraw: boolean;
     redrawUsed: boolean;
+    /** True when the game refreshed the hand that the viewer sees, with no command. */
+    redrawAutomatic: boolean;
     comebackTiers: readonly ComebackTier[];
     comebackTier: ComebackTier | null;
     comebackDamageBonus: number | null;
@@ -328,6 +344,7 @@ export function createMatchScreenSnapshot(
         null,
       comebackLine: draftPlayer.construction.comebackClosingLine,
       status: draftPlayer.construction.status,
+      combos: reviewResolution === null ? activeCombos(state, playerId, locale, phraseById) : [],
     } satisfies MatchPlayerView;
   }) as [MatchPlayerView, MatchPlayerView];
 
@@ -412,6 +429,13 @@ export function createMatchScreenSnapshot(
         activePlayer.construction.status === 'building' &&
         !activePlayer.redrawUsed,
       redrawUsed: activePlayer.redrawUsed,
+      redrawAutomatic:
+        reviewResolution === null &&
+        viewerId === activePlayerId &&
+        viewerSnapshot.log.some(
+          (entry) =>
+            entry.type === 'redraw-hand' && entry.automatic === true && entry.actorId === viewerId,
+        ),
       comebackTiers: actionComebackTiers,
       comebackTier: actionComebackTier,
       comebackDamageBonus:
@@ -548,6 +572,30 @@ function scoreComponentViews(
     });
   }
   return components;
+}
+
+/**
+ * A noun of the previous scored insult multiplies its clause by its chain when
+ * the player uses it again. The engine advances that chain by one for the
+ * insult that reuses the noun, so the factor of the next use is the chain plus
+ * one. `tests/unit/match-screen-snapshot.test.ts` holds this projection to the
+ * factor that the next resolution reports.
+ */
+function activeCombos(
+  state: MatchState,
+  playerId: string,
+  locale: GameLocaleBundle,
+  phraseById: ReadonlyMap<string, Phrase>,
+): readonly MatchComboView[] {
+  const chains = state.comboState[playerId];
+  if (!chains) return [];
+  return chains.previousNounIds
+    .map((nounPhraseId) => ({
+      nounPhraseId,
+      text: gameMessage(locale, phraseById.get(nounPhraseId)?.textKey) || nounPhraseId,
+      multiplier: (chains.chainByNounId[nounPhraseId] ?? 1) + 1,
+    }))
+    .toSorted((first, second) => second.multiplier - first.multiplier);
 }
 
 function scorePhraseText(

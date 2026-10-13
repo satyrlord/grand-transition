@@ -101,6 +101,51 @@ Milestone 024 controls the preparation, timeout, and fallback behavior.
 
 Milestone 020 controls the preferences.
 
+### Loading hints
+
+The product owner approved this section on 2026-10-13.
+The reference game shows a hint line on its loading screen.
+It selects the line from a list of gameplay tips and a list of silly lines, with about one silly line in five, and it does not repeat the previous line.
+
+While the voice loader shows, it shows one hint line below its meter.
+This includes the idle state, the check, and the download of the GPU voices.
+The line has the visible label `Hint:` and one sentence in the interface language.
+The existing label, percentage, and meter of the loader stay.
+
+`src/app/hints.ts` owns the hints. It is a pure module with no DOM use.
+Its text is interface text in Lit messages. It contains no game-language text.
+
+- The serious list has 16 hints or more. Each serious hint states a rule that the engine applies.
+- The silly list has 5 hints or more. A silly hint states no rule, and it uses the political-satire voice of the game.
+- Each hint is one sentence of approximately 90 characters or less in English.
+- A hint must not promise achievements, statistics, unlocks, gamepad or keyboard shortcuts, or online play.
+- A hint that gives a value of a rule must use the value of the engine.
+
+The selection gets its random values from a source that the caller gives, so a test gives the same hints again.
+Each selection uses the silly list when the first random value is below 0.2, and the serious list for each other value.
+The selection must not give the hint that it gave last.
+When the selected list has only that hint, the selection uses the other list.
+Each surface has its own selection state. The game stores no hint state.
+
+The loader shows a new hint each 8000 milliseconds while the page is visible.
+The source name of this interval is `loadingHintRotationMs`.
+The interval stops while the page is hidden, and it starts again when the page is visible.
+A new hint replaces the text only. The line has no animation and no transition, also with no reduced-motion preference.
+
+The line is a region with `aria-live="polite"` and `aria-atomic="true"`.
+The region renders empty first, and then it gets the first hint, so assistive technology announces that hint one time.
+From the first replacement, the region has `aria-live="off"`, so the subsequent hints are not announced.
+A loader that goes away removes the line and stops the interval.
+A loader that shows again announces its first hint again.
+
+The line keeps the height of two text lines or more, so a hint of one line or two lines does not move the loader edge.
+On the desktop layout, the loader with the longest hint stays above the disclaimer, and it does not move the menu actions.
+Compact layouts put the loader in the page flow, and the page can scroll to it.
+
+The hint line and the hint record of Milestone 025 are the only hint surfaces.
+The Settings status lines `Loading sound…` and `Loading local voice model…` show no hint.
+The thinking record of the artificial intelligence shows no hint.
+
 Each title transition or setup transition moves the keyboard focus to the heading of the destination.
 Code can put focus on the heading, but the heading is not in the usual Tab sequence.
 
@@ -291,6 +336,18 @@ The game does not disable submission only to hide the validation.
 - **AC-015-17:** A right-click on each screen and each modal of the connected app shell does not open the browser context menu.
   After the app shell disconnects, the browser context menu operates again.
   `tests/browser/title-screen.browser.test.ts` does checks of the prevention and the removal.
+- **AC-015-18:** The hint module has 16 serious hints or more and 5 silly hints or more.
+  Each hint is one sentence of 92 characters or less in English, with no promise of a missing feature.
+  The hints that give rule values agree with the engine constants.
+  The same random source gives the same hints, no hint occurs two times in sequence, and the silly share of 20,000 selections is between 18 and 22 percent.
+  The loader shows one hint below its meter while the GPU voices are idle, in a check, or loading, and no hint in each other state.
+  The first hint is in a polite live region, and each subsequent hint has `aria-live="off"`.
+  The hint changes each 8000 milliseconds, it does not change while the page is hidden, and it has no animation.
+  The desktop layout check uses 1024 by 720, 1024 by 768, 1280 by 720, 1400 by 1050, and 1920 by 1080.
+  There the loader with the longest Romanian hint, and with a hint that is 40 percent longer, stays above the disclaimer with no page scroll.
+  At the compact viewports, the loader stays in the page width, and the page scrolls to it.
+  Verifiers: `tests/unit/hints.test.ts`, `tests/browser/title-loading-hint.browser.test.ts`, and
+  `tests/browser/title-gpu-loader.browser.test.ts`.
 
 ## Impeccable UI validation
 

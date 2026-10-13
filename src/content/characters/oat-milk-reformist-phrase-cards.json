@@ -27,9 +27,21 @@
     "accountability"
   ],
   "comebacks": {
-    "weak": "The people want hospitals but you're selling them spa coupons.",
-    "medium": "Every stump has a director. The forest is saved.",
-    "strong": "Your budget gives billionaires a sustainability award."
+    "weak": [
+      "The people want hospitals but you're selling them spa coupons.",
+      "I hear you. Sadly, the workshop on hearing you is full.",
+      "You promised dialogue. You delivered a questionnaire."
+    ],
+    "medium": [
+      "Every stump has a director. The forest is saved.",
+      "You privatised the park bench and called it a mobility strategy.",
+      "We mapped your stakeholders. Every one of them is you."
+    ],
+    "strong": [
+      "Your budget gives billionaires a sustainability award.",
+      "You cut the school lunch and tipped the consultant.",
+      "Your reform helps everyone who already owns a yacht."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.35,

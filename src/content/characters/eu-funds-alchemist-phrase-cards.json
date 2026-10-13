@@ -27,9 +27,21 @@
     "maintenance"
   ],
   "comebacks": {
-    "weak": "Your pastry budget has eaten your argument.",
-    "medium": "Your watch is worth more than the education budget.",
-    "strong": "You ate cake and called the crumbs growth."
+    "weak": [
+      "Your pastry budget has eaten your argument.",
+      "Your argument is a pilot project. It ends when the funding does.",
+      "Lovely point. Shall I file it under ineligible costs?"
+    ],
+    "medium": [
+      "Your watch is worth more than the education budget.",
+      "I applied for a grant to understand you. Rejected: no measurable impact.",
+      "I turn empty ditches into ceremonies. Your argument stayed a ditch."
+    ],
+    "strong": [
+      "You ate cake and called the crumbs growth.",
+      "You are the only project I could never get co-financed.",
+      "For my next trick, your credibility disappears. Oh, you already managed it."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.6,

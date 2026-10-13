@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { createMatchScreenSnapshot } from '../../src/app/match-screen-snapshot.ts';
 import { basicScoringBalance } from '../../src/content/basic-scoring-balance.ts';
-import { englishGameLocale, gameCatalog } from '../../src/game-content.ts';
+import { englishGameLocale, gameCatalog, romanianGameLocale } from '../../src/game-content.ts';
 import {
   createMatchReducer,
   createMatchSetupState,
@@ -448,6 +448,199 @@ describe('match-screen snapshot', () => {
     expect(waitingPlayer.sentence).toBe(publicSentence);
   });
 
+  test('projects each active noun chain with the factor that the next delivery reports', () => {
+    const noun = 'common-noun-001';
+    const otherNoun = 'common-noun-002';
+    const newNoun = 'common-noun-037';
+    const combosOf = (state: MatchState, playerId: string, viewerId?: string) =>
+      createMatchScreenSnapshot(
+        state,
+        englishGameLocale,
+        null,
+        null,
+        null,
+        {},
+        viewerId,
+      ).players.find((player) => player.playerId === playerId)!.combos;
+    const comboFactors = (resolution: MatchResolution, playerId: string) =>
+      resolution.players[playerId]!.score!.breakdown.flatMap((item) =>
+        item.kind === 'combo-multiplier' ? [item.factor] : [],
+      );
+
+    let state = hotseatMatch(20_260_832);
+    const [firstId, secondId] = state.playerOrder;
+    // No scored insult yet: no player has a chain.
+    expect(combosOf(state, firstId)).toEqual([]);
+    expect(combosOf(state, secondId)).toEqual([]);
+
+    state = draftSentences(state, {
+      [firstId]: [noun, 'common-predicate-010-present'],
+      [secondId]: [otherNoun, 'common-predicate-011-present'],
+    });
+    state = accept(state, lifecycleCommand('resolve-round'));
+    expect(state.resolutionHistory.at(-1)!.players[firstId]!.completeValidInsult).toBe(true);
+    expect(comboFactors(state.resolutionHistory.at(-1)!, firstId)).toEqual([]);
+    state = accept(state, lifecycleCommand('prepare-round'));
+
+    // The chains are public: each viewer sees the chains of the two players.
+    for (const viewerId of [firstId, secondId]) {
+      expect(combosOf(state, firstId, viewerId)).toEqual([
+        { nounPhraseId: noun, text: phraseText(noun), multiplier: 2 },
+      ]);
+      expect(combosOf(state, secondId, viewerId)).toEqual([
+        { nounPhraseId: otherNoun, text: phraseText(otherNoun), multiplier: 2 },
+      ]);
+    }
+    // The chip gives the noun in the game language of the match.
+    expect(
+      createMatchScreenSnapshot(state, romanianGameLocale).players.find(
+        (player) => player.playerId === firstId,
+      )!.combos[0]!.text,
+    ).toBe(phraseText(noun, romanianGameLocale));
+
+    // Round 2: the first player uses the noun again. The second player changes the noun.
+    const shownSecondRound = combosOf(state, firstId)[0]!.multiplier;
+    state = draftSentences(state, {
+      [firstId]: [noun, 'common-predicate-010-present'],
+      [secondId]: [newNoun, 'common-predicate-009-present'],
+    });
+    const reviewState = state;
+    state = accept(state, lifecycleCommand('resolve-round'));
+    const secondRound = state.resolutionHistory.at(-1)!;
+    expect(comboFactors(secondRound, firstId)).toEqual([shownSecondRound]);
+    expect(secondRound.players[firstId]!.score!.combo).toMatchObject({
+      nounPhraseId: noun,
+      chain: shownSecondRound,
+    });
+    expect(comboFactors(secondRound, secondId)).toEqual([]);
+    // The delivery shows its own combo emphasis, so its snapshot has no chips.
+    const review = createMatchScreenSnapshot(reviewState, englishGameLocale, null, secondRound);
+    expect(review.players.map((player) => player.combos)).toEqual([[], []]);
+    expect(review.reaction.players[firstId]!.scoreComponents[0]!.comboFactor).toBe(
+      shownSecondRound,
+    );
+    state = accept(state, lifecycleCommand('prepare-round'));
+    expect(combosOf(state, firstId)).toEqual([
+      { nounPhraseId: noun, text: phraseText(noun), multiplier: 3 },
+    ]);
+    expect(combosOf(state, secondId)).toEqual([
+      { nounPhraseId: newNoun, text: phraseText(newNoun), multiplier: 2 },
+    ]);
+
+    // Round 3: the chain grows again. An unfinished sentence clears the chains of its player.
+    const shownThirdRound = combosOf(state, firstId)[0]!.multiplier;
+    state = draftSentences(state, {
+      [firstId]: [noun, 'common-predicate-010-present'],
+      [secondId]: [newNoun],
+    });
+    state = accept(state, lifecycleCommand('resolve-round'));
+    expect(comboFactors(state.resolutionHistory.at(-1)!, firstId)).toEqual([shownThirdRound]);
+    expect(state.resolutionHistory.at(-1)!.players[secondId]!.completeValidInsult).toBe(false);
+    state = accept(state, lifecycleCommand('prepare-round'));
+    expect(combosOf(state, firstId)).toEqual([
+      { nounPhraseId: noun, text: phraseText(noun), multiplier: 4 },
+    ]);
+    expect(combosOf(state, secondId)).toEqual([]);
+
+    // The highest factor is first. Equal factors keep the sequence of the insult.
+    const ordered = {
+      ...state,
+      comboState: {
+        ...state.comboState,
+        [secondId]: {
+          previousNounIds: [otherNoun, newNoun, noun],
+          chainByNounId: { [otherNoun]: 1, [newNoun]: 1, [noun]: 2 },
+        },
+      },
+    };
+    expect(
+      combosOf(ordered, secondId).map(({ nounPhraseId, multiplier }) => [nounPhraseId, multiplier]),
+    ).toEqual([
+      [noun, 3],
+      [otherNoun, 2],
+      [newNoun, 2],
+    ]);
+    expect(Object.isFrozen(combosOf(ordered, secondId))).toBe(true);
+  });
+
+  test('tells the viewer that the game refreshed a spent hand automatically', () => {
+    let state = hotseatMatch(20_260_833);
+    const actorId = state.activePlayerId;
+    const opponentId = state.playerOrder.find((playerId) => playerId !== actorId)!;
+    const cards = ['common-noun-001', 'common-noun-002'].map((phraseId, index) => ({
+      id: `hand-1-${actorId}-${index + 1}`,
+      phraseId,
+    }));
+    const player = state.draft!.playerStates[actorId]!;
+    state = {
+      ...state,
+      draft: {
+        ...state.draft!,
+        playerStates: {
+          ...state.draft!.playerStates,
+          [actorId]: {
+            ...player,
+            hand: cards,
+            legalCards: [
+              ...player.legalCards.filter(({ source }) => source !== 'private'),
+              ...cards.map(({ id }) => ({ source: 'private' as const, cardId: id })),
+            ],
+          },
+        },
+      },
+    };
+    const select = (cardId: string) =>
+      accept(state, {
+        type: 'select-phrase',
+        source: 'user',
+        actorId,
+        payload: { card: { source: 'private', cardId } },
+      });
+    const viewer = (viewerId: string) =>
+      createMatchScreenSnapshot(state, englishGameLocale, null, null, null, {}, viewerId);
+    expect(viewer(actorId).actions).toMatchObject({ redrawUsed: false, redrawAutomatic: false });
+
+    state = select(cards[0]!.id);
+    state = accept(state, {
+      type: 'commit-sentence',
+      source: 'user',
+      actorId: opponentId,
+      payload: {},
+    });
+    expect(viewer(actorId).privateCards.filter(({ reference }) => reference)).toHaveLength(1);
+    expect(viewer(actorId).actions).toMatchObject({ redrawUsed: false, redrawAutomatic: false });
+
+    // The second private card empties the hand at the start of the next pick.
+    state = select(cards[1]!.id);
+    expect(state.activePlayerId).toBe(actorId);
+    const refreshed = viewer(actorId);
+    expect(refreshed.privateCards.map(({ reference }) => reference?.cardId)).toEqual([
+      `redraw-1-${actorId}-1`,
+      `redraw-1-${actorId}-2`,
+    ]);
+    expect(refreshed.privateCards.every(({ state: cardState }) => cardState === 'legal')).toBe(
+      true,
+    );
+    expect(refreshed.privateCards.every(({ text }) => text.length > 0)).toBe(true);
+    expect(refreshed.actions).toMatchObject({
+      canRedraw: false,
+      redrawUsed: true,
+      redrawAutomatic: true,
+    });
+    // A viewer that does not own the hand gets no card and no notice.
+    const other = viewer(opponentId);
+    expect(other.privateCards.every(({ reference }) => reference === null)).toBe(true);
+    expect(other.actions.redrawAutomatic).toBe(false);
+  });
+
+  test('reports no automatic refresh after a Reshuffle command', () => {
+    let state = hotseatMatch(20_260_834);
+    const actorId = state.activePlayerId;
+    state = accept(state, { type: 'redraw-hand', source: 'user', actorId, payload: {} });
+    const snapshot = createMatchScreenSnapshot(state, englishGameLocale);
+    expect(snapshot.actions).toMatchObject({ redrawUsed: true, redrawAutomatic: false });
+  });
+
   test('projects clause, finisher, weakness, combo, and comeback score components', () => {
     const scene = gameCatalog.scenes[0]!;
     let state = createMatchSetupState({
@@ -637,6 +830,52 @@ describe('match-screen snapshot', () => {
     });
   });
 });
+
+/** Each player selects the planned phrases in turn sequence, and then ends the sentence. */
+function draftSentences(
+  state: MatchState,
+  plans: Readonly<Record<string, readonly string[]>>,
+): MatchState {
+  const queues = Object.fromEntries(
+    Object.entries(plans).map(([playerId, phraseIds]) => [playerId, [...phraseIds]]),
+  );
+  let next = state;
+  while (next.phase === 'drafting') {
+    const actorId = next.activePlayerId;
+    const phraseId = queues[actorId]!.shift();
+    if (phraseId) {
+      next = selectPrivateCard(withPrivateCard(next, actorId, phraseId), actorId, phraseId);
+    } else {
+      next = accept(next, {
+        type: 'commit-sentence',
+        source: 'user',
+        actorId,
+        payload: {},
+      });
+    }
+  }
+  return next;
+}
+
+function hotseatMatch(seed: number): MatchState {
+  const scene = gameCatalog.scenes[0]!;
+  const state = createMatchSetupState({
+    schemaVersion: 1,
+    seed,
+    players: [configuredPlayer(0), configuredPlayer(1)],
+    sceneId: scene.id,
+    scenePhraseIds: scene.phrasePool,
+    generalPhraseIds: gameCatalog.phrases.map((phrase) => phrase.id),
+    mode: 'hotseat',
+    openingPlayerIndex: scene.openingPlayerIndex,
+  });
+  return accept(accept(state, lifecycleCommand('start-match')), lifecycleCommand('prepare-round'));
+}
+
+function phraseText(phraseId: string, locale = englishGameLocale): string {
+  const phrase = gameCatalog.phrases.find((candidate) => candidate.id === phraseId)!;
+  return locale.messages[phrase.textKey]!;
+}
 
 function withPrivateCard(state: MatchState, playerId: string, phraseId: string): MatchState {
   const draft = state.draft!;

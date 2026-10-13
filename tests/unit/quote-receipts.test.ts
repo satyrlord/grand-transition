@@ -301,11 +301,23 @@ describe('the Real-or-invented guess (AC-034-05)', () => {
     expect(JSON.stringify(allCards)).toBe(before);
   });
 
-  test('counts a real slogan as a real quote', () => {
+  test('counts a real quote, a real slogan, and an adaptation as Real', () => {
     expect(quoteGuessAnswer(sourced('a', 'exact-quote'))).toBe('real');
     expect(quoteGuessAnswer(sourced('a', 'real-slogan'))).toBe('real');
-    expect(quoteGuessAnswer(sourced('a', 'adapted-quote'))).toBe('adapted');
+    expect(quoteGuessAnswer(sourced('a', 'adapted-quote'))).toBe('real');
     expect(quoteGuessAnswer(invented('a'))).toBe('invented');
+  });
+
+  test('scores Real as the correct answer for an adapted card', () => {
+    // card-2 is adapted.
+    expect(scoreQuoteGuess(['card-2'], { 'card-2': 'real' }, reveals)).toEqual({
+      correct: 1,
+      total: 1,
+    });
+    expect(scoreQuoteGuess(['card-2'], { 'card-2': 'invented' }, reveals)).toEqual({
+      correct: 0,
+      total: 1,
+    });
   });
 
   test('scores each answer', () => {
@@ -314,13 +326,14 @@ describe('the Real-or-invented guess (AC-034-05)', () => {
     expect(
       scoreQuoteGuess(
         guessed,
-        { 'card-1': 'real', 'card-2': 'adapted', 'card-3': 'invented' },
+        { 'card-1': 'real', 'card-2': 'real', 'card-3': 'invented' },
         reveals,
       ),
     ).toEqual({ correct: 3, total: 3 });
-    expect(scoreQuoteGuess(guessed, { 'card-1': 'adapted', 'card-2': 'adapted' }, reveals)).toEqual(
-      { correct: 1, total: 3 },
-    );
+    expect(scoreQuoteGuess(guessed, { 'card-1': 'invented', 'card-2': 'real' }, reveals)).toEqual({
+      correct: 1,
+      total: 3,
+    });
     expect(scoreQuoteGuess(guessed, {}, reveals)).toEqual({ correct: 0, total: 3 });
   });
 });

@@ -2,6 +2,8 @@ import { z } from 'zod';
 import {
   characterDefinitionSchema,
   characterSchema,
+  comebackLineKey,
+  comebackLinesPerTier,
   identifierSchema,
   phraseDefinitionSchema,
   phraseSchema,
@@ -14,6 +16,7 @@ const maximumPhraseWordCount = 11;
 // A comeback line is delivered alone, with no card placed after it, so its
 // guardrail sits above the phrase ceiling. It still stops real bloat.
 const maximumComebackWordCount = 16;
+const comebackTiers = ['weak', 'medium', 'strong'] as const;
 
 // Guardrail ceilings by role. They only stop real bloat: a card may sit well
 // above the measured source-game band when the length is the joke, and the
@@ -45,6 +48,12 @@ const comebackLineSchema = z
       });
     }
   });
+
+// The sequence is content: the first line of a tier is the line that each
+// player has from the start.
+const comebackTierLinesSchema = z
+  .array(comebackLineSchema)
+  .length(comebackLinesPerTier, `Give each comeback tier exactly ${comebackLinesPerTier} lines.`);
 
 const manualPhraseCardSchema = phraseDefinitionSchema
   .omit({
@@ -158,9 +167,9 @@ const manualCharacterFileSchema = characterDefinitionSchema
     description: z.string().trim().min(1),
     comebacks: z
       .object({
-        weak: comebackLineSchema,
-        medium: comebackLineSchema,
-        strong: comebackLineSchema,
+        weak: comebackTierLinesSchema,
+        medium: comebackTierLinesSchema,
+        strong: comebackTierLinesSchema,
       })
       .strict(),
     phrases: manualPhraseCardsSchema,
@@ -276,12 +285,20 @@ export function parseCharacterCardFile(
   const corpus = parsePhraseCardCorpus(source.phrases, source.id, options);
   const nameKey = `character.${source.id}.name`;
   const descriptionKey = `character.${source.id}.description`;
-  const comebackLinesByTier = {
-    weak: [`comeback.${source.id}.weak`],
-    medium: [`comeback.${source.id}.medium`],
-    strong: [`comeback.${source.id}.strong`],
-  } as const;
   const { rosterOrder, name, description, comebacks, phrases: _phrases, ...definition } = source;
+  const comebackLinesByTier: Record<(typeof comebackTiers)[number], string[]> = {
+    weak: [],
+    medium: [],
+    strong: [],
+  };
+  const comebackMessages: Record<string, string> = {};
+  for (const tier of comebackTiers) {
+    comebacks[tier].forEach((line, lineIndex) => {
+      const key = comebackLineKey(source.id, tier, lineIndex);
+      comebackLinesByTier[tier].push(key);
+      comebackMessages[key] = line;
+    });
+  }
   const character = parsed(
     characterSchema,
     {
@@ -297,9 +314,7 @@ export function parseCharacterCardFile(
     ...corpus.englishMessages,
     [nameKey]: name,
     [descriptionKey]: description,
-    [comebackLinesByTier.weak[0]]: comebacks.weak,
-    [comebackLinesByTier.medium[0]]: comebacks.medium,
-    [comebackLinesByTier.strong[0]]: comebacks.strong,
+    ...comebackMessages,
   };
   return { rosterOrder, character, corpus, englishMessages };
 }

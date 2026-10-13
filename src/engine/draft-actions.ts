@@ -48,6 +48,7 @@ export const draftRuleErrorCodes = [
   'comeback-unaffordable',
 ] as const;
 export const grammarMistakeSelfDamage = 3;
+const timeoutBaseSelfDamage = 3;
 const maximumRoundDealAttempts = 32;
 
 export type DraftRuleErrorCode = (typeof draftRuleErrorCodes)[number];
@@ -133,6 +134,8 @@ export type DraftLogEntry = Readonly<{
   type: 'round-start' | DraftCommand['type'];
   actorId: string | null;
   cardSource?: DraftCardSource;
+  /** Present when the game refreshed a spent hand without a player command. */
+  automatic?: true;
 }>;
 
 export type DraftState = GameState<
@@ -434,6 +437,19 @@ function reduceDraftCommand(
     return reject(command, 'wrong-actor');
   }
 
+  const result = applyDraftCommand(state, player, command, context, randomSource);
+  return result.ok
+    ? { ok: true, state: refreshSpentHand(result.state, context, randomSource) }
+    : result;
+}
+
+function applyDraftCommand(
+  state: DraftState,
+  player: DraftPlayerState,
+  command: DraftCommand,
+  context: DraftEngineContext,
+  randomSource: RandomSource,
+): ReducerResult<DraftState, DraftRuleError> {
   switch (command.type) {
     case 'select-phrase':
       return selectPhrase(state, player, command, context);
@@ -514,6 +530,18 @@ function redrawHand(
   randomSource: RandomSource,
 ): ReducerResult<DraftState, DraftRuleError> {
   if (player.redrawUsed) return reject(command, 'redraw-already-used');
+  const refreshed = withRefreshedHand(state, player, context, randomSource);
+  if (!refreshed) return reject(command, 'redraw-unavailable');
+  return accept(refreshed, command, context, true);
+}
+
+/** Replaces the two private cards of a player, or gives `null` when the pool cannot. */
+function withRefreshedHand(
+  state: DraftState,
+  player: DraftPlayerState,
+  context: DraftEngineContext,
+  randomSource: RandomSource,
+): DraftState | null {
   const handResult = generatePrivateHand(
     {
       seed: state.seed,
@@ -528,7 +556,7 @@ function redrawHand(
     },
     randomSource,
   );
-  if (!handResult.ok) return reject(command, 'redraw-unavailable');
+  if (!handResult.ok) return null;
 
   const nextPlayer: DraftPlayerState = {
     ...player,
@@ -538,16 +566,44 @@ function redrawHand(
     })),
     redrawUsed: true,
   };
-  return accept(
+  return {
+    ...state,
+    seed: handResult.hand.nextSeed,
+    reservedPhraseIds: [...state.reservedPhraseIds, ...handResult.hand.phraseIds],
+    playerStates: { ...state.playerStates, [player.playerId]: nextPlayer },
+  };
+}
+
+/**
+ * Refreshes the hand of the player whose pick starts with no private card
+ * left, when that player did not use the refresh of this round.
+ */
+function refreshSpentHand(
+  state: DraftState,
+  context: DraftEngineContext,
+  randomSource: RandomSource,
+): DraftState {
+  if (state.phase !== 'drafting') return state;
+  const player = state.playerStates[state.activePlayerId];
+  if (
+    !player ||
+    player.construction.status !== 'building' ||
+    player.hand.length > 0 ||
+    player.redrawUsed
+  ) {
+    return state;
+  }
+  const refreshed = withRefreshedHand(state, player, context, randomSource);
+  if (!refreshed) return state;
+  return recalculatePlayers(
     {
-      ...state,
-      seed: handResult.hand.nextSeed,
-      reservedPhraseIds: [...state.reservedPhraseIds, ...handResult.hand.phraseIds],
-      playerStates: { ...state.playerStates, [player.playerId]: nextPlayer },
+      ...refreshed,
+      publicLog: [
+        ...refreshed.publicLog,
+        { type: 'redraw-hand', actorId: player.playerId, automatic: true },
+      ],
     },
-    command,
     context,
-    true,
   );
 }
 
@@ -624,7 +680,7 @@ function expireTurn(
   const consecutiveTimeouts = shouldPenalize
     ? player.consecutiveTimeouts + 1
     : player.consecutiveTimeouts;
-  const damage = shouldPenalize ? 3 * 2 ** (consecutiveTimeouts - 1) : 0;
+  const damage = shouldPenalize ? timeoutSelfDamage(consecutiveTimeouts) : 0;
   return accept(
     {
       ...state,
@@ -641,6 +697,16 @@ function expireTurn(
     context,
     false,
   );
+}
+
+/**
+ * The self-damage of the expiration at a position of one sequence: 3 for the
+ * first, then 3 times 2 to the power of the position, so 12, 24, and 48.
+ */
+export function timeoutSelfDamage(consecutiveTimeouts: number): number {
+  return consecutiveTimeouts <= 1
+    ? timeoutBaseSelfDamage
+    : timeoutBaseSelfDamage * 2 ** consecutiveTimeouts;
 }
 
 function acceptCardAction(

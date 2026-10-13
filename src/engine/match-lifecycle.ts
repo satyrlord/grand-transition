@@ -48,7 +48,6 @@ export type MatchSetup = Readonly<{
   aiDifficulty: string | null;
   timerSeconds: MatchTimerSeconds;
   speechEnabled: boolean;
-  privacyEnabled: boolean;
   basePointsMultiplier?: BasePointsMultiplier;
 }>;
 
@@ -194,7 +193,6 @@ export type MatchSetupRequest = Readonly<{
   mode?: MatchMode;
   aiDifficulty?: string | null;
   speechEnabled?: boolean;
-  privacyEnabled?: boolean;
   basePointsMultiplier?: BasePointsMultiplier;
   openingPlayerIndex?: 0 | 1;
 }>;
@@ -213,7 +211,6 @@ export function createMatchSetupState(request: MatchSetupRequest): MatchState {
     aiDifficulty: request.aiDifficulty ?? null,
     timerSeconds: 30,
     speechEnabled: request.speechEnabled ?? false,
-    privacyEnabled: request.privacyEnabled ?? true,
     ...(request.basePointsMultiplier !== undefined
       ? { basePointsMultiplier: request.basePointsMultiplier }
       : {}),
@@ -468,8 +465,13 @@ function reduceDraft(
   const timeoutDamageAfter = mistakeActorId
     ? (draft.playerStates[mistakeActorId]?.timeoutDamage ?? 0)
     : 0;
+  const penalty = grammarMistakeDamage + Math.max(0, timeoutDamageAfter - timeoutDamageBefore);
+  // A cliffhanger has no second chance: a mistake or a penalized expiration
+  // costs all the Pride that the player has left.
   const immediateSelfDamage =
-    grammarMistakeDamage + Math.max(0, timeoutDamageAfter - timeoutDamageBefore);
+    penalty > 0 && state.suddenDeathActive && mistakeActorId
+      ? Math.max(penalty, state.playerStates[mistakeActorId]!.pride)
+      : penalty;
   const playerStates = Object.fromEntries(
     state.playerOrder.map((playerId) => [
       playerId,

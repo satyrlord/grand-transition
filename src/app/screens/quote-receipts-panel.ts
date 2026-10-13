@@ -39,7 +39,7 @@ type Stage = 'gate' | 'guess' | 'receipts';
 type Sentence = MatchLogDocument['sentences'][number];
 type UsedPhrase = Sentence['phrases'][number];
 
-const guessAnswers = ['real', 'adapted', 'invented'] as const;
+const guessAnswers = ['real', 'invented'] as const;
 
 /**
  * The Milestone 034 panel of one completed match. It shows only the public
@@ -188,7 +188,7 @@ export class GrandTransitionQuoteReceipts extends LitElement {
         @submit=${this.revealGuess}
       >
         <p class="quote-guess-intro">
-          ${msg('Real, adapted, or invented? Select one answer for each phrase.')}
+          ${msg('Real or invented? Select one answer for each phrase.')}
           ${
             match.setup.mode === 'hotseat'
               ? msg('The two players make one guess together.')
@@ -486,31 +486,27 @@ declare global {
 // Milestone 034 receipt text. A record has only enumerated values, so each
 // label and each context is interface text of the active interface language.
 
-/** The label never says that a speaker said the text of an adapted card. */
+/**
+ * A real quote, a real slogan, and an adaptation of a real statement have one
+ * label. It says that the phrase comes from real speech. It never says that a
+ * speaker said the text of the card.
+ */
 export function quoteRevealLabel(record: QuoteRevealRecord): string {
-  switch (record.classification) {
-    case 'exact-quote':
-      return msg('Real quote');
-    case 'adapted-quote':
-      return msg('Adapted from a real statement');
-    case 'real-slogan':
-      return msg('Real slogan');
-    case 'generic-phrase':
-      return msg('Everyday phrase');
-    case 'invented':
-      return msg('Invented for the game');
-  }
+  if (isSourcedQuoteReveal(record)) return msg('From real speech');
+  return record.classification === 'generic-phrase'
+    ? msg('Everyday phrase')
+    : msg('Invented for the game');
 }
 
 /**
- * The translation note of a real quote whose card is not in its source
- * language. `cardLocale` is the locale of the card text on the screen.
+ * The translation note of a phrase from real speech whose card is not in its
+ * source language. `cardLocale` is the locale of the card text on the screen.
  */
 export function quoteRevealTranslation(
   record: QuoteRevealRecord,
   cardLocale: string,
 ): string | null {
-  if (record.classification !== 'exact-quote') return null;
+  if (!isSourcedQuoteReveal(record)) return null;
   if (cardLocale.split('-')[0] === record.sourceLanguage) return null;
   switch (record.sourceLanguage) {
     case 'ro':
@@ -534,14 +530,7 @@ export function quoteRevealContext(record: QuoteRevealRecord): string | null {
 }
 
 export function quoteGuessAnswerLabel(answer: QuoteGuessAnswer): string {
-  switch (answer) {
-    case 'real':
-      return msg('Real quote');
-    case 'adapted':
-      return msg('Adapted');
-    case 'invented':
-      return msg('Invented');
-  }
+  return answer === 'real' ? msg('Real') : msg('Invented');
 }
 
 // A council venue already gives its usual level.

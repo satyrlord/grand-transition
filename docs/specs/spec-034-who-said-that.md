@@ -51,12 +51,19 @@ An `invented` or `generic-phrase` record has none of these four fields.
 Ordinary language has no attributed source statement.
 The interface translates each enumerated value through Lit localization, so a record has no free text.
 
-The labels obey the Milestone 005 rule against adaptations shown as real words:
+The player sees one outcome for the three sourced classifications: the phrase is **Real**.
+A phrase is Real when its card keeps, or closely follows, wording that a person said in real life.
+The other outcome of the guess is **Invented**.
+The record keeps the classification as editorial detail.
+The interface must not show a different label, answer, or style for `exact-quote`, `adapted-quote`, and `real-slogan`.
 
-- `exact-quote`: **Real quote.** The card keeps the real wording.
-  When the card language is not the source language, the label adds **Translated from Romanian** or the related language.
-- `adapted-quote`: **Adapted from a real statement.** The label never says that the speaker said the card text.
-- `real-slogan`: **Real slogan.**
+The receipt labels are these:
+
+- `exact-quote`, `adapted-quote`, and `real-slogan`: **From real speech.**
+  The label says where the phrase comes from.
+  It never says that the speaker said the card text.
+  Thus it obeys the Milestone 005 rule against adaptations shown as real words.
+  When the card language is not the source language, the receipt adds **Translated from Romanian** or the related language.
 - `generic-phrase`: **Everyday phrase.** This is ordinary language, such as a
   pronoun, a family member, a basic relation, or a simple connector. It counts as
   real, without a claim that it is an attributed quote.
@@ -115,7 +122,7 @@ The tool gives the number of required cards with no record for each owner.
 The victory screen of Milestone 019 gets a **Who said that?** button.
 It opens a panel that lists each committed sentence of the match in turn order.
 In each sentence, each phrase that has a record shows its label and its context, for example
-**Real quote · County council, 2014**.
+**From real speech · County council, 2014**.
 A phrase with no record, and a continuation, shows no receipt.
 A receipt of a phrase from real speech is the reward, so its label and its context are larger than those of an `invented` receipt.
 When no eligible committed phrase has a verified source, the panel says
@@ -146,8 +153,10 @@ Ordinary-language cards do not enter the guess, because they have no attributed
 quote for the player to discover.
 The selection uses the match seed, so it is deterministic.
 The panel does not give the number of real phrases before the guess.
-For each phrase, the player selects **Real quote**, **Adapted**, or **Invented**.
-`real-slogan` counts as **Real quote**.
+For each phrase, the player selects **Real** or **Invented**.
+The guess must not offer a third answer.
+**Real** is the correct answer for `exact-quote`, `adapted-quote`, and `real-slogan`.
+**Invented** is the correct answer for `invented`.
 Then the panel gives the score, for example **3 of 5**.
 Below the score, it shows the receipt of each phrase of the guess only, and it marks each guess correct or not correct.
 Below these receipts is a closed section with a **Full record** link.
@@ -173,6 +182,7 @@ It lists each reveal record whose card a player committed in a completed match, 
 The context shows the venue, the level, and the year, for example **Television (national level), 2014**.
 It does not show the level when the venue gives it, for example **County council, 2014**.
 Each item shows the card text in the interface language, its label, and its context.
+When the interface language is not the source language, the item adds the translation label.
 The phrases from real speech are first in the list.
 The archive also shows the number of records found, the total number of records, and the best guess score.
 It shows the same two numbers for the records from real speech.
@@ -181,8 +191,12 @@ show their label without source context.
 
 Store the archive in the Milestone 020 persistence as a new document with its own codec and schema version.
 It contains only card IDs, the best guess score, and the IDs of the matches whose guess is closed.
+It does not contain the answers of a guess.
+Thus a stored score stays valid when the answers of the guess change.
 A stored archive that has no list of match IDs is an archive with no closed guess.
-A reset of stored data also clears it.
+The game has no control that clears the archive or opens a guess again.
+When the player clears the site data of the browser, the browser removes the archive with all the other stored data.
+Then the archive is empty, and no guess is closed.
 A match that does not complete does not add records.
 
 ## Acceptance criteria
@@ -196,15 +210,19 @@ A match that does not complete does not add records.
   It shows no receipt for other phrases, and no card that was not committed.
   A historical phrase with wording outside its current permitted forms cannot
   receive the attribution of replacement text or enter the guess.
-- **AC-034-04:** An `adapted-quote` card never shows **Real quote**.
-  An `exact-quote` card in a language that is not its source language shows the translation label.
+- **AC-034-04:** An `exact-quote` card, an `adapted-quote` card, and a `real-slogan` card show the same label, **From real speech**.
+  No receipt shows a label that only one of these classifications has.
+  A sourced card in a language that is not its source language shows the translation label.
 - **AC-034-05:** The guess selects the same phrases for the same seed, it scores each answer correctly, and it does not change the match record or the replay.
+  The guess offers only **Real** and **Invented**, and **Real** is the correct answer for an `adapted-quote` card.
   After the guess, the panel shows only the receipts of the guessed phrases, and the full list is in a closed **Full record** section.
 - **AC-034-10:** A match offers its guess one time only.
   After the panel shows the receipts of a match, a new panel of that match shows no guess, also after a reload.
-  A reset of stored data opens the guess again.
+  The game has no control that opens the guess again.
+  After the player clears the site data of the browser, no guess is closed.
 - **AC-034-06:** The archive adds each committed record after a completed match, and it survives a reload.
-  A reset clears it, and a match that is not complete does not change it.
+  It is empty after the player clears the site data of the browser.
+  A match that is not complete does not change it.
 - **AC-034-07:** The panel and the archive pass the supported landscape viewport matrix, keyboard navigation, and forced colors, in English and in Romanian.
 - **AC-034-08:** Removed. No automated check reads the private research folder.
 - **AC-034-09:** At least half of all shipped card IDs have non-`invented` records.
@@ -227,6 +245,9 @@ Do not use a decoration that hides the text.
   The unit suite also checks the complete-catalog percentage of AC-034-09.
   Private research records the editorial and search evidence for that criterion.
 - `tests/unit/quote-receipts.test.ts` and `tests/browser/quote-receipts.browser.test.ts` do checks of AC-034-03, AC-034-04, and AC-034-05.
+  The unit test checks that **Real** is the correct answer for each sourced classification.
+  The browser test checks the one label, the translation label, and the two answers of the guess, in English and in Romanian.
+  `e2e/quote-reveals.spec.ts` checks the one label and the translation label of the shipped sourced records in the archive.
 - `tests/unit/quote-archive.test.ts` and `tests/browser/quote-receipts.browser.test.ts` do checks of AC-034-10.
 - `tests/unit/quote-archive.test.ts`, `tests/unit/match-coordinator.test.ts`, and the browser test do checks of AC-034-06.
 - `tests/browser/layout-regions.browser.test.ts` and `e2e/quote-reveals.spec.ts` do checks of AC-034-07.

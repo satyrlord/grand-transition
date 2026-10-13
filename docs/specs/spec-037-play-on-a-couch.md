@@ -17,9 +17,9 @@
 ## Purpose
 
 Hotseat puts two private hands on one screen.
-The game must conceal each hand between turns, and the players must look away.
+It shows the private hand of the active player and has no concealment step, so the other player must look away.
 In a Couch room, the host shows the arena to the whole room, and each player holds a private hand on a phone.
-Thus the hand stays private without concealment, and the room can watch the match without a break.
+Thus the hand stays private, and the room can watch the match without a break.
 
 The design copies the host-and-phones model of party games.
 The host shows the scenes, the characters, the animations, the sounds, the music, and the voices.

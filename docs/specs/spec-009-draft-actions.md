@@ -28,6 +28,9 @@ The player can do these actions:
 | Use comeback               | Use the strongest filled tier, and end the sentence             |
 | Let the timer stop         | Pass the pick. When the opponent ended, apply the timeout rule  |
 
+Milestone 008 controls the automatic refresh of a spent hand.
+That refresh is not a player action and not a command.
+
 A finisher or a comeback ends the sentence immediately.
 A continuation ends the participation of that player and carries the fragment to the next round.
 The game does not give turns to the players that completed or continued.
@@ -44,7 +47,8 @@ Unlimited does not send `expire-turn`.
 When the two players are active, the expiration passes the pick.
 It does not end the sentence, and it does not deal damage.
 When the other player completed or continued, the player with the stopped timer gets 3 damage on the first expiration in a sequence.
-Each subsequent expiration in the same sequence doubles the previous damage: 6, 12, and 24.
+Expiration `n` of the same sequence, for `n` of 2 or more, deals 3 times 2 to the power of `n`: 12, 24, and 48.
+This is the escalation of the reference game.
 The selection of a card resets the expiration sequence.
 Expiration self-damage does not charge a comeback.
 
@@ -64,7 +68,7 @@ They do not name a private phrase that is not selected.
   It cannot give again a phrase from a hand or from the board in the same round.
 - **AC-009-04:** The pure state records the baseline of 30 seconds.
   An `expire-turn` command passes the pick as usual.
-  After the opponent ends, it deals 3, 6, 12, and 24 on four sequential expirations.
+  After the opponent ends, it deals 3, 12, 24, and 48 on four sequential expirations.
 - **AC-009-05:** Some private phrases are not selected.
   Their IDs and their text do not go into the snapshot of the opponent or the public log.
   Accepted construction text stays public, and this includes text from a private card.

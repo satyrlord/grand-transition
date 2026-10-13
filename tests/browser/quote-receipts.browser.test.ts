@@ -244,23 +244,23 @@ describe('receipts panel', () => {
     expect(document.activeElement).toBe(panel.querySelector('.quote-receipts-list'));
 
     expect(receiptFacts(panel, ids.exactRomanian!)).toEqual({
-      label: 'Real quote',
+      label: 'From real speech',
       translation: 'Translated from Romanian',
       context: 'County council, 2014',
     });
     expect(receiptFacts(panel, ids.exactEnglish!)).toEqual({
-      label: 'Real quote',
+      label: 'From real speech',
       translation: null,
       context: 'Television (national level), 2001',
     });
     expect(receiptFacts(panel, ids.adapted!)).toEqual({
-      label: 'Adapted from a real statement',
-      translation: null,
+      label: 'From real speech',
+      translation: 'Translated from Romanian',
       context: 'Parliament (international level), 2019',
     });
     expect(receiptFacts(panel, ids.slogan!)).toEqual({
-      label: 'Real slogan',
-      translation: null,
+      label: 'From real speech',
+      translation: 'Translated from Romanian',
       context: 'Protest (national level), 2017',
     });
     expect(receiptFacts(panel, ids.invented!)).toEqual({
@@ -269,12 +269,12 @@ describe('receipts panel', () => {
       context: null,
     });
     expect(receiptFacts(panel, ids.council!)).toEqual({
-      label: 'Adapted from a real statement',
-      translation: null,
+      label: 'From real speech',
+      translation: 'Translated from another language',
       context: 'Local council, 1990',
     });
     expect(receiptFacts(panel, ids.exactOther!)).toEqual({
-      label: 'Real quote',
+      label: 'From real speech',
       translation: 'Translated from another language',
       context: 'Court (county level), 2026',
     });
@@ -308,20 +308,28 @@ describe('receipts panel', () => {
     ).toEqual(ordered.map(({ playerId }) => playerId));
   });
 
-  test('never shows Real quote for an adapted card, and marks a translated real quote (AC-034-04)', async () => {
+  test('shows one label for each phrase from real speech, and marks a translated phrase (AC-034-04)', async () => {
     const english = completedMatch('en').matchLog;
     const { reveals, ids } = fixtureReveals(english);
     let panel = await mountPanel(english, reveals);
     button(panel, 'Show receipts').click();
     await panel.updateComplete;
-    for (const receipt of panel.querySelectorAll('[data-receipt-classification="adapted-quote"]')) {
-      expect(text(receipt)).not.toContain('Real quote');
-      expect(text(receipt.querySelector('.quote-receipt-label'))).toBe(
-        'Adapted from a real statement',
-      );
-      expect(receipt.querySelector('.quote-receipt-translation')).toBeNull();
+    // A real quote, a real slogan, and an adaptation show the same label.
+    for (const classification of ['exact-quote', 'adapted-quote', 'real-slogan']) {
+      const receipts = [
+        ...panel.querySelectorAll(`[data-receipt-classification="${classification}"]`),
+      ];
+      expect(receipts.length).toBeGreaterThan(0);
+      for (const receipt of receipts) {
+        expect(text(receipt.querySelector('.quote-receipt-label'))).toBe('From real speech');
+      }
     }
+    // No classification has a label of its own, so the panel has two labels.
+    expect(new Set([...panel.querySelectorAll('.quote-receipt-label')].map(text))).toEqual(
+      new Set(['From real speech', 'Invented for the game']),
+    );
     expect(receiptFacts(panel, ids.exactRomanian!).translation).toBe('Translated from Romanian');
+    expect(receiptFacts(panel, ids.adapted!).translation).toBe('Translated from Romanian');
     expect(receiptFacts(panel, ids.exactEnglish!).translation).toBeNull();
 
     // The same cards in a Romanian match: the Romanian source is not a translation.
@@ -329,8 +337,10 @@ describe('receipts panel', () => {
     panel = await mountPanel(romanian, reveals);
     button(panel, 'Show receipts').click();
     await panel.updateComplete;
-    if (panel.querySelector(`[data-receipt-card="${ids.exactRomanian}"]`)) {
-      expect(receiptFacts(panel, ids.exactRomanian!).translation).toBeNull();
+    for (const cardId of [ids.exactRomanian, ids.adapted, ids.slogan]) {
+      if (panel.querySelector(`[data-receipt-card="${cardId}"]`)) {
+        expect(receiptFacts(panel, cardId!).translation).toBeNull();
+      }
     }
     if (panel.querySelector(`[data-receipt-card="${ids.exactEnglish}"]`)) {
       expect(receiptFacts(panel, ids.exactEnglish!).translation).toBe('Translated from English');
@@ -347,13 +357,13 @@ describe('receipts panel', () => {
     button(panel, 'Arată dovezile').click();
     await panel.updateComplete;
     expect(receiptFacts(panel, ids.exactRomanian!)).toEqual({
-      label: 'Citat real',
+      label: 'Din declarații reale',
       translation: 'Tradus din română',
       context: 'Consiliu județean, 2014',
     });
     expect(receiptFacts(panel, ids.adapted!)).toEqual({
-      label: 'Adaptare după o declarație reală',
-      translation: null,
+      label: 'Din declarații reale',
+      translation: 'Tradus din română',
       context: 'Parlament (nivel internațional), 2019',
     });
     expect(receiptFacts(panel, ids.invented!).label).toBe('Inventat pentru joc');
@@ -520,6 +530,74 @@ describe('Real-or-invented guess (AC-034-05)', () => {
     expect(JSON.stringify(log)).toBe(before);
   });
 
+  test.each([
+    {
+      interfaceLocale: 'en',
+      intro: 'Real or invented? Select one answer for each phrase.',
+      options: ['Real', 'Invented'],
+      score: 'Your score 2 of 2',
+      mark: 'Your guess: Real · Correct',
+    },
+    {
+      interfaceLocale: 'ro-RO',
+      intro: 'Real sau inventat? Alege un răspuns pentru fiecare expresie.',
+      options: ['Real', 'Inventat'],
+      score: 'Scorul tău 2 din 2',
+      mark: 'Răspunsul tău: Real · Corect',
+    },
+  ] as const)(
+    'offers two answers in $interfaceLocale, and Real is correct for an adapted phrase',
+    async ({ interfaceLocale, intro, options, score, mark }) => {
+      await setInterfaceLocale(interfaceLocale);
+      const log = completedMatch().matchLog;
+      const { ids } = fixtureReveals(log);
+      const reveals = createQuoteRevealIndex(
+        [
+          sourced(ids.adapted!, 'adapted-quote', 'ro', 'parliament', 'national', 2019),
+          { cardId: ids.invented!, classification: 'invented' },
+        ],
+        gameCatalog.phrases,
+      );
+      const panel = await mountPanel(log, reveals);
+      panel.querySelector<HTMLButtonElement>('.quote-receipts-primary')!.click();
+      await panel.updateComplete;
+      expect(text(panel.querySelector('.quote-guess-intro'))).toBe(intro);
+      const items = [...panel.querySelectorAll<HTMLElement>('[data-guess-card]')];
+      expect(new Set(items.map((item) => item.dataset.guessCard))).toEqual(
+        new Set([ids.adapted, ids.invented]),
+      );
+      // The guess has no third answer.
+      for (const item of items) {
+        const offered = [...item.querySelectorAll('.quote-guess-option')];
+        expect(offered.map((option) => option.querySelector('input')!.value)).toEqual([
+          'real',
+          'invented',
+        ]);
+        expect(offered.map(text)).toEqual(options);
+      }
+
+      for (const [cardId, answer] of [
+        [ids.adapted, 'real'],
+        [ids.invented, 'invented'],
+      ] as const) {
+        panel
+          .querySelector<HTMLInputElement>(
+            `[data-guess-card="${cardId}"] input[value="${answer}"]`,
+          )!
+          .click();
+      }
+      await panel.updateComplete;
+      panel.querySelector<HTMLButtonElement>('.quote-receipts-primary')!.click();
+      await panel.updateComplete;
+      expect(text(panel.querySelector('.quote-guess-score'))).toBe(score);
+      const adapted = panel.querySelector<HTMLElement>(
+        `.quote-guess-results [data-receipt-card="${ids.adapted}"] .quote-receipt-guess`,
+      )!;
+      expect(adapted.dataset.guessResult).toBe('correct');
+      expect(text(adapted)).toBe(mark);
+    },
+  );
+
   test('offers the guess of a match one time only', async () => {
     const log = completedMatch().matchLog;
     const { reveals } = fixtureReveals(log);
@@ -677,7 +755,7 @@ describe('quote archive (AC-034-06)', () => {
       englishGameLocale.messages[key(ids.exactRomanian!)],
     );
     expect(receiptFacts(archive, ids.exactRomanian!)).toEqual({
-      label: 'Real quote',
+      label: 'From real speech',
       translation: 'Translated from Romanian',
       context: 'County council, 2014',
     });
@@ -693,7 +771,7 @@ describe('quote archive (AC-034-06)', () => {
       romanianGameLocale.messages[key(ids.exactRomanian!)],
     );
     expect(receiptFacts(archive, ids.exactRomanian!)).toEqual({
-      label: 'Citat real',
+      label: 'Din declarații reale',
       translation: null,
       context: 'Consiliu județean, 2014',
     });
@@ -726,7 +804,7 @@ describe('quote archive (AC-034-06)', () => {
     );
   });
 
-  test('opens from the title, survives a reload, and is empty after a reset', async () => {
+  test('opens from the title, survives a reload, and is empty after the site data is cleared', async () => {
     await page.viewport(1280, 720);
     const saved = shipped.filter((id) => isSourcedQuoteReveal(quoteReveals.get(id)!)).slice(0, 2);
     expect(saved).toHaveLength(2);

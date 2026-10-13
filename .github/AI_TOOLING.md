@@ -12,12 +12,13 @@ Each target controls its guidance.
 - [`PROSE.md`](PROSE.md) gives the technical writing checks, the project glossary, and the checks for differences between documents and code.
 - [`agents/README.md`](agents/README.md) is the index of the specialist review agents.
 - [`instructions/`](instructions/) gives Copilot guidance for specified paths.
-- [`prompts/`](prompts/) contains optional milestone prompts for integrated
-  development environments (IDEs) that can use prompt files.
+- [`implement-milestone`](skills/implement-milestone/SKILL.md) and
+  [`review-milestone`](skills/review-milestone/SKILL.md) give the milestone workflows.
+  Start these workflows only when the user names the skill.
 - [`.codex/config.toml`](../.codex/config.toml) gives Microsoft Learn access to
-  trusted local Codex application, command-line interface (CLI), and IDE sessions.
-- [`.vscode/mcp.json`](../.vscode/mcp.json) gives Microsoft Learn access to
-  VS Code Copilot sessions.
+  trusted local Codex application, command-line interface (CLI), and integrated development environment (IDE) sessions.
+- [`.vscode/mcp.json`](../.vscode/mcp.json) contains no repository MCP server connections.
+  It does not configure Microsoft Learn for VS Code Copilot sessions.
 - Each profile in [`agents/`](agents/) gives its custom Copilot agent access to the same server.
   This access includes cloud clients and CLI clients that can use the profile field.
 
@@ -86,7 +87,8 @@ A client uses this configuration only when it can use the profile field.
 The GitHub [agent configuration
 reference](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
 tells that IDE agents do not use the `mcp-servers` field of the profile.
-VS Code uses `.vscode/mcp.json` for that server connection.
+The tracked `.vscode/mcp.json` has an empty server map.
+It does not give VS Code a Microsoft Learn connection.
 
 ## Items that the repository does not include
 
@@ -98,5 +100,4 @@ VS Code uses `.vscode/mcp.json` for that server connection.
 - Do not include a generic orchestrator agent or builder agent.
   `AGENTS.md` controls the coordination, the approval for implementation, the verification, and the last steps.
 
-Prompt files are an optional feature of GitHub Copilot in IDEs.
-Agents can use the skills and the instructions without prompt files.
+The repository uses milestone skills and has no milestone prompt files.

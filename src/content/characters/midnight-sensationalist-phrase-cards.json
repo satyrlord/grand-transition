@@ -27,9 +27,21 @@
     "delivery"
   ],
   "comebacks": {
-    "weak": "Stay tuned for even less evidence.",
-    "medium": "The hidden system called. It wants you off air.",
-    "strong": "I promised viewers a fortune. You missed the punchline."
+    "weak": [
+      "Stay tuned for even less evidence.",
+      "Breaking news: your point is still developing.",
+      "Stay with us: your argument returns after the weather."
+    ],
+    "medium": [
+      "The hidden system called. It wants you off air.",
+      "We go live to your evidence. The street is empty.",
+      "My phone lines are jammed. Every caller wants you muted."
+    ],
+    "strong": [
+      "I promised viewers a fortune. You missed the punchline.",
+      "I broadcast scandals all night. Yours could not hold one commercial break.",
+      "Tonight's special edition: your credibility, found abandoned in a car park."
+    ]
   },
   "aiPersonality": {
     "aggression": 0.8,

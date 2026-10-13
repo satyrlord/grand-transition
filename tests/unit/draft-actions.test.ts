@@ -404,12 +404,14 @@ describe('Hollywood Roast draft actions', () => {
       status: 'ended',
       selectedComebackTier: 'strong',
     });
-    expect(state.playerStates[playerIds[0]]!.construction.previewText).toMatch(
-      /\. Your argument is lost in the synergy\.$/u,
+    // The seeded draw selects one of the three strong lines of the character.
+    const strongLines = gameCatalog.characters[0]!.comebackLinesByTier.strong.map(
+      (key) => englishGameLocale.messages[key]!,
     );
-    expect(state.playerStates[playerIds[0]]!.construction.analysis.publicText).not.toContain(
-      'Your argument got lost in the synergy',
-    );
+    const construction = state.playerStates[playerIds[0]]!.construction;
+    const closingLine = strongLines.find((line) => construction.previewText.endsWith(`. ${line}`));
+    expect(closingLine).toBeDefined();
+    expect(construction.analysis.publicText).not.toContain(closingLine!);
     expect(state.playerStates[playerIds[0]]!.comebackCharge).toBe(0);
   });
 
@@ -438,6 +440,86 @@ describe('Hollywood Roast draft actions', () => {
     });
   });
 
+  describe('automatic refresh of a spent hand', () => {
+    const expire = (state: DraftState, actorId: string) =>
+      run(state, { type: 'expire-turn', source: 'user', actorId, payload: {} });
+    const withOnlyCard = (state: DraftState, playerId: string, phraseId: string): DraftState => ({
+      ...state,
+      playerStates: {
+        ...state.playerStates,
+        [playerId]: {
+          ...state.playerStates[playerId]!,
+          hand: [{ id: 'test-last-card', phraseId }],
+        },
+      },
+    });
+    const playLastCard = (state: DraftState, playerId: string) =>
+      select(withOnlyCard(state, playerId, 'common-noun-001'), playerId, {
+        source: 'private',
+        cardId: 'test-last-card',
+      });
+
+    test('deals two new cards when the pick of a player with no private card starts', () => {
+      const initial = prepared();
+      const dealtBefore = new Set(initial.reservedPhraseIds);
+      let state = playLastCard(initial, playerIds[0]);
+      expect(state.playerStates[playerIds[0]]!.hand).toHaveLength(0);
+      expect(state.playerStates[playerIds[0]]!.redrawUsed).toBe(false);
+
+      // The pick comes back to the first player without a card selection.
+      state = expire(state, playerIds[1]);
+      const player = state.playerStates[playerIds[0]]!;
+      expect(state.activePlayerId).toBe(playerIds[0]);
+      expect(player.hand).toHaveLength(2);
+      expect(player.redrawUsed).toBe(true);
+      expect(player.hand.every((card) => !dealtBefore.has(card.phraseId))).toBe(true);
+      expect(player.legalCards.length).toBeGreaterThan(0);
+      expect(state.commandHistory.some((command) => command.type === 'redraw-hand')).toBe(false);
+      expect(state.publicLog.at(-1)).toEqual({
+        type: 'redraw-hand',
+        actorId: playerIds[0],
+        automatic: true,
+      });
+    });
+
+    test('refreshes at once when the player keeps the pick after the opponent ended', () => {
+      let state = run(prepared(), {
+        type: 'expire-turn',
+        source: 'user',
+        actorId: playerIds[0],
+        payload: {},
+      });
+      state = run(state, {
+        type: 'commit-sentence',
+        source: 'user',
+        actorId: playerIds[1],
+        payload: {},
+      });
+      state = playLastCard(state, playerIds[0]);
+      expect(state.activePlayerId).toBe(playerIds[0]);
+      expect(state.playerStates[playerIds[0]]!.hand).toHaveLength(2);
+      expect(state.playerStates[playerIds[0]]!.redrawUsed).toBe(true);
+    });
+
+    test('does not refresh for a player who used the refresh of the round', () => {
+      let state = run(prepared(), {
+        type: 'redraw-hand',
+        source: 'user',
+        actorId: playerIds[0],
+        payload: {},
+      });
+      state = playLastCard(state, playerIds[0]);
+      state = expire(state, playerIds[1]);
+      expect(state.activePlayerId).toBe(playerIds[0]);
+      expect(state.playerStates[playerIds[0]]!.hand).toHaveLength(0);
+    });
+
+    test('is deterministic for one seed', () => {
+      const play = () => expire(playLastCard(prepared(), playerIds[0]), playerIds[1]);
+      expect(play()).toEqual(play());
+    });
+  });
+
   test('a timeout passes the pick while both players are building', () => {
     const state = run(prepared(), {
       type: 'expire-turn',
@@ -450,10 +532,10 @@ describe('Hollywood Roast draft actions', () => {
     expect(state.playerStates[playerIds[0]]!.construction.status).toBe('building');
   });
 
-  test('timeouts after the opponent ends deal 3, 6, 12, and 24', () => {
+  test('timeouts after the opponent ends deal 3, 12, 24, and 48', () => {
     let state = prepared();
     state = selectPrivate(state, playerIds[0], 'common-continuation-001', 'first-carry');
-    const expectations = [3, 9, 21, 45];
+    const expectations = [3, 15, 39, 87];
     for (const expected of expectations) {
       state = run(state, {
         type: 'expire-turn',

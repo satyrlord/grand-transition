@@ -159,6 +159,10 @@ Apply the same family humor review and editorial review to those 9 cards.
 - Word limits: `conjunction` 6, `continuation` 1, `verb` 10, `modifier` 9, `noun` 10, `predicate` 10, and `ending` 11.
   Each form that the player sees and each agreement form has 11 words or fewer.
   Each comeback line has 16 words or fewer.
+- Each character file gives exactly three comeback lines for each of the `weak`, `medium`, and `strong` tiers.
+  Keep the first line of a tier first, because the line number is part of its locale key.
+  Add the Romanian lines as `comeback.<character-id>.<tier>.1`, `.2`, and `.3` in `src/content/ro/characters/<character-id>.json`.
+  Each comeback text is unique in its locale across all characters.
 - An `ending` text ends with a full stop.
 - Identifiers and the text that the player sees are unique across the common corpus and all the character files.
 - The full catalog has one `continuation` card, and its cue stays `[...]`.

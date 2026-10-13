@@ -295,7 +295,16 @@ blank broadcast-paper stack. Keep the listening ear cup, speaking slice, small
 stop palm, stronger bent-knee recoil and worried two-hand paper guard. Each
 pose used only that accepted selection. All six sources retain their native
 1254-square canvas and use only bounded detached alpha-1 cleanup. Registration
-preserves all reviewed decoded pixels. The alternate package remains unchanged.
+preserves all reviewed decoded pixels.
+The revised alternate preserves its accepted drawn face, layered honey-brown bob,
+navy pantsuit, cream-white open blouse, red pocket square and belt, gold studs,
+low navy pumps and one blank paper stack. Keep its small slender paper-holding
+hand and slightly long red nails only on visible dorsal nail plates. Palm-side
+finger pads and the selection's raised-index tip stay skin-colored. Its listening
+ear cup, speaking palm, small recoil, stronger bent-knee recoil and guarded
+weakness each use only the accepted selection as reference. All six sources are
+native 1254-square. Weakness retains generated pixels; the other five sources use
+only bounded detached alpha-1 cleanup. Registration preserves all reviewed pixels.
 Exact numeric contour conformance remains unverified; preserve the approved
 selection and the reviewed pose pixels.
 Focused asset, unit, character-presenter and production-build checks passed for
@@ -304,6 +313,12 @@ landscape sizes. Regional clipping and speech-overlap checks pass, but do not
 check HUD occlusion. At 640 by 320, the HUD hides the faces and upper props with
 both the previous sprites and the revised sprites. Keep this layout gap separate
 from source-art acceptance. Full suites and aggregate gates remain deferred.
+The revised alternate also passed focused asset, unit, character-presenter and
+production-build checks in an isolated checkout of committed source with the
+installed art. Its nine states passed the regional checks on both sides at all
+20 landscape sizes. Source hand closeups and desktop/near-square captures show
+correct nail placement. The same phone HUD gap remains; concurrent background
+source changes, complete text access and full UI acceptance are not verified.
 
 All four Velvet Mogul packages retain native 1254-square sources. The default,
 Boardroom Patriarch and Silk Diplomat face right; Velvet Statesman faces left.

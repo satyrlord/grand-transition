@@ -135,13 +135,15 @@ describe('game-locale bundle validation', () => {
 
     const repeatedComebacks = validateGameLocaleBundleText(
       bundle('ro-RO', {
-        'comeback.a.weak': 'Ai spus asta deja.',
-        'comeback.b.medium': 'Ai spus asta deja.',
+        'comeback.a.weak.1': 'Ai spus asta deja.',
+        'comeback.a.weak.2': 'Ai spus  asta deja. ',
+        'comeback.b.medium.3': 'AI SPUS ASTA DEJA.',
       }),
       'ro-RO',
     );
     expect(pathsAndCodes(repeatedComebacks)).toEqual([
-      { path: 'messages.comeback.b.medium', code: 'duplicate-visible-text' },
+      { path: 'messages.comeback.a.weak.2', code: 'duplicate-visible-text' },
+      { path: 'messages.comeback.b.medium.3', code: 'duplicate-visible-text' },
     ]);
   });
 
