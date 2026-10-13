@@ -289,9 +289,21 @@ the written direction for new selections.
 
 Both Midnight Sensationalist packages face left in their native sources.
 Their paper stacks and hand gestures stay inside the visible match window.
-The default selection includes a reviewed chat margin correction for its
-smallest runtime variant. Each pose used its original accepted selection as
-the only image reference; all sources retain their native 1254-square canvas.
+The revised default package preserves its owner-approved oval face and adult
+proportions, grouped gray hair, navy suit, cream-white shirt, oxblood tie and one
+blank broadcast-paper stack. Keep the listening ear cup, speaking slice, small
+stop palm, stronger bent-knee recoil and worried two-hand paper guard. Each
+pose used only that accepted selection. All six sources retain their native
+1254-square canvas and use only bounded detached alpha-1 cleanup. Registration
+preserves all reviewed decoded pixels. The alternate package remains unchanged.
+Exact numeric contour conformance remains unverified; preserve the approved
+selection and the reviewed pose pixels.
+Focused asset, unit, character-presenter and production-build checks passed for
+the revised default. Installed tests cover all nine states on both sides at 20
+landscape sizes. Regional clipping and speech-overlap checks pass, but do not
+check HUD occlusion. At 640 by 320, the HUD hides the faces and upper props with
+both the previous sprites and the revised sprites. Keep this layout gap separate
+from source-art acceptance. Full suites and aggregate gates remain deferred.
 
 All four Velvet Mogul packages retain native 1254-square sources. The default,
 Boardroom Patriarch and Silk Diplomat face right; Velvet Statesman faces left.

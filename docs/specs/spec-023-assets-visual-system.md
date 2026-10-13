@@ -141,16 +141,33 @@ Its Romanian ceremonial architecture includes pale carved piers, shallow
 arcades, paneled doors and a coffered ceiling. Retain the accepted slight
 tonal variation and wall/floor join near 66 percent as source-specific
 decisions. The manifest geometry and interface placement remain unchanged.
-The Midnight Sensationalist default and alternate selections and their five
+The owner-approved revised Midnight Sensationalist default selection and five
 reviewed matching poses are installed under the authorized package integration.
-All twelve sources use native 1254-square canvases and face left. The default
-selection includes a reviewed chat margin correction for the 128-pixel runtime
-variant. Each pose used only its original accepted selection as the image
-reference. Keep the reviewed identity, paper-hand continuity and prop clearance.
-The alternate retains its accepted master's slight facial tonal modeling as a
-source-specific decision, without changing the direction for future artwork.
-Metadata registration preserves the reviewed pixels; the existing nine-state
-mappings, skin identifiers and complete asset inventory remain unchanged.
+All six sources retain native 1254-square canvases and face left. Keep the
+accepted oval face, short gray hair in broad drawn locks, lean adult build,
+navy suit, cream-white shirt, oxblood tie and one blank broadcast-paper stack.
+Preserve concentrated ear-cupping, urgent speaking with a slicing hand, small
+stop-palm recoil, stronger bent-knee recoil and worried two-hand paper guard.
+Each pose used only the accepted selection as its image reference. All six
+sources use only bounded detached alpha-1 cleanup; metadata registration
+preserves their reviewed decoded pixels. The existing nine-state mappings,
+skin identifiers and complete asset inventory remain unchanged. Exact numeric
+contour-width conformance remains unverified; preserve the approved selection.
+The alternate package retains its six accepted native 1254-square, left-facing
+sources, including its master's slight facial tonal modeling as a source-specific
+decision. These decisions do not change the written direction for future artwork.
+Focused asset checks, 38 unit tests, 24 character-presenter browser tests and the
+production build passed for the revised default package. Installed checks cover
+all nine logical states on both sides at 20 landscape sizes in Transition-Era
+Television Studio, at device pixel ratio 1. All 3,600 regional stage-clipping and
+speech-overlap samples passed; 144 captured variant responses match the installed
+manifests, with no browser errors or missing selected assets. These checks do not
+check HUD occlusion. At 640 by 320, the HUD hides both faces and upper props with
+both the previous sprites and the revised sprites. This layout gap remains open.
+Reviewed desktop and near-square captures retain the faces, papers and defining
+gestures. Full long-text access, other scenes, natural transitions, physical
+devices and heard speech remain unverified. Full suites and aggregate gates are
+deferred at the owner's request.
 The four approved Velvet Mogul selections and their twenty matching poses are
 installed. All twenty-four sources retain native 1254-square canvases. The
 default, Boardroom Patriarch and Silk Diplomat face right; Velvet Statesman
