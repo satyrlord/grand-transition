@@ -19,7 +19,7 @@ const identity = {
   source,
   sourceSha256,
   license: 'Apache-2.0',
-  runtime: 'onnxruntime-web@1.29.0',
+  runtime: 'onnxruntime-web@1.30.0',
   pronunciation: 'phonemizer@1.2.1',
   sampleRate: 24000,
   samplesPerDurationFrame: 600,
@@ -30,8 +30,8 @@ const identity = {
   shards,
   runtimeModule: {
     path: 'ort-wasm-simd-threaded.asyncify.mjs',
-    bytes: 51407,
-    sha256: '5d25483158d53d8f34d0e9c06a654d56c8dca4ebdf370ea0982ef11315a00e0e',
+    bytes: 53057,
+    sha256: '3d1c85995364bb643302fc6fd877a0c3ba5ae72401815e0f24828a53d9191e28',
   },
   voices: [
     { id: 'bm_george', name: 'George', lang: 'en-GB', default: true },
@@ -77,7 +77,7 @@ const files = [
   {
     path: 'NOTICE.txt',
     bytes: 566,
-    sha256: 'a049696c6525749b8ec3fa3faeb0df1c5fb93c7781b0c522a967fdf70a502053',
+    sha256: 'eb3e581a8d3cfdf6fcc8b981ab6f888563c67065a081df0553fdd4594d3ec72d',
   },
   {
     path: 'onnx-runtime-LICENSE',
@@ -86,13 +86,13 @@ const files = [
   },
   {
     path: 'onnx-runtime-NOTICES',
-    bytes: 336906,
-    sha256: '53d3fa5821ac016ac24dd35775c996efec86e2ae0841e9a3a5e146c0ae916845',
+    bytes: 338088,
+    sha256: '143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3',
   },
   {
     path: 'ort-wasm-simd-threaded.asyncify.wasm',
-    bytes: 25749873,
-    sha256: '503d17cb7411b79781b9fad1cf0978f03cf06b050c7d399c730e914f473bf549',
+    bytes: 26781914,
+    sha256: '39f9f0894d478800487ed9f7dbe92618498db320cf55c8e3d89adff8dce658da',
   },
   {
     path: 'phonemizer-LICENSE',
@@ -108,7 +108,7 @@ const files = [
 const vocabulary =
   '{"$":0,";":1,":":2,",":3,".":4,"!":5,"?":6,"\u2014":9,"\u2026":10,"\\"":11,"(":12,")":13,"\u201c":14,"\u201d":15," ":16,"\u0303":17,"\u02a3":18,"\u02a5":19,"\u02a6":20,"\u02a8":21,"\u1d5d":22,"\uab67":23,"A":24,"I":25,"O":31,"Q":33,"S":35,"T":36,"W":39,"Y":41,"\u1d4a":42,"a":43,"b":44,"c":45,"d":46,"e":47,"f":48,"h":50,"i":51,"j":52,"k":53,"l":54,"m":55,"n":56,"o":57,"p":58,"q":59,"r":60,"s":61,"t":62,"u":63,"v":64,"w":65,"x":66,"y":67,"z":68,"\u0251":69,"\u0250":70,"\u0252":71,"\u00e6":72,"\u03b2":75,"\u0254":76,"\u0255":77,"\u00e7":78,"\u0256":80,"\u00f0":81,"\u02a4":82,"\u0259":83,"\u025a":85,"\u025b":86,"\u025c":87,"\u025f":90,"\u0261":92,"\u0265":99,"\u0268":101,"\u026a":102,"\u029d":103,"\u026f":110,"\u0270":111,"\u014b":112,"\u0273":113,"\u0272":114,"\u0274":115,"\u00f8":116,"\u0278":118,"\u03b8":119,"\u0153":120,"\u0279":123,"\u027e":125,"\u027b":126,"\u0281":128,"\u027d":129,"\u0282":130,"\u0283":131,"\u0288":132,"\u02a7":133,"\u028a":135,"\u028b":136,"\u028c":138,"\u0263":139,"\u0264":140,"\u03c7":142,"\u028e":143,"\u0292":147,"\u0294":148,"\u02c8":156,"\u02cc":157,"\u02d0":158,"\u02b0":162,"\u02b2":164,"\u2193":169,"\u2192":171,"\u2197":172,"\u2198":173,"\u1d7b":177}\n';
 const notice =
-  'Kokoro-82M v1.0 FP32. Source: https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX\nPinned revision: 1939ad2a8e416c0acfeecc08a694d14ef25f2231. Apache-2.0.\nBritish voices: George (bm_george) and Emma (bf_emma).\nExpose predicted phoneme durations and add a multiplicative F0 pitch input; retain all trained weights.\nThe model is split into ordered static shards and reassembled without changing bytes.\nONNX Runtime Web 1.29.0: Microsoft Corporation, MIT. See onnx-runtime-LICENSE and onnx-runtime-NOTICES.\nPhonemizer.js 1.2.1: Apache-2.0. See phonemizer-LICENSE.\n';
+  'Kokoro-82M v1.0 FP32. Source: https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX\nPinned revision: 1939ad2a8e416c0acfeecc08a694d14ef25f2231. Apache-2.0.\nBritish voices: George (bm_george) and Emma (bf_emma).\nExpose predicted phoneme durations and add a multiplicative F0 pitch input; retain all trained weights.\nThe model is split into ordered static shards and reassembled without changing bytes.\nONNX Runtime Web 1.30.0: Microsoft Corporation, MIT. See onnx-runtime-LICENSE and onnx-runtime-NOTICES.\nPhonemizer.js 1.2.1: Apache-2.0. See phonemizer-LICENSE.\n';
 
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 async function pinnedInput(cache: string, url: string, expected: string): Promise<Buffer> {
@@ -203,11 +203,11 @@ async function build() {
     ['kokoro-LICENSE', `${source}/resolve/${revision}/LICENSE`],
     [
       'onnx-runtime-LICENSE',
-      'https://raw.githubusercontent.com/microsoft/onnxruntime/v1.29.0/LICENSE',
+      'https://raw.githubusercontent.com/microsoft/onnxruntime/v1.30.0/LICENSE',
     ],
     [
       'onnx-runtime-NOTICES',
-      'https://raw.githubusercontent.com/microsoft/onnxruntime/v1.29.0/ThirdPartyNotices.txt',
+      'https://raw.githubusercontent.com/microsoft/onnxruntime/v1.30.0/ThirdPartyNotices.txt',
     ],
   ])
     await pinnedInput(

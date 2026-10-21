@@ -170,7 +170,7 @@ presentation again.
 ## Local neural speech
 
 Use streamed Piper `en_GB-vctk-medium`, revision
-`1162a9173d0ce503555aed757976b7a9912eae4c`, with ONNX Runtime Web 1.29.0
+`1162a9173d0ce503555aed757976b7a9912eae4c`, with ONNX Runtime Web 1.30.0
 and phonemizer 1.2.1. One shared model gives British male speaker p226
 (speaker ID 95) and British female speaker p225 (speaker ID 107). The published
 model repository has the MIT license. The VCTK dataset uses CC BY 4.0. Ship the
@@ -311,7 +311,7 @@ The title Settings checkbox `GPU voices` is on by default. Its setting is
 not related to the speech setting. It selects streamed FP32 Kokoro with the
 British George and Emma voices.
 The local GPU package is approximately 353 MB. It uses the compact
-WebGPU entry point of ONNX Runtime Web 1.29.0 and the Asyncify runtime that
+WebGPU entry point of ONNX Runtime Web 1.30.0 and the Asyncify runtime that
 agrees with it. Each model shard is less than 100 MiB.
 
 The worker checks the pinned hash of each shard. It does not hash the

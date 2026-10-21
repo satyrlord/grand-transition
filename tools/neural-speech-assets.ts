@@ -14,7 +14,7 @@ const identity = {
   revision,
   source: 'https://huggingface.co/rhasspy/piper-voices',
   license: 'MIT; VCTK dataset CC BY 4.0',
-  runtime: 'onnxruntime-web@1.29.0',
+  runtime: 'onnxruntime-web@1.30.0',
   pronunciation: 'phonemizer@1.2.1',
   sampleRate: 22050,
   samplesPerDurationFrame: 256,
@@ -86,8 +86,8 @@ const expectedFiles = [
   },
   {
     path: 'onnx-runtime-NOTICES',
-    bytes: 336906,
-    sha256: '53d3fa5821ac016ac24dd35775c996efec86e2ae0841e9a3a5e146c0ae916845',
+    bytes: 338088,
+    sha256: '143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3',
   },
   {
     path: 'phonemizer-LICENSE',
@@ -96,8 +96,8 @@ const expectedFiles = [
   },
   {
     path: 'ort-wasm-simd-threaded.wasm',
-    bytes: 13961845,
-    sha256: 'ec8580a9d7b9476ceee52e10a7f94124e4dc71a019d666ed6d4726697c109a4d',
+    bytes: 14239897,
+    sha256: '3398c10d07d229bd91b364548e130e0e51a8e5704b88c7c083ebbeb78842dee2',
   },
 ];
 const names = expectedFiles.map(({ path: name }) => name);
@@ -192,7 +192,7 @@ async function build() {
   ]) {
     await writeFile(
       path.join(root, to),
-      await download(`https://raw.githubusercontent.com/microsoft/onnxruntime/v1.29.0/${from}`),
+      await download(`https://raw.githubusercontent.com/microsoft/onnxruntime/v1.30.0/${from}`),
     );
   }
   await writeFile(

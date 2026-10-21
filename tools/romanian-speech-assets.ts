@@ -107,7 +107,7 @@ const identity = {
   schemaVersion: 1,
   package: 'Piper-ro_RO-mihai-medium + Piper-ro_RO-liana-medium',
   sampleRate: 22050,
-  runtime: 'onnxruntime-web@1.29.0',
+  runtime: 'onnxruntime-web@1.30.0',
   pronunciation: 'espeak-phonemizer@0.1.2',
   espeakRevision,
   dictionaryEspeakRevision,
@@ -155,7 +155,7 @@ const expectedFiles = [
   {
     path: 'NOTICE.txt',
     bytes: 1932,
-    sha256: '1d997840a0e04fb6db654c03b65102c8d70cd490ea8bf0fff69322c200b992de',
+    sha256: 'b9fea9f99672c3670d360cdb8bff2efd3010eeeea82ad7df3ca2378cd1035509',
   },
   {
     path: 'liana/MODEL_CARD',
@@ -449,7 +449,7 @@ function notice(bucketName: string): string {
     `The shipped pronouncing data is trimmed to Romanian: core.data plus ${bucketName}.data.`,
     '',
     identity.modification,
-    'ONNX Runtime is supplied by onnxruntime-web@1.29.0, Microsoft Corporation, MIT; its licence ships with the English Piper package.',
+    'ONNX Runtime is supplied by onnxruntime-web@1.30.0, Microsoft Corporation, MIT; its licence ships with the English Piper package.',
     '',
   ].join('\n');
 }

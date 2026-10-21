@@ -5,7 +5,7 @@
   "source": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX",
   "sourceSha256": "8fbea51ea711f2af382e88c833d9e288c6dc82ce5e98421ea61c058ce21a34cb",
   "license": "Apache-2.0",
-  "runtime": "onnxruntime-web@1.29.0",
+  "runtime": "onnxruntime-web@1.30.0",
   "pronunciation": "phonemizer@1.2.1",
   "sampleRate": 24000,
   "samplesPerDurationFrame": 600,
@@ -20,8 +20,8 @@
   ],
   "runtimeModule": {
     "path": "ort-wasm-simd-threaded.asyncify.mjs",
-    "bytes": 51407,
-    "sha256": "5d25483158d53d8f34d0e9c06a654d56c8dca4ebdf370ea0982ef11315a00e0e"
+    "bytes": 53057,
+    "sha256": "3d1c85995364bb643302fc6fd877a0c3ba5ae72401815e0f24828a53d9191e28"
   },
   "voices": [
     {
@@ -76,7 +76,7 @@
     {
       "path": "NOTICE.txt",
       "bytes": 566,
-      "sha256": "a049696c6525749b8ec3fa3faeb0df1c5fb93c7781b0c522a967fdf70a502053"
+      "sha256": "eb3e581a8d3cfdf6fcc8b981ab6f888563c67065a081df0553fdd4594d3ec72d"
     },
     {
       "path": "onnx-runtime-LICENSE",
@@ -85,13 +85,13 @@
     },
     {
       "path": "onnx-runtime-NOTICES",
-      "bytes": 336906,
-      "sha256": "53d3fa5821ac016ac24dd35775c996efec86e2ae0841e9a3a5e146c0ae916845"
+      "bytes": 338088,
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3"
     },
     {
       "path": "ort-wasm-simd-threaded.asyncify.wasm",
-      "bytes": 25749873,
-      "sha256": "503d17cb7411b79781b9fad1cf0978f03cf06b050c7d399c730e914f473bf549"
+      "bytes": 26781914,
+      "sha256": "39f9f0894d478800487ed9f7dbe92618498db320cf55c8e3d89adff8dce658da"
     },
     {
       "path": "phonemizer-LICENSE",
