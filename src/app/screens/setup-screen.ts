@@ -375,6 +375,7 @@ export class GrandTransitionSetup extends LitElement {
             </button>
             <button
               type="submit"
+              data-testid="setup-start-match"
               class="primary-action"
               ?disabled=${
                 (this.snapshot.mode === 'hotseat' && !this.hotseatAvailable) ||

@@ -191,16 +191,21 @@ test('unavailable speech keeps the game playable without narration', async ({ pa
 });
 
 for (const timer of [
-  { label: '15 seconds', value: '15' },
-  { label: 'Unlimited', value: 'unlimited' },
+  { label: '15 seconds', value: '15', afterSecond: '14' },
+  { label: 'Unlimited', value: 'unlimited', afterSecond: 'unlimited' },
 ] as const) {
   test(`the ${timer.label} timer setting reaches the match`, async ({ page }) => {
+    // Host latency must not consume the initial countdown before it is checked.
+    await page.clock.install({ time: new Date('2026-08-23T12:00:00Z') });
+    await page.clock.pauseAt(new Date('2026-08-23T12:01:00Z'));
     await page.goto('./');
-    await page.getByRole('button', { name: 'Settings', exact: true }).click();
-    await page.getByRole('button', { name: timer.label, exact: true }).click();
-    await page.getByRole('button', { name: 'Close', exact: true }).click();
+    await page.getByTestId('title-settings').click();
+    await page.getByTestId(`settings-timer-${timer.value}`).click();
+    await page.getByTestId('settings-close').click();
     await startHotseat(page);
     await expect(page.locator(`[data-timer="${timer.value}"]`)).toBeVisible();
+    await page.clock.runFor(1_000);
+    await expect(page.locator(`[data-timer="${timer.afterSecond}"]`)).toBeVisible();
   });
 }
 
@@ -267,9 +272,9 @@ test('the fixed release match reaches victory and reopens from history', async (
 });
 
 async function startHotseat(page: Page): Promise<void> {
-  await page.getByRole('button', { name: 'Multiplayer', exact: true }).click();
+  await page.getByTestId('title-mode-hotseat').click();
   await lockInSetup(page);
-  await page.getByRole('button', { name: 'Start match', exact: true }).click();
+  await page.getByTestId('setup-start-match').click();
   await expect(page.locator('.shared-board')).toBeVisible();
 }
 

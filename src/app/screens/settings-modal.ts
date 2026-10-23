@@ -83,6 +83,7 @@ export class GrandTransitionSettings extends LitElement {
             </div>
             <button
               type="button"
+              data-testid="settings-close"
               class="settings-close"
               @click=${this.close}
             >
@@ -318,6 +319,7 @@ export class GrandTransitionSettings extends LitElement {
   private renderTimerOption(value: TurnTimerSeconds, label: string) {
     return html`<button
       type="button"
+      data-testid=${`settings-timer-${value ?? 'unlimited'}`}
       aria-pressed=${this.settings.turnTimerSeconds === value}
       @click=${() => this.changeSetting('turnTimerSeconds', value)}
     >
