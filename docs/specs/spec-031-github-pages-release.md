@@ -19,7 +19,8 @@ Complete the release documentation.
 The repository is `satyrlord/grand-transition`, the default branch is `main`, and the base is `/grand-transition/`.
 After a rename, a transfer, a move to a root site, or a branch change, update the specification, Vite, Playwright, and the workflow together.
 
-The workflow installs Node.js 24 and runs `npm ci`.
+The workflow installs Node.js 24.22.1 and runs `npm ci`.
+The pull-request, build, and published-smoke jobs use the same patched Node.js release.
 It installs Playwright Chromium and stable Chrome with their dependencies.
 It runs `npm run quality:release`, and it uploads only `dist/` with the official Pages artifact action.
 The release gate is the Milestone 002 full gate without `test:e2e:full`.
@@ -48,7 +49,7 @@ The deploy job has a `needs` dependency on the build job.
 It cannot run after a build that failed, a canceled build, a build from a pull request, or a build that is not from `main`.
 
 The build job checks out the commit of the change with the complete history (`fetch-depth: 0`), because the game version counts the commits.
-It installs Node.js 24.
+It installs Node.js 24.22.1.
 It restores the Git LFS objects from a cache with a key from the LFS object list, and it runs `git lfs pull`.
 It installs the npm version in `packageManager` and runs `npm ci`.
 It installs Playwright Chromium and stable Chrome with their dependencies and runs `npm run quality:release`.

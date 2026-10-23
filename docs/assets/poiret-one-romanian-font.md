@@ -13,7 +13,17 @@ Its SHA-256 hash is
 `bcfc2f5d5f828c3aee7ec2ed422c086aa42fa582d22e503c956ca261e96da0dc`.
 The SHA-256 hash of the derived file is
 `a55b2e450ce53af7cee2cdb4533ec2e044d132eaa689441292d6813906aed5ca`.
-Install `fonttools[woff]`.
+Install the maintenance dependencies with this command:
+
+```powershell
+py -m pip install --upgrade -r tools/requirements-fonts.txt
+```
+
+The requirements file sets Brotli 1.2.1 as the minimum version for the WOFF2 decoder.
+This version contains the fix for
+[CVE-2026-111497](https://github.com/google/brotli/releases/tag/v1.2.1).
+These Python dependencies are only for this maintenance script.
+The production build and browser runtime do not install them.
 Then, to make the file again, run `py tools/build-romanian-display-font.py`.
 Before the script writes the file, it examines the source hash and the comma outlines.
 

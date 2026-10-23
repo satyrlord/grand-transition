@@ -295,7 +295,8 @@ If it does not agree with an approved specification, obey the specification.
 
 ## Technology
 
-The approved implementation uses Node.js 24 Long-Term Support (LTS), npm 12, TypeScript 7, Vite 8, Lit 3, `@lit/localize`, and Zod 4.
+The approved implementation uses Node.js 24.22.1 or a later Node.js 24 Long-Term Support (LTS) release.
+It uses npm 12, TypeScript 7, Vite 8, Lit 3, `@lit/localize`, and Zod 4.
 It also uses plain CSS, a pure deterministic game engine, and validated data files.
 The result is a static GitHub Pages build.
 The accurate contracts and the active milestones are in `docs/specs/`.

@@ -38,7 +38,7 @@ The workflow has three jobs.
 1. The `build` job has only `contents: read`.
    1. It checks out the commit of the change with the complete history, and it restores the Git Large File Storage (LFS) objects.
       The complete history gives the commit count of the game version, for example `v1.177`.
-   2. It installs Node.js 24, the npm version in `packageManager`, and the lockfile dependencies.
+   2. It installs Node.js 24.22.1, the npm version in `packageManager`, and the lockfile dependencies.
    3. It installs Playwright Chromium and stable Chrome with their dependencies.
    4. It runs `npm run quality:release`, which is the full quality gate without `test:e2e:full`.
       It builds `dist/` with `build:bundle` after the other phases pass.

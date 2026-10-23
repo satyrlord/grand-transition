@@ -1,0 +1,3 @@
+# Dependencies for build-romanian-display-font.py only.
+fonttools[woff]
+Brotli>=1.2.1
