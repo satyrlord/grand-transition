@@ -122,7 +122,7 @@ describe('Milestone 031 release workflow', () => {
       steps.join(', '),
     ).toBe(true);
     expect([...positions].sort((a, b) => a - b)).toEqual(positions);
-    expect(build).toMatch(/node-version: 24\n/u);
+    expect(build).toMatch(/node-version: '24\.22\.1'\n/u);
     // The game version counts all commits, so the build checks out the full history.
     expect(build).toMatch(
       /uses: actions\/checkout@\S+ # v\S+\n\s+with:\n(?:\s+#.*\n)?\s+fetch-depth: 0\n/u,

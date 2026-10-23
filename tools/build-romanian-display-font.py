@@ -1,7 +1,11 @@
 """Build the checked-in Poiret One Latin Extended file with Romanian T-comma mappings.
 
-This maintenance script requires fonttools[woff] (including brotli). It is not
-part of the runtime or production build; the resulting WOFF2 is checked in.
+Install maintenance dependencies with:
+    py -m pip install --upgrade -r tools/requirements-fonts.txt
+
+The requirements set Brotli 1.2.1 as the minimum WOFF2 decoder version.
+This script is not part of the runtime or production build.
+The resulting WOFF2 is checked in.
 """
 
 from hashlib import sha256

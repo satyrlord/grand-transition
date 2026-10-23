@@ -11,7 +11,10 @@
 
 ## Deliver
 
-Install Node.js 24 Long-Term Support (LTS), npm 12, strict TypeScript 7, Vite 8, and Lit 3.
+Install Node.js 24.22.1 or a later Node.js 24 Long-Term Support (LTS) release.
+Install npm 12, strict TypeScript 7, Vite 8, and Lit 3.
+The Node.js minimum contains the Brotli decoder security fix for
+[CVE-2026-111497](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases).
 Add the approved directory structure and a title placeholder.
 Commit the lockfile.
 In this slice, add only the `dev`, `preview`, `build`, and `typecheck` scripts.
@@ -32,7 +35,7 @@ Record the accurate versions in `package-lock.json`.
 
 ## Scaffold contract
 
-- `package.json` declares `npm@12.0.2`, Node.js `24.x`, npm `12.x`, native ES modules, and a private package.
+- `package.json` declares `npm@12.0.2`, Node.js `^24.22.1`, npm `12.x`, native ES modules, and a private package.
 - The lockfile is the only authority for the dependency versions.
   A clean install must not change it.
 - The title placeholder contains one visible `main` and one `h1` with the name “Grand Transition.”
@@ -45,7 +48,8 @@ Record the accurate versions in `package-lock.json`.
 
 ## Acceptance criteria
 
-- **AC-001-01:** A clean `npm ci` uses Node.js 24 and npm 12, and it completes without errors.
+- **AC-001-01:** A clean `npm ci` uses Node.js 24.22.1 or a later Node.js 24 release, with npm 12.
+  It completes without errors.
   It does not change `package-lock.json`, and it installs the resolved versions in that file.
   Do the check with the clean-install check.
 - **AC-001-02:** `npm run typecheck` and `npm run build` stop with exit code 0.
