@@ -202,6 +202,7 @@ export class GrandTransitionTitle extends LitElement {
               ([mode, label]) => html`
               <button
                 type="button"
+                data-testid=${`title-mode-${mode}`}
                 class="title-setup-action"
                 ?disabled=${mode === 'hotseat' && !this.hotseatAvailable}
                 aria-describedby=${
@@ -226,6 +227,7 @@ export class GrandTransitionTitle extends LitElement {
           <div class="title-secondary-actions" data-layout-region="secondary-actions">
             <button
               type="button"
+              data-testid="title-settings"
               class="title-settings-action"
               aria-haspopup="dialog"
               @click=${this.showSettings}
