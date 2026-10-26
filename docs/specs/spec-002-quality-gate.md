@@ -129,7 +129,18 @@ Milestone 031 gave this rule first for the deployment workflow.
 Dependabot keeps the `github-actions` pins current through `.github/dependabot.yml`.
 The repository keeps PNG, WAV, OGG, MP3, ONNX, BIN, and WASM files in Git Large File Storage (LFS) through `.gitattributes`.
 Each workflow checks out the complete history (`fetch-depth: 0`), because the build counts the commits for the game version of Milestone 015.
-Each workflow restores the LFS objects from a cache after checkout, and it runs `git lfs pull` before it installs the dependencies.
+Each asset-consuming workflow restores the LFS objects from a cache after checkout.
+Use a key from the LFS object list and the `lfs-` restore prefix.
+Keep the same cache path and key format in the quality and release workflows.
+Run `git lfs pull` and `git lfs fsck --objects HEAD` before dependency installation.
+After a successful pull and object validation, save a cache miss before later checks start.
+A failed pull or object validation must not save the cache.
+A later dependency or test failure must not discard that saved cache.
+A newer pull-request quality run cancels an older run for the same pull request.
+Main push runs use separate concurrency groups and do not cancel one another.
+This concurrency rule does not change release deployment.
+For source-only local work, contributors can keep LFS pointer files and reuse the checkout.
+Builds and checks that read assets must first download and validate the objects for the selected commit.
 
 Collect the production TypeScript coverage from the component suite in a real browser.
 Make sure that the global minimum values are 70 percent for statements, branches, functions, and lines.
@@ -212,3 +223,10 @@ The calibration, ladder, and content-lifecycle tests select their full-only beha
 When a person runs it directly, it fails before it loads the content.
 Environment variables cannot decrease its workload.
 In `tests/unit/quality-gate.test.ts`, do checks of the runner connections, and make sure that a run that a person starts directly fails.
+
+**AC-002-11:** The quality workflow reuses unchanged LFS objects after the object list changes.
+It saves newly downloaded objects after successful validation, before dependency installation or tests.
+It cancels superseded runs only for the same pull request.
+The verifier is `tests/unit/release-pages-workflow.test.ts` and the LFS cache steps in a pull-request run.
+The code-only checkout procedure in `README.md` changes no global Git setting.
+The verifier is a fresh local fixture clone with that procedure, followed by `git lfs pull`.

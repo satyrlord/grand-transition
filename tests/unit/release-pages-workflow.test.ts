@@ -104,8 +104,10 @@ describe('Milestone 031 release workflow', () => {
     const steps = [
       'uses: actions/checkout@',
       'run: git lfs ls-files --long',
-      'uses: actions/cache@',
+      'uses: actions/cache/restore@',
       'run: git lfs pull',
+      'run: git lfs fsck --objects HEAD',
+      'uses: actions/cache/save@',
       'uses: actions/setup-node@',
       "require('./package.json').packageManager",
       'run: npm ci',
@@ -137,6 +139,52 @@ describe('Milestone 031 release workflow', () => {
     expect(build).toContain('artifact-digest: ${{ steps.digest.outputs.sha256 }}');
   });
 
+  test('keeps validated LFS downloads when later installation or tests fail', async () => {
+    for (const file of [workflowPath, '.github/workflows/quality-gate.yml']) {
+      const workflow = await readFile(file, 'utf8');
+      const steps = workflow.split(/\n {6}- name: /u);
+      const restore = steps.find((step) => step.startsWith('Restore the Git LFS cache'))!;
+      const pull = steps.find((step) => step.startsWith('Download the Git LFS objects'))!;
+      const validate = steps.find((step) => step.startsWith('Validate the Git LFS objects'))!;
+      const save = steps.find((step) => step.startsWith('Save the Git LFS cache'))!;
+
+      expect(restore, file).toContain('uses: actions/cache/restore@');
+      expect(restore).toContain('path: .git/lfs');
+      expect(restore).toContain("key: lfs-${{ hashFiles('.lfs-assets-id') }}");
+      expect(restore).toContain('restore-keys: lfs-');
+      // A fallback cache still needs a pull, validation, and a save with the new key.
+      expect(pull).toContain('run: git lfs pull');
+      expect(validate).toContain('run: git lfs fsck --objects HEAD');
+      expect(pull + validate).not.toMatch(/if:|continue-on-error:/u);
+      expect(save).toContain("if: steps.lfs-cache.outputs.cache-hit != 'true'");
+      expect(save).not.toMatch(/always\(\)|failure\(\)|continue-on-error:/u);
+      expect(save).toContain('uses: actions/cache/save@');
+      expect(save).toContain('path: .git/lfs');
+      expect(save).toContain('key: ${{ steps.lfs-cache.outputs.cache-primary-key }}');
+      const positions = [restore, pull, validate, save].map((step) => steps.indexOf(step));
+      expect([...positions].sort((a, b) => a - b)).toEqual(positions);
+      expect(workflow.indexOf('uses: actions/cache/save@')).toBeLessThan(
+        workflow.indexOf('uses: actions/setup-node@'),
+      );
+    }
+  });
+
+  test('cancels superseded PR checks without canceling main or release jobs', async () => {
+    const workflow = await readFile('.github/workflows/quality-gate.yml', 'utf8');
+    const concurrency = workflow.slice(
+      workflow.indexOf('\nconcurrency:'),
+      workflow.indexOf('\njobs:'),
+    );
+
+    expect(concurrency).toContain(
+      'group: quality-${{ github.event.pull_request.number || github.run_id }}',
+    );
+    expect(concurrency).toContain("cancel-in-progress: ${{ github.event_name == 'pull_request' }}");
+    const release = await readFile(workflowPath, 'utf8');
+    expect(jobSection(release, 'deploy')).toContain('cancel-in-progress: false');
+    expect(jobSection(release, 'published-smoke')).not.toContain('git lfs pull');
+  });
+
   test('smokes the published release against the deployed artifact digest', async () => {
     const workflow = await readFile(workflowPath, 'utf8');
     const smoke = jobSection(workflow, 'published-smoke');
@@ -158,7 +206,7 @@ describe('Milestone 031 release workflow', () => {
 
     expect(actionLines.length).toBeGreaterThan(0);
     for (const line of actionLines) {
-      expect(line).toMatch(/uses: actions\/[a-z-]+@[0-9a-f]{40} # v\d+(?:\.\d+)*$/u);
+      expect(line).toMatch(/uses: actions\/[a-z-]+(?:\/[a-z-]+)?@[0-9a-f]{40} # v\d+(?:\.\d+)*$/u);
     }
   });
 });
