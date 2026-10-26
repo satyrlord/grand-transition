@@ -89,6 +89,15 @@ Apply the same restriction to each new check that operates for a long time.
 Before you add a package script for such a check, add the check to the full gate.
 Add an executable guard that stops the check when a person runs it directly.
 
+## Git LFS bandwidth
+
+Reuse an existing checkout and its `.git/lfs` objects when possible.
+For source-only work, use the code-only checkout procedure in `README.md`.
+Do not download media only to inspect source or documentation.
+Before a build or a check that reads media, run `git lfs pull` and `git lfs fsck --objects HEAD`.
+Do not use `git lfs fetch --all` for usual work.
+Report checks blocked by missing assets separately from code failures.
+
 ## AI workflow
 
 Use [`.github/AI_TOOLING.md`](.github/AI_TOOLING.md) as the index for the AI guidance of the repository.

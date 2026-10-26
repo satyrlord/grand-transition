@@ -304,6 +304,42 @@ The accurate contracts and the active milestones are in `docs/specs/`.
 The repository keeps images, audio, and speech models in Git Large File Storage (LFS).
 Install Git LFS and run `git lfs install` before you clone the repository.
 
+### Work without repeated asset downloads
+
+Reuse your existing checkout for code changes.
+Keep its `.git/lfs` directory, which holds downloaded assets.
+Do not use `git lfs fetch --all` for usual development.
+It downloads historical objects that the selected commit does not use.
+
+For a new code-only checkout, run this command in PowerShell or a terminal:
+
+```text
+git -c filter.lfs.smudge= -c filter.lfs.process= -c filter.lfs.required=false clone https://github.com/satyrlord/grand-transition.git grand-transition-code
+```
+
+Then run these commands in the new directory:
+
+```text
+cd grand-transition-code
+git lfs install --local --skip-smudge
+```
+
+The local setting prevents automatic asset downloads on later checkouts and pulls.
+It changes only this repository, not your other repositories or global Git settings.
+This checkout contains LFS pointer files until you download the assets.
+Use it for source inspection, documentation, and tests that do not read media.
+
+Before a build, game preview, asset test, or quality gate, download the necessary assets:
+
+```text
+git lfs pull
+git lfs fsck --objects HEAD
+```
+
+Repeat `git lfs pull` after a commit changes assets.
+It reuses the objects already in `.git/lfs` and downloads missing objects.
+To restore automatic asset downloads for this checkout, run `git lfs install --local --force`.
+
 ## Add phrase cards
 
 Add shared cards to `src/content/common-phrase-cards.json`.

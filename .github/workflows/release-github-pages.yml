@@ -31,12 +31,24 @@ jobs:
       - name: List the Git LFS objects
         run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
       - name: Restore the Git LFS cache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: lfs-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: .git/lfs
           key: lfs-${{ hashFiles('.lfs-assets-id') }}
+          restore-keys: lfs-
       - name: Download the Git LFS objects
         run: git lfs pull
+      - name: Validate the Git LFS objects
+        run: git lfs fsck --objects HEAD
+      # Save before dependency installation and tests, so later failures do not
+      # discard newly downloaded objects. Failed downloads or validation cannot save.
+      - name: Save the Git LFS cache
+        if: steps.lfs-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .git/lfs
+          key: ${{ steps.lfs-cache.outputs.cache-primary-key }}
       - name: Set up Node.js 24
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:

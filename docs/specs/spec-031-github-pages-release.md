@@ -50,7 +50,10 @@ It cannot run after a build that failed, a canceled build, a build from a pull r
 
 The build job checks out the commit of the change with the complete history (`fetch-depth: 0`), because the game version counts the commits.
 It installs Node.js 24.22.1.
-It restores the Git LFS objects from a cache with a key from the LFS object list, and it runs `git lfs pull`.
+It uses the LFS cache contract of Milestone 002, with an object-list key and the `lfs-` restore prefix.
+It downloads missing objects and validates them before it saves a cache miss.
+The cache save precedes dependency installation and the release gate.
+The published-smoke job uses the tested artifact and does not download LFS objects.
 It installs the npm version in `packageManager` and runs `npm ci`.
 It installs Playwright Chromium and stable Chrome with their dependencies and runs `npm run quality:release`.
 It uploads one artifact that contains only files from `dist/`.
@@ -125,6 +128,9 @@ To publish again without a new commit, dispatch the release workflow manually fr
   It shows the sequence of revert, rebuild, gate, deploy, and smoke, and it does all these steps.
 - **AC-031-07:** The release workflow is the only workflow that can deploy to Pages.
   No other workflow has `pages: write`, `upload-pages-artifact`, or `deploy-pages`.
+- **AC-031-09:** The build follows the LFS cache contract of Milestone 002.
+  A later build failure does not discard a cache saved after successful object validation.
+  The verifier is `tests/unit/release-pages-workflow.test.ts` and the cache steps in a release build.
 - **AC-031-08:** Removed. It was the build contract of the removed tester workflow.
 
 ## Impeccable UI validation

@@ -37,6 +37,10 @@ The workflow has three jobs.
 
 1. The `build` job has only `contents: read`.
    1. It checks out the commit of the change with the complete history, and it restores the Git Large File Storage (LFS) objects.
+      The cache uses an object-list key and the `lfs-` restore prefix to reuse unchanged objects.
+      The job runs `git lfs pull` and `git lfs fsck --objects HEAD`.
+      On a cache miss, it saves the validated objects before dependency installation and tests.
+      Thus, a later test failure does not discard the new cache.
       The complete history gives the commit count of the game version, for example `v1.177`.
    2. It installs Node.js 24.22.1, the npm version in `packageManager`, and the lockfile dependencies.
    3. It installs Playwright Chromium and stable Chrome with their dependencies.
@@ -261,7 +265,8 @@ Action SHAs in the release workflow:
 | Action                          | Tag    | SHA                                        |
 | ------------------------------- | ------ | ------------------------------------------ |
 | `actions/checkout`              | v7.0.1 | `3d3c42e5aac5ba805825da76410c181273ba90b1` |
-| `actions/cache`                 | v6.1.0 | `55cc8345863c7cc4c66a329aec7e433d2d1c52a9` |
+| `actions/cache/restore`         | v6.1.0 | `55cc8345863c7cc4c66a329aec7e433d2d1c52a9` |
+| `actions/cache/save`            | v6.1.0 | `55cc8345863c7cc4c66a329aec7e433d2d1c52a9` |
 | `actions/setup-node`            | v7.0.0 | `820762786026740c76f36085b0efc47a31fe5020` |
 | `actions/upload-pages-artifact` | v5.0.0 | `fc324d3547104276b827a68afc52ff2a11cc49c9` |
 | `actions/upload-artifact`       | v7.0.1 | `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` |
