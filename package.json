@@ -10,6 +10,8 @@
     "npm": "12.x"
   },
   "scripts": {
+    "checkout:code": "node tools/prepare-checkout.ts code",
+    "checkout:assets": "node tools/prepare-checkout.ts assets",
     "dev": "vite",
     "prod": "npm run build && npm run preview -- --host 127.0.0.1 --strictPort",
     "preview": "vite preview",

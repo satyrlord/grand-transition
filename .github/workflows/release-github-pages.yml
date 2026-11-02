@@ -28,6 +28,7 @@ jobs:
         with:
           # The game version counts all commits, so the build needs the full history.
           fetch-depth: 0
+          lfs: false
       - name: List the Git LFS objects
         run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
       - name: Restore the Git LFS cache
@@ -134,6 +135,8 @@ jobs:
     steps:
       - name: Check out the commit of the change
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          lfs: false
       - name: Set up Node.js 24
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
