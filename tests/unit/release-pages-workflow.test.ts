@@ -209,4 +209,24 @@ describe('Milestone 031 release workflow', () => {
       expect(line).toMatch(/uses: actions\/[a-z-]+(?:\/[a-z-]+)?@[0-9a-f]{40} # v\d+(?:\.\d+)*$/u);
     }
   });
+
+  test('keeps workflow checkouts source-only until the LFS cache is restored', async () => {
+    for (const file of await readdir('.github/workflows')) {
+      const workflow = await readFile(path.join('.github/workflows', file), 'utf8');
+      const steps = workflow.split(/\n {6}- /u);
+      for (const step of steps.filter((value) => value.includes('uses: actions/checkout@'))) {
+        expect(step, file).toMatch(/\n {10}lfs: false(?:\n|$)/u);
+      }
+    }
+    const setup = await readFile('.github/workflows/copilot-setup-steps.yml', 'utf8');
+    expect(setup).toContain('\n  copilot-setup-steps:\n');
+    expect(setup).toContain('run: node tools/prepare-checkout.ts code');
+    expect(setup).not.toMatch(
+      /git lfs (?:pull|fetch)|prepare-checkout\.ts assets|actions\/cache\//u,
+    );
+    expect(setup).not.toMatch(/pages: write|id-token: write/u);
+    for (const line of setup.split('\n').filter((value) => value.includes('uses: '))) {
+      expect(line).toMatch(/@[0-9a-f]{40} # v\d+(?:\.\d+)*$/u);
+    }
+  });
 });

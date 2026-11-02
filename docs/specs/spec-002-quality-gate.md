@@ -141,6 +141,17 @@ Main push runs use separate concurrency groups and do not cancel one another.
 This concurrency rule does not change release deployment.
 For source-only local work, contributors can keep LFS pointer files and reuse the checkout.
 Builds and checks that read assets must first download and validate the objects for the selected commit.
+`checkout:code` disables automatic LFS downloads through local Git configuration and restores cached objects without a network request.
+It preserves modified files and keeps missing objects as pointers.
+`checkout:assets` downloads missing objects and validates the objects for `HEAD`.
+It stops with a failure status if the download or validation fails.
+Each command keeps automatic downloads disabled and changes no global Git setting.
+Linked worktrees reuse the initial checkout's LFS object store.
+Each workflow checkout sets `lfs: false` before an asset cache restore or a source-only task.
+The Copilot setup workflow prepares only source code and available cached assets.
+It does not download LFS objects or restore the asset cache.
+This workflow controls Copilot sessions on GitHub Actions after it is on the default branch.
+It does not control cloud sandbox sessions or the initial clone of a different service.
 
 Collect the production TypeScript coverage from the component suite in a real browser.
 Make sure that the global minimum values are 70 percent for statements, branches, functions, and lines.
@@ -230,3 +241,10 @@ It cancels superseded runs only for the same pull request.
 The verifier is `tests/unit/release-pages-workflow.test.ts` and the LFS cache steps in a pull-request run.
 The code-only checkout procedure in `README.md` changes no global Git setting.
 The verifier is a fresh local fixture clone with that procedure, followed by `git lfs pull`.
+
+**AC-002-12:** Source-only preparation succeeds with an unavailable remote and leaves missing assets as pointers.
+Asset preparation downloads only on request and fails when a missing object is unavailable.
+A linked worktree restores cached assets without its remote.
+The preparation commands preserve global Git configuration and local edits.
+The verifier is `tests/unit/prepare-checkout.test.ts` with a local Git LFS fixture.
+Workflow checks in `tests/unit/release-pages-workflow.test.ts` prevent downloads before cache restoration and during Copilot setup.

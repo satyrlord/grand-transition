@@ -302,12 +302,16 @@ The result is a static GitHub Pages build.
 The accurate contracts and the active milestones are in `docs/specs/`.
 
 The repository keeps images, audio, and speech models in Git Large File Storage (LFS).
-Install Git LFS and run `git lfs install` before you clone the repository.
+Install Git LFS before you prepare a checkout.
 
 ### Work without repeated asset downloads
 
 Reuse your existing checkout for code changes.
 Keep its `.git/lfs` directory, which holds downloaded assets.
+Run `npm run checkout:code` before source-only work.
+This command disables automatic LFS downloads in the local repository configuration.
+It also restores available cached assets without a network request.
+It keeps missing assets as pointer files and preserves modified files.
 Do not use `git lfs fetch --all` for usual development.
 It downloads historical objects that the selected commit does not use.
 
@@ -321,24 +325,58 @@ Then run these commands in the new directory:
 
 ```text
 cd grand-transition-code
-git lfs install --local --skip-smudge
+npm run checkout:code
 ```
 
 The local setting prevents automatic asset downloads on later checkouts and pulls.
 It changes only this repository, not your other repositories or global Git settings.
-This checkout contains LFS pointer files until you download the assets.
+This checkout contains LFS pointer files for assets that are not cached.
 Use it for source inspection, documentation, and tests that do not read media.
+The preparation command uses only Node.js, Git, and Git LFS.
+It does not install dependencies.
 
 Before a build, game preview, asset test, or quality gate, download the necessary assets:
 
 ```text
-git lfs pull
-git lfs fsck --objects HEAD
+npm run checkout:assets
 ```
 
-Repeat `git lfs pull` after a commit changes assets.
-It reuses the objects already in `.git/lfs` and downloads missing objects.
+Repeat `npm run checkout:assets` after a commit changes assets.
+It reuses cached objects, downloads missing objects, and runs `git lfs fsck --objects HEAD`.
+It fails if the download or validation fails.
+Automatic downloads stay disabled after this command.
 To restore automatic asset downloads for this checkout, run `git lfs install --local --force`.
+
+For a second task on the same machine, use a linked worktree from the prepared checkout:
+
+```text
+git worktree add -b task-name ../grand-transition-task HEAD
+cd ../grand-transition-task
+npm run checkout:code
+```
+
+The worktree shares the Git LFS object store with the initial checkout.
+It can restore cached assets without a second download.
+Keep the initial checkout while its linked worktrees are in use.
+Separate cloud machines do not share this local cache.
+
+### Cloud agents
+
+The `copilot-setup-steps.yml` workflow prepares a source-only checkout for Copilot sessions on GitHub Actions.
+Copilot code review uses the same setup unless a separate review workflow replaces it.
+The setup does not download LFS objects or the asset cache.
+It starts to apply after the workflow is on the default branch.
+It does not control Copilot cloud sandbox sessions or a different service's initial clone.
+
+For other cloud agents, select a source-only clone before the environment starts.
+Run `npm run checkout:code` in the checkout before source-only work.
+Reuse the checkout or a linked worktree when the environment retains files.
+Before a build or an asset-consuming check, run `npm run checkout:assets`.
+Do not claim that an asset-consuming check passed while its assets are missing.
+
+The quality and release workflows restore their LFS cache before downloads and validation.
+Their checkout steps disable automatic LFS downloads.
+The published smoke job uses the deployed artifact and does not download LFS objects.
 
 ## Add phrase cards
 

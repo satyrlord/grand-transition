@@ -92,9 +92,14 @@ Add an executable guard that stops the check when a person runs it directly.
 ## Git LFS bandwidth
 
 Reuse an existing checkout and its `.git/lfs` objects when possible.
+Use a linked worktree for a second task on the same machine.
+It shares the initial checkout's Git LFS object store.
 For source-only work, use the code-only checkout procedure in `README.md`.
+Run `npm run checkout:code` before source-only work.
+It disables automatic downloads locally and restores cached assets without a network request.
 Do not download media only to inspect source or documentation.
-Before a build or a check that reads media, run `git lfs pull` and `git lfs fsck --objects HEAD`.
+Before a build or a check that reads media, run `npm run checkout:assets`.
+It downloads missing objects and runs `git lfs fsck --objects HEAD`.
 Do not use `git lfs fetch --all` for usual work.
 Report checks blocked by missing assets separately from code failures.
 

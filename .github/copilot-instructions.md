@@ -4,6 +4,12 @@ Read [`AGENTS.md`](../AGENTS.md), and obey its instructions.
 Read the applicable approved specification.
 Select a workflow from [`skills/SKILLS.md`](skills/SKILLS.md).
 
+Reuse the session checkout for all tasks in that session.
+For source-only work, run `npm run checkout:code` without asset downloads.
+Before a build or a check that reads media, run `npm run checkout:assets`.
+Do not download LFS objects only to examine code or documentation.
+Keep the asset cache when the environment retains files.
+
 Files in the temporary folder, artificial intelligence (AI) prompts, and generated evidence do not control the product.
 Do not say that a repository command passes until the command is in the configuration and runs.
 
