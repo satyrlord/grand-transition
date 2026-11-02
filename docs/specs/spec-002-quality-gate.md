@@ -127,6 +127,9 @@ Pull requests validate, but they do not deploy.
 Each workflow pins each third-party action to a full commit SHA, with its release tag in a comment.
 Milestone 031 gave this rule first for the deployment workflow.
 Dependabot keeps the `github-actions` pins current through `.github/dependabot.yml`.
+Its monthly version-update check groups all minor and patch updates in one pull request.
+Major version updates use separate pull requests.
+The version-update group does not delay or group security updates.
 The repository keeps PNG, WAV, OGG, MP3, ONNX, BIN, and WASM files in Git Large File Storage (LFS) through `.gitattributes`.
 Each workflow checks out the complete history (`fetch-depth: 0`), because the build counts the commits for the game version of Milestone 015.
 Each asset-consuming workflow restores the LFS objects from a cache after checkout.
