@@ -378,6 +378,11 @@ The quality and release workflows restore their LFS cache before downloads and v
 Their checkout steps disable automatic LFS downloads.
 The published smoke job uses the deployed artifact and does not download LFS objects.
 
+Dependabot checks GitHub Actions versions monthly.
+It groups minor and patch version updates in one pull request to decrease repeated quality runs.
+Major version updates use separate pull requests.
+This group applies only to version updates and does not delay security updates.
+
 ## Add phrase cards
 
 Add shared cards to `src/content/common-phrase-cards.json`.

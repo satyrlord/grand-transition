@@ -4,5 +4,13 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    groups:
+      actions-minor-and-patch:
+        applies-to: version-updates
+        patterns:
+          - '*'
+        update-types:
+          - minor
+          - patch
     commit-message:
       prefix: ci
